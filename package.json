@@ -1,0 +1,15 @@
+﻿{
+  "name": "cliente-x-instagram",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "validate-copy": "node automation/instagram-template/scripts/publish-carousel.mjs --account cliente-x --validate-copy",
+    "render-only": "node automation/instagram-template/scripts/publish-carousel.mjs --account cliente-x --render-only",
+    "dry-run": "node automation/instagram-template/scripts/publish-carousel.mjs --account cliente-x --dry-run",
+    "publish": "node automation/instagram-template/scripts/publish-carousel.mjs --account cliente-x"
+  },
+  "dependencies": {
+    "playwright": "^1.58.2"
+  }
+}

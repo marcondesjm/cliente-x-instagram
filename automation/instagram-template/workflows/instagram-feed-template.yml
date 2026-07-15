@@ -1,0 +1,58 @@
+name: Instagram Feed Template
+
+on:
+  workflow_dispatch:
+    inputs:
+      account:
+        description: "Account key from accounts config"
+        required: true
+        default: "cliente-exemplo"
+      dry_run:
+        description: "Run without publishing"
+        required: true
+        default: "true"
+        type: choice
+        options:
+          - "true"
+          - "false"
+
+jobs:
+  instagram-feed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate copy
+        run: node automation/instagram-template/scripts/publish-carousel.mjs --account "${{ inputs.account }}" --validate-copy
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Publish carousel
+        shell: bash
+        run: |
+          ARGS=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          node automation/instagram-template/scripts/publish-carousel.mjs --account "${{ inputs.account }}" $ARGS
+
+      - name: Upload run logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: instagram-template-runs
+          path: automation/instagram-template/runs/
+          if-no-files-found: ignore
