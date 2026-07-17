@@ -278,6 +278,34 @@ async function graphPost(path, params = {}) {
   return res.json();
 }
 
+function normalizeCaption(text = '') {
+  return text.replace(/\s+/g, ' ').trim();
+}
+
+function saoPauloDateFromIso(isoString) {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Sao_Paulo',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).formatToParts(new Date(isoString));
+  const map = Object.fromEntries(parts.map((p) => [p.type, p.value]));
+  return `${map.year}-${map.month}-${map.day}`;
+}
+
+async function findDuplicatePostToday(userId, token, caption, today) {
+  const media = await graphGet(`/${userId}/media`, {
+    fields: 'id,caption,permalink,timestamp',
+    limit: '25',
+    access_token: token
+  });
+  const expectedCaption = normalizeCaption(caption);
+  return (media.data || []).find((item) => {
+    if (!item.caption || !item.timestamp) return false;
+    return saoPauloDateFromIso(item.timestamp) === today && normalizeCaption(item.caption) === expectedCaption;
+  });
+}
+
 async function uploadToImgBB(imagePath, apiKey) {
   const form = new FormData();
   form.append('key', apiKey);
@@ -337,6 +365,27 @@ async function main() {
   const igAccount = await graphGet(`/${userId}`, { fields: 'id,username', access_token: token });
   if (igAccount.username !== account.expectedUsername) {
     throw new Error(`Conta errada: esperado ${account.expectedUsername}, retornou ${igAccount.username}.`);
+  }
+
+  if (!args.dryRun) {
+    const duplicate = await findDuplicatePostToday(userId, token, pack.caption, today);
+    if (duplicate) {
+      const result = {
+        ok: true,
+        skipped: true,
+        reason: 'duplicate_caption_today',
+        account: account.account,
+        runDir,
+        matchedMedia: {
+          id: duplicate.id,
+          permalink: duplicate.permalink,
+          timestamp: duplicate.timestamp
+        }
+      };
+      writeFileSync(join(runDir, 'result.json'), JSON.stringify(result, null, 2), 'utf8');
+      console.log(JSON.stringify(result, null, 2));
+      return;
+    }
   }
 
   const imageUrls = await Promise.all(imagePaths.map((imagePath) => uploadToImgBB(imagePath, imgbbKey)));
