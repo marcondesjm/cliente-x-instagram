@@ -2,7 +2,6 @@ name: Instagram Feed Cliente X
 
 on:
   schedule:
-    - cron: "10 16 * * *"
     - cron: "50 14 * * *"
     - cron: "0 16 * * *"
     - cron: "0 19 * * *"
@@ -29,7 +28,7 @@ jobs:
     timeout-minutes: 20
     env:
       ACCOUNT: ${{ github.event.inputs.account || 'cliente-x' }}
-      DRY_RUN: ${{ github.event_name == 'schedule' && github.event.schedule == '10 16 * * *' && 'true' || (github.event_name == 'schedule' && 'false' || (github.event.inputs.dry_run || 'true')) }}
+      DRY_RUN: ${{ github.event_name == 'schedule' && 'false' || (github.event.inputs.dry_run || 'true') }}
       CLIENTE_X_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.CLIENTE_X_INSTAGRAM_ACCESS_TOKEN }}
       CLIENTE_X_INSTAGRAM_USER_ID: ${{ secrets.CLIENTE_X_INSTAGRAM_USER_ID }}
       IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
@@ -52,15 +51,40 @@ jobs:
       - name: Validate copy
         run: node automation/instagram-template/scripts/publish-carousel.mjs --account "$ACCOUNT" --validate-copy
 
-      - name: Install Playwright Chromium
-        run: npx playwright install --with-deps chromium
-
-      - name: Select scheduled content slot
+      - name: Skip stale scheduled run
         if: github.event_name == 'schedule'
         shell: bash
         run: |
           case "${{ github.event.schedule }}" in
-            "10 16 * * *") SLOT_INDEX=1 ;;
+            "50 14 * * *") EXPECTED_HOUR=14; EXPECTED_MINUTE=50 ;;
+            "0 16 * * *") EXPECTED_HOUR=16; EXPECTED_MINUTE=0 ;;
+            "0 19 * * *") EXPECTED_HOUR=19; EXPECTED_MINUTE=0 ;;
+            "0 22 * * *") EXPECTED_HOUR=22; EXPECTED_MINUTE=0 ;;
+            "0 1 * * *") EXPECTED_HOUR=1; EXPECTED_MINUTE=0 ;;
+            *) EXPECTED_HOUR=$(date -u +%H); EXPECTED_MINUTE=$(date -u +%M) ;;
+          esac
+
+          TODAY_UTC="$(date -u +%Y-%m-%d)"
+          EXPECTED_EPOCH="$(date -u -d "$TODAY_UTC $EXPECTED_HOUR:$EXPECTED_MINUTE:00" +%s)"
+          NOW_EPOCH="$(date -u +%s)"
+          DELAY_MINUTES=$(( (NOW_EPOCH - EXPECTED_EPOCH) / 60 ))
+
+          if [ "$DELAY_MINUTES" -gt 20 ]; then
+            echo "Scheduled run is stale by ${DELAY_MINUTES} minutes. Skipping publish."
+            echo "SKIP_PUBLISH=true" >> "$GITHUB_ENV"
+          else
+            echo "Scheduled run delay is ${DELAY_MINUTES} minutes. Continuing publish."
+          fi
+
+      - name: Install Playwright Chromium
+        if: env.SKIP_PUBLISH != 'true'
+        run: npx playwright install --with-deps chromium
+
+      - name: Select scheduled content slot
+        if: github.event_name == 'schedule' && env.SKIP_PUBLISH != 'true'
+        shell: bash
+        run: |
+          case "${{ github.event.schedule }}" in
             "50 14 * * *") SLOT_INDEX=0 ;;
             "0 16 * * *") SLOT_INDEX=1 ;;
             "0 19 * * *") SLOT_INDEX=2 ;;
@@ -71,6 +95,7 @@ jobs:
           echo "INSTAGRAM_TEMPLATE_SLOT_INDEX=$SLOT_INDEX" >> "$GITHUB_ENV"
 
       - name: Publish carousel
+        if: env.SKIP_PUBLISH != 'true'
         shell: bash
         run: |
           ARGS=""
