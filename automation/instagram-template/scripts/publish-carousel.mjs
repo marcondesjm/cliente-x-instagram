@@ -101,8 +101,15 @@ function daysSinceEpoch(dateString) {
   return Math.floor(Date.UTC(year, month - 1, day) / 86_400_000);
 }
 
-function pickDaily(items, dateString) {
-  return items[daysSinceEpoch(dateString) % items.length];
+function pickDaily(items, dateString, slotIndex = 0) {
+  return items[((daysSinceEpoch(dateString) * 5) + slotIndex) % items.length];
+}
+
+function readSlotIndex() {
+  const raw = process.env.INSTAGRAM_TEMPLATE_SLOT_INDEX || '0';
+  const value = Number.parseInt(raw, 10);
+  if (!Number.isInteger(value) || value < 0) throw new Error('INSTAGRAM_TEMPLATE_SLOT_INDEX precisa ser um inteiro maior ou igual a zero.');
+  return value;
 }
 
 function assertNoMojibake(text) {
@@ -275,12 +282,13 @@ async function main() {
   }
 
   const today = todaySaoPaulo();
-  const pack = pickDaily(packs, today);
+  const slotIndex = readSlotIndex();
+  const pack = pickDaily(packs, today, slotIndex);
   const style = pickDaily(styles, today);
-  const runId = `${timestampSaoPaulo()}${args.renderOnly ? '-render-only' : ''}`;
+  const runId = `${timestampSaoPaulo()}-slot-${slotIndex}${args.renderOnly ? '-render-only' : ''}`;
   const runDir = join(RUNS_DIR, account.account, runId);
   mkdirSync(runDir, { recursive: true });
-  writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, account: account.account, visualStyle: style.name, ...pack }, null, 2), 'utf8');
+  writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, account: account.account, visualStyle: style.name, ...pack }, null, 2), 'utf8');
   writeFileSync(join(runDir, 'caption.txt'), pack.caption, 'utf8');
   const imagePaths = await renderSlides(runDir, pack.slides, account, style);
 
