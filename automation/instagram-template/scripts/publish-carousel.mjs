@@ -38,6 +38,7 @@ function parseArgs(argv) {
     configDir: resolve(getValue('--config-dir', DEFAULT_CONFIG_DIR)),
     dryRun: argv.includes('--dry-run'),
     renderOnly: argv.includes('--render-only'),
+    storyOnly: argv.includes('--story-only'),
     validateCopy: argv.includes('--validate-copy')
   };
 }
@@ -262,6 +263,83 @@ async function renderSlides(runDir, slides, account, style) {
   return imagePaths;
 }
 
+function storyHtml(slide, account, style) {
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { width: 1080px; height: 1920px; overflow: hidden; font-family: Arial, Helvetica, sans-serif; background: ${style.bgTop}; color: ${style.text}; }
+    main {
+      width: 1080px;
+      height: 1920px;
+      padding: 116px 76px 104px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        linear-gradient(135deg, ${style.accentSoft}, rgba(124,255,178,0) 40%),
+        linear-gradient(180deg, ${style.bgTop} 0%, ${style.bgBottom} 100%);
+      position: relative;
+    }
+    main::before { content: ""; position: absolute; inset: 48px; border: 2px solid rgba(244,247,245,0.1); }
+    main::after {
+      content: "";
+      position: absolute;
+      right: -120px;
+      top: 270px;
+      width: 520px;
+      height: 1120px;
+      background:
+        linear-gradient(90deg, ${style.grid} 1px, transparent 1px),
+        linear-gradient(180deg, ${style.grid} 1px, transparent 1px);
+      background-size: 50px 50px;
+      transform: rotate(-7deg);
+    }
+    section, footer { position: relative; z-index: 2; }
+    .brand { font-size: 38px; font-weight: 900; color: ${style.text}; }
+    .eyebrow { font-size: 32px; font-weight: 900; color: ${style.accent}; text-transform: uppercase; margin-top: 110px; }
+    .content { display: flex; flex-direction: column; gap: 38px; }
+    .bar { width: 210px; height: 14px; background: ${style.accent}; }
+    h1 { max-width: 880px; font-size: 90px; line-height: 1.03; font-weight: 900; color: ${style.text}; letter-spacing: 0; }
+    p { max-width: 850px; font-size: 44px; line-height: 1.2; font-weight: 800; color: ${style.muted}; letter-spacing: 0; }
+    footer { color: #AEB8B2; font-size: 30px; font-weight: 800; }
+    footer strong { display: block; color: ${style.text}; font-size: 36px; font-weight: 900; margin-bottom: 6px; }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <div class="brand">${account.brandName}</div>
+      <div class="eyebrow">${slide.eyebrow}</div>
+    </section>
+    <section class="content">
+      <div class="bar"></div>
+      <h1>${slide.title}</h1>
+      <p>${slide.body}</p>
+    </section>
+    <footer><strong>${account.brandName}</strong>${account.footerText}</footer>
+  </main>
+</body>
+</html>`;
+}
+
+async function renderStory(runDir, pack, account, style) {
+  const browser = await chromium.launch();
+  const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
+  const html = storyHtml(pack.slides[0], account, style);
+  assertNoMojibake(html);
+  assertPortugueseAccents(`${pack.slides[0].eyebrow}\n${pack.slides[0].title}\n${pack.slides[0].body}`);
+  const htmlPath = join(runDir, 'story.html');
+  const imagePath = join(runDir, 'story.jpg');
+  writeFileSync(htmlPath, html, 'utf8');
+  await page.goto(`file://${htmlPath.replace(/\\/g, '/')}`);
+  await page.screenshot({ path: imagePath, type: 'jpeg', quality: 94, fullPage: false });
+  await browser.close();
+  return imagePath;
+}
+
 async function graphGet(path, params = {}) {
   const url = new URL(`${IG_BASE}${path}`);
   Object.entries(params).forEach(([key, value]) => url.searchParams.set(key, value));
@@ -328,6 +406,16 @@ async function pollContainer(containerId, token) {
   throw new Error(`Container ${containerId} timed out.`);
 }
 
+async function createStory(userId, token, imageUrl) {
+  const story = await graphPost(`/${userId}/media`, {
+    media_type: 'STORIES',
+    image_url: imageUrl,
+    access_token: token
+  });
+  await pollContainer(story.id, token);
+  return story;
+}
+
 async function main() {
   const args = parseArgs(process.argv);
   const env = loadEnv();
@@ -348,10 +436,11 @@ async function main() {
   mkdirSync(runDir, { recursive: true });
   writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, account: account.account, visualStyle: style.name, ...pack }, null, 2), 'utf8');
   writeFileSync(join(runDir, 'caption.txt'), pack.caption, 'utf8');
-  const imagePaths = await renderSlides(runDir, pack.slides, account, style);
+  const imagePaths = args.storyOnly ? [] : await renderSlides(runDir, pack.slides, account, style);
+  const storyImagePath = await renderStory(runDir, pack, account, style);
 
   if (args.renderOnly) {
-    console.log(JSON.stringify({ ok: true, renderOnly: true, account: account.account, runDir, visualStyle: style.name, imagePaths }, null, 2));
+    console.log(JSON.stringify({ ok: true, renderOnly: true, account: account.account, runDir, visualStyle: style.name, imagePaths, storyImagePath }, null, 2));
     return;
   }
 
@@ -367,7 +456,7 @@ async function main() {
     throw new Error(`Conta errada: esperado ${account.expectedUsername}, retornou ${igAccount.username}.`);
   }
 
-  if (!args.dryRun) {
+  if (!args.dryRun && !args.storyOnly) {
     const duplicate = await findDuplicatePostToday(userId, token, pack.caption, today);
     if (duplicate) {
       const result = {
@@ -388,32 +477,58 @@ async function main() {
     }
   }
 
-  const imageUrls = await Promise.all(imagePaths.map((imagePath) => uploadToImgBB(imagePath, imgbbKey)));
-  const children = await Promise.all(imageUrls.map((imageUrl) => graphPost(`/${userId}/media`, {
-    image_url: imageUrl,
-    is_carousel_item: 'true',
-    access_token: token
-  })));
-  const childIds = children.map((child) => child.id);
-  await Promise.all(childIds.map((childId) => pollContainer(childId, token)));
-  const carousel = await graphPost(`/${userId}/media`, {
-    media_type: 'CAROUSEL',
-    children: childIds.join(','),
-    caption: pack.caption,
-    access_token: token
-  });
-  await pollContainer(carousel.id, token);
+  const storyImageUrl = await uploadToImgBB(storyImagePath, imgbbKey);
+  let imageUrls = [];
+  let childIds = [];
+  let carousel = null;
+  if (!args.storyOnly) {
+    imageUrls = await Promise.all(imagePaths.map((imagePath) => uploadToImgBB(imagePath, imgbbKey)));
+    const children = await Promise.all(imageUrls.map((imageUrl) => graphPost(`/${userId}/media`, {
+      image_url: imageUrl,
+      is_carousel_item: 'true',
+      access_token: token
+    })));
+    childIds = children.map((child) => child.id);
+    await Promise.all(childIds.map((childId) => pollContainer(childId, token)));
+    carousel = await graphPost(`/${userId}/media`, {
+      media_type: 'CAROUSEL',
+      children: childIds.join(','),
+      caption: pack.caption,
+      access_token: token
+    });
+    await pollContainer(carousel.id, token);
+  }
+  const story = await createStory(userId, token, storyImageUrl);
 
-  const baseResult = { ok: true, dryRun: args.dryRun, account: account.account, runDir, imagePaths, imageUrls, childIds, carouselId: carousel.id };
+  const baseResult = {
+    ok: true,
+    dryRun: args.dryRun,
+    storyOnly: args.storyOnly,
+    account: account.account,
+    runDir,
+    imagePaths,
+    storyImagePath,
+    imageUrls,
+    storyImageUrl,
+    childIds,
+    carouselId: carousel?.id,
+    storyContainerId: story.id
+  };
   if (args.dryRun) {
     writeFileSync(join(runDir, 'result.json'), JSON.stringify(baseResult, null, 2), 'utf8');
     console.log(JSON.stringify(baseResult, null, 2));
     return;
   }
 
-  const media = await graphPost(`/${userId}/media_publish`, { creation_id: carousel.id, access_token: token });
-  const details = await graphGet(`/${media.id}`, { fields: 'id,permalink,timestamp', access_token: token });
-  const result = { ...baseResult, mediaId: media.id, ...details };
+  let media = null;
+  let details = null;
+  if (!args.storyOnly) {
+    media = await graphPost(`/${userId}/media_publish`, { creation_id: carousel.id, access_token: token });
+    details = await graphGet(`/${media.id}`, { fields: 'id,permalink,timestamp', access_token: token });
+  }
+  const storyMedia = await graphPost(`/${userId}/media_publish`, { creation_id: story.id, access_token: token });
+  const storyDetails = await graphGet(`/${storyMedia.id}`, { fields: 'id,timestamp', access_token: token });
+  const result = { ...baseResult, mediaId: media?.id, ...(details || {}), storyMediaId: storyMedia.id, story: storyDetails };
   writeFileSync(join(runDir, 'result.json'), JSON.stringify(result, null, 2), 'utf8');
   console.log(JSON.stringify(result, null, 2));
 }
