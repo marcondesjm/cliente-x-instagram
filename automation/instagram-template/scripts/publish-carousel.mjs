@@ -77,6 +77,34 @@ function loadConfig(configDir, accountName) {
   return { account, packs: content.packs, styles };
 }
 
+async function loadSupabasePacks(env, accountName) {
+  const url = env.SUPABASE_URL;
+  const key = env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) return null;
+
+  const endpoint = new URL('/rest/v1/instagram_posts', url);
+  endpoint.searchParams.set('select', 'slot_index,slides,caption');
+  endpoint.searchParams.set('account', `eq.${accountName}`);
+  endpoint.searchParams.set('active', 'eq.true');
+  endpoint.searchParams.set('order', 'slot_index.asc');
+
+  const res = await fetch(endpoint, {
+    headers: {
+      apikey: key,
+      Authorization: `Bearer ${key}`
+    }
+  });
+  if (!res.ok) throw new Error(`Supabase posts failed [${res.status}]: ${await res.text()}`);
+
+  const rows = await res.json();
+  if (!Array.isArray(rows) || !rows.length) return null;
+  return rows.map((row) => ({
+    slotIndex: row.slot_index,
+    slides: row.slides,
+    caption: row.caption
+  }));
+}
+
 function timestampSaoPaulo() {
   const parts = new Intl.DateTimeFormat('en-CA', {
     timeZone: 'America/Sao_Paulo',
@@ -274,7 +302,9 @@ async function pollContainer(containerId, token) {
 
 async function main() {
   const args = parseArgs(process.argv);
-  const { account, packs, styles } = loadConfig(args.configDir, args.account);
+  const env = loadEnv();
+  const { account, packs: localPacks, styles } = loadConfig(args.configDir, args.account);
+  const packs = await loadSupabasePacks(env, args.account) || localPacks;
   validatePacks(packs);
   if (args.validateCopy) {
     console.log(JSON.stringify({ ok: true, account: account.account, checkedPacks: packs.length }, null, 2));
@@ -297,7 +327,6 @@ async function main() {
     return;
   }
 
-  const env = loadEnv();
   const token = env[account.accessTokenEnv];
   const userId = env[account.userIdEnv];
   const imgbbKey = env[account.imgbbKeyEnv];
