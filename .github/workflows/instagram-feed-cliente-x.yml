@@ -21,6 +21,17 @@ on:
         options:
           - "true"
           - "false"
+      slot_index:
+        description: "Content slot to publish"
+        required: true
+        default: "0"
+        type: choice
+        options:
+          - "0"
+          - "1"
+          - "2"
+          - "3"
+          - "4"
 
 jobs:
   instagram-feed:
@@ -93,6 +104,11 @@ jobs:
             *) SLOT_INDEX=0 ;;
           esac
           echo "INSTAGRAM_TEMPLATE_SLOT_INDEX=$SLOT_INDEX" >> "$GITHUB_ENV"
+
+      - name: Select manual content slot
+        if: github.event_name == 'workflow_dispatch' && env.SKIP_PUBLISH != 'true'
+        shell: bash
+        run: echo "INSTAGRAM_TEMPLATE_SLOT_INDEX=${{ github.event.inputs.slot_index || '0' }}" >> "$GITHUB_ENV"
 
       - name: Publish feed and story
         if: env.SKIP_PUBLISH != 'true'
