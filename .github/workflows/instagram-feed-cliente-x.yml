@@ -1,6 +1,12 @@
 name: Instagram Feed Cliente X
 
 on:
+  schedule:
+    - cron: "50 14 * * *"
+    - cron: "0 16 * * *"
+    - cron: "0 19 * * *"
+    - cron: "0 22 * * *"
+    - cron: "0 1 * * *"
   workflow_dispatch:
     inputs:
       account:
@@ -33,7 +39,7 @@ jobs:
     timeout-minutes: 20
     env:
       ACCOUNT: ${{ github.event.inputs.account || 'cliente-x' }}
-      DRY_RUN: ${{ github.event.inputs.dry_run || 'true' }}
+      DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run || 'false' }}
       CLIENTE_X_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.CLIENTE_X_INSTAGRAM_ACCESS_TOKEN }}
       CLIENTE_X_INSTAGRAM_USER_ID: ${{ secrets.CLIENTE_X_INSTAGRAM_USER_ID }}
       IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
@@ -59,9 +65,22 @@ jobs:
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
 
-      - name: Select manual content slot
+      - name: Select content slot
         shell: bash
-        run: echo "INSTAGRAM_TEMPLATE_SLOT_INDEX=${{ github.event.inputs.slot_index || '0' }}" >> "$GITHUB_ENV"
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            SLOT_INDEX="${{ github.event.inputs.slot_index || '0' }}"
+          else
+            case "${{ github.event.schedule }}" in
+              "50 14 * * *") SLOT_INDEX="0" ;;
+              "0 16 * * *") SLOT_INDEX="1" ;;
+              "0 19 * * *") SLOT_INDEX="2" ;;
+              "0 22 * * *") SLOT_INDEX="3" ;;
+              "0 1 * * *") SLOT_INDEX="4" ;;
+              *) SLOT_INDEX="0" ;;
+            esac
+          fi
+          echo "INSTAGRAM_TEMPLATE_SLOT_INDEX=$SLOT_INDEX" >> "$GITHUB_ENV"
 
       - name: Publish feed and story
         shell: bash
