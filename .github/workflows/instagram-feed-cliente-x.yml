@@ -3,6 +3,8 @@ name: Instagram Feed Cliente X
 on:
   schedule:
     - cron: "25 13 * * *"
+    - cron: "40 13 * * *"
+    - cron: "0 14 * * *"
     - cron: "50 14 * * *"
     - cron: "0 16 * * *"
     - cron: "0 19 * * *"
@@ -74,6 +76,8 @@ jobs:
           else
             case "${{ github.event.schedule }}" in
               "25 13 * * *") SLOT_INDEX="0" ;;
+              "40 13 * * *") SLOT_INDEX="1" ;;
+              "0 14 * * *") SLOT_INDEX="2" ;;
               "50 14 * * *") SLOT_INDEX="0" ;;
               "0 16 * * *") SLOT_INDEX="1" ;;
               "0 19 * * *") SLOT_INDEX="2" ;;
