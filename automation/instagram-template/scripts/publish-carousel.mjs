@@ -504,21 +504,10 @@ async function main() {
       const recentMedia = await fetchRecentMedia(userId, token);
       const fresh = pickFreshPack(packs, today, slotIndex, recentMedia);
       if (!fresh.pack) {
-        const result = {
-          ok: true,
-          skipped: true,
-          reason: 'all_pack_captions_already_published_recently',
-          account: account.account,
-          requestedSlotIndex: slotIndex,
-          checkedPacks: packs.length,
-          matchedMedia: fresh.duplicate ? {
-            id: fresh.duplicate.id,
-            permalink: fresh.duplicate.permalink,
-            timestamp: fresh.duplicate.timestamp
-          } : undefined
-        };
-        console.log(JSON.stringify(result, null, 2));
-        return;
+        const duplicateDetails = fresh.duplicate
+          ? ` Ultima midia igual: ${fresh.duplicate.permalink || fresh.duplicate.id} (${fresh.duplicate.timestamp}).`
+          : '';
+        throw new Error(`Nenhum conteudo novo para publicar: ${packs.length} captions ja aparecem nas midias recentes.${duplicateDetails}`);
       }
       pack = fresh.pack;
       packIndex = fresh.packIndex;
