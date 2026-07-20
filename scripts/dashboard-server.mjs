@@ -9,6 +9,8 @@ const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const DOCS_DIR = join(ROOT, 'docs');
 const CONTENT_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'content-packs.json');
 const ACCOUNTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'accounts.json');
+const WORKFLOW_PATH = join(ROOT, '.github', 'workflows', 'instagram-feed-cliente-x.yml');
+const README_PATH = join(ROOT, 'README.md');
 const RUNS_DIR = join(ROOT, 'automation', 'instagram-template', 'runs');
 const ACCOUNT = 'cliente-x';
 const PORT = Number(process.env.DASHBOARD_PORT || 4173);
@@ -30,6 +32,34 @@ function readJson(path) {
 
 function normalizeCaption(text = '') {
   return text.replace(/\s+/g, ' ').trim();
+}
+
+function cronToBrtTime(cron) {
+  const [minute, hour] = cron.split(' ').map(Number);
+  const brtHour = (hour + 21) % 24;
+  return `${String(brtHour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+}
+
+function brtTimeToCron(time) {
+  const match = String(time).trim().match(/^([01]?\d|2[0-3]):([0-5]\d)$/);
+  if (!match) throw new Error(`Horario invalido: ${time}. Use HH:MM.`);
+  const hourBrt = Number(match[1]);
+  const minute = Number(match[2]);
+  const hourUtc = (hourBrt + 3) % 24;
+  return `${minute} ${hourUtc} * * *`;
+}
+
+function normalizeTimes(times) {
+  const unique = Array.from(new Set(times.map((time) => {
+    const match = String(time).trim().match(/^([01]?\d|2[0-3]):([0-5]\d)$/);
+    if (!match) throw new Error(`Horario invalido: ${time}. Use HH:MM.`);
+    return `${String(Number(match[1])).padStart(2, '0')}:${match[2]}`;
+  })));
+  return unique.sort((a, b) => {
+    const [ah, am] = a.split(':').map(Number);
+    const [bh, bm] = b.split(':').map(Number);
+    return ah * 60 + am - (bh * 60 + bm);
+  });
 }
 
 function json(res, status, body) {
@@ -101,12 +131,52 @@ function getState() {
 
   return {
     account,
+    scheduleBrt: account?.scheduleUtc?.map(cronToBrtTime) || [],
     packs,
     packCount: packs.length,
     uniqueCaptions,
     latestResult,
     latestFailure
   };
+}
+
+function updateWorkflowSchedule(scheduleUtc) {
+  let text = readFileSync(WORKFLOW_PATH, 'utf8');
+  const scheduleBlock = scheduleUtc.map((cron) => `    - cron: "${cron}"`).join('\n');
+  text = text.replace(/  schedule:\r?\n(?:    - cron: ".*"\r?\n)+/, `  schedule:\n${scheduleBlock}\n`);
+
+  const optionsBlock = scheduleUtc.map((_, index) => `          - "${index}"`).join('\n');
+  text = text.replace(/        options:\r?\n(?:          - "\d+"\r?\n)+/, `        options:\n${optionsBlock}\n`);
+
+  const caseBlock = scheduleUtc.map((cron, index) => `              "${cron}") SLOT_INDEX="${index}" ;;`).join('\n');
+  text = text.replace(/            case "\$\{\{ github\.event\.schedule \}\}" in\r?\n(?:              ".*"\) SLOT_INDEX="\d+" ;;\r?\n)+/, `            case "\${{ github.event.schedule }}" in\n${caseBlock}\n`);
+  writeFileSync(WORKFLOW_PATH, text, 'utf8');
+}
+
+function updateReadmeSchedule(scheduleBrt) {
+  const times = scheduleBrt.map((time) => time.replace(/^0/, ''));
+  const label = times.length > 1
+    ? `${times.slice(0, -1).join(', ')} e ${times.at(-1)}`
+    : times[0] || '';
+  let text = readFileSync(README_PATH, 'utf8');
+  text = text.replace(
+    /6\. O workflow .*? fica agendado para publicar às .*? no horário de Brasília\./,
+    `6. O workflow \`.github/workflows/instagram-feed-cliente-x.yml\` fica agendado para publicar às ${label} no horário de Brasília.`
+  );
+  writeFileSync(README_PATH, text, 'utf8');
+}
+
+function saveSchedule(times) {
+  const scheduleBrt = normalizeTimes(times);
+  const scheduleUtc = scheduleBrt.map(brtTimeToCron);
+  const accounts = readJson(ACCOUNTS_PATH);
+  const account = accounts.find((item) => item.account === ACCOUNT);
+  if (!account) throw new Error(`Conta ${ACCOUNT} nao encontrada em accounts.json.`);
+  account.scheduleUtc = scheduleUtc;
+  writeFileSync(ACCOUNTS_PATH, `${JSON.stringify(accounts, null, 2)}\n`, 'utf8');
+  updateWorkflowSchedule(scheduleUtc);
+  updateReadmeSchedule(scheduleBrt);
+  return getState();
 }
 
 function validatePack(pack) {
@@ -170,6 +240,10 @@ async function handleApi(req, res, url) {
       const index = Number(url.pathname.split('/').pop());
       const body = await readBody(req);
       return json(res, 200, savePack(index, body.pack));
+    }
+    if (req.method === 'POST' && url.pathname === '/api/schedule') {
+      const body = await readBody(req);
+      return json(res, 200, saveSchedule(body.times || []));
     }
     if (req.method === 'POST' && url.pathname === '/api/validate') {
       return json(res, 200, await runCommand('npm', ['run', 'validate-copy']));

@@ -390,6 +390,30 @@
       gap: 10px;
     }
 
+    .schedule-editor {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .time-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 42px;
+      gap: 8px;
+      align-items: end;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdfc;
+    }
+
+    .icon-button {
+      width: 42px;
+      padding: 0;
+      font-size: 20px;
+      line-height: 1;
+    }
+
     label {
       display: grid;
       gap: 6px;
@@ -595,6 +619,18 @@
             <span class="status-pill good" id="scheduleStatus">Coberto</span>
           </div>
           <div class="timeline" id="timeline"></div>
+          <div style="height: 16px;"></div>
+          <div class="panel-head" style="margin-bottom: 10px;">
+            <div>
+              <div class="section-label">Editar agenda</div>
+              <h2>Horários manuais</h2>
+            </div>
+            <button id="addTime" type="button">Adicionar horário</button>
+          </div>
+          <div class="schedule-editor" id="scheduleEditor"></div>
+          <div class="editor-actions">
+            <button class="primary" id="saveSchedule" type="button">Salvar horários</button>
+          </div>
         </div>
 
         <div class="panel">
@@ -623,7 +659,7 @@
                 </div>
                 <div class="preview-foot">Marcondes Machado · IA aplicada a empresas</div>
               </div>
-              <div class="message" id="editorMessage">Inicie com `npm run dashboard` para salvar, validar e renderizar pelo painel.</div>
+              <div class="message" id="editorMessage">Inicie com `npm run dashboard` para salvar conteúdo, editar horários, validar e renderizar pelo painel.</div>
             </div>
             <div>
               <div class="slide-list" id="slideFields"></div>
@@ -749,6 +785,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
 
     let appState = {
       packs: [],
+      scheduleBrt: [],
       selectedPack: 0,
       selectedSlide: 0,
       serverMode: location.protocol.startsWith('http')
@@ -792,17 +829,86 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       try {
         const state = await api('/api/state');
         appState.packs = state.packs || [];
+        appState.scheduleBrt = state.scheduleBrt || [];
         DATA.schedulesUtc = state.account?.scheduleUtc || DATA.schedulesUtc;
         DATA.packCount = state.packCount || DATA.packCount;
         DATA.uniqueCaptions = state.uniqueCaptions || DATA.uniqueCaptions;
         document.getElementById('contentCount').textContent = DATA.packCount;
         document.getElementById('contentNote').textContent = `${DATA.schedulesUtc.length} horários ativos`;
         renderSchedule();
+        renderScheduleEditor();
         renderChecks();
         renderEditor();
         setMessage('Conteúdos carregados do projeto. Escolha um slot, edite e salve.', 'good');
       } catch (error) {
         setMessage(`Não consegui carregar pelo servidor: ${error.message}`, 'bad');
+      }
+    }
+
+    function scheduleTimesFromInputs() {
+      return Array.from(document.querySelectorAll('[data-time-input]'))
+        .map((input) => input.value)
+        .filter(Boolean);
+    }
+
+    function renderScheduleEditor() {
+      const editor = document.getElementById('scheduleEditor');
+      const times = appState.scheduleBrt.length ? appState.scheduleBrt : DATA.schedulesUtc.map((cron) => {
+        const [minute, hour] = cron.split(' ').map(Number);
+        const brtHour = (hour + 21) % 24;
+        return `${String(brtHour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+      });
+
+      editor.innerHTML = times.map((time, index) => `
+        <div class="time-row">
+          <label>
+            Horário ${index + 1}
+            <input type="time" data-time-input value="${escapeHtml(time)}">
+          </label>
+          <button class="icon-button" type="button" data-remove-time="${index}" title="Remover horário">×</button>
+        </div>
+      `).join('');
+    }
+
+    function addScheduleTime() {
+      appState.scheduleBrt = scheduleTimesFromInputs();
+      appState.scheduleBrt.push('09:00');
+      renderScheduleEditor();
+    }
+
+    function removeScheduleTime(index) {
+      appState.scheduleBrt = scheduleTimesFromInputs();
+      appState.scheduleBrt.splice(index, 1);
+      renderScheduleEditor();
+    }
+
+    async function saveSchedule() {
+      if (!appState.serverMode) {
+        setMessage('Para salvar horários, abra com: npm run dashboard', 'bad');
+        return;
+      }
+      const button = document.getElementById('saveSchedule');
+      const original = button.textContent;
+      button.disabled = true;
+      button.textContent = 'Salvando';
+      setMessage('Salvando horários no workflow, accounts.json e README...', 'warn');
+      try {
+        const state = await api('/api/schedule', {
+          method: 'POST',
+          body: JSON.stringify({ times: scheduleTimesFromInputs() })
+        });
+        appState.scheduleBrt = state.scheduleBrt || [];
+        DATA.schedulesUtc = state.account?.scheduleUtc || DATA.schedulesUtc;
+        document.getElementById('contentNote').textContent = `${DATA.schedulesUtc.length} horários ativos`;
+        renderSchedule();
+        renderScheduleEditor();
+        renderChecks();
+        setMessage('Horários salvos. Para valer no GitHub Actions, faça commit/push das mudanças.', 'good');
+      } catch (error) {
+        setMessage(error.message, 'bad');
+      } finally {
+        button.disabled = false;
+        button.textContent = original;
       }
     }
 
@@ -1112,6 +1218,12 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     document.getElementById('slideFields').addEventListener('input', updatePreview);
     document.getElementById('captionInput').addEventListener('input', syncEditorToState);
     document.getElementById('savePack').addEventListener('click', saveSelectedPack);
+    document.getElementById('addTime').addEventListener('click', addScheduleTime);
+    document.getElementById('saveSchedule').addEventListener('click', saveSchedule);
+    document.getElementById('scheduleEditor').addEventListener('click', (event) => {
+      const button = event.target.closest('[data-remove-time]');
+      if (button) removeScheduleTime(Number(button.dataset.removeTime));
+    });
     document.getElementById('validateCopy').addEventListener('click', (event) => {
       runServerAction('/api/validate', event.currentTarget, 'Validando');
     });

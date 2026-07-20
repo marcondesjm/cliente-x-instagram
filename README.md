@@ -28,7 +28,7 @@ npm run dashboard
 
 Rode `npm run dashboard` e abra `http://localhost:4173`.
 
-O painel permite acompanhar próximos horários, últimos runs do GitHub Actions, editar manualmente banners/slides e legendas, salvar em `content-packs.json`, validar textos e renderizar prévias.
+O painel permite acompanhar próximos horários, últimos runs do GitHub Actions, editar manualmente horários, banners/slides e legendas, salvar em `content-packs.json`, atualizar `accounts.json`/workflow/README, validar textos e renderizar prévias.
 
 ## Segurança
 
