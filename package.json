@@ -1,16 +1,18 @@
-﻿{
+{
   "name": "cliente-x-instagram",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "validate-copy": "node automation/instagram-template/scripts/publish-carousel.mjs --account cliente-x --validate-copy",
-    "render-only": "node automation/instagram-template/scripts/publish-carousel.mjs --account cliente-x --render-only",
-    "dry-run": "node automation/instagram-template/scripts/publish-carousel.mjs --account cliente-x --dry-run",
-    "story-only": "node automation/instagram-template/scripts/publish-carousel.mjs --account cliente-x --story-only",
-    "publish": "node automation/instagram-template/scripts/publish-carousel.mjs --account cliente-x"
+    "instagram": "node automation/instagram-template/scripts/run-with-system-ca.mjs automation/instagram-template/scripts/publish-carousel.mjs",
+    "validate-copy": "npm run instagram -- --account cliente-x --validate-copy",
+    "render-only": "npm run instagram -- --account cliente-x --render-only",
+    "dry-run": "npm run instagram -- --account cliente-x --dry-run",
+    "story-only": "npm run instagram -- --account cliente-x --story-only",
+    "publish": "npm run instagram -- --account cliente-x"
   },
   "dependencies": {
-    "playwright": "^1.58.2"
+    "playwright": "^1.58.2",
+    "win-ca": "^3.5.1"
   }
 }

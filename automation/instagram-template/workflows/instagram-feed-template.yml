@@ -35,7 +35,7 @@ jobs:
         run: npm ci
 
       - name: Validate copy
-        run: node automation/instagram-template/scripts/publish-carousel.mjs --account "${{ inputs.account }}" --validate-copy
+        run: npm run instagram -- --account "${{ inputs.account }}" --validate-copy
 
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
@@ -47,7 +47,7 @@ jobs:
           if [ "${{ inputs.dry_run }}" = "true" ]; then
             ARGS="$ARGS --dry-run"
           fi
-          node automation/instagram-template/scripts/publish-carousel.mjs --account "${{ inputs.account }}" $ARGS
+          npm run instagram -- --account "${{ inputs.account }}" $ARGS
 
       - name: Upload run logs
         if: always()

@@ -17,6 +17,7 @@ Este template reaproveita o fluxo do feed do NerionOS para outras contas de Inst
 - `automation/instagram-template/config/accounts.example.json`
 - `automation/instagram-template/config/content-packs.example.json`
 - `automation/instagram-template/config/visual-styles.example.json`
+- `automation/instagram-template/scripts/run-with-system-ca.mjs`
 - `automation/instagram-template/scripts/publish-carousel.mjs`
 - `automation/instagram-template/workflows/instagram-feed-template.yml`
 
@@ -29,6 +30,8 @@ Este template reaproveita o fluxo do feed do NerionOS para outras contas de Inst
    - `CLIENTE_INSTAGRAM_ACCESS_TOKEN`
    - `CLIENTE_INSTAGRAM_USER_ID`
    - `IMGBB_API_KEY`
+   - `SUPABASE_URL` (opcional)
+   - `SUPABASE_SERVICE_ROLE_KEY` (opcional)
 5. Copie `workflows/instagram-feed-template.yml` para `.github/workflows/instagram-feed-<cliente>.yml`.
 6. Ajuste o `on.schedule` se quiser agendamento automatico.
 
@@ -37,25 +40,25 @@ Este template reaproveita o fluxo do feed do NerionOS para outras contas de Inst
 Validar textos:
 
 ```powershell
-node automation\instagram-template\scripts\publish-carousel.mjs --account cliente-exemplo --validate-copy
+npm run instagram -- --account cliente-exemplo --validate-copy
 ```
 
 Renderizar sem publicar:
 
 ```powershell
-node automation\instagram-template\scripts\publish-carousel.mjs --account cliente-exemplo --render-only
+npm run instagram -- --account cliente-exemplo --render-only
 ```
 
 Dry-run:
 
 ```powershell
-node automation\instagram-template\scripts\publish-carousel.mjs --account cliente-exemplo --dry-run
+npm run instagram -- --account cliente-exemplo --dry-run
 ```
 
 Publicar de verdade:
 
 ```powershell
-node automation\instagram-template\scripts\publish-carousel.mjs --account cliente-exemplo
+npm run instagram -- --account cliente-exemplo
 ```
 
 ## Checklist antes de publicar

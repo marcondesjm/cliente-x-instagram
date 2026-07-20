@@ -131,7 +131,11 @@ function daysSinceEpoch(dateString) {
 }
 
 function pickDaily(items, dateString, slotIndex = 0) {
-  return items[((daysSinceEpoch(dateString) * 5) + slotIndex) % items.length];
+  return items[pickDailyIndex(items, dateString, slotIndex)];
+}
+
+function pickDailyIndex(items, dateString, slotIndex = 0) {
+  return (daysSinceEpoch(dateString) + slotIndex) % items.length;
 }
 
 function readSlotIndex() {
@@ -176,6 +180,38 @@ function validatePack(pack) {
 
 function validatePacks(packs) {
   packs.forEach(validatePack);
+}
+
+async function fetchWithContext(url, options, label) {
+  try {
+    return await fetch(url, options);
+  } catch (error) {
+    const cause = error.cause || error;
+    const detail = [cause.code, cause.message].filter(Boolean).join(': ');
+    throw new Error(`${label} request failed${detail ? ` (${detail})` : ''}`);
+  }
+}
+
+function localChromiumExecutable() {
+  const explicitPath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE || process.env.CHROME_EXECUTABLE_PATH;
+  if (explicitPath) return explicitPath;
+
+  if (process.platform !== 'win32') return null;
+
+  const candidates = [
+    process.env.ProgramFiles && join(process.env.ProgramFiles, 'Google', 'Chrome', 'Application', 'chrome.exe'),
+    process.env['ProgramFiles(x86)'] && join(process.env['ProgramFiles(x86)'], 'Google', 'Chrome', 'Application', 'chrome.exe'),
+    process.env.LOCALAPPDATA && join(process.env.LOCALAPPDATA, 'Google', 'Chrome', 'Application', 'chrome.exe'),
+    process.env.ProgramFiles && join(process.env.ProgramFiles, 'Microsoft', 'Edge', 'Application', 'msedge.exe'),
+    process.env['ProgramFiles(x86)'] && join(process.env['ProgramFiles(x86)'], 'Microsoft', 'Edge', 'Application', 'msedge.exe')
+  ].filter(Boolean);
+
+  return candidates.find((candidate) => existsSync(candidate)) || null;
+}
+
+async function launchChromium() {
+  const executablePath = localChromiumExecutable();
+  return executablePath ? chromium.launch({ executablePath }) : chromium.launch();
 }
 
 function slideHtml(slide, index, total, account, style) {
@@ -245,7 +281,7 @@ function slideHtml(slide, index, total, account, style) {
 }
 
 async function renderSlides(runDir, slides, account, style) {
-  const browser = await chromium.launch();
+  const browser = await launchChromium();
   const page = await browser.newPage({ viewport: { width: 1080, height: 1080 }, deviceScaleFactor: 1 });
   const imagePaths = [];
   for (let index = 0; index < slides.length; index += 1) {
@@ -326,7 +362,7 @@ function storyHtml(slide, account, style) {
 }
 
 async function renderStory(runDir, pack, account, style) {
-  const browser = await chromium.launch();
+  const browser = await launchChromium();
   const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
   const html = storyHtml(pack.slides[0], account, style);
   assertNoMojibake(html);
@@ -343,7 +379,7 @@ async function renderStory(runDir, pack, account, style) {
 async function graphGet(path, params = {}) {
   const url = new URL(`${IG_BASE}${path}`);
   Object.entries(params).forEach(([key, value]) => url.searchParams.set(key, value));
-  const res = await fetch(url);
+  const res = await fetchWithContext(url, undefined, `Graph GET ${path}`);
   if (!res.ok) throw new Error(`Graph GET failed [${res.status}]: ${await res.text()}`);
   return res.json();
 }
@@ -351,7 +387,7 @@ async function graphGet(path, params = {}) {
 async function graphPost(path, params = {}) {
   const url = new URL(`${IG_BASE}${path}`);
   Object.entries(params).forEach(([key, value]) => url.searchParams.set(key, value));
-  const res = await fetch(url, { method: 'POST' });
+  const res = await fetchWithContext(url, { method: 'POST' }, `Graph POST ${path}`);
   if (!res.ok) throw new Error(`Graph POST failed [${res.status}]: ${await res.text()}`);
   return res.json();
 }
@@ -371,24 +407,41 @@ function saoPauloDateFromIso(isoString) {
   return `${map.year}-${map.month}-${map.day}`;
 }
 
-async function findDuplicatePostToday(userId, token, caption, today) {
+async function fetchRecentMedia(userId, token) {
   const media = await graphGet(`/${userId}/media`, {
     fields: 'id,caption,permalink,timestamp',
-    limit: '25',
+    limit: '50',
     access_token: token
   });
+  return media.data || [];
+}
+
+function findDuplicateCaption(media, caption) {
   const expectedCaption = normalizeCaption(caption);
-  return (media.data || []).find((item) => {
-    if (!item.caption || !item.timestamp) return false;
-    return saoPauloDateFromIso(item.timestamp) === today && normalizeCaption(item.caption) === expectedCaption;
-  });
+  return media.find((item) => item.caption && normalizeCaption(item.caption) === expectedCaption);
+}
+
+function pickFreshPack(packs, dateString, slotIndex, recentMedia = []) {
+  const startIndex = pickDailyIndex(packs, dateString, slotIndex);
+  for (let offset = 0; offset < packs.length; offset += 1) {
+    const packIndex = (startIndex + offset) % packs.length;
+    const pack = packs[packIndex];
+    const duplicate = findDuplicateCaption(recentMedia, pack.caption);
+    if (!duplicate) return { pack, packIndex, skippedDuplicates: offset };
+  }
+  return {
+    pack: null,
+    packIndex: null,
+    skippedDuplicates: packs.length,
+    duplicate: findDuplicateCaption(recentMedia, packs[startIndex].caption)
+  };
 }
 
 async function uploadToImgBB(imagePath, apiKey) {
   const form = new FormData();
   form.append('key', apiKey);
   form.append('image', readFileSync(resolve(imagePath)).toString('base64'));
-  const res = await fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: form });
+  const res = await fetchWithContext('https://api.imgbb.com/1/upload', { method: 'POST', body: form }, 'ImgBB upload');
   if (!res.ok) throw new Error(`imgBB upload failed [${res.status}]: ${await res.text()}`);
   const json = await res.json();
   if (!json.success) throw new Error(`imgBB upload failed: ${JSON.stringify(json)}`);
@@ -429,52 +482,61 @@ async function main() {
 
   const today = todaySaoPaulo();
   const slotIndex = readSlotIndex();
-  const pack = pickDaily(packs, today, slotIndex);
   const style = pickDaily(styles, today);
+  let pack = pickDaily(packs, today, slotIndex);
+  let packIndex = pickDailyIndex(packs, today, slotIndex);
+  let skippedDuplicates = 0;
+
+  const token = env[account.accessTokenEnv];
+  const userId = env[account.userIdEnv];
+  const imgbbKey = env[account.imgbbKeyEnv];
+  if (!args.renderOnly) {
+    if (!token) throw new Error(`${account.accessTokenEnv} ausente.`);
+    if (!userId) throw new Error(`${account.userIdEnv} ausente.`);
+    if (!imgbbKey) throw new Error(`${account.imgbbKeyEnv} ausente.`);
+
+    const igAccount = await graphGet(`/${userId}`, { fields: 'id,username', access_token: token });
+    if (igAccount.username !== account.expectedUsername) {
+      throw new Error(`Conta errada: esperado ${account.expectedUsername}, retornou ${igAccount.username}.`);
+    }
+
+    if (!args.storyOnly) {
+      const recentMedia = await fetchRecentMedia(userId, token);
+      const fresh = pickFreshPack(packs, today, slotIndex, recentMedia);
+      if (!fresh.pack) {
+        const result = {
+          ok: true,
+          skipped: true,
+          reason: 'all_pack_captions_already_published_recently',
+          account: account.account,
+          requestedSlotIndex: slotIndex,
+          checkedPacks: packs.length,
+          matchedMedia: fresh.duplicate ? {
+            id: fresh.duplicate.id,
+            permalink: fresh.duplicate.permalink,
+            timestamp: fresh.duplicate.timestamp
+          } : undefined
+        };
+        console.log(JSON.stringify(result, null, 2));
+        return;
+      }
+      pack = fresh.pack;
+      packIndex = fresh.packIndex;
+      skippedDuplicates = fresh.skippedDuplicates;
+    }
+  }
+
   const runId = `${timestampSaoPaulo()}-slot-${slotIndex}${args.renderOnly ? '-render-only' : ''}`;
   const runDir = join(RUNS_DIR, account.account, runId);
   mkdirSync(runDir, { recursive: true });
-  writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, account: account.account, visualStyle: style.name, ...pack }, null, 2), 'utf8');
+  writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, account: account.account, visualStyle: style.name, ...pack }, null, 2), 'utf8');
   writeFileSync(join(runDir, 'caption.txt'), pack.caption, 'utf8');
   const imagePaths = args.storyOnly ? [] : await renderSlides(runDir, pack.slides, account, style);
   const storyImagePath = await renderStory(runDir, pack, account, style);
 
   if (args.renderOnly) {
-    console.log(JSON.stringify({ ok: true, renderOnly: true, account: account.account, runDir, visualStyle: style.name, imagePaths, storyImagePath }, null, 2));
+    console.log(JSON.stringify({ ok: true, renderOnly: true, account: account.account, runDir, visualStyle: style.name, slotIndex, packIndex, imagePaths, storyImagePath }, null, 2));
     return;
-  }
-
-  const token = env[account.accessTokenEnv];
-  const userId = env[account.userIdEnv];
-  const imgbbKey = env[account.imgbbKeyEnv];
-  if (!token) throw new Error(`${account.accessTokenEnv} ausente.`);
-  if (!userId) throw new Error(`${account.userIdEnv} ausente.`);
-  if (!imgbbKey) throw new Error(`${account.imgbbKeyEnv} ausente.`);
-
-  const igAccount = await graphGet(`/${userId}`, { fields: 'id,username', access_token: token });
-  if (igAccount.username !== account.expectedUsername) {
-    throw new Error(`Conta errada: esperado ${account.expectedUsername}, retornou ${igAccount.username}.`);
-  }
-
-  if (!args.dryRun && !args.storyOnly) {
-    const duplicate = await findDuplicatePostToday(userId, token, pack.caption, today);
-    if (duplicate) {
-      const result = {
-        ok: true,
-        skipped: true,
-        reason: 'duplicate_caption_today',
-        account: account.account,
-        runDir,
-        matchedMedia: {
-          id: duplicate.id,
-          permalink: duplicate.permalink,
-          timestamp: duplicate.timestamp
-        }
-      };
-      writeFileSync(join(runDir, 'result.json'), JSON.stringify(result, null, 2), 'utf8');
-      console.log(JSON.stringify(result, null, 2));
-      return;
-    }
   }
 
   const storyImageUrl = await uploadToImgBB(storyImagePath, imgbbKey);
@@ -506,6 +568,9 @@ async function main() {
     storyOnly: args.storyOnly,
     account: account.account,
     runDir,
+    slotIndex,
+    packIndex,
+    skippedDuplicates,
     imagePaths,
     storyImagePath,
     imageUrls,

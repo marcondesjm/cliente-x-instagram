@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Como Funciona a Automação do Instagram</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 18mm;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: #17202a;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      line-height: 1.5;
+      background: #ffffff;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      color: #0f172a;
+      font-size: 28px;
+      line-height: 1.15;
+    }
+
+    h2 {
+      margin: 24px 0 8px;
+      color: #0f766e;
+      font-size: 18px;
+      border-bottom: 1px solid #d6e4e2;
+      padding-bottom: 4px;
+    }
+
+    h3 {
+      margin: 16px 0 6px;
+      color: #1f2937;
+      font-size: 14px;
+    }
+
+    p {
+      margin: 0 0 9px;
+    }
+
+    ul, ol {
+      margin: 6px 0 10px 20px;
+      padding: 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    code {
+      padding: 1px 4px;
+      border-radius: 3px;
+      background: #eef2f7;
+      color: #111827;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 12px;
+    }
+
+    .cover {
+      padding: 26px;
+      border-radius: 10px;
+      background: #f4fbfa;
+      border: 1px solid #cfe8e4;
+      margin-bottom: 22px;
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      color: #475569;
+      font-size: 15px;
+    }
+
+    .meta {
+      margin-top: 16px;
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    .box {
+      margin: 12px 0;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .success {
+      background: #ecfdf5;
+      border-color: #bbf7d0;
+    }
+
+    .warning {
+      background: #fff7ed;
+      border-color: #fed7aa;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .step {
+      padding: 10px 12px;
+      border-left: 4px solid #0f766e;
+      background: #f8fafc;
+    }
+
+    .small {
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    .page-break {
+      break-before: page;
+    }
+  </style>
+</head>
+<body>
+  <section class="cover">
+    <h1>Como Funciona a Automação do Instagram</h1>
+    <p class="subtitle">Explicação do fluxo configurado para publicar no Instagram com o computador desligado.</p>
+    <p class="meta">Projeto: <strong>marcondesjm/cliente-x-instagram</strong><br>
+    Conta alvo: <strong>@marcondes.machado.oficial</strong><br>
+    Atualizado em: <strong>17/07/2026</strong></p>
+  </section>
+
+  <h2>Resumo rápido</h2>
+  <p>A automação não depende mais do computador local. Ela roda no GitHub Actions, que é um ambiente na nuvem. O Supabase guarda os conteúdos dos carrosséis, o GitHub Actions busca esses conteúdos, gera as imagens, envia para o ImgBB e publica no Instagram usando a API oficial da Meta.</p>
+
+  <div class="box success">
+    <p><strong>Estado atual:</strong> o fluxo foi testado em modo seguro, com <code>dry_run=true</code>, e passou com sucesso no GitHub Actions. Esse teste não publica no feed, mas comprova que a nuvem consegue executar a automação.</p>
+  </div>
+
+  <h2>Quem faz o quê</h2>
+  <h3>Supabase</h3>
+  <p>Guarda os posts que serão publicados. Foi criada a tabela <code>public.instagram_posts</code> com 5 carrosséis ativos para a conta <code>cliente-x</code>.</p>
+
+  <h3>GitHub Actions</h3>
+  <p>É o executor principal. Ele acorda nos horários programados, baixa o projeto, instala as dependências, gera os slides e chama as APIs externas. Como roda no GitHub, o computador pode ficar desligado.</p>
+
+  <h3>ImgBB</h3>
+  <p>Recebe as imagens geradas dos slides e devolve URLs públicas. A API do Instagram precisa dessas URLs para montar o carrossel.</p>
+
+  <h3>Instagram Graph API</h3>
+  <p>É a API oficial usada para criar os containers do carrossel e publicar o post final na conta <code>@marcondes.machado.oficial</code>.</p>
+
+  <h2>Fluxo completo</h2>
+  <div class="flow">
+    <div class="step"><strong>1. Horário chega</strong><br>O GitHub Actions dispara automaticamente conforme o cron configurado.</div>
+    <div class="step"><strong>2. Slot é escolhido</strong><br>Cada horário usa um slot diferente, para evitar repetir o mesmo carrossel no mesmo dia.</div>
+    <div class="step"><strong>3. Conteúdo vem do Supabase</strong><br>O script lê a tabela <code>instagram_posts</code>. Se o Supabase não estiver configurado, usa o JSON local como fallback.</div>
+    <div class="step"><strong>4. Slides são renderizados</strong><br>O Playwright/Chromium gera as imagens JPG dos slides.</div>
+    <div class="step"><strong>5. Imagens sobem para ImgBB</strong><br>O ImgBB devolve URLs públicas para cada slide.</div>
+    <div class="step"><strong>6. Instagram monta o carrossel</strong><br>A API cria os itens do carrossel e prepara o container principal.</div>
+    <div class="step"><strong>7. Publicação final</strong><br>No agendamento automático, o script chama <code>media_publish</code> e publica de verdade.</div>
+  </div>
+
+  <h2>Horários configurados</h2>
+  <p>Os horários estão em horário de Brasília:</p>
+  <ul>
+    <li>11:50</li>
+    <li>13:00</li>
+    <li>16:00</li>
+    <li>19:00</li>
+    <li>22:00</li>
+  </ul>
+
+  <p>No arquivo do GitHub Actions, esses horários aparecem em UTC:</p>
+  <ul>
+    <li><code>50 14 * * *</code> - 11:50 Brasília</li>
+    <li><code>0 16 * * *</code> - 13:00 Brasília</li>
+    <li><code>0 19 * * *</code> - 16:00 Brasília</li>
+    <li><code>0 22 * * *</code> - 19:00 Brasília</li>
+    <li><code>0 1 * * *</code> - 22:00 Brasília</li>
+  </ul>
+
+  <h2>Secrets usados</h2>
+  <p>As chaves sensíveis não ficam no código. Elas ficam em <strong>GitHub Actions Secrets</strong>:</p>
+  <ul>
+    <li><code>CLIENTE_X_INSTAGRAM_ACCESS_TOKEN</code></li>
+    <li><code>CLIENTE_X_INSTAGRAM_USER_ID</code></li>
+    <li><code>IMGBB_API_KEY</code></li>
+    <li><code>SUPABASE_URL</code></li>
+    <li><code>SUPABASE_SERVICE_ROLE_KEY</code></li>
+  </ul>
+
+  <div class="box warning">
+    <p><strong>Importante:</strong> esses valores não devem ser colocados em arquivos públicos nem enviados no chat. O arquivo <code>.env</code> local serve só para testes no seu computador.</p>
+  </div>
+
+  <h2>Diferença entre teste e publicação real</h2>
+  <h3>Teste manual</h3>
+  <p>Quando o workflow é rodado manualmente com <code>dry_run=true</code>, ele cria imagens, sobe para ImgBB e prepara o carrossel no Instagram, mas não chama a publicação final. Isso é o teste seguro.</p>
+
+  <h3>Agendamento automático</h3>
+  <p>Quando o horário automático dispara, o workflow usa <code>DRY_RUN=false</code>. Nesse caso, depois de preparar o carrossel, ele publica no feed.</p>
+
+  <h2>Arquivos principais</h2>
+  <ul>
+    <li><code>.github/workflows/instagram-feed-cliente-x.yml</code> - agenda e execução na nuvem.</li>
+    <li><code>automation/instagram-template/scripts/publish-carousel.mjs</code> - lógica de gerar, subir e publicar.</li>
+    <li><code>supabase/instagram-posts.sql</code> - criação da tabela e posts iniciais no Supabase.</li>
+    <li><code>automation/instagram-template/config/content-packs.json</code> - fallback local dos posts.</li>
+  </ul>
+
+  <h2>Como saber se funcionou</h2>
+  <ol>
+    <li>Acesse o repositório no GitHub.</li>
+    <li>Entre em <strong>Actions</strong>.</li>
+    <li>Abra o workflow <strong>Instagram Feed Cliente X</strong>.</li>
+    <li>Confira se o run do horário ficou com status <strong>success</strong>.</li>
+    <li>Se quiser detalhes, abra o artifact <code>instagram-template-runs</code>.</li>
+  </ol>
+
+  <div class="box success">
+    <p><strong>Conclusão:</strong> com GitHub Actions e Supabase configurados, a automação pode publicar mesmo com o computador desligado.</p>
+  </div>
+</body>
+</html>
