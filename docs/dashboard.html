@@ -696,15 +696,15 @@
           <div class="panel-head">
             <div>
               <div class="section-label">Último post confirmado</div>
-              <h2>Postagem salva localmente</h2>
+              <h2 id="latestPostTitle">Postagem salva localmente</h2>
             </div>
-            <a class="button" href="https://www.instagram.com/p/DbBP5OAljgp/" target="_blank" rel="noreferrer">Abrir post</a>
+            <a class="button" id="latestPostLink" href="https://www.instagram.com/p/DbBP5OAljgp/" target="_blank" rel="noreferrer">Abrir post</a>
           </div>
           <div class="preview">
-            <img src="../automation/instagram-template/runs/cliente-x/2026-07-20-122011-slot-3/story.jpg" alt="Story gerado da última publicação local">
+            <img id="latestPostImage" src="../automation/instagram-template/runs/cliente-x/2026-07-20-122011-slot-3/story.jpg" alt="Imagem da última publicação">
             <div>
-              <div class="status-pill good">Publicado</div>
-              <p class="caption">Automação financeira não é só sobre economizar tempo.
+              <div class="status-pill good" id="latestPostStatus">Publicado</div>
+              <p class="caption" id="latestPostCaption">Automação financeira não é só sobre economizar tempo.
 
 É sobre reduzir erro, proteger caixa e dar clareza para decisões que acontecem todos os meses. A IA ajuda quando existe processo, dado e critério de revisão.
 
@@ -852,10 +852,31 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       if (!appState.serverMode) return;
       try {
         appState.privateMetrics = await api('/api/private-metrics');
+        renderLatestPost(appState.privateMetrics);
       } catch (error) {
         appState.privateMetrics = { error: error.message };
       }
       renderChecks();
+    }
+
+    function renderLatestPost(privateMetrics) {
+      const media = privateMetrics?.latestMedia;
+      if (!media) return;
+
+      const link = document.getElementById('latestPostLink');
+      const image = document.getElementById('latestPostImage');
+      const title = document.getElementById('latestPostTitle');
+      const status = document.getElementById('latestPostStatus');
+      const caption = document.getElementById('latestPostCaption');
+
+      title.textContent = 'Postagem confirmada pela Meta';
+      status.textContent = privateMetrics.insights?.available ? 'Publicado · métricas ok' : 'Publicado';
+      status.className = 'status-pill good';
+      if (media.permalink) link.href = media.permalink;
+      if (media.caption) caption.textContent = media.caption;
+      const mediaImage = media.thumbnail_url || media.media_url;
+      if (mediaImage) image.src = mediaImage;
+      image.onerror = () => { image.style.display = 'none'; };
     }
 
     function scheduleTimesFromInputs() {
