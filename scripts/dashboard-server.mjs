@@ -12,6 +12,8 @@ const ACCOUNTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', '
 const WORKFLOW_PATH = join(ROOT, '.github', 'workflows', 'instagram-feed-cliente-x.yml');
 const README_PATH = join(ROOT, 'README.md');
 const RUNS_DIR = join(ROOT, 'automation', 'instagram-template', 'runs');
+const ENV_PATH = join(ROOT, '.env');
+const IG_BASE = 'https://graph.facebook.com/v23.0';
 const ACCOUNT = 'cliente-x';
 const PORT = Number(process.env.DASHBOARD_PORT || 4173);
 
@@ -28,6 +30,27 @@ const mimeTypes = {
 
 function readJson(path) {
   return JSON.parse(readFileSync(path, 'utf8').replace(/^\uFEFF/, ''));
+}
+
+function loadEnv() {
+  const env = { ...process.env };
+  if (!existsSync(ENV_PATH)) return env;
+
+  const text = readFileSync(ENV_PATH, 'utf8').replace(/^\uFEFF/, '');
+  for (const line of text.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) continue;
+    const index = trimmed.indexOf('=');
+    if (index === -1) continue;
+    const key = trimmed.slice(0, index).trim();
+    const rawValue = trimmed.slice(index + 1).trim();
+    env[key] = rawValue.replace(/^(['"])(.*)\1$/, '$2');
+  }
+  return env;
+}
+
+function hasUsableSecret(value) {
+  return Boolean(value && !String(value).includes('cole_') && String(value).trim().length > 8);
 }
 
 function normalizeCaption(text = '') {
@@ -121,7 +144,11 @@ function getState() {
   const group = content.find((item) => item.account === ACCOUNT);
   const packs = group?.packs || [];
   const uniqueCaptions = new Set(packs.map((pack) => normalizeCaption(pack.caption))).size;
-  const latestResultFile = latestFiles(join(RUNS_DIR, ACCOUNT), (path) => path.endsWith('result.json'), 1)[0];
+  const latestResultFile = latestFiles(join(RUNS_DIR, ACCOUNT), (path) => path.endsWith('result.json'), 30)
+    .find((file) => {
+      const result = readJson(file.path);
+      return !result.dryRun && result.mediaId;
+    });
   const latestFailureFile = latestFiles(RUNS_DIR, (path) => /failure-\d{4}-\d{2}-\d{2}-\d{6}\.json$/.test(path), 1)[0];
   const latestResult = latestResultFile ? readJson(latestResultFile.path) : null;
   const latestFailure = latestFailureFile ? {
@@ -138,6 +165,94 @@ function getState() {
     latestResult,
     latestFailure
   };
+}
+
+async function graphGet(path, params = {}) {
+  const url = new URL(`${IG_BASE}${path}`);
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) url.searchParams.set(key, value);
+  });
+  const response = await fetch(url, { headers: { accept: 'application/json' } });
+  const payloadText = await response.text();
+  const payload = payloadText ? JSON.parse(payloadText) : {};
+  if (!response.ok) {
+    const message = payload?.error?.message || `Graph API ${response.status}`;
+    throw new Error(message);
+  }
+  return payload;
+}
+
+function insightValue(insights, name) {
+  const item = insights?.data?.find((entry) => entry.name === name);
+  const value = item?.values?.[0]?.value;
+  return typeof value === 'number' ? value : null;
+}
+
+async function readPrivateMetrics() {
+  const state = getState();
+  const account = state.account;
+  if (!account) throw new Error(`Conta ${ACCOUNT} nao encontrada em accounts.json.`);
+
+  const env = loadEnv();
+  const credentials = [
+    { label: 'Token Instagram', env: account.accessTokenEnv, configured: hasUsableSecret(env[account.accessTokenEnv]) },
+    { label: 'User ID Instagram', env: account.userIdEnv, configured: hasUsableSecret(env[account.userIdEnv]) },
+    { label: 'Chave imgBB', env: account.imgbbKeyEnv, configured: hasUsableSecret(env[account.imgbbKeyEnv]) }
+  ];
+  const missing = credentials.filter((item) => !item.configured).map((item) => item.env);
+  const token = env[account.accessTokenEnv];
+  const userId = env[account.userIdEnv];
+
+  const result = {
+    configured: missing.length === 0,
+    credentials,
+    missing,
+    account: null,
+    latestMedia: null,
+    insights: null,
+    checkedAt: new Date().toISOString()
+  };
+
+  if (!hasUsableSecret(token) || !hasUsableSecret(userId)) return result;
+
+  const igAccount = await graphGet(`/${userId}`, {
+    fields: 'id,username',
+    access_token: token
+  });
+  result.account = {
+    id: igAccount.id,
+    username: igAccount.username,
+    expectedUsername: account.expectedUsername,
+    matchesExpected: igAccount.username === account.expectedUsername
+  };
+
+  const latestMediaId = state.latestResult?.mediaId || state.latestResult?.id;
+  if (!latestMediaId) return result;
+
+  result.latestMedia = await graphGet(`/${latestMediaId}`, {
+    fields: 'id,permalink,timestamp,media_type,like_count,comments_count',
+    access_token: token
+  });
+
+  try {
+    const insights = await graphGet(`/${latestMediaId}/insights`, {
+      metric: 'reach,saved,total_interactions',
+      access_token: token
+    });
+    result.insights = {
+      available: true,
+      reach: insightValue(insights, 'reach'),
+      saved: insightValue(insights, 'saved'),
+      totalInteractions: insightValue(insights, 'total_interactions')
+    };
+  } catch (error) {
+    result.insights = {
+      available: false,
+      error: error.message
+    };
+  }
+
+  return result;
 }
 
 function updateWorkflowSchedule(scheduleUtc) {
@@ -235,6 +350,9 @@ async function handleApi(req, res, url) {
   try {
     if (req.method === 'GET' && url.pathname === '/api/state') {
       return json(res, 200, getState());
+    }
+    if (req.method === 'GET' && url.pathname === '/api/private-metrics') {
+      return json(res, 200, await readPrivateMetrics());
     }
     if (req.method === 'POST' && url.pathname.startsWith('/api/content/')) {
       const index = Number(url.pathname.split('/').pop());

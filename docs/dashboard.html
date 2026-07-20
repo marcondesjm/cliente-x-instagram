@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dashboard Instagram | Cliente X</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317211c'/%3E%3Cpath d='M18 42V22h6l8 10 8-10h6v20h-7V33l-7 9-7-9v9z' fill='%237cffb2'/%3E%3C/svg%3E">
   <style>
     :root {
       --bg: #f4f7f5;
@@ -718,7 +719,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               <div class="section-label">Saúde</div>
               <h2>Checklist operacional</h2>
             </div>
-            <span class="status-pill good">Pronto</span>
+            <span class="status-pill good" id="healthStatus">Pronto</span>
           </div>
           <div class="checks" id="checks"></div>
         </div>
@@ -788,7 +789,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       scheduleBrt: [],
       selectedPack: 0,
       selectedSlide: 0,
-      serverMode: location.protocol.startsWith('http')
+      serverMode: location.protocol.startsWith('http'),
+      privateMetrics: null
     };
 
     function escapeHtml(value = '') {
@@ -840,9 +842,20 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         renderChecks();
         renderEditor();
         setMessage('Conteúdos carregados do projeto. Escolha um slot, edite e salve.', 'good');
+        loadPrivateMetrics();
       } catch (error) {
         setMessage(`Não consegui carregar pelo servidor: ${error.message}`, 'bad');
       }
+    }
+
+    async function loadPrivateMetrics() {
+      if (!appState.serverMode) return;
+      try {
+        appState.privateMetrics = await api('/api/private-metrics');
+      } catch (error) {
+        appState.privateMetrics = { error: error.message };
+      }
+      renderChecks();
     }
 
     function scheduleTimesFromInputs() {
@@ -1098,6 +1111,52 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     }
 
     function renderChecks() {
+      const privateMetrics = appState.privateMetrics;
+      let privateCheck = {
+        level: 'warn',
+        title: 'Métricas privadas carregando',
+        body: 'O painel local está verificando token, conta e dados do último post.'
+      };
+
+      if (privateMetrics?.error) {
+        privateCheck = {
+          level: 'bad',
+          title: 'Graph API indisponível',
+          body: privateMetrics.error
+        };
+      } else if (privateMetrics && !privateMetrics.configured) {
+        privateCheck = {
+          level: 'bad',
+          title: 'Secrets locais incompletos',
+          body: `Falta configurar: ${privateMetrics.missing.join(', ')}.`
+        };
+      } else if (privateMetrics?.account && !privateMetrics.account.matchesExpected) {
+        privateCheck = {
+          level: 'bad',
+          title: 'Conta Instagram diferente',
+          body: `Token retornou @${privateMetrics.account.username}, esperado @${privateMetrics.account.expectedUsername}.`
+        };
+      } else if (privateMetrics?.latestMedia) {
+        const media = privateMetrics.latestMedia;
+        const insights = privateMetrics.insights;
+        const reach = insights?.reach ?? insights?.impressions;
+        privateCheck = {
+          level: insights?.available ? 'good' : 'warn',
+          title: insights?.available
+            ? `Último post: ${formatNumber(media.like_count)} curtidas · ${formatNumber(media.comments_count)} comentários`
+            : `Conta confirmada: @${privateMetrics.account.username}`,
+          body: insights?.available
+            ? `Alcance ${formatNumber(reach)} · salvos ${formatNumber(insights.saved)} · interações ${formatNumber(insights.totalInteractions)}.`
+            : `Curtidas ${formatNumber(media.like_count)} e comentários ${formatNumber(media.comments_count)}. ${insightsHelpText(insights?.error)}`
+        };
+      } else if (privateMetrics?.account) {
+        privateCheck = {
+          level: 'good',
+          title: `Conta confirmada: @${privateMetrics.account.username}`,
+          body: 'Token e user ID funcionam. Ainda não há mediaId local para buscar métricas do post.'
+        };
+      }
+
       const checks = [
         {
           level: DATA.packCount >= DATA.schedulesUtc.length ? 'good' : 'bad',
@@ -1118,12 +1177,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           title: 'Fallback local ativo',
           body: 'Se o Supabase tiver poucos posts, o script completa com os packs locais.'
         },
-        {
-          level: 'warn',
-          title: 'Métricas privadas dependem de token',
-          body: 'Curtidas, alcance e confirmação via Graph precisam dos secrets válidos no GitHub.'
-        }
+        privateCheck
       ];
+
+      const healthStatus = document.getElementById('healthStatus');
+      const hasBadCheck = checks.some((check) => check.level === 'bad');
+      healthStatus.textContent = hasBadCheck ? 'Atenção' : 'Pronto';
+      healthStatus.className = `status-pill ${hasBadCheck ? 'bad' : 'good'}`;
 
       document.getElementById('checks').innerHTML = checks.map((check) => `
         <div class="check">
@@ -1134,6 +1194,19 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           </div>
         </div>
       `).join('');
+    }
+
+    function formatNumber(value) {
+      return value === null || value === undefined
+        ? '--'
+        : new Intl.NumberFormat('pt-BR').format(value);
+    }
+
+    function insightsHelpText(error = '') {
+      if (error.includes('Application does not have permission')) {
+        return 'Para mostrar alcance, libere a permissão de insights no app da Meta e gere um novo token.';
+      }
+      return `Alcance/insights não liberado: ${error || 'sem retorno da Graph API'}.`;
     }
 
     function runStatusClass(run) {
