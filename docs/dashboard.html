@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard Instagram | Cliente X</title>
+  <style>
+    :root {
+      --bg: #f4f7f5;
+      --panel: #ffffff;
+      --panel-2: #eef4f0;
+      --text: #17211c;
+      --muted: #5d6b64;
+      --line: #d8e2dc;
+      --accent: #0e7c5a;
+      --accent-2: #235b95;
+      --warn: #9f6b00;
+      --bad: #b42318;
+      --good: #027a48;
+      --shadow: 0 18px 44px rgba(28, 44, 36, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .shell {
+      width: min(1440px, 100%);
+      margin: 0 auto;
+      padding: 22px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 0 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(24px, 3vw, 38px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .subline {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button, a.button {
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--text);
+      padding: 0 14px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    button.primary {
+      background: var(--text);
+      border-color: var(--text);
+      color: white;
+    }
+
+    button:disabled {
+      cursor: progress;
+      opacity: 0.7;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 18px;
+      padding-top: 18px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .panel, .metric, .timeline-item, .run-row {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+
+    .metric {
+      min-height: 114px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .metric .label, .section-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .metric .value {
+      font-size: 30px;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .metric .note {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .panel {
+      padding: 18px;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 19px;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .status-pill.good {
+      color: var(--good);
+      background: #ecfdf3;
+      border-color: #abefc6;
+    }
+
+    .status-pill.bad {
+      color: var(--bad);
+      background: #fef3f2;
+      border-color: #fecdca;
+    }
+
+    .status-pill.warn {
+      color: var(--warn);
+      background: #fffaeb;
+      border-color: #fedf89;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(13, minmax(76px, 82px));
+      gap: 8px;
+      overflow-x: auto;
+      max-width: 100%;
+      padding-bottom: 4px;
+    }
+
+    .timeline-item {
+      min-height: 76px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: none;
+    }
+
+    .timeline-item.next {
+      outline: 3px solid rgba(14, 124, 90, 0.22);
+      border-color: var(--accent);
+    }
+
+    .timeline-item.past {
+      background: #f8faf9;
+      color: #728079;
+    }
+
+    .time {
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .slot {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .runs {
+      display: grid;
+      gap: 8px;
+    }
+
+    .run-row {
+      display: grid;
+      grid-template-columns: 96px minmax(0, 1fr) 92px;
+      gap: 12px;
+      align-items: center;
+      padding: 11px 12px;
+      box-shadow: none;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .run-time {
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--muted);
+    }
+
+    .run-name {
+      min-width: 0;
+      font-size: 14px;
+      font-weight: 900;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .run-meta {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .preview {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .preview img {
+      width: min(220px, 100%);
+      aspect-ratio: 9 / 16;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      justify-self: start;
+    }
+
+    .caption {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+      font-weight: 700;
+      white-space: pre-line;
+      max-height: 210px;
+      overflow: auto;
+      padding-right: 6px;
+    }
+
+    .checks {
+      display: grid;
+      gap: 10px;
+    }
+
+    .check {
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdfc;
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      margin-top: 2px;
+      background: var(--muted);
+    }
+
+    .dot.good { background: var(--good); }
+    .dot.warn { background: var(--warn); }
+    .dot.bad { background: var(--bad); }
+
+    .check strong {
+      display: block;
+      font-size: 14px;
+      line-height: 1.2;
+      margin-bottom: 3px;
+    }
+
+    .check span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .empty {
+      padding: 18px;
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 800;
+      background: #fbfdfc;
+    }
+
+    footer {
+      padding: 18px 0 4px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 1100px) {
+      main { grid-template-columns: 1fr; }
+      .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      .shell { padding: 14px; }
+      header { align-items: stretch; flex-direction: column; }
+      .actions { justify-content: stretch; }
+      button, a.button { width: 100%; }
+      .metrics { grid-template-columns: 1fr; }
+      .run-row { grid-template-columns: 1fr; }
+      .preview { grid-template-columns: 1fr; }
+      .preview img { width: min(220px, 100%); }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div class="brand-block">
+        <div class="eyebrow">Instagram Automation</div>
+        <h1>Marcondes Machado</h1>
+        <div class="subline">@marcondes.machado.oficial · IA aplicada a empresas</div>
+      </div>
+      <div class="actions">
+        <a class="button" href="https://github.com/marcondesjm/cliente-x-instagram/actions/workflows/instagram-feed-cliente-x.yml" target="_blank" rel="noreferrer">GitHub Actions</a>
+        <button class="primary" id="refreshRuns" type="button">Atualizar runs</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="grid">
+        <div class="metrics">
+          <div class="metric">
+            <div class="label">Próxima postagem</div>
+            <div class="value" id="nextPost">--:--</div>
+            <div class="note" id="nextPostNote">Calculando horário de Brasília</div>
+          </div>
+          <div class="metric">
+            <div class="label">Conteúdos</div>
+            <div class="value" id="contentCount">18</div>
+            <div class="note" id="contentNote">13 horários ativos</div>
+          </div>
+          <div class="metric">
+            <div class="label">Última publicação local</div>
+            <div class="value" id="lastPostTime">12:20</div>
+            <div class="note">20/07/2026 · slot 3</div>
+          </div>
+          <div class="metric">
+            <div class="label">Último erro local</div>
+            <div class="value" id="lastFailureTime">11:09</div>
+            <div class="note">Certificado local antigo</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="section-label">Agenda BRT</div>
+              <h2>Horários de publicação</h2>
+            </div>
+            <span class="status-pill good" id="scheduleStatus">Coberto</span>
+          </div>
+          <div class="timeline" id="timeline"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="section-label">GitHub Actions</div>
+              <h2>Últimas execuções</h2>
+            </div>
+            <span class="status-pill" id="runsStatus">Aguardando</span>
+          </div>
+          <div class="runs" id="runsList">
+            <div class="empty">Clique em atualizar para buscar os runs públicos do GitHub.</div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="grid">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="section-label">Último post confirmado</div>
+              <h2>Postagem salva localmente</h2>
+            </div>
+            <a class="button" href="https://www.instagram.com/p/DbBP5OAljgp/" target="_blank" rel="noreferrer">Abrir post</a>
+          </div>
+          <div class="preview">
+            <img src="../automation/instagram-template/runs/cliente-x/2026-07-20-122011-slot-3/story.jpg" alt="Story gerado da última publicação local">
+            <div>
+              <div class="status-pill good">Publicado</div>
+              <p class="caption">Automação financeira não é só sobre economizar tempo.
+
+É sobre reduzir erro, proteger caixa e dar clareza para decisões que acontecem todos os meses. A IA ajuda quando existe processo, dado e critério de revisão.
+
+O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais conferir.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="section-label">Saúde</div>
+              <h2>Checklist operacional</h2>
+            </div>
+            <span class="status-pill good">Pronto</span>
+          </div>
+          <div class="checks" id="checks"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="section-label">Repositório</div>
+              <h2>Versão ativa</h2>
+            </div>
+            <span class="status-pill good">Main</span>
+          </div>
+          <div class="checks">
+            <div class="check">
+              <span class="dot good"></span>
+              <div>
+                <strong>Commit atual</strong>
+                <span><a href="https://github.com/marcondesjm/cliente-x-instagram/commit/f907a45628c1a7a96a234287d60b25feab192724" target="_blank" rel="noreferrer">f907a45</a> · conteúdos novos e proteções de agendamento.</span>
+              </div>
+            </div>
+            <div class="check">
+              <span class="dot good"></span>
+              <div>
+                <strong>Validação local</strong>
+                <span>18 packs conferidos, renderização testada e sintaxe do script validada.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      Dashboard local gerado para o projeto cliente-x-instagram. Os runs do GitHub dependem da API pública e podem levar alguns segundos para atualizar.
+    </footer>
+  </div>
+
+  <script>
+    const DATA = {
+      repo: 'marcondesjm/cliente-x-instagram',
+      workflow: 'instagram-feed-cliente-x.yml',
+      schedulesUtc: [
+        '30 9 * * *',
+        '10 11 * * *',
+        '0 12 * * *',
+        '50 14 * * *',
+        '10 15 * * *',
+        '0 16 * * *',
+        '50 16 * * *',
+        '15 17 * * *',
+        '50 17 * * *',
+        '0 19 * * *',
+        '40 20 * * *',
+        '0 22 * * *',
+        '0 1 * * *'
+      ],
+      packCount: 18,
+      uniqueCaptions: 18,
+      lastFailure: {
+        file: 'failure-2026-07-20-110950.json',
+        message: 'Graph GET request failed por certificado local'
+      }
+    };
+
+    const brtFormatter = new Intl.DateTimeFormat('pt-BR', {
+      timeZone: 'America/Sao_Paulo',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    });
+
+    const dateFormatter = new Intl.DateTimeFormat('pt-BR', {
+      timeZone: 'America/Sao_Paulo',
+      day: '2-digit',
+      month: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    });
+
+    function localDateParts(date) {
+      const parts = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'America/Sao_Paulo',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      }).formatToParts(date);
+      return Object.fromEntries(parts.map((part) => [part.type, Number(part.value)]));
+    }
+
+    function cronToDate(cron, baseDate, dayOffset = 0) {
+      const [minute, hour] = cron.split(' ').map(Number);
+      const parts = localDateParts(baseDate);
+      return new Date(Date.UTC(parts.year, parts.month - 1, parts.day + dayOffset, hour, minute));
+    }
+
+    function scheduleRows() {
+      const now = new Date();
+      const today = DATA.schedulesUtc.map((cron, index) => ({
+        cron,
+        index,
+        date: cronToDate(cron, now, 0)
+      })).sort((a, b) => a.date - b.date);
+
+      const upcoming = today.find((item) => item.date > now) || {
+        ...today[0],
+        date: cronToDate(today[0].cron, now, 1)
+      };
+
+      return { now, today, upcoming };
+    }
+
+    function renderSchedule() {
+      const { now, today, upcoming } = scheduleRows();
+      document.getElementById('nextPost').textContent = brtFormatter.format(upcoming.date);
+      document.getElementById('nextPostNote').textContent = upcoming.date.toDateString() === now.toDateString()
+        ? 'Ainda hoje no horário de Brasília'
+        : 'Próximo dia no horário de Brasília';
+
+      const timeline = document.getElementById('timeline');
+      timeline.innerHTML = '';
+      today.forEach((item) => {
+        const el = document.createElement('div');
+        const isNext = item.cron === upcoming.cron && upcoming.date.toDateString() === item.date.toDateString();
+        el.className = `timeline-item ${item.date < now ? 'past' : ''} ${isNext ? 'next' : ''}`;
+        el.innerHTML = `
+          <div class="time">${brtFormatter.format(item.date)}</div>
+          <div class="slot">slot ${item.index}</div>
+        `;
+        timeline.appendChild(el);
+      });
+    }
+
+    function renderChecks() {
+      const checks = [
+        {
+          level: DATA.packCount >= DATA.schedulesUtc.length ? 'good' : 'bad',
+          title: `${DATA.packCount} conteúdos para ${DATA.schedulesUtc.length} horários`,
+          body: DATA.packCount >= DATA.schedulesUtc.length
+            ? 'Há conteúdo suficiente para cobrir a agenda diária.'
+            : 'Faltam conteúdos para cobrir todos os horários.'
+        },
+        {
+          level: DATA.uniqueCaptions === DATA.packCount ? 'good' : 'bad',
+          title: `${DATA.uniqueCaptions} captions únicas`,
+          body: DATA.uniqueCaptions === DATA.packCount
+            ? 'A proteção anti-duplicidade tem material novo para escolher.'
+            : 'Existe caption repetida no pacote local.'
+        },
+        {
+          level: 'good',
+          title: 'Fallback local ativo',
+          body: 'Se o Supabase tiver poucos posts, o script completa com os packs locais.'
+        },
+        {
+          level: 'warn',
+          title: 'Métricas privadas dependem de token',
+          body: 'Curtidas, alcance e confirmação via Graph precisam dos secrets válidos no GitHub.'
+        }
+      ];
+
+      document.getElementById('checks').innerHTML = checks.map((check) => `
+        <div class="check">
+          <span class="dot ${check.level}"></span>
+          <div>
+            <strong>${check.title}</strong>
+            <span>${check.body}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function runStatusClass(run) {
+      if (run.status !== 'completed') return 'warn';
+      if (run.conclusion === 'success') return 'good';
+      return 'bad';
+    }
+
+    function renderRuns(runs) {
+      const runsList = document.getElementById('runsList');
+      const runsStatus = document.getElementById('runsStatus');
+      if (!runs.length) {
+        runsList.innerHTML = '<div class="empty">Nenhum run retornado pela API.</div>';
+        runsStatus.textContent = 'Vazio';
+        runsStatus.className = 'status-pill warn';
+        return;
+      }
+
+      const latest = runs[0];
+      const statusClass = runStatusClass(latest);
+      runsStatus.textContent = latest.status === 'completed' ? latest.conclusion : latest.status;
+      runsStatus.className = `status-pill ${statusClass}`;
+
+      runsList.innerHTML = runs.map((run) => {
+        const cls = runStatusClass(run);
+        const when = dateFormatter.format(new Date(run.created_at));
+        const label = run.event === 'schedule' ? 'Agendado' : 'Manual';
+        return `
+          <a class="run-row" href="${run.html_url}" target="_blank" rel="noreferrer">
+            <div class="run-time">${when}</div>
+            <div>
+              <div class="run-name">${run.name || 'Instagram Feed Cliente X'}</div>
+              <div class="run-meta">${label} · ${run.status}</div>
+            </div>
+            <span class="status-pill ${cls}">${run.conclusion || run.status}</span>
+          </a>
+        `;
+      }).join('');
+    }
+
+    async function refreshRuns() {
+      const button = document.getElementById('refreshRuns');
+      const runsStatus = document.getElementById('runsStatus');
+      button.disabled = true;
+      button.textContent = 'Atualizando';
+      runsStatus.textContent = 'Buscando';
+      runsStatus.className = 'status-pill warn';
+
+      try {
+        const url = `https://api.github.com/repos/${DATA.repo}/actions/workflows/${DATA.workflow}/runs?per_page=8`;
+        const response = await fetch(url, { headers: { Accept: 'application/vnd.github+json' } });
+        if (!response.ok) throw new Error(`GitHub API ${response.status}`);
+        const payload = await response.json();
+        renderRuns(payload.workflow_runs || []);
+      } catch (error) {
+        document.getElementById('runsList').innerHTML = `<div class="empty">${error.message}</div>`;
+        runsStatus.textContent = 'Falhou';
+        runsStatus.className = 'status-pill bad';
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Atualizar runs';
+      }
+    }
+
+    renderSchedule();
+    renderChecks();
+    refreshRuns();
+    setInterval(renderSchedule, 60_000);
+    document.getElementById('refreshRuns').addEventListener('click', refreshRuns);
+  </script>
+</body>
+</html>
