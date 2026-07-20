@@ -9,6 +9,18 @@ const TEMPLATE_DIR = resolve(ROOT, 'automation', 'instagram-template');
 const DEFAULT_CONFIG_DIR = join(TEMPLATE_DIR, 'config');
 const RUNS_DIR = join(TEMPLATE_DIR, 'runs');
 const IG_BASE = 'https://graph.facebook.com/v21.0';
+const RETRY_ATTEMPTS = Number.parseInt(process.env.INSTAGRAM_TEMPLATE_RETRY_ATTEMPTS || '3', 10);
+const RETRY_BASE_DELAY_MS = Number.parseInt(process.env.INSTAGRAM_TEMPLATE_RETRY_BASE_DELAY_MS || '2500', 10);
+const RETRYABLE_STATUS = new Set([408, 409, 425, 429, 500, 502, 503, 504]);
+const RETRYABLE_CODES = new Set([
+  'ECONNRESET',
+  'ETIMEDOUT',
+  'EAI_AGAIN',
+  'ENOTFOUND',
+  'UND_ERR_CONNECT_TIMEOUT',
+  'UND_ERR_HEADERS_TIMEOUT',
+  'UND_ERR_SOCKET'
+]);
 
 const PLAIN_ASCII_PORTUGUESE = [
   ['nao', 'não'],
@@ -196,8 +208,54 @@ async function fetchWithContext(url, options, label) {
   } catch (error) {
     const cause = error.cause || error;
     const detail = [cause.code, cause.message].filter(Boolean).join(': ');
-    throw new Error(`${label} request failed${detail ? ` (${detail})` : ''}`);
+    const wrapped = new Error(`${label} request failed${detail ? ` (${detail})` : ''}`);
+    wrapped.stage = label;
+    wrapped.causeCode = cause.code;
+    wrapped.retryable = !cause.code || RETRYABLE_CODES.has(cause.code);
+    throw wrapped;
   }
+}
+
+function sleep(ms) {
+  return new Promise((resolveSleep) => setTimeout(resolveSleep, ms));
+}
+
+function retryDelay(attempt) {
+  return RETRY_BASE_DELAY_MS * (2 ** (attempt - 1));
+}
+
+function createHttpError(label, status, body) {
+  const bodyPreview = body.slice(0, 1200);
+  const error = new Error(`${label} failed [${status}]: ${bodyPreview}`);
+  error.stage = label;
+  error.status = status;
+  error.responseBody = bodyPreview;
+  error.retryable = RETRYABLE_STATUS.has(status);
+  return error;
+}
+
+async function withRetry(label, operation, attempts = RETRY_ATTEMPTS) {
+  const maxAttempts = Number.isInteger(attempts) && attempts > 0 ? attempts : 1;
+  let lastError = null;
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    try {
+      return await operation(attempt);
+    } catch (error) {
+      lastError = error;
+      error.stage = error.stage || label;
+      error.attempt = attempt;
+      error.attempts = maxAttempts;
+      const canRetry = error.retryable && attempt < maxAttempts;
+      if (!canRetry) break;
+
+      const delay = retryDelay(attempt);
+      console.warn(`${label} falhou na tentativa ${attempt}/${maxAttempts}; tentando de novo em ${Math.round(delay / 1000)}s. ${error.message}`);
+      await sleep(delay);
+    }
+  }
+
+  throw lastError;
 }
 
 function localChromiumExecutable() {
@@ -385,19 +443,27 @@ async function renderStory(runDir, pack, account, style) {
 }
 
 async function graphGet(path, params = {}) {
-  const url = new URL(`${IG_BASE}${path}`);
-  Object.entries(params).forEach(([key, value]) => url.searchParams.set(key, value));
-  const res = await fetchWithContext(url, undefined, `Graph GET ${path}`);
-  if (!res.ok) throw new Error(`Graph GET failed [${res.status}]: ${await res.text()}`);
-  return res.json();
+  const label = `Graph GET ${path}`;
+  return withRetry(label, async () => {
+    const url = new URL(`${IG_BASE}${path}`);
+    Object.entries(params).forEach(([key, value]) => url.searchParams.set(key, value));
+    const res = await fetchWithContext(url, undefined, label);
+    const text = await res.text();
+    if (!res.ok) throw createHttpError(label, res.status, text);
+    return text ? JSON.parse(text) : {};
+  });
 }
 
 async function graphPost(path, params = {}) {
-  const url = new URL(`${IG_BASE}${path}`);
-  Object.entries(params).forEach(([key, value]) => url.searchParams.set(key, value));
-  const res = await fetchWithContext(url, { method: 'POST' }, `Graph POST ${path}`);
-  if (!res.ok) throw new Error(`Graph POST failed [${res.status}]: ${await res.text()}`);
-  return res.json();
+  const label = `Graph POST ${path}`;
+  return withRetry(label, async () => {
+    const url = new URL(`${IG_BASE}${path}`);
+    Object.entries(params).forEach(([key, value]) => url.searchParams.set(key, value));
+    const res = await fetchWithContext(url, { method: 'POST' }, label);
+    const text = await res.text();
+    if (!res.ok) throw createHttpError(label, res.status, text);
+    return text ? JSON.parse(text) : {};
+  });
 }
 
 function normalizeCaption(text = '') {
@@ -446,14 +512,22 @@ function pickFreshPack(packs, dateString, slotIndex, recentMedia = []) {
 }
 
 async function uploadToImgBB(imagePath, apiKey) {
-  const form = new FormData();
-  form.append('key', apiKey);
-  form.append('image', readFileSync(resolve(imagePath)).toString('base64'));
-  const res = await fetchWithContext('https://api.imgbb.com/1/upload', { method: 'POST', body: form }, 'ImgBB upload');
-  if (!res.ok) throw new Error(`imgBB upload failed [${res.status}]: ${await res.text()}`);
-  const json = await res.json();
-  if (!json.success) throw new Error(`imgBB upload failed: ${JSON.stringify(json)}`);
-  return json.data.url;
+  return withRetry('ImgBB upload', async () => {
+    const form = new FormData();
+    form.append('key', apiKey);
+    form.append('image', readFileSync(resolve(imagePath)).toString('base64'));
+    const res = await fetchWithContext('https://api.imgbb.com/1/upload', { method: 'POST', body: form }, 'ImgBB upload');
+    const text = await res.text();
+    if (!res.ok) throw createHttpError('ImgBB upload', res.status, text);
+    const json = text ? JSON.parse(text) : {};
+    if (!json.success) {
+      const error = new Error(`ImgBB upload failed: ${JSON.stringify(json).slice(0, 1200)}`);
+      error.stage = 'ImgBB upload';
+      error.retryable = Boolean(json?.error?.code >= 500);
+      throw error;
+    }
+    return json.data.url;
+  });
 }
 
 async function pollContainer(containerId, token) {
@@ -598,7 +672,18 @@ async function main() {
 
 main().catch((error) => {
   mkdirSync(RUNS_DIR, { recursive: true });
-  writeFileSync(join(RUNS_DIR, `failure-${timestampSaoPaulo()}.json`), JSON.stringify({ ok: false, error: error.message }, null, 2), 'utf8');
+  writeFileSync(join(RUNS_DIR, `failure-${timestampSaoPaulo()}.json`), JSON.stringify({
+    ok: false,
+    stage: error.stage || 'unknown',
+    error: error.message,
+    status: error.status,
+    responseBody: error.responseBody,
+    causeCode: error.causeCode,
+    attempt: error.attempt,
+    attempts: error.attempts,
+    retryable: Boolean(error.retryable),
+    checkedAt: new Date().toISOString()
+  }, null, 2), 'utf8');
   console.error(error.message);
   process.exit(1);
 });
