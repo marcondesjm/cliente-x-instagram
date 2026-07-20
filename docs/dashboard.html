@@ -378,6 +378,149 @@
       background: #fbfdfc;
     }
 
+    .editor-layout {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .field-stack, .slide-list, .editor-actions {
+      display: grid;
+      gap: 10px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    select, input, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdfc;
+      color: var(--text);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 11px 12px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 92px;
+      resize: vertical;
+      line-height: 1.35;
+    }
+
+    select:focus, input:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(14, 124, 90, 0.12);
+    }
+
+    .slide-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdfc;
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .slide-card h3 {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.2;
+    }
+
+    .two-fields {
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr);
+      gap: 10px;
+    }
+
+    .editor-actions {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 12px;
+    }
+
+    .message {
+      min-height: 42px;
+      padding: 12px;
+      border-radius: 8px;
+      background: var(--panel-2);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.35;
+      white-space: pre-line;
+    }
+
+    .preview-card {
+      min-height: 360px;
+      border-radius: 8px;
+      padding: 24px;
+      background:
+        linear-gradient(135deg, rgba(21, 167, 108, 0.18), transparent 40%),
+        linear-gradient(180deg, #0b1511 0%, #17211c 100%);
+      color: #f8faf9;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .preview-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 34px 34px;
+      transform: rotate(-4deg) scale(1.2);
+      opacity: 0.4;
+    }
+
+    .preview-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .preview-banner {
+      color: #7cffb2;
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .preview-title {
+      margin: 26px 0 12px;
+      font-size: 34px;
+      line-height: 1.05;
+      font-weight: 900;
+    }
+
+    .preview-body {
+      color: #cfd8d3;
+      font-size: 18px;
+      line-height: 1.22;
+      font-weight: 800;
+    }
+
+    .preview-foot {
+      color: #aeb8b2;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
     footer {
       padding: 18px 0 4px;
       color: var(--muted);
@@ -388,6 +531,7 @@
     @media (max-width: 1100px) {
       main { grid-template-columns: 1fr; }
       .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .editor-layout { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 640px) {
@@ -399,6 +543,7 @@
       .run-row { grid-template-columns: 1fr; }
       .preview { grid-template-columns: 1fr; }
       .preview img { width: min(220px, 100%); }
+      .two-fields, .editor-actions { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -450,6 +595,49 @@
             <span class="status-pill good" id="scheduleStatus">Coberto</span>
           </div>
           <div class="timeline" id="timeline"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="section-label">Editor manual</div>
+              <h2>Banners e descrições</h2>
+            </div>
+            <span class="status-pill warn" id="editorStatus">Local</span>
+          </div>
+          <div class="editor-layout">
+            <div class="field-stack">
+              <label>
+                Selecionar conteúdo
+                <select id="packSelect"></select>
+              </label>
+              <label>
+                Slide para prévia
+                <select id="slideSelect"></select>
+              </label>
+              <div class="preview-card">
+                <div>
+                  <div class="preview-banner" id="previewBanner">Banner</div>
+                  <div class="preview-title" id="previewTitle">Título do slide</div>
+                  <div class="preview-body" id="previewBody">Descrição do slide selecionado.</div>
+                </div>
+                <div class="preview-foot">Marcondes Machado · IA aplicada a empresas</div>
+              </div>
+              <div class="message" id="editorMessage">Inicie com `npm run dashboard` para salvar, validar e renderizar pelo painel.</div>
+            </div>
+            <div>
+              <div class="slide-list" id="slideFields"></div>
+              <label style="margin-top: 10px;">
+                Descrição do post / legenda
+                <textarea id="captionInput" rows="7"></textarea>
+              </label>
+              <div class="editor-actions">
+                <button class="primary" id="savePack" type="button">Salvar conteúdo</button>
+                <button id="validateCopy" type="button">Validar textos</button>
+                <button id="renderSlot" type="button">Renderizar prévia</button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="panel">
@@ -558,6 +746,181 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         message: 'Graph GET request failed por certificado local'
       }
     };
+
+    let appState = {
+      packs: [],
+      selectedPack: 0,
+      selectedSlide: 0,
+      serverMode: location.protocol.startsWith('http')
+    };
+
+    function escapeHtml(value = '') {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function setMessage(message, level = 'warn') {
+      const box = document.getElementById('editorMessage');
+      const status = document.getElementById('editorStatus');
+      box.textContent = message;
+      status.textContent = level === 'good' ? 'Salvo' : level === 'bad' ? 'Atenção' : 'Local';
+      status.className = `status-pill ${level}`;
+    }
+
+    async function api(path, options = {}) {
+      const response = await fetch(path, {
+        ...options,
+        headers: {
+          'content-type': 'application/json',
+          ...(options.headers || {})
+        }
+      });
+      const payload = await response.json();
+      if (!response.ok || payload.error) throw new Error(payload.error || `HTTP ${response.status}`);
+      return payload;
+    }
+
+    async function loadState() {
+      if (!appState.serverMode) {
+        setMessage('Abra pelo servidor local para salvar: npm run dashboard', 'warn');
+        return;
+      }
+
+      try {
+        const state = await api('/api/state');
+        appState.packs = state.packs || [];
+        DATA.schedulesUtc = state.account?.scheduleUtc || DATA.schedulesUtc;
+        DATA.packCount = state.packCount || DATA.packCount;
+        DATA.uniqueCaptions = state.uniqueCaptions || DATA.uniqueCaptions;
+        document.getElementById('contentCount').textContent = DATA.packCount;
+        document.getElementById('contentNote').textContent = `${DATA.schedulesUtc.length} horários ativos`;
+        renderSchedule();
+        renderChecks();
+        renderEditor();
+        setMessage('Conteúdos carregados do projeto. Escolha um slot, edite e salve.', 'good');
+      } catch (error) {
+        setMessage(`Não consegui carregar pelo servidor: ${error.message}`, 'bad');
+      }
+    }
+
+    function currentPack() {
+      return appState.packs[appState.selectedPack] || { slides: [], caption: '' };
+    }
+
+    function readEditorPack() {
+      const slides = Array.from(document.querySelectorAll('.slide-card')).map((card) => ({
+        eyebrow: card.querySelector('[data-field="eyebrow"]').value,
+        title: card.querySelector('[data-field="title"]').value,
+        body: card.querySelector('[data-field="body"]').value
+      }));
+      return {
+        slides,
+        caption: document.getElementById('captionInput').value
+      };
+    }
+
+    function syncEditorToState() {
+      if (!appState.packs.length) return;
+      appState.packs[appState.selectedPack] = readEditorPack();
+    }
+
+    function renderEditor() {
+      const packSelect = document.getElementById('packSelect');
+      const slideSelect = document.getElementById('slideSelect');
+      const slideFields = document.getElementById('slideFields');
+      const pack = currentPack();
+      packSelect.innerHTML = appState.packs.map((item, index) => {
+        const title = item.slides?.[0]?.title || `Conteúdo ${index}`;
+        return `<option value="${index}">Slot ${index} · ${escapeHtml(title)}</option>`;
+      }).join('');
+      packSelect.value = String(appState.selectedPack);
+
+      const slides = pack.slides?.length ? pack.slides : Array.from({ length: 5 }, () => ({ eyebrow: '', title: '', body: '' }));
+      slideSelect.innerHTML = slides.map((_, index) => `<option value="${index}">Slide ${index + 1}</option>`).join('');
+      slideSelect.value = String(Math.min(appState.selectedSlide, slides.length - 1));
+
+      slideFields.innerHTML = slides.map((slide, index) => `
+        <div class="slide-card">
+          <h3>Slide ${index + 1}</h3>
+          <div class="two-fields">
+            <label>
+              Banner
+              <input data-slide="${index}" data-field="eyebrow" value="${escapeHtml(slide.eyebrow || '')}">
+            </label>
+            <label>
+              Título
+              <input data-slide="${index}" data-field="title" value="${escapeHtml(slide.title || '')}">
+            </label>
+          </div>
+          <label>
+            Descrição do banner
+            <textarea data-slide="${index}" data-field="body">${escapeHtml(slide.body || '')}</textarea>
+          </label>
+        </div>
+      `).join('');
+      document.getElementById('captionInput').value = pack.caption || '';
+      updatePreview();
+    }
+
+    function updatePreview() {
+      syncEditorToState();
+      const pack = currentPack();
+      const slide = pack.slides?.[appState.selectedSlide] || pack.slides?.[0] || {};
+      document.getElementById('previewBanner').textContent = slide.eyebrow || 'Banner';
+      document.getElementById('previewTitle').textContent = slide.title || 'Título do slide';
+      document.getElementById('previewBody').textContent = slide.body || 'Descrição do slide selecionado.';
+    }
+
+    async function saveSelectedPack() {
+      if (!appState.serverMode) {
+        setMessage('Para salvar no arquivo, abra com: npm run dashboard', 'bad');
+        return;
+      }
+      syncEditorToState();
+      setMessage('Salvando conteúdo no content-packs.json...', 'warn');
+      try {
+        const state = await api(`/api/content/${appState.selectedPack}`, {
+          method: 'POST',
+          body: JSON.stringify({ pack: currentPack() })
+        });
+        appState.packs = state.packs || appState.packs;
+        DATA.packCount = state.packCount;
+        DATA.uniqueCaptions = state.uniqueCaptions;
+        document.getElementById('contentCount').textContent = DATA.packCount;
+        renderChecks();
+        renderEditor();
+        setMessage('Conteúdo salvo. Rode validar textos antes de publicar.', 'good');
+      } catch (error) {
+        setMessage(error.message, 'bad');
+      }
+    }
+
+    async function runServerAction(path, button, runningText) {
+      if (!appState.serverMode) {
+        setMessage('Essa ação precisa do servidor local: npm run dashboard', 'bad');
+        return;
+      }
+      const original = button.textContent;
+      button.disabled = true;
+      button.textContent = runningText;
+      setMessage(runningText, 'warn');
+      try {
+        const payload = await api(path, {
+          method: 'POST',
+          body: JSON.stringify({ slotIndex: appState.selectedPack })
+        });
+        const output = [payload.stdout, payload.stderr].filter(Boolean).join('\n').trim();
+        setMessage(payload.ok ? `Concluído.\n${output}` : `Falhou.\n${output}`, payload.ok ? 'good' : 'bad');
+      } catch (error) {
+        setMessage(error.message, 'bad');
+      } finally {
+        button.disabled = false;
+        button.textContent = original;
+      }
+    }
 
     const brtFormatter = new Intl.DateTimeFormat('pt-BR', {
       timeZone: 'America/Sao_Paulo',
@@ -731,9 +1094,30 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
 
     renderSchedule();
     renderChecks();
+    renderEditor();
+    loadState();
     refreshRuns();
     setInterval(renderSchedule, 60_000);
     document.getElementById('refreshRuns').addEventListener('click', refreshRuns);
+    document.getElementById('packSelect').addEventListener('change', (event) => {
+      syncEditorToState();
+      appState.selectedPack = Number(event.target.value);
+      appState.selectedSlide = 0;
+      renderEditor();
+    });
+    document.getElementById('slideSelect').addEventListener('change', (event) => {
+      appState.selectedSlide = Number(event.target.value);
+      updatePreview();
+    });
+    document.getElementById('slideFields').addEventListener('input', updatePreview);
+    document.getElementById('captionInput').addEventListener('input', syncEditorToState);
+    document.getElementById('savePack').addEventListener('click', saveSelectedPack);
+    document.getElementById('validateCopy').addEventListener('click', (event) => {
+      runServerAction('/api/validate', event.currentTarget, 'Validando');
+    });
+    document.getElementById('renderSlot').addEventListener('click', (event) => {
+      runServerAction('/api/render', event.currentTarget, 'Renderizando');
+    });
   </script>
 </body>
 </html>

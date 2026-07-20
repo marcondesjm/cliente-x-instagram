@@ -9,7 +9,8 @@
     "render-only": "npm run instagram -- --account cliente-x --render-only",
     "dry-run": "npm run instagram -- --account cliente-x --dry-run",
     "story-only": "npm run instagram -- --account cliente-x --story-only",
-    "publish": "npm run instagram -- --account cliente-x"
+    "publish": "npm run instagram -- --account cliente-x",
+    "dashboard": "node scripts/dashboard-server.mjs"
   },
   "dependencies": {
     "playwright": "^1.58.2",
