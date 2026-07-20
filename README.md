@@ -21,7 +21,7 @@ npm run render-only
 ```
 
 5. No GitHub Actions, rode primeiro manualmente com `dry_run=true`.
-6. O workflow `.github/workflows/instagram-feed-cliente-x.yml` fica agendado para publicar às 6:30, 8:10, 9:00, 11:50, 12:10, 13:00, 13:50, 14:15, 16:00, 17:40, 19:00 e 22:00 no horário de Brasília. Esse agendamento roda no GitHub Actions e não depende do PC ligado.
+6. O workflow `.github/workflows/instagram-feed-cliente-x.yml` fica agendado para publicar às 6:30, 8:10, 9:00, 11:50, 12:10, 13:00, 13:50, 14:15, 14:50, 16:00, 17:40, 19:00 e 22:00 no horário de Brasília. Esse agendamento roda no GitHub Actions e não depende do PC ligado.
 
 ## Segurança
 

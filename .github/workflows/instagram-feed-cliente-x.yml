@@ -10,6 +10,7 @@ on:
     - cron: "0 16 * * *"
     - cron: "50 16 * * *"
     - cron: "15 17 * * *"
+    - cron: "50 17 * * *"
     - cron: "0 19 * * *"
     - cron: "40 20 * * *"
     - cron: "0 22 * * *"
@@ -46,6 +47,7 @@ on:
           - "9"
           - "10"
           - "11"
+          - "12"
 
 jobs:
   instagram-feed:
@@ -94,10 +96,11 @@ jobs:
               "0 16 * * *") SLOT_INDEX="5" ;;
               "50 16 * * *") SLOT_INDEX="6" ;;
               "15 17 * * *") SLOT_INDEX="7" ;;
-              "0 19 * * *") SLOT_INDEX="8" ;;
-              "40 20 * * *") SLOT_INDEX="9" ;;
-              "0 22 * * *") SLOT_INDEX="10" ;;
-              "0 1 * * *") SLOT_INDEX="11" ;;
+              "50 17 * * *") SLOT_INDEX="8" ;;
+              "0 19 * * *") SLOT_INDEX="9" ;;
+              "40 20 * * *") SLOT_INDEX="10" ;;
+              "0 22 * * *") SLOT_INDEX="11" ;;
+              "0 1 * * *") SLOT_INDEX="12" ;;
               *) SLOT_INDEX="0" ;;
             esac
           fi

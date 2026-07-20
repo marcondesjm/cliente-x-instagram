@@ -36,12 +36,32 @@ values
     0,
     true,
     '[
-      {"eyebrow":"Maturidade","title":"Sua empresa usa IA ou só testa ferramenta?","body":"O primeiro nível é pedir textos. O próximo é redesenhar processos para ganhar velocidade, padrão e escala."},
-      {"eyebrow":"Fase 1","title":"IA como copiloto.","body":"Use para escrever melhor, resumir reuniões, analisar documentos e organizar ideias. É o começo, não o destino."},
-      {"eyebrow":"Fase 2","title":"IA dentro do processo.","body":"Quando a IA entra no atendimento, vendas, financeiro e suporte, ela deixa de ser curiosidade e vira operação."},
-      {"eyebrow":"Fase 3","title":"Agentes executam tarefas inteiras.","body":"O ganho real aparece quando sistemas recebem contexto, tomam passos definidos e entregam trabalho verificável."},
-      {"eyebrow":"Decisão","title":"A pergunta mudou.","body":"Não é mais se a empresa vai usar IA. É onde ela vai aplicar primeiro para gerar resultado mensurável."}
-    ]'::jsonb,
+  {
+    "eyebrow": "Maturidade",
+    "title": "Sua empresa usa IA ou só testa ferramenta?",
+    "body": "O primeiro nível é pedir textos. O próximo é redesenhar processos para ganhar velocidade, padrão e escala."
+  },
+  {
+    "eyebrow": "Fase 1",
+    "title": "IA como copiloto.",
+    "body": "Use para escrever melhor, resumir reuniões, analisar documentos e organizar ideias. É o começo, não o destino."
+  },
+  {
+    "eyebrow": "Fase 2",
+    "title": "IA dentro do processo.",
+    "body": "Quando a IA entra no atendimento, vendas, financeiro e suporte, ela deixa de ser curiosidade e vira operação."
+  },
+  {
+    "eyebrow": "Fase 3",
+    "title": "Agentes executam tarefas inteiras.",
+    "body": "O ganho real aparece quando sistemas recebem contexto, tomam passos definidos e entregam trabalho verificável."
+  },
+  {
+    "eyebrow": "Decisão",
+    "title": "A pergunta mudou.",
+    "body": "Não é mais se a empresa vai usar IA. É onde ela vai aplicar primeiro para gerar resultado mensurável."
+  }
+]'::jsonb,
     'Muita empresa acha que usa IA porque abriu o ChatGPT algumas vezes.
 
 Mas maturidade em IA tem camadas: primeiro você usa como copiloto, depois coloca dentro dos processos e, por fim, cria agentes que executam tarefas com contexto e controle.
@@ -55,12 +75,32 @@ O jogo não é testar ferramenta. É transformar rotina em sistema.
     1,
     true,
     '[
-      {"eyebrow":"Vendas","title":"IA não vende sozinha. Ela tira atrito da venda.","body":"O vendedor continua sendo humano. A diferença é que ele chega mais preparado, responde mais rápido e perde menos contexto."},
-      {"eyebrow":"Antes","title":"Lead sem histórico vira chute.","body":"Sem registro claro, cada conversa começa do zero. A IA ajuda a recuperar contexto e indicar o próximo melhor passo."},
-      {"eyebrow":"Durante","title":"Atendimento precisa de padrão.","body":"Scripts inteligentes, respostas assistidas e resumo automático reduzem falhas sem deixar a conversa robótica."},
-      {"eyebrow":"Depois","title":"Follow-up é onde mora dinheiro esquecido.","body":"A IA pode lembrar prazos, priorizar oportunidades e preparar mensagens alinhadas ao estágio do cliente."},
-      {"eyebrow":"Resultado","title":"Menos improviso, mais conversão.","body":"Quando vendas vira processo, a IA consegue acelerar o que já funciona e revelar onde o funil está travando."}
-    ]'::jsonb,
+  {
+    "eyebrow": "Vendas",
+    "title": "IA não vende sozinha. Ela tira atrito da venda.",
+    "body": "O vendedor continua sendo humano. A diferença é que ele chega mais preparado, responde mais rápido e perde menos contexto."
+  },
+  {
+    "eyebrow": "Antes",
+    "title": "Lead sem histórico vira chute.",
+    "body": "Sem registro claro, cada conversa começa do zero. A IA ajuda a recuperar contexto e indicar o próximo melhor passo."
+  },
+  {
+    "eyebrow": "Durante",
+    "title": "Atendimento precisa de padrão.",
+    "body": "Scripts inteligentes, respostas assistidas e resumo automático reduzem falhas sem deixar a conversa robótica."
+  },
+  {
+    "eyebrow": "Depois",
+    "title": "Follow-up é onde mora dinheiro esquecido.",
+    "body": "A IA pode lembrar prazos, priorizar oportunidades e preparar mensagens alinhadas ao estágio do cliente."
+  },
+  {
+    "eyebrow": "Resultado",
+    "title": "Menos improviso, mais conversão.",
+    "body": "Quando vendas vira processo, a IA consegue acelerar o que já funciona e revelar onde o funil está travando."
+  }
+]'::jsonb,
     'IA em vendas não substitui relacionamento.
 
 Ela organiza contexto, reduz tempo de resposta, melhora follow-up e ajuda o time a enxergar o que precisa acontecer em cada etapa.
@@ -74,12 +114,32 @@ A venda continua humana. A operação por trás dela é que fica mais inteligent
     2,
     true,
     '[
-      {"eyebrow":"Execução","title":"IA resolve execução, não falta de estratégia.","body":"Se o processo é confuso, a IA só acelera a confusão. Antes de automatizar, defina o que bom significa."},
-      {"eyebrow":"Clareza","title":"Sem contexto, tudo fica genérico.","body":"Briefing fraco gera resposta fraca. A qualidade da IA depende da qualidade da direção que você entrega."},
-      {"eyebrow":"Processo","title":"Transforme rotina em checklist.","body":"O que se repete pode ser descrito. O que pode ser descrito pode ser treinado, automatizado e medido."},
-      {"eyebrow":"Controle","title":"Automação boa tem revisão.","body":"IA precisa de critérios, logs e pontos de aprovação. Velocidade sem controle vira risco operacional."},
-      {"eyebrow":"Prática","title":"Comece pelo gargalo mais caro.","body":"Escolha uma tarefa repetitiva, demorada e importante. Automatize pequeno, valide rápido e escale com segurança."}
-    ]'::jsonb,
+  {
+    "eyebrow": "Execução",
+    "title": "IA resolve execução, não falta de estratégia.",
+    "body": "Se o processo é confuso, a IA só acelera a confusão. Antes de automatizar, defina o que bom significa."
+  },
+  {
+    "eyebrow": "Clareza",
+    "title": "Sem contexto, tudo fica genérico.",
+    "body": "Briefing fraco gera resposta fraca. A qualidade da IA depende da qualidade da direção que você entrega."
+  },
+  {
+    "eyebrow": "Processo",
+    "title": "Transforme rotina em checklist.",
+    "body": "O que se repete pode ser descrito. O que pode ser descrito pode ser treinado, automatizado e medido."
+  },
+  {
+    "eyebrow": "Controle",
+    "title": "Automação boa tem revisão.",
+    "body": "IA precisa de critérios, logs e pontos de aprovação. Velocidade sem controle vira risco operacional."
+  },
+  {
+    "eyebrow": "Prática",
+    "title": "Comece pelo gargalo mais caro.",
+    "body": "Escolha uma tarefa repetitiva, demorada e importante. Automatize pequeno, valide rápido e escale com segurança."
+  }
+]'::jsonb,
     'IA não conserta uma operação sem direção.
 
 Ela executa melhor quando existe contexto, padrão e critério de qualidade. Por isso, antes de sair automatizando tudo, documente o fluxo e escolha um gargalo claro.
@@ -93,12 +153,32 @@ Automação boa começa com processo bem pensado.
     3,
     true,
     '[
-      {"eyebrow":"Vibe coding","title":"Criar software ficou mais acessível.","body":"Com IA e ferramentas no-code, ideias internas podem virar protótipos em dias, não meses."},
-      {"eyebrow":"Cuidado","title":"Protótipo não é operação.","body":"A velocidade encanta, mas sistemas reais precisam de dados corretos, permissões, testes e manutenção."},
-      {"eyebrow":"Uso certo","title":"Comece com ferramentas internas.","body":"Dashboards, calculadoras, triagem de leads e automações simples são ótimos primeiros projetos com IA."},
-      {"eyebrow":"Time","title":"Quem entende o processo cria melhor.","body":"A vantagem não é saber programar tudo. É saber explicar bem o problema, as regras e o resultado esperado."},
-      {"eyebrow":"Próximo passo","title":"Teste pequeno. Aprenda rápido.","body":"A empresa que aprende a prototipar com IA ganha velocidade para testar ideias antes da concorrência."}
-    ]'::jsonb,
+  {
+    "eyebrow": "Vibe coding",
+    "title": "Criar software ficou mais acessível.",
+    "body": "Com IA e ferramentas no-code, ideias internas podem virar protótipos em dias, não meses."
+  },
+  {
+    "eyebrow": "Cuidado",
+    "title": "Protótipo não é operação.",
+    "body": "A velocidade encanta, mas sistemas reais precisam de dados corretos, permissões, testes e manutenção."
+  },
+  {
+    "eyebrow": "Uso certo",
+    "title": "Comece com ferramentas internas.",
+    "body": "Dashboards, calculadoras, triagem de leads e automações simples são ótimos primeiros projetos com IA."
+  },
+  {
+    "eyebrow": "Time",
+    "title": "Quem entende o processo cria melhor.",
+    "body": "A vantagem não é saber programar tudo. É saber explicar bem o problema, as regras e o resultado esperado."
+  },
+  {
+    "eyebrow": "Próximo passo",
+    "title": "Teste pequeno. Aprenda rápido.",
+    "body": "A empresa que aprende a prototipar com IA ganha velocidade para testar ideias antes da concorrência."
+  }
+]'::jsonb,
     'Vibe coding e no-code com IA estão mudando a forma como empresas criam soluções internas.
 
 Mas o segredo não é sair criando qualquer coisa. É escolher problemas reais, prototipar rápido e validar com quem usa no dia a dia.
@@ -112,12 +192,32 @@ Velocidade com critério vira vantagem competitiva.
     4,
     true,
     '[
-      {"eyebrow":"Liderança","title":"IA não substitui pensamento.","body":"Ela amplia a capacidade de quem sabe perguntar, decidir e revisar. Usar sem critério só escala mediocridade."},
-      {"eyebrow":"Erro comum","title":"Delegar decisão para a IA.","body":"A IA pode organizar cenários, levantar riscos e sugerir caminhos. A responsabilidade continua sendo da liderança."},
-      {"eyebrow":"Melhor uso","title":"Use IA para pensar melhor.","body":"Peça contrapontos, simulações, resumos e hipóteses. A ferramenta deve melhorar seu raciocínio, não substituir."},
-      {"eyebrow":"Cultura","title":"O time precisa de método.","body":"Sem orientação, cada pessoa usa IA de um jeito. Com método, a empresa cria padrão e aprende coletivamente."},
-      {"eyebrow":"Futuro","title":"Quem lidera com IA decide mais rápido.","body":"A vantagem está em combinar contexto humano com execução acelerada por sistemas inteligentes."}
-    ]'::jsonb,
+  {
+    "eyebrow": "Liderança",
+    "title": "IA não substitui pensamento.",
+    "body": "Ela amplia a capacidade de quem sabe perguntar, decidir e revisar. Usar sem critério só escala mediocridade."
+  },
+  {
+    "eyebrow": "Erro comum",
+    "title": "Delegar decisão para a IA.",
+    "body": "A IA pode organizar cenários, levantar riscos e sugerir caminhos. A responsabilidade continua sendo da liderança."
+  },
+  {
+    "eyebrow": "Melhor uso",
+    "title": "Use IA para pensar melhor.",
+    "body": "Peça contrapontos, simulações, resumos e hipóteses. A ferramenta deve melhorar seu raciocínio, não substituir."
+  },
+  {
+    "eyebrow": "Cultura",
+    "title": "O time precisa de método.",
+    "body": "Sem orientação, cada pessoa usa IA de um jeito. Com método, a empresa cria padrão e aprende coletivamente."
+  },
+  {
+    "eyebrow": "Futuro",
+    "title": "Quem lidera com IA decide mais rápido.",
+    "body": "A vantagem está em combinar contexto humano com execução acelerada por sistemas inteligentes."
+  }
+]'::jsonb,
     'A melhor forma de usar IA não é terceirizar pensamento.
 
 É usar a tecnologia para organizar cenários, questionar hipóteses, acelerar análise e executar com mais qualidade.
@@ -125,6 +225,513 @@ Velocidade com critério vira vantagem competitiva.
 IA forte não elimina liderança. Ela exige liderança melhor.
 
 #lideranca #inteligenciaartificial #gestao #produtividade #empresas'
+  ),
+  (
+    'cliente-x',
+    5,
+    true,
+    '[
+  {
+    "eyebrow": "Atendimento",
+    "title": "Cliente não espera sua equipe lembrar de tudo.",
+    "body": "Histórico, prazo e próxima ação precisam estar visíveis. IA ajuda o atendimento a responder com contexto."
+  },
+  {
+    "eyebrow": "Problema",
+    "title": "Cada conversa perdida custa confiança.",
+    "body": "Quando o cliente repete a mesma informação, a operação mostra falha. O time precisa de memória organizada."
+  },
+  {
+    "eyebrow": "Sistema",
+    "title": "Transforme mensagens em dados úteis.",
+    "body": "Resumos, etiquetas e prioridades deixam a fila mais clara e reduzem decisões tomadas no improviso."
+  },
+  {
+    "eyebrow": "Qualidade",
+    "title": "Padrão não significa frieza.",
+    "body": "A IA pode sugerir respostas consistentes enquanto a equipe mantém tom humano e julgamento profissional."
+  },
+  {
+    "eyebrow": "Ganho",
+    "title": "Atender melhor é operar melhor.",
+    "body": "Quando contexto e rotina ficam claros, o cliente sente velocidade e a empresa reduz retrabalho."
+  }
+]'::jsonb,
+    'Atendimento bom não depende só de boa vontade.
+
+Depende de contexto, histórico, prioridade e padrão. A IA entra justamente para organizar essas camadas e ajudar a equipe a responder melhor, sem transformar tudo em mensagem genérica.
+
+Cliente sente quando a operação está preparada.
+
+#atendimento #inteligenciaartificial #crm #automacao #experienciadocliente'
+  ),
+  (
+    'cliente-x',
+    6,
+    true,
+    '[
+  {
+    "eyebrow": "Dados",
+    "title": "IA sem dados confiáveis vira palpite bonito.",
+    "body": "Antes de automatizar análise, organize origem, atualização e responsabilidade sobre cada informação."
+  },
+  {
+    "eyebrow": "Base",
+    "title": "Planilha bagunçada limita qualquer tecnologia.",
+    "body": "Campos duplicados, nomes diferentes e números sem padrão geram resposta fraca, mesmo com ferramenta avançada."
+  },
+  {
+    "eyebrow": "Rotina",
+    "title": "Crie uma fonte de verdade.",
+    "body": "Defina onde cada dado nasce, quem revisa e como ele chega aos relatórios usados na decisão."
+  },
+  {
+    "eyebrow": "IA aplicada",
+    "title": "A automação precisa enxergar o processo.",
+    "body": "Quando dados e fluxo conversam, a IA consegue resumir, comparar, alertar e indicar próximos passos."
+  },
+  {
+    "eyebrow": "Resultado",
+    "title": "Decisão rápida pede dado limpo.",
+    "body": "A empresa que cuida da base ganha velocidade porque para de discutir número e começa a agir."
+  }
+]'::jsonb,
+    'Não existe IA forte em cima de dados fracos.
+
+Antes de pedir relatórios inteligentes, a empresa precisa organizar origem, padrão e responsabilidade sobre as informações que usa para decidir.
+
+Dado limpo não é detalhe técnico. É vantagem operacional.
+
+#dados #inteligenciaartificial #gestao #automacao #business'
+  ),
+  (
+    'cliente-x',
+    7,
+    true,
+    '[
+  {
+    "eyebrow": "Financeiro",
+    "title": "Automação também protege o caixa.",
+    "body": "Cobranças, vencimentos e conciliações não podem depender apenas de memória e conferência manual."
+  },
+  {
+    "eyebrow": "Risco",
+    "title": "Pequenas falhas viram perda silenciosa.",
+    "body": "Um boleto esquecido, um repasse atrasado ou um lançamento duplicado distorcem a visão do negócio."
+  },
+  {
+    "eyebrow": "Controle",
+    "title": "IA ajuda a encontrar exceções.",
+    "body": "O valor está em apontar divergências, resumir pendências e chamar atenção para o que precisa de revisão."
+  },
+  {
+    "eyebrow": "Processo",
+    "title": "Rotina financeira precisa de trilha.",
+    "body": "Logs, responsáveis e critérios deixam claro o que foi feito, por quem e qual decisão ainda falta."
+  },
+  {
+    "eyebrow": "Prática",
+    "title": "Comece pela dor que repete todo mês.",
+    "body": "Escolha uma conferência manual recorrente e transforme em alerta, relatório ou checklist automatizado."
+  }
+]'::jsonb,
+    'Automação financeira não é só sobre economizar tempo.
+
+É sobre reduzir erro, proteger caixa e dar clareza para decisões que acontecem todos os meses. A IA ajuda quando existe processo, dado e critério de revisão.
+
+O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais conferir.
+
+#financeiro #automacao #inteligenciaartificial #gestao #empresas'
+  ),
+  (
+    'cliente-x',
+    8,
+    true,
+    '[
+  {
+    "eyebrow": "Operação",
+    "title": "O gargalo certo paga a automação.",
+    "body": "Nem toda tarefa merece IA primeiro. Comece onde há volume, demora, erro e impacto direto no resultado."
+  },
+  {
+    "eyebrow": "Diagnóstico",
+    "title": "Procure repetição com consequência.",
+    "body": "Uma rotina repetida muitas vezes por semana, quando falha, precisa ser candidata imediata a melhoria."
+  },
+  {
+    "eyebrow": "Critério",
+    "title": "Automatize o que pode ser medido.",
+    "body": "Tempo salvo, erro evitado e resposta acelerada ajudam a provar valor sem depender de opinião."
+  },
+  {
+    "eyebrow": "Entrega",
+    "title": "Pequeno projeto, impacto claro.",
+    "body": "Um fluxo simples bem resolvido cria confiança para avançar em automações maiores com menos risco."
+  },
+  {
+    "eyebrow": "Crescimento",
+    "title": "Escala começa com escolha.",
+    "body": "A melhor automação inicial não é a mais impressionante. É a que remove o bloqueio mais caro."
+  }
+]'::jsonb,
+    'O melhor primeiro projeto de IA não é o mais bonito.
+
+É o que remove um gargalo real: tarefa repetitiva, demorada, sujeita a erro e com impacto claro no resultado. Começar pequeno com critério cria confiança para escalar.
+
+Automação boa nasce de uma escolha bem feita.
+
+#operacao #automacao #inteligenciaartificial #produtividade #gestao'
+  ),
+  (
+    'cliente-x',
+    9,
+    true,
+    '[
+  {
+    "eyebrow": "Equipe",
+    "title": "IA só escala quando o time entende o método.",
+    "body": "Ferramenta solta vira uso isolado. Método compartilhado transforma aprendizado individual em capacidade da empresa."
+  },
+  {
+    "eyebrow": "Padrão",
+    "title": "Prompt bom precisa virar processo.",
+    "body": "Se uma pessoa descobriu um jeito melhor de trabalhar, documente, teste e transforme em prática comum."
+  },
+  {
+    "eyebrow": "Treinamento",
+    "title": "Ensine o time a pedir melhor.",
+    "body": "Contexto, objetivo, restrições e exemplo de saída aumentam muito a qualidade do que a IA entrega."
+  },
+  {
+    "eyebrow": "Governança",
+    "title": "Liberdade precisa de limite claro.",
+    "body": "Defina o que pode usar, o que precisa de revisão e quais dados nunca entram em ferramentas externas."
+  },
+  {
+    "eyebrow": "Cultura",
+    "title": "A empresa aprende quando registra.",
+    "body": "Casos de uso, erros e ganhos precisam virar repertório. Sem registro, cada pessoa começa do zero."
+  }
+]'::jsonb,
+    'IA na empresa não pode depender de uma pessoa curiosa.
+
+Quando o time aprende método, registra casos de uso e cria critérios de revisão, a tecnologia deixa de ser experimento individual e vira capacidade coletiva.
+
+O ganho real aparece quando o aprendizado vira processo.
+
+#equipe #inteligenciaartificial #gestao #produtividade #automacao'
+  ),
+  (
+    'cliente-x',
+    10,
+    true,
+    '[
+  {
+    "eyebrow": "Agenda",
+    "title": "Rotina inteligente começa no calendário.",
+    "body": "Antes de pedir mais velocidade, organize prioridades, prazos e responsáveis em um fluxo visível."
+  },
+  {
+    "eyebrow": "Sinal",
+    "title": "Atraso repetido mostra processo fraco.",
+    "body": "Quando a mesma entrega escapa toda semana, o problema não é memória. É falta de sistema."
+  },
+  {
+    "eyebrow": "IA aplicada",
+    "title": "Alertas reduzem cobrança manual.",
+    "body": "A automação pode lembrar prazos, resumir pendências e avisar quem precisa agir antes do gargalo crescer."
+  },
+  {
+    "eyebrow": "Gestão",
+    "title": "Calendário também é dado operacional.",
+    "body": "Compromissos, ciclos e tarefas recorrentes mostram onde o time perde tempo e onde precisa de apoio."
+  },
+  {
+    "eyebrow": "Prática",
+    "title": "Comece por uma rotina semanal.",
+    "body": "Escolha uma reunião, relatório ou acompanhamento e transforme em fluxo com aviso, checklist e registro."
+  }
+]'::jsonb,
+    'Automação começa quando a rotina deixa de depender só de lembrança.
+
+Calendário, prazos, responsáveis e alertas formam uma base simples para a IA ajudar sem bagunçar a operação. O ganho aparece quando o time sabe o que precisa acontecer antes do problema virar urgência.
+
+Processo visível reduz cobrança manual.
+
+#gestao #automacao #inteligenciaartificial #produtividade #empresas'
+  ),
+  (
+    'cliente-x',
+    11,
+    true,
+    '[
+  {
+    "eyebrow": "Marketing",
+    "title": "Conteúdo bom também precisa de operação.",
+    "body": "Ideia, aprovação, criação e publicação precisam de ritmo. Sem processo, até post simples atrasa."
+  },
+  {
+    "eyebrow": "Planejamento",
+    "title": "Calendário editorial evita correria.",
+    "body": "A IA ajuda a organizar temas, reaproveitar ideias e manter consistência sem depender de inspiração."
+  },
+  {
+    "eyebrow": "Qualidade",
+    "title": "Padrão protege a marca.",
+    "body": "Tom de voz, promessa e revisão precisam estar claros para cada peça sair alinhada ao posicionamento."
+  },
+  {
+    "eyebrow": "Escala",
+    "title": "Reaproveitar não é repetir.",
+    "body": "Um bom tema pode virar carrossel, story, roteiro e email quando existe método de adaptação."
+  },
+  {
+    "eyebrow": "Ação",
+    "title": "Crie uma fila de ideias aprovadas.",
+    "body": "Com temas validados e regras claras, a equipe produz melhor e a automação entra para acelerar."
+  }
+]'::jsonb,
+    'Marketing com IA não é só gerar texto rápido.
+
+É criar uma operação de conteúdo com tema, calendário, revisão e reaproveitamento inteligente. Quando a marca tem padrão, a tecnologia acelera sem diluir o posicionamento.
+
+Consistência nasce de processo.
+
+#marketing #conteudo #inteligenciaartificial #automacao #negocios'
+  ),
+  (
+    'cliente-x',
+    12,
+    true,
+    '[
+  {
+    "eyebrow": "Suporte",
+    "title": "Pergunta repetida pede sistema.",
+    "body": "Se o cliente pergunta sempre a mesma coisa, a resposta não deveria depender de improviso."
+  },
+  {
+    "eyebrow": "Base",
+    "title": "FAQ vivo economiza horas.",
+    "body": "A IA pode sugerir respostas, atualizar artigos e indicar dúvidas que merecem virar material oficial."
+  },
+  {
+    "eyebrow": "Triagem",
+    "title": "Nem todo chamado tem a mesma urgência.",
+    "body": "Classificar impacto, prazo e tipo de solicitação ajuda a equipe a priorizar com menos ruído."
+  },
+  {
+    "eyebrow": "Controle",
+    "title": "Resposta rápida precisa de histórico.",
+    "body": "Sem contexto, velocidade vira chute. Com registro, o suporte atende melhor e aprende com cada caso."
+  },
+  {
+    "eyebrow": "Resultado",
+    "title": "Menos repetição, mais cuidado real.",
+    "body": "Quando o básico está organizado, a equipe tem tempo para resolver o que exige atenção humana."
+  }
+]'::jsonb,
+    'Suporte eficiente não nasce de responder correndo.
+
+Nasce de organizar dúvidas frequentes, histórico, prioridade e critérios de atendimento. A IA ajuda muito quando existe uma base viva para aprender com cada chamado.
+
+O cliente sente quando a resposta tem contexto.
+
+#suporte #atendimento #inteligenciaartificial #automacao #experienciadocliente'
+  ),
+  (
+    'cliente-x',
+    13,
+    true,
+    '[
+  {
+    "eyebrow": "RH",
+    "title": "IA também melhora rotina de pessoas.",
+    "body": "Recrutamento, onboarding e comunicação interna têm tarefas repetitivas que pedem clareza e cuidado."
+  },
+  {
+    "eyebrow": "Seleção",
+    "title": "Triagem não precisa ser caos.",
+    "body": "Critérios bem definidos ajudam a IA a organizar currículos sem tirar a decisão das pessoas."
+  },
+  {
+    "eyebrow": "Onboarding",
+    "title": "Novo colaborador precisa de trilha.",
+    "body": "Checklists, documentos e mensagens certas reduzem dúvidas e aceleram adaptação."
+  },
+  {
+    "eyebrow": "Comunicação",
+    "title": "Informação interna precisa chegar limpa.",
+    "body": "A IA pode resumir políticas, organizar comunicados e transformar regras em respostas acessíveis."
+  },
+  {
+    "eyebrow": "Cuidado",
+    "title": "Automatize tarefa, não empatia.",
+    "body": "O ganho está em liberar tempo para conversas melhores, não em tornar gestão de pessoas impessoal."
+  }
+]'::jsonb,
+    'IA em RH não deve tirar humanidade do processo.
+
+Ela pode organizar triagens, checklists, documentos e comunicações para que o time tenha mais tempo para decisões e conversas importantes. Automação boa libera atenção, não substitui cuidado.
+
+Pessoas precisam de processo e presença.
+
+#rh #gestaodepessoas #inteligenciaartificial #automacao #empresas'
+  ),
+  (
+    'cliente-x',
+    14,
+    true,
+    '[
+  {
+    "eyebrow": "Diretoria",
+    "title": "Relatório bonito não basta.",
+    "body": "A liderança precisa saber o que mudou, por que mudou e qual decisão precisa ser tomada."
+  },
+  {
+    "eyebrow": "Resumo",
+    "title": "IA ajuda a separar sinal de ruído.",
+    "body": "Dados soltos cansam. Bons resumos mostram tendência, exceção e impacto para a próxima ação."
+  },
+  {
+    "eyebrow": "Ritual",
+    "title": "Decisão pede cadência.",
+    "body": "Sem rotina de acompanhamento, indicador vira decoração. Com cadência, ele vira gestão."
+  },
+  {
+    "eyebrow": "Contexto",
+    "title": "Número sem história engana.",
+    "body": "A automação deve trazer comparação, causa provável e perguntas para revisão humana."
+  },
+  {
+    "eyebrow": "Prática",
+    "title": "Transforme relatório em reunião objetiva.",
+    "body": "Comece cada encontro com variações, riscos e decisões pendentes. Menos leitura, mais ação."
+  }
+]'::jsonb,
+    'Relatório executivo precisa ajudar a decidir.
+
+A IA pode resumir indicadores, destacar exceções e preparar perguntas melhores para a liderança. Mas o valor aparece quando existe cadência de gestão e responsabilidade sobre a próxima ação.
+
+Dado bom encurta reunião.
+
+#diretoria #gestao #dados #inteligenciaartificial #produtividade'
+  ),
+  (
+    'cliente-x',
+    15,
+    true,
+    '[
+  {
+    "eyebrow": "Comercial",
+    "title": "Proposta atrasada perde força.",
+    "body": "Depois da conversa boa, o cliente espera clareza. Automação ajuda a transformar contexto em proposta rápida."
+  },
+  {
+    "eyebrow": "Contexto",
+    "title": "Toda proposta carrega uma história.",
+    "body": "Dor, objetivo, prazo e objeções precisam aparecer. Sem isso, o documento fica genérico."
+  },
+  {
+    "eyebrow": "Padrão",
+    "title": "Modelo não precisa ser engessado.",
+    "body": "A IA pode preencher estrutura, adaptar argumentos e manter consistência sem apagar personalização."
+  },
+  {
+    "eyebrow": "Follow-up",
+    "title": "Envio é só metade do processo.",
+    "body": "Lembretes, resumo da conversa e próximas ações reduzem oportunidades esquecidas."
+  },
+  {
+    "eyebrow": "Ganho",
+    "title": "Velocidade com contexto vende melhor.",
+    "body": "Quando o comercial responde rápido e com precisão, o cliente sente organização antes da contratação."
+  }
+]'::jsonb,
+    'Proposta comercial não pode depender de copiar e colar correndo.
+
+Com contexto bem registrado, a IA ajuda a montar documentos mais rápidos, consistentes e alinhados ao que o cliente realmente pediu. O resultado é menos atraso e mais clareza na negociação.
+
+Vender melhor também é operar melhor.
+
+#comercial #vendas #automacao #inteligenciaartificial #negocios'
+  ),
+  (
+    'cliente-x',
+    16,
+    true,
+    '[
+  {
+    "eyebrow": "Qualidade",
+    "title": "Automação sem revisão vira risco.",
+    "body": "Publicar, responder ou analisar com IA exige critérios claros para evitar erro repetido em escala."
+  },
+  {
+    "eyebrow": "Checklist",
+    "title": "O que precisa ser conferido?",
+    "body": "Tom, dado sensível, promessa, número e fonte devem estar no roteiro de revisão antes da saída final."
+  },
+  {
+    "eyebrow": "Logs",
+    "title": "Registro evita discussão vazia.",
+    "body": "Saber o que foi gerado, aprovado e publicado ajuda a corrigir rápido quando algo sai do padrão."
+  },
+  {
+    "eyebrow": "Governança",
+    "title": "Liberdade boa tem limite visível.",
+    "body": "O time usa melhor a IA quando entende onde pode acelerar e onde precisa pedir validação."
+  },
+  {
+    "eyebrow": "Maturidade",
+    "title": "Controle aumenta confiança.",
+    "body": "Quanto melhor a revisão, mais a empresa consegue automatizar sem medo de perder qualidade."
+  }
+]'::jsonb,
+    'A pergunta não é só o que a IA consegue fazer.
+
+A pergunta é como a empresa revisa, registra e controla o que ela entrega. Automação sem critério pode escalar erro. Automação com governança escala confiança.
+
+Velocidade precisa de qualidade.
+
+#governanca #inteligenciaartificial #automacao #qualidade #gestao'
+  ),
+  (
+    'cliente-x',
+    17,
+    true,
+    '[
+  {
+    "eyebrow": "Implantação",
+    "title": "Projeto de IA precisa virar rotina.",
+    "body": "Ideia aprovada não gera resultado sozinha. O valor aparece quando alguém usa, mede e melhora."
+  },
+  {
+    "eyebrow": "Adoção",
+    "title": "Ferramenta parada não transforma nada.",
+    "body": "Treinamento, suporte e pequenos rituais ajudam o time a incorporar a novidade no trabalho real."
+  },
+  {
+    "eyebrow": "Métrica",
+    "title": "Sem indicador, tudo vira opinião.",
+    "body": "Tempo salvo, erro reduzido e resposta acelerada mostram se a automação está pagando a conta."
+  },
+  {
+    "eyebrow": "Melhoria",
+    "title": "Primeira versão é ponto de partida.",
+    "body": "Toda automação precisa de ajuste depois que encontra o uso diário, as exceções e os casos difíceis."
+  },
+  {
+    "eyebrow": "Resultado",
+    "title": "Tecnologia boa muda comportamento.",
+    "body": "Quando a solução encaixa no fluxo, o time usa sem esforço e a empresa ganha capacidade operacional."
+  }
+]'::jsonb,
+    'Implantar IA não termina quando a ferramenta fica pronta.
+
+Termina quando o time usa, mede resultado e melhora a rotina com base no que aprendeu. Adoção é parte do projeto, não detalhe depois da entrega.
+
+Automação só vale quando entra no dia a dia.
+
+#implantacao #inteligenciaartificial #automacao #gestao #produtividade'
   )
 on conflict (account, slot_index) do update
 set

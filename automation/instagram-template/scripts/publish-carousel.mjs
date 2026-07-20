@@ -106,6 +106,14 @@ async function loadSupabasePacks(env, accountName) {
   }));
 }
 
+function mergePacks(primaryPacks, fallbackPacks) {
+  if (!primaryPacks?.length) return fallbackPacks;
+
+  const captions = new Set(primaryPacks.map((pack) => normalizeCaption(pack.caption)));
+  const extras = fallbackPacks.filter((pack) => !captions.has(normalizeCaption(pack.caption)));
+  return [...primaryPacks, ...extras];
+}
+
 function timestampSaoPaulo() {
   const parts = new Intl.DateTimeFormat('en-CA', {
     timeZone: 'America/Sao_Paulo',
@@ -473,7 +481,8 @@ async function main() {
   const args = parseArgs(process.argv);
   const env = loadEnv();
   const { account, packs: localPacks, styles } = loadConfig(args.configDir, args.account);
-  const packs = await loadSupabasePacks(env, args.account) || localPacks;
+  const supabasePacks = await loadSupabasePacks(env, args.account);
+  const packs = mergePacks(supabasePacks, localPacks);
   validatePacks(packs);
   if (args.validateCopy) {
     console.log(JSON.stringify({ ok: true, account: account.account, checkedPacks: packs.length }, null, 2));
