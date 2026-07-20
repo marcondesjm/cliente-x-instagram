@@ -6,6 +6,8 @@ on:
     - cron: "10 11 * * *"
     - cron: "0 12 * * *"
     - cron: "30 15 * * *"
+    - cron: "30 16 * * *"
+    - cron: "10 18 * * *"
     - cron: "30 20 * * *"
   workflow_dispatch:
     inputs:
@@ -32,6 +34,8 @@ on:
           - "2"
           - "3"
           - "4"
+          - "5"
+          - "6"
 
 jobs:
   instagram-feed:
@@ -76,7 +80,9 @@ jobs:
               "10 11 * * *") SLOT_INDEX="1" ;;
               "0 12 * * *") SLOT_INDEX="2" ;;
               "30 15 * * *") SLOT_INDEX="3" ;;
-              "30 20 * * *") SLOT_INDEX="4" ;;
+              "30 16 * * *") SLOT_INDEX="4" ;;
+              "10 18 * * *") SLOT_INDEX="5" ;;
+              "30 20 * * *") SLOT_INDEX="6" ;;
               *) SLOT_INDEX="0" ;;
             esac
           fi
