@@ -369,6 +369,15 @@ function parseAdminUsersJson() {
   }
 }
 
+function publicPanelUsers(users = []) {
+  return users.map((user) => ({
+    email: user.email,
+    role: user.role || 'user',
+    accounts: Array.isArray(user.accounts) ? user.accounts : [],
+    disabled: Boolean(user.disabled)
+  }));
+}
+
 async function createPanelUser(body = {}, availableAccounts = []) {
   const email = String(body.email || '').trim().toLowerCase();
   const password = String(body.password || '');
@@ -387,16 +396,87 @@ async function createPanelUser(body = {}, availableAccounts = []) {
     email,
     password,
     role: 'user',
-    accounts
+    accounts,
+    disabled: false
   });
 
   const saved = await saveVercelEnv('ADMIN_USERS_JSON', JSON.stringify(users));
   return {
     ok: true,
-    users: users.map((user) => ({ email: user.email, role: user.role || 'user', accounts: user.accounts || [] })),
+    users: publicPanelUsers(users),
     message: accounts.length
       ? `${email} salvo em ADMIN_USERS_JSON. Faça redeploy para esse login entrar em vigor.`
       : `${email} salvo sem conta vinculada. Faça redeploy; ele poderá entrar e criar a empresa dele do zero.`,
+    saved
+  };
+}
+
+async function updatePanelUser(body = {}, availableAccounts = []) {
+  const email = String(body.email || '').trim().toLowerCase();
+  const action = String(body.userAction || 'update').trim().toLowerCase();
+  const adminEmail = String(process.env.ADMIN_EMAIL || '').trim().toLowerCase();
+  const users = parseAdminUsersJson();
+  const index = users.findIndex((user) => String(user.email || '').trim().toLowerCase() === email);
+
+  if (!email) throw userError('Informe o usuário para alterar.');
+  if (email === adminEmail) throw userError('O admin principal não pode ser alterado por aqui.');
+  if (index === -1) throw userError('Usuário não encontrado.', 404);
+
+  if (action === 'delete') {
+    users.splice(index, 1);
+    const saved = await saveVercelEnv('ADMIN_USERS_JSON', JSON.stringify(users));
+    return {
+      ok: true,
+      users: publicPanelUsers(users),
+      message: `${email} excluído. Faça Redeploy Vercel para bloquear esse login em produção.`,
+      saved
+    };
+  }
+
+  if (action === 'freeze' || action === 'activate') {
+    users[index].disabled = action === 'freeze';
+    const saved = await saveVercelEnv('ADMIN_USERS_JSON', JSON.stringify(users));
+    return {
+      ok: true,
+      users: publicPanelUsers(users),
+      message: action === 'freeze'
+        ? `${email} congelado. Faça Redeploy Vercel para bloquear esse login em produção.`
+        : `${email} ativado. Faça Redeploy Vercel para liberar esse login em produção.`,
+      saved
+    };
+  }
+
+  if (action !== 'update') throw userError('Ação de usuário inválida.');
+
+  const newEmail = String(body.newEmail || email).trim().toLowerCase();
+  const password = String(body.password || '');
+  const accounts = Array.isArray(body.accounts)
+    ? body.accounts.map((item) => normalizeAccountKey(item))
+    : [];
+  const availableKeys = new Set(availableAccounts.map((account) => account.account));
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail)) throw userError('Email do usuário inválido.');
+  if (newEmail === adminEmail) throw userError('Esse email já é o admin principal.');
+  if (password && password.length < 8) throw userError('Senha do usuário precisa ter pelo menos 8 caracteres.');
+  if (accounts.some((account) => !availableKeys.has(account))) throw userError('Uma das contas selecionadas não existe.');
+  if (users.some((user, userIndex) => userIndex !== index && String(user.email || '').trim().toLowerCase() === newEmail)) {
+    throw userError('Já existe outro usuário com esse email.');
+  }
+
+  users[index] = {
+    ...users[index],
+    email: newEmail,
+    role: 'user',
+    accounts,
+    disabled: Boolean(body.disabled)
+  };
+  if (password) users[index].password = password;
+
+  const saved = await saveVercelEnv('ADMIN_USERS_JSON', JSON.stringify(users));
+  return {
+    ok: true,
+    users: publicPanelUsers(users),
+    message: `${newEmail} atualizado. Faça Redeploy Vercel para aplicar no login em produção.`,
     saved
   };
 }
@@ -672,6 +752,14 @@ export default async function handler(req, res) {
         if (!isOwner(session)) throw userError('Apenas o admin principal pode criar usuarios.', 403);
         const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
         const result = await createPanelUser(body, accounts);
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json(result);
+        return;
+      }
+      if (body.action === 'update-user') {
+        if (!isOwner(session)) throw userError('Apenas o admin principal pode alterar usuarios.', 403);
+        const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
+        const result = await updatePanelUser(body, accounts);
         res.setHeader('cache-control', 'no-store');
         res.status(200).json(result);
         return;

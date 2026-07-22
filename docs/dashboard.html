@@ -1265,6 +1265,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       openAccessIndex: null,
       accounts: [],
       users: [],
+      editingUserEmail: null,
       sessionRole: null,
       selectedAccount: 'cliente-x',
       account: null
@@ -1478,6 +1479,56 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('queuePost').textContent = `Agendar pack (${appState.selectedAccount})`;
     }
 
+    function renderAccountCheckboxes(attribute, selectedAccounts = []) {
+      const selected = new Set(selectedAccounts || []);
+      const accounts = appState.accounts || [];
+      if (!accounts.length) {
+        return '<div class="empty">Nenhuma conta criada ainda. Sem conta marcada, o usuário pode criar a empresa dele do zero.</div>';
+      }
+      return accounts.map((account) => `
+        <label class="check">
+          <input type="checkbox" ${attribute} value="${escapeHtml(account.account)}" ${selected.has(account.account) ? 'checked' : ''}>
+          <div>
+            <strong>${escapeHtml(account.account)}</strong>
+            <span>${escapeHtml(account.expectedUsername || '')}</span>
+          </div>
+        </label>
+      `).join('');
+    }
+
+    function renderUserEditForm(user) {
+      return `
+        <div class="access-manager" data-user-edit-panel="${escapeHtml(user.email)}">
+          <label>
+            Email
+            <input id="editUserEmail" type="email" value="${escapeHtml(user.email)}">
+          </label>
+          <label>
+            Nova senha
+            <div class="password-row">
+              <input id="editUserPassword" type="password" autocomplete="new-password" placeholder="deixe vazio para manter">
+              <button type="button" data-toggle-password="editUserPassword">Mostrar</button>
+            </div>
+          </label>
+          <div>
+            <label>Contas liberadas</label>
+            <div class="checks">${renderAccountCheckboxes('data-edit-user-account', user.accounts || [])}</div>
+          </div>
+          <label>
+            Status
+            <select id="editUserStatus">
+              <option value="active" ${user.disabled ? '' : 'selected'}>Ativo</option>
+              <option value="disabled" ${user.disabled ? 'selected' : ''}>Congelado</option>
+            </select>
+          </label>
+          <div class="editor-actions">
+            <button class="primary" type="button" data-user-save="${escapeHtml(user.email)}">Salvar dados</button>
+            <button type="button" data-user-cancel>Cancelar</button>
+          </div>
+        </div>
+      `;
+    }
+
     function renderUsers() {
       const list = document.getElementById('usersList');
       const accountBox = document.getElementById('newUserAccounts');
@@ -1494,25 +1545,33 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         return;
       }
 
-      list.innerHTML = appState.users.length ? appState.users.map((user) => `
+      list.innerHTML = appState.users.length ? appState.users.map((user) => {
+        const canManage = user.role !== 'owner';
+        const accountText = (user.accounts || []).join(', ') || 'sem contas';
+        const statusText = user.disabled ? 'congelado' : 'ativo';
+        const dotClass = user.disabled ? 'bad' : user.role === 'owner' ? 'good' : 'warn';
+        return `
         <div class="check">
-          <span class="dot ${user.role === 'owner' ? 'good' : 'warn'}"></span>
+          <span class="dot ${dotClass}"></span>
           <div>
             <strong>${escapeHtml(user.email)}</strong>
-            <span>${escapeHtml(user.role || 'user')} · ${escapeHtml((user.accounts || []).join(', ') || 'sem contas')}</span>
+            <span>${escapeHtml(user.role || 'user')} · ${escapeHtml(statusText)} · ${escapeHtml(accountText)}</span>
+            ${canManage ? `
+              <div class="access-actions">
+                <button type="button" data-user-edit="${escapeHtml(user.email)}">Editar</button>
+                ${user.disabled
+                  ? `<button type="button" data-user-activate="${escapeHtml(user.email)}">Ativar</button>`
+                  : `<button type="button" data-user-freeze="${escapeHtml(user.email)}">Congelar</button>`}
+                <button type="button" data-user-delete="${escapeHtml(user.email)}">Excluir</button>
+              </div>
+              ${appState.editingUserEmail === user.email ? renderUserEditForm(user) : ''}
+            ` : ''}
           </div>
         </div>
-      `).join('') : '<div class="empty">Nenhum usuário adicional configurado.</div>';
+      `;
+      }).join('') : '<div class="empty">Nenhum usuário adicional configurado.</div>';
 
-      accountBox.innerHTML = (appState.accounts || []).map((account) => `
-        <label class="check">
-          <input type="checkbox" data-user-account value="${escapeHtml(account.account)}">
-          <div>
-            <strong>${escapeHtml(account.account)}</strong>
-            <span>${escapeHtml(account.expectedUsername || '')}</span>
-          </div>
-        </label>
-      `).join('');
+      accountBox.innerHTML = renderAccountCheckboxes('data-user-account');
     }
 
     async function switchAccount(event) {
@@ -1747,6 +1806,90 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       } finally {
         button.disabled = false;
         button.textContent = original;
+      }
+    }
+
+    async function updateUser(userAction, email, extra = {}, button = null) {
+      const result = document.getElementById('newUserResult');
+      const original = button?.textContent;
+      if (button) {
+        button.disabled = true;
+        button.textContent = 'Salvando';
+      }
+      result.textContent = 'Salvando alteração no Vercel...';
+
+      try {
+        const payload = await api('/api/state', {
+          method: 'POST',
+          body: JSON.stringify({
+            action: 'update-user',
+            userAction,
+            email,
+            ...extra
+          })
+        });
+        appState.users = payload.users || appState.users;
+        if (userAction === 'delete' || userAction === 'freeze' || userAction === 'activate') {
+          appState.editingUserEmail = null;
+        }
+        renderUsers();
+        result.textContent = payload.message || 'Usuário atualizado. Faça Redeploy Vercel para aplicar.';
+      } catch (error) {
+        result.textContent = error.message;
+      } finally {
+        if (button) {
+          button.disabled = false;
+          button.textContent = original;
+        }
+      }
+    }
+
+    async function saveUserEdit(email, button) {
+      const accounts = Array.from(document.querySelectorAll('[data-edit-user-account]:checked')).map((input) => input.value);
+      await updateUser('update', email, {
+        newEmail: document.getElementById('editUserEmail')?.value || email,
+        password: document.getElementById('editUserPassword')?.value || '',
+        accounts,
+        disabled: document.getElementById('editUserStatus')?.value === 'disabled'
+      }, button);
+    }
+
+    function handleUserManagementClick(event) {
+      const edit = event.target.closest('[data-user-edit]');
+      const freeze = event.target.closest('[data-user-freeze]');
+      const activate = event.target.closest('[data-user-activate]');
+      const remove = event.target.closest('[data-user-delete]');
+      const save = event.target.closest('[data-user-save]');
+      const cancel = event.target.closest('[data-user-cancel]');
+
+      if (edit) {
+        appState.editingUserEmail = edit.dataset.userEdit;
+        renderUsers();
+        document.getElementById('newUserResult').textContent = 'Edite os dados e clique em Salvar dados.';
+        return;
+      }
+      if (freeze) {
+        updateUser('freeze', freeze.dataset.userFreeze, {}, freeze);
+        return;
+      }
+      if (activate) {
+        updateUser('activate', activate.dataset.userActivate, {}, activate);
+        return;
+      }
+      if (remove) {
+        if (confirm(`Excluir ${remove.dataset.userDelete}? Depois clique em Redeploy Vercel para aplicar.`)) {
+          updateUser('delete', remove.dataset.userDelete, {}, remove);
+        }
+        return;
+      }
+      if (save) {
+        saveUserEdit(save.dataset.userSave, save);
+        return;
+      }
+      if (cancel) {
+        appState.editingUserEmail = null;
+        renderUsers();
+        document.getElementById('newUserResult').textContent = 'Edição cancelada.';
       }
     }
 
@@ -2450,6 +2593,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('redeployVercel').addEventListener('click', redeployVercel);
       document.getElementById('createAccount').addEventListener('click', createAccount);
       document.getElementById('createUser').addEventListener('click', createUser);
+      document.getElementById('usersList').addEventListener('click', handleUserManagementClick);
       document.getElementById('accessConfig').addEventListener('click', (event) => {
         const edit = event.target.closest('[data-access-edit]');
         const validate = event.target.closest('[data-access-validate]');
