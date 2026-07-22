@@ -432,6 +432,21 @@
       overflow-wrap: anywhere;
     }
 
+    .access-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .access-actions a {
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 900;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
     .empty {
       padding: 18px;
       border: 1px dashed var(--line);
@@ -1031,6 +1046,19 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             </div>
           </div>
         </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="section-label">Configuração</div>
+              <h2>Acessos conectados</h2>
+            </div>
+            <span class="status-pill good" id="accessStatus">Protegido</span>
+          </div>
+          <div class="checks" id="accessConfig">
+            <div class="empty">Faça login para carregar GitHub, Vercel, Meta e Instagram.</div>
+          </div>
+        </div>
       </aside>
     </main>
 
@@ -1076,7 +1104,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       localWriteMode: ['localhost', '127.0.0.1', '::1'].includes(location.hostname),
       privateMetrics: null,
       adminEmail: null,
-      secrets: []
+      secrets: [],
+      accessConfig: []
     };
 
     function escapeHtml(value = '') {
@@ -1195,6 +1224,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         appState.scheduleBrt = state.scheduleBrt || [];
         appState.scheduledPosts = state.scheduledPosts || [];
         appState.secrets = state.secrets || [];
+        appState.accessConfig = state.accessConfig || [];
         DATA.schedulesUtc = state.account?.scheduleUtc || DATA.schedulesUtc;
         DATA.packCount = state.packCount || DATA.packCount;
         DATA.uniqueCaptions = state.uniqueCaptions || DATA.uniqueCaptions;
@@ -1210,6 +1240,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         setMessage('Conteúdos carregados do projeto. Escolha um slot, edite e salve.', 'good');
         loadPrivateMetrics();
         renderSecretStatus();
+        renderAccessConfig();
       } catch (error) {
         setMessage(`Não consegui carregar pelo servidor: ${error.message}`, 'bad');
       }
@@ -1266,6 +1297,53 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         .map((secret) => `${secret.key}: ${secret.configured ? secret.masked : 'ausente'}`)
         .join(' · ');
       secretSummary.textContent = `${configured}/${secrets.length} configurados. ${list}. Valores completos não são exibidos.`;
+    }
+
+    function secretByKey(key) {
+      return (appState.secrets || []).find((secret) => secret.key === key);
+    }
+
+    function renderAccessConfig() {
+      const container = document.getElementById('accessConfig');
+      const status = document.getElementById('accessStatus');
+      const configs = appState.accessConfig || [];
+      if (!configs.length) {
+        container.innerHTML = '<div class="empty">Configuração de acessos ainda não carregada.</div>';
+        status.textContent = 'Aguardando';
+        status.className = 'status-pill warn';
+        return;
+      }
+
+      const configuredSecrets = (appState.secrets || []).filter((secret) => secret.configured).length;
+      status.textContent = appState.secrets?.length ? `${configuredSecrets}/${appState.secrets.length} secrets` : 'Protegido';
+      status.className = 'status-pill good';
+
+      container.innerHTML = configs.map((item) => {
+        const envs = (item.envKeys || []).map((key) => {
+          const secret = secretByKey(key);
+          if (!secret) return `${key}: protegido no provedor`;
+          return `${key}: ${secret.configured ? secret.masked : 'ausente'}`;
+        }).join(' · ');
+        const expiry = item.expiresAt ? ` · vence em ${escapeHtml(item.expiresAt)}` : '';
+        const links = [
+          item.managementUrl ? `<a href="${escapeHtml(item.managementUrl)}" target="_blank" rel="noreferrer">Gerenciar</a>` : '',
+          item.secondaryUrl ? `<a href="${escapeHtml(item.secondaryUrl)}" target="_blank" rel="noreferrer">Abrir</a>` : ''
+        ].filter(Boolean).join('');
+
+        return `
+          <div class="check">
+            <span class="dot good"></span>
+            <div>
+              <strong>${escapeHtml(item.platform)} · ${escapeHtml(item.account || 'conta configurada')}</strong>
+              <span>${escapeHtml(item.project || '')}${expiry}</span>
+              <span>${escapeHtml(item.purpose || '')}</span>
+              <span>${escapeHtml(envs || 'Sem variáveis listadas')}</span>
+              <span>${escapeHtml(item.status || '')} ${escapeHtml(item.action || '')}</span>
+              ${links ? `<div class="access-actions">${links}</div>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
     }
 
     async function loadPrivateMetrics() {

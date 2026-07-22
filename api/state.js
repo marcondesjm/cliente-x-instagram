@@ -41,6 +41,61 @@ const MAINTENANCE = {
   },
   note: 'Por segurança, o dashboard mostra o que renovar, mas não exibe nem edita valores de tokens.'
 };
+const ACCESS_CONFIG = [
+  {
+    platform: 'GitHub',
+    account: 'marcondesjm',
+    project: 'marcondesjm/cliente-x-instagram',
+    purpose: 'Disparar GitHub Actions e gravar agenda/conteúdo pelo painel.',
+    envKeys: ['GITHUB_TOKEN'],
+    managementUrl: 'https://github.com/settings/personal-access-tokens',
+    secondaryUrl: 'https://github.com/marcondesjm/cliente-x-instagram/actions/workflows/instagram-feed-cliente-x.yml',
+    status: 'Token fine-grained com Actions read/write e Contents read/write.',
+    action: 'Quando vencer, criar novo token para este repositório, trocar GITHUB_TOKEN no Vercel Production e redeployar.',
+    expiresAt: '2026-08-21'
+  },
+  {
+    platform: 'Vercel',
+    account: 'marcondes-machados-projects',
+    project: 'cliente-x-instagram',
+    purpose: 'Hospedar o painel protegido e guardar variáveis de produção.',
+    envKeys: [
+      'GITHUB_TOKEN',
+      'IMGBB_API_KEY',
+      'CLIENTE_X_INSTAGRAM_ACCESS_TOKEN',
+      'CLIENTE_X_INSTAGRAM_USER_ID',
+      'ADMIN_EMAIL',
+      'ADMIN_PASSWORD',
+      'ADMIN_SESSION_SECRET'
+    ],
+    managementUrl: 'https://vercel.com/marcondes-machados-projects/cliente-x-instagram/settings/environment-variables',
+    secondaryUrl: 'https://cliente-x-instagram.vercel.app',
+    status: 'Produção em cliente-x-instagram.vercel.app.',
+    action: 'Alterar variáveis em Production e criar novo deploy para aplicar.'
+  },
+  {
+    platform: 'Meta',
+    account: 'marcondes.machado.oficial',
+    project: 'Instagram Graph API',
+    purpose: 'Autorizar publicação no feed/story e leitura de métricas.',
+    envKeys: ['CLIENTE_X_INSTAGRAM_ACCESS_TOKEN', 'CLIENTE_X_INSTAGRAM_USER_ID'],
+    managementUrl: 'https://developers.facebook.com/tools/explorer/',
+    secondaryUrl: 'https://developers.facebook.com/apps/',
+    status: 'Usado pelas rotas de publicação e métricas privadas.',
+    action: 'Se a Meta bloquear ou expirar o token, gerar novo token, trocar no Vercel e nos GitHub Secrets, depois testar métricas.'
+  },
+  {
+    platform: 'Instagram',
+    account: 'marcondes.machado.oficial',
+    project: 'Conta profissional conectada ao Meta',
+    purpose: 'Destino final das publicações automatizadas.',
+    envKeys: ['CLIENTE_X_INSTAGRAM_USER_ID'],
+    managementUrl: 'https://www.instagram.com/marcondes.machado.oficial/',
+    secondaryUrl: 'https://business.facebook.com/latest/settings/instagram_accounts',
+    status: 'Conta esperada pelo projeto: marcondes.machado.oficial.',
+    action: 'Se trocar a conta, atualizar CLIENTE_X_INSTAGRAM_USER_ID e validar o usuário antes de publicar.'
+  }
+];
 const SECRET_KEYS = [
   'GITHUB_TOKEN',
   'CLIENTE_X_INSTAGRAM_ACCESS_TOKEN',
@@ -178,6 +233,7 @@ export default async function handler(req, res) {
       adminEmail: configuredAdminEmail() || null
     },
     maintenance: MAINTENANCE,
+    accessConfig: ACCESS_CONFIG,
     secrets: session ? secretStatuses() : [],
     scheduleBrt: account?.scheduleUtc?.map(cronToBrtTime) || [],
     packs,
