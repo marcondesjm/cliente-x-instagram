@@ -901,6 +901,11 @@
             <div class="note" id="contentNote">13 horários ativos</div>
           </div>
           <div class="metric">
+            <div class="label">Vigia automático</div>
+            <div class="value" id="watchdogMetricValue">Ativo</div>
+            <div class="note" id="watchdogMetricNote">Principal + backup monitorando</div>
+          </div>
+          <div class="metric">
             <div class="label">Última publicação local</div>
             <div class="value" id="lastPostTime">12:20</div>
             <div class="note">20/07/2026 · slot 3</div>
@@ -1658,12 +1663,20 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     function renderWatchdog() {
       const panel = document.getElementById('watchdogPanel');
       const status = document.getElementById('watchdogStatus');
+      const metricValue = document.getElementById('watchdogMetricValue');
+      const metricNote = document.getElementById('watchdogMetricNote');
       const errors = appState.watchdogErrors || [];
       const openError = errors.find((error) => error.status === 'open');
       const latestError = openError || errors[0] || null;
 
       status.textContent = openError ? 'Erro' : 'Ativo';
       status.className = `status-pill ${openError ? 'bad' : 'good'}`;
+      if (metricValue) metricValue.textContent = openError ? 'Erro' : 'Ativo';
+      if (metricNote) {
+        metricNote.textContent = openError
+          ? `Slot ${openError.slotIndex ?? '--'} com falha registrada`
+          : 'Principal + backup monitorando';
+      }
 
       const rows = [
         {
