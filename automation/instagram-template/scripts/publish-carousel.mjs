@@ -312,6 +312,31 @@ const AUTO_CONTENT_CONTEXTS = [
   }
 ];
 
+const ENGAGEMENT_INTELLIGENCE = {
+  eyebrowHooks: [
+    'Para salvar',
+    'Insight prático',
+    'Atenção',
+    'Aplicação real',
+    'Antes de automatizar',
+    'Decisão'
+  ],
+  titleClosers: [
+    'O ponto é simples:',
+    'Veja o que muda:',
+    'Na prática:',
+    'O ganho aparece aqui:',
+    'O erro comum é este:'
+  ],
+  ctas: [
+    'Salve este post para revisar antes de automatizar uma rotina.',
+    'Envie para alguém que ainda está tentando resolver isso só no esforço manual.',
+    'Comente "IA" se você quer transformar essa rotina em processo.',
+    'Use este raciocínio como checklist antes de escolher qualquer ferramenta.'
+  ],
+  visualVariants: ['focus', 'numbered', 'quote', 'signal']
+};
+
 function autoPack(topic, angle, context, sequence, runStamp = null) {
   const runLine = runStamp ? `\n\nEdição operacional ${runStamp}.` : '';
   return {
@@ -344,6 +369,91 @@ function autoPack(topic, angle, context, sequence, runStamp = null) {
       }
     ],
     caption: `${topic.area} com IA não começa pela ferramenta.\n\nComeça quando você identifica que ${topic.pain}, descreve o processo e define o que precisa ser conferido antes de escalar.\n\n${angle.action}\n\nO melhor sinal para acompanhar é ${context.proof}.${runLine}\n\nSérie prática ${String(sequence + 1).padStart(3, '0')}: automação boa transforma rotina em sistema.\n\n${topic.hashtag}`
+  };
+}
+
+function splitCaptionParts(caption = '') {
+  const lines = String(caption).trim().split(/\r?\n/);
+  const hashtagLines = lines.filter((line) => line.trim().startsWith('#'));
+  const bodyLines = lines.filter((line) => !line.trim().startsWith('#'));
+  return {
+    body: bodyLines.join('\n').trim(),
+    hashtags: hashtagLines.join('\n').trim()
+  };
+}
+
+function compactSentence(text = '', maxLength = 132) {
+  const clean = String(text || '').replace(/\s+/g, ' ').trim();
+  if (clean.length <= maxLength) return clean;
+  const sliced = clean.slice(0, maxLength);
+  return `${sliced.slice(0, Math.max(0, sliced.lastIndexOf(' '))).trim()}.`;
+}
+
+function engagementVariant(dateString, slotIndex, offset = 0) {
+  return ENGAGEMENT_INTELLIGENCE.visualVariants[
+    pickDailyIndex(ENGAGEMENT_INTELLIGENCE.visualVariants, dateString, slotIndex + offset)
+  ];
+}
+
+function enhanceSlide(slide, index, dateString, slotIndex) {
+  const next = { ...slide };
+  if (next.imagePath || next.imageUrl) return next;
+
+  next.visualVariant = engagementVariant(dateString, slotIndex, index);
+  if (index === 0) {
+    next.eyebrow = ENGAGEMENT_INTELLIGENCE.eyebrowHooks[
+      pickDailyIndex(ENGAGEMENT_INTELLIGENCE.eyebrowHooks, dateString, slotIndex)
+    ];
+    if (next.body && !/[?!.]$/.test(next.body.trim())) next.body = `${next.body.trim()}.`;
+  } else if (next.body && next.body.length > 150) {
+    next.body = compactSentence(next.body, 148);
+  }
+
+  if (index > 0 && index < 4 && next.title && !next.title.includes(':')) {
+    const closer = ENGAGEMENT_INTELLIGENCE.titleClosers[
+      pickDailyIndex(ENGAGEMENT_INTELLIGENCE.titleClosers, dateString, slotIndex + index)
+    ];
+    next.body = `${closer} ${next.body || ''}`.trim();
+  }
+
+  return next;
+}
+
+function enhanceCaption(caption, dateString, slotIndex) {
+  const { body, hashtags } = splitCaptionParts(caption);
+  const cta = ENGAGEMENT_INTELLIGENCE.ctas[
+    pickDailyIndex(ENGAGEMENT_INTELLIGENCE.ctas, dateString, slotIndex)
+  ];
+  const hasCta = /salve|envie|comente|compartilhe|mande/i.test(body);
+  const enhancedBody = hasCta ? body : `${body}\n\n${cta}`;
+  return [enhancedBody.trim(), hashtags].filter(Boolean).join('\n\n');
+}
+
+function enhancePackForEngagement(pack, dateString, slotIndex) {
+  if (process.env.INSTAGRAM_TEMPLATE_DISABLE_ENGAGEMENT_AI === 'true') {
+    return {
+      pack,
+      intelligence: {
+        enabled: false,
+        reason: 'INSTA_TEMPLATE_DISABLE_ENGAGEMENT_AI ativo.'
+      }
+    };
+  }
+
+  const enhanced = JSON.parse(JSON.stringify(pack));
+  enhanced.slides = (enhanced.slides || []).map((slide, index) => enhanceSlide(slide, index, dateString, slotIndex));
+  enhanced.caption = enhanceCaption(enhanced.caption || '', dateString, slotIndex);
+  enhanced.engagementIntelligence = {
+    version: 1,
+    appliedAt: new Date().toISOString(),
+    strategy: 'hook + CTA + visual variance',
+    visualVariants: enhanced.slides.map((slide) => slide.visualVariant || 'custom-image'),
+    captionCtaAdded: enhanced.caption !== pack.caption
+  };
+
+  return {
+    pack: enhanced,
+    intelligence: enhanced.engagementIntelligence
   };
 }
 
@@ -552,6 +662,16 @@ async function launchChromium() {
 }
 
 function slideHtml(slide, index, total, account, style) {
+  const variant = slide.visualVariant || 'focus';
+  const titleSize = variant === 'quote' ? 74 : variant === 'signal' ? 86 : 82;
+  const bodySize = variant === 'numbered' ? 40 : 42;
+  const align = variant === 'quote' ? 'center' : 'left';
+  const rail = variant === 'numbered'
+    ? `<div class="rail">${String(index).padStart(2, '0')}</div>`
+    : '';
+  const signal = variant === 'signal'
+    ? '<div class="signal"><span></span><span></span><span></span></div>'
+    : '';
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -585,13 +705,18 @@ function slideHtml(slide, index, total, account, style) {
       background-size: 46px 46px;
       transform: rotate(-7deg);
     }
+    .rail { position: absolute; left: 70px; bottom: 160px; font-size: 150px; line-height: 1; font-weight: 900; color: ${style.accent}; opacity: 0.16; z-index: 1; }
+    .signal { position: absolute; right: 70px; bottom: 92px; display: flex; gap: 14px; z-index: 1; }
+    .signal span { width: 16px; height: 88px; border-radius: 99px; background: ${style.accent}; opacity: 0.28; }
+    .signal span:nth-child(2) { height: 132px; opacity: 0.52; }
+    .signal span:nth-child(3) { height: 62px; opacity: 0.2; }
     section, footer { position: relative; z-index: 2; }
     .top { display: flex; align-items: center; justify-content: space-between; gap: 28px; }
     .brand { font-size: 34px; font-weight: 900; color: ${style.text}; }
     .eyebrow { font-size: 28px; font-weight: 900; color: ${style.accent}; text-transform: uppercase; text-align: right; }
-    .content { display: flex; flex-direction: column; gap: 34px; }
-    h1 { max-width: 850px; font-size: 82px; line-height: 1.03; font-weight: 900; color: ${style.text}; letter-spacing: 0; }
-    p { max-width: 830px; font-size: 42px; line-height: 1.18; font-weight: 800; color: ${style.muted}; letter-spacing: 0; }
+    .content { display: flex; flex-direction: column; gap: 34px; text-align: ${align}; align-items: ${align === 'center' ? 'center' : 'flex-start'}; }
+    h1 { max-width: 850px; font-size: ${titleSize}px; line-height: 1.03; font-weight: 900; color: ${style.text}; letter-spacing: 0; }
+    p { max-width: 830px; font-size: ${bodySize}px; line-height: 1.18; font-weight: 800; color: ${style.muted}; letter-spacing: 0; }
     .bar { width: ${index % 2 === 0 ? '148px' : '220px'}; height: 12px; background: ${style.accent}; }
     footer { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; color: #AEB8B2; font-size: 26px; font-weight: 800; }
     footer strong { display: block; color: ${style.text}; font-size: 30px; font-weight: 900; }
@@ -599,6 +724,8 @@ function slideHtml(slide, index, total, account, style) {
 </head>
 <body>
   <main>
+    ${rail}
+    ${signal}
     <section class="top">
       <div class="brand">${account.brandName}</div>
       <div class="eyebrow">${slide.eyebrow}</div>
@@ -650,6 +777,9 @@ async function renderSlides(runDir, slides, account, style) {
 }
 
 function storyHtml(slide, account, style) {
+  const variant = slide.visualVariant || 'focus';
+  const titleSize = variant === 'quote' ? 82 : 90;
+  const align = variant === 'quote' ? 'center' : 'left';
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -683,12 +813,13 @@ function storyHtml(slide, account, style) {
       background-size: 50px 50px;
       transform: rotate(-7deg);
     }
+    .story-mark { position: absolute; right: 76px; bottom: 180px; width: 180px; height: 180px; border: 18px solid ${style.accent}; border-radius: 50%; opacity: 0.18; z-index: 1; }
     section, footer { position: relative; z-index: 2; }
     .brand { font-size: 38px; font-weight: 900; color: ${style.text}; }
     .eyebrow { font-size: 32px; font-weight: 900; color: ${style.accent}; text-transform: uppercase; margin-top: 110px; }
-    .content { display: flex; flex-direction: column; gap: 38px; }
+    .content { display: flex; flex-direction: column; gap: 38px; text-align: ${align}; align-items: ${align === 'center' ? 'center' : 'flex-start'}; }
     .bar { width: 210px; height: 14px; background: ${style.accent}; }
-    h1 { max-width: 880px; font-size: 90px; line-height: 1.03; font-weight: 900; color: ${style.text}; letter-spacing: 0; }
+    h1 { max-width: 880px; font-size: ${titleSize}px; line-height: 1.03; font-weight: 900; color: ${style.text}; letter-spacing: 0; }
     p { max-width: 850px; font-size: 44px; line-height: 1.2; font-weight: 800; color: ${style.muted}; letter-spacing: 0; }
     footer { color: #AEB8B2; font-size: 30px; font-weight: 800; }
     footer strong { display: block; color: ${style.text}; font-size: 36px; font-weight: 900; margin-bottom: 6px; }
@@ -696,6 +827,7 @@ function storyHtml(slide, account, style) {
 </head>
 <body>
   <main>
+    <div class="story-mark"></div>
     <section>
       <div class="brand">${account.brandName}</div>
       <div class="eyebrow">${slide.eyebrow}</div>
@@ -942,7 +1074,11 @@ async function main() {
   const runId = `${timestampSaoPaulo()}-slot-${slotIndex}${args.renderOnly ? '-render-only' : ''}`;
   const runDir = join(RUNS_DIR, account.account, runId);
   mkdirSync(runDir, { recursive: true });
-  writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, account: account.account, visualStyle: style.name, ...pack }, null, 2), 'utf8');
+  const enhancement = enhancePackForEngagement(pack, today, slotIndex);
+  pack = enhancement.pack;
+  validatePack(pack);
+  writeFileSync(join(runDir, 'engagement-intelligence.json'), JSON.stringify(enhancement.intelligence, null, 2), 'utf8');
+  writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, account: account.account, visualStyle: style.name, intelligence: enhancement.intelligence, ...pack }, null, 2), 'utf8');
   writeFileSync(join(runDir, 'caption.txt'), pack.caption, 'utf8');
   const storyOnly = publishMode === 'story-only';
   const imagePaths = storyOnly ? [] : await renderSlides(runDir, pack.slides, account, style);
