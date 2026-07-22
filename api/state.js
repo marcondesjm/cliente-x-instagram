@@ -686,6 +686,41 @@ async function createAccountConfig(body = {}, session = null) {
   };
 }
 
+async function updateAccountProfile(body = {}, session = null) {
+  const accountKey = normalizeAccountKey(body.account);
+  const accountsFile = await readGithubConfig(ACCOUNTS_FILE_PATH);
+  const index = accountsFile.data.findIndex((item) => item.account === accountKey);
+  if (index === -1) throw userError(`Conta ${accountKey} nao encontrada.`, 404);
+  if (!canAccessAccount(session, accountsFile.data[index])) {
+    throw userError('Seu usuario nao pode alterar esta conta.', 403);
+  }
+
+  const contentProfile = {
+    niche: String(body.niche || '').trim(),
+    audience: String(body.audience || '').trim(),
+    offer: String(body.offer || '').trim(),
+    tone: String(body.tone || 'consultivo').trim() || 'consultivo'
+  };
+  if (!contentProfile.niche || !contentProfile.audience || !contentProfile.offer) {
+    throw userError('Informe nicho, publico ideal e oferta principal para atualizar a conta.');
+  }
+
+  accountsFile.data[index] = {
+    ...accountsFile.data[index],
+    expectedUsername: String(body.expectedUsername || accountsFile.data[index].expectedUsername || '').replace(/^@/, '').trim(),
+    brandName: String(body.brandName || accountsFile.data[index].brandName || accountKey).trim(),
+    footerText: String(body.footerText || accountsFile.data[index].footerText || 'IA aplicada a empresas').trim(),
+    contentProfile
+  };
+
+  await writeGithubConfig(ACCOUNTS_FILE_PATH, accountsFile.data, accountsFile.sha, `Update profile for ${accountKey}`);
+  return {
+    ok: true,
+    account: accountsFile.data[index],
+    message: `Perfil editorial de ${accountKey} atualizado. As próximas postagens automáticas usarão esse direcionamento.`
+  };
+}
+
 async function readScheduledGroups() {
   const token = process.env.GITHUB_TOKEN || process.env.GITHUB_PAT;
   if (!token) return readJson(SCHEDULED_POSTS_PATH);
@@ -792,6 +827,12 @@ export default async function handler(req, res) {
       }
       if (body.action === 'create-account') {
         const result = await createAccountConfig(body, session);
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json(result);
+        return;
+      }
+      if (body.action === 'update-account-profile') {
+        const result = await updateAccountProfile(body, session);
         res.setHeader('cache-control', 'no-store');
         res.status(200).json(result);
         return;

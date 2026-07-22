@@ -1179,6 +1179,62 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         <div class="panel">
           <div class="panel-head">
             <div>
+              <div class="section-label">Estratégia</div>
+              <h2>Perfil editorial da conta ativa</h2>
+            </div>
+            <span class="status-pill good" id="activeProfileStatus">Configurado</span>
+          </div>
+          <div class="checks">
+            <div class="check">
+              <span class="dot good"></span>
+              <div>
+                <strong>Próximas postagens</strong>
+                <span>Esse perfil orienta os conteúdos automáticos da conta selecionada.</span>
+              </div>
+            </div>
+          </div>
+          <div class="access-manager">
+            <label>
+              Instagram
+              <input id="activeAccountUsername" placeholder="ex: marcondes.machado.oficial">
+            </label>
+            <label>
+              Nome/marca
+              <input id="activeAccountBrand" placeholder="ex: Marcondes Machado">
+            </label>
+            <label>
+              Rodapé dos posts
+              <input id="activeAccountFooter" placeholder="ex: IA aplicada a empresas">
+            </label>
+            <label>
+              Nicho
+              <input id="activeAccountNiche" placeholder="ex: automação com IA para empresas">
+            </label>
+            <label>
+              Público ideal
+              <input id="activeAccountAudience" placeholder="ex: donos e gestores de empresas">
+            </label>
+            <label>
+              Oferta principal
+              <input id="activeAccountOffer" placeholder="ex: consultoria e automações com IA">
+            </label>
+            <label>
+              Tom das postagens
+              <select id="activeAccountTone">
+                <option value="consultivo">Consultivo</option>
+                <option value="autoridade">Autoridade</option>
+                <option value="educativo">Educativo</option>
+                <option value="provocativo">Provocativo</option>
+              </select>
+            </label>
+            <button class="primary" id="saveActiveProfile" type="button">Salvar perfil editorial</button>
+            <div class="access-result" id="activeProfileResult">Configure esta conta para orientar as próximas postagens.</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
               <div class="section-label">Multi-conta</div>
               <h2>Adicionar conta</h2>
             </div>
@@ -1471,6 +1527,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         document.getElementById('contentCount').textContent = DATA.packCount;
         document.getElementById('contentNote').textContent = `${DATA.schedulesUtc.length} horários ativos`;
         renderAccountSwitcher();
+        renderActiveProfile();
         renderUsers();
         renderVersion(state.activeVersion);
         renderMaintenance(state.maintenance);
@@ -1535,6 +1592,24 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       subline.textContent = `${username} · ${footer}`;
       document.getElementById('publishNow').textContent = `Publicar agora (${appState.selectedAccount})`;
       document.getElementById('queuePost').textContent = `Agendar pack (${appState.selectedAccount})`;
+    }
+
+    function renderActiveProfile() {
+      const account = appState.account || {};
+      const profile = account.contentProfile || {};
+      const hasProfile = Boolean(profile.niche && profile.audience && profile.offer);
+      document.getElementById('activeProfileStatus').textContent = hasProfile ? 'Configurado' : 'Pendente';
+      document.getElementById('activeProfileStatus').className = `status-pill ${hasProfile ? 'good' : 'warn'}`;
+      document.getElementById('activeAccountUsername').value = account.expectedUsername || '';
+      document.getElementById('activeAccountBrand').value = account.brandName || '';
+      document.getElementById('activeAccountFooter').value = account.footerText || '';
+      document.getElementById('activeAccountNiche').value = profile.niche || '';
+      document.getElementById('activeAccountAudience').value = profile.audience || '';
+      document.getElementById('activeAccountOffer').value = profile.offer || '';
+      document.getElementById('activeAccountTone').value = profile.tone || 'consultivo';
+      document.getElementById('activeProfileResult').textContent = hasProfile
+        ? `Perfil ativo para @${account.expectedUsername || appState.selectedAccount}.`
+        : 'Informe nicho, público e oferta para orientar as próximas postagens.';
     }
 
     function renderAccountCheckboxes(attribute, selectedAccounts = []) {
@@ -1953,6 +2028,40 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         document.getElementById('newAccountOffer').value = '';
         document.getElementById('newAccountTone').value = 'consultivo';
         result.textContent = payload.message || 'Conta criada.';
+        await loadState();
+      } catch (error) {
+        result.textContent = error.message;
+      } finally {
+        button.disabled = false;
+        button.textContent = original;
+      }
+    }
+
+    async function saveActiveProfile() {
+      const button = document.getElementById('saveActiveProfile');
+      const result = document.getElementById('activeProfileResult');
+      const original = button.textContent;
+      button.disabled = true;
+      button.textContent = 'Salvando';
+      result.textContent = 'Atualizando perfil editorial no GitHub...';
+
+      try {
+        const payload = await api('/api/state', {
+          method: 'POST',
+          body: JSON.stringify({
+            action: 'update-account-profile',
+            account: appState.selectedAccount,
+            expectedUsername: document.getElementById('activeAccountUsername').value.trim(),
+            brandName: document.getElementById('activeAccountBrand').value.trim(),
+            footerText: document.getElementById('activeAccountFooter').value.trim(),
+            niche: document.getElementById('activeAccountNiche').value.trim(),
+            audience: document.getElementById('activeAccountAudience').value.trim(),
+            offer: document.getElementById('activeAccountOffer').value.trim(),
+            tone: document.getElementById('activeAccountTone').value
+          })
+        });
+        appState.account = payload.account || appState.account;
+        result.textContent = payload.message || 'Perfil editorial salvo.';
         await loadState();
       } catch (error) {
         result.textContent = error.message;
@@ -2795,6 +2904,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('refreshRuns').addEventListener('click', refreshRuns);
       document.getElementById('accountSelect').addEventListener('change', switchAccount);
       document.getElementById('redeployVercel').addEventListener('click', redeployVercel);
+      document.getElementById('saveActiveProfile').addEventListener('click', saveActiveProfile);
       document.getElementById('createAccount').addEventListener('click', createAccount);
       document.getElementById('createUser').addEventListener('click', createUser);
       document.getElementById('usersList').addEventListener('click', handleUserManagementClick);
