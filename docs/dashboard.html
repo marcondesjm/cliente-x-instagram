@@ -1062,6 +1062,25 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         <div class="panel">
           <div class="panel-head">
             <div>
+              <div class="section-label">Automação</div>
+              <h2>Vigia automático</h2>
+            </div>
+            <span class="status-pill good" id="watchdogStatus">Ativo</span>
+          </div>
+          <div class="checks" id="watchdogPanel">
+            <div class="check">
+              <span class="dot good"></span>
+              <div>
+                <strong>Principal e backup ativos</strong>
+                <span>Monitorando horários atrasados sem depender do painel aberto.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
               <div class="section-label">Repositório</div>
               <h2>Versão ativa</h2>
             </div>
@@ -1422,6 +1441,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         renderUsers();
         renderVersion(state.activeVersion);
         renderMaintenance(state.maintenance);
+        renderWatchdog();
         renderSchedule();
         renderScheduleEditor();
         renderQueue();
@@ -1617,6 +1637,75 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         .map((secret) => `${secret.key}: ${secret.configured ? secret.masked : 'ausente'}`)
         .join(' · ');
       secretSummary.textContent = `${configured}/${secrets.length} configurados. ${list}. Valores completos não são exibidos.`;
+    }
+
+    function formatDateTime(value) {
+      if (!value) return '--';
+      try {
+        return new Intl.DateTimeFormat('pt-BR', {
+          timeZone: 'America/Sao_Paulo',
+          day: '2-digit',
+          month: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        }).format(new Date(value));
+      } catch {
+        return String(value);
+      }
+    }
+
+    function renderWatchdog() {
+      const panel = document.getElementById('watchdogPanel');
+      const status = document.getElementById('watchdogStatus');
+      const errors = appState.watchdogErrors || [];
+      const openError = errors.find((error) => error.status === 'open');
+      const latestError = openError || errors[0] || null;
+
+      status.textContent = openError ? 'Erro' : 'Ativo';
+      status.className = `status-pill ${openError ? 'bad' : 'good'}`;
+
+      const rows = [
+        {
+          level: openError ? 'bad' : 'good',
+          title: openError ? `Erro aberto no slot ${openError.slotIndex ?? '--'}` : 'Sem erro aberto',
+          body: openError
+            ? `${openError.stage || 'etapa desconhecida'}: ${openError.error || 'erro sem detalhe'}`
+            : 'Principal e backup estão ativos e qualquer slot atrasado entra na fila automática.'
+        },
+        {
+          level: 'good',
+          title: 'Workflow principal',
+          body: 'Instagram Feed Cliente X roda nos minutos 03, 08, 13, 18, 23, 28, 33, 38, 43, 48, 53 e 58.'
+        },
+        {
+          level: 'good',
+          title: 'Workflow backup',
+          body: 'Instagram Watchdog Backup roda nos minutos 01, 06, 11, 16, 21, 26, 31, 36, 41, 46, 51 e 56.'
+        },
+        {
+          level: latestError?.status === 'resolved' ? 'good' : latestError ? 'warn' : 'good',
+          title: latestError ? `Último registro: ${latestError.status || 'open'}` : 'Log de erros pronto',
+          body: latestError
+            ? `Falhou em ${formatDateTime(latestError.failedAt)}${latestError.resolvedAt ? ` e resolveu em ${formatDateTime(latestError.resolvedAt)}` : ''}. Solução: ${latestError.solution || 'abrir o run e corrigir a etapa indicada.'}`
+            : 'Se uma tentativa automática falhar, o vigia grava etapa, erro, solução e link do run.'
+        }
+      ];
+
+      panel.innerHTML = rows.map((row) => `
+        <div class="check">
+          <span class="dot ${row.level}"></span>
+          <div>
+            <strong>${escapeHtml(row.title)}</strong>
+            <span>${escapeHtml(row.body)}</span>
+            ${latestError?.runUrl && row.title.startsWith('Último registro') ? `
+              <div class="access-actions">
+                <a href="${escapeHtml(latestError.runUrl)}" target="_blank" rel="noreferrer">Abrir run</a>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `).join('');
     }
 
     function secretByKey(key) {
