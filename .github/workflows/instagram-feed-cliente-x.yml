@@ -56,6 +56,26 @@ on:
           - "10"
           - "11"
           - "12"
+      publish_mode:
+        description: "Publish mode"
+        required: true
+        default: "feed-and-story"
+        type: choice
+        options:
+          - "feed-and-story"
+          - "story-only"
+      scheduled_only:
+        description: "Run only due manual queue"
+        required: true
+        default: "false"
+        type: choice
+        options:
+          - "true"
+          - "false"
+      pack_json:
+        description: "Optional pack JSON from dashboard"
+        required: false
+        default: ""
 
 jobs:
   instagram-feed:
@@ -64,7 +84,9 @@ jobs:
     env:
       ACCOUNT: ${{ github.event.inputs.account || 'cliente-x' }}
       DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run || 'false' }}
-      SCHEDULED_ONLY: ${{ github.event_name == 'schedule' && github.event.schedule == '*/10 * * * *' && 'true' || 'false' }}
+      SCHEDULED_ONLY: ${{ ((github.event_name == 'workflow_dispatch' && github.event.inputs.scheduled_only == 'true') || (github.event_name == 'schedule' && github.event.schedule == '*/10 * * * *')) && 'true' || 'false' }}
+      INSTAGRAM_TEMPLATE_PACK_JSON: ${{ github.event.inputs.pack_json || '' }}
+      INSTAGRAM_TEMPLATE_PUBLISH_MODE: ${{ github.event.inputs.publish_mode || 'feed-and-story' }}
       CLIENTE_X_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.CLIENTE_X_INSTAGRAM_ACCESS_TOKEN }}
       CLIENTE_X_INSTAGRAM_USER_ID: ${{ secrets.CLIENTE_X_INSTAGRAM_USER_ID }}
       IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
@@ -133,6 +155,9 @@ jobs:
           fi
           if [ "$SCHEDULED_ONLY" = "true" ]; then
             ARGS="$ARGS --scheduled-only"
+          fi
+          if [ "$INSTAGRAM_TEMPLATE_PUBLISH_MODE" = "story-only" ]; then
+            ARGS="$ARGS --story-only"
           fi
           npm run instagram -- --account "$ACCOUNT" $ARGS
 

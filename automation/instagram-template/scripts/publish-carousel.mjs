@@ -862,7 +862,16 @@ async function main() {
   let packIndex = pickDailyIndex(packs, today, slotIndex);
   let skippedDuplicates = 0;
   let scheduledPost = null;
-  let publishMode = args.storyOnly ? 'story-only' : 'feed-and-story';
+  let publishMode = process.env.INSTAGRAM_TEMPLATE_PUBLISH_MODE === 'story-only' || args.storyOnly
+    ? 'story-only'
+    : 'feed-and-story';
+  let dashboardPack = null;
+  if (process.env.INSTAGRAM_TEMPLATE_PACK_JSON?.trim()) {
+    dashboardPack = JSON.parse(process.env.INSTAGRAM_TEMPLATE_PACK_JSON);
+    validatePack(dashboardPack);
+    pack = dashboardPack;
+    packIndex = `dashboard-${slotIndex}`;
+  }
 
   if (!args.renderOnly) {
     scheduledPost = dueScheduledPost(args.configDir, account.account).post;
@@ -904,7 +913,7 @@ async function main() {
       throw new Error(`Conta errada: esperado ${account.expectedUsername}, retornou ${igAccount.username}.`);
     }
 
-    if (!scheduledPost && !args.storyOnly) {
+    if (!scheduledPost && !dashboardPack && !args.storyOnly) {
       const recentMedia = await fetchRecentMedia(userId, token);
       const fresh = pickFreshPack(packs, today, slotIndex, recentMedia);
       if (!fresh.pack) {
