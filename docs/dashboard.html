@@ -1597,7 +1597,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         const canManage = user.role !== 'owner';
         const accountText = (user.accounts || []).join(', ') || 'sem contas';
         const statusText = user.disabled ? 'congelado' : 'ativo';
-        const dotClass = user.disabled ? 'bad' : user.role === 'owner' ? 'good' : 'warn';
+        const hasAccounts = user.role === 'owner' || (user.accounts || []).length > 0;
+        const dotClass = user.disabled ? 'bad' : hasAccounts ? 'good' : 'warn';
         return `
         <div class="check">
           <span class="dot ${dotClass}"></span>
