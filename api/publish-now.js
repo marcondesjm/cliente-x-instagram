@@ -1,4 +1,4 @@
-import { requireAdmin } from './_auth.js';
+import { requireAdmin } from '../lib/auth.js';
 
 const OWNER = 'marcondesjm';
 const REPO = 'cliente-x-instagram';

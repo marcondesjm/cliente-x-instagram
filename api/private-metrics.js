@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { requireAdmin } from './_auth.js';
+import { requireAdmin } from '../lib/auth.js';
 
 const ROOT = process.cwd();
 const ACCOUNTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'accounts.json');

@@ -1,5 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import {
+  clearSessionCookie,
+  configuredAdminEmail,
+  createSessionCookie,
+  getSession,
+  hasAdminConfig,
+  validateLogin
+} from '../lib/auth.js';
 
 const ROOT = process.cwd();
 const CONTENT_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'content-packs.json');
@@ -33,6 +41,13 @@ const MAINTENANCE = {
   },
   note: 'Por segurança, o dashboard mostra o que renovar, mas não exibe nem edita valores de tokens.'
 };
+const SECRET_KEYS = [
+  'GITHUB_TOKEN',
+  'CLIENTE_X_INSTAGRAM_ACCESS_TOKEN',
+  'CLIENTE_X_INSTAGRAM_USER_ID',
+  'IMGBB_API_KEY',
+  'ADMIN_EMAIL'
+];
 
 function readJson(path) {
   return JSON.parse(readFileSync(path, 'utf8').replace(/^\uFEFF/, ''));
@@ -46,6 +61,40 @@ function cronToBrtTime(cron) {
   const [minute, hour] = cron.split(' ').map(Number);
   const brtHour = (hour + 21) % 24;
   return `${String(brtHour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+}
+
+function maskSecret(value = '') {
+  const text = String(value || '');
+  if (!text) return '';
+  if (text.length <= 10) return `${text.slice(0, 2)}...${text.slice(-2)}`;
+  return `${text.slice(0, 6)}...${text.slice(-4)}`;
+}
+
+function secretStatuses() {
+  return SECRET_KEYS.map((key) => {
+    const value = process.env[key] || '';
+    return {
+      key,
+      configured: Boolean(value),
+      masked: maskSecret(value),
+      length: value.length
+    };
+  });
+}
+
+function readBody(req) {
+  return new Promise((resolve, reject) => {
+    let raw = '';
+    req.on('data', (chunk) => { raw += chunk; });
+    req.on('end', () => {
+      try {
+        resolve(raw ? JSON.parse(raw) : {});
+      } catch (error) {
+        reject(error);
+      }
+    });
+    req.on('error', reject);
+  });
 }
 
 async function readScheduledGroups() {
@@ -69,11 +118,40 @@ async function readScheduledGroups() {
 }
 
 export default async function handler(req, res) {
+  if (req.method === 'POST') {
+    try {
+      const body = await readBody(req);
+      if (body.action === 'login') {
+        const email = String(body.email || '').trim();
+        const password = String(body.password || '');
+        if (!validateLogin(email, password)) {
+          res.status(401).json({ error: 'Email ou senha invalidos.' });
+          return;
+        }
+        res.setHeader('Set-Cookie', createSessionCookie(email));
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json({ ok: true, authenticated: true, email });
+        return;
+      }
+      if (body.action === 'logout') {
+        res.setHeader('Set-Cookie', clearSessionCookie());
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json({ ok: true, authenticated: false });
+        return;
+      }
+      res.status(400).json({ error: 'Acao invalida.' });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+    return;
+  }
+
   if (req.method !== 'GET') {
     res.status(405).json({ error: 'Metodo nao permitido.' });
     return;
   }
 
+  const session = getSession(req);
   const accounts = readJson(ACCOUNTS_PATH);
   const content = readJson(CONTENT_PATH);
   const account = accounts.find((item) => item.account === ACCOUNT);
@@ -93,7 +171,14 @@ export default async function handler(req, res) {
         ? `https://github.com/${OWNER}/${REPO}/commit/${process.env.VERCEL_GIT_COMMIT_SHA}`
         : ACTIVE_VERSION.stableCommitUrl
     },
+    session: {
+      authenticated: Boolean(session),
+      email: session?.email || null,
+      adminConfigured: hasAdminConfig(),
+      adminEmail: configuredAdminEmail() || null
+    },
     maintenance: MAINTENANCE,
+    secrets: session ? secretStatuses() : [],
     scheduleBrt: account?.scheduleUtc?.map(cronToBrtTime) || [],
     packs,
     packCount: packs.length,

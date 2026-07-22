@@ -1075,7 +1075,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       serverMode: location.protocol.startsWith('http'),
       localWriteMode: ['localhost', '127.0.0.1', '::1'].includes(location.hostname),
       privateMetrics: null,
-      adminEmail: null
+      adminEmail: null,
+      secrets: []
     };
 
     function escapeHtml(value = '') {
@@ -1130,7 +1131,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     }
 
     async function checkSession() {
-      const session = await api('/api/auth/session');
+      const state = await api('/api/state');
+      const session = state.session || {};
       if (!session.adminConfigured) {
         showLogin('Admin ainda não configurado no Vercel.');
         return false;
@@ -1152,9 +1154,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       button.textContent = 'Entrando';
       error.textContent = '';
       try {
-        const session = await api('/api/auth/login', {
+        const session = await api('/api/state', {
           method: 'POST',
           body: JSON.stringify({
+            action: 'login',
             email: document.getElementById('adminEmail').value,
             password: document.getElementById('adminPassword').value
           })
@@ -1172,7 +1175,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     }
 
     async function logout() {
-      await api('/api/auth/logout', { method: 'POST' });
+      await api('/api/state', {
+        method: 'POST',
+        body: JSON.stringify({ action: 'logout' })
+      });
       appState.adminEmail = null;
       showLogin('Sessão encerrada.');
     }
@@ -1188,6 +1194,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         appState.packs = state.packs || [];
         appState.scheduleBrt = state.scheduleBrt || [];
         appState.scheduledPosts = state.scheduledPosts || [];
+        appState.secrets = state.secrets || [];
         DATA.schedulesUtc = state.account?.scheduleUtc || DATA.schedulesUtc;
         DATA.packCount = state.packCount || DATA.packCount;
         DATA.uniqueCaptions = state.uniqueCaptions || DATA.uniqueCaptions;
@@ -1202,7 +1209,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         renderEditor();
         setMessage('Conteúdos carregados do projeto. Escolha um slot, edite e salve.', 'good');
         loadPrivateMetrics();
-        loadSecretStatus();
+        renderSecretStatus();
       } catch (error) {
         setMessage(`Não consegui carregar pelo servidor: ${error.message}`, 'bad');
       }
@@ -1247,19 +1254,18 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       status.className = 'status-pill warn';
     }
 
-    async function loadSecretStatus() {
+    function renderSecretStatus() {
       const secretSummary = document.getElementById('secretSummary');
-      try {
-        const payload = await api('/api/admin/secrets');
-        const configured = (payload.secrets || []).filter((secret) => secret.configured).length;
-        const total = (payload.secrets || []).length;
-        const list = (payload.secrets || [])
-          .map((secret) => `${secret.key}: ${secret.configured ? secret.masked : 'ausente'}`)
-          .join(' · ');
-        secretSummary.textContent = `${configured}/${total} configurados. ${list}. ${payload.message}`;
-      } catch (error) {
-        secretSummary.textContent = `Não consegui conferir secrets: ${error.message}`;
+      const secrets = appState.secrets || [];
+      if (!secrets.length) {
+        secretSummary.textContent = 'Faça login para conferir valores mascarados.';
+        return;
       }
+      const configured = secrets.filter((secret) => secret.configured).length;
+      const list = secrets
+        .map((secret) => `${secret.key}: ${secret.configured ? secret.masked : 'ausente'}`)
+        .join(' · ');
+      secretSummary.textContent = `${configured}/${secrets.length} configurados. ${list}. Valores completos não são exibidos.`;
     }
 
     async function loadPrivateMetrics() {

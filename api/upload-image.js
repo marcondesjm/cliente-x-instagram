@@ -1,4 +1,4 @@
-import { requireAdmin } from './_auth.js';
+import { requireAdmin } from '../lib/auth.js';
 
 function json(res, status, body) {
   res.setHeader('cache-control', 'no-store');
