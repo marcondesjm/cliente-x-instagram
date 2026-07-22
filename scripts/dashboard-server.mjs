@@ -163,9 +163,24 @@ function json(res, status, body) {
   const payload = JSON.stringify(body, null, 2);
   res.writeHead(status, {
     'content-type': 'application/json; charset=utf-8',
-    'cache-control': 'no-store'
+    'cache-control': 'no-store',
+    'access-control-allow-origin': '*',
+    'access-control-allow-methods': 'GET,POST,OPTIONS',
+    'access-control-allow-headers': 'content-type',
+    'access-control-allow-private-network': 'true'
   });
   res.end(payload);
+}
+
+function options(res) {
+  res.writeHead(204, {
+    'access-control-allow-origin': '*',
+    'access-control-allow-methods': 'GET,POST,OPTIONS',
+    'access-control-allow-headers': 'content-type',
+    'access-control-allow-private-network': 'true',
+    'access-control-max-age': '86400'
+  });
+  res.end();
 }
 
 function readBody(req) {
@@ -536,6 +551,7 @@ async function handleApi(req, res, url) {
 
 const server = createServer(async (req, res) => {
   const url = new URL(req.url, `http://localhost:${PORT}`);
+  if (req.method === 'OPTIONS') return options(res);
   if (url.pathname.startsWith('/api/')) return handleApi(req, res, url);
 
   const path = safeStaticPath(url.pathname);
