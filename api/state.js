@@ -570,6 +570,45 @@ function envPrefixFromAccount(accountKey) {
   return accountKey.toUpperCase().replace(/[^A-Z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'CLIENTE';
 }
 
+function buildInitialPacksForProfile(profile = {}, brandName = '') {
+  const niche = profile.niche || 'empresas';
+  const audience = profile.audience || 'donos e gestores';
+  const offer = profile.offer || 'automação com IA';
+  const tone = profile.tone || 'consultivo';
+  return [
+    {
+      slides: [
+        {
+          eyebrow: 'Diagnóstico',
+          title: `${brandName || niche}: onde a IA pode gerar resultado?`,
+          body: `Antes de escolher ferramenta, entenda a rotina que mais pesa para ${audience}.`
+        },
+        {
+          eyebrow: 'Nicho',
+          title: `O contexto muda tudo em ${niche}.`,
+          body: `A comunicação precisa falar da dor real, da decisão e do risco que esse público já sente.`
+        },
+        {
+          eyebrow: 'Oferta',
+          title: `${offer} precisa parecer prático.`,
+          body: 'Mostre aplicação, consequência e próximo passo. Conteúdo bonito sem clareza não gera conversa.'
+        },
+        {
+          eyebrow: 'Linha editorial',
+          title: `Tom ${tone}, com prova e direção.`,
+          body: 'Cada post deve ensinar algo útil e abrir uma porta para atendimento, diagnóstico ou reunião.'
+        },
+        {
+          eyebrow: 'Próximo passo',
+          title: 'A automação começa pelo posicionamento.',
+          body: 'Com nicho, público e oferta definidos, a IA cria posts mais específicos e menos genéricos.'
+        }
+      ],
+      caption: `${brandName || niche} com IA não começa pela ferramenta.\n\nComeça entendendo o nicho, o público e a oferta.\n\nPara ${audience}, o conteúdo precisa mostrar um problema real, uma aplicação clara e um próximo passo simples.\n\nAqui a linha editorial será ${tone}: útil, direta e conectada a ${offer}.\n\n#inteligenciaartificial #automacao #marketingdigital #gestao #negocios`
+    }
+  ];
+}
+
 async function addAccountToPanelUser(email, accountKey) {
   if (!email || isOwner({ email, role: email === process.env.ADMIN_EMAIL ? 'owner' : 'user' })) return null;
   const users = parseAdminUsersJson();
@@ -585,8 +624,17 @@ async function createAccountConfig(body = {}, session = null) {
   const expectedUsername = String(body.expectedUsername || '').replace(/^@/, '').trim();
   const brandName = String(body.brandName || accountKey).trim();
   const footerText = String(body.footerText || 'IA aplicada a empresas').trim();
+  const contentProfile = {
+    niche: String(body.niche || '').trim(),
+    audience: String(body.audience || '').trim(),
+    offer: String(body.offer || '').trim(),
+    tone: String(body.tone || 'consultivo').trim() || 'consultivo'
+  };
   const sourceAccount = normalizeAccountKey(body.sourceAccount || 'cliente-x');
   if (!expectedUsername) throw userError('Informe o @ do Instagram sem espaco.');
+  if (!contentProfile.niche || !contentProfile.audience || !contentProfile.offer) {
+    throw userError('Informe nicho, publico ideal e oferta principal para criar a conta.');
+  }
 
   const envPrefix = envPrefixFromAccount(accountKey);
   const [accountsFile, contentFile, queueFile] = await Promise.all([
@@ -600,7 +648,6 @@ async function createAccountConfig(body = {}, session = null) {
   }
 
   const source = accountsFile.data.find((item) => item.account === sourceAccount) || accountsFile.data[0] || {};
-  const sourceContent = contentFile.data.find((item) => item.account === sourceAccount) || contentFile.data[0] || { packs: [] };
 
   const newAccount = {
     account: accountKey,
@@ -610,6 +657,7 @@ async function createAccountConfig(body = {}, session = null) {
     accessTokenEnv: `${envPrefix}_INSTAGRAM_ACCESS_TOKEN`,
     userIdEnv: `${envPrefix}_INSTAGRAM_USER_ID`,
     imgbbKeyEnv: `${envPrefix}_IMGBB_API_KEY`,
+    contentProfile,
     scheduleUtc: Array.isArray(source.scheduleUtc) ? source.scheduleUtc : [],
     ...(session && !isOwner(session) ? { ownerEmail: session.email } : {})
   };
@@ -617,7 +665,7 @@ async function createAccountConfig(body = {}, session = null) {
   accountsFile.data.push(newAccount);
   contentFile.data.push({
     account: accountKey,
-    packs: JSON.parse(JSON.stringify(sourceContent.packs || []))
+    packs: buildInitialPacksForProfile(contentProfile, brandName || accountKey)
   });
   if (!queueFile.data.some((item) => item.account === accountKey)) {
     queueFile.data.push({ account: accountKey, posts: [] });

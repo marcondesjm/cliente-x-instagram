@@ -1203,8 +1203,29 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               Rodapé dos posts
               <input id="newAccountFooter" placeholder="ex: IA aplicada ao jurídico">
             </label>
+            <label>
+              Nicho
+              <input id="newAccountNiche" placeholder="ex: advocacia médica, estética, imobiliário">
+            </label>
+            <label>
+              Público ideal
+              <input id="newAccountAudience" placeholder="ex: médicos donos de clínica">
+            </label>
+            <label>
+              Oferta principal
+              <input id="newAccountOffer" placeholder="ex: planejamento jurídico e contratos">
+            </label>
+            <label>
+              Tom das postagens
+              <select id="newAccountTone">
+                <option value="consultivo">Consultivo</option>
+                <option value="autoridade">Autoridade</option>
+                <option value="educativo">Educativo</option>
+                <option value="provocativo">Provocativo</option>
+              </select>
+            </label>
             <button class="primary" id="createAccount" type="button">Criar conta</button>
-            <div class="access-result" id="newAccountResult">Use letras, números e hífen na chave da conta.</div>
+            <div class="access-result" id="newAccountResult">Informe nicho, público e oferta para a inteligência criar posts alinhados à nova conta.</div>
           </div>
         </div>
 
@@ -1886,6 +1907,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const expectedUsername = document.getElementById('newAccountUsername').value.trim();
       const brandName = document.getElementById('newAccountBrand').value.trim();
       const footerText = document.getElementById('newAccountFooter').value.trim();
+      const niche = document.getElementById('newAccountNiche').value.trim();
+      const audience = document.getElementById('newAccountAudience').value.trim();
+      const offer = document.getElementById('newAccountOffer').value.trim();
+      const tone = document.getElementById('newAccountTone').value;
 
       button.disabled = true;
       button.textContent = 'Criando';
@@ -1900,6 +1925,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             expectedUsername,
             brandName,
             footerText,
+            niche,
+            audience,
+            offer,
+            tone,
             sourceAccount: appState.selectedAccount
           })
         });
@@ -1908,6 +1937,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         document.getElementById('newAccountUsername').value = '';
         document.getElementById('newAccountBrand').value = '';
         document.getElementById('newAccountFooter').value = '';
+        document.getElementById('newAccountNiche').value = '';
+        document.getElementById('newAccountAudience').value = '';
+        document.getElementById('newAccountOffer').value = '';
+        document.getElementById('newAccountTone').value = 'consultivo';
         result.textContent = payload.message || 'Conta criada.';
         await loadState();
       } catch (error) {

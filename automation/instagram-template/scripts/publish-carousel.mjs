@@ -492,6 +492,36 @@ function buildLastResortPack(dateString, slotIndex) {
   );
 }
 
+function profileTopicFromAccount(account = {}) {
+  const profile = account.contentProfile || {};
+  if (!profile.niche && !profile.audience && !profile.offer) return null;
+  const niche = profile.niche || account.brandName || 'negócio';
+  const audience = profile.audience || 'clientes';
+  const offer = profile.offer || 'solução com IA';
+  const tone = profile.tone || 'consultivo';
+  return {
+    area: niche,
+    pain: `${audience} ainda precisa entender o valor de ${offer}`,
+    process: `dor do público, promessa, prova, objeções e próximo passo em tom ${tone}`,
+    gain: `transformar interesse em conversa sobre ${offer}`,
+    hashtag: '#inteligenciaartificial #automacao #marketingdigital #negocios #conteudo'
+  };
+}
+
+function buildProfileContentPacks(account, dateString, slotIndex, runStamp = null) {
+  const topic = profileTopicFromAccount(account);
+  if (!topic) return [];
+  const packs = [];
+  for (const [angleIndex, angle] of AUTO_CONTENT_ANGLES.entries()) {
+    for (const [contextIndex, context] of AUTO_CONTENT_CONTEXTS.entries()) {
+      const sequence = (angleIndex * AUTO_CONTENT_CONTEXTS.length) + contextIndex;
+      packs.push(autoPack(topic, angle, context, sequence, runStamp));
+    }
+  }
+  const start = pickDailyIndex(packs, dateString, slotIndex);
+  return [...packs.slice(start), ...packs.slice(0, start)];
+}
+
 function timestampSaoPaulo() {
   const parts = new Intl.DateTimeFormat('en-CA', {
     timeZone: 'America/Sao_Paulo',
@@ -977,7 +1007,8 @@ async function main() {
 
   const today = todaySaoPaulo();
   const slotIndex = readSlotIndex();
-  const autoPacks = buildAutoContentPacks(today, slotIndex);
+  const profilePacks = buildProfileContentPacks(account, today, slotIndex);
+  const autoPacks = profilePacks.length ? profilePacks : buildAutoContentPacks(today, slotIndex);
   validatePacks(autoPacks);
   if (args.validateCopy) {
     console.log(JSON.stringify({
