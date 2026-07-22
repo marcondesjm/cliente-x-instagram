@@ -129,15 +129,18 @@ function saveScheduledPost(body) {
   if (!Number.isInteger(packIndex) || packIndex < 0 || packIndex >= packs.length) {
     throw new Error('Pack invalido para agendamento.');
   }
+  const pack = body.pack || packs[packIndex];
+  validatePack(pack);
 
   const { groups, group } = ensureScheduledPosts();
   const post = {
     id: `manual-${Date.now()}`,
     status: 'pending',
     packIndex,
+    pack,
     scheduledFor: body.publishNow ? new Date().toISOString() : brtDateTimeToIso(body.date, body.time),
     mode: body.mode === 'story-only' ? 'story-only' : 'feed-and-story',
-    title: packs[packIndex]?.slides?.[0]?.title || `Pack ${packIndex}`,
+    title: pack?.slides?.[0]?.title || `Pack ${packIndex}`,
     createdAt: new Date().toISOString()
   };
   group.posts.push(post);

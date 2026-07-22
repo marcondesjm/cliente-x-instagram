@@ -965,6 +965,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       selectedPack: 0,
       selectedSlide: 0,
       serverMode: location.protocol.startsWith('http'),
+      localWriteMode: ['localhost', '127.0.0.1', '::1'].includes(location.hostname),
       privateMetrics: null
     };
 
@@ -992,7 +993,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           ...(options.headers || {})
         }
       });
-      const payload = await response.json();
+      const text = await response.text();
+      let payload = {};
+      try {
+        payload = text ? JSON.parse(text) : {};
+      } catch {
+        throw new Error(`HTTP ${response.status}: resposta invalida do servidor`);
+      }
       if (!response.ok || payload.error) throw new Error(payload.error || `HTTP ${response.status}`);
       return payload;
     }
@@ -1140,13 +1147,14 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     }
 
     async function scheduleSelectedPost(publishNow = false) {
-      if (!appState.serverMode) {
+      if (!appState.localWriteMode) {
         setMessage('Essa ação precisa do servidor local: npm run dashboard', 'bad');
         return;
       }
       syncEditorToState();
       const body = {
         packIndex: appState.selectedPack,
+        pack: currentPack(),
         date: document.getElementById('manualDate').value,
         time: document.getElementById('manualTime').value,
         mode: document.getElementById('manualMode').value,
@@ -1185,7 +1193,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     }
 
     async function saveSchedule() {
-      if (!appState.serverMode) {
+      if (!appState.localWriteMode) {
         setMessage('Para salvar horários, abra com: npm run dashboard', 'bad');
         return;
       }
@@ -1319,7 +1327,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     async function uploadSlideImage(input) {
       const file = input.files?.[0];
       if (!file) return;
-      if (!appState.serverMode) {
+      if (!appState.localWriteMode) {
         setMessage('Upload precisa do servidor local: npm run dashboard', 'bad');
         return;
       }
@@ -1334,10 +1342,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           })
         });
         syncEditorToState();
-        appState.packs[appState.selectedPack].slides[slideIndex].imagePath = payload.imagePath;
-        appState.packs[appState.selectedPack].slides[slideIndex].imageUrl = '';
+        appState.packs[appState.selectedPack].slides[slideIndex].imagePath = payload.imagePath || '';
+        appState.packs[appState.selectedPack].slides[slideIndex].imageUrl = payload.imageUrl || '';
         renderEditor();
-        setMessage('Imagem anexada ao slide. Clique em Salvar conteúdo para gravar no pack.', 'good');
+        setMessage('Imagem anexada ao slide. Agendar/Publicar agora usará essa imagem; Salvar conteúdo grava no pack.', 'good');
       } catch (error) {
         setMessage(error.message, 'bad');
       } finally {
@@ -1356,7 +1364,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     }
 
     async function saveSelectedPack() {
-      if (!appState.serverMode) {
+      if (!appState.localWriteMode) {
         setMessage('Para salvar no arquivo, abra com: npm run dashboard', 'bad');
         return;
       }
@@ -1380,7 +1388,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     }
 
     async function runServerAction(path, button, runningText) {
-      if (!appState.serverMode) {
+      if (!appState.localWriteMode) {
         setMessage('Essa ação precisa do servidor local: npm run dashboard', 'bad');
         return;
       }
@@ -1404,7 +1412,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     }
 
     async function runQueueAction(path, button, runningText) {
-      if (!appState.serverMode) {
+      if (!appState.localWriteMode) {
         setMessage('Essa ação precisa do servidor local: npm run dashboard', 'bad');
         return;
       }

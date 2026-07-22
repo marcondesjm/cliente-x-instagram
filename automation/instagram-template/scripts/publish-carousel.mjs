@@ -868,10 +868,14 @@ async function main() {
     scheduledPost = dueScheduledPost(args.configDir, account.account).post;
     if (scheduledPost) {
       process.env.INSTAGRAM_TEMPLATE_ACTIVE_SCHEDULED_POST_ID = scheduledPost.id;
-      if (!Number.isInteger(scheduledPost.packIndex) || scheduledPost.packIndex < 0 || scheduledPost.packIndex >= packs.length) {
+      if (scheduledPost.pack) {
+        validatePack(scheduledPost.pack);
+        pack = scheduledPost.pack;
+      } else if (!Number.isInteger(scheduledPost.packIndex) || scheduledPost.packIndex < 0 || scheduledPost.packIndex >= packs.length) {
         throw new Error(`Post agendado ${scheduledPost.id} aponta para pack invalido: ${scheduledPost.packIndex}.`);
+      } else {
+        pack = packs[scheduledPost.packIndex];
       }
-      pack = packs[scheduledPost.packIndex];
       packIndex = `scheduled-${scheduledPost.packIndex}`;
       publishMode = scheduledPost.mode === 'story-only' ? 'story-only' : 'feed-and-story';
       console.log(`Post agendado selecionado: ${scheduledPost.id} pack ${scheduledPost.packIndex} (${scheduledPost.scheduledFor}).`);
