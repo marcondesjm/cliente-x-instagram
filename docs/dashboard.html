@@ -1187,11 +1187,11 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               <input id="newUserPassword" type="password" autocomplete="new-password" placeholder="mínimo 8 caracteres">
             </label>
             <div>
-              <label>Contas liberadas</label>
+              <label>Contas liberadas (opcional)</label>
               <div class="checks" id="newUserAccounts"></div>
             </div>
             <button class="primary" id="createUser" type="button">Criar usuário</button>
-            <div class="access-result" id="newUserResult">Depois de criar usuário, clique em Redeploy Vercel para ativar o login.</div>
+            <div class="access-result" id="newUserResult">Sem marcar conta, o usuário entra e cria a empresa dele do zero. Depois clique em Redeploy Vercel.</div>
           </div>
         </div>
       </aside>
@@ -1270,7 +1270,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     }
 
     function accountParam() {
-      return encodeURIComponent(appState.selectedAccount || 'cliente-x');
+      return encodeURIComponent(appState.selectedAccount || '');
     }
 
     function withAccount(path) {
@@ -1281,7 +1281,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     function bodyWithAccount(body = {}) {
       return JSON.stringify({
         ...body,
-        account: appState.selectedAccount || 'cliente-x'
+        account: appState.selectedAccount || ''
       });
     }
 
@@ -1382,7 +1382,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         appState.accounts = state.accounts || [];
         appState.users = state.users || [];
         appState.sessionRole = state.session?.role || appState.sessionRole;
-        appState.selectedAccount = state.selectedAccount || appState.selectedAccount;
+        appState.selectedAccount = state.selectedAccount || state.accounts?.[0]?.account || '';
         appState.account = state.account || null;
         appState.packs = state.packs || [];
         appState.scheduleBrt = state.scheduleBrt || [];
@@ -1434,7 +1434,15 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     function renderAccountSwitcher() {
       const select = document.getElementById('accountSelect');
       const subline = document.getElementById('accountSubline');
-      const accounts = appState.accounts.length ? appState.accounts : [{ account: appState.selectedAccount }];
+      const accounts = appState.accounts.length ? appState.accounts : [];
+      if (!accounts.length) {
+        select.innerHTML = '<option value="">Crie sua conta</option>';
+        select.value = '';
+        subline.textContent = 'Nenhuma empresa criada ainda';
+        document.getElementById('publishNow').textContent = 'Publicar agora (sem conta)';
+        document.getElementById('queuePost').textContent = 'Agendar pack (sem conta)';
+        return;
+      }
       select.innerHTML = accounts.map((account) => {
         const label = `${account.account}${account.expectedUsername ? ` · ${account.expectedUsername}` : ''}`;
         return `<option value="${escapeHtml(account.account)}">${escapeHtml(label)}</option>`;
@@ -1487,7 +1495,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     }
 
     async function switchAccount(event) {
-      appState.selectedAccount = event.target.value || 'cliente-x';
+      appState.selectedAccount = event.target.value || '';
       appState.openAccessIndex = null;
       appState.privateMetrics = null;
       setMessage(`Carregando conta ${appState.selectedAccount}...`, 'warn');

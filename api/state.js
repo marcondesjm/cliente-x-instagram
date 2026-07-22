@@ -165,6 +165,20 @@ function accountEnvRole(key) {
   return { role: null, account };
 }
 
+function accountForSecretKey(accounts, key) {
+  return accounts.find((account) => (
+    account.accessTokenEnv === key ||
+    account.userIdEnv === key ||
+    account.imgbbKeyEnv === key
+  ));
+}
+
+function canManageSecret(session, key, accounts = []) {
+  if (isOwner(session)) return true;
+  const account = accountForSecretKey(accounts, key);
+  return Boolean(account && canAccessAccount(session, account));
+}
+
 function readJson(path) {
   return JSON.parse(readFileSync(path, 'utf8').replace(/^\uFEFF/, ''));
 }
@@ -365,7 +379,6 @@ async function createPanelUser(body = {}, availableAccounts = []) {
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw userError('Email do usuario invalido.');
   if (password.length < 8) throw userError('Senha do usuario precisa ter pelo menos 8 caracteres.');
-  if (!accounts.length) throw userError('Selecione pelo menos uma conta para o usuario.');
   if (accounts.some((account) => !availableKeys.has(account))) throw userError('Uma das contas selecionadas nao existe.');
   if (email === String(process.env.ADMIN_EMAIL || '').toLowerCase()) throw userError('Esse email ja e o admin principal.');
 
@@ -381,7 +394,9 @@ async function createPanelUser(body = {}, availableAccounts = []) {
   return {
     ok: true,
     users: users.map((user) => ({ email: user.email, role: user.role || 'user', accounts: user.accounts || [] })),
-    message: `${email} salvo em ADMIN_USERS_JSON. Faça redeploy para esse login entrar em vigor.`,
+    message: accounts.length
+      ? `${email} salvo em ADMIN_USERS_JSON. Faça redeploy para esse login entrar em vigor.`
+      : `${email} salvo sem conta vinculada. Faça redeploy; ele poderá entrar e criar a empresa dele do zero.`,
     saved
   };
 }
@@ -473,7 +488,17 @@ function envPrefixFromAccount(accountKey) {
   return accountKey.toUpperCase().replace(/[^A-Z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'CLIENTE';
 }
 
-async function createAccountConfig(body = {}) {
+async function addAccountToPanelUser(email, accountKey) {
+  if (!email || isOwner({ email, role: email === process.env.ADMIN_EMAIL ? 'owner' : 'user' })) return null;
+  const users = parseAdminUsersJson();
+  const user = users.find((item) => String(item.email || '').toLowerCase() === String(email).toLowerCase());
+  if (!user) return null;
+  user.accounts = [...new Set([...(Array.isArray(user.accounts) ? user.accounts : []), accountKey])];
+  await saveVercelEnv('ADMIN_USERS_JSON', JSON.stringify(users));
+  return users.map((item) => ({ email: item.email, role: item.role || 'user', accounts: item.accounts || [] }));
+}
+
+async function createAccountConfig(body = {}, session = null) {
   const accountKey = normalizeAccountKey(body.account);
   const expectedUsername = String(body.expectedUsername || '').replace(/^@/, '').trim();
   const brandName = String(body.brandName || accountKey).trim();
@@ -503,7 +528,8 @@ async function createAccountConfig(body = {}) {
     accessTokenEnv: `${envPrefix}_INSTAGRAM_ACCESS_TOKEN`,
     userIdEnv: `${envPrefix}_INSTAGRAM_USER_ID`,
     imgbbKeyEnv: `${envPrefix}_IMGBB_API_KEY`,
-    scheduleUtc: Array.isArray(source.scheduleUtc) ? source.scheduleUtc : []
+    scheduleUtc: Array.isArray(source.scheduleUtc) ? source.scheduleUtc : [],
+    ...(session && !isOwner(session) ? { ownerEmail: session.email } : {})
   };
 
   accountsFile.data.push(newAccount);
@@ -518,10 +544,14 @@ async function createAccountConfig(body = {}) {
   await writeGithubConfig(ACCOUNTS_FILE_PATH, accountsFile.data, accountsFile.sha, `Add Instagram account ${accountKey}`);
   await writeGithubConfig(CONTENT_FILE_PATH, contentFile.data, contentFile.sha, `Add content packs for ${accountKey}`);
   await writeGithubConfig(SCHEDULED_FILE_PATH, queueFile.data, queueFile.sha, `Add scheduled queue for ${accountKey}`);
+  const users = session && !isOwner(session)
+    ? await addAccountToPanelUser(session.email, accountKey)
+    : null;
 
   return {
     ok: true,
     account: newAccount,
+    users,
     message: `Conta ${accountKey} criada no GitHub. Configure os envs ${newAccount.accessTokenEnv}, ${newAccount.userIdEnv} e ${newAccount.imgbbKeyEnv} no painel.`
   };
 }
@@ -594,9 +624,13 @@ export default async function handler(req, res) {
         return;
       }
       if (body.action === 'validate-access') {
-        if (!isOwner(session)) throw userError('Apenas o admin principal pode validar acessos.', 403);
+        const key = String(body.key || '').trim();
+        const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
+        if (!canManageSecret(session, key, accounts)) {
+          throw userError('Seu usuario so pode validar acessos das proprias contas.', 403);
+        }
         const result = await validateAccessValue(
-          String(body.key || '').trim(),
+          key,
           String(body.value || ''),
           body.companion || {}
         );
@@ -605,8 +639,11 @@ export default async function handler(req, res) {
         return;
       }
       if (body.action === 'save-access') {
-        if (!isOwner(session)) throw userError('Apenas o admin principal pode salvar acessos.', 403);
         const key = String(body.key || '').trim();
+        const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
+        if (!canManageSecret(session, key, accounts)) {
+          throw userError('Seu usuario so pode salvar acessos das proprias contas.', 403);
+        }
         const value = String(body.value || '');
         const validation = await validateAccessValue(key, value, body.companion || {});
         const saved = await saveVercelEnv(key, value);
@@ -620,14 +657,12 @@ export default async function handler(req, res) {
         return;
       }
       if (body.action === 'create-account') {
-        if (!isOwner(session)) throw userError('Apenas o admin principal pode criar contas.', 403);
-        const result = await createAccountConfig(body);
+        const result = await createAccountConfig(body, session);
         res.setHeader('cache-control', 'no-store');
         res.status(200).json(result);
         return;
       }
       if (body.action === 'redeploy-vercel') {
-        if (!isOwner(session)) throw userError('Apenas o admin principal pode fazer redeploy.', 403);
         const result = await redeployVercelProduction();
         res.setHeader('cache-control', 'no-store');
         res.status(200).json(result);
@@ -656,15 +691,47 @@ export default async function handler(req, res) {
   const session = getSession(req);
   const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
   const allowedAccounts = session && !isOwner(session)
-    ? accounts.filter((item) => canAccessAccount(session, item.account))
+    ? accounts.filter((item) => canAccessAccount(session, item))
     : accounts;
   if (session && !allowedAccounts.length) {
-    res.status(403).json({ error: 'Seu usuario nao tem nenhuma conta liberada.' });
+    res.setHeader('cache-control', 'no-store');
+    res.status(200).json({
+      account: null,
+      accounts: [],
+      selectedAccount: null,
+      activeVersion: {
+        ...ACTIVE_VERSION,
+        currentCommit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || ACTIVE_VERSION.stableCommit,
+        currentCommitFull: process.env.VERCEL_GIT_COMMIT_SHA || ACTIVE_VERSION.stableCommit,
+        currentCommitUrl: process.env.VERCEL_GIT_COMMIT_SHA
+          ? `https://github.com/${OWNER}/${REPO}/commit/${process.env.VERCEL_GIT_COMMIT_SHA}`
+          : ACTIVE_VERSION.stableCommitUrl
+      },
+      session: {
+        authenticated: true,
+        email: session.email,
+        role: session.role,
+        accounts: session.accounts || [],
+        adminConfigured: hasAdminConfig(),
+        adminEmail: configuredAdminEmail() || null
+      },
+      users: [],
+      maintenance: MAINTENANCE,
+      accessConfig: [],
+      secrets: [],
+      scheduleBrt: [],
+      packs: [],
+      packCount: 0,
+      uniqueCaptions: 0,
+      scheduledPosts: [],
+      latestResult: null,
+      latestFailure: null
+    });
     return;
   }
 
   let accountKey = accountFromQuery(req);
-  if (session && !canAccessAccount(session, accountKey)) {
+  if (session && !canAccessAccount(session, accounts.find((item) => item.account === accountKey) || accountKey)) {
     accountKey = allowedAccounts[0]?.account || accountKey;
   }
   const content = await readConfigGroups(CONTENT_FILE_PATH, CONTENT_PATH);
