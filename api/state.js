@@ -157,6 +157,12 @@ function vercelTokenFromEnv() {
   return process.env.VERCEL_TOKEN || process.env.VERCEL_ACCESS_TOKEN || '';
 }
 
+function userError(message, statusCode = 400) {
+  const error = new Error(message);
+  error.statusCode = statusCode;
+  return error;
+}
+
 function vercelApiPath(path) {
   const url = new URL(`https://api.vercel.com${path}`);
   if (VERCEL_TEAM_ID) url.searchParams.set('teamId', VERCEL_TEAM_ID);
@@ -164,7 +170,7 @@ function vercelApiPath(path) {
 }
 
 async function vercelFetch(path, options = {}, token = vercelTokenFromEnv()) {
-  if (!token) throw new Error('Configure VERCEL_TOKEN para salvar variaveis pelo painel.');
+  if (!token) throw userError('Configure VERCEL_TOKEN para salvar variaveis pelo painel.');
   const response = await fetch(vercelApiPath(path), {
     ...options,
     headers: {
@@ -175,28 +181,28 @@ async function vercelFetch(path, options = {}, token = vercelTokenFromEnv()) {
   });
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) {
-    throw new Error(payload.error?.message || payload.message || `Vercel HTTP ${response.status}`);
+    throw userError(payload.error?.message || payload.message || `Vercel HTTP ${response.status}`, response.status);
   }
   return payload;
 }
 
 async function validateAccessValue(key, value, companion = {}) {
   const text = String(value || '').trim();
-  if (!EDITABLE_SECRET_KEYS.has(key)) throw new Error('Variavel nao permitida.');
-  if (!text) throw new Error('Cole um valor antes de validar.');
+  if (!EDITABLE_SECRET_KEYS.has(key)) throw userError('Variavel nao permitida.');
+  if (!text) throw userError('Cole um valor antes de validar.');
 
   if (key === 'ADMIN_EMAIL') {
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)) throw new Error('Email invalido.');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)) throw userError('Email invalido.');
     return { ok: true, message: 'Email admin valido.' };
   }
 
   if (key === 'ADMIN_PASSWORD') {
-    if (text.length < 8) throw new Error('Senha precisa ter pelo menos 8 caracteres.');
+    if (text.length < 8) throw userError('Senha precisa ter pelo menos 8 caracteres.');
     return { ok: true, message: 'Senha admin com tamanho valido.' };
   }
 
   if (key === 'ADMIN_SESSION_SECRET') {
-    if (text.length < 32) throw new Error('ADMIN_SESSION_SECRET precisa ter pelo menos 32 caracteres.');
+    if (text.length < 32) throw userError('ADMIN_SESSION_SECRET precisa ter pelo menos 32 caracteres.');
     return { ok: true, message: 'Chave de sessao com tamanho valido.' };
   }
 
@@ -208,7 +214,7 @@ async function validateAccessValue(key, value, companion = {}) {
         'x-github-api-version': '2022-11-28'
       }
     });
-    if (!response.ok) throw new Error(`GitHub recusou o token: HTTP ${response.status}.`);
+    if (!response.ok) throw userError(`GitHub recusou o token: HTTP ${response.status}.`, response.status);
     const workflow = await response.json();
     return { ok: true, message: `GitHub validado: workflow ${workflow.name || 'instagram-feed-cliente-x.yml'} acessivel.` };
   }
@@ -220,11 +226,11 @@ async function validateAccessValue(key, value, companion = {}) {
     const userId = key === 'CLIENTE_X_INSTAGRAM_USER_ID'
       ? text
       : String(companion.userId || process.env.CLIENTE_X_INSTAGRAM_USER_ID || '').trim();
-    if (!token || !userId) throw new Error('Informe token Meta e ID do Instagram para validar.');
+    if (!token || !userId) throw userError('Informe token Meta e ID do Instagram para validar.');
     const response = await fetch(`https://graph.facebook.com/v22.0/${encodeURIComponent(userId)}?fields=username&access_token=${encodeURIComponent(token)}`);
     const payload = await response.json().catch(() => ({}));
     if (!response.ok || payload.error) {
-      throw new Error(payload.error?.message || `Meta recusou os dados: HTTP ${response.status}.`);
+      throw userError(payload.error?.message || `Meta recusou os dados: HTTP ${response.status}.`, response.status);
     }
     return { ok: true, message: `Meta/Instagram validado: ${payload.username || userId}.` };
   }
@@ -241,7 +247,7 @@ async function validateAccessValue(key, value, companion = {}) {
     });
     const payload = await response.json().catch(() => ({}));
     if (!response.ok || !payload.success) {
-      throw new Error(payload.error?.message || `ImgBB recusou a chave: HTTP ${response.status}.`);
+      throw userError(payload.error?.message || `ImgBB recusou a chave: HTTP ${response.status}.`, response.status);
     }
     return { ok: true, message: 'ImgBB validado com upload temporario.' };
   }
@@ -255,9 +261,9 @@ async function validateAccessValue(key, value, companion = {}) {
 }
 
 async function saveVercelEnv(key, value) {
-  if (!EDITABLE_SECRET_KEYS.has(key)) throw new Error('Variavel nao permitida.');
+  if (!EDITABLE_SECRET_KEYS.has(key)) throw userError('Variavel nao permitida.');
   const text = String(value || '').trim();
-  if (!text) throw new Error('Cole um valor antes de salvar.');
+  if (!text) throw userError('Cole um valor antes de salvar.');
   const token = key === 'VERCEL_TOKEN' ? text : vercelTokenFromEnv();
   const projectPath = `/v9/projects/${encodeURIComponent(VERCEL_PROJECT_ID)}`;
   const existingPayload = await vercelFetch(`${projectPath}/env`, {}, token);
@@ -374,7 +380,7 @@ export default async function handler(req, res) {
       }
       res.status(400).json({ error: 'Acao invalida.' });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(error.statusCode || 500).json({ error: error.message });
     }
     return;
   }
