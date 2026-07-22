@@ -17,6 +17,9 @@ const ACCOUNT = 'cliente-x';
 const OWNER = 'marcondesjm';
 const REPO = 'cliente-x-instagram';
 const SCHEDULED_FILE_PATH = 'automation/instagram-template/config/scheduled-posts.json';
+const VERCEL_PROJECT_ID = process.env.VERCEL_PROJECT_ID || 'prj_AVyS8LGjVuhUOxkpfZZwOF5vMmPj';
+const VERCEL_TEAM_ID = process.env.VERCEL_TEAM_ID || 'team_T4Th6hb1UxtrbtcWfLxlWNRQ';
+const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instagram';
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
@@ -60,6 +63,7 @@ const ACCESS_CONFIG = [
     project: 'cliente-x-instagram',
     purpose: 'Hospedar o painel protegido e guardar variáveis de produção.',
     envKeys: [
+      'VERCEL_TOKEN',
       'GITHUB_TOKEN',
       'IMGBB_API_KEY',
       'CLIENTE_X_INSTAGRAM_ACCESS_TOKEN',
@@ -97,12 +101,24 @@ const ACCESS_CONFIG = [
   }
 ];
 const SECRET_KEYS = [
+  'VERCEL_TOKEN',
   'GITHUB_TOKEN',
   'CLIENTE_X_INSTAGRAM_ACCESS_TOKEN',
   'CLIENTE_X_INSTAGRAM_USER_ID',
   'IMGBB_API_KEY',
-  'ADMIN_EMAIL'
+  'ADMIN_EMAIL',
+  'ADMIN_PASSWORD'
 ];
+const EDITABLE_SECRET_KEYS = new Set([
+  'VERCEL_TOKEN',
+  'GITHUB_TOKEN',
+  'CLIENTE_X_INSTAGRAM_ACCESS_TOKEN',
+  'CLIENTE_X_INSTAGRAM_USER_ID',
+  'IMGBB_API_KEY',
+  'ADMIN_EMAIL',
+  'ADMIN_PASSWORD',
+  'ADMIN_SESSION_SECRET'
+]);
 
 function readJson(path) {
   return JSON.parse(readFileSync(path, 'utf8').replace(/^\uFEFF/, ''));
@@ -135,6 +151,139 @@ function secretStatuses() {
       length: value.length
     };
   });
+}
+
+function vercelTokenFromEnv() {
+  return process.env.VERCEL_TOKEN || process.env.VERCEL_ACCESS_TOKEN || '';
+}
+
+function vercelApiPath(path) {
+  const url = new URL(`https://api.vercel.com${path}`);
+  if (VERCEL_TEAM_ID) url.searchParams.set('teamId', VERCEL_TEAM_ID);
+  return url;
+}
+
+async function vercelFetch(path, options = {}, token = vercelTokenFromEnv()) {
+  if (!token) throw new Error('Configure VERCEL_TOKEN para salvar variaveis pelo painel.');
+  const response = await fetch(vercelApiPath(path), {
+    ...options,
+    headers: {
+      authorization: `Bearer ${token}`,
+      'content-type': 'application/json',
+      ...(options.headers || {})
+    }
+  });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(payload.error?.message || payload.message || `Vercel HTTP ${response.status}`);
+  }
+  return payload;
+}
+
+async function validateAccessValue(key, value, companion = {}) {
+  const text = String(value || '').trim();
+  if (!EDITABLE_SECRET_KEYS.has(key)) throw new Error('Variavel nao permitida.');
+  if (!text) throw new Error('Cole um valor antes de validar.');
+
+  if (key === 'ADMIN_EMAIL') {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)) throw new Error('Email invalido.');
+    return { ok: true, message: 'Email admin valido.' };
+  }
+
+  if (key === 'ADMIN_PASSWORD') {
+    if (text.length < 8) throw new Error('Senha precisa ter pelo menos 8 caracteres.');
+    return { ok: true, message: 'Senha admin com tamanho valido.' };
+  }
+
+  if (key === 'ADMIN_SESSION_SECRET') {
+    if (text.length < 32) throw new Error('ADMIN_SESSION_SECRET precisa ter pelo menos 32 caracteres.');
+    return { ok: true, message: 'Chave de sessao com tamanho valido.' };
+  }
+
+  if (key === 'GITHUB_TOKEN') {
+    const response = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/actions/workflows/instagram-feed-cliente-x.yml`, {
+      headers: {
+        accept: 'application/vnd.github+json',
+        authorization: `Bearer ${text}`,
+        'x-github-api-version': '2022-11-28'
+      }
+    });
+    if (!response.ok) throw new Error(`GitHub recusou o token: HTTP ${response.status}.`);
+    const workflow = await response.json();
+    return { ok: true, message: `GitHub validado: workflow ${workflow.name || 'instagram-feed-cliente-x.yml'} acessivel.` };
+  }
+
+  if (key === 'CLIENTE_X_INSTAGRAM_ACCESS_TOKEN' || key === 'CLIENTE_X_INSTAGRAM_USER_ID') {
+    const token = key === 'CLIENTE_X_INSTAGRAM_ACCESS_TOKEN'
+      ? text
+      : String(companion.accessToken || process.env.CLIENTE_X_INSTAGRAM_ACCESS_TOKEN || '').trim();
+    const userId = key === 'CLIENTE_X_INSTAGRAM_USER_ID'
+      ? text
+      : String(companion.userId || process.env.CLIENTE_X_INSTAGRAM_USER_ID || '').trim();
+    if (!token || !userId) throw new Error('Informe token Meta e ID do Instagram para validar.');
+    const response = await fetch(`https://graph.facebook.com/v22.0/${encodeURIComponent(userId)}?fields=username&access_token=${encodeURIComponent(token)}`);
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok || payload.error) {
+      throw new Error(payload.error?.message || `Meta recusou os dados: HTTP ${response.status}.`);
+    }
+    return { ok: true, message: `Meta/Instagram validado: ${payload.username || userId}.` };
+  }
+
+  if (key === 'IMGBB_API_KEY') {
+    const body = new URLSearchParams({
+      key: text,
+      expiration: '60',
+      image: 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/p9sAAAAASUVORK5CYII='
+    });
+    const response = await fetch('https://api.imgbb.com/1/upload', {
+      method: 'POST',
+      body
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok || !payload.success) {
+      throw new Error(payload.error?.message || `ImgBB recusou a chave: HTTP ${response.status}.`);
+    }
+    return { ok: true, message: 'ImgBB validado com upload temporario.' };
+  }
+
+  if (key === 'VERCEL_TOKEN') {
+    await vercelFetch(`/v9/projects/${encodeURIComponent(VERCEL_PROJECT_ID)}`, {}, text);
+    return { ok: true, message: `Vercel validado no projeto ${VERCEL_PROJECT_NAME}.` };
+  }
+
+  return { ok: true, message: `${key} recebeu um valor preenchido.` };
+}
+
+async function saveVercelEnv(key, value) {
+  if (!EDITABLE_SECRET_KEYS.has(key)) throw new Error('Variavel nao permitida.');
+  const text = String(value || '').trim();
+  if (!text) throw new Error('Cole um valor antes de salvar.');
+  const token = key === 'VERCEL_TOKEN' ? text : vercelTokenFromEnv();
+  const projectPath = `/v9/projects/${encodeURIComponent(VERCEL_PROJECT_ID)}`;
+  const existingPayload = await vercelFetch(`${projectPath}/env`, {}, token);
+  const existing = (existingPayload.envs || []).filter((env) => {
+    const target = Array.isArray(env.target) ? env.target : [env.target].filter(Boolean);
+    return env.key === key && target.includes('production');
+  });
+
+  for (const env of existing) {
+    await vercelFetch(`${projectPath}/env/${encodeURIComponent(env.id)}`, { method: 'DELETE' }, token);
+  }
+
+  await vercelFetch(`/v10/projects/${encodeURIComponent(VERCEL_PROJECT_ID)}/env`, {
+    method: 'POST',
+    body: JSON.stringify({
+      key,
+      value: text,
+      target: ['production'],
+      type: 'encrypted'
+    })
+  }, token);
+
+  return {
+    ok: true,
+    message: `${key} salvo no Vercel Production. Faça um novo deploy para a aplicação usar o valor atualizado.`
+  };
 }
 
 function readBody(req) {
@@ -192,6 +341,35 @@ export default async function handler(req, res) {
         res.setHeader('Set-Cookie', clearSessionCookie());
         res.setHeader('cache-control', 'no-store');
         res.status(200).json({ ok: true, authenticated: false });
+        return;
+      }
+      const session = getSession(req);
+      if (!session) {
+        res.status(401).json({ error: 'Login admin obrigatorio.' });
+        return;
+      }
+      if (body.action === 'validate-access') {
+        const result = await validateAccessValue(
+          String(body.key || '').trim(),
+          String(body.value || ''),
+          body.companion || {}
+        );
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json(result);
+        return;
+      }
+      if (body.action === 'save-access') {
+        const key = String(body.key || '').trim();
+        const value = String(body.value || '');
+        const validation = await validateAccessValue(key, value, body.companion || {});
+        const saved = await saveVercelEnv(key, value);
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json({
+          ok: true,
+          validation,
+          ...saved,
+          secrets: secretStatuses()
+        });
         return;
       }
       res.status(400).json({ error: 'Acao invalida.' });
