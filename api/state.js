@@ -31,9 +31,9 @@ const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
   status: 'funcionando',
-  stableCommit: 'eb93f36',
-  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/eb93f36',
-  description: 'Vercel, botões, publicação real e linha editorial narrativa confirmados.'
+  stableCommit: '3314cfb',
+  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
+  description: 'Vercel, multi-conta, perfil editorial, usuários e automação validados.'
 };
 const MAINTENANCE = {
   githubToken: {
