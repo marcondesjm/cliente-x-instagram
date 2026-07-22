@@ -907,13 +907,13 @@
           </div>
           <div class="metric">
             <div class="label">Última publicação local</div>
-            <div class="value" id="lastPostTime">12:20</div>
-            <div class="note">20/07/2026 · slot 3</div>
+            <div class="value" id="lastPostTime">--:--</div>
+            <div class="note" id="lastPostNote">Aguardando confirmação da Meta</div>
           </div>
           <div class="metric">
-            <div class="label">Último erro local</div>
-            <div class="value" id="lastFailureTime">11:09</div>
-            <div class="note">Certificado local antigo</div>
+            <div class="label">Erro do vigia</div>
+            <div class="value" id="lastFailureTime">OK</div>
+            <div class="note" id="lastFailureNote">Sem erro aberto</div>
           </div>
         </div>
 
@@ -1660,6 +1660,43 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       }
     }
 
+    function formatTimeOnly(value) {
+      if (!value) return '--:--';
+      try {
+        return new Intl.DateTimeFormat('pt-BR', {
+          timeZone: 'America/Sao_Paulo',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        }).format(new Date(value));
+      } catch {
+        return '--:--';
+      }
+    }
+
+    function renderTopErrorMetric() {
+      const value = document.getElementById('lastFailureTime');
+      const note = document.getElementById('lastFailureNote');
+      const errors = appState.watchdogErrors || [];
+      const openError = errors.find((error) => error.status === 'open');
+      const latestError = openError || errors[0] || null;
+
+      if (openError) {
+        value.textContent = 'Erro';
+        note.textContent = `Slot ${openError.slotIndex ?? '--'} · ${openError.stage || 'etapa desconhecida'}`;
+        return;
+      }
+
+      if (latestError?.status === 'resolved') {
+        value.textContent = 'OK';
+        note.textContent = `Último erro resolvido em ${formatDateTime(latestError.resolvedAt)}`;
+        return;
+      }
+
+      value.textContent = 'OK';
+      note.textContent = 'Sem erro aberto';
+    }
+
     function renderWatchdog() {
       const panel = document.getElementById('watchdogPanel');
       const status = document.getElementById('watchdogStatus');
@@ -1677,6 +1714,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           ? `Slot ${openError.slotIndex ?? '--'} com falha registrada`
           : 'Principal + backup monitorando';
       }
+      renderTopErrorMetric();
 
       const rows = [
         {
@@ -2075,6 +2113,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       status.className = 'status-pill good';
       if (media.permalink) link.href = media.permalink;
       if (media.caption) caption.textContent = media.caption;
+      document.getElementById('lastPostTime').textContent = formatTimeOnly(media.timestamp);
+      document.getElementById('lastPostNote').textContent = media.timestamp
+        ? `${formatDateTime(media.timestamp)} · confirmado pela Meta`
+        : 'Confirmado pela Meta';
       const mediaImage = media.thumbnail_url || media.media_url;
       if (mediaImage) image.src = mediaImage;
       image.onerror = () => { image.style.display = 'none'; };
