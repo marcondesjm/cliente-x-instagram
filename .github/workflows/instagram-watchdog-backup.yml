@@ -1,0 +1,114 @@
+name: Instagram Watchdog Backup
+
+permissions:
+  contents: write
+
+concurrency:
+  group: instagram-feed-cliente-x
+  cancel-in-progress: false
+
+on:
+  schedule:
+    - cron: "1,6,11,16,21,26,31,36,41,46,51,56 * * * *"
+
+jobs:
+  instagram-watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      ACCOUNT: cliente-x
+      DRY_RUN: "false"
+      INSTAGRAM_TEMPLATE_PACK_JSON: ""
+      INSTAGRAM_TEMPLATE_PUBLISH_MODE: feed-and-story
+      CLIENTE_X_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.CLIENTE_X_INSTAGRAM_ACCESS_TOKEN }}
+      CLIENTE_X_INSTAGRAM_USER_ID: ${{ secrets.CLIENTE_X_INSTAGRAM_USER_ID }}
+      IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Refresh main state
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Check scheduled queue
+        id: scheduled_queue
+        run: node scripts/has-due-scheduled-post.mjs
+
+      - name: Select automatic catch-up slot
+        id: auto_slot
+        if: steps.scheduled_queue.outputs.has_due != 'true'
+        run: node scripts/select-due-auto-slot.mjs
+
+      - name: Install dependencies
+        if: steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
+        run: npm ci
+
+      - name: Validate copy
+        if: steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
+        run: npm run instagram -- --account "$ACCOUNT" --validate-copy
+
+      - name: Install Playwright Chromium
+        if: steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
+        run: npx playwright install --with-deps chromium
+
+      - name: Select content slot
+        if: steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
+        shell: bash
+        run: |
+          if [ "${{ steps.scheduled_queue.outputs.has_due }}" = "true" ]; then
+            SLOT_INDEX="0"
+          else
+            SLOT_INDEX="${{ steps.auto_slot.outputs.slot_index }}"
+          fi
+          echo "INSTAGRAM_TEMPLATE_SLOT_INDEX=$SLOT_INDEX" >> "$GITHUB_ENV"
+
+      - name: Publish feed and story
+        if: steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
+        shell: bash
+        run: |
+          ARGS=""
+          if [ "${{ steps.scheduled_queue.outputs.has_due }}" = "true" ]; then
+            ARGS="$ARGS --scheduled-only"
+          fi
+          npm run instagram -- --account "$ACCOUNT" $ARGS
+
+      - name: Mark automatic slot published
+        if: success() && steps.scheduled_queue.outputs.has_due != 'true' && steps.auto_slot.outputs.has_due == 'true'
+        run: node scripts/mark-auto-slot-published.mjs
+
+      - name: Persist schedule state
+        if: always() && (steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true')
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add automation/instagram-template/config/scheduled-posts.json
+          git add automation/instagram-template/config/published-slots.json
+          if git diff --cached --quiet; then
+            echo "No schedule state changes to persist."
+          else
+            git commit -m "Update Instagram schedule state"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+
+      - name: Upload run logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: instagram-template-runs
+          path: automation/instagram-template/runs/
+          if-no-files-found: ignore
