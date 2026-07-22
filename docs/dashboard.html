@@ -863,6 +863,7 @@
           </label>
         </div>
         <a class="button" href="https://github.com/marcondesjm/cliente-x-instagram/actions/workflows/instagram-feed-cliente-x.yml" target="_blank" rel="noreferrer">GitHub Actions</a>
+        <button id="redeployVercel" type="button">Redeploy Vercel</button>
         <button class="primary" id="refreshRuns" type="button">Atualizar runs</button>
         <button id="logoutButton" type="button">Sair</button>
       </div>
@@ -1408,6 +1409,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const username = current.expectedUsername ? `@${current.expectedUsername}` : appState.selectedAccount;
       const footer = current.footerText || 'IA aplicada a empresas';
       subline.textContent = `${username} · ${footer}`;
+      document.getElementById('publishNow').textContent = `Publicar agora (${appState.selectedAccount})`;
+      document.getElementById('queuePost').textContent = `Agendar pack (${appState.selectedAccount})`;
     }
 
     async function switchAccount(event) {
@@ -1603,6 +1606,26 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         await loadState();
       } catch (error) {
         result.textContent = error.message;
+      } finally {
+        button.disabled = false;
+        button.textContent = original;
+      }
+    }
+
+    async function redeployVercel() {
+      const button = document.getElementById('redeployVercel');
+      const original = button.textContent;
+      button.disabled = true;
+      button.textContent = 'Redeploy...';
+      setMessage('Iniciando redeploy da Vercel...', 'warn');
+      try {
+        const payload = await api('/api/state', {
+          method: 'POST',
+          body: JSON.stringify({ action: 'redeploy-vercel' })
+        });
+        setMessage(`${payload.message || 'Redeploy iniciado.'}${payload.url ? `\n${payload.url}` : ''}`, 'good');
+      } catch (error) {
+        setMessage(error.message, 'bad');
       } finally {
         button.disabled = false;
         button.textContent = original;
@@ -2243,6 +2266,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('logoutButton').addEventListener('click', logout);
       document.getElementById('refreshRuns').addEventListener('click', refreshRuns);
       document.getElementById('accountSelect').addEventListener('change', switchAccount);
+      document.getElementById('redeployVercel').addEventListener('click', redeployVercel);
       document.getElementById('createAccount').addEventListener('click', createAccount);
       document.getElementById('accessConfig').addEventListener('click', (event) => {
         const edit = event.target.closest('[data-access-edit]');

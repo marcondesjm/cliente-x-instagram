@@ -341,6 +341,31 @@ async function saveVercelEnv(key, value) {
   };
 }
 
+async function redeployVercelProduction() {
+  const deployments = await vercelFetch('/v6/deployments?limit=1&target=production');
+  const latest = deployments.deployments?.find((deployment) => deployment.target === 'production') ||
+    deployments.deployments?.[0];
+  if (!latest?.uid) throw userError('Nao encontrei deployment de producao para redeploy.');
+
+  const deployment = await vercelFetch('/v13/deployments', {
+    method: 'POST',
+    body: JSON.stringify({
+      name: VERCEL_PROJECT_NAME,
+      target: 'production',
+      deploymentId: latest.uid
+    })
+  });
+
+  return {
+    ok: true,
+    deploymentId: deployment.id || deployment.uid,
+    url: deployment.url ? `https://${deployment.url}` : null,
+    inspectorUrl: deployment.inspectorUrl || null,
+    readyState: deployment.readyState || deployment.status || 'QUEUED',
+    message: 'Redeploy iniciado na Vercel. Aguarde alguns minutos e atualize o painel.'
+  };
+}
+
 function readBody(req) {
   return new Promise((resolve, reject) => {
     let raw = '';
@@ -549,6 +574,12 @@ export default async function handler(req, res) {
       }
       if (body.action === 'create-account') {
         const result = await createAccountConfig(body);
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json(result);
+        return;
+      }
+      if (body.action === 'redeploy-vercel') {
+        const result = await redeployVercelProduction();
         res.setHeader('cache-control', 'no-store');
         res.status(200).json(result);
         return;
