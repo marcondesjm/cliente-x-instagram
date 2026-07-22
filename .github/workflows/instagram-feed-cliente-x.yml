@@ -8,6 +8,9 @@ concurrency:
   cancel-in-progress: false
 
 on:
+  push:
+    paths:
+      - ".github/force-instagram-watchdog.txt"
   schedule:
     - cron: "3,8,13,18,23,28,33,38,43,48,53,58 * * * *"
   workflow_dispatch:
@@ -95,7 +98,7 @@ jobs:
 
       - name: Select automatic catch-up slot
         id: auto_slot
-        if: github.event_name == 'schedule' && steps.scheduled_queue.outputs.has_due != 'true'
+        if: github.event_name != 'workflow_dispatch' && steps.scheduled_queue.outputs.has_due != 'true'
         run: node scripts/select-due-auto-slot.mjs
 
       - name: Install dependencies
@@ -134,7 +137,7 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.event.inputs.scheduled_only }}" = "true" ]; then
             ARGS="$ARGS --scheduled-only"
           fi
-          if [ "${{ github.event_name }}" = "schedule" ] && [ "${{ steps.scheduled_queue.outputs.has_due }}" = "true" ]; then
+          if [ "${{ github.event_name }}" != "workflow_dispatch" ] && [ "${{ steps.scheduled_queue.outputs.has_due }}" = "true" ]; then
             ARGS="$ARGS --scheduled-only"
           fi
           if [ "$INSTAGRAM_TEMPLATE_PUBLISH_MODE" = "story-only" ]; then
@@ -143,7 +146,7 @@ jobs:
           npm run instagram -- --account "$ACCOUNT" $ARGS
 
       - name: Mark automatic slot published
-        if: success() && github.event_name == 'schedule' && steps.scheduled_queue.outputs.has_due != 'true' && steps.auto_slot.outputs.has_due == 'true'
+        if: success() && github.event_name != 'workflow_dispatch' && steps.scheduled_queue.outputs.has_due != 'true' && steps.auto_slot.outputs.has_due == 'true'
         run: node scripts/mark-auto-slot-published.mjs
 
       - name: Persist schedule state
