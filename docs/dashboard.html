@@ -120,6 +120,12 @@
       font-weight: 700;
     }
 
+    .header-version {
+      color: var(--accent-strong);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
     .actions {
       display: flex;
       align-items: center;
@@ -869,6 +875,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
+        <div class="header-version" id="headerVersion">Versão atual: 3314cfb</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1489,16 +1496,19 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const name = document.getElementById('versionName');
       const commit = document.getElementById('versionCommit');
       const description = document.getElementById('versionDescription');
+      const headerVersion = document.getElementById('headerVersion');
       const statusText = version.status || 'funcionando';
       const currentCommit = version.currentCommit || version.stableCommit || 'main';
       const currentCommitUrl = version.currentCommitUrl || version.stableCommitUrl || `https://github.com/${DATA.repo}`;
       const stableCommit = version.stableCommit ? ` · base ${escapeHtml(version.stableCommit)}` : '';
+      const stableText = version.stableCommit && version.stableCommit !== currentCommit ? ` · base ${version.stableCommit}` : '';
 
       status.textContent = statusText.charAt(0).toUpperCase() + statusText.slice(1);
       status.className = `status-pill ${statusText === 'funcionando' ? 'good' : 'warn'}`;
       name.textContent = `${version.name || 'cliente-x-funcionando'} · ${version.label || 'última versão funcionando'}.`;
       commit.innerHTML = `<a href="${escapeHtml(currentCommitUrl)}" target="_blank" rel="noreferrer">${escapeHtml(currentCommit)}</a>${stableCommit}`;
       description.textContent = version.description || 'Projeto operacional confirmado.';
+      headerVersion.textContent = `Versão atual: ${currentCommit}${stableText}`;
     }
 
     function renderAccountSwitcher() {
