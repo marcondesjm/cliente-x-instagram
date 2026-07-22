@@ -126,6 +126,163 @@ function mergePacks(primaryPacks, fallbackPacks) {
   return [...primaryPacks, ...extras];
 }
 
+const AUTO_CONTENT_TOPICS = [
+  {
+    area: 'Comercial',
+    pain: 'proposta demora para sair',
+    process: 'briefing, escopo, prazo e objeções',
+    gain: 'responder com mais contexto e menos retrabalho',
+    hashtag: '#comercial #vendas #automacao #inteligenciaartificial #negocios'
+  },
+  {
+    area: 'Atendimento',
+    pain: 'cliente precisa repetir informação',
+    process: 'histórico, prioridade, dono e próxima ação',
+    gain: 'atender com memória operacional',
+    hashtag: '#atendimento #crm #inteligenciaartificial #automacao #experienciadocliente'
+  },
+  {
+    area: 'Financeiro',
+    pain: 'conferência manual consome tempo todo mês',
+    process: 'vencimentos, conciliação, alertas e exceções',
+    gain: 'proteger caixa com mais previsibilidade',
+    hashtag: '#financeiro #gestao #automacao #inteligenciaartificial #empresas'
+  },
+  {
+    area: 'Marketing',
+    pain: 'conteúdo depende de inspiração de última hora',
+    process: 'tema, calendário, revisão e reaproveitamento',
+    gain: 'manter presença sem perder posicionamento',
+    hashtag: '#marketing #conteudo #inteligenciaartificial #automacao #negocios'
+  },
+  {
+    area: 'Operação',
+    pain: 'gargalo pequeno trava entrega importante',
+    process: 'entrada, regra, responsável e indicador',
+    gain: 'tirar esforço manual do caminho crítico',
+    hashtag: '#operacao #processos #automacao #produtividade #gestao'
+  },
+  {
+    area: 'RH',
+    pain: 'onboarding acontece sem trilha clara',
+    process: 'checklists, documentos, mensagens e responsáveis',
+    gain: 'dar previsibilidade sem tirar cuidado humano',
+    hashtag: '#rh #gestaodepessoas #inteligenciaartificial #automacao #empresas'
+  },
+  {
+    area: 'Diretoria',
+    pain: 'reunião discute número em vez de decisão',
+    process: 'indicadores, exceções, causa provável e próximo passo',
+    gain: 'transformar relatório em ação',
+    hashtag: '#diretoria #dados #gestao #inteligenciaartificial #produtividade'
+  },
+  {
+    area: 'Suporte',
+    pain: 'dúvida repetida volta para a fila toda semana',
+    process: 'base de conhecimento, triagem, prioridade e revisão',
+    gain: 'resolver o básico com consistência',
+    hashtag: '#suporte #atendimento #automacao #inteligenciaartificial #experienciadocliente'
+  },
+  {
+    area: 'Dados',
+    pain: 'relatório nasce de planilha bagunçada',
+    process: 'origem, padrão, atualização e dono da informação',
+    gain: 'decidir sem perder tempo discutindo a base',
+    hashtag: '#dados #businessintelligence #gestao #inteligenciaartificial #automacao'
+  },
+  {
+    area: 'Implantação',
+    pain: 'ferramenta pronta não vira hábito',
+    process: 'treinamento, rotina, métrica e melhoria contínua',
+    gain: 'fazer a automação entrar no dia a dia',
+    hashtag: '#implantacao #automacao #inteligenciaartificial #gestao #produtividade'
+  }
+];
+
+const AUTO_CONTENT_ANGLES = [
+  {
+    label: 'Diagnóstico',
+    hook: 'Antes de automatizar, encontre o ponto que realmente custa caro.',
+    insight: 'A IA funciona melhor quando o problema está descrito com começo, regra e resultado esperado.',
+    action: 'Mapeie uma rotina repetitiva, escreva o critério de qualidade e só então escolha a ferramenta.'
+  },
+  {
+    label: 'Processo',
+    hook: 'Automação boa começa quando o trabalho deixa de morar na cabeça de alguém.',
+    insight: 'Quando o fluxo fica visível, a IA consegue resumir, alertar, organizar e executar com menos improviso.',
+    action: 'Transforme a rotina em checklist, defina responsáveis e acompanhe o que mudou depois da primeira versão.'
+  },
+  {
+    label: 'Controle',
+    hook: 'Velocidade sem revisão apenas espalha erro mais rápido.',
+    insight: 'O ganho real aparece quando a empresa combina IA com critérios, logs e pontos claros de aprovação.',
+    action: 'Defina o que pode ser automático, o que precisa de validação e quais dados nunca entram sem cuidado.'
+  },
+  {
+    label: 'Escala',
+    hook: 'O primeiro projeto de IA deve provar valor sem complicar a operação.',
+    insight: 'Começar pequeno ajuda o time a aprender, medir resultado e ganhar confiança para avançar.',
+    action: 'Escolha um fluxo simples, publique a regra, meça tempo salvo e melhore com base no uso real.'
+  },
+  {
+    label: 'Rotina',
+    hook: 'Toda tarefa que se repete muito merece uma pergunta: por que ainda depende de esforço manual?',
+    insight: 'A IA não precisa substituir pessoas para gerar valor; muitas vezes basta reduzir atrito e lembrar o próximo passo.',
+    action: 'Observe uma semana de trabalho, marque repetições e escolha uma delas para virar sistema.'
+  },
+  {
+    label: 'Gestão',
+    hook: 'IA aplicada não é truque de ferramenta. É método de gestão.',
+    insight: 'A empresa ganha quando usa tecnologia para padronizar execução, preservar contexto e melhorar decisão.',
+    action: 'Registre o fluxo, revise exceções e transforme cada melhoria em processo compartilhado.'
+  }
+];
+
+function autoPack(topic, angle, sequence) {
+  return {
+    autoGenerated: true,
+    slides: [
+      {
+        eyebrow: angle.label,
+        title: `${topic.area}: onde a IA realmente ajuda?`,
+        body: angle.hook
+      },
+      {
+        eyebrow: 'Dor',
+        title: `O sinal aparece quando ${topic.pain}.`,
+        body: 'Esse tipo de gargalo consome energia do time e normalmente deixa rastro em atraso, retrabalho ou decisão fraca.'
+      },
+      {
+        eyebrow: 'Base',
+        title: 'Sem processo claro, a IA improvisa.',
+        body: `Organize ${topic.process}. Depois disso, a tecnologia consegue trabalhar com contexto.`
+      },
+      {
+        eyebrow: 'Aplicação',
+        title: 'Automatize uma parte verificável.',
+        body: angle.insight
+      },
+      {
+        eyebrow: 'Próximo passo',
+        title: `O ganho é ${topic.gain}.`,
+        body: angle.action
+      }
+    ],
+    caption: `${topic.area} com IA não começa pela ferramenta.\n\nComeça quando você identifica que ${topic.pain}, descreve o processo e define o que precisa ser conferido antes de escalar.\n\n${angle.action}\n\nSérie prática ${String(sequence + 1).padStart(2, '0')}: automação boa transforma rotina em sistema.\n\n${topic.hashtag}`
+  };
+}
+
+function buildAutoContentPacks(dateString, slotIndex) {
+  const packs = [];
+  for (const [topicIndex, topic] of AUTO_CONTENT_TOPICS.entries()) {
+    for (const [angleIndex, angle] of AUTO_CONTENT_ANGLES.entries()) {
+      packs.push(autoPack(topic, angle, topicIndex * AUTO_CONTENT_ANGLES.length + angleIndex));
+    }
+  }
+  const start = pickDailyIndex(packs, dateString, slotIndex);
+  return [...packs.slice(start), ...packs.slice(0, start)];
+}
+
 function timestampSaoPaulo() {
   const parts = new Intl.DateTimeFormat('en-CA', {
     timeZone: 'America/Sao_Paulo',
@@ -227,10 +384,21 @@ function retryDelay(attempt) {
 function createHttpError(label, status, body) {
   const bodyPreview = body.slice(0, 1200);
   const error = new Error(`${label} failed [${status}]: ${bodyPreview}`);
+  let payload = null;
+  try {
+    payload = body ? JSON.parse(body) : null;
+  } catch {
+    payload = null;
+  }
+  const graphError = payload?.error;
+  const graphMediaTimeout = graphError
+    && (graphError.code === -2
+      || graphError.error_subcode === 2207003
+      || /timeout|tempo limite|download da m[ií]dia/i.test(`${graphError.message || ''} ${graphError.error_user_msg || ''}`));
   error.stage = label;
   error.status = status;
   error.responseBody = bodyPreview;
-  error.retryable = RETRYABLE_STATUS.has(status);
+  error.retryable = RETRYABLE_STATUS.has(status) || Boolean(graphMediaTimeout);
   return error;
 }
 
@@ -558,13 +726,21 @@ async function main() {
   const supabasePacks = await loadSupabasePacks(env, args.account);
   const packs = mergePacks(supabasePacks, localPacks);
   validatePacks(packs);
-  if (args.validateCopy) {
-    console.log(JSON.stringify({ ok: true, account: account.account, checkedPacks: packs.length }, null, 2));
-    return;
-  }
 
   const today = todaySaoPaulo();
   const slotIndex = readSlotIndex();
+  const autoPacks = buildAutoContentPacks(today, slotIndex);
+  validatePacks(autoPacks);
+  if (args.validateCopy) {
+    console.log(JSON.stringify({
+      ok: true,
+      account: account.account,
+      checkedPacks: packs.length,
+      checkedAutoPacks: autoPacks.length
+    }, null, 2));
+    return;
+  }
+
   const style = pickDaily(styles, today);
   let pack = pickDaily(packs, today, slotIndex);
   let packIndex = pickDailyIndex(packs, today, slotIndex);
@@ -587,14 +763,22 @@ async function main() {
       const recentMedia = await fetchRecentMedia(userId, token);
       const fresh = pickFreshPack(packs, today, slotIndex, recentMedia);
       if (!fresh.pack) {
-        const duplicateDetails = fresh.duplicate
-          ? ` Ultima midia igual: ${fresh.duplicate.permalink || fresh.duplicate.id} (${fresh.duplicate.timestamp}).`
-          : '';
-        throw new Error(`Nenhum conteudo novo para publicar: ${packs.length} captions ja aparecem nas midias recentes.${duplicateDetails}`);
+        const autoFresh = pickFreshPack(autoPacks, today, slotIndex, recentMedia);
+        if (!autoFresh.pack) {
+          const duplicateDetails = autoFresh.duplicate || fresh.duplicate
+            ? ` Ultima midia igual: ${(autoFresh.duplicate || fresh.duplicate).permalink || (autoFresh.duplicate || fresh.duplicate).id} (${(autoFresh.duplicate || fresh.duplicate).timestamp}).`
+            : '';
+          throw new Error(`Nenhum conteudo novo para publicar: ${packs.length} captions locais e ${autoPacks.length} captions automaticas ja aparecem nas midias recentes.${duplicateDetails}`);
+        }
+        pack = autoFresh.pack;
+        packIndex = `auto-${autoFresh.packIndex}`;
+        skippedDuplicates = fresh.skippedDuplicates + autoFresh.skippedDuplicates;
+        console.log(`Conteudo automatico selecionado porque ${packs.length} captions locais ja aparecem nas midias recentes.`);
+      } else {
+        pack = fresh.pack;
+        packIndex = fresh.packIndex;
+        skippedDuplicates = fresh.skippedDuplicates;
       }
-      pack = fresh.pack;
-      packIndex = fresh.packIndex;
-      skippedDuplicates = fresh.skippedDuplicates;
     }
   }
 
