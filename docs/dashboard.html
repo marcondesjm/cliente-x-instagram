@@ -492,6 +492,20 @@
       font-size: 13px;
     }
 
+    .password-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .password-row button {
+      min-height: 40px;
+      padding: 8px 12px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
     .access-manager .editor-actions {
       grid-template-columns: 1fr 1fr;
     }
@@ -839,7 +853,10 @@
       </label>
       <label>
         Senha
-        <input id="adminPassword" type="password" autocomplete="current-password" required>
+        <div class="password-row">
+          <input id="adminPassword" type="password" autocomplete="current-password" required>
+          <button type="button" data-toggle-password="adminPassword">Mostrar</button>
+        </div>
       </label>
       <button class="primary" type="submit" id="loginButton">Entrar</button>
       <div class="auth-error" id="loginError"></div>
@@ -1184,7 +1201,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             </label>
             <label>
               Senha provisória
-              <input id="newUserPassword" type="password" autocomplete="new-password" placeholder="mínimo 8 caracteres">
+              <div class="password-row">
+                <input id="newUserPassword" type="password" autocomplete="new-password" placeholder="mínimo 8 caracteres">
+                <button type="button" data-toggle-password="newUserPassword">Mostrar</button>
+              </div>
             </label>
             <div>
               <label>Contas liberadas (opcional)</label>
@@ -1572,7 +1592,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             </label>
             <label>
               Novo valor
-              <input type="password" data-access-value autocomplete="new-password" placeholder="Cole o novo token, ID, email ou senha">
+              <div class="password-row">
+                <input type="password" data-access-value autocomplete="new-password" placeholder="Cole o novo token, ID, email ou senha">
+                <button type="button" data-toggle-access-password="${index}">Mostrar</button>
+              </div>
             </label>
             <div class="editor-actions">
               <button type="button" data-access-validate="${index}">Validar</button>
@@ -1724,6 +1747,23 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         button.disabled = false;
         button.textContent = original;
       }
+    }
+
+    function togglePassword(inputId, button) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      const showing = input.type === 'text';
+      input.type = showing ? 'password' : 'text';
+      button.textContent = showing ? 'Mostrar' : 'Ocultar';
+    }
+
+    function toggleAccessPassword(index, button) {
+      const panel = document.querySelector(`[data-access-panel="${index}"]`);
+      const input = panel?.querySelector('[data-access-value]');
+      if (!input) return;
+      const showing = input.type === 'text';
+      input.type = showing ? 'password' : 'text';
+      button.textContent = showing ? 'Mostrar' : 'Ocultar';
     }
 
     async function redeployVercel() {
@@ -2377,6 +2417,17 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
 
     function bindEvents() {
       document.getElementById('loginForm').addEventListener('submit', login);
+      document.addEventListener('click', (event) => {
+        const toggle = event.target.closest('[data-toggle-password]');
+        const accessToggle = event.target.closest('[data-toggle-access-password]');
+        if (toggle) {
+          togglePassword(toggle.dataset.togglePassword, toggle);
+          return;
+        }
+        if (accessToggle) {
+          toggleAccessPassword(Number(accessToggle.dataset.toggleAccessPassword), accessToggle);
+        }
+      });
       document.getElementById('logoutButton').addEventListener('click', logout);
       document.getElementById('refreshRuns').addEventListener('click', refreshRuns);
       document.getElementById('accountSelect').addEventListener('change', switchAccount);
