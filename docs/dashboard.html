@@ -1945,54 +1945,6 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     }
 
     boot();
-/*
-    document.getElementById('refreshRuns').addEventListener('click', refreshRuns);
-    document.getElementById('packSelect').addEventListener('change', (event) => {
-      syncEditorToState();
-      appState.selectedPack = Number(event.target.value);
-      appState.selectedSlide = 0;
-      renderEditor();
-    });
-    document.getElementById('slideSelect').addEventListener('change', (event) => {
-      appState.selectedSlide = Number(event.target.value);
-      updatePreview();
-    });
-    document.getElementById('slideFields').addEventListener('input', updatePreview);
-    document.getElementById('slideFields').addEventListener('change', (event) => {
-      const input = event.target.closest('[data-image-upload]');
-      if (input) uploadSlideImage(input);
-    });
-    document.getElementById('slideFields').addEventListener('click', (event) => {
-      const button = event.target.closest('[data-clear-image]');
-      if (button) clearSlideImage(Number(button.dataset.clearImage));
-    });
-    document.getElementById('captionInput').addEventListener('input', syncEditorToState);
-    document.getElementById('savePack').addEventListener('click', saveSelectedPack);
-    document.getElementById('addTime').addEventListener('click', addScheduleTime);
-    document.getElementById('saveSchedule').addEventListener('click', saveSchedule);
-    document.getElementById('scheduleEditor').addEventListener('click', (event) => {
-      const button = event.target.closest('[data-remove-time]');
-      if (button) removeScheduleTime(Number(button.dataset.removeTime));
-    });
-    document.getElementById('validateCopy').addEventListener('click', (event) => {
-      runServerAction('/api/validate', event.currentTarget, 'Validando');
-    });
-    document.getElementById('renderSlot').addEventListener('click', (event) => {
-      runServerAction('/api/render', event.currentTarget, 'Renderizando');
-    });
-    document.getElementById('queuePost').addEventListener('click', () => scheduleSelectedPost(false));
-    document.getElementById('publishNow').addEventListener('click', () => scheduleSelectedPost(true));
-    document.getElementById('runScheduled').addEventListener('click', (event) => {
-      runQueueAction('/api/publish-scheduled', event.currentTarget, 'Rodando fila');
-    });
-    document.getElementById('pushScheduled').addEventListener('click', (event) => {
-      runQueueAction('/api/push-scheduled-posts', event.currentTarget, 'Enviando agenda');
-    });
-    document.getElementById('queueList').addEventListener('click', (event) => {
-      const button = event.target.closest('[data-cancel-post]');
-      if (button) cancelScheduledPost(button.dataset.cancelPost);
-    });
-*/
   </script>
 </body>
 </html>
