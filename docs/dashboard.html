@@ -2107,7 +2107,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const original = button.textContent;
       button.disabled = true;
       button.textContent = 'Salvando';
-      setMessage('Salvando horários no workflow, accounts.json e README...', 'warn');
+      setMessage('Salvando horários na agenda da conta...', 'warn');
       try {
         const state = await api('/api/schedule', {
           method: 'POST',
@@ -2119,7 +2119,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         renderSchedule();
         renderScheduleEditor();
         renderChecks();
-        setMessage('Horários salvos. Para valer no GitHub Actions, faça commit/push das mudanças.', 'good');
+        setMessage('Horários salvos. O vigia automático do GitHub usa essa agenda.', 'good');
       } catch (error) {
         setMessage(error.message, 'bad');
       } finally {

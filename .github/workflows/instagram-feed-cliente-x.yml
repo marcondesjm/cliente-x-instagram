@@ -10,19 +10,6 @@ concurrency:
 on:
   schedule:
     - cron: "*/10 * * * *"
-    - cron: "30 9 * * *"
-    - cron: "10 11 * * *"
-    - cron: "0 12 * * *"
-    - cron: "50 14 * * *"
-    - cron: "10 15 * * *"
-    - cron: "0 16 * * *"
-    - cron: "50 16 * * *"
-    - cron: "15 17 * * *"
-    - cron: "50 17 * * *"
-    - cron: "0 19 * * *"
-    - cron: "40 20 * * *"
-    - cron: "0 22 * * *"
-    - cron: "0 1 * * *"
   workflow_dispatch:
     inputs:
       account:
@@ -84,7 +71,6 @@ jobs:
     env:
       ACCOUNT: ${{ github.event.inputs.account || 'cliente-x' }}
       DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run || 'false' }}
-      SCHEDULED_ONLY: ${{ ((github.event_name == 'workflow_dispatch' && github.event.inputs.scheduled_only == 'true') || (github.event_name == 'schedule' && github.event.schedule == '*/10 * * * *')) && 'true' || 'false' }}
       INSTAGRAM_TEMPLATE_PACK_JSON: ${{ github.event.inputs.pack_json || '' }}
       INSTAGRAM_TEMPLATE_PUBLISH_MODE: ${{ github.event.inputs.publish_mode || 'feed-and-story' }}
       CLIENTE_X_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.CLIENTE_X_INSTAGRAM_ACCESS_TOKEN }}
@@ -107,53 +93,48 @@ jobs:
         id: scheduled_queue
         run: node scripts/has-due-scheduled-post.mjs
 
+      - name: Select automatic catch-up slot
+        id: auto_slot
+        if: github.event_name == 'schedule' && steps.scheduled_queue.outputs.has_due != 'true'
+        run: node scripts/select-due-auto-slot.mjs
+
       - name: Install dependencies
-        if: env.SCHEDULED_ONLY != 'true' || steps.scheduled_queue.outputs.has_due == 'true'
+        if: github.event_name == 'workflow_dispatch' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
         run: npm ci
 
       - name: Validate copy
-        if: env.SCHEDULED_ONLY != 'true' || steps.scheduled_queue.outputs.has_due == 'true'
+        if: github.event_name == 'workflow_dispatch' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
         run: npm run instagram -- --account "$ACCOUNT" --validate-copy
 
       - name: Install Playwright Chromium
-        if: env.SCHEDULED_ONLY != 'true' || steps.scheduled_queue.outputs.has_due == 'true'
+        if: github.event_name == 'workflow_dispatch' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
         run: npx playwright install --with-deps chromium
 
       - name: Select content slot
-        if: env.SCHEDULED_ONLY != 'true' || steps.scheduled_queue.outputs.has_due == 'true'
+        if: github.event_name == 'workflow_dispatch' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
         shell: bash
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             SLOT_INDEX="${{ github.event.inputs.slot_index || '0' }}"
+          elif [ "${{ steps.scheduled_queue.outputs.has_due }}" = "true" ]; then
+            SLOT_INDEX="0"
           else
-            case "${{ github.event.schedule }}" in
-              "30 9 * * *") SLOT_INDEX="0" ;;
-              "10 11 * * *") SLOT_INDEX="1" ;;
-              "0 12 * * *") SLOT_INDEX="2" ;;
-              "50 14 * * *") SLOT_INDEX="3" ;;
-              "10 15 * * *") SLOT_INDEX="4" ;;
-              "0 16 * * *") SLOT_INDEX="5" ;;
-              "50 16 * * *") SLOT_INDEX="6" ;;
-              "15 17 * * *") SLOT_INDEX="7" ;;
-              "50 17 * * *") SLOT_INDEX="8" ;;
-              "0 19 * * *") SLOT_INDEX="9" ;;
-              "40 20 * * *") SLOT_INDEX="10" ;;
-              "0 22 * * *") SLOT_INDEX="11" ;;
-              "0 1 * * *") SLOT_INDEX="12" ;;
-              *) SLOT_INDEX="0" ;;
-            esac
+            SLOT_INDEX="${{ steps.auto_slot.outputs.slot_index }}"
           fi
           echo "INSTAGRAM_TEMPLATE_SLOT_INDEX=$SLOT_INDEX" >> "$GITHUB_ENV"
 
       - name: Publish feed and story
-        if: env.SCHEDULED_ONLY != 'true' || steps.scheduled_queue.outputs.has_due == 'true'
+        if: github.event_name == 'workflow_dispatch' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
         shell: bash
         run: |
           ARGS=""
           if [ "$DRY_RUN" = "true" ]; then
             ARGS="$ARGS --dry-run"
           fi
-          if [ "$SCHEDULED_ONLY" = "true" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.event.inputs.scheduled_only }}" = "true" ]; then
+            ARGS="$ARGS --scheduled-only"
+          fi
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "${{ steps.scheduled_queue.outputs.has_due }}" = "true" ]; then
             ARGS="$ARGS --scheduled-only"
           fi
           if [ "$INSTAGRAM_TEMPLATE_PUBLISH_MODE" = "story-only" ]; then
@@ -161,17 +142,22 @@ jobs:
           fi
           npm run instagram -- --account "$ACCOUNT" $ARGS
 
-      - name: Persist scheduled queue status
-        if: always() && env.SCHEDULED_ONLY == 'true'
+      - name: Mark automatic slot published
+        if: success() && github.event_name == 'schedule' && steps.scheduled_queue.outputs.has_due != 'true' && steps.auto_slot.outputs.has_due == 'true'
+        run: node scripts/mark-auto-slot-published.mjs
+
+      - name: Persist schedule state
+        if: always() && (steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true')
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add automation/instagram-template/config/scheduled-posts.json
+          git add automation/instagram-template/config/published-slots.json
           if git diff --cached --quiet; then
-            echo "No scheduled queue changes to persist."
+            echo "No schedule state changes to persist."
           else
-            git commit -m "Update scheduled Instagram queue"
+            git commit -m "Update Instagram schedule state"
             git pull --rebase origin main
             git push origin HEAD:main
           fi

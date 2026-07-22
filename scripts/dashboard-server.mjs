@@ -347,14 +347,8 @@ async function readPrivateMetrics() {
 
 function updateWorkflowSchedule(scheduleUtc) {
   let text = readFileSync(WORKFLOW_PATH, 'utf8');
-  const scheduleBlock = scheduleUtc.map((cron) => `    - cron: "${cron}"`).join('\n');
-  text = text.replace(/  schedule:\r?\n(?:    - cron: ".*"\r?\n)+/, `  schedule:\n${scheduleBlock}\n`);
-
   const optionsBlock = scheduleUtc.map((_, index) => `          - "${index}"`).join('\n');
   text = text.replace(/        options:\r?\n(?:          - "\d+"\r?\n)+/, `        options:\n${optionsBlock}\n`);
-
-  const caseBlock = scheduleUtc.map((cron, index) => `              "${cron}") SLOT_INDEX="${index}" ;;`).join('\n');
-  text = text.replace(/            case "\$\{\{ github\.event\.schedule \}\}" in\r?\n(?:              ".*"\) SLOT_INDEX="\d+" ;;\r?\n)+/, `            case "\${{ github.event.schedule }}" in\n${caseBlock}\n`);
   writeFileSync(WORKFLOW_PATH, text, 'utf8');
 }
 
