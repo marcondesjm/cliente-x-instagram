@@ -930,6 +930,39 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             </div>
           </div>
         </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="section-label">Manutenção</div>
+              <h2>Tokens e reativação</h2>
+            </div>
+            <span class="status-pill warn" id="maintenanceStatus">Acompanhar</span>
+          </div>
+          <div class="checks">
+            <div class="check">
+              <span class="dot warn"></span>
+              <div>
+                <strong id="githubTokenTitle">GitHub token do Vercel</strong>
+                <span id="githubTokenInfo">Renovar antes de 21/08/2026. Atualizar GITHUB_TOKEN no Vercel Production e redeployar.</span>
+              </div>
+            </div>
+            <div class="check">
+              <span class="dot warn"></span>
+              <div>
+                <strong id="metaTokenTitle">Token Meta/Instagram</strong>
+                <span id="metaTokenInfo">Reativar se a Meta negar publicação ou métricas. Atualizar no Vercel e GitHub Secrets.</span>
+              </div>
+            </div>
+            <div class="check">
+              <span class="dot good"></span>
+              <div>
+                <strong>Segurança</strong>
+                <span id="maintenanceNote">O painel mostra o que renovar, mas não exibe nem edita valores de tokens.</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </aside>
     </main>
 
@@ -1032,6 +1065,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         document.getElementById('contentCount').textContent = DATA.packCount;
         document.getElementById('contentNote').textContent = `${DATA.schedulesUtc.length} horários ativos`;
         renderVersion(state.activeVersion);
+        renderMaintenance(state.maintenance);
         renderSchedule();
         renderScheduleEditor();
         renderQueue();
@@ -1061,6 +1095,26 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       name.textContent = `${version.name || 'cliente-x-funcionando'} · ${version.label || 'última versão funcionando'}.`;
       commit.innerHTML = `<a href="${escapeHtml(currentCommitUrl)}" target="_blank" rel="noreferrer">${escapeHtml(currentCommit)}</a>${stableCommit}`;
       description.textContent = version.description || 'Projeto operacional confirmado.';
+    }
+
+    function renderMaintenance(maintenance) {
+      if (!maintenance) return;
+
+      const github = maintenance.githubToken || {};
+      const meta = maintenance.metaToken || {};
+      const githubInfo = document.getElementById('githubTokenInfo');
+      const metaInfo = document.getElementById('metaTokenInfo');
+      const note = document.getElementById('maintenanceNote');
+      const status = document.getElementById('maintenanceStatus');
+
+      document.getElementById('githubTokenTitle').textContent = `${github.label || 'GitHub token'} (${github.env || 'GITHUB_TOKEN'})`;
+      document.getElementById('metaTokenTitle').textContent = `${meta.label || 'Token Meta'} (${meta.env || 'CLIENTE_X_INSTAGRAM_ACCESS_TOKEN'})`;
+      githubInfo.textContent = `${github.status || 'acompanhar'}${github.expiresAt ? ` · vence em ${github.expiresAt}` : ''}. ${github.action || ''}`;
+      metaInfo.textContent = `${meta.status || 'acompanhar'}. ${meta.action || ''}`;
+      note.textContent = maintenance.note || 'Não exponha tokens no painel.';
+
+      status.textContent = github.expiresAt ? 'Renovar' : 'Acompanhar';
+      status.className = 'status-pill warn';
     }
 
     async function loadPrivateMetrics() {

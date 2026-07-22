@@ -17,6 +17,22 @@ const ACTIVE_VERSION = {
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/eb93f36',
   description: 'Vercel, botões, publicação real e linha editorial narrativa confirmados.'
 };
+const MAINTENANCE = {
+  githubToken: {
+    label: 'GitHub token do Vercel',
+    env: 'GITHUB_TOKEN',
+    expiresAt: '2026-08-21',
+    status: 'renovar antes do vencimento',
+    action: 'Criar outro fine-grained token no GitHub com Actions e Contents read/write para marcondesjm/cliente-x-instagram, atualizar GITHUB_TOKEN no Vercel Production e redeployar.'
+  },
+  metaToken: {
+    label: 'Token Meta/Instagram',
+    env: 'CLIENTE_X_INSTAGRAM_ACCESS_TOKEN',
+    status: 'reativar se a Meta negar publicação ou métricas',
+    action: 'Gerar novo token na Meta, trocar CLIENTE_X_INSTAGRAM_ACCESS_TOKEN no Vercel e nos GitHub Secrets, depois testar /api/private-metrics e Publicar agora.'
+  },
+  note: 'Por segurança, o dashboard mostra o que renovar, mas não exibe nem edita valores de tokens.'
+};
 
 function readJson(path) {
   return JSON.parse(readFileSync(path, 'utf8').replace(/^\uFEFF/, ''));
@@ -77,6 +93,7 @@ export default async function handler(req, res) {
         ? `https://github.com/${OWNER}/${REPO}/commit/${process.env.VERCEL_GIT_COMMIT_SHA}`
         : ACTIVE_VERSION.stableCommitUrl
     },
+    maintenance: MAINTENANCE,
     scheduleBrt: account?.scheduleUtc?.map(cronToBrtTime) || [],
     packs,
     packCount: packs.length,
