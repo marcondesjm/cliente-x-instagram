@@ -9,6 +9,7 @@ const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const DOCS_DIR = join(ROOT, 'docs');
 const CONTENT_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'content-packs.json');
 const ACCOUNTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'accounts.json');
+const SCHEDULED_POSTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'scheduled-posts.json');
 const WORKFLOW_PATH = join(ROOT, '.github', 'workflows', 'instagram-feed-cliente-x.yml');
 const README_PATH = join(ROOT, 'README.md');
 const RUNS_DIR = join(ROOT, 'automation', 'instagram-template', 'runs');
@@ -30,6 +31,10 @@ const mimeTypes = {
 
 function readJson(path) {
   return JSON.parse(readFileSync(path, 'utf8').replace(/^\uFEFF/, ''));
+}
+
+function writeJson(path, value) {
+  writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
 }
 
 function loadEnv() {
@@ -83,6 +88,70 @@ function normalizeTimes(times) {
     const [bh, bm] = b.split(':').map(Number);
     return ah * 60 + am - (bh * 60 + bm);
   });
+}
+
+function ensureScheduledPosts() {
+  if (!existsSync(SCHEDULED_POSTS_PATH)) {
+    writeJson(SCHEDULED_POSTS_PATH, [{ account: ACCOUNT, posts: [] }]);
+  }
+  const groups = readJson(SCHEDULED_POSTS_PATH);
+  let group = groups.find((item) => item.account === ACCOUNT);
+  if (!group) {
+    group = { account: ACCOUNT, posts: [] };
+    groups.push(group);
+    writeJson(SCHEDULED_POSTS_PATH, groups);
+  }
+  if (!Array.isArray(group.posts)) group.posts = [];
+  return { groups, group };
+}
+
+function readScheduledPosts() {
+  return ensureScheduledPosts().group.posts
+    .slice()
+    .sort((a, b) => String(a.scheduledFor).localeCompare(String(b.scheduledFor)));
+}
+
+function brtDateTimeToIso(date, time) {
+  const dateMatch = String(date || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  const timeMatch = String(time || '').match(/^([01]\d|2[0-3]):([0-5]\d)$/);
+  if (!dateMatch) throw new Error('Data invalida. Use AAAA-MM-DD.');
+  if (!timeMatch) throw new Error('Horario invalido. Use HH:MM.');
+  const [, year, month, day] = dateMatch;
+  const [, hour, minute] = timeMatch;
+  return `${year}-${month}-${day}T${hour}:${minute}:00-03:00`;
+}
+
+function saveScheduledPost(body) {
+  const packIndex = Number(body.packIndex);
+  const packs = getState().packs;
+  if (!Number.isInteger(packIndex) || packIndex < 0 || packIndex >= packs.length) {
+    throw new Error('Pack invalido para agendamento.');
+  }
+
+  const { groups, group } = ensureScheduledPosts();
+  const post = {
+    id: `manual-${Date.now()}`,
+    status: 'pending',
+    packIndex,
+    scheduledFor: body.publishNow ? new Date().toISOString() : brtDateTimeToIso(body.date, body.time),
+    mode: body.mode === 'story-only' ? 'story-only' : 'feed-and-story',
+    title: packs[packIndex]?.slides?.[0]?.title || `Pack ${packIndex}`,
+    createdAt: new Date().toISOString()
+  };
+  group.posts.push(post);
+  writeJson(SCHEDULED_POSTS_PATH, groups);
+  return { scheduledPosts: readScheduledPosts(), post };
+}
+
+function cancelScheduledPost(id) {
+  const { groups, group } = ensureScheduledPosts();
+  const post = group.posts.find((item) => item.id === id);
+  if (!post) throw new Error('Post agendado nao encontrado.');
+  if (post.status !== 'pending') throw new Error('Somente posts pendentes podem ser cancelados.');
+  post.status = 'cancelled';
+  post.cancelledAt = new Date().toISOString();
+  writeJson(SCHEDULED_POSTS_PATH, groups);
+  return { scheduledPosts: readScheduledPosts(), post };
 }
 
 function json(res, status, body) {
@@ -162,6 +231,7 @@ function getState() {
     packs,
     packCount: packs.length,
     uniqueCaptions,
+    scheduledPosts: readScheduledPosts(),
     latestResult,
     latestFailure
   };
@@ -338,6 +408,26 @@ function runCommand(command, args, env = {}) {
   });
 }
 
+async function pushScheduledPosts() {
+  const steps = [];
+  for (const [command, args] of [
+    ['git', ['add', 'automation/instagram-template/config/scheduled-posts.json']],
+    ['git', ['diff', '--cached', '--quiet']],
+    ['git', ['commit', '-m', 'Update scheduled Instagram posts']],
+    ['git', ['pull', '--rebase', 'origin', 'main']],
+    ['git', ['push', 'origin', 'HEAD:main']]
+  ]) {
+    const result = await runCommand(command, args);
+    steps.push({ command: `${command} ${args.join(' ')}`, ...result });
+    if (command === 'git' && args[0] === 'diff' && result.code === 0) {
+      return { ok: true, skipped: true, message: 'Nenhuma mudanca de agendamento para enviar.', steps };
+    }
+    if (command === 'git' && args[0] === 'diff' && result.code === 1) continue;
+    if (!result.ok) return { ok: false, steps };
+  }
+  return { ok: true, steps };
+}
+
 function safeStaticPath(urlPath) {
   const decoded = decodeURIComponent(urlPath.split('?')[0]);
   const target = decoded === '/' ? join(DOCS_DIR, 'dashboard.html') : join(ROOT, decoded);
@@ -363,6 +453,14 @@ async function handleApi(req, res, url) {
       const body = await readBody(req);
       return json(res, 200, saveSchedule(body.times || []));
     }
+    if (req.method === 'POST' && url.pathname === '/api/scheduled-posts') {
+      const body = await readBody(req);
+      return json(res, 200, saveScheduledPost(body));
+    }
+    if (req.method === 'POST' && url.pathname.startsWith('/api/scheduled-posts/') && url.pathname.endsWith('/cancel')) {
+      const id = url.pathname.split('/').at(-2);
+      return json(res, 200, cancelScheduledPost(id));
+    }
     if (req.method === 'POST' && url.pathname === '/api/validate') {
       return json(res, 200, await runCommand('npm', ['run', 'validate-copy']));
     }
@@ -372,6 +470,12 @@ async function handleApi(req, res, url) {
       return json(res, 200, await runCommand('npm', ['run', 'render-only'], {
         INSTAGRAM_TEMPLATE_SLOT_INDEX: String(slotIndex)
       }));
+    }
+    if (req.method === 'POST' && url.pathname === '/api/publish-scheduled') {
+      return json(res, 200, await runCommand('npm', ['run', 'instagram', '--', '--account', ACCOUNT, '--scheduled-only']));
+    }
+    if (req.method === 'POST' && url.pathname === '/api/push-scheduled-posts') {
+      return json(res, 200, await pushScheduledPosts());
     }
     return json(res, 404, { error: 'Endpoint nao encontrado.' });
   } catch (error) {

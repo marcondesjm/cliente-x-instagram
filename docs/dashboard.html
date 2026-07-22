@@ -498,6 +498,47 @@
       margin-top: 12px;
     }
 
+    .queue-actions {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      align-items: end;
+    }
+
+    .queue-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .queue-row {
+      display: grid;
+      grid-template-columns: minmax(116px, 140px) minmax(0, 1fr) minmax(86px, auto);
+      gap: 10px;
+      align-items: center;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdfc;
+      min-width: 0;
+    }
+
+    .queue-title {
+      min-width: 0;
+      font-size: 14px;
+      font-weight: 900;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .queue-meta {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      margin-top: 2px;
+    }
+
     .message {
       min-height: 42px;
       padding: 12px;
@@ -611,7 +652,7 @@
       }
       .preview { grid-template-columns: 1fr; }
       .preview img { width: min(260px, 100%); }
-      .two-fields, .editor-actions { grid-template-columns: 1fr; }
+      .two-fields, .editor-actions, .queue-actions, .queue-row { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 520px) {
@@ -759,6 +800,40 @@
         <div class="panel">
           <div class="panel-head">
             <div>
+              <div class="section-label">Fila manual</div>
+              <h2>Agendar publicação</h2>
+            </div>
+            <span class="status-pill warn" id="queueStatus">Local</span>
+          </div>
+          <div class="queue-actions">
+            <label>
+              Data
+              <input type="date" id="manualDate">
+            </label>
+            <label>
+              Hora BRT
+              <input type="time" id="manualTime">
+            </label>
+            <label>
+              Modo
+              <select id="manualMode">
+                <option value="feed-and-story">Feed + story</option>
+                <option value="story-only">Só story</option>
+              </select>
+            </label>
+            <button class="primary" id="queuePost" type="button">Agendar pack</button>
+          </div>
+          <div class="editor-actions">
+            <button id="publishNow" type="button">Publicar agora</button>
+            <button id="runScheduled" type="button">Rodar fila</button>
+            <button id="pushScheduled" type="button">Enviar agenda</button>
+          </div>
+          <div class="queue-list" id="queueList"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
               <div class="section-label">GitHub Actions</div>
               <h2>Últimas execuções</h2>
             </div>
@@ -866,6 +941,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     let appState = {
       packs: [],
       scheduleBrt: [],
+      scheduledPosts: [],
       selectedPack: 0,
       selectedSlide: 0,
       serverMode: location.protocol.startsWith('http'),
@@ -911,6 +987,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         const state = await api('/api/state');
         appState.packs = state.packs || [];
         appState.scheduleBrt = state.scheduleBrt || [];
+        appState.scheduledPosts = state.scheduledPosts || [];
         DATA.schedulesUtc = state.account?.scheduleUtc || DATA.schedulesUtc;
         DATA.packCount = state.packCount || DATA.packCount;
         DATA.uniqueCaptions = state.uniqueCaptions || DATA.uniqueCaptions;
@@ -918,6 +995,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         document.getElementById('contentNote').textContent = `${DATA.schedulesUtc.length} horários ativos`;
         renderSchedule();
         renderScheduleEditor();
+        renderQueue();
         renderChecks();
         renderEditor();
         setMessage('Conteúdos carregados do projeto. Escolha um slot, edite e salve.', 'good');
@@ -987,6 +1065,97 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       appState.scheduleBrt = scheduleTimesFromInputs();
       appState.scheduleBrt.push('09:00');
       renderScheduleEditor();
+    }
+
+    function defaultManualDateTime() {
+      const now = new Date(Date.now() + 20 * 60_000);
+      const parts = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'America/Sao_Paulo',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      }).formatToParts(now);
+      const map = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+      document.getElementById('manualDate').value = `${map.year}-${map.month}-${map.day}`;
+      document.getElementById('manualTime').value = `${map.hour}:${map.minute}`;
+    }
+
+    function queueStatusClass(status) {
+      if (status === 'published') return 'good';
+      if (status === 'failed' || status === 'cancelled') return 'bad';
+      return 'warn';
+    }
+
+    function renderQueue() {
+      const list = document.getElementById('queueList');
+      const status = document.getElementById('queueStatus');
+      const posts = appState.scheduledPosts || [];
+      const pending = posts.filter((post) => post.status === 'pending').length;
+      status.textContent = `${pending} pendente${pending === 1 ? '' : 's'}`;
+      status.className = `status-pill ${pending ? 'warn' : 'good'}`;
+      if (!posts.length) {
+        list.innerHTML = '<div class="empty">Nenhum post manual agendado.</div>';
+        return;
+      }
+      list.innerHTML = posts.slice().reverse().map((post) => {
+        const when = new Date(post.scheduledFor);
+        const statusClass = queueStatusClass(post.status);
+        const canCancel = post.status === 'pending';
+        return `
+          <div class="queue-row">
+            <div class="run-time">${dateFormatter.format(when)}</div>
+            <div>
+              <div class="queue-title">${escapeHtml(post.title || `Pack ${post.packIndex}`)}</div>
+              <div class="queue-meta">slot ${post.packIndex} · ${post.mode === 'story-only' ? 'story' : 'feed + story'}</div>
+            </div>
+            ${canCancel
+              ? `<button type="button" data-cancel-post="${escapeHtml(post.id)}">Cancelar</button>`
+              : `<span class="status-pill ${statusClass}">${escapeHtml(post.status)}</span>`}
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function scheduleSelectedPost(publishNow = false) {
+      if (!appState.serverMode) {
+        setMessage('Essa ação precisa do servidor local: npm run dashboard', 'bad');
+        return;
+      }
+      syncEditorToState();
+      const body = {
+        packIndex: appState.selectedPack,
+        date: document.getElementById('manualDate').value,
+        time: document.getElementById('manualTime').value,
+        mode: document.getElementById('manualMode').value,
+        publishNow
+      };
+      setMessage(publishNow ? 'Enfileirando publicação imediata...' : 'Salvando agendamento...', 'warn');
+      try {
+        const payload = await api('/api/scheduled-posts', {
+          method: 'POST',
+          body: JSON.stringify(body)
+        });
+        appState.scheduledPosts = payload.scheduledPosts || [];
+        renderQueue();
+        setMessage(publishNow ? 'Post entrou na fila para publicação imediata.' : 'Agendamento salvo na fila local.', 'good');
+      } catch (error) {
+        setMessage(error.message, 'bad');
+      }
+    }
+
+    async function cancelScheduledPost(id) {
+      setMessage('Cancelando post agendado...', 'warn');
+      try {
+        const payload = await api(`/api/scheduled-posts/${encodeURIComponent(id)}/cancel`, { method: 'POST' });
+        appState.scheduledPosts = payload.scheduledPosts || [];
+        renderQueue();
+        setMessage('Post cancelado.', 'good');
+      } catch (error) {
+        setMessage(error.message, 'bad');
+      }
     }
 
     function removeScheduleTime(index) {
@@ -1133,6 +1302,32 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         });
         const output = [payload.stdout, payload.stderr].filter(Boolean).join('\n').trim();
         setMessage(payload.ok ? `Concluído.\n${output}` : `Falhou.\n${output}`, payload.ok ? 'good' : 'bad');
+      } catch (error) {
+        setMessage(error.message, 'bad');
+      } finally {
+        button.disabled = false;
+        button.textContent = original;
+      }
+    }
+
+    async function runQueueAction(path, button, runningText) {
+      if (!appState.serverMode) {
+        setMessage('Essa ação precisa do servidor local: npm run dashboard', 'bad');
+        return;
+      }
+      const original = button.textContent;
+      button.disabled = true;
+      button.textContent = runningText;
+      setMessage(runningText, 'warn');
+      try {
+        const payload = await api(path, { method: 'POST' });
+        const stepOutput = (payload.steps || [])
+          .map((step) => [step.command, step.stdout, step.stderr].filter(Boolean).join('\n'))
+          .filter(Boolean)
+          .join('\n\n');
+        const output = [payload.stdout, payload.stderr, payload.message, stepOutput].filter(Boolean).join('\n').trim();
+        setMessage(payload.ok ? `Concluído.\n${output}` : `Falhou.\n${output}`, payload.ok ? 'good' : 'bad');
+        await loadState();
       } catch (error) {
         setMessage(error.message, 'bad');
       } finally {
@@ -1374,6 +1569,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     renderSchedule();
     renderChecks();
     renderEditor();
+    defaultManualDateTime();
+    renderQueue();
     loadState();
     refreshRuns();
     setInterval(renderSchedule, 60_000);
@@ -1402,6 +1599,18 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     });
     document.getElementById('renderSlot').addEventListener('click', (event) => {
       runServerAction('/api/render', event.currentTarget, 'Renderizando');
+    });
+    document.getElementById('queuePost').addEventListener('click', () => scheduleSelectedPost(false));
+    document.getElementById('publishNow').addEventListener('click', () => scheduleSelectedPost(true));
+    document.getElementById('runScheduled').addEventListener('click', (event) => {
+      runQueueAction('/api/publish-scheduled', event.currentTarget, 'Rodando fila');
+    });
+    document.getElementById('pushScheduled').addEventListener('click', (event) => {
+      runQueueAction('/api/push-scheduled-posts', event.currentTarget, 'Enviando agenda');
+    });
+    document.getElementById('queueList').addEventListener('click', (event) => {
+      const button = event.target.closest('[data-cancel-post]');
+      if (button) cancelScheduledPost(button.dataset.cancelPost);
     });
   </script>
 </body>

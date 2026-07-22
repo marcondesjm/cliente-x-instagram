@@ -30,6 +30,10 @@ Rode `npm run dashboard` e abra `http://localhost:4173`.
 
 O painel permite acompanhar próximos horários, últimos runs do GitHub Actions, editar manualmente horários, banners/slides e legendas, salvar em `content-packs.json`, atualizar `accounts.json`/workflow/README, validar textos e renderizar prévias.
 
+### Agendamento manual
+
+No painel, escolha um pack, defina data/hora em Brasília e salve na fila manual. Clique em `Enviar agenda` para commitar e enviar `scheduled-posts.json` ao GitHub. O workflow confere a fila a cada 10 minutos e publica posts pendentes antes da automação normal.
+
 ## Segurança
 
 - Não comite `.env` com token real.

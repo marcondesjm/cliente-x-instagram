@@ -51,12 +51,17 @@ function parseArgs(argv) {
     dryRun: argv.includes('--dry-run'),
     renderOnly: argv.includes('--render-only'),
     storyOnly: argv.includes('--story-only'),
-    validateCopy: argv.includes('--validate-copy')
+    validateCopy: argv.includes('--validate-copy'),
+    scheduledOnly: argv.includes('--scheduled-only')
   };
 }
 
 function readJson(path) {
   return JSON.parse(readFileSync(path, 'utf8').replace(/^\uFEFF/, ''));
+}
+
+function writeJson(path, value) {
+  writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
 }
 
 function configPath(configDir, name) {
@@ -88,6 +93,40 @@ function loadConfig(configDir, accountName) {
   if (!content.packs?.length) throw new Error(`Conta "${accountName}" nao tem packs de conteudo.`);
   if (!styles.length) throw new Error('Nenhum estilo visual configurado.');
   return { account, packs: content.packs, styles };
+}
+
+function scheduledPostsPath(configDir) {
+  return configPath(configDir, 'scheduled-posts');
+}
+
+function loadScheduledPosts(configDir, accountName) {
+  const path = scheduledPostsPath(configDir);
+  if (!existsSync(path)) return { path, groups: [{ account: accountName, posts: [] }], group: { account: accountName, posts: [] } };
+  const groups = readJson(path);
+  let group = groups.find((item) => item.account === accountName);
+  if (!group) {
+    group = { account: accountName, posts: [] };
+    groups.push(group);
+  }
+  if (!Array.isArray(group.posts)) group.posts = [];
+  return { path, groups, group };
+}
+
+function dueScheduledPost(configDir, accountName, now = new Date()) {
+  const state = loadScheduledPosts(configDir, accountName);
+  const post = state.group.posts
+    .filter((item) => item.status === 'pending' && Date.parse(item.scheduledFor) <= now.getTime())
+    .sort((a, b) => Date.parse(a.scheduledFor) - Date.parse(b.scheduledFor))[0];
+  return { ...state, post };
+}
+
+function updateScheduledPost(configDir, accountName, id, patch) {
+  const state = loadScheduledPosts(configDir, accountName);
+  const post = state.group.posts.find((item) => item.id === id);
+  if (!post) return null;
+  Object.assign(post, patch);
+  writeJson(state.path, state.groups);
+  return post;
 }
 
 async function loadSupabasePacks(env, accountName) {
@@ -801,6 +840,31 @@ async function main() {
   let pack = pickDaily(packs, today, slotIndex);
   let packIndex = pickDailyIndex(packs, today, slotIndex);
   let skippedDuplicates = 0;
+  let scheduledPost = null;
+  let publishMode = args.storyOnly ? 'story-only' : 'feed-and-story';
+
+  if (!args.renderOnly) {
+    scheduledPost = dueScheduledPost(args.configDir, account.account).post;
+    if (scheduledPost) {
+      process.env.INSTAGRAM_TEMPLATE_ACTIVE_SCHEDULED_POST_ID = scheduledPost.id;
+      if (!Number.isInteger(scheduledPost.packIndex) || scheduledPost.packIndex < 0 || scheduledPost.packIndex >= packs.length) {
+        throw new Error(`Post agendado ${scheduledPost.id} aponta para pack invalido: ${scheduledPost.packIndex}.`);
+      }
+      pack = packs[scheduledPost.packIndex];
+      packIndex = `scheduled-${scheduledPost.packIndex}`;
+      publishMode = scheduledPost.mode === 'story-only' ? 'story-only' : 'feed-and-story';
+      console.log(`Post agendado selecionado: ${scheduledPost.id} pack ${scheduledPost.packIndex} (${scheduledPost.scheduledFor}).`);
+    } else if (args.scheduledOnly) {
+      console.log(JSON.stringify({
+        ok: true,
+        skipped: true,
+        scheduledOnly: true,
+        account: account.account,
+        message: 'Nenhum post agendado pendente para publicar agora.'
+      }, null, 2));
+      return;
+    }
+  }
 
   const token = env[account.accessTokenEnv];
   const userId = env[account.userIdEnv];
@@ -815,7 +879,7 @@ async function main() {
       throw new Error(`Conta errada: esperado ${account.expectedUsername}, retornou ${igAccount.username}.`);
     }
 
-    if (!args.storyOnly) {
+    if (!scheduledPost && !args.storyOnly) {
       const recentMedia = await fetchRecentMedia(userId, token);
       const fresh = pickFreshPack(packs, today, slotIndex, recentMedia);
       if (!fresh.pack) {
@@ -846,7 +910,8 @@ async function main() {
   mkdirSync(runDir, { recursive: true });
   writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, account: account.account, visualStyle: style.name, ...pack }, null, 2), 'utf8');
   writeFileSync(join(runDir, 'caption.txt'), pack.caption, 'utf8');
-  const imagePaths = args.storyOnly ? [] : await renderSlides(runDir, pack.slides, account, style);
+  const storyOnly = publishMode === 'story-only';
+  const imagePaths = storyOnly ? [] : await renderSlides(runDir, pack.slides, account, style);
   const storyImagePath = await renderStory(runDir, pack, account, style);
 
   if (args.renderOnly) {
@@ -858,7 +923,7 @@ async function main() {
   let imageUrls = [];
   let childIds = [];
   let carousel = null;
-  if (!args.storyOnly) {
+  if (!storyOnly) {
     imageUrls = await Promise.all(imagePaths.map((imagePath) => uploadToImgBB(imagePath, imgbbKey)));
     const children = await Promise.all(imageUrls.map((imageUrl) => graphPost(`/${userId}/media`, {
       image_url: imageUrl,
@@ -880,7 +945,8 @@ async function main() {
   const baseResult = {
     ok: true,
     dryRun: args.dryRun,
-    storyOnly: args.storyOnly,
+    storyOnly,
+    scheduledPostId: scheduledPost?.id,
     account: account.account,
     runDir,
     slotIndex,
@@ -902,18 +968,41 @@ async function main() {
 
   let media = null;
   let details = null;
-  if (!args.storyOnly) {
+  if (!storyOnly) {
     media = await graphPost(`/${userId}/media_publish`, { creation_id: carousel.id, access_token: token });
     details = await graphGet(`/${media.id}`, { fields: 'id,permalink,timestamp', access_token: token });
   }
   const storyMedia = await graphPost(`/${userId}/media_publish`, { creation_id: story.id, access_token: token });
   const storyDetails = await graphGet(`/${storyMedia.id}`, { fields: 'id,timestamp', access_token: token });
   const result = { ...baseResult, mediaId: media?.id, ...(details || {}), storyMediaId: storyMedia.id, story: storyDetails };
+  if (scheduledPost) {
+    updateScheduledPost(args.configDir, account.account, scheduledPost.id, {
+      status: 'published',
+      publishedAt: new Date().toISOString(),
+      mediaId: media?.id,
+      permalink: details?.permalink,
+      storyMediaId: storyMedia.id
+    });
+    delete process.env.INSTAGRAM_TEMPLATE_ACTIVE_SCHEDULED_POST_ID;
+  }
   writeFileSync(join(runDir, 'result.json'), JSON.stringify(result, null, 2), 'utf8');
   console.log(JSON.stringify(result, null, 2));
 }
 
 main().catch((error) => {
+  const args = parseArgs(process.argv);
+  const scheduledPostId = process.env.INSTAGRAM_TEMPLATE_ACTIVE_SCHEDULED_POST_ID;
+  if (scheduledPostId) {
+    try {
+      updateScheduledPost(args.configDir, args.account, scheduledPostId, {
+        status: 'failed',
+        failedAt: new Date().toISOString(),
+        error: error.message
+      });
+    } catch {
+      // Keep the original publication error as the main failure signal.
+    }
+  }
   mkdirSync(RUNS_DIR, { recursive: true });
   writeFileSync(join(RUNS_DIR, `failure-${timestampSaoPaulo()}.json`), JSON.stringify({
     ok: false,

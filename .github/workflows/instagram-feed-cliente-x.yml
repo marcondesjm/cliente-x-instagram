@@ -1,7 +1,15 @@
 name: Instagram Feed Cliente X
 
+permissions:
+  contents: write
+
+concurrency:
+  group: instagram-feed-cliente-x
+  cancel-in-progress: false
+
 on:
   schedule:
+    - cron: "*/10 * * * *"
     - cron: "30 9 * * *"
     - cron: "10 11 * * *"
     - cron: "0 12 * * *"
@@ -56,6 +64,7 @@ jobs:
     env:
       ACCOUNT: ${{ github.event.inputs.account || 'cliente-x' }}
       DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run || 'false' }}
+      SCHEDULED_ONLY: ${{ github.event_name == 'schedule' && github.event.schedule == '*/10 * * * *' && 'true' || 'false' }}
       CLIENTE_X_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.CLIENTE_X_INSTAGRAM_ACCESS_TOKEN }}
       CLIENTE_X_INSTAGRAM_USER_ID: ${{ secrets.CLIENTE_X_INSTAGRAM_USER_ID }}
       IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
@@ -72,16 +81,24 @@ jobs:
           node-version: "22"
           cache: "npm"
 
+      - name: Check scheduled queue
+        id: scheduled_queue
+        run: node scripts/has-due-scheduled-post.mjs
+
       - name: Install dependencies
+        if: env.SCHEDULED_ONLY != 'true' || steps.scheduled_queue.outputs.has_due == 'true'
         run: npm ci
 
       - name: Validate copy
+        if: env.SCHEDULED_ONLY != 'true' || steps.scheduled_queue.outputs.has_due == 'true'
         run: npm run instagram -- --account "$ACCOUNT" --validate-copy
 
       - name: Install Playwright Chromium
+        if: env.SCHEDULED_ONLY != 'true' || steps.scheduled_queue.outputs.has_due == 'true'
         run: npx playwright install --with-deps chromium
 
       - name: Select content slot
+        if: env.SCHEDULED_ONLY != 'true' || steps.scheduled_queue.outputs.has_due == 'true'
         shell: bash
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
@@ -107,13 +124,32 @@ jobs:
           echo "INSTAGRAM_TEMPLATE_SLOT_INDEX=$SLOT_INDEX" >> "$GITHUB_ENV"
 
       - name: Publish feed and story
+        if: env.SCHEDULED_ONLY != 'true' || steps.scheduled_queue.outputs.has_due == 'true'
         shell: bash
         run: |
           ARGS=""
           if [ "$DRY_RUN" = "true" ]; then
             ARGS="$ARGS --dry-run"
           fi
+          if [ "$SCHEDULED_ONLY" = "true" ]; then
+            ARGS="$ARGS --scheduled-only"
+          fi
           npm run instagram -- --account "$ACCOUNT" $ARGS
+
+      - name: Persist scheduled queue status
+        if: always() && env.SCHEDULED_ONLY == 'true'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add automation/instagram-template/config/scheduled-posts.json
+          if git diff --cached --quiet; then
+            echo "No scheduled queue changes to persist."
+          else
+            git commit -m "Update scheduled Instagram queue"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
 
       - name: Upload run logs
         if: always()
