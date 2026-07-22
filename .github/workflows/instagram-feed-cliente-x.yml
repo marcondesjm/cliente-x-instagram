@@ -156,6 +156,14 @@ jobs:
         if: success() && github.event_name != 'workflow_dispatch' && steps.scheduled_queue.outputs.has_due != 'true' && steps.auto_slot.outputs.has_due == 'true'
         run: node scripts/mark-auto-slot-published.mjs
 
+      - name: Resolve watchdog error
+        if: success() && github.event_name != 'workflow_dispatch' && (steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true')
+        run: node scripts/record-watchdog-status.mjs --status=resolved
+
+      - name: Record watchdog error
+        if: failure() && (steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true')
+        run: node scripts/record-watchdog-status.mjs --status=failed
+
       - name: Persist schedule state
         if: always() && (steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true')
         shell: bash
@@ -164,6 +172,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add automation/instagram-template/config/scheduled-posts.json
           git add automation/instagram-template/config/published-slots.json
+          git add automation/instagram-template/config/watchdog-errors.json
           if git diff --cached --quiet; then
             echo "No schedule state changes to persist."
           else

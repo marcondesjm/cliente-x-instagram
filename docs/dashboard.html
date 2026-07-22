@@ -1262,6 +1262,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       adminEmail: null,
       secrets: [],
       accessConfig: [],
+      watchdogErrors: [],
       openAccessIndex: null,
       accounts: [],
       users: [],
@@ -1411,6 +1412,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         appState.scheduledPosts = state.scheduledPosts || [];
         appState.secrets = state.secrets || [];
         appState.accessConfig = state.accessConfig || [];
+        appState.watchdogErrors = state.watchdogErrors || [];
         DATA.schedulesUtc = state.account?.scheduleUtc || DATA.schedulesUtc;
         DATA.packCount = state.packCount || DATA.packCount;
         DATA.uniqueCaptions = state.uniqueCaptions || DATA.uniqueCaptions;
@@ -2446,6 +2448,19 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         };
       }
 
+      const openWatchdogError = (appState.watchdogErrors || []).find((error) => error.status === 'open');
+      const watchdogCheck = openWatchdogError
+        ? {
+          level: 'bad',
+          title: `Vigia com erro no slot ${openWatchdogError.slotIndex ?? '--'}`,
+          body: `${openWatchdogError.stage || 'etapa desconhecida'}: ${openWatchdogError.error || 'erro sem detalhe'}. Solução: ${openWatchdogError.solution || 'abrir o run do GitHub Actions e corrigir a etapa indicada.'}${openWatchdogError.runUrl ? ` Run: ${openWatchdogError.runUrl}` : ''}`
+        }
+        : {
+          level: 'good',
+          title: 'Vigia sem erro aberto',
+          body: 'Quando uma tentativa automática falhar, o painel mostra etapa, erro, run e solução sugerida.'
+        };
+
       const checks = [
         {
           level: DATA.packCount >= DATA.schedulesUtc.length ? 'good' : 'bad',
@@ -2466,6 +2481,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           title: 'Fallback local ativo',
           body: 'Se o Supabase tiver poucos posts, o script completa com os packs locais.'
         },
+        watchdogCheck,
         privateCheck
       ];
 

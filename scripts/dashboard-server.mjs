@@ -11,6 +11,7 @@ const UPLOADS_DIR = join(DOCS_DIR, 'uploads');
 const CONTENT_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'content-packs.json');
 const ACCOUNTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'accounts.json');
 const SCHEDULED_POSTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'scheduled-posts.json');
+const WATCHDOG_ERRORS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'watchdog-errors.json');
 const WORKFLOW_PATH = join(ROOT, '.github', 'workflows', 'instagram-feed-cliente-x.yml');
 const README_PATH = join(ROOT, 'README.md');
 const RUNS_DIR = join(ROOT, 'automation', 'instagram-template', 'runs');
@@ -252,6 +253,7 @@ function getState() {
     packCount: packs.length,
     uniqueCaptions,
     scheduledPosts: readScheduledPosts(),
+    watchdogErrors: existsSync(WATCHDOG_ERRORS_PATH) ? readJson(WATCHDOG_ERRORS_PATH) : [],
     latestResult,
     latestFailure
   };

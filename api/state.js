@@ -17,11 +17,13 @@ const ROOT = process.cwd();
 const CONTENT_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'content-packs.json');
 const ACCOUNTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'accounts.json');
 const SCHEDULED_POSTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'scheduled-posts.json');
+const WATCHDOG_ERRORS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'watchdog-errors.json');
 const OWNER = 'marcondesjm';
 const REPO = 'cliente-x-instagram';
 const ACCOUNTS_FILE_PATH = 'automation/instagram-template/config/accounts.json';
 const CONTENT_FILE_PATH = 'automation/instagram-template/config/content-packs.json';
 const SCHEDULED_FILE_PATH = 'automation/instagram-template/config/scheduled-posts.json';
+const WATCHDOG_ERRORS_FILE_PATH = 'automation/instagram-template/config/watchdog-errors.json';
 const VERCEL_PROJECT_ID = process.env.VERCEL_PROJECT_ID || 'prj_AVyS8LGjVuhUOxkpfZZwOF5vMmPj';
 const VERCEL_TEAM_ID = process.env.VERCEL_TEAM_ID || 'team_T4Th6hb1UxtrbtcWfLxlWNRQ';
 const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instagram';
@@ -656,6 +658,10 @@ async function readScheduledGroups() {
   }
 }
 
+async function readWatchdogErrors() {
+  return readConfigGroups(WATCHDOG_ERRORS_FILE_PATH, WATCHDOG_ERRORS_PATH);
+}
+
 async function readConfigGroups(filePath, localPath) {
   const token = process.env.GITHUB_TOKEN || process.env.GITHUB_PAT;
   if (!token) return readJson(localPath);
@@ -805,6 +811,7 @@ export default async function handler(req, res) {
       },
       users: [],
       maintenance: MAINTENANCE,
+      watchdogErrors: [],
       accessConfig: [],
       secrets: [],
       scheduleBrt: [],
@@ -832,6 +839,7 @@ export default async function handler(req, res) {
   }));
   const group = content.find((item) => item.account === accountKey);
   const scheduledGroups = await readScheduledGroups();
+  const watchdogErrors = await readWatchdogErrors();
   const scheduledGroup = scheduledGroups.find((item) => item.account === accountKey);
   const packs = group?.packs || [];
 
@@ -858,6 +866,7 @@ export default async function handler(req, res) {
     },
     users: session && isOwner(session) ? publicUsers() : [],
     maintenance: MAINTENANCE,
+    watchdogErrors: watchdogErrors.filter((item) => !item.account || item.account === accountKey).slice(-10).reverse(),
     accessConfig: accessConfigForAccount(account),
     secrets: session ? secretStatuses(accounts) : [],
     scheduleBrt: account?.scheduleUtc?.map(cronToBrtTime) || [],
