@@ -525,6 +525,10 @@
       overflow-wrap: anywhere;
     }
 
+    .access-result.good { color: var(--good); }
+    .access-result.warn { color: var(--warn); }
+    .access-result.bad { color: var(--bad); }
+
     .empty {
       padding: 18px;
       border: 1px dashed var(--line);
@@ -2043,6 +2047,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const original = button.textContent;
       button.disabled = true;
       button.textContent = 'Salvando';
+      result.className = 'access-result warn';
       result.textContent = 'Atualizando perfil editorial no GitHub...';
 
       try {
@@ -2061,9 +2066,17 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           })
         });
         appState.account = payload.account || appState.account;
-        result.textContent = payload.message || 'Perfil editorial salvo.';
         await loadState();
+        const savedAt = new Date().toLocaleTimeString('pt-BR', {
+          timeZone: 'America/Sao_Paulo',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        });
+        result.className = 'access-result good';
+        result.textContent = `${payload.message || 'Perfil editorial salvo.'} Confirmado às ${savedAt} BRT.`;
       } catch (error) {
+        result.className = 'access-result bad';
         result.textContent = error.message;
       } finally {
         button.disabled = false;
