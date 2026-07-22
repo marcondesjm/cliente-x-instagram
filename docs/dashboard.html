@@ -885,6 +885,7 @@
         <button id="logoutButton" type="button">Sair</button>
       </div>
     </header>
+    <div class="message" id="deployMessage">Redeploy Vercel ainda não iniciado nesta sessão.</div>
 
     <main>
       <section class="grid">
@@ -1768,21 +1769,36 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
 
     async function redeployVercel() {
       const button = document.getElementById('redeployVercel');
+      const deployMessage = document.getElementById('deployMessage');
       const original = button.textContent;
       button.disabled = true;
       button.textContent = 'Redeploy...';
+      deployMessage.textContent = 'Iniciando redeploy da Vercel...';
+      deployMessage.className = 'message warn';
       setMessage('Iniciando redeploy da Vercel...', 'warn');
       try {
         const payload = await api('/api/state', {
           method: 'POST',
           body: JSON.stringify({ action: 'redeploy-vercel' })
         });
+        const deployLink = payload.inspectorUrl || payload.url || '';
+        deployMessage.innerHTML = `
+          <strong>Redeploy iniciado.</strong>
+          ${payload.readyState ? `Status: ${escapeHtml(payload.readyState)}. ` : ''}
+          ${deployLink ? `<a href="${escapeHtml(deployLink)}" target="_blank" rel="noreferrer">Abrir deploy na Vercel</a>` : ''}
+        `;
+        deployMessage.className = 'message good';
+        button.textContent = 'Redeploy iniciado';
         setMessage(`${payload.message || 'Redeploy iniciado.'}${payload.url ? `\n${payload.url}` : ''}`, 'good');
       } catch (error) {
+        deployMessage.textContent = `Redeploy falhou: ${error.message}`;
+        deployMessage.className = 'message bad';
         setMessage(error.message, 'bad');
       } finally {
         button.disabled = false;
-        button.textContent = original;
+        setTimeout(() => {
+          button.textContent = original;
+        }, 4000);
       }
     }
 
