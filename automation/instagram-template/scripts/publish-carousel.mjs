@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { chromium } from 'playwright';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { dirname, extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
@@ -367,6 +367,10 @@ function uniqueRunStamp(dateString, slotIndex) {
   return `${dateString} slot ${slotIndex} run ${timestampSaoPaulo().slice(11)}`;
 }
 
+function isHttpUrl(value) {
+  return /^https?:\/\//i.test(String(value || ''));
+}
+
 function buildLastResortPack(dateString, slotIndex) {
   const stamp = uniqueRunStamp(dateString, slotIndex);
   return autoPack(
@@ -444,9 +448,13 @@ function validatePack(pack) {
   assertPortugueseAccents(pack.caption);
   if (!Array.isArray(pack.slides) || pack.slides.length < 2) throw new Error('Cada pack precisa de pelo menos 2 slides.');
   for (const slide of pack.slides) {
+    const hasImage = Boolean(slide.imagePath || slide.imageUrl);
     const text = `${slide.eyebrow}\n${slide.title}\n${slide.body}`;
     assertNoMojibake(text);
     assertPortugueseAccents(text);
+    if (!hasImage && (!slide.eyebrow || !slide.title || !slide.body)) {
+      throw new Error('Slides sem imagem precisam de banner, titulo e descricao.');
+    }
   }
 }
 
@@ -614,11 +622,24 @@ async function renderSlides(runDir, slides, account, style) {
   const page = await browser.newPage({ viewport: { width: 1080, height: 1080 }, deviceScaleFactor: 1 });
   const imagePaths = [];
   for (let index = 0; index < slides.length; index += 1) {
-    const html = slideHtml(slides[index], index + 1, slides.length, account, style);
-    assertNoMojibake(html);
-    assertPortugueseAccents(`${slides[index].eyebrow}\n${slides[index].title}\n${slides[index].body}`);
-    const htmlPath = join(runDir, `slide-${String(index + 1).padStart(2, '0')}.html`);
+    const slide = slides[index];
     const imagePath = join(runDir, `slide-${String(index + 1).padStart(2, '0')}.jpg`);
+    if (slide.imageUrl) {
+      imagePaths.push(String(slide.imageUrl).trim());
+      continue;
+    }
+    if (slide.imagePath) {
+      const source = resolve(ROOT, String(slide.imagePath).replace(/^\/+/, ''));
+      if (!existsSync(source)) throw new Error(`Imagem do slide ${index + 1} nao encontrada: ${slide.imagePath}`);
+      const customImagePath = join(runDir, `slide-${String(index + 1).padStart(2, '0')}${extname(source).toLowerCase() || '.jpg'}`);
+      copyFileSync(source, customImagePath);
+      imagePaths.push(customImagePath);
+      continue;
+    }
+    const html = slideHtml(slide, index + 1, slides.length, account, style);
+    assertNoMojibake(html);
+    assertPortugueseAccents(`${slide.eyebrow}\n${slide.title}\n${slide.body}`);
+    const htmlPath = join(runDir, `slide-${String(index + 1).padStart(2, '0')}.html`);
     writeFileSync(htmlPath, html, 'utf8');
     await page.goto(`file://${htmlPath.replace(/\\/g, '/')}`);
     await page.screenshot({ path: imagePath, type: 'jpeg', quality: 94, fullPage: false });
@@ -924,7 +945,9 @@ async function main() {
   let childIds = [];
   let carousel = null;
   if (!storyOnly) {
-    imageUrls = await Promise.all(imagePaths.map((imagePath) => uploadToImgBB(imagePath, imgbbKey)));
+    imageUrls = await Promise.all(imagePaths.map((imagePath) => (
+      isHttpUrl(imagePath) ? imagePath : uploadToImgBB(imagePath, imgbbKey)
+    )));
     const children = await Promise.all(imageUrls.map((imageUrl) => graphPost(`/${userId}/media`, {
       image_url: imageUrl,
       is_carousel_item: 'true',

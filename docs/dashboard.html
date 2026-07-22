@@ -487,6 +487,26 @@
       line-height: 1.2;
     }
 
+    .image-tools {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: end;
+    }
+
+    .image-tools input[type="file"] {
+      padding: 9px 10px;
+    }
+
+    .image-preview {
+      width: 100%;
+      max-height: 180px;
+      object-fit: contain;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-2);
+    }
+
     .two-fields {
       display: grid;
       grid-template-columns: 180px minmax(0, 1fr);
@@ -652,7 +672,7 @@
       }
       .preview { grid-template-columns: 1fr; }
       .preview img { width: min(260px, 100%); }
-      .two-fields, .editor-actions, .queue-actions, .queue-row { grid-template-columns: 1fr; }
+      .two-fields, .editor-actions, .queue-actions, .queue-row, .image-tools { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 520px) {
@@ -1202,7 +1222,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const slides = Array.from(document.querySelectorAll('.slide-card')).map((card) => ({
         eyebrow: card.querySelector('[data-field="eyebrow"]').value,
         title: card.querySelector('[data-field="title"]').value,
-        body: card.querySelector('[data-field="body"]').value
+        body: card.querySelector('[data-field="body"]').value,
+        imagePath: card.querySelector('[data-field="imagePath"]').value,
+        imageUrl: card.querySelector('[data-field="imageUrl"]').value
       }));
       return {
         slides,
@@ -1233,6 +1255,19 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       slideFields.innerHTML = slides.map((slide, index) => `
         <div class="slide-card">
           <h3>Slide ${index + 1}</h3>
+          ${slide.imagePath || slide.imageUrl ? `<img class="image-preview" src="${escapeHtml(slide.imagePath || slide.imageUrl)}" alt="Imagem do slide ${index + 1}">` : ''}
+          <div class="image-tools">
+            <label>
+              URL pública da imagem
+              <input data-slide="${index}" data-field="imageUrl" value="${escapeHtml(slide.imageUrl || '')}" placeholder="https://...">
+            </label>
+            <button type="button" data-clear-image="${index}">Limpar imagem</button>
+          </div>
+          <label>
+            Enviar imagem do computador
+            <input type="file" data-image-upload="${index}" accept="image/png,image/jpeg,image/webp">
+          </label>
+          <input type="hidden" data-slide="${index}" data-field="imagePath" value="${escapeHtml(slide.imagePath || '')}">
           <div class="two-fields">
             <label>
               Banner
@@ -1260,6 +1295,64 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('previewBanner').textContent = slide.eyebrow || 'Banner';
       document.getElementById('previewTitle').textContent = slide.title || 'Título do slide';
       document.getElementById('previewBody').textContent = slide.body || 'Descrição do slide selecionado.';
+      const card = document.querySelector('.preview-card');
+      if (slide.imagePath || slide.imageUrl) {
+        card.style.backgroundImage = `url("${(slide.imagePath || slide.imageUrl).replace(/"/g, '%22')}")`;
+        card.style.backgroundSize = 'cover';
+        card.style.backgroundPosition = 'center';
+      } else {
+        card.style.backgroundImage = '';
+        card.style.backgroundSize = '';
+        card.style.backgroundPosition = '';
+      }
+    }
+
+    function readFileAsDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(reader.error || new Error('Falha ao ler imagem.'));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function uploadSlideImage(input) {
+      const file = input.files?.[0];
+      if (!file) return;
+      if (!appState.serverMode) {
+        setMessage('Upload precisa do servidor local: npm run dashboard', 'bad');
+        return;
+      }
+      const slideIndex = Number(input.dataset.imageUpload);
+      setMessage('Enviando imagem para o projeto...', 'warn');
+      try {
+        const payload = await api('/api/upload-image', {
+          method: 'POST',
+          body: JSON.stringify({
+            name: file.name,
+            dataUrl: await readFileAsDataUrl(file)
+          })
+        });
+        syncEditorToState();
+        appState.packs[appState.selectedPack].slides[slideIndex].imagePath = payload.imagePath;
+        appState.packs[appState.selectedPack].slides[slideIndex].imageUrl = '';
+        renderEditor();
+        setMessage('Imagem anexada ao slide. Clique em Salvar conteúdo para gravar no pack.', 'good');
+      } catch (error) {
+        setMessage(error.message, 'bad');
+      } finally {
+        input.value = '';
+      }
+    }
+
+    function clearSlideImage(index) {
+      syncEditorToState();
+      const slide = appState.packs[appState.selectedPack]?.slides?.[index];
+      if (!slide) return;
+      slide.imagePath = '';
+      slide.imageUrl = '';
+      renderEditor();
+      setMessage('Imagem removida do slide. Clique em Salvar conteúdo para gravar.', 'warn');
     }
 
     async function saveSelectedPack() {
@@ -1586,6 +1679,14 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       updatePreview();
     });
     document.getElementById('slideFields').addEventListener('input', updatePreview);
+    document.getElementById('slideFields').addEventListener('change', (event) => {
+      const input = event.target.closest('[data-image-upload]');
+      if (input) uploadSlideImage(input);
+    });
+    document.getElementById('slideFields').addEventListener('click', (event) => {
+      const button = event.target.closest('[data-clear-image]');
+      if (button) clearSlideImage(Number(button.dataset.clearImage));
+    });
     document.getElementById('captionInput').addEventListener('input', syncEditorToState);
     document.getElementById('savePack').addEventListener('click', saveSelectedPack);
     document.getElementById('addTime').addEventListener('click', addScheduleTime);

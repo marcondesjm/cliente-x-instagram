@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 import { createServer } from 'node:http';
-import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { extname, join, resolve } from 'node:path';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const DOCS_DIR = join(ROOT, 'docs');
+const UPLOADS_DIR = join(DOCS_DIR, 'uploads');
 const CONTENT_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'content-packs.json');
 const ACCOUNTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'accounts.json');
 const SCHEDULED_POSTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'scheduled-posts.json');
@@ -26,6 +27,7 @@ const mimeTypes = {
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
   '.svg': 'image/svg+xml; charset=utf-8'
 };
 
@@ -168,7 +170,7 @@ function readBody(req) {
     let raw = '';
     req.on('data', (chunk) => {
       raw += chunk;
-      if (raw.length > 1_000_000) {
+      if (raw.length > 12_000_000) {
         req.destroy();
         rejectBody(new Error('Payload muito grande.'));
       }
@@ -368,9 +370,10 @@ function validatePack(pack) {
   if (!pack || typeof pack !== 'object') throw new Error('Pack invalido.');
   if (!Array.isArray(pack.slides) || pack.slides.length < 2) throw new Error('O pack precisa ter pelo menos 2 slides.');
   for (const [index, slide] of pack.slides.entries()) {
-    if (!slide.eyebrow?.trim()) throw new Error(`Slide ${index + 1}: banner vazio.`);
-    if (!slide.title?.trim()) throw new Error(`Slide ${index + 1}: titulo vazio.`);
-    if (!slide.body?.trim()) throw new Error(`Slide ${index + 1}: descricao vazia.`);
+    const hasImage = Boolean(slide.imagePath?.trim() || slide.imageUrl?.trim());
+    if (!hasImage && !slide.eyebrow?.trim()) throw new Error(`Slide ${index + 1}: banner vazio.`);
+    if (!hasImage && !slide.title?.trim()) throw new Error(`Slide ${index + 1}: titulo vazio.`);
+    if (!hasImage && !slide.body?.trim()) throw new Error(`Slide ${index + 1}: descricao vazia.`);
   }
   if (!pack.caption?.trim()) throw new Error('Legenda/caption vazia.');
 }
@@ -385,12 +388,51 @@ function savePack(index, pack) {
     slides: pack.slides.map((slide) => ({
       eyebrow: String(slide.eyebrow).trim(),
       title: String(slide.title).trim(),
-      body: String(slide.body).trim()
+      body: String(slide.body).trim(),
+      ...(slide.imagePath ? { imagePath: String(slide.imagePath).trim() } : {}),
+      ...(slide.imageUrl ? { imageUrl: String(slide.imageUrl).trim() } : {})
     })),
     caption: String(pack.caption).trim()
   };
   writeFileSync(CONTENT_PATH, `${JSON.stringify(content, null, 2)}\n`, 'utf8');
   return getState();
+}
+
+function saveSlideImage(sourcePath) {
+  const source = resolve(String(sourcePath || ''));
+  if (!existsSync(source) || !statSync(source).isFile()) throw new Error('Arquivo de imagem nao encontrado.');
+  const ext = extname(source).toLowerCase();
+  if (!['.jpg', '.jpeg', '.png', '.webp'].includes(ext)) throw new Error('Use imagem JPG, PNG ou WEBP.');
+  mkdirSync(UPLOADS_DIR, { recursive: true });
+  const name = `${Date.now()}-${source.split(/[\\/]/).pop().replace(/[^a-z0-9._-]/gi, '-')}`;
+  const target = join(UPLOADS_DIR, name);
+  copyFileSync(source, target);
+  return {
+    imagePath: `/docs/uploads/${name}`,
+    absolutePath: target
+  };
+}
+
+function saveSlideImageData(name, dataUrl) {
+  const match = String(dataUrl || '').match(/^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/);
+  if (!match) throw new Error('Imagem invalida. Use JPG, PNG ou WEBP.');
+  const extByMime = {
+    'image/jpeg': '.jpg',
+    'image/png': '.png',
+    'image/webp': '.webp'
+  };
+  mkdirSync(UPLOADS_DIR, { recursive: true });
+  const safeName = String(name || 'imagem')
+    .replace(/\.[^.]+$/, '')
+    .replace(/[^a-z0-9._-]/gi, '-')
+    .slice(0, 80) || 'imagem';
+  const targetName = `${Date.now()}-${safeName}${extByMime[match[1]]}`;
+  const target = join(UPLOADS_DIR, targetName);
+  writeFileSync(target, Buffer.from(match[2], 'base64'));
+  return {
+    imagePath: `/docs/uploads/${targetName}`,
+    absolutePath: target
+  };
 }
 
 function runCommand(command, args, env = {}) {
@@ -411,7 +453,7 @@ function runCommand(command, args, env = {}) {
 async function pushScheduledPosts() {
   const steps = [];
   for (const [command, args] of [
-    ['git', ['add', 'automation/instagram-template/config/scheduled-posts.json']],
+    ['git', ['add', 'automation/instagram-template/config/scheduled-posts.json', 'automation/instagram-template/config/content-packs.json', 'docs/uploads']],
     ['git', ['diff', '--cached', '--quiet']],
     ['git', ['commit', '-m', 'Update scheduled Instagram posts']],
     ['git', ['pull', '--rebase', 'origin', 'main']],
@@ -448,6 +490,12 @@ async function handleApi(req, res, url) {
       const index = Number(url.pathname.split('/').pop());
       const body = await readBody(req);
       return json(res, 200, savePack(index, body.pack));
+    }
+    if (req.method === 'POST' && url.pathname === '/api/upload-image') {
+      const body = await readBody(req);
+      return json(res, 200, body.dataUrl
+        ? saveSlideImageData(body.name, body.dataUrl)
+        : saveSlideImage(body.path));
     }
     if (req.method === 'POST' && url.pathname === '/api/schedule') {
       const body = await readBody(req);
