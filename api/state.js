@@ -9,6 +9,14 @@ const ACCOUNT = 'cliente-x';
 const OWNER = 'marcondesjm';
 const REPO = 'cliente-x-instagram';
 const SCHEDULED_FILE_PATH = 'automation/instagram-template/config/scheduled-posts.json';
+const ACTIVE_VERSION = {
+  name: 'cliente-x-funcionando',
+  label: 'Última versão funcionando',
+  status: 'funcionando',
+  stableCommit: 'eb93f36',
+  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/eb93f36',
+  description: 'Vercel, botões, publicação real e linha editorial narrativa confirmados.'
+};
 
 function readJson(path) {
   return JSON.parse(readFileSync(path, 'utf8').replace(/^\uFEFF/, ''));
@@ -61,6 +69,14 @@ export default async function handler(req, res) {
   res.setHeader('cache-control', 'no-store');
   res.status(200).json({
     account,
+    activeVersion: {
+      ...ACTIVE_VERSION,
+      currentCommit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || ACTIVE_VERSION.stableCommit,
+      currentCommitFull: process.env.VERCEL_GIT_COMMIT_SHA || ACTIVE_VERSION.stableCommit,
+      currentCommitUrl: process.env.VERCEL_GIT_COMMIT_SHA
+        ? `https://github.com/${OWNER}/${REPO}/commit/${process.env.VERCEL_GIT_COMMIT_SHA}`
+        : ACTIVE_VERSION.stableCommitUrl
+    },
     scheduleBrt: account?.scheduleUtc?.map(cronToBrtTime) || [],
     packs,
     packCount: packs.length,

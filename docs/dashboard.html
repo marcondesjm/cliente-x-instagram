@@ -904,21 +904,28 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               <div class="section-label">Repositório</div>
               <h2>Versão ativa</h2>
             </div>
-            <span class="status-pill good">Main</span>
+            <span class="status-pill good" id="versionStatus">Funcionando</span>
           </div>
           <div class="checks">
             <div class="check">
               <span class="dot good"></span>
               <div>
-                <strong>Commit atual</strong>
-                <span><a href="https://github.com/marcondesjm/cliente-x-instagram/commit/f907a45628c1a7a96a234287d60b25feab192724" target="_blank" rel="noreferrer">f907a45</a> · conteúdos novos e proteções de agendamento.</span>
+                <strong>Ponto estável</strong>
+                <span id="versionName">cliente-x-funcionando · última versão funcionando.</span>
               </div>
             </div>
             <div class="check">
               <span class="dot good"></span>
               <div>
-                <strong>Validação local</strong>
-                <span>18 packs conferidos, renderização testada e sintaxe do script validada.</span>
+                <strong>Commit em uso</strong>
+                <span id="versionCommit"><a href="https://github.com/marcondesjm/cliente-x-instagram/commit/eb93f36" target="_blank" rel="noreferrer">eb93f36</a> · versão narrativa funcionando.</span>
+              </div>
+            </div>
+            <div class="check">
+              <span class="dot good"></span>
+              <div>
+                <strong>Confirmação</strong>
+                <span id="versionDescription">Vercel, botões, publicação real e linha editorial narrativa confirmados.</span>
               </div>
             </div>
           </div>
@@ -1024,6 +1031,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         DATA.uniqueCaptions = state.uniqueCaptions || DATA.uniqueCaptions;
         document.getElementById('contentCount').textContent = DATA.packCount;
         document.getElementById('contentNote').textContent = `${DATA.schedulesUtc.length} horários ativos`;
+        renderVersion(state.activeVersion);
         renderSchedule();
         renderScheduleEditor();
         renderQueue();
@@ -1034,6 +1042,25 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       } catch (error) {
         setMessage(`Não consegui carregar pelo servidor: ${error.message}`, 'bad');
       }
+    }
+
+    function renderVersion(version) {
+      if (!version) return;
+
+      const status = document.getElementById('versionStatus');
+      const name = document.getElementById('versionName');
+      const commit = document.getElementById('versionCommit');
+      const description = document.getElementById('versionDescription');
+      const statusText = version.status || 'funcionando';
+      const currentCommit = version.currentCommit || version.stableCommit || 'main';
+      const currentCommitUrl = version.currentCommitUrl || version.stableCommitUrl || `https://github.com/${DATA.repo}`;
+      const stableCommit = version.stableCommit ? ` · base ${escapeHtml(version.stableCommit)}` : '';
+
+      status.textContent = statusText.charAt(0).toUpperCase() + statusText.slice(1);
+      status.className = `status-pill ${statusText === 'funcionando' ? 'good' : 'warn'}`;
+      name.textContent = `${version.name || 'cliente-x-funcionando'} · ${version.label || 'última versão funcionando'}.`;
+      commit.innerHTML = `<a href="${escapeHtml(currentCommitUrl)}" target="_blank" rel="noreferrer">${escapeHtml(currentCommit)}</a>${stableCommit}`;
+      description.textContent = version.description || 'Projeto operacional confirmado.';
     }
 
     async function loadPrivateMetrics() {
