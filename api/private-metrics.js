@@ -1,10 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { requireAdmin } from '../lib/auth.js';
+import { accountFromQuery, requireConfiguredAccount } from '../lib/accounts.js';
 
 const ROOT = process.cwd();
 const ACCOUNTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'accounts.json');
-const ACCOUNT = 'cliente-x';
 const IG_BASE = 'https://graph.facebook.com/v23.0';
 
 function readJson(path) {
@@ -44,12 +44,9 @@ export default async function handler(req, res) {
     return;
   }
 
+  const accountKey = accountFromQuery(req);
   const accounts = readJson(ACCOUNTS_PATH);
-  const account = accounts.find((item) => item.account === ACCOUNT);
-  if (!account) {
-    res.status(500).json({ error: `Conta ${ACCOUNT} nao encontrada em accounts.json.` });
-    return;
-  }
+  const account = requireConfiguredAccount(accounts, accountKey);
 
   const credentials = [
     { label: 'Token Instagram', env: account.accessTokenEnv, configured: hasUsableSecret(process.env[account.accessTokenEnv]) },

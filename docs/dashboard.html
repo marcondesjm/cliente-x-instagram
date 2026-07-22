@@ -129,6 +129,26 @@
       min-width: 0;
     }
 
+    .account-switcher {
+      min-width: min(100%, 320px);
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .account-switcher label {
+      gap: 6px;
+      margin: 0;
+      font-size: 11px;
+    }
+
+    .account-switcher select {
+      min-height: 40px;
+      font-size: 13px;
+    }
+
     button, a.button {
       min-height: 42px;
       border: 1px solid var(--line);
@@ -831,9 +851,17 @@
       <div class="brand-block">
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
-        <div class="subline">@marcondes.machado.oficial · IA aplicada a empresas</div>
+        <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
       </div>
       <div class="actions">
+        <div class="account-switcher">
+          <label>
+            Conta ativa
+            <select id="accountSelect">
+              <option value="cliente-x">cliente-x · marcondes.machado.oficial</option>
+            </select>
+          </label>
+        </div>
         <a class="button" href="https://github.com/marcondesjm/cliente-x-instagram/actions/workflows/instagram-feed-cliente-x.yml" target="_blank" rel="noreferrer">GitHub Actions</a>
         <button class="primary" id="refreshRuns" type="button">Atualizar runs</button>
         <button id="logoutButton" type="button">Sair</button>
@@ -1097,6 +1125,45 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <div class="empty">Faça login para carregar GitHub, Vercel, Meta e Instagram.</div>
           </div>
         </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="section-label">Multi-conta</div>
+              <h2>Adicionar conta</h2>
+            </div>
+            <span class="status-pill warn" id="newAccountStatus">Novo cliente</span>
+          </div>
+          <div class="checks">
+            <div class="check">
+              <span class="dot warn"></span>
+              <div>
+                <strong>Cadastro operacional</strong>
+                <span>Cria a conta no GitHub e separa conteúdo, agenda e envs. Depois configure os tokens em Acessos conectados.</span>
+              </div>
+            </div>
+          </div>
+          <div class="access-manager">
+            <label>
+              Chave da conta
+              <input id="newAccountKey" placeholder="ex: cliente-advogados">
+            </label>
+            <label>
+              Instagram
+              <input id="newAccountUsername" placeholder="ex: novo.instagram.oficial">
+            </label>
+            <label>
+              Nome/marca
+              <input id="newAccountBrand" placeholder="ex: Cliente Advogados">
+            </label>
+            <label>
+              Rodapé dos posts
+              <input id="newAccountFooter" placeholder="ex: IA aplicada ao jurídico">
+            </label>
+            <button class="primary" id="createAccount" type="button">Criar conta</button>
+            <div class="access-result" id="newAccountResult">Use letras, números e hífen na chave da conta.</div>
+          </div>
+        </div>
       </aside>
     </main>
 
@@ -1144,7 +1211,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       adminEmail: null,
       secrets: [],
       accessConfig: [],
-      openAccessIndex: null
+      openAccessIndex: null,
+      accounts: [],
+      selectedAccount: 'cliente-x',
+      account: null
     };
 
     function escapeHtml(value = '') {
@@ -1165,6 +1235,22 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
 
     async function api(path, options = {}) {
       return requestJson(path, options);
+    }
+
+    function accountParam() {
+      return encodeURIComponent(appState.selectedAccount || 'cliente-x');
+    }
+
+    function withAccount(path) {
+      const separator = path.includes('?') ? '&' : '?';
+      return `${path}${separator}account=${accountParam()}`;
+    }
+
+    function bodyWithAccount(body = {}) {
+      return JSON.stringify({
+        ...body,
+        account: appState.selectedAccount || 'cliente-x'
+      });
     }
 
     async function requestJson(url, options = {}) {
@@ -1199,7 +1285,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     }
 
     async function checkSession() {
-      const state = await api('/api/state');
+      const state = await api(withAccount('/api/state'));
       const session = state.session || {};
       if (!session.adminConfigured) {
         showLogin('Admin ainda não configurado no Vercel.');
@@ -1258,7 +1344,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       }
 
       try {
-        const state = await api('/api/state');
+        const state = await api(withAccount('/api/state'));
+        appState.accounts = state.accounts || [];
+        appState.selectedAccount = state.selectedAccount || appState.selectedAccount;
+        appState.account = state.account || null;
         appState.packs = state.packs || [];
         appState.scheduleBrt = state.scheduleBrt || [];
         appState.scheduledPosts = state.scheduledPosts || [];
@@ -1269,6 +1358,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         DATA.uniqueCaptions = state.uniqueCaptions || DATA.uniqueCaptions;
         document.getElementById('contentCount').textContent = DATA.packCount;
         document.getElementById('contentNote').textContent = `${DATA.schedulesUtc.length} horários ativos`;
+        renderAccountSwitcher();
         renderVersion(state.activeVersion);
         renderMaintenance(state.maintenance);
         renderSchedule();
@@ -1302,6 +1392,31 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       name.textContent = `${version.name || 'cliente-x-funcionando'} · ${version.label || 'última versão funcionando'}.`;
       commit.innerHTML = `<a href="${escapeHtml(currentCommitUrl)}" target="_blank" rel="noreferrer">${escapeHtml(currentCommit)}</a>${stableCommit}`;
       description.textContent = version.description || 'Projeto operacional confirmado.';
+    }
+
+    function renderAccountSwitcher() {
+      const select = document.getElementById('accountSelect');
+      const subline = document.getElementById('accountSubline');
+      const accounts = appState.accounts.length ? appState.accounts : [{ account: appState.selectedAccount }];
+      select.innerHTML = accounts.map((account) => {
+        const label = `${account.account}${account.expectedUsername ? ` · ${account.expectedUsername}` : ''}`;
+        return `<option value="${escapeHtml(account.account)}">${escapeHtml(label)}</option>`;
+      }).join('');
+      select.value = appState.selectedAccount;
+
+      const current = appState.account || accounts.find((account) => account.account === appState.selectedAccount) || {};
+      const username = current.expectedUsername ? `@${current.expectedUsername}` : appState.selectedAccount;
+      const footer = current.footerText || 'IA aplicada a empresas';
+      subline.textContent = `${username} · ${footer}`;
+    }
+
+    async function switchAccount(event) {
+      appState.selectedAccount = event.target.value || 'cliente-x';
+      appState.openAccessIndex = null;
+      appState.privateMetrics = null;
+      setMessage(`Carregando conta ${appState.selectedAccount}...`, 'warn');
+      await loadState();
+      await refreshRuns();
     }
 
     function renderMaintenance(maintenance) {
@@ -1454,10 +1569,50 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       }
     }
 
+    async function createAccount() {
+      const button = document.getElementById('createAccount');
+      const result = document.getElementById('newAccountResult');
+      const original = button.textContent;
+      const account = document.getElementById('newAccountKey').value.trim();
+      const expectedUsername = document.getElementById('newAccountUsername').value.trim();
+      const brandName = document.getElementById('newAccountBrand').value.trim();
+      const footerText = document.getElementById('newAccountFooter').value.trim();
+
+      button.disabled = true;
+      button.textContent = 'Criando';
+      result.textContent = 'Criando conta no GitHub...';
+
+      try {
+        const payload = await api('/api/state', {
+          method: 'POST',
+          body: JSON.stringify({
+            action: 'create-account',
+            account,
+            expectedUsername,
+            brandName,
+            footerText,
+            sourceAccount: appState.selectedAccount
+          })
+        });
+        appState.selectedAccount = payload.account?.account || account;
+        document.getElementById('newAccountKey').value = '';
+        document.getElementById('newAccountUsername').value = '';
+        document.getElementById('newAccountBrand').value = '';
+        document.getElementById('newAccountFooter').value = '';
+        result.textContent = payload.message || 'Conta criada.';
+        await loadState();
+      } catch (error) {
+        result.textContent = error.message;
+      } finally {
+        button.disabled = false;
+        button.textContent = original;
+      }
+    }
+
     async function loadPrivateMetrics() {
       if (!appState.serverMode) return;
       try {
-        appState.privateMetrics = await api('/api/private-metrics');
+        appState.privateMetrics = await api(withAccount('/api/private-metrics'));
         renderLatestPost(appState.privateMetrics);
       } catch (error) {
         appState.privateMetrics = { error: error.message };
@@ -1576,7 +1731,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         date: document.getElementById('manualDate').value,
         time: document.getElementById('manualTime').value,
         mode: document.getElementById('manualMode').value,
-        publishNow
+        publishNow,
+        account: appState.selectedAccount
       };
       setMessage(publishNow ? 'Enfileirando publicação imediata...' : 'Salvando agendamento...', 'warn');
       try {
@@ -1595,7 +1751,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     async function cancelScheduledPost(id) {
       setMessage('Cancelando post agendado...', 'warn');
       try {
-        const payload = await api(`/api/scheduled-posts/${encodeURIComponent(id)}/cancel`, { method: 'POST' });
+        const payload = await api(withAccount(`/api/scheduled-posts/${encodeURIComponent(id)}/cancel`), { method: 'POST' });
         appState.scheduledPosts = payload.scheduledPosts || [];
         renderQueue();
         setMessage('Post cancelado.', 'good');
@@ -1619,7 +1775,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       try {
         const state = await api('/api/schedule', {
           method: 'POST',
-          body: JSON.stringify({ times: scheduleTimesFromInputs() })
+          body: bodyWithAccount({ times: scheduleTimesFromInputs() })
         });
         appState.scheduleBrt = state.scheduleBrt || [];
         DATA.schedulesUtc = state.account?.scheduleUtc || DATA.schedulesUtc;
@@ -1779,7 +1935,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       try {
         const state = await api(`/api/content/${appState.selectedPack}`, {
           method: 'POST',
-          body: JSON.stringify({ pack: currentPack() })
+          body: bodyWithAccount({ pack: currentPack() })
         });
         appState.packs = state.packs || appState.packs;
         DATA.packCount = state.packCount;
@@ -1819,7 +1975,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       button.textContent = runningText;
       setMessage(runningText, 'warn');
       try {
-        const payload = await api(path, { method: 'POST' });
+        const payload = await api(path, {
+          method: 'POST',
+          body: bodyWithAccount()
+        });
         const stepOutput = (payload.steps || [])
           .map((step) => [step.command, step.stdout, step.stderr].filter(Boolean).join('\n'))
           .filter(Boolean)
@@ -2083,6 +2242,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('loginForm').addEventListener('submit', login);
       document.getElementById('logoutButton').addEventListener('click', logout);
       document.getElementById('refreshRuns').addEventListener('click', refreshRuns);
+      document.getElementById('accountSelect').addEventListener('change', switchAccount);
+      document.getElementById('createAccount').addEventListener('click', createAccount);
       document.getElementById('accessConfig').addEventListener('click', (event) => {
         const edit = event.target.closest('[data-access-edit]');
         const validate = event.target.closest('[data-access-validate]');

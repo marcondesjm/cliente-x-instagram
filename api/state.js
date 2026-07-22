@@ -8,14 +8,16 @@ import {
   hasAdminConfig,
   validateLogin
 } from '../lib/auth.js';
+import { accountFromQuery, normalizeAccountKey, requireConfiguredAccount } from '../lib/accounts.js';
 
 const ROOT = process.cwd();
 const CONTENT_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'content-packs.json');
 const ACCOUNTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'accounts.json');
 const SCHEDULED_POSTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'scheduled-posts.json');
-const ACCOUNT = 'cliente-x';
 const OWNER = 'marcondesjm';
 const REPO = 'cliente-x-instagram';
+const ACCOUNTS_FILE_PATH = 'automation/instagram-template/config/accounts.json';
+const CONTENT_FILE_PATH = 'automation/instagram-template/config/content-packs.json';
 const SCHEDULED_FILE_PATH = 'automation/instagram-template/config/scheduled-posts.json';
 const VERCEL_PROJECT_ID = process.env.VERCEL_PROJECT_ID || 'prj_AVyS8LGjVuhUOxkpfZZwOF5vMmPj';
 const VERCEL_TEAM_ID = process.env.VERCEL_TEAM_ID || 'team_T4Th6hb1UxtrbtcWfLxlWNRQ';
@@ -44,7 +46,13 @@ const MAINTENANCE = {
   },
   note: 'Por segurança, o dashboard mostra o que renovar, mas não exibe nem edita valores de tokens.'
 };
-const ACCESS_CONFIG = [
+function accessConfigForAccount(account) {
+  const accessTokenEnv = account?.accessTokenEnv || 'CLIENTE_X_INSTAGRAM_ACCESS_TOKEN';
+  const userIdEnv = account?.userIdEnv || 'CLIENTE_X_INSTAGRAM_USER_ID';
+  const imgbbKeyEnv = account?.imgbbKeyEnv || 'IMGBB_API_KEY';
+  const username = account?.expectedUsername || 'marcondes.machado.oficial';
+
+  return [
   {
     platform: 'GitHub',
     account: 'marcondesjm',
@@ -65,9 +73,9 @@ const ACCESS_CONFIG = [
     envKeys: [
       'VERCEL_TOKEN',
       'GITHUB_TOKEN',
-      'IMGBB_API_KEY',
-      'CLIENTE_X_INSTAGRAM_ACCESS_TOKEN',
-      'CLIENTE_X_INSTAGRAM_USER_ID',
+      imgbbKeyEnv,
+      accessTokenEnv,
+      userIdEnv,
       'ADMIN_EMAIL',
       'ADMIN_PASSWORD',
       'ADMIN_SESSION_SECRET'
@@ -79,10 +87,10 @@ const ACCESS_CONFIG = [
   },
   {
     platform: 'Meta',
-    account: 'marcondes.machado.oficial',
+    account: username,
     project: 'Instagram Graph API',
     purpose: 'Autorizar publicação no feed/story e leitura de métricas.',
-    envKeys: ['CLIENTE_X_INSTAGRAM_ACCESS_TOKEN', 'CLIENTE_X_INSTAGRAM_USER_ID'],
+    envKeys: [accessTokenEnv, userIdEnv],
     managementUrl: 'https://developers.facebook.com/tools/explorer/',
     secondaryUrl: 'https://developers.facebook.com/apps/',
     status: 'Usado pelas rotas de publicação e métricas privadas.',
@@ -90,21 +98,20 @@ const ACCESS_CONFIG = [
   },
   {
     platform: 'Instagram',
-    account: 'marcondes.machado.oficial',
+    account: username,
     project: 'Conta profissional conectada ao Meta',
     purpose: 'Destino final das publicações automatizadas.',
-    envKeys: ['CLIENTE_X_INSTAGRAM_USER_ID'],
-    managementUrl: 'https://www.instagram.com/marcondes.machado.oficial/',
+    envKeys: [userIdEnv],
+    managementUrl: `https://www.instagram.com/${username}/`,
     secondaryUrl: 'https://business.facebook.com/latest/settings/instagram_accounts',
-    status: 'Conta esperada pelo projeto: marcondes.machado.oficial.',
-    action: 'Se trocar a conta, atualizar CLIENTE_X_INSTAGRAM_USER_ID e validar o usuário antes de publicar.'
+    status: `Conta esperada pelo projeto: ${username}.`,
+    action: `Se trocar a conta, atualizar ${userIdEnv} e validar o usuário antes de publicar.`
   }
 ];
+}
 const SECRET_KEYS = [
   'VERCEL_TOKEN',
   'GITHUB_TOKEN',
-  'CLIENTE_X_INSTAGRAM_ACCESS_TOKEN',
-  'CLIENTE_X_INSTAGRAM_USER_ID',
   'IMGBB_API_KEY',
   'ADMIN_EMAIL',
   'ADMIN_PASSWORD'
@@ -119,6 +126,39 @@ const EDITABLE_SECRET_KEYS = new Set([
   'ADMIN_PASSWORD',
   'ADMIN_SESSION_SECRET'
 ]);
+
+function accountSecretKeys(accounts = readJson(ACCOUNTS_PATH)) {
+  return accounts.flatMap((account) => [
+    account.accessTokenEnv,
+    account.userIdEnv,
+    account.imgbbKeyEnv
+  ]).filter(Boolean);
+}
+
+function isEditableSecretKey(key) {
+  return EDITABLE_SECRET_KEYS.has(key) ||
+    accountSecretKeys().includes(key) ||
+    /^[A-Z0-9_]+_(INSTAGRAM_ACCESS_TOKEN|INSTAGRAM_USER_ID|IMGBB_API_KEY)$/.test(key);
+}
+
+function accountEnvRole(key) {
+  const accounts = readJson(ACCOUNTS_PATH);
+  const account = accounts.find((item) => (
+    item.accessTokenEnv === key ||
+    item.userIdEnv === key ||
+    item.imgbbKeyEnv === key
+  ));
+  if (!account) {
+    if (key.endsWith('_INSTAGRAM_ACCESS_TOKEN')) return { role: 'instagram-token', account: null };
+    if (key.endsWith('_INSTAGRAM_USER_ID')) return { role: 'instagram-user-id', account: null };
+    if (key.endsWith('_IMGBB_API_KEY')) return { role: 'imgbb-key', account: null };
+    return { role: null, account: null };
+  }
+  if (account.accessTokenEnv === key) return { role: 'instagram-token', account };
+  if (account.userIdEnv === key) return { role: 'instagram-user-id', account };
+  if (account.imgbbKeyEnv === key) return { role: 'imgbb-key', account };
+  return { role: null, account };
+}
 
 function readJson(path) {
   return JSON.parse(readFileSync(path, 'utf8').replace(/^\uFEFF/, ''));
@@ -141,8 +181,13 @@ function maskSecret(value = '') {
   return `${text.slice(0, 6)}...${text.slice(-4)}`;
 }
 
-function secretStatuses() {
-  return SECRET_KEYS.map((key) => {
+function secretStatuses(accounts = readJson(ACCOUNTS_PATH)) {
+  const keys = [...new Set([
+    ...SECRET_KEYS,
+    ...accountSecretKeys(accounts)
+  ].filter(Boolean))];
+
+  return keys.map((key) => {
     const value = process.env[key] || '';
     return {
       key,
@@ -188,7 +233,7 @@ async function vercelFetch(path, options = {}, token = vercelTokenFromEnv()) {
 
 async function validateAccessValue(key, value, companion = {}) {
   const text = String(value || '').trim();
-  if (!EDITABLE_SECRET_KEYS.has(key)) throw userError('Variavel nao permitida.');
+  if (!isEditableSecretKey(key)) throw userError('Variavel nao permitida.');
   if (!text) throw userError('Cole um valor antes de validar.');
 
   if (key === 'ADMIN_EMAIL') {
@@ -219,14 +264,18 @@ async function validateAccessValue(key, value, companion = {}) {
     return { ok: true, message: `GitHub validado: workflow ${workflow.name || 'instagram-feed-cliente-x.yml'} acessivel.` };
   }
 
-  if (key === 'CLIENTE_X_INSTAGRAM_ACCESS_TOKEN' || key === 'CLIENTE_X_INSTAGRAM_USER_ID') {
-    const token = key === 'CLIENTE_X_INSTAGRAM_ACCESS_TOKEN'
+  const envRole = accountEnvRole(key);
+
+  if (envRole.role === 'instagram-token' || envRole.role === 'instagram-user-id') {
+    const token = envRole.role === 'instagram-token'
       ? text
-      : String(companion.accessToken || process.env.CLIENTE_X_INSTAGRAM_ACCESS_TOKEN || '').trim();
-    const userId = key === 'CLIENTE_X_INSTAGRAM_USER_ID'
+      : String(companion.accessToken || (envRole.account ? process.env[envRole.account.accessTokenEnv] : '') || '').trim();
+    const userId = envRole.role === 'instagram-user-id'
       ? text
-      : String(companion.userId || process.env.CLIENTE_X_INSTAGRAM_USER_ID || '').trim();
-    if (!token || !userId) throw userError('Informe token Meta e ID do Instagram para validar.');
+      : String(companion.userId || (envRole.account ? process.env[envRole.account.userIdEnv] : '') || '').trim();
+    if (!token || !userId) {
+      return { ok: true, message: `${key} preenchido. Validação completa da Meta precisa de token e user ID configurados.` };
+    }
     const response = await fetch(`https://graph.facebook.com/v22.0/${encodeURIComponent(userId)}?fields=username&access_token=${encodeURIComponent(token)}`);
     const payload = await response.json().catch(() => ({}));
     if (!response.ok || payload.error) {
@@ -235,7 +284,7 @@ async function validateAccessValue(key, value, companion = {}) {
     return { ok: true, message: `Meta/Instagram validado: ${payload.username || userId}.` };
   }
 
-  if (key === 'IMGBB_API_KEY') {
+  if (envRole.role === 'imgbb-key') {
     const body = new URLSearchParams({
       key: text,
       expiration: '60',
@@ -261,7 +310,7 @@ async function validateAccessValue(key, value, companion = {}) {
 }
 
 async function saveVercelEnv(key, value) {
-  if (!EDITABLE_SECRET_KEYS.has(key)) throw userError('Variavel nao permitida.');
+  if (!isEditableSecretKey(key)) throw userError('Variavel nao permitida.');
   const text = String(value || '').trim();
   if (!text) throw userError('Cole um valor antes de salvar.');
   const token = key === 'VERCEL_TOKEN' ? text : vercelTokenFromEnv();
@@ -307,6 +356,106 @@ function readBody(req) {
   });
 }
 
+function githubToken() {
+  const token = process.env.GITHUB_TOKEN || process.env.GITHUB_PAT;
+  if (!token) throw userError('GITHUB_TOKEN ausente na Vercel.');
+  return token;
+}
+
+async function githubJson(path, options = {}) {
+  const response = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/${path}`, {
+    ...options,
+    headers: {
+      accept: 'application/vnd.github+json',
+      authorization: `Bearer ${githubToken()}`,
+      'content-type': 'application/json',
+      'x-github-api-version': '2022-11-28',
+      ...(options.headers || {})
+    }
+  });
+  const text = await response.text();
+  const payload = text ? JSON.parse(text) : {};
+  if (!response.ok) throw userError(`GitHub HTTP ${response.status}: ${payload.message || text}`, response.status);
+  return payload;
+}
+
+async function readGithubConfig(filePath) {
+  const file = await githubJson(`contents/${filePath}?ref=main`);
+  return {
+    sha: file.sha,
+    data: JSON.parse(Buffer.from(file.content, 'base64').toString('utf8').replace(/^\uFEFF/, ''))
+  };
+}
+
+async function writeGithubConfig(filePath, data, sha, message) {
+  await githubJson(`contents/${filePath}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      message,
+      branch: 'main',
+      sha,
+      content: Buffer.from(`${JSON.stringify(data, null, 2)}\n`, 'utf8').toString('base64')
+    })
+  });
+}
+
+function envPrefixFromAccount(accountKey) {
+  return accountKey.toUpperCase().replace(/[^A-Z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'CLIENTE';
+}
+
+async function createAccountConfig(body = {}) {
+  const accountKey = normalizeAccountKey(body.account);
+  const expectedUsername = String(body.expectedUsername || '').replace(/^@/, '').trim();
+  const brandName = String(body.brandName || accountKey).trim();
+  const footerText = String(body.footerText || 'IA aplicada a empresas').trim();
+  const sourceAccount = normalizeAccountKey(body.sourceAccount || 'cliente-x');
+  if (!expectedUsername) throw userError('Informe o @ do Instagram sem espaco.');
+
+  const envPrefix = envPrefixFromAccount(accountKey);
+  const [accountsFile, contentFile, queueFile] = await Promise.all([
+    readGithubConfig(ACCOUNTS_FILE_PATH),
+    readGithubConfig(CONTENT_FILE_PATH),
+    readGithubConfig(SCHEDULED_FILE_PATH)
+  ]);
+
+  if (accountsFile.data.some((item) => item.account === accountKey)) {
+    throw userError(`Conta ${accountKey} ja existe.`);
+  }
+
+  const source = accountsFile.data.find((item) => item.account === sourceAccount) || accountsFile.data[0] || {};
+  const sourceContent = contentFile.data.find((item) => item.account === sourceAccount) || contentFile.data[0] || { packs: [] };
+
+  const newAccount = {
+    account: accountKey,
+    expectedUsername,
+    brandName,
+    footerText,
+    accessTokenEnv: `${envPrefix}_INSTAGRAM_ACCESS_TOKEN`,
+    userIdEnv: `${envPrefix}_INSTAGRAM_USER_ID`,
+    imgbbKeyEnv: `${envPrefix}_IMGBB_API_KEY`,
+    scheduleUtc: Array.isArray(source.scheduleUtc) ? source.scheduleUtc : []
+  };
+
+  accountsFile.data.push(newAccount);
+  contentFile.data.push({
+    account: accountKey,
+    packs: JSON.parse(JSON.stringify(sourceContent.packs || []))
+  });
+  if (!queueFile.data.some((item) => item.account === accountKey)) {
+    queueFile.data.push({ account: accountKey, posts: [] });
+  }
+
+  await writeGithubConfig(ACCOUNTS_FILE_PATH, accountsFile.data, accountsFile.sha, `Add Instagram account ${accountKey}`);
+  await writeGithubConfig(CONTENT_FILE_PATH, contentFile.data, contentFile.sha, `Add content packs for ${accountKey}`);
+  await writeGithubConfig(SCHEDULED_FILE_PATH, queueFile.data, queueFile.sha, `Add scheduled queue for ${accountKey}`);
+
+  return {
+    ok: true,
+    account: newAccount,
+    message: `Conta ${accountKey} criada no GitHub. Configure os envs ${newAccount.accessTokenEnv}, ${newAccount.userIdEnv} e ${newAccount.imgbbKeyEnv} no painel.`
+  };
+}
+
 async function readScheduledGroups() {
   const token = process.env.GITHUB_TOKEN || process.env.GITHUB_PAT;
   if (!token) return readJson(SCHEDULED_POSTS_PATH);
@@ -324,6 +473,26 @@ async function readScheduledGroups() {
     return JSON.parse(Buffer.from(file.content, 'base64').toString('utf8').replace(/^\uFEFF/, ''));
   } catch {
     return readJson(SCHEDULED_POSTS_PATH);
+  }
+}
+
+async function readConfigGroups(filePath, localPath) {
+  const token = process.env.GITHUB_TOKEN || process.env.GITHUB_PAT;
+  if (!token) return readJson(localPath);
+
+  try {
+    const response = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${filePath}?ref=main`, {
+      headers: {
+        accept: 'application/vnd.github+json',
+        authorization: `Bearer ${token}`,
+        'x-github-api-version': '2022-11-28'
+      }
+    });
+    if (!response.ok) throw new Error(`GitHub HTTP ${response.status}`);
+    const file = await response.json();
+    return JSON.parse(Buffer.from(file.content, 'base64').toString('utf8').replace(/^\uFEFF/, ''));
+  } catch {
+    return readJson(localPath);
   }
 }
 
@@ -378,6 +547,12 @@ export default async function handler(req, res) {
         });
         return;
       }
+      if (body.action === 'create-account') {
+        const result = await createAccountConfig(body);
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json(result);
+        return;
+      }
       res.status(400).json({ error: 'Acao invalida.' });
     } catch (error) {
       res.status(error.statusCode || 500).json({ error: error.message });
@@ -391,17 +566,26 @@ export default async function handler(req, res) {
   }
 
   const session = getSession(req);
-  const accounts = readJson(ACCOUNTS_PATH);
-  const content = readJson(CONTENT_PATH);
-  const account = accounts.find((item) => item.account === ACCOUNT);
-  const group = content.find((item) => item.account === ACCOUNT);
+  const accountKey = accountFromQuery(req);
+  const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
+  const content = await readConfigGroups(CONTENT_FILE_PATH, CONTENT_PATH);
+  const account = requireConfiguredAccount(accounts, accountKey);
+  const accountSummaries = accounts.map((item) => ({
+    account: item.account,
+    expectedUsername: item.expectedUsername,
+    brandName: item.brandName,
+    footerText: item.footerText
+  }));
+  const group = content.find((item) => item.account === accountKey);
   const scheduledGroups = await readScheduledGroups();
-  const scheduledGroup = scheduledGroups.find((item) => item.account === ACCOUNT);
+  const scheduledGroup = scheduledGroups.find((item) => item.account === accountKey);
   const packs = group?.packs || [];
 
   res.setHeader('cache-control', 'no-store');
   res.status(200).json({
     account,
+    accounts: accountSummaries,
+    selectedAccount: accountKey,
     activeVersion: {
       ...ACTIVE_VERSION,
       currentCommit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || ACTIVE_VERSION.stableCommit,
@@ -417,8 +601,8 @@ export default async function handler(req, res) {
       adminEmail: configuredAdminEmail() || null
     },
     maintenance: MAINTENANCE,
-    accessConfig: ACCESS_CONFIG,
-    secrets: session ? secretStatuses() : [],
+    accessConfig: accessConfigForAccount(account),
+    secrets: session ? secretStatuses(accounts) : [],
     scheduleBrt: account?.scheduleUtc?.map(cronToBrtTime) || [],
     packs,
     packCount: packs.length,

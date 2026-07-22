@@ -1,4 +1,5 @@
 import { requireAdmin } from '../lib/auth.js';
+import { accountFromBody } from '../lib/accounts.js';
 
 const OWNER = 'marcondesjm';
 const REPO = 'cliente-x-instagram';
@@ -57,11 +58,12 @@ export default async function handler(req, res) {
 
   try {
     const body = await readBody(req);
+    const account = accountFromBody(body);
     const packJson = body.pack ? JSON.stringify(body.pack) : '';
     if (packJson.length > 60000) throw new Error('Pack muito grande para disparar pelo GitHub Actions.');
 
     await dispatchWorkflow({
-      account: 'cliente-x',
+      account,
       dry_run: 'false',
       slot_index: String(Number.isInteger(body.packIndex) ? body.packIndex : 0),
       publish_mode: body.mode === 'story-only' ? 'story-only' : 'feed-and-story',

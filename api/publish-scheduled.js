@@ -1,4 +1,5 @@
 import { requireAdmin } from '../lib/auth.js';
+import { accountFromBody } from '../lib/accounts.js';
 
 const OWNER = 'marcondesjm';
 const REPO = 'cliente-x-instagram';
@@ -15,6 +16,21 @@ function githubToken() {
   return token;
 }
 
+function readBody(req) {
+  return new Promise((resolve, reject) => {
+    let raw = '';
+    req.on('data', (chunk) => { raw += chunk; });
+    req.on('end', () => {
+      try {
+        resolve(raw ? JSON.parse(raw) : {});
+      } catch (error) {
+        reject(error);
+      }
+    });
+    req.on('error', reject);
+  });
+}
+
 export default async function handler(req, res) {
   if (!requireAdmin(req, res)) return;
 
@@ -24,6 +40,8 @@ export default async function handler(req, res) {
   }
 
   try {
+    const body = await readBody(req);
+    const account = accountFromBody(body);
     const response = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/actions/workflows/${WORKFLOW}/dispatches`, {
       method: 'POST',
       headers: {
@@ -35,7 +53,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         ref: 'main',
         inputs: {
-          account: 'cliente-x',
+          account,
           dry_run: 'false',
           slot_index: '0',
           publish_mode: 'feed-and-story',

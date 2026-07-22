@@ -1,10 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { requireAdmin } from '../../lib/auth.js';
+import { accountFromBody } from '../../lib/accounts.js';
 
 const OWNER = 'marcondesjm';
 const REPO = 'cliente-x-instagram';
-const ACCOUNT = 'cliente-x';
 const FILE_PATH = 'automation/instagram-template/config/content-packs.json';
 const LOCAL_CONTENT_PATH = join(process.cwd(), FILE_PATH);
 
@@ -83,8 +83,8 @@ async function writeContentFile(groups, sha) {
   });
 }
 
-function stateFromGroups(groups) {
-  const group = groups.find((item) => item.account === ACCOUNT);
+function stateFromGroups(groups, account) {
+  const group = groups.find((item) => item.account === account);
   const packs = group?.packs || [];
   return {
     packs,
@@ -104,6 +104,7 @@ export default async function handler(req, res) {
   try {
     const index = Number(req.query.index);
     const body = await readBody(req);
+    const account = accountFromBody(body);
     validatePack(body.pack);
 
     let sha;
@@ -114,8 +115,8 @@ export default async function handler(req, res) {
       groups = JSON.parse(readFileSync(LOCAL_CONTENT_PATH, 'utf8').replace(/^\uFEFF/, ''));
     }
 
-    const group = groups.find((item) => item.account === ACCOUNT);
-    if (!group) throw new Error(`Conta ${ACCOUNT} nao encontrada em content-packs.json.`);
+    const group = groups.find((item) => item.account === account);
+    if (!group) throw new Error(`Conta ${account} nao encontrada em content-packs.json.`);
     if (!Number.isInteger(index) || index < 0 || index >= group.packs.length) throw new Error('Slot de conteudo inexistente.');
 
     group.packs[index] = {
@@ -131,7 +132,7 @@ export default async function handler(req, res) {
 
     if (!sha) throw new Error('Nao consegui obter o arquivo atual do GitHub.');
     await writeContentFile(groups, sha);
-    json(res, 200, { ok: true, ...stateFromGroups(groups), message: 'Conteudo salvo no GitHub.' });
+    json(res, 200, { ok: true, ...stateFromGroups(groups, account), message: 'Conteudo salvo no GitHub.' });
   } catch (error) {
     json(res, 500, { error: error.message });
   }

@@ -1,8 +1,8 @@
 import { requireAdmin } from '../../../lib/auth.js';
+import { accountFromQuery } from '../../../lib/accounts.js';
 
 const OWNER = 'marcondesjm';
 const REPO = 'cliente-x-instagram';
-const ACCOUNT = 'cliente-x';
 const FILE_PATH = 'automation/instagram-template/config/scheduled-posts.json';
 
 function json(res, status, body) {
@@ -61,8 +61,9 @@ export default async function handler(req, res) {
 
   try {
     const id = req.query.id;
+    const account = accountFromQuery(req);
     const { sha, groups } = await readQueueFile();
-    const group = groups.find((item) => item.account === ACCOUNT);
+    const group = groups.find((item) => item.account === account);
     const post = group?.posts?.find((item) => item.id === id);
     if (!post) throw new Error('Post agendado nao encontrado.');
     if (post.status !== 'pending') throw new Error('Somente posts pendentes podem ser cancelados.');

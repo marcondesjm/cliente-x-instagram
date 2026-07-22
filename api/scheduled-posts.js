@@ -1,10 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { requireAdmin } from '../lib/auth.js';
+import { accountFromBody } from '../lib/accounts.js';
 
 const OWNER = 'marcondesjm';
 const REPO = 'cliente-x-instagram';
-const ACCOUNT = 'cliente-x';
 const FILE_PATH = 'automation/instagram-template/config/scheduled-posts.json';
 const LOCAL_CONTENT_PATH = join(process.cwd(), 'automation', 'instagram-template', 'config', 'content-packs.json');
 
@@ -52,9 +52,9 @@ function validatePack(pack) {
   if (!pack.caption?.trim()) throw new Error('Legenda/caption vazia.');
 }
 
-function localPacks() {
+function localPacks(account) {
   const groups = JSON.parse(readFileSync(LOCAL_CONTENT_PATH, 'utf8').replace(/^\uFEFF/, ''));
-  return groups.find((item) => item.account === ACCOUNT)?.packs || [];
+  return groups.find((item) => item.account === account)?.packs || [];
 }
 
 async function githubJson(path, options = {}) {
@@ -102,18 +102,19 @@ export default async function handler(req, res) {
 
   try {
     const body = await readBody(req);
+    const account = accountFromBody(body);
     const packIndex = Number(body.packIndex);
-    const packs = localPacks();
-    if (!Number.isInteger(packIndex) || packIndex < 0 || packIndex >= packs.length) {
+    const packs = localPacks(account);
+    if (!Number.isInteger(packIndex) || packIndex < 0 || (!body.pack && packIndex >= packs.length)) {
       throw new Error('Pack invalido para agendamento.');
     }
     const pack = body.pack || packs[packIndex];
     validatePack(pack);
 
     const { sha, groups } = await readQueueFile();
-    let group = groups.find((item) => item.account === ACCOUNT);
+    let group = groups.find((item) => item.account === account);
     if (!group) {
-      group = { account: ACCOUNT, posts: [] };
+      group = { account, posts: [] };
       groups.push(group);
     }
     if (!Array.isArray(group.posts)) group.posts = [];
