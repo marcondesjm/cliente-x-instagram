@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { requireAdmin } from '../../lib/auth.js';
+import { canAccessAccount, requireAdmin } from '../../lib/auth.js';
 import { accountFromBody } from '../../lib/accounts.js';
 
 const OWNER = 'marcondesjm';
@@ -94,7 +94,8 @@ function stateFromGroups(groups, account) {
 }
 
 export default async function handler(req, res) {
-  if (!requireAdmin(req, res)) return;
+  const session = requireAdmin(req, res);
+  if (!session) return;
 
   if (req.method !== 'POST') {
     json(res, 405, { error: 'Metodo nao permitido.' });
@@ -105,6 +106,10 @@ export default async function handler(req, res) {
     const index = Number(req.query.index);
     const body = await readBody(req);
     const account = accountFromBody(body);
+    if (!canAccessAccount(session, account)) {
+      json(res, 403, { error: 'Seu usuario nao tem acesso a esta conta.' });
+      return;
+    }
     validatePack(body.pack);
 
     let sha;

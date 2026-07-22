@@ -1,4 +1,4 @@
-import { requireAdmin } from '../lib/auth.js';
+import { canAccessAccount, requireAdmin } from '../lib/auth.js';
 import { accountFromBody } from '../lib/accounts.js';
 
 const OWNER = 'marcondesjm';
@@ -32,7 +32,8 @@ function readBody(req) {
 }
 
 export default async function handler(req, res) {
-  if (!requireAdmin(req, res)) return;
+  const session = requireAdmin(req, res);
+  if (!session) return;
 
   if (req.method !== 'POST') {
     json(res, 405, { error: 'Metodo nao permitido.' });
@@ -42,6 +43,10 @@ export default async function handler(req, res) {
   try {
     const body = await readBody(req);
     const account = accountFromBody(body);
+    if (!canAccessAccount(session, account)) {
+      json(res, 403, { error: 'Seu usuario nao tem acesso a esta conta.' });
+      return;
+    }
     const response = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/actions/workflows/${WORKFLOW}/dispatches`, {
       method: 'POST',
       headers: {

@@ -1165,6 +1165,35 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <div class="access-result" id="newAccountResult">Use letras, números e hífen na chave da conta.</div>
           </div>
         </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="section-label">Acesso</div>
+              <h2>Usuários por conta</h2>
+            </div>
+            <span class="status-pill good" id="usersStatus">Admin</span>
+          </div>
+          <div class="checks" id="usersList">
+            <div class="empty">Usuários adicionais aparecem aqui para o admin principal.</div>
+          </div>
+          <div class="access-manager" id="userManager">
+            <label>
+              Email do usuário
+              <input id="newUserEmail" type="email" placeholder="usuario@empresa.com">
+            </label>
+            <label>
+              Senha provisória
+              <input id="newUserPassword" type="password" autocomplete="new-password" placeholder="mínimo 8 caracteres">
+            </label>
+            <div>
+              <label>Contas liberadas</label>
+              <div class="checks" id="newUserAccounts"></div>
+            </div>
+            <button class="primary" id="createUser" type="button">Criar usuário</button>
+            <div class="access-result" id="newUserResult">Depois de criar usuário, clique em Redeploy Vercel para ativar o login.</div>
+          </div>
+        </div>
       </aside>
     </main>
 
@@ -1214,6 +1243,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       accessConfig: [],
       openAccessIndex: null,
       accounts: [],
+      users: [],
+      sessionRole: null,
       selectedAccount: 'cliente-x',
       account: null
     };
@@ -1281,6 +1312,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
 
     function showApp(session) {
       appState.adminEmail = session?.email || null;
+      appState.sessionRole = session?.role || null;
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('appShell').classList.remove('auth-locked');
     }
@@ -1335,6 +1367,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         body: JSON.stringify({ action: 'logout' })
       });
       appState.adminEmail = null;
+      appState.sessionRole = null;
       showLogin('Sessão encerrada.');
     }
 
@@ -1347,6 +1380,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       try {
         const state = await api(withAccount('/api/state'));
         appState.accounts = state.accounts || [];
+        appState.users = state.users || [];
+        appState.sessionRole = state.session?.role || appState.sessionRole;
         appState.selectedAccount = state.selectedAccount || appState.selectedAccount;
         appState.account = state.account || null;
         appState.packs = state.packs || [];
@@ -1360,6 +1395,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         document.getElementById('contentCount').textContent = DATA.packCount;
         document.getElementById('contentNote').textContent = `${DATA.schedulesUtc.length} horários ativos`;
         renderAccountSwitcher();
+        renderUsers();
         renderVersion(state.activeVersion);
         renderMaintenance(state.maintenance);
         renderSchedule();
@@ -1411,6 +1447,43 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       subline.textContent = `${username} · ${footer}`;
       document.getElementById('publishNow').textContent = `Publicar agora (${appState.selectedAccount})`;
       document.getElementById('queuePost').textContent = `Agendar pack (${appState.selectedAccount})`;
+    }
+
+    function renderUsers() {
+      const list = document.getElementById('usersList');
+      const accountBox = document.getElementById('newUserAccounts');
+      const status = document.getElementById('usersStatus');
+      const manager = document.getElementById('userManager');
+      const isOwner = appState.sessionRole === 'owner';
+
+      status.textContent = isOwner ? `${appState.users.length} usuário${appState.users.length === 1 ? '' : 's'}` : 'Restrito';
+      status.className = `status-pill ${isOwner ? 'good' : 'warn'}`;
+      manager.style.display = isOwner ? 'grid' : 'none';
+
+      if (!isOwner) {
+        list.innerHTML = '<div class="empty">Seu usuário pode operar somente as contas liberadas pelo admin principal.</div>';
+        return;
+      }
+
+      list.innerHTML = appState.users.length ? appState.users.map((user) => `
+        <div class="check">
+          <span class="dot ${user.role === 'owner' ? 'good' : 'warn'}"></span>
+          <div>
+            <strong>${escapeHtml(user.email)}</strong>
+            <span>${escapeHtml(user.role || 'user')} · ${escapeHtml((user.accounts || []).join(', ') || 'sem contas')}</span>
+          </div>
+        </div>
+      `).join('') : '<div class="empty">Nenhum usuário adicional configurado.</div>';
+
+      accountBox.innerHTML = (appState.accounts || []).map((account) => `
+        <label class="check">
+          <input type="checkbox" data-user-account value="${escapeHtml(account.account)}">
+          <div>
+            <strong>${escapeHtml(account.account)}</strong>
+            <span>${escapeHtml(account.expectedUsername || '')}</span>
+          </div>
+        </label>
+      `).join('');
     }
 
     async function switchAccount(event) {
@@ -1604,6 +1677,39 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         document.getElementById('newAccountFooter').value = '';
         result.textContent = payload.message || 'Conta criada.';
         await loadState();
+      } catch (error) {
+        result.textContent = error.message;
+      } finally {
+        button.disabled = false;
+        button.textContent = original;
+      }
+    }
+
+    async function createUser() {
+      const button = document.getElementById('createUser');
+      const result = document.getElementById('newUserResult');
+      const original = button.textContent;
+      const accounts = Array.from(document.querySelectorAll('[data-user-account]:checked')).map((input) => input.value);
+      button.disabled = true;
+      button.textContent = 'Criando';
+      result.textContent = 'Salvando usuário no Vercel...';
+
+      try {
+        const payload = await api('/api/state', {
+          method: 'POST',
+          body: JSON.stringify({
+            action: 'create-user',
+            email: document.getElementById('newUserEmail').value,
+            password: document.getElementById('newUserPassword').value,
+            accounts
+          })
+        });
+        document.getElementById('newUserEmail').value = '';
+        document.getElementById('newUserPassword').value = '';
+        document.querySelectorAll('[data-user-account]').forEach((input) => { input.checked = false; });
+        appState.users = payload.users || appState.users;
+        renderUsers();
+        result.textContent = payload.message || 'Usuário criado. Faça redeploy para ativar.';
       } catch (error) {
         result.textContent = error.message;
       } finally {
@@ -2268,6 +2374,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('accountSelect').addEventListener('change', switchAccount);
       document.getElementById('redeployVercel').addEventListener('click', redeployVercel);
       document.getElementById('createAccount').addEventListener('click', createAccount);
+      document.getElementById('createUser').addEventListener('click', createUser);
       document.getElementById('accessConfig').addEventListener('click', (event) => {
         const edit = event.target.closest('[data-access-edit]');
         const validate = event.target.closest('[data-access-validate]');

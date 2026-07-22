@@ -4,8 +4,11 @@ import {
   clearSessionCookie,
   configuredAdminEmail,
   createSessionCookie,
+  canAccessAccount,
   getSession,
   hasAdminConfig,
+  isOwner,
+  publicUsers,
   validateLogin
 } from '../lib/auth.js';
 import { accountFromQuery, normalizeAccountKey, requireConfiguredAccount } from '../lib/accounts.js';
@@ -114,7 +117,8 @@ const SECRET_KEYS = [
   'GITHUB_TOKEN',
   'IMGBB_API_KEY',
   'ADMIN_EMAIL',
-  'ADMIN_PASSWORD'
+  'ADMIN_PASSWORD',
+  'ADMIN_USERS_JSON'
 ];
 const EDITABLE_SECRET_KEYS = new Set([
   'VERCEL_TOKEN',
@@ -124,6 +128,7 @@ const EDITABLE_SECRET_KEYS = new Set([
   'IMGBB_API_KEY',
   'ADMIN_EMAIL',
   'ADMIN_PASSWORD',
+  'ADMIN_USERS_JSON',
   'ADMIN_SESSION_SECRET'
 ]);
 
@@ -341,6 +346,46 @@ async function saveVercelEnv(key, value) {
   };
 }
 
+function parseAdminUsersJson() {
+  try {
+    const users = JSON.parse(process.env.ADMIN_USERS_JSON || '[]');
+    return Array.isArray(users) ? users : [];
+  } catch {
+    return [];
+  }
+}
+
+async function createPanelUser(body = {}, availableAccounts = []) {
+  const email = String(body.email || '').trim().toLowerCase();
+  const password = String(body.password || '');
+  const accounts = Array.isArray(body.accounts)
+    ? body.accounts.map((item) => normalizeAccountKey(item))
+    : [];
+  const availableKeys = new Set(availableAccounts.map((account) => account.account));
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw userError('Email do usuario invalido.');
+  if (password.length < 8) throw userError('Senha do usuario precisa ter pelo menos 8 caracteres.');
+  if (!accounts.length) throw userError('Selecione pelo menos uma conta para o usuario.');
+  if (accounts.some((account) => !availableKeys.has(account))) throw userError('Uma das contas selecionadas nao existe.');
+  if (email === String(process.env.ADMIN_EMAIL || '').toLowerCase()) throw userError('Esse email ja e o admin principal.');
+
+  const users = parseAdminUsersJson().filter((user) => String(user.email || '').toLowerCase() !== email);
+  users.push({
+    email,
+    password,
+    role: 'user',
+    accounts
+  });
+
+  const saved = await saveVercelEnv('ADMIN_USERS_JSON', JSON.stringify(users));
+  return {
+    ok: true,
+    users: users.map((user) => ({ email: user.email, role: user.role || 'user', accounts: user.accounts || [] })),
+    message: `${email} salvo em ADMIN_USERS_JSON. Faça redeploy para esse login entrar em vigor.`,
+    saved
+  };
+}
+
 async function redeployVercelProduction() {
   const deployments = await vercelFetch('/v6/deployments?limit=1&target=production');
   const latest = deployments.deployments?.find((deployment) => deployment.target === 'production') ||
@@ -549,6 +594,7 @@ export default async function handler(req, res) {
         return;
       }
       if (body.action === 'validate-access') {
+        if (!isOwner(session)) throw userError('Apenas o admin principal pode validar acessos.', 403);
         const result = await validateAccessValue(
           String(body.key || '').trim(),
           String(body.value || ''),
@@ -559,6 +605,7 @@ export default async function handler(req, res) {
         return;
       }
       if (body.action === 'save-access') {
+        if (!isOwner(session)) throw userError('Apenas o admin principal pode salvar acessos.', 403);
         const key = String(body.key || '').trim();
         const value = String(body.value || '');
         const validation = await validateAccessValue(key, value, body.companion || {});
@@ -573,13 +620,23 @@ export default async function handler(req, res) {
         return;
       }
       if (body.action === 'create-account') {
+        if (!isOwner(session)) throw userError('Apenas o admin principal pode criar contas.', 403);
         const result = await createAccountConfig(body);
         res.setHeader('cache-control', 'no-store');
         res.status(200).json(result);
         return;
       }
       if (body.action === 'redeploy-vercel') {
+        if (!isOwner(session)) throw userError('Apenas o admin principal pode fazer redeploy.', 403);
         const result = await redeployVercelProduction();
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json(result);
+        return;
+      }
+      if (body.action === 'create-user') {
+        if (!isOwner(session)) throw userError('Apenas o admin principal pode criar usuarios.', 403);
+        const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
+        const result = await createPanelUser(body, accounts);
         res.setHeader('cache-control', 'no-store');
         res.status(200).json(result);
         return;
@@ -597,11 +654,22 @@ export default async function handler(req, res) {
   }
 
   const session = getSession(req);
-  const accountKey = accountFromQuery(req);
   const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
+  const allowedAccounts = session && !isOwner(session)
+    ? accounts.filter((item) => canAccessAccount(session, item.account))
+    : accounts;
+  if (session && !allowedAccounts.length) {
+    res.status(403).json({ error: 'Seu usuario nao tem nenhuma conta liberada.' });
+    return;
+  }
+
+  let accountKey = accountFromQuery(req);
+  if (session && !canAccessAccount(session, accountKey)) {
+    accountKey = allowedAccounts[0]?.account || accountKey;
+  }
   const content = await readConfigGroups(CONTENT_FILE_PATH, CONTENT_PATH);
-  const account = requireConfiguredAccount(accounts, accountKey);
-  const accountSummaries = accounts.map((item) => ({
+  const account = requireConfiguredAccount(allowedAccounts, accountKey);
+  const accountSummaries = allowedAccounts.map((item) => ({
     account: item.account,
     expectedUsername: item.expectedUsername,
     brandName: item.brandName,
@@ -628,9 +696,12 @@ export default async function handler(req, res) {
     session: {
       authenticated: Boolean(session),
       email: session?.email || null,
+      role: session?.role || null,
+      accounts: session?.accounts || [],
       adminConfigured: hasAdminConfig(),
       adminEmail: configuredAdminEmail() || null
     },
+    users: session && isOwner(session) ? publicUsers() : [],
     maintenance: MAINTENANCE,
     accessConfig: accessConfigForAccount(account),
     secrets: session ? secretStatuses(accounts) : [],

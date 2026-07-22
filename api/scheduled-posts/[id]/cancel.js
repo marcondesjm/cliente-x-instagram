@@ -1,4 +1,4 @@
-import { requireAdmin } from '../../../lib/auth.js';
+import { canAccessAccount, requireAdmin } from '../../../lib/auth.js';
 import { accountFromQuery } from '../../../lib/accounts.js';
 
 const OWNER = 'marcondesjm';
@@ -52,7 +52,8 @@ async function writeQueueFile(groups, sha) {
 }
 
 export default async function handler(req, res) {
-  if (!requireAdmin(req, res)) return;
+  const session = requireAdmin(req, res);
+  if (!session) return;
 
   if (req.method !== 'POST') {
     json(res, 405, { error: 'Metodo nao permitido.' });
@@ -62,6 +63,10 @@ export default async function handler(req, res) {
   try {
     const id = req.query.id;
     const account = accountFromQuery(req);
+    if (!canAccessAccount(session, account)) {
+      json(res, 403, { error: 'Seu usuario nao tem acesso a esta conta.' });
+      return;
+    }
     const { sha, groups } = await readQueueFile();
     const group = groups.find((item) => item.account === account);
     const post = group?.posts?.find((item) => item.id === id);

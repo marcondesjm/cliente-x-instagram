@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { requireAdmin } from '../lib/auth.js';
+import { canAccessAccount, requireAdmin } from '../lib/auth.js';
 import { accountFromQuery, requireConfiguredAccount } from '../lib/accounts.js';
 
 const ROOT = process.cwd();
@@ -37,7 +37,8 @@ function insightValue(insights, name) {
 }
 
 export default async function handler(req, res) {
-  if (!requireAdmin(req, res)) return;
+  const session = requireAdmin(req, res);
+  if (!session) return;
 
   if (req.method !== 'GET') {
     res.status(405).json({ error: 'Metodo nao permitido.' });
@@ -45,6 +46,10 @@ export default async function handler(req, res) {
   }
 
   const accountKey = accountFromQuery(req);
+  if (!canAccessAccount(session, accountKey)) {
+    res.status(403).json({ error: 'Seu usuario nao tem acesso a esta conta.' });
+    return;
+  }
   const accounts = readJson(ACCOUNTS_PATH);
   const account = requireConfiguredAccount(accounts, accountKey);
 
