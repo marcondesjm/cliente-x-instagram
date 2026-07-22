@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { requireAdmin } from './_auth.js';
 
 const ROOT = process.cwd();
 const ACCOUNTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'accounts.json');
@@ -36,6 +37,8 @@ function insightValue(insights, name) {
 }
 
 export default async function handler(req, res) {
+  if (!requireAdmin(req, res)) return;
+
   if (req.method !== 'GET') {
     res.status(405).json({ error: 'Metodo nao permitido.' });
     return;

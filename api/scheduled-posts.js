@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { requireAdmin } from './_auth.js';
 
 const OWNER = 'marcondesjm';
 const REPO = 'cliente-x-instagram';
@@ -92,6 +93,8 @@ async function writeQueueFile(groups, sha) {
 }
 
 export default async function handler(req, res) {
+  if (!requireAdmin(req, res)) return;
+
   if (req.method !== 'POST') {
     json(res, 405, { error: 'Metodo nao permitido.' });
     return;

@@ -1,3 +1,5 @@
+import { requireAdmin } from './_auth.js';
+
 function json(res, status, body) {
   res.setHeader('cache-control', 'no-store');
   res.status(status).json(body);
@@ -19,6 +21,8 @@ function readBody(req) {
 }
 
 export default async function handler(req, res) {
+  if (!requireAdmin(req, res)) return;
+
   if (req.method !== 'POST') {
     json(res, 405, { error: 'Metodo nao permitido.' });
     return;

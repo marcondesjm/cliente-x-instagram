@@ -1,3 +1,5 @@
+import { requireAdmin } from '../../_auth.js';
+
 const OWNER = 'marcondesjm';
 const REPO = 'cliente-x-instagram';
 const ACCOUNT = 'cliente-x';
@@ -50,6 +52,8 @@ async function writeQueueFile(groups, sha) {
 }
 
 export default async function handler(req, res) {
+  if (!requireAdmin(req, res)) return;
+
   if (req.method !== 'POST') {
     json(res, 405, { error: 'Metodo nao permitido.' });
     return;

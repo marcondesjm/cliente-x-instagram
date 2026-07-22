@@ -1,3 +1,5 @@
+import { requireAdmin } from './_auth.js';
+
 const OWNER = 'marcondesjm';
 const REPO = 'cliente-x-instagram';
 const WORKFLOW = 'instagram-feed-cliente-x.yml';
@@ -46,6 +48,8 @@ async function dispatchWorkflow(inputs) {
 }
 
 export default async function handler(req, res) {
+  if (!requireAdmin(req, res)) return;
+
   if (req.method !== 'POST') {
     json(res, 405, { error: 'Metodo nao permitido.' });
     return;

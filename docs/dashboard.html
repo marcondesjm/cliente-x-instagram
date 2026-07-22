@@ -36,6 +36,46 @@
       overflow-x: hidden;
     }
 
+    .auth-screen {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+    }
+
+    .auth-card {
+      width: min(440px, 100%);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 22px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .auth-card h1 {
+      font-size: 28px;
+    }
+
+    .auth-note {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .auth-error {
+      min-height: 20px;
+      color: var(--bad);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .auth-locked {
+      display: none;
+    }
+
     .shell {
       width: min(1440px, 100%);
       margin: 0 auto;
@@ -713,7 +753,27 @@
   </style>
 </head>
 <body>
-  <div class="shell">
+  <div class="auth-screen" id="loginScreen">
+    <form class="auth-card" id="loginForm">
+      <div>
+        <div class="eyebrow">Acesso admin</div>
+        <h1>Painel protegido</h1>
+      </div>
+      <div class="auth-note">Entre para publicar, agendar, editar conteúdo e ver dados operacionais. Tokens completos não são exibidos no navegador.</div>
+      <label>
+        Email
+        <input id="adminEmail" type="email" autocomplete="username" required>
+      </label>
+      <label>
+        Senha
+        <input id="adminPassword" type="password" autocomplete="current-password" required>
+      </label>
+      <button class="primary" type="submit" id="loginButton">Entrar</button>
+      <div class="auth-error" id="loginError"></div>
+    </form>
+  </div>
+
+  <div class="shell auth-locked" id="appShell">
     <header>
       <div class="brand-block">
         <div class="eyebrow">Instagram Automation</div>
@@ -723,6 +783,7 @@
       <div class="actions">
         <a class="button" href="https://github.com/marcondesjm/cliente-x-instagram/actions/workflows/instagram-feed-cliente-x.yml" target="_blank" rel="noreferrer">GitHub Actions</a>
         <button class="primary" id="refreshRuns" type="button">Atualizar runs</button>
+        <button id="logoutButton" type="button">Sair</button>
       </div>
     </header>
 
@@ -961,6 +1022,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
                 <span id="maintenanceNote">O painel mostra o que renovar, mas não exibe nem edita valores de tokens.</span>
               </div>
             </div>
+            <div class="check">
+              <span class="dot warn"></span>
+              <div>
+                <strong>Secrets configurados</strong>
+                <span id="secretSummary">Faça login para conferir valores mascarados.</span>
+              </div>
+            </div>
           </div>
         </div>
       </aside>
@@ -1006,7 +1074,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       selectedSlide: 0,
       serverMode: location.protocol.startsWith('http'),
       localWriteMode: ['localhost', '127.0.0.1', '::1'].includes(location.hostname),
-      privateMetrics: null
+      privateMetrics: null,
+      adminEmail: null
     };
 
     function escapeHtml(value = '') {
@@ -1048,6 +1117,66 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       return payload;
     }
 
+    function showLogin(message = '') {
+      document.getElementById('loginScreen').style.display = 'grid';
+      document.getElementById('appShell').classList.add('auth-locked');
+      document.getElementById('loginError').textContent = message;
+    }
+
+    function showApp(session) {
+      appState.adminEmail = session?.email || null;
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('appShell').classList.remove('auth-locked');
+    }
+
+    async function checkSession() {
+      const session = await api('/api/auth/session');
+      if (!session.adminConfigured) {
+        showLogin('Admin ainda não configurado no Vercel.');
+        return false;
+      }
+      document.getElementById('adminEmail').value = session.adminEmail || '';
+      if (!session.authenticated) {
+        showLogin('');
+        return false;
+      }
+      showApp(session);
+      return true;
+    }
+
+    async function login(event) {
+      event.preventDefault();
+      const button = document.getElementById('loginButton');
+      const error = document.getElementById('loginError');
+      button.disabled = true;
+      button.textContent = 'Entrando';
+      error.textContent = '';
+      try {
+        const session = await api('/api/auth/login', {
+          method: 'POST',
+          body: JSON.stringify({
+            email: document.getElementById('adminEmail').value,
+            password: document.getElementById('adminPassword').value
+          })
+        });
+        document.getElementById('adminPassword').value = '';
+        showApp(session);
+        await loadState();
+        await refreshRuns();
+      } catch (loginError) {
+        error.textContent = loginError.message;
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Entrar';
+      }
+    }
+
+    async function logout() {
+      await api('/api/auth/logout', { method: 'POST' });
+      appState.adminEmail = null;
+      showLogin('Sessão encerrada.');
+    }
+
     async function loadState() {
       if (!appState.serverMode) {
         setMessage('Abra pelo servidor local para salvar: npm run dashboard', 'warn');
@@ -1073,6 +1202,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         renderEditor();
         setMessage('Conteúdos carregados do projeto. Escolha um slot, edite e salve.', 'good');
         loadPrivateMetrics();
+        loadSecretStatus();
       } catch (error) {
         setMessage(`Não consegui carregar pelo servidor: ${error.message}`, 'bad');
       }
@@ -1115,6 +1245,21 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
 
       status.textContent = github.expiresAt ? 'Renovar' : 'Acompanhar';
       status.className = 'status-pill warn';
+    }
+
+    async function loadSecretStatus() {
+      const secretSummary = document.getElementById('secretSummary');
+      try {
+        const payload = await api('/api/admin/secrets');
+        const configured = (payload.secrets || []).filter((secret) => secret.configured).length;
+        const total = (payload.secrets || []).length;
+        const list = (payload.secrets || [])
+          .map((secret) => `${secret.key}: ${secret.configured ? secret.masked : 'ausente'}`)
+          .join(' · ');
+        secretSummary.textContent = `${configured}/${total} configurados. ${list}. ${payload.message}`;
+      } catch (error) {
+        secretSummary.textContent = `Não consegui conferir secrets: ${error.message}`;
+      }
     }
 
     async function loadPrivateMetrics() {
@@ -1728,14 +1873,73 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       }
     }
 
-    renderSchedule();
-    renderChecks();
-    renderEditor();
-    defaultManualDateTime();
-    renderQueue();
-    loadState();
-    refreshRuns();
-    setInterval(renderSchedule, 60_000);
+    async function boot() {
+      renderSchedule();
+      renderChecks();
+      renderEditor();
+      defaultManualDateTime();
+      renderQueue();
+      bindEvents();
+      if (await checkSession()) {
+        await loadState();
+        await refreshRuns();
+      }
+      setInterval(renderSchedule, 60_000);
+    }
+
+    function bindEvents() {
+      document.getElementById('loginForm').addEventListener('submit', login);
+      document.getElementById('logoutButton').addEventListener('click', logout);
+      document.getElementById('refreshRuns').addEventListener('click', refreshRuns);
+      document.getElementById('packSelect').addEventListener('change', (event) => {
+        syncEditorToState();
+        appState.selectedPack = Number(event.target.value);
+        appState.selectedSlide = 0;
+        renderEditor();
+      });
+      document.getElementById('slideSelect').addEventListener('change', (event) => {
+        appState.selectedSlide = Number(event.target.value);
+        updatePreview();
+      });
+      document.getElementById('slideFields').addEventListener('input', updatePreview);
+      document.getElementById('slideFields').addEventListener('change', (event) => {
+        const input = event.target.closest('[data-image-upload]');
+        if (input) uploadSlideImage(input);
+      });
+      document.getElementById('slideFields').addEventListener('click', (event) => {
+        const button = event.target.closest('[data-clear-image]');
+        if (button) clearSlideImage(Number(button.dataset.clearImage));
+      });
+      document.getElementById('captionInput').addEventListener('input', syncEditorToState);
+      document.getElementById('savePack').addEventListener('click', saveSelectedPack);
+      document.getElementById('addTime').addEventListener('click', addScheduleTime);
+      document.getElementById('saveSchedule').addEventListener('click', saveSchedule);
+      document.getElementById('scheduleEditor').addEventListener('click', (event) => {
+        const button = event.target.closest('[data-remove-time]');
+        if (button) removeScheduleTime(Number(button.dataset.removeTime));
+      });
+      document.getElementById('validateCopy').addEventListener('click', (event) => {
+        runServerAction('/api/validate', event.currentTarget, 'Validando');
+      });
+      document.getElementById('renderSlot').addEventListener('click', (event) => {
+        runServerAction('/api/render', event.currentTarget, 'Renderizando');
+      });
+      document.getElementById('queuePost').addEventListener('click', () => scheduleSelectedPost(false));
+      document.getElementById('publishNow').addEventListener('click', () => scheduleSelectedPost(true));
+      document.getElementById('runScheduled').addEventListener('click', (event) => {
+        runQueueAction('/api/publish-scheduled', event.currentTarget, 'Rodando fila');
+      });
+      document.getElementById('pushScheduled').addEventListener('click', (event) => {
+        runQueueAction('/api/push-scheduled-posts', event.currentTarget, 'Enviando agenda');
+      });
+      document.getElementById('queueList').addEventListener('click', (event) => {
+        const button = event.target.closest('[data-cancel-post]');
+        if (button) cancelScheduledPost(button.dataset.cancelPost);
+      });
+    }
+
+    boot();
+/*
     document.getElementById('refreshRuns').addEventListener('click', refreshRuns);
     document.getElementById('packSelect').addEventListener('change', (event) => {
       syncEditorToState();
@@ -1782,6 +1986,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const button = event.target.closest('[data-cancel-post]');
       if (button) cancelScheduledPost(button.dataset.cancelPost);
     });
+*/
   </script>
 </body>
 </html>
