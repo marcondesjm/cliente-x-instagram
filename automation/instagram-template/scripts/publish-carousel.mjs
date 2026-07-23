@@ -313,6 +313,117 @@ const AUTO_CONTENT_CONTEXTS = [
   }
 ];
 
+const INDUSTRY_SPECIALISTS = [
+  {
+    id: 'juridico',
+    keywords: ['advogado', 'advogados', 'advocacia', 'juridico', 'jurídico', 'direito', 'contrato', 'contratos', 'escritorio juridico', 'escritório jurídico'],
+    area: 'Advocacia',
+    pain: 'lead chega pelo WhatsApp sem contexto, documento ou urgência clara',
+    process: 'triagem do caso, documentos, área do direito, prazo, risco e próximo atendimento',
+    gain: 'transformar contatos soltos em atendimento jurídico mais organizado',
+    hashtag: '#advocacia #juridico #inteligenciaartificial #automacao #gestaojuridica',
+    trigger: 'quando o escritório recebe muitas conversas e cada atendimento começa do zero',
+    proof: 'triagem melhor, histórico salvo e reunião inicial com mais contexto',
+    examples: ['triagem de leads', 'organização de documentos', 'follow-up de consulta', 'contratos e prazos']
+  },
+  {
+    id: 'clinicas',
+    keywords: ['clinica', 'clínica', 'clinicas', 'clínicas', 'medico', 'médico', 'dentista', 'odontologia', 'consulta', 'paciente', 'saude', 'saúde'],
+    area: 'Clínicas',
+    pain: 'paciente chama, pergunta preço, some e volta sem histórico',
+    process: 'triagem, especialidade, urgência, agenda, confirmação e pós-consulta',
+    gain: 'organizar atendimento sem perder acolhimento',
+    hashtag: '#clinicas #saude #atendimento #inteligenciaartificial #automacao',
+    trigger: 'quando a recepção lida com muitas mensagens e pouca visibilidade de prioridade',
+    proof: 'menos mensagens perdidas, agenda mais clara e experiência mais consistente',
+    examples: ['agendamento', 'confirmação de consulta', 'retorno de pacientes', 'triagem inicial']
+  },
+  {
+    id: 'imobiliario',
+    keywords: ['imobiliaria', 'imobiliária', 'imovel', 'imóvel', 'imoveis', 'imóveis', 'corretor', 'corretores', 'aluguel', 'locacao', 'locação'],
+    area: 'Imobiliário',
+    pain: 'interessado pergunta por imóvel, mas o atendimento demora e perde intenção de compra',
+    process: 'perfil do cliente, bairro, faixa de preço, urgência, financiamento e visita',
+    gain: 'priorizar oportunidades e acelerar visitas com contexto',
+    hashtag: '#imobiliario #corretordeimoveis #vendas #inteligenciaartificial #automacao',
+    trigger: 'quando muitos leads chegam por anúncio e poucos viram visita qualificada',
+    proof: 'lead qualificado, follow-up no prazo e histórico de preferência salvo',
+    examples: ['captação de lead', 'agendamento de visita', 'qualificação financeira', 'follow-up de proposta']
+  },
+  {
+    id: 'restaurantes',
+    keywords: ['restaurante', 'restaurantes', 'delivery', 'cardapio', 'cardápio', 'bar', 'lanchonete', 'pedido', 'ifood'],
+    area: 'Restaurantes',
+    pain: 'pedido, reserva e dúvida chegam misturados e a equipe perde tempo respondendo repetição',
+    process: 'cardápio, reserva, pedido, status, avaliação e recompra',
+    gain: 'atender melhor nos horários de pico sem confundir a operação',
+    hashtag: '#restaurante #delivery #atendimento #inteligenciaartificial #automacao',
+    trigger: 'quando o movimento aumenta e cada mensagem disputa atenção com a operação',
+    proof: 'respostas mais rápidas, menos erro de pedido e retorno de cliente melhor acompanhado',
+    examples: ['reservas', 'pedidos', 'cardápio', 'avaliações']
+  },
+  {
+    id: 'estetica',
+    keywords: ['estetica', 'estética', 'beleza', 'salão', 'salao', 'barbearia', 'procedimento', 'spa', 'harmonizacao', 'harmonização'],
+    area: 'Estética e beleza',
+    pain: 'cliente pergunta procedimento, preço e horário, mas a conversa não vira agenda',
+    process: 'interesse, indicação, contraindicação, horários, retorno e reativação',
+    gain: 'transformar curiosidade em agenda com cuidado e clareza',
+    hashtag: '#estetica #beleza #atendimento #inteligenciaartificial #automacao',
+    trigger: 'quando o atendimento precisa educar sem parecer resposta genérica',
+    proof: 'mais agendamentos, retornos lembrados e comunicação com padrão',
+    examples: ['pré-atendimento', 'agenda', 'retorno', 'reativação']
+  },
+  {
+    id: 'educacao',
+    keywords: ['escola', 'curso', 'cursos', 'educacao', 'educação', 'aluno', 'alunos', 'treinamento', 'mentoria', 'faculdade'],
+    area: 'Educação',
+    pain: 'interessado pede informação, mas não entende trilha, preço, turma e próximo passo',
+    process: 'perfil do aluno, objetivo, turma, material, matrícula e acompanhamento',
+    gain: 'orientar alunos com mais clareza até a matrícula',
+    hashtag: '#educacao #cursos #atendimento #inteligenciaartificial #automacao',
+    trigger: 'quando dúvidas repetidas atrapalham matrícula e suporte',
+    proof: 'respostas consistentes, menos evasão de lead e acompanhamento mais visível',
+    examples: ['captação de alunos', 'matrícula', 'suporte', 'trilhas de estudo']
+  },
+  {
+    id: 'ecommerce',
+    keywords: ['ecommerce', 'e-commerce', 'loja', 'varejo', 'produto', 'produtos', 'pedido', 'estoque', 'vendas online'],
+    area: 'E-commerce',
+    pain: 'cliente pergunta sobre produto, prazo ou troca e a venda esfria antes do fechamento',
+    process: 'produto, estoque, frete, pagamento, status do pedido, troca e recompra',
+    gain: 'responder com contexto e recuperar carrinhos com mais precisão',
+    hashtag: '#ecommerce #vendasonline #atendimento #inteligenciaartificial #automacao',
+    trigger: 'quando atendimento e operação não conversam no mesmo ritmo',
+    proof: 'menos abandono, status mais claro e recompra melhor trabalhada',
+    examples: ['carrinho abandonado', 'status de pedido', 'trocas', 'recompra']
+  },
+  {
+    id: 'financeiro',
+    keywords: ['contabilidade', 'contador', 'financeiro', 'financas', 'finanças', 'cobranca', 'cobrança', 'nota fiscal', 'fiscal'],
+    area: 'Contabilidade e financeiro',
+    pain: 'documento, cobrança e fechamento dependem de lembretes manuais todo mês',
+    process: 'pendências, documentos, vencimentos, conciliação, alertas e fechamento',
+    gain: 'dar previsibilidade ao mês sem depender de cobrança no improviso',
+    hashtag: '#contabilidade #financeiro #gestao #inteligenciaartificial #automacao',
+    trigger: 'quando a rotina mensal repete a mesma cobrança e os mesmos atrasos',
+    proof: 'menos pendências, prazos visíveis e fechamento mais previsível',
+    examples: ['documentos mensais', 'cobranças', 'conciliação', 'alertas']
+  },
+  {
+    id: 'servicos',
+    keywords: ['consultoria', 'servico', 'serviço', 'servicos', 'serviços', 'agencia', 'agência', 'prestador', 'proposta', 'orcamento', 'orçamento'],
+    area: 'Serviços profissionais',
+    pain: 'briefing, proposta e follow-up dependem demais da memória de quem vende',
+    process: 'briefing, escopo, prazo, proposta, objeção, aprovação e entrega',
+    gain: 'vender serviço com mais contexto e menos retrabalho',
+    hashtag: '#servicos #consultoria #vendas #inteligenciaartificial #automacao',
+    trigger: 'quando cada proposta nasce do zero e o follow-up fica solto',
+    proof: 'propostas mais rápidas, histórico salvo e próximos passos claros',
+    examples: ['briefing', 'propostas', 'follow-up', 'entrega']
+  }
+];
+
 const ENGAGEMENT_INTELLIGENCE = {
   eyebrowHooks: [
     'Para salvar',
@@ -519,11 +630,43 @@ function shortPhrase(value = '', fallback = '') {
   return `${text.slice(0, 86).replace(/\s+\S*$/, '')}...`;
 }
 
+function normalizeSearchText(value = '') {
+  return String(value || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function detectIndustrySpecialist(account = {}) {
+  const profile = account.contentProfile || {};
+  const brandSummary = account.brandSummary || {};
+  const documentAnalysis = account.brandDocument?.analysis || {};
+  const haystack = normalizeSearchText([
+    account.brandName,
+    profile.niche,
+    profile.audience,
+    profile.offer,
+    brandSummary.description,
+    brandSummary.positioning,
+    brandSummary.differentiator,
+    documentAnalysis.summary,
+    ...(Array.isArray(documentAnalysis.keywords) ? documentAnalysis.keywords : []),
+    ...(Array.isArray(documentAnalysis.signals) ? documentAnalysis.signals : [])
+  ].filter(Boolean).join(' '));
+
+  return INDUSTRY_SPECIALISTS.find((industry) => (
+    industry.keywords.some((keyword) => haystack.includes(normalizeSearchText(keyword)))
+  )) || null;
+}
+
 function profileTopicFromAccount(account = {}) {
   const profile = account.contentProfile || {};
   const brandSummary = account.brandSummary || {};
   const documentAnalysis = account.brandDocument?.analysis || {};
   if (!profile.niche && !profile.audience && !profile.offer && !brandSummary.description && !documentAnalysis.summary) return null;
+  const industry = detectIndustrySpecialist(account);
   const niche = profile.niche || account.brandName || 'negócio';
   const audience = profile.audience || 'clientes';
   const offer = profile.offer || 'solução com IA';
@@ -532,23 +675,31 @@ function profileTopicFromAccount(account = {}) {
   const documentKeywords = Array.isArray(documentAnalysis.keywords) ? documentAnalysis.keywords.slice(0, 5).join(', ') : '';
   const differentiator = shortPhrase(brandSummary.differentiator || documentAnalysis.summary, offer);
   return {
-    area: niche,
-    pain: `${shortPhrase(audience, 'clientes')} ainda precisa entender o valor de ${differentiator}`,
-    process: `dor do público, promessa, prova, objeções e próximo passo em tom ${tone}. Contexto da empresa: ${brandContext}`,
-    gain: documentKeywords
+    area: industry?.area || niche,
+    pain: industry?.pain || `${shortPhrase(audience, 'clientes')} ainda precisa entender o valor de ${differentiator}`,
+    process: industry
+      ? `${industry.process}. Oferta da marca: ${shortPhrase(offer, 'solução com IA')}. Tom ${tone}. Contexto: ${brandContext}`
+      : `dor do público, promessa, prova, objeções e próximo passo em tom ${tone}. Contexto da empresa: ${brandContext}`,
+    gain: industry?.gain || (documentKeywords
       ? `transformar ${documentKeywords} em conversa prática sobre ${offer}`
-      : `transformar interesse em conversa sobre ${offer}`,
-    hashtag: '#inteligenciaartificial #automacao #marketingdigital #negocios #conteudo'
+      : `transformar interesse em conversa sobre ${offer}`),
+    hashtag: industry?.hashtag || '#inteligenciaartificial #automacao #marketingdigital #negocios #conteudo',
+    industryId: industry?.id || 'perfil',
+    industryExamples: industry?.examples || []
   };
 }
 
 function buildProfileContentPacks(account, dateString, slotIndex, runStamp = null) {
   const topic = profileTopicFromAccount(account);
   if (!topic) return [];
+  const specialistContext = topic.industryId !== 'perfil'
+    ? [{ trigger: `quando ${topic.pain}`, proof: `${topic.gain}; exemplos: ${topic.industryExamples.join(', ')}` }]
+    : [];
+  const contexts = specialistContext.length ? [...specialistContext, ...AUTO_CONTENT_CONTEXTS] : AUTO_CONTENT_CONTEXTS;
   const packs = [];
   for (const [angleIndex, angle] of AUTO_CONTENT_ANGLES.entries()) {
-    for (const [contextIndex, context] of AUTO_CONTENT_CONTEXTS.entries()) {
-      const sequence = (angleIndex * AUTO_CONTENT_CONTEXTS.length) + contextIndex;
+    for (const [contextIndex, context] of contexts.entries()) {
+      const sequence = (angleIndex * contexts.length) + contextIndex;
       packs.push(autoPack(topic, angle, context, sequence, runStamp));
     }
   }
@@ -1088,20 +1239,25 @@ async function main() {
   const slotIndex = readSlotIndex();
   const profilePacks = buildProfileContentPacks(account, today, slotIndex);
   const autoPacks = profilePacks.length ? profilePacks : buildAutoContentPacks(today, slotIndex);
+  const automaticSelectionPacks = profilePacks.length ? mergePacks(profilePacks, packs) : packs;
   validatePacks(autoPacks);
+  validatePacks(automaticSelectionPacks);
   if (args.validateCopy) {
     console.log(JSON.stringify({
       ok: true,
       account: account.account,
       checkedPacks: packs.length,
-      checkedAutoPacks: autoPacks.length
+      checkedAutoPacks: autoPacks.length,
+      checkedAutomaticSelectionPacks: automaticSelectionPacks.length
     }, null, 2));
     return;
   }
 
   const style = styleWithBrandPalette(pickDaily(styles, today), account);
-  let pack = pickDaily(packs, today, slotIndex);
-  let packIndex = pickDailyIndex(packs, today, slotIndex);
+  let pack = pickDaily(automaticSelectionPacks, today, slotIndex);
+  let packIndex = profilePacks.length
+    ? `profile-${pickDailyIndex(automaticSelectionPacks, today, slotIndex)}`
+    : pickDailyIndex(automaticSelectionPacks, today, slotIndex);
   let skippedDuplicates = 0;
   let scheduledPost = null;
   let publishMode = process.env.INSTAGRAM_TEMPLATE_PUBLISH_MODE === 'story-only' || args.storyOnly
@@ -1157,7 +1313,7 @@ async function main() {
 
     if (!scheduledPost && !dashboardPack && !args.storyOnly) {
       const recentMedia = await fetchRecentMedia(userId, token);
-      const fresh = pickFreshPack(packs, today, slotIndex, recentMedia);
+      const fresh = pickFreshPack(automaticSelectionPacks, today, slotIndex, recentMedia);
       if (!fresh.pack) {
         const autoFresh = pickFreshPack(autoPacks, today, slotIndex, recentMedia);
         if (!autoFresh.pack) {
@@ -1166,16 +1322,16 @@ async function main() {
           pack = fallbackPack;
           packIndex = `auto-unique-${slotIndex}`;
           skippedDuplicates = fresh.skippedDuplicates + autoFresh.skippedDuplicates;
-          console.log(`Conteudo unico de emergencia selecionado porque ${packs.length} captions locais e ${autoPacks.length} captions automaticas ja aparecem nas midias recentes.`);
+          console.log(`Conteudo unico de emergencia selecionado porque ${automaticSelectionPacks.length} captions preferenciais e ${autoPacks.length} captions automaticas ja aparecem nas midias recentes.`);
         } else {
           pack = autoFresh.pack;
           packIndex = `auto-${autoFresh.packIndex}`;
           skippedDuplicates = fresh.skippedDuplicates + autoFresh.skippedDuplicates;
-          console.log(`Conteudo automatico selecionado porque ${packs.length} captions locais ja aparecem nas midias recentes.`);
+          console.log(`Conteudo automatico selecionado porque ${automaticSelectionPacks.length} captions preferenciais ja aparecem nas midias recentes.`);
         }
       } else {
         pack = fresh.pack;
-        packIndex = fresh.packIndex;
+        packIndex = profilePacks.length ? `profile-${fresh.packIndex}` : fresh.packIndex;
         skippedDuplicates = fresh.skippedDuplicates;
       }
     }
