@@ -1447,6 +1447,18 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
                 <span>Cor de fundo</span>
               </label>
             </div>
+            <div class="document-box">
+              <strong>Briefing da nova conta</strong>
+              <span>Preencha o modelo, baixe em TXT e anexe depois que a conta estiver criada.</span>
+              <div class="briefing-template">
+                <textarea id="newAccountBriefingTemplate" rows="10" placeholder="Preencha o briefing padrão da nova empresa aqui."></textarea>
+                <div class="briefing-actions">
+                  <button type="button" id="fillNewAccountBriefing">Modelo padrão</button>
+                  <button type="button" id="copyNewAccountBriefing">Copiar briefing</button>
+                  <button type="button" id="downloadNewAccountBriefing">Baixar TXT</button>
+                </div>
+              </div>
+            </div>
             <button class="primary" id="createAccount" type="button">Criar conta</button>
             <div class="access-result" id="newAccountResult">Informe nicho, público e oferta para a inteligência criar posts alinhados à nova conta.</div>
           </div>
@@ -2255,6 +2267,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         document.getElementById('newBrandPrimary').value = '#17211c';
         document.getElementById('newBrandSecondary').value = '#0e7c5a';
         document.getElementById('newBrandBackground').value = '#f4f7f5';
+        document.getElementById('newAccountBriefingTemplate').value = '';
         result.textContent = payload.message || 'Conta criada.';
         await loadState();
       } catch (error) {
@@ -2776,8 +2789,30 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       });
     }
 
-    function buildBrandBriefingTemplate() {
-      const account = appState.account || {};
+    function newAccountDraft() {
+      return {
+        brandName: document.getElementById('newAccountBrand').value.trim(),
+        expectedUsername: document.getElementById('newAccountUsername').value.trim().replace(/^@/, ''),
+        contentProfile: {
+          niche: document.getElementById('newAccountNiche').value.trim(),
+          audience: document.getElementById('newAccountAudience').value.trim(),
+          offer: document.getElementById('newAccountOffer').value.trim(),
+          tone: document.getElementById('newAccountTone').value
+        },
+        brandSummary: {
+          description: document.getElementById('newBrandSummary').value.trim(),
+          positioning: document.getElementById('newBrandPositioning').value.trim(),
+          differentiator: document.getElementById('newBrandDifferentiator').value.trim()
+        },
+        brandPalette: {
+          primary: document.getElementById('newBrandPrimary').value,
+          secondary: document.getElementById('newBrandSecondary').value,
+          background: document.getElementById('newBrandBackground').value
+        }
+      };
+    }
+
+    function buildBrandBriefingTemplate(account = appState.account || {}) {
       const profile = account.contentProfile || {};
       const summary = account.brandSummary || {};
       const palette = account.brandPalette || {};
@@ -2806,20 +2841,28 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       ].join('\n');
     }
 
-    function fillBrandBriefingTemplate({ force = false } = {}) {
-      const field = document.getElementById('brandBriefingTemplate');
+    function fillBriefingTemplate(fieldId, account, { force = false } = {}) {
+      const field = document.getElementById(fieldId);
       if (!force && field.value.trim()) return;
-      field.value = buildBrandBriefingTemplate();
+      field.value = buildBrandBriefingTemplate(account);
     }
 
-    async function copyBrandBriefingTemplate() {
-      const field = document.getElementById('brandBriefingTemplate');
-      const result = document.getElementById('activeProfileResult');
-      if (!field.value.trim()) fillBrandBriefingTemplate({ force: true });
+    function fillBrandBriefingTemplate({ force = false } = {}) {
+      fillBriefingTemplate('brandBriefingTemplate', appState.account || {}, { force });
+    }
+
+    function fillNewAccountBriefingTemplate({ force = false } = {}) {
+      fillBriefingTemplate('newAccountBriefingTemplate', newAccountDraft(), { force });
+    }
+
+    async function copyBriefingTemplate(fieldId, resultId, refreshTemplate, successMessage) {
+      const field = document.getElementById(fieldId);
+      const result = document.getElementById(resultId);
+      if (!field.value.trim()) refreshTemplate({ force: true });
       try {
         await navigator.clipboard.writeText(field.value);
         result.className = 'access-result good';
-        result.textContent = 'Briefing copiado. Cole em um TXT ou envie para o cliente responder.';
+        result.textContent = successMessage;
       } catch {
         field.focus();
         field.select();
@@ -2828,10 +2871,28 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       }
     }
 
-    function downloadBrandBriefingTemplate() {
-      const field = document.getElementById('brandBriefingTemplate');
-      const result = document.getElementById('activeProfileResult');
-      if (!field.value.trim()) fillBrandBriefingTemplate({ force: true });
+    async function copyBrandBriefingTemplate() {
+      await copyBriefingTemplate(
+        'brandBriefingTemplate',
+        'activeProfileResult',
+        fillBrandBriefingTemplate,
+        'Briefing copiado. Cole em um TXT ou envie para o cliente responder.'
+      );
+    }
+
+    async function copyNewAccountBriefingTemplate() {
+      await copyBriefingTemplate(
+        'newAccountBriefingTemplate',
+        'newAccountResult',
+        fillNewAccountBriefingTemplate,
+        'Briefing da nova conta copiado. Envie para o cliente responder.'
+      );
+    }
+
+    function downloadBriefingTemplate(fieldId, resultId, refreshTemplate, successMessage) {
+      const field = document.getElementById(fieldId);
+      const result = document.getElementById(resultId);
+      if (!field.value.trim()) refreshTemplate({ force: true });
       const blob = new Blob([field.value], { type: 'text/plain;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -2842,7 +2903,25 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       link.remove();
       URL.revokeObjectURL(url);
       result.className = 'access-result good';
-      result.textContent = 'TXT do briefing gerado. Depois de preencher, anexe esse arquivo aqui.';
+      result.textContent = successMessage;
+    }
+
+    function downloadBrandBriefingTemplate() {
+      downloadBriefingTemplate(
+        'brandBriefingTemplate',
+        'activeProfileResult',
+        fillBrandBriefingTemplate,
+        'TXT do briefing gerado. Depois de preencher, anexe esse arquivo aqui.'
+      );
+    }
+
+    function downloadNewAccountBriefingTemplate() {
+      downloadBriefingTemplate(
+        'newAccountBriefingTemplate',
+        'newAccountResult',
+        fillNewAccountBriefingTemplate,
+        'TXT do briefing da nova conta gerado. Depois crie a conta e anexe esse arquivo.'
+      );
     }
 
     async function uploadBrandDocument() {
@@ -3266,6 +3345,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('fillBrandBriefing').addEventListener('click', () => fillBrandBriefingTemplate({ force: true }));
       document.getElementById('copyBrandBriefing').addEventListener('click', copyBrandBriefingTemplate);
       document.getElementById('downloadBrandBriefing').addEventListener('click', downloadBrandBriefingTemplate);
+      document.getElementById('fillNewAccountBriefing').addEventListener('click', () => fillNewAccountBriefingTemplate({ force: true }));
+      document.getElementById('copyNewAccountBriefing').addEventListener('click', copyNewAccountBriefingTemplate);
+      document.getElementById('downloadNewAccountBriefing').addEventListener('click', downloadNewAccountBriefingTemplate);
       ['activeBrandPrimary', 'activeBrandSecondary', 'activeBrandBackground'].forEach((id) => {
         document.getElementById(id).addEventListener('input', () => {
           renderPalettePreview('activePalettePreview', {
