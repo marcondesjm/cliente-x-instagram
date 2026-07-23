@@ -791,7 +791,50 @@ function contrastColor(hex) {
   return ((r * 299 + g * 587 + b * 114) / 1000) > 150 ? '#17211c' : '#ffffff';
 }
 
-function styleWithBrandPalette(style, account = {}) {
+function rgbToHex({ r, g, b }) {
+  return `#${[r, g, b].map((value) => Math.round(Math.max(0, Math.min(255, value))).toString(16).padStart(2, '0')).join('')}`;
+}
+
+function mixHex(left, right, weight = 0.5) {
+  const a = hexToRgb(left);
+  const b = hexToRgb(right);
+  return rgbToHex({
+    r: a.r * (1 - weight) + b.r * weight,
+    g: a.g * (1 - weight) + b.g * weight,
+    b: a.b * (1 - weight) + b.b * weight
+  });
+}
+
+function readableMuted(text) {
+  return text === '#ffffff' ? '#e7eee9' : '#4b5b53';
+}
+
+function paletteVariant(style, name, { accent, accentSoft, grid, bgTop, bgBottom }) {
+  const text = contrastColor(bgTop);
+  return {
+    ...style,
+    name,
+    accent,
+    accentSoft,
+    grid,
+    bgTop,
+    bgBottom,
+    text,
+    muted: readableMuted(text)
+  };
+}
+
+function rotateItems(items, startIndex = 0) {
+  const offset = ((startIndex % items.length) + items.length) % items.length;
+  return [...items.slice(offset), ...items.slice(0, offset)];
+}
+
+function styleForSlide(style, index = 1) {
+  if (!Array.isArray(style.slidePalettes) || !style.slidePalettes.length) return style;
+  return style.slidePalettes[(index - 1) % style.slidePalettes.length];
+}
+
+function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo(), slotIndex = 0 } = {}) {
   const palette = account.brandPalette || {};
   if (!validHexColor(palette.primary) && !validHexColor(palette.secondary) && !validHexColor(palette.background)) {
     return style;
@@ -799,17 +842,53 @@ function styleWithBrandPalette(style, account = {}) {
   const primary = validHexColor(palette.primary) ? palette.primary.toLowerCase() : '#17211c';
   const secondary = validHexColor(palette.secondary) ? palette.secondary.toLowerCase() : style.accent;
   const background = validHexColor(palette.background) ? palette.background.toLowerCase() : style.bgTop;
-  const text = contrastColor(background);
+
+  const lightTop = mixHex(background, '#ffffff', 0.18);
+  const lightBottom = mixHex(background, secondary, 0.08);
+  const deepPrimary = mixHex(primary, '#000000', 0.72);
+  const deepSecondary = mixHex(secondary, '#000000', 0.68);
+  const techTop = style.bgTop;
+  const techBottom = style.bgBottom;
+  const editorialTop = mixHex(primary, style.bgTop, 0.58);
+  const editorialBottom = mixHex(secondary, style.bgBottom, 0.50);
+
+  const variants = [
+    paletteVariant(style, `${style.name}-brand-light`, {
+      accent: secondary,
+      accentSoft: rgba(secondary, 0.16),
+      grid: rgba(primary, 0.10),
+      bgTop: lightTop,
+      bgBottom: lightBottom
+    }),
+    paletteVariant(style, `${style.name}-brand-deep`, {
+      accent: secondary,
+      accentSoft: rgba(secondary, 0.24),
+      grid: rgba(secondary, 0.14),
+      bgTop: deepPrimary,
+      bgBottom: deepSecondary
+    }),
+    paletteVariant(style, `${style.name}-brand-tech`, {
+      accent: validHexColor(style.accent) ? style.accent : secondary,
+      accentSoft: validHexColor(style.accent) ? rgba(style.accent, 0.18) : rgba(secondary, 0.22),
+      grid: validHexColor(style.accent) ? rgba(style.accent, 0.12) : rgba(secondary, 0.13),
+      bgTop: techTop,
+      bgBottom: techBottom
+    }),
+    paletteVariant(style, `${style.name}-brand-editorial`, {
+      accent: validHexColor(style.accent) ? mixHex(secondary, style.accent, 0.42) : secondary,
+      accentSoft: validHexColor(style.accent) ? rgba(style.accent, 0.14) : rgba(secondary, 0.18),
+      grid: validHexColor(style.accent) ? rgba(style.accent, 0.09) : rgba(primary, 0.10),
+      bgTop: editorialTop,
+      bgBottom: editorialBottom
+    })
+  ];
+
+  const selectedIndex = pickDailyIndex(variants, dateString, slotIndex);
+  const slidePalettes = rotateItems(variants, selectedIndex);
   return {
-    ...style,
-    name: `${style.name}-brand`,
-    accent: secondary,
-    accentSoft: rgba(secondary, 0.18),
-    grid: rgba(primary, 0.11),
-    bgTop: background,
-    bgBottom: background,
-    text,
-    muted: text === '#ffffff' ? '#e7eee9' : '#4b5b53'
+    ...slidePalettes[0],
+    name: `${slidePalettes[0].name}-slot-${slotIndex}`,
+    slidePalettes
   };
 }
 
@@ -922,6 +1001,7 @@ async function launchChromium() {
 }
 
 function slideHtml(slide, index, total, account, style) {
+  const slideStyle = styleForSlide(style, index);
   const variant = slide.visualVariant || 'focus';
   const titleSize = variant === 'quote' ? 74 : variant === 'signal' ? 86 : 82;
   const bodySize = variant === 'numbered' ? 40 : 42;
@@ -938,7 +1018,7 @@ function slideHtml(slide, index, total, account, style) {
   <meta charset="UTF-8">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { width: 1080px; height: 1080px; overflow: hidden; font-family: Arial, Helvetica, sans-serif; background: ${style.bgTop}; color: ${style.text}; }
+    body { width: 1080px; height: 1080px; overflow: hidden; font-family: Arial, Helvetica, sans-serif; background: ${slideStyle.bgTop}; color: ${slideStyle.text}; }
     main {
       width: 1080px;
       height: 1080px;
@@ -947,8 +1027,8 @@ function slideHtml(slide, index, total, account, style) {
       flex-direction: column;
       justify-content: space-between;
       background:
-        linear-gradient(135deg, ${style.accentSoft}, rgba(124,255,178,0) 34%),
-        linear-gradient(180deg, ${style.bgTop} 0%, ${style.bgBottom} 100%);
+        linear-gradient(135deg, ${slideStyle.accentSoft}, ${rgba(slideStyle.accent, 0)} 34%),
+        linear-gradient(180deg, ${slideStyle.bgTop} 0%, ${slideStyle.bgBottom} 100%);
       position: relative;
     }
     main::before { content: ""; position: absolute; inset: 34px; border: 2px solid rgba(244,247,245,0.1); }
@@ -960,26 +1040,26 @@ function slideHtml(slide, index, total, account, style) {
       width: 450px;
       height: 780px;
       background:
-        linear-gradient(90deg, ${style.grid} 1px, transparent 1px),
-        linear-gradient(180deg, ${style.grid} 1px, transparent 1px);
+        linear-gradient(90deg, ${slideStyle.grid} 1px, transparent 1px),
+        linear-gradient(180deg, ${slideStyle.grid} 1px, transparent 1px);
       background-size: 46px 46px;
       transform: rotate(-7deg);
     }
-    .rail { position: absolute; left: 70px; bottom: 160px; font-size: 150px; line-height: 1; font-weight: 900; color: ${style.accent}; opacity: 0.16; z-index: 1; }
+    .rail { position: absolute; left: 70px; bottom: 160px; font-size: 150px; line-height: 1; font-weight: 900; color: ${slideStyle.accent}; opacity: 0.16; z-index: 1; }
     .signal { position: absolute; right: 70px; bottom: 92px; display: flex; gap: 14px; z-index: 1; }
-    .signal span { width: 16px; height: 88px; border-radius: 99px; background: ${style.accent}; opacity: 0.28; }
+    .signal span { width: 16px; height: 88px; border-radius: 99px; background: ${slideStyle.accent}; opacity: 0.28; }
     .signal span:nth-child(2) { height: 132px; opacity: 0.52; }
     .signal span:nth-child(3) { height: 62px; opacity: 0.2; }
     section, footer { position: relative; z-index: 2; }
     .top { display: flex; align-items: center; justify-content: space-between; gap: 28px; }
-    .brand { font-size: 34px; font-weight: 900; color: ${style.text}; }
-    .eyebrow { font-size: 28px; font-weight: 900; color: ${style.accent}; text-transform: uppercase; text-align: right; }
+    .brand { font-size: 34px; font-weight: 900; color: ${slideStyle.text}; }
+    .eyebrow { font-size: 28px; font-weight: 900; color: ${slideStyle.accent}; text-transform: uppercase; text-align: right; }
     .content { display: flex; flex-direction: column; gap: 34px; text-align: ${align}; align-items: ${align === 'center' ? 'center' : 'flex-start'}; }
-    h1 { max-width: 850px; font-size: ${titleSize}px; line-height: 1.03; font-weight: 900; color: ${style.text}; letter-spacing: 0; }
-    p { max-width: 830px; font-size: ${bodySize}px; line-height: 1.18; font-weight: 800; color: ${style.muted}; letter-spacing: 0; }
-    .bar { width: ${index % 2 === 0 ? '148px' : '220px'}; height: 12px; background: ${style.accent}; }
-    footer { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; color: #AEB8B2; font-size: 26px; font-weight: 800; }
-    footer strong { display: block; color: ${style.text}; font-size: 30px; font-weight: 900; }
+    h1 { max-width: 850px; font-size: ${titleSize}px; line-height: 1.03; font-weight: 900; color: ${slideStyle.text}; letter-spacing: 0; }
+    p { max-width: 830px; font-size: ${bodySize}px; line-height: 1.18; font-weight: 800; color: ${slideStyle.muted}; letter-spacing: 0; }
+    .bar { width: ${index % 2 === 0 ? '148px' : '220px'}; height: 12px; background: ${slideStyle.accent}; }
+    footer { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; color: ${slideStyle.muted}; font-size: 26px; font-weight: 800; }
+    footer strong { display: block; color: ${slideStyle.text}; font-size: 30px; font-weight: 900; }
   </style>
 </head>
 <body>
@@ -1037,6 +1117,7 @@ async function renderSlides(runDir, slides, account, style) {
 }
 
 function storyHtml(slide, account, style) {
+  const slideStyle = styleForSlide(style, 1);
   const variant = slide.visualVariant || 'focus';
   const titleSize = variant === 'quote' ? 82 : 90;
   const align = variant === 'quote' ? 'center' : 'left';
@@ -1046,7 +1127,7 @@ function storyHtml(slide, account, style) {
   <meta charset="UTF-8">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { width: 1080px; height: 1920px; overflow: hidden; font-family: Arial, Helvetica, sans-serif; background: ${style.bgTop}; color: ${style.text}; }
+    body { width: 1080px; height: 1920px; overflow: hidden; font-family: Arial, Helvetica, sans-serif; background: ${slideStyle.bgTop}; color: ${slideStyle.text}; }
     main {
       width: 1080px;
       height: 1920px;
@@ -1055,8 +1136,8 @@ function storyHtml(slide, account, style) {
       flex-direction: column;
       justify-content: space-between;
       background:
-        linear-gradient(135deg, ${style.accentSoft}, rgba(124,255,178,0) 40%),
-        linear-gradient(180deg, ${style.bgTop} 0%, ${style.bgBottom} 100%);
+        linear-gradient(135deg, ${slideStyle.accentSoft}, ${rgba(slideStyle.accent, 0)} 40%),
+        linear-gradient(180deg, ${slideStyle.bgTop} 0%, ${slideStyle.bgBottom} 100%);
       position: relative;
     }
     main::before { content: ""; position: absolute; inset: 48px; border: 2px solid rgba(244,247,245,0.1); }
@@ -1068,21 +1149,21 @@ function storyHtml(slide, account, style) {
       width: 520px;
       height: 1120px;
       background:
-        linear-gradient(90deg, ${style.grid} 1px, transparent 1px),
-        linear-gradient(180deg, ${style.grid} 1px, transparent 1px);
+        linear-gradient(90deg, ${slideStyle.grid} 1px, transparent 1px),
+        linear-gradient(180deg, ${slideStyle.grid} 1px, transparent 1px);
       background-size: 50px 50px;
       transform: rotate(-7deg);
     }
-    .story-mark { position: absolute; right: 76px; bottom: 180px; width: 180px; height: 180px; border: 18px solid ${style.accent}; border-radius: 50%; opacity: 0.18; z-index: 1; }
+    .story-mark { position: absolute; right: 76px; bottom: 180px; width: 180px; height: 180px; border: 18px solid ${slideStyle.accent}; border-radius: 50%; opacity: 0.18; z-index: 1; }
     section, footer { position: relative; z-index: 2; }
-    .brand { font-size: 38px; font-weight: 900; color: ${style.text}; }
-    .eyebrow { font-size: 32px; font-weight: 900; color: ${style.accent}; text-transform: uppercase; margin-top: 110px; }
+    .brand { font-size: 38px; font-weight: 900; color: ${slideStyle.text}; }
+    .eyebrow { font-size: 32px; font-weight: 900; color: ${slideStyle.accent}; text-transform: uppercase; margin-top: 110px; }
     .content { display: flex; flex-direction: column; gap: 38px; text-align: ${align}; align-items: ${align === 'center' ? 'center' : 'flex-start'}; }
-    .bar { width: 210px; height: 14px; background: ${style.accent}; }
-    h1 { max-width: 880px; font-size: ${titleSize}px; line-height: 1.03; font-weight: 900; color: ${style.text}; letter-spacing: 0; }
-    p { max-width: 850px; font-size: 44px; line-height: 1.2; font-weight: 800; color: ${style.muted}; letter-spacing: 0; }
-    footer { color: #AEB8B2; font-size: 30px; font-weight: 800; }
-    footer strong { display: block; color: ${style.text}; font-size: 36px; font-weight: 900; margin-bottom: 6px; }
+    .bar { width: 210px; height: 14px; background: ${slideStyle.accent}; }
+    h1 { max-width: 880px; font-size: ${titleSize}px; line-height: 1.03; font-weight: 900; color: ${slideStyle.text}; letter-spacing: 0; }
+    p { max-width: 850px; font-size: 44px; line-height: 1.2; font-weight: 800; color: ${slideStyle.muted}; letter-spacing: 0; }
+    footer { color: ${slideStyle.muted}; font-size: 30px; font-weight: 800; }
+    footer strong { display: block; color: ${slideStyle.text}; font-size: 36px; font-weight: 900; margin-bottom: 6px; }
   </style>
 </head>
 <body>
@@ -1253,7 +1334,7 @@ async function main() {
     return;
   }
 
-  const style = styleWithBrandPalette(pickDaily(styles, today), account);
+  const style = styleWithBrandPalette(pickDaily(styles, today, slotIndex), account, { dateString: today, slotIndex });
   let pack = pickDaily(automaticSelectionPacks, today, slotIndex);
   let packIndex = profilePacks.length
     ? `profile-${pickDailyIndex(automaticSelectionPacks, today, slotIndex)}`

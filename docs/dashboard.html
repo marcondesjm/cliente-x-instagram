@@ -567,7 +567,7 @@
 
     .briefing-controls {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
       gap: 8px;
       align-items: end;
     }
@@ -1361,7 +1361,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               <div class="briefing-template">
                 <div class="briefing-controls">
                   <label>
-                    Modelo do briefing
+                    Nicho
                     <select id="brandBriefingModel">
                       <option value="general">Geral</option>
                       <option value="law">Advocacia</option>
@@ -1372,7 +1372,17 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
                       <option value="agency">Agência</option>
                     </select>
                   </label>
-                  <button type="button" id="fillBrandBriefing">Modelo padrão</button>
+                  <label>
+                    Objetivo
+                    <select id="brandBriefingGoal">
+                      <option value="authority">Autoridade</option>
+                      <option value="leads">Captação de leads</option>
+                      <option value="offer">Oferta ou lançamento</option>
+                      <option value="personalBrand">Marca pessoal</option>
+                      <option value="reactivation">Reativação</option>
+                    </select>
+                  </label>
+                  <button type="button" id="fillBrandBriefing">Montar briefing</button>
                 </div>
                 <textarea id="brandBriefingTemplate" rows="10" placeholder="Preencha o briefing padrão da empresa aqui."></textarea>
                 <div class="briefing-actions">
@@ -1478,7 +1488,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               <div class="briefing-template">
                 <div class="briefing-controls">
                   <label>
-                    Modelo do briefing
+                    Nicho
                     <select id="newAccountBriefingModel">
                       <option value="general">Geral</option>
                       <option value="law">Advocacia</option>
@@ -1489,7 +1499,17 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
                       <option value="agency">Agência</option>
                     </select>
                   </label>
-                  <button type="button" id="fillNewAccountBriefing">Modelo padrão</button>
+                  <label>
+                    Objetivo
+                    <select id="newAccountBriefingGoal">
+                      <option value="authority">Autoridade</option>
+                      <option value="leads">Captação de leads</option>
+                      <option value="offer">Oferta ou lançamento</option>
+                      <option value="personalBrand">Marca pessoal</option>
+                      <option value="reactivation">Reativação</option>
+                    </select>
+                  </label>
+                  <button type="button" id="fillNewAccountBriefing">Montar briefing</button>
                 </div>
                 <textarea id="newAccountBriefingTemplate" rows="10" placeholder="Preencha o briefing padrão da nova empresa aqui."></textarea>
                 <div class="briefing-actions">
@@ -2854,72 +2874,127 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     const briefingModels = {
       general: {
         label: 'Geral',
+        promise: 'mapear marca, oferta, dores e provas para gerar conteudo mais especifico.',
         questions: [
-          '17. Jornada de compra: como o cliente descobre, considera e decide?',
-          '18. Conteudos que mais costumam gerar resposta:',
-          '19. Perguntas frequentes que a equipe responde toda semana:',
-          '20. Exemplos de posts, anuncios ou marcas de referencia:',
-          '21. Oferta principal para transformar em CTA:'
+          'Jornada de compra: como o cliente descobre, considera e decide?',
+          'Conteudos que mais costumam gerar resposta:',
+          'Perguntas frequentes que a equipe responde toda semana:',
+          'Exemplos de posts, anuncios ou marcas de referencia:',
+          'Oferta principal para transformar em CTA:'
         ]
       },
       law: {
         label: 'Advocacia',
+        promise: 'captar dores juridicas reais com autoridade, clareza e limites eticos.',
         questions: [
-          '17. Areas de atuacao prioritarias e tipos de causa que deseja atrair:',
-          '18. Duvidas juridicas recorrentes do publico leigo:',
-          '19. Sinais de urgencia que fazem o cliente procurar atendimento:',
-          '20. Limites eticos: temas, promessas e termos que devem ser evitados:',
-          '21. CTA permitido: agendar consulta, enviar mensagem, baixar material ou outro:'
+          'Areas de atuacao prioritarias e tipos de causa que deseja atrair:',
+          'Duvidas juridicas recorrentes do publico leigo:',
+          'Sinais de urgencia que fazem o cliente procurar atendimento:',
+          'Limites eticos: temas, promessas e termos que devem ser evitados:',
+          'CTA permitido: agendar consulta, enviar mensagem, baixar material ou outro:'
         ]
       },
       clinic: {
         label: 'Clínica',
+        promise: 'gerar confianca, educar pacientes e transformar duvidas em agendamentos.',
         questions: [
-          '17. Especialidades, tratamentos ou procedimentos prioritarios:',
-          '18. Sintomas, medos ou duvidas que fazem o paciente buscar ajuda:',
-          '19. Orientacoes importantes antes/depois do atendimento:',
-          '20. Limites de comunicacao: promessas, antes/depois e temas sensiveis:',
-          '21. CTA preferido: agendar avaliacao, chamar no WhatsApp, triagem ou outro:'
+          'Especialidades, tratamentos ou procedimentos prioritarios:',
+          'Sintomas, medos ou duvidas que fazem o paciente buscar ajuda:',
+          'Orientacoes importantes antes/depois do atendimento:',
+          'Limites de comunicacao: promessas, antes/depois e temas sensiveis:',
+          'CTA preferido: agendar avaliacao, chamar no WhatsApp, triagem ou outro:'
         ]
       },
       realEstate: {
         label: 'Imobiliária',
+        promise: 'equilibrar desejo, prova, urgencia e seguranca para compra, venda ou locacao.',
         questions: [
-          '17. Tipo de imovel ou cliente prioritario: compra, venda, locacao ou investimento:',
-          '18. Regioes, ticket medio e diferenciais do atendimento:',
-          '19. Medos e travas comuns: financiamento, documentacao, preco ou prazo:',
-          '20. Provas uteis: velocidade de venda, carteira, avaliacao, depoimentos:',
-          '21. CTA preferido: simular financiamento, avaliar imovel, visitar ou falar com corretor:'
+          'Tipo de imovel ou cliente prioritario: compra, venda, locacao ou investimento:',
+          'Regioes, ticket medio e diferenciais do atendimento:',
+          'Medos e travas comuns: financiamento, documentacao, preco ou prazo:',
+          'Provas uteis: velocidade de venda, carteira, avaliacao, depoimentos:',
+          'CTA preferido: simular financiamento, avaliar imovel, visitar ou falar com corretor:'
         ]
       },
       retail: {
         label: 'Loja ou e-commerce',
+        promise: 'transformar produtos, ofertas e provas sociais em conteudo de conversao.',
         questions: [
-          '17. Produtos/categorias com maior margem ou prioridade comercial:',
-          '18. Datas sazonais, campanhas e ofertas recorrentes:',
-          '19. Objeções de compra: preco, frete, prazo, garantia, troca ou confianca:',
-          '20. Provas de conversao: reviews, uso real, comparativos, bastidores:',
-          '21. CTA preferido: comprar agora, chamar vendedor, cupom, catalogo ou vitrine:'
+          'Produtos/categorias com maior margem ou prioridade comercial:',
+          'Datas sazonais, campanhas e ofertas recorrentes:',
+          'Objeções de compra: preco, frete, prazo, garantia, troca ou confianca:',
+          'Provas de conversao: reviews, uso real, comparativos, bastidores:',
+          'CTA preferido: comprar agora, chamar vendedor, cupom, catalogo ou vitrine:'
         ]
       },
       consulting: {
         label: 'Consultoria',
+        promise: 'mostrar metodo, diagnostico, resultado e decisao de compra com clareza.',
         questions: [
-          '17. Problema de negocio que a consultoria resolve com mais clareza:',
-          '18. Metodo, etapas e entregaveis do trabalho:',
-          '19. Perfil do decisor e objeções antes de contratar:',
-          '20. Provas: cases, numeros, diagnosticos, antes/depois operacional:',
-          '21. CTA preferido: diagnostico, reuniao, auditoria, treinamento ou proposta:'
+          'Problema de negocio que a consultoria resolve com mais clareza:',
+          'Metodo, etapas e entregaveis do trabalho:',
+          'Perfil do decisor e objeções antes de contratar:',
+          'Provas: cases, numeros, diagnosticos, antes/depois operacional:',
+          'CTA preferido: diagnostico, reuniao, auditoria, treinamento ou proposta:'
         ]
       },
       agency: {
         label: 'Agência',
+        promise: 'organizar serviços, processo, cases e dores comerciais para vender sem parecer generico.',
         questions: [
-          '17. Servicos prioritarios: trafego, social, branding, sites, CRM ou automacao:',
-          '18. Segmentos que a agencia atende melhor:',
-          '19. Dores do cliente: briefing, leads, conversao, criativos, relatorios ou escala:',
-          '20. Provas: campanhas, metricas, criativos, depoimentos e bastidores:',
-          '21. CTA preferido: diagnostico, proposta, reuniao ou pacote inicial:'
+          'Servicos prioritarios: trafego, social, branding, sites, CRM ou automacao:',
+          'Segmentos que a agencia atende melhor:',
+          'Dores do cliente: briefing, leads, conversao, criativos, relatorios ou escala:',
+          'Provas: campanhas, metricas, criativos, depoimentos e bastidores:',
+          'CTA preferido: diagnostico, proposta, reuniao ou pacote inicial:'
+        ]
+      }
+    };
+
+    const briefingGoals = {
+      authority: {
+        label: 'Autoridade',
+        questions: [
+          'Que ideias a marca defende com firmeza?',
+          'Quais erros do mercado ela quer corrigir?',
+          'Quais experiencias, cases ou aprendizados provam autoridade?',
+          'Que temas devem aparecer em conteudos educativos recorrentes?'
+        ]
+      },
+      leads: {
+        label: 'Captação de leads',
+        questions: [
+          'Qual acao o seguidor deve tomar depois do post?',
+          'Que dor faz a pessoa pedir ajuda agora, nao depois?',
+          'Qual isca, diagnostico, conversa ou oferta abre a porta?',
+          'Que informacao o lead precisa enviar no primeiro contato?'
+        ]
+      },
+      offer: {
+        label: 'Oferta ou lançamento',
+        questions: [
+          'Qual produto, servico ou campanha precisa ser vendido?',
+          'Qual prazo, condicao, lote, bonus ou escassez pode ser usado?',
+          'Quais objeções impedem a compra?',
+          'Qual promessa concreta pode ser comunicada sem exagero?'
+        ]
+      },
+      personalBrand: {
+        label: 'Marca pessoal',
+        questions: [
+          'Qual historia pessoal explica por que essa pessoa faz esse trabalho?',
+          'Quais opinioes, bastidores e aprendizados devem aparecer?',
+          'Que tipo de autoridade a pessoa quer construir?',
+          'Que assuntos pessoais podem humanizar sem fugir do posicionamento?'
+        ]
+      },
+      reactivation: {
+        label: 'Reativação',
+        questions: [
+          'Quem deve voltar a comprar, responder ou marcar reuniao?',
+          'Qual motivo fez esse publico esfriar?',
+          'Que novidade, prova ou oportunidade justifica retomar contato?',
+          'Qual CTA leve reabre conversa sem parecer insistente?'
         ]
       }
     };
@@ -2928,54 +3003,74 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       return briefingModels[model] || briefingModels.general;
     }
 
-    function buildBrandBriefingTemplate(account = appState.account || {}, model = 'general') {
+    function getBriefingGoal(goal = 'authority') {
+      return briefingGoals[goal] || briefingGoals.authority;
+    }
+
+    function numberedLines(lines, start = 1) {
+      return lines.map((line, index) => `${start + index}. ${line}`);
+    }
+
+    function buildBrandBriefingTemplate(account = appState.account || {}, model = 'general', goal = 'authority') {
       const profile = account.contentProfile || {};
       const summary = account.brandSummary || {};
       const palette = account.brandPalette || {};
       const briefingModel = getBriefingModel(model);
+      const briefingGoal = getBriefingGoal(goal);
       const baseLines = [
-        `BRIEFING PADRAO DA EMPRESA - ${briefingModel.label.toUpperCase()}`,
+        `BRIEFING GUIADO - ${briefingModel.label.toUpperCase()} / ${briefingGoal.label.toUpperCase()}`,
+        `Uso ideal: ${briefingModel.promise}`,
         '',
-        `1. Nome da empresa/marca: ${account.brandName || ''}`,
-        `2. Instagram/site: ${account.expectedUsername ? `@${account.expectedUsername}` : ''}`,
-        `3. O que a empresa faz: ${summary.description || profile.niche || ''}`,
-        `4. Publico ideal: ${profile.audience || ''}`,
-        `5. Principal oferta/produto/servico: ${profile.offer || ''}`,
-        `6. Problemas que resolve: `,
-        `7. Principais beneficios para o cliente: `,
-        `8. Diferenciais da marca: ${summary.differentiator || ''}`,
-        `9. Posicionamento/frase da marca: ${summary.positioning || ''}`,
-        `10. Tom de voz desejado: ${profile.tone || 'consultivo'}`,
-        `11. Provas, cases, numeros ou resultados: `,
-        `12. Objecoes comuns dos clientes: `,
-        `13. Temas que devem aparecer nos criativos: `,
-        `14. Temas/palavras que devem ser evitados: `,
-        `15. Chamada para acao preferida: `,
-        `16. Cores da marca: primaria ${palette.primary || ''}, secundaria ${palette.secondary || ''}, fundo ${palette.background || ''}`,
+        '1. SOBRE A MARCA',
+        `1.1 Nome da empresa/marca: ${account.brandName || ''}`,
+        `1.2 Instagram/site: ${account.expectedUsername ? `@${account.expectedUsername}` : ''}`,
+        `1.3 O que a empresa faz: ${summary.description || profile.niche || ''}`,
+        `1.4 Posicionamento/frase da marca: ${summary.positioning || ''}`,
+        `1.5 Diferenciais da marca: ${summary.differentiator || ''}`,
         '',
-        'PERGUNTAS ESPECIFICAS DO MODELO',
-        ...briefingModel.questions,
+        '2. PUBLICO, DOR E OFERTA',
+        `2.1 Publico ideal: ${profile.audience || ''}`,
+        `2.2 Principal oferta/produto/servico: ${profile.offer || ''}`,
+        '2.3 Problemas que resolve:',
+        '2.4 Principais beneficios para o cliente:',
+        '2.5 Objecoes comuns antes da compra:',
         '',
-        'Observacoes extras:',
+        '3. CONTEUDO E CONVERSAO',
+        `3.1 Tom de voz desejado: ${profile.tone || 'consultivo'}`,
+        '3.2 Provas, cases, numeros ou resultados:',
+        '3.3 Temas que devem aparecer nos criativos:',
+        '3.4 Temas/palavras que devem ser evitados:',
+        '3.5 Chamada para acao preferida:',
+        `3.6 Cores da marca: primaria ${palette.primary || ''}, secundaria ${palette.secondary || ''}, fundo ${palette.background || ''}`,
+        '',
+        `4. PERGUNTAS DO NICHO - ${briefingModel.label.toUpperCase()}`,
+        ...numberedLines(briefingModel.questions, 1),
+        '',
+        `5. OBJETIVO DA CAMPANHA - ${briefingGoal.label.toUpperCase()}`,
+        ...numberedLines(briefingGoal.questions, 1),
+        '',
+        '6. OBSERVACOES EXTRAS',
         ''
       ];
       return baseLines.join('\n');
     }
 
-    function fillBriefingTemplate(fieldId, account, { force = false, model = 'general' } = {}) {
+    function fillBriefingTemplate(fieldId, account, { force = false, model = 'general', goal = 'authority' } = {}) {
       const field = document.getElementById(fieldId);
       if (!force && field.value.trim()) return;
-      field.value = buildBrandBriefingTemplate(account, model);
+      field.value = buildBrandBriefingTemplate(account, model, goal);
     }
 
     function fillBrandBriefingTemplate({ force = false } = {}) {
       const model = document.getElementById('brandBriefingModel')?.value || 'general';
-      fillBriefingTemplate('brandBriefingTemplate', appState.account || {}, { force, model });
+      const goal = document.getElementById('brandBriefingGoal')?.value || 'authority';
+      fillBriefingTemplate('brandBriefingTemplate', appState.account || {}, { force, model, goal });
     }
 
     function fillNewAccountBriefingTemplate({ force = false } = {}) {
       const model = document.getElementById('newAccountBriefingModel')?.value || 'general';
-      fillBriefingTemplate('newAccountBriefingTemplate', newAccountDraft(), { force, model });
+      const goal = document.getElementById('newAccountBriefingGoal')?.value || 'authority';
+      fillBriefingTemplate('newAccountBriefingTemplate', newAccountDraft(), { force, model, goal });
     }
 
     async function copyBriefingTemplate(fieldId, resultId, refreshTemplate, successMessage) {
@@ -3472,7 +3567,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('copyNewAccountBriefing').addEventListener('click', copyNewAccountBriefingTemplate);
       document.getElementById('downloadNewAccountBriefing').addEventListener('click', downloadNewAccountBriefingTemplate);
       document.getElementById('brandBriefingModel').addEventListener('change', () => fillBrandBriefingTemplate({ force: true }));
+      document.getElementById('brandBriefingGoal').addEventListener('change', () => fillBrandBriefingTemplate({ force: true }));
       document.getElementById('newAccountBriefingModel').addEventListener('change', () => fillNewAccountBriefingTemplate({ force: true }));
+      document.getElementById('newAccountBriefingGoal').addEventListener('change', () => fillNewAccountBriefingTemplate({ force: true }));
       ['activeBrandPrimary', 'activeBrandSecondary', 'activeBrandBackground'].forEach((id) => {
         document.getElementById(id).addEventListener('input', () => {
           renderPalettePreview('activePalettePreview', {
