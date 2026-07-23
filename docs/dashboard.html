@@ -1778,8 +1778,11 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         secondary: document.getElementById('activeBrandSecondary').value,
         background: document.getElementById('activeBrandBackground').value
       });
+      const keywords = documentInfo.analysis?.keywords?.length
+        ? ` · analisado: ${documentInfo.analysis.keywords.slice(0, 5).join(', ')}`
+        : '';
       document.getElementById('activeBrandDocumentStatus').textContent = documentInfo.path
-        ? `${documentInfo.name || 'Documento anexado'} · ${(documentInfo.mimeType || '').replace('application/', '').replace('text/', '') || 'arquivo'} · ${documentInfo.uploadedAt ? new Date(documentInfo.uploadedAt).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }) : 'salvo'}`
+        ? `${documentInfo.name || 'Documento anexado'} · ${(documentInfo.mimeType || '').replace('application/', '').replace('text/', '') || 'arquivo'} · ${documentInfo.uploadedAt ? new Date(documentInfo.uploadedAt).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }) : 'salvo'}${keywords}`
         : 'Nenhum PDF/TXT anexado.';
       document.getElementById('activeProfileResult').textContent = hasProfile
         ? `Perfil ativo para @${account.expectedUsername || appState.selectedAccount}.`
@@ -2755,7 +2758,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         return;
       }
       result.className = 'access-result warn';
-      result.textContent = 'Anexando documento da empresa...';
+      result.textContent = 'Anexando e analisando documento da empresa...';
       try {
         const payload = await api('/api/state', {
           method: 'POST',
@@ -2771,7 +2774,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         appState.account = payload.account || appState.account;
         await loadState();
         result.className = 'access-result good';
-        result.textContent = payload.message || 'Documento anexado à marca.';
+        result.textContent = payload.message || 'Documento anexado e analisado na marca.';
       } catch (error) {
         result.className = 'access-result bad';
         result.textContent = error.message;

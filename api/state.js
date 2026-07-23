@@ -12,6 +12,7 @@ import {
   validateLogin
 } from '../lib/auth.js';
 import { accountFromQuery, normalizeAccountKey, requireConfiguredAccount } from '../lib/accounts.js';
+import { analyzeBrandDocument } from '../lib/brand-analysis.js';
 
 const ROOT = process.cwd();
 const CONTENT_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'content-packs.json');
@@ -679,7 +680,7 @@ function decodeBrandDocument(body = {}) {
     mimeType: match[1],
     size: bytes.length,
     base64: match[2],
-    textPreview: match[1] === 'text/plain' ? bytes.toString('utf8').slice(0, 1200) : ''
+    bytes
   };
 }
 
@@ -813,6 +814,7 @@ async function uploadBrandDocument(body = {}, session = null) {
   }
 
   const document = decodeBrandDocument(body);
+  const documentAnalysis = await analyzeBrandDocument(document.bytes, document.mimeType);
   const uploadedAt = new Date().toISOString();
   const stamp = uploadedAt.replace(/[:.]/g, '-');
   const path = `docs/uploads/brand-documents/${accountKey}/${stamp}-${document.name}`;
@@ -826,7 +828,8 @@ async function uploadBrandDocument(body = {}, session = null) {
       size: document.size,
       path: `/${path}`,
       uploadedAt,
-      ...(document.textPreview ? { textPreview: document.textPreview } : {})
+      textPreview: documentAnalysis.textPreview,
+      analysis: documentAnalysis.analysis
     }
   };
 
@@ -834,7 +837,7 @@ async function uploadBrandDocument(body = {}, session = null) {
   return {
     ok: true,
     account: accountsFile.data[index],
-    message: `Documento ${document.name} anexado ao perfil da marca.`
+    message: `Documento ${document.name} anexado e analisado no perfil da marca.`
   };
 }
 

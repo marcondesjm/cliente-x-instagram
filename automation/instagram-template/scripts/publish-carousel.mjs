@@ -3,6 +3,7 @@ import { chromium } from 'playwright';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { buildBrandContext } from '../../../lib/brand-analysis.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const TEMPLATE_DIR = resolve(ROOT, 'automation', 'instagram-template');
@@ -492,18 +493,31 @@ function buildLastResortPack(dateString, slotIndex) {
   );
 }
 
+function shortPhrase(value = '', fallback = '') {
+  const text = String(value || fallback || '').replace(/\s+/g, ' ').trim();
+  if (text.length <= 86) return text;
+  return `${text.slice(0, 86).replace(/\s+\S*$/, '')}...`;
+}
+
 function profileTopicFromAccount(account = {}) {
   const profile = account.contentProfile || {};
-  if (!profile.niche && !profile.audience && !profile.offer) return null;
+  const brandSummary = account.brandSummary || {};
+  const documentAnalysis = account.brandDocument?.analysis || {};
+  if (!profile.niche && !profile.audience && !profile.offer && !brandSummary.description && !documentAnalysis.summary) return null;
   const niche = profile.niche || account.brandName || 'negócio';
   const audience = profile.audience || 'clientes';
   const offer = profile.offer || 'solução com IA';
   const tone = profile.tone || 'consultivo';
+  const brandContext = buildBrandContext(account);
+  const documentKeywords = Array.isArray(documentAnalysis.keywords) ? documentAnalysis.keywords.slice(0, 5).join(', ') : '';
+  const differentiator = shortPhrase(brandSummary.differentiator || documentAnalysis.summary, offer);
   return {
     area: niche,
-    pain: `${audience} ainda precisa entender o valor de ${offer}`,
-    process: `dor do público, promessa, prova, objeções e próximo passo em tom ${tone}`,
-    gain: `transformar interesse em conversa sobre ${offer}`,
+    pain: `${shortPhrase(audience, 'clientes')} ainda precisa entender o valor de ${differentiator}`,
+    process: `dor do público, promessa, prova, objeções e próximo passo em tom ${tone}. Contexto da empresa: ${brandContext}`,
+    gain: documentKeywords
+      ? `transformar ${documentKeywords} em conversa prática sobre ${offer}`
+      : `transformar interesse em conversa sobre ${offer}`,
     hashtag: '#inteligenciaartificial #automacao #marketingdigital #negocios #conteudo'
   };
 }

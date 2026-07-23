@@ -4,6 +4,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, statSyn
 import { extname, join, resolve } from 'node:path';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { analyzeBrandDocument } from '../lib/brand-analysis.js';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const DOCS_DIR = join(ROOT, 'docs');
@@ -317,7 +318,6 @@ function decodeBrandDocument(body = {}) {
     mimeType: match[1],
     size: bytes.length,
     bytes,
-    textPreview: match[1] === 'text/plain' ? bytes.toString('utf8').slice(0, 1200) : ''
   };
 }
 
@@ -354,13 +354,14 @@ function updateAccountProfile(body = {}) {
   };
 }
 
-function uploadBrandDocument(body = {}) {
+async function uploadBrandDocument(body = {}) {
   const accounts = readJson(ACCOUNTS_PATH);
   const accountKey = String(body.account || ACCOUNT).trim() || ACCOUNT;
   const index = accounts.findIndex((item) => item.account === accountKey);
   if (index === -1) throw new Error(`Conta ${accountKey} nao encontrada.`);
 
   const document = decodeBrandDocument(body);
+  const documentAnalysis = await analyzeBrandDocument(document.bytes, document.mimeType);
   const uploadedAt = new Date().toISOString();
   const stamp = uploadedAt.replace(/[:.]/g, '-');
   const dir = join(UPLOADS_DIR, 'brand-documents', accountKey);
@@ -377,14 +378,15 @@ function uploadBrandDocument(body = {}) {
       size: document.size,
       path: `/docs/uploads/brand-documents/${accountKey}/${fileName}`,
       uploadedAt,
-      ...(document.textPreview ? { textPreview: document.textPreview } : {})
+      textPreview: documentAnalysis.textPreview,
+      analysis: documentAnalysis.analysis
     }
   };
   writeJson(ACCOUNTS_PATH, accounts);
   return {
     ok: true,
     account: accounts[index],
-    message: `Documento ${document.name} anexado ao perfil da marca.`
+    message: `Documento ${document.name} anexado e analisado no perfil da marca.`
   };
 }
 
@@ -632,7 +634,7 @@ async function handleApi(req, res, url) {
         return json(res, 200, updateAccountProfile(body));
       }
       if (body.action === 'upload-brand-document') {
-        return json(res, 200, uploadBrandDocument(body));
+        return json(res, 200, await uploadBrandDocument(body));
       }
       return json(res, 400, { error: 'Acao nao suportada no servidor local.' });
     }
