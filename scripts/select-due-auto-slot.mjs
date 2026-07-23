@@ -8,6 +8,7 @@ const ACCOUNT = process.env.ACCOUNT || process.env.INSTAGRAM_TEMPLATE_ACCOUNT ||
 const ACCOUNTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'accounts.json');
 const LEDGER_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'published-slots.json');
 const GRACE_MINUTES = Number.parseInt(process.env.AUTO_POST_GRACE_MINUTES || '2', 10);
+const AUTO_POST_LIMIT_PER_DAY = Number.parseInt(process.env.AUTO_POST_LIMIT_PER_DAY || '1', 10);
 
 function readJson(path, fallback) {
   if (!existsSync(path)) return fallback;
@@ -64,6 +65,20 @@ const done = new Set(
 const now = new Date();
 const dueUntil = new Date(now.getTime() - Math.max(0, GRACE_MINUTES) * 60_000);
 const currentLocalDate = saoPauloDate(now);
+const publishedToday = ledger.filter((entry) => (
+  entry.account === ACCOUNT &&
+  entry.date === currentLocalDate &&
+  entry.status === 'published'
+)).length;
+
+if (AUTO_POST_LIMIT_PER_DAY > 0 && publishedToday >= AUTO_POST_LIMIT_PER_DAY) {
+  writeOutput({
+    has_due: 'false',
+    reason: `daily_auto_limit_reached:${publishedToday}/${AUTO_POST_LIMIT_PER_DAY}`
+  });
+  process.exit(0);
+}
+
 const candidates = [];
 
 for (const offset of [-1, 0]) {
