@@ -335,6 +335,21 @@ const ENGAGEMENT_INTELLIGENCE = {
     'Comente "IA" se você quer transformar essa rotina em processo.',
     'Use este raciocínio como checklist antes de escolher qualquer ferramenta.'
   ],
+  captionAngles: [
+    'Leitura do dia: procure onde o trabalho ainda depende de memória e improviso.',
+    'Ponto de atenção: ferramenta sem processo claro costuma apenas acelerar a bagunça.',
+    'Aplicação prática: comece por uma rotina pequena, repetida e fácil de medir.',
+    'Sinal de oportunidade: quando a equipe repete a mesma pergunta, existe fluxo para organizar.',
+    'Pergunta para gestão: qual parte da operação perde contexto toda semana?',
+    'Ajuste de processo: antes de automatizar, escreva regra, responsável e próximo passo.',
+    'Ideia para revisar: o melhor ganho aparece quando a IA protege padrão, não só velocidade.',
+    'Rotina que merece sistema: tudo que volta todo dia precisa deixar rastro e critério.',
+    'Antes de escolher ferramenta: defina qual erro a automação precisa reduzir.',
+    'Critério para decidir: se não dá para medir antes e depois, ainda é só experimento.',
+    'O detalhe que muda a operação: contexto salvo vale mais que resposta rápida e solta.',
+    'Diagnóstico rápido: observe onde o cliente espera porque alguém está procurando informação.',
+    'Próximo passo possível: transforme uma tarefa repetida em checklist antes de pedir IA.'
+  ],
   visualVariants: ['focus', 'numbered', 'quote', 'signal']
 };
 
@@ -425,8 +440,13 @@ function enhanceCaption(caption, dateString, slotIndex) {
   const cta = ENGAGEMENT_INTELLIGENCE.ctas[
     pickDailyIndex(ENGAGEMENT_INTELLIGENCE.ctas, dateString, slotIndex)
   ];
+  const angle = ENGAGEMENT_INTELLIGENCE.captionAngles[
+    pickDailyIndex(ENGAGEMENT_INTELLIGENCE.captionAngles, dateString, slotIndex)
+  ];
+  const slotNote = angle;
   const hasCta = /salve|envie|comente|compartilhe|mande/i.test(body);
-  const enhancedBody = hasCta ? body : `${body}\n\n${cta}`;
+  const bodyWithAngle = body.includes(slotNote) ? body : `${body}\n\n${slotNote}`;
+  const enhancedBody = hasCta ? bodyWithAngle : `${bodyWithAngle}\n\n${cta}`;
   return [enhancedBody.trim(), hashtags].filter(Boolean).join('\n\n');
 }
 
