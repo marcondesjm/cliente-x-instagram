@@ -248,6 +248,21 @@ function getState() {
 
   return {
     account,
+    accounts: accounts.map((item) => ({
+      account: item.account,
+      expectedUsername: item.expectedUsername,
+      brandName: item.brandName,
+      footerText: item.footerText
+    })),
+    selectedAccount: account?.account || ACCOUNT,
+    session: {
+      authenticated: true,
+      email: 'local@dashboard',
+      role: 'owner',
+      accounts: accounts.map((item) => item.account),
+      adminConfigured: true,
+      adminEmail: 'local@dashboard'
+    },
     scheduleBrt: account?.scheduleUtc?.map(cronToBrtTime) || [],
     packs,
     packCount: packs.length,
@@ -256,6 +271,120 @@ function getState() {
     watchdogErrors: existsSync(WATCHDOG_ERRORS_PATH) ? readJson(WATCHDOG_ERRORS_PATH) : [],
     latestResult,
     latestFailure
+  };
+}
+
+function normalizeBrandSummary(value = {}) {
+  return {
+    description: String(value.description || '').trim(),
+    positioning: String(value.positioning || '').trim(),
+    differentiator: String(value.differentiator || '').trim()
+  };
+}
+
+function normalizeColor(value, fallback) {
+  const color = String(value || '').trim();
+  return /^#[0-9a-f]{6}$/i.test(color) ? color.toLowerCase() : fallback;
+}
+
+function normalizeBrandPalette(value = {}) {
+  return {
+    primary: normalizeColor(value.primary, '#17211c'),
+    secondary: normalizeColor(value.secondary, '#0e7c5a'),
+    background: normalizeColor(value.background, '#f4f7f5')
+  };
+}
+
+function safeUploadName(name = 'documento') {
+  return String(name || 'documento')
+    .replace(/\.[^.]+$/, '')
+    .replace(/[^a-z0-9._-]/gi, '-')
+    .slice(0, 80) || 'documento';
+}
+
+function decodeBrandDocument(body = {}) {
+  const mimeType = String(body.mimeType || '').toLowerCase();
+  const match = String(body.dataUrl || '').match(/^data:(application\/pdf|text\/plain);base64,([A-Za-z0-9+/=]+)$/);
+  if (!match) throw new Error('Envie um arquivo PDF ou TXT valido.');
+  if (mimeType && mimeType !== match[1]) throw new Error('Tipo do arquivo nao confere com o conteudo enviado.');
+  const size = Number(body.size || 0);
+  const bytes = Buffer.from(match[2], 'base64');
+  if (bytes.length > 4_000_000 || size > 4_000_000) throw new Error('Arquivo muito grande. Use PDF/TXT de ate 4 MB.');
+  const ext = match[1] === 'application/pdf' ? '.pdf' : '.txt';
+  const name = `${safeUploadName(body.name)}${ext}`;
+  return {
+    name,
+    mimeType: match[1],
+    size: bytes.length,
+    bytes,
+    textPreview: match[1] === 'text/plain' ? bytes.toString('utf8').slice(0, 1200) : ''
+  };
+}
+
+function updateAccountProfile(body = {}) {
+  const accounts = readJson(ACCOUNTS_PATH);
+  const accountKey = String(body.account || ACCOUNT).trim() || ACCOUNT;
+  const index = accounts.findIndex((item) => item.account === accountKey);
+  if (index === -1) throw new Error(`Conta ${accountKey} nao encontrada.`);
+
+  const contentProfile = {
+    niche: String(body.niche || '').trim(),
+    audience: String(body.audience || '').trim(),
+    offer: String(body.offer || '').trim(),
+    tone: String(body.tone || 'consultivo').trim() || 'consultivo'
+  };
+  if (!contentProfile.niche || !contentProfile.audience || !contentProfile.offer) {
+    throw new Error('Informe nicho, publico ideal e oferta principal para atualizar a conta.');
+  }
+
+  accounts[index] = {
+    ...accounts[index],
+    expectedUsername: String(body.expectedUsername || accounts[index].expectedUsername || '').replace(/^@/, '').trim(),
+    brandName: String(body.brandName || accounts[index].brandName || accountKey).trim(),
+    footerText: String(body.footerText || accounts[index].footerText || 'IA aplicada a empresas').trim(),
+    contentProfile,
+    brandSummary: normalizeBrandSummary(body.brandSummary || accounts[index].brandSummary || {}),
+    brandPalette: normalizeBrandPalette(body.brandPalette || accounts[index].brandPalette || {})
+  };
+  writeJson(ACCOUNTS_PATH, accounts);
+  return {
+    ok: true,
+    account: accounts[index],
+    message: `Perfil da marca de ${accountKey} atualizado localmente.`
+  };
+}
+
+function uploadBrandDocument(body = {}) {
+  const accounts = readJson(ACCOUNTS_PATH);
+  const accountKey = String(body.account || ACCOUNT).trim() || ACCOUNT;
+  const index = accounts.findIndex((item) => item.account === accountKey);
+  if (index === -1) throw new Error(`Conta ${accountKey} nao encontrada.`);
+
+  const document = decodeBrandDocument(body);
+  const uploadedAt = new Date().toISOString();
+  const stamp = uploadedAt.replace(/[:.]/g, '-');
+  const dir = join(UPLOADS_DIR, 'brand-documents', accountKey);
+  mkdirSync(dir, { recursive: true });
+  const fileName = `${stamp}-${document.name}`;
+  const target = join(dir, fileName);
+  writeFileSync(target, document.bytes);
+
+  accounts[index] = {
+    ...accounts[index],
+    brandDocument: {
+      name: document.name,
+      mimeType: document.mimeType,
+      size: document.size,
+      path: `/docs/uploads/brand-documents/${accountKey}/${fileName}`,
+      uploadedAt,
+      ...(document.textPreview ? { textPreview: document.textPreview } : {})
+    }
+  };
+  writeJson(ACCOUNTS_PATH, accounts);
+  return {
+    ok: true,
+    account: accounts[index],
+    message: `Documento ${document.name} anexado ao perfil da marca.`
   };
 }
 
@@ -496,6 +625,16 @@ async function handleApi(req, res, url) {
   try {
     if (req.method === 'GET' && url.pathname === '/api/state') {
       return json(res, 200, getState());
+    }
+    if (req.method === 'POST' && url.pathname === '/api/state') {
+      const body = await readBody(req);
+      if (body.action === 'update-account-profile') {
+        return json(res, 200, updateAccountProfile(body));
+      }
+      if (body.action === 'upload-brand-document') {
+        return json(res, 200, uploadBrandDocument(body));
+      }
+      return json(res, 400, { error: 'Acao nao suportada no servidor local.' });
     }
     if (req.method === 'GET' && url.pathname === '/api/private-metrics') {
       return json(res, 200, await readPrivateMetrics());

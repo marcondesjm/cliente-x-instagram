@@ -493,9 +493,71 @@
     }
 
     .access-manager input,
-    .access-manager select {
+    .access-manager select,
+    .access-manager textarea {
       min-height: 38px;
       font-size: 13px;
+    }
+
+    .brand-palette {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .color-field {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 8px;
+      align-items: end;
+    }
+
+    .color-field input[type="color"] {
+      width: 42px;
+      min-height: 38px;
+      padding: 3px;
+      cursor: pointer;
+    }
+
+    .palette-preview {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .palette-swatch {
+      min-height: 58px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px;
+      display: flex;
+      align-items: flex-end;
+      color: var(--text);
+      font-size: 11px;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+
+    .document-box {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdfc;
+    }
+
+    .document-box strong {
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .document-box span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      overflow-wrap: anywhere;
     }
 
     .password-row {
@@ -1231,7 +1293,43 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
                 <option value="provocativo">Provocativo</option>
               </select>
             </label>
-            <button class="primary" id="saveActiveProfile" type="button">Salvar perfil editorial</button>
+            <label>
+              Resumo da empresa
+              <textarea id="activeBrandSummary" rows="4" placeholder="ex: Consultoria que ajuda empresas a aplicar IA em vendas, atendimento e operação com processos simples e mensuráveis."></textarea>
+            </label>
+            <label>
+              Posicionamento da marca
+              <input id="activeBrandPositioning" placeholder="ex: IA prática para empresas que querem operar melhor">
+            </label>
+            <label>
+              Diferencial
+              <input id="activeBrandDifferentiator" placeholder="ex: transforma rotina real em automação, sem linguagem técnica demais">
+            </label>
+            <div class="brand-palette">
+              <label class="color-field">
+                <input id="activeBrandPrimary" type="color" value="#17211c">
+                <span>Cor primária</span>
+              </label>
+              <label class="color-field">
+                <input id="activeBrandSecondary" type="color" value="#0e7c5a">
+                <span>Cor secundária</span>
+              </label>
+              <label class="color-field">
+                <input id="activeBrandBackground" type="color" value="#f4f7f5">
+                <span>Cor de fundo</span>
+              </label>
+            </div>
+            <div class="palette-preview" id="activePalettePreview"></div>
+            <div class="document-box">
+              <strong>Documento da empresa</strong>
+              <span id="activeBrandDocumentStatus">Nenhum PDF/TXT anexado.</span>
+              <label>
+                Anexar PDF ou TXT
+                <input id="activeBrandDocument" type="file" accept=".pdf,.txt,application/pdf,text/plain">
+              </label>
+              <button type="button" id="uploadBrandDocument">Anexar documento</button>
+            </div>
+            <button class="primary" id="saveActiveProfile" type="button">Salvar perfil da marca</button>
             <div class="access-result" id="activeProfileResult">Configure esta conta para orientar as próximas postagens.</div>
           </div>
         </div>
@@ -1291,6 +1389,32 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
                 <option value="provocativo">Provocativo</option>
               </select>
             </label>
+            <label>
+              Resumo da empresa
+              <textarea id="newBrandSummary" rows="4" placeholder="ex: Empresa que ajuda clínicas a organizar atendimento, agenda e relacionamento com IA."></textarea>
+            </label>
+            <label>
+              Posicionamento da marca
+              <input id="newBrandPositioning" placeholder="ex: automação simples para clínicas crescerem com controle">
+            </label>
+            <label>
+              Diferencial
+              <input id="newBrandDifferentiator" placeholder="ex: une estratégia, implantação e rotina do time">
+            </label>
+            <div class="brand-palette">
+              <label class="color-field">
+                <input id="newBrandPrimary" type="color" value="#17211c">
+                <span>Cor primária</span>
+              </label>
+              <label class="color-field">
+                <input id="newBrandSecondary" type="color" value="#0e7c5a">
+                <span>Cor secundária</span>
+              </label>
+              <label class="color-field">
+                <input id="newBrandBackground" type="color" value="#f4f7f5">
+                <span>Cor de fundo</span>
+              </label>
+            </div>
             <button class="primary" id="createAccount" type="button">Criar conta</button>
             <div class="access-result" id="newAccountResult">Informe nicho, público e oferta para a inteligência criar posts alinhados à nova conta.</div>
           </div>
@@ -1598,9 +1722,41 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('queuePost').textContent = `Agendar pack (${appState.selectedAccount})`;
     }
 
+    function paletteColor(value, fallback) {
+      const color = String(value || '').trim();
+      return /^#[0-9a-f]{6}$/i.test(color) ? color : fallback;
+    }
+
+    function contrastColor(hex) {
+      const clean = paletteColor(hex, '#ffffff').slice(1);
+      const value = parseInt(clean, 16);
+      const r = (value >> 16) & 255;
+      const g = (value >> 8) & 255;
+      const b = value & 255;
+      return ((r * 299 + g * 587 + b * 114) / 1000) > 150 ? '#17211c' : '#ffffff';
+    }
+
+    function renderPalettePreview(targetId, palette = {}) {
+      const target = document.getElementById(targetId);
+      if (!target) return;
+      const colors = [
+        ['Primária', paletteColor(palette.primary, '#17211c')],
+        ['Secundária', paletteColor(palette.secondary, '#0e7c5a')],
+        ['Fundo', paletteColor(palette.background, '#f4f7f5')]
+      ];
+      target.innerHTML = colors.map(([label, color]) => `
+        <div class="palette-swatch" style="background:${escapeHtml(color)}; color:${contrastColor(color)};">
+          ${escapeHtml(label)} · ${escapeHtml(color)}
+        </div>
+      `).join('');
+    }
+
     function renderActiveProfile() {
       const account = appState.account || {};
       const profile = account.contentProfile || {};
+      const summary = account.brandSummary || {};
+      const palette = account.brandPalette || {};
+      const documentInfo = account.brandDocument || {};
       const hasProfile = Boolean(profile.niche && profile.audience && profile.offer);
       document.getElementById('activeProfileStatus').textContent = hasProfile ? 'Configurado' : 'Pendente';
       document.getElementById('activeProfileStatus').className = `status-pill ${hasProfile ? 'good' : 'warn'}`;
@@ -1611,6 +1767,20 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('activeAccountAudience').value = profile.audience || '';
       document.getElementById('activeAccountOffer').value = profile.offer || '';
       document.getElementById('activeAccountTone').value = profile.tone || 'consultivo';
+      document.getElementById('activeBrandSummary').value = summary.description || '';
+      document.getElementById('activeBrandPositioning').value = summary.positioning || '';
+      document.getElementById('activeBrandDifferentiator').value = summary.differentiator || '';
+      document.getElementById('activeBrandPrimary').value = paletteColor(palette.primary, '#17211c');
+      document.getElementById('activeBrandSecondary').value = paletteColor(palette.secondary, '#0e7c5a');
+      document.getElementById('activeBrandBackground').value = paletteColor(palette.background, '#f4f7f5');
+      renderPalettePreview('activePalettePreview', {
+        primary: document.getElementById('activeBrandPrimary').value,
+        secondary: document.getElementById('activeBrandSecondary').value,
+        background: document.getElementById('activeBrandBackground').value
+      });
+      document.getElementById('activeBrandDocumentStatus').textContent = documentInfo.path
+        ? `${documentInfo.name || 'Documento anexado'} · ${(documentInfo.mimeType || '').replace('application/', '').replace('text/', '') || 'arquivo'} · ${documentInfo.uploadedAt ? new Date(documentInfo.uploadedAt).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }) : 'salvo'}`
+        : 'Nenhum PDF/TXT anexado.';
       document.getElementById('activeProfileResult').textContent = hasProfile
         ? `Perfil ativo para @${account.expectedUsername || appState.selectedAccount}.`
         : 'Informe nicho, público e oferta para orientar as próximas postagens.';
@@ -2001,6 +2171,16 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const audience = document.getElementById('newAccountAudience').value.trim();
       const offer = document.getElementById('newAccountOffer').value.trim();
       const tone = document.getElementById('newAccountTone').value;
+      const brandSummary = {
+        description: document.getElementById('newBrandSummary').value.trim(),
+        positioning: document.getElementById('newBrandPositioning').value.trim(),
+        differentiator: document.getElementById('newBrandDifferentiator').value.trim()
+      };
+      const brandPalette = {
+        primary: document.getElementById('newBrandPrimary').value,
+        secondary: document.getElementById('newBrandSecondary').value,
+        background: document.getElementById('newBrandBackground').value
+      };
 
       button.disabled = true;
       button.textContent = 'Criando';
@@ -2019,6 +2199,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             audience,
             offer,
             tone,
+            brandSummary,
+            brandPalette,
             sourceAccount: appState.selectedAccount
           })
         });
@@ -2031,6 +2213,12 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         document.getElementById('newAccountAudience').value = '';
         document.getElementById('newAccountOffer').value = '';
         document.getElementById('newAccountTone').value = 'consultivo';
+        document.getElementById('newBrandSummary').value = '';
+        document.getElementById('newBrandPositioning').value = '';
+        document.getElementById('newBrandDifferentiator').value = '';
+        document.getElementById('newBrandPrimary').value = '#17211c';
+        document.getElementById('newBrandSecondary').value = '#0e7c5a';
+        document.getElementById('newBrandBackground').value = '#f4f7f5';
         result.textContent = payload.message || 'Conta criada.';
         await loadState();
       } catch (error) {
@@ -2062,7 +2250,17 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             niche: document.getElementById('activeAccountNiche').value.trim(),
             audience: document.getElementById('activeAccountAudience').value.trim(),
             offer: document.getElementById('activeAccountOffer').value.trim(),
-            tone: document.getElementById('activeAccountTone').value
+            tone: document.getElementById('activeAccountTone').value,
+            brandSummary: {
+              description: document.getElementById('activeBrandSummary').value.trim(),
+              positioning: document.getElementById('activeBrandPositioning').value.trim(),
+              differentiator: document.getElementById('activeBrandDifferentiator').value.trim()
+            },
+            brandPalette: {
+              primary: document.getElementById('activeBrandPrimary').value,
+              secondary: document.getElementById('activeBrandSecondary').value,
+              background: document.getElementById('activeBrandBackground').value
+            }
           })
         });
         appState.account = payload.account || appState.account;
@@ -2542,6 +2740,46 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       });
     }
 
+    async function uploadBrandDocument() {
+      const input = document.getElementById('activeBrandDocument');
+      const file = input.files?.[0];
+      const result = document.getElementById('activeProfileResult');
+      if (!file) {
+        result.className = 'access-result warn';
+        result.textContent = 'Escolha um PDF ou TXT antes de anexar.';
+        return;
+      }
+      if (!['application/pdf', 'text/plain'].includes(file.type) && !/\.(pdf|txt)$/i.test(file.name)) {
+        result.className = 'access-result bad';
+        result.textContent = 'Use arquivo PDF ou TXT.';
+        return;
+      }
+      result.className = 'access-result warn';
+      result.textContent = 'Anexando documento da empresa...';
+      try {
+        const payload = await api('/api/state', {
+          method: 'POST',
+          body: JSON.stringify({
+            action: 'upload-brand-document',
+            account: appState.selectedAccount,
+            name: file.name,
+            mimeType: file.type || (file.name.toLowerCase().endsWith('.pdf') ? 'application/pdf' : 'text/plain'),
+            size: file.size,
+            dataUrl: await readFileAsDataUrl(file)
+          })
+        });
+        appState.account = payload.account || appState.account;
+        await loadState();
+        result.className = 'access-result good';
+        result.textContent = payload.message || 'Documento anexado à marca.';
+      } catch (error) {
+        result.className = 'access-result bad';
+        result.textContent = error.message;
+      } finally {
+        input.value = '';
+      }
+    }
+
     async function uploadSlideImage(input) {
       const file = input.files?.[0];
       if (!file) return;
@@ -2919,6 +3157,16 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('redeployVercel').addEventListener('click', redeployVercel);
       document.getElementById('saveActiveProfile').addEventListener('click', saveActiveProfile);
       document.getElementById('createAccount').addEventListener('click', createAccount);
+      document.getElementById('uploadBrandDocument').addEventListener('click', uploadBrandDocument);
+      ['activeBrandPrimary', 'activeBrandSecondary', 'activeBrandBackground'].forEach((id) => {
+        document.getElementById(id).addEventListener('input', () => {
+          renderPalettePreview('activePalettePreview', {
+            primary: document.getElementById('activeBrandPrimary').value,
+            secondary: document.getElementById('activeBrandSecondary').value,
+            background: document.getElementById('activeBrandBackground').value
+          });
+        });
+      });
       document.getElementById('createUser').addEventListener('click', createUser);
       document.getElementById('usersList').addEventListener('click', handleUserManagementClick);
       document.getElementById('accessConfig').addEventListener('click', (event) => {

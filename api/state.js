@@ -511,7 +511,13 @@ async function redeployVercelProduction() {
 function readBody(req) {
   return new Promise((resolve, reject) => {
     let raw = '';
-    req.on('data', (chunk) => { raw += chunk; });
+    req.on('data', (chunk) => {
+      raw += chunk;
+      if (raw.length > 6_000_000) {
+        req.destroy();
+        reject(userError('Arquivo muito grande. Use PDF/TXT de ate 4 MB.', 413));
+      }
+    });
     req.on('end', () => {
       try {
         resolve(raw ? JSON.parse(raw) : {});
@@ -566,6 +572,25 @@ async function writeGithubConfig(filePath, data, sha, message) {
   });
 }
 
+async function writeGithubFile(filePath, base64Content, message) {
+  let sha = null;
+  try {
+    const existing = await githubJson(`contents/${filePath}?ref=main`);
+    sha = existing.sha;
+  } catch (error) {
+    if (error.statusCode !== 404) throw error;
+  }
+  await githubJson(`contents/${filePath}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      message,
+      branch: 'main',
+      ...(sha ? { sha } : {}),
+      content: base64Content
+    })
+  });
+}
+
 function envPrefixFromAccount(accountKey) {
   return accountKey.toUpperCase().replace(/[^A-Z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'CLIENTE';
 }
@@ -609,6 +634,55 @@ function buildInitialPacksForProfile(profile = {}, brandName = '') {
   ];
 }
 
+function normalizeBrandSummary(value = {}) {
+  return {
+    description: String(value.description || '').trim(),
+    positioning: String(value.positioning || '').trim(),
+    differentiator: String(value.differentiator || '').trim()
+  };
+}
+
+function normalizeColor(value, fallback) {
+  const color = String(value || '').trim();
+  return /^#[0-9a-f]{6}$/i.test(color) ? color.toLowerCase() : fallback;
+}
+
+function normalizeBrandPalette(value = {}) {
+  return {
+    primary: normalizeColor(value.primary, '#17211c'),
+    secondary: normalizeColor(value.secondary, '#0e7c5a'),
+    background: normalizeColor(value.background, '#f4f7f5')
+  };
+}
+
+function safeUploadName(name = 'documento') {
+  return String(name || 'documento')
+    .replace(/\.[^.]+$/, '')
+    .replace(/[^a-z0-9._-]/gi, '-')
+    .slice(0, 80) || 'documento';
+}
+
+function decodeBrandDocument(body = {}) {
+  const mimeType = String(body.mimeType || '').toLowerCase();
+  const match = String(body.dataUrl || '').match(/^data:(application\/pdf|text\/plain);base64,([A-Za-z0-9+/=]+)$/);
+  if (!match) throw userError('Envie um arquivo PDF ou TXT valido.');
+  if (mimeType && mimeType !== match[1]) throw userError('Tipo do arquivo nao confere com o conteudo enviado.');
+  const size = Number(body.size || 0);
+  const bytes = Buffer.from(match[2], 'base64');
+  if (bytes.length > 4_000_000 || size > 4_000_000) {
+    throw userError('Arquivo muito grande. Use PDF/TXT de ate 4 MB.', 413);
+  }
+  const ext = match[1] === 'application/pdf' ? '.pdf' : '.txt';
+  const name = `${safeUploadName(body.name)}${ext}`;
+  return {
+    name,
+    mimeType: match[1],
+    size: bytes.length,
+    base64: match[2],
+    textPreview: match[1] === 'text/plain' ? bytes.toString('utf8').slice(0, 1200) : ''
+  };
+}
+
 async function addAccountToPanelUser(email, accountKey) {
   if (!email || isOwner({ email, role: email === process.env.ADMIN_EMAIL ? 'owner' : 'user' })) return null;
   const users = parseAdminUsersJson();
@@ -630,6 +704,8 @@ async function createAccountConfig(body = {}, session = null) {
     offer: String(body.offer || '').trim(),
     tone: String(body.tone || 'consultivo').trim() || 'consultivo'
   };
+  const brandSummary = normalizeBrandSummary(body.brandSummary || {});
+  const brandPalette = normalizeBrandPalette(body.brandPalette || {});
   const sourceAccount = normalizeAccountKey(body.sourceAccount || 'cliente-x');
   if (!expectedUsername) throw userError('Informe o @ do Instagram sem espaco.');
   if (!contentProfile.niche || !contentProfile.audience || !contentProfile.offer) {
@@ -658,6 +734,8 @@ async function createAccountConfig(body = {}, session = null) {
     userIdEnv: `${envPrefix}_INSTAGRAM_USER_ID`,
     imgbbKeyEnv: `${envPrefix}_IMGBB_API_KEY`,
     contentProfile,
+    brandSummary,
+    brandPalette,
     scheduleUtc: Array.isArray(source.scheduleUtc) ? source.scheduleUtc : [],
     ...(session && !isOwner(session) ? { ownerEmail: session.email } : {})
   };
@@ -701,6 +779,8 @@ async function updateAccountProfile(body = {}, session = null) {
     offer: String(body.offer || '').trim(),
     tone: String(body.tone || 'consultivo').trim() || 'consultivo'
   };
+  const brandSummary = normalizeBrandSummary(body.brandSummary || accountsFile.data[index].brandSummary || {});
+  const brandPalette = normalizeBrandPalette(body.brandPalette || accountsFile.data[index].brandPalette || {});
   if (!contentProfile.niche || !contentProfile.audience || !contentProfile.offer) {
     throw userError('Informe nicho, publico ideal e oferta principal para atualizar a conta.');
   }
@@ -710,7 +790,9 @@ async function updateAccountProfile(body = {}, session = null) {
     expectedUsername: String(body.expectedUsername || accountsFile.data[index].expectedUsername || '').replace(/^@/, '').trim(),
     brandName: String(body.brandName || accountsFile.data[index].brandName || accountKey).trim(),
     footerText: String(body.footerText || accountsFile.data[index].footerText || 'IA aplicada a empresas').trim(),
-    contentProfile
+    contentProfile,
+    brandSummary,
+    brandPalette
   };
 
   await writeGithubConfig(ACCOUNTS_FILE_PATH, accountsFile.data, accountsFile.sha, `Update profile for ${accountKey}`);
@@ -718,6 +800,41 @@ async function updateAccountProfile(body = {}, session = null) {
     ok: true,
     account: accountsFile.data[index],
     message: `Perfil editorial de ${accountKey} atualizado. As próximas postagens automáticas usarão esse direcionamento.`
+  };
+}
+
+async function uploadBrandDocument(body = {}, session = null) {
+  const accountKey = normalizeAccountKey(body.account);
+  const accountsFile = await readGithubConfig(ACCOUNTS_FILE_PATH);
+  const index = accountsFile.data.findIndex((item) => item.account === accountKey);
+  if (index === -1) throw userError(`Conta ${accountKey} nao encontrada.`, 404);
+  if (!canAccessAccount(session, accountsFile.data[index])) {
+    throw userError('Seu usuario nao pode alterar esta conta.', 403);
+  }
+
+  const document = decodeBrandDocument(body);
+  const uploadedAt = new Date().toISOString();
+  const stamp = uploadedAt.replace(/[:.]/g, '-');
+  const path = `docs/uploads/brand-documents/${accountKey}/${stamp}-${document.name}`;
+  await writeGithubFile(path, document.base64, `Upload brand document for ${accountKey}`);
+
+  accountsFile.data[index] = {
+    ...accountsFile.data[index],
+    brandDocument: {
+      name: document.name,
+      mimeType: document.mimeType,
+      size: document.size,
+      path: `/${path}`,
+      uploadedAt,
+      ...(document.textPreview ? { textPreview: document.textPreview } : {})
+    }
+  };
+
+  await writeGithubConfig(ACCOUNTS_FILE_PATH, accountsFile.data, accountsFile.sha, `Attach brand document for ${accountKey}`);
+  return {
+    ok: true,
+    account: accountsFile.data[index],
+    message: `Documento ${document.name} anexado ao perfil da marca.`
   };
 }
 
@@ -833,6 +950,12 @@ export default async function handler(req, res) {
       }
       if (body.action === 'update-account-profile') {
         const result = await updateAccountProfile(body, session);
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json(result);
+        return;
+      }
+      if (body.action === 'upload-brand-document') {
+        const result = await uploadBrandDocument(body, session);
         res.setHeader('cache-control', 'no-store');
         res.status(200).json(result);
         return;

@@ -583,6 +583,51 @@ function assertPortugueseAccents(text) {
   if (found) throw new Error(`Texto sem acento: use "${found[1]}" no lugar de "${found[0]}".`);
 }
 
+function validHexColor(value) {
+  return /^#[0-9a-f]{6}$/i.test(String(value || '').trim());
+}
+
+function hexToRgb(hex) {
+  const value = parseInt(String(hex).slice(1), 16);
+  return {
+    r: (value >> 16) & 255,
+    g: (value >> 8) & 255,
+    b: value & 255
+  };
+}
+
+function rgba(hex, alpha) {
+  const { r, g, b } = hexToRgb(hex);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+function contrastColor(hex) {
+  const { r, g, b } = hexToRgb(hex);
+  return ((r * 299 + g * 587 + b * 114) / 1000) > 150 ? '#17211c' : '#ffffff';
+}
+
+function styleWithBrandPalette(style, account = {}) {
+  const palette = account.brandPalette || {};
+  if (!validHexColor(palette.primary) && !validHexColor(palette.secondary) && !validHexColor(palette.background)) {
+    return style;
+  }
+  const primary = validHexColor(palette.primary) ? palette.primary.toLowerCase() : '#17211c';
+  const secondary = validHexColor(palette.secondary) ? palette.secondary.toLowerCase() : style.accent;
+  const background = validHexColor(palette.background) ? palette.background.toLowerCase() : style.bgTop;
+  const text = contrastColor(background);
+  return {
+    ...style,
+    name: `${style.name}-brand`,
+    accent: secondary,
+    accentSoft: rgba(secondary, 0.18),
+    grid: rgba(primary, 0.11),
+    bgTop: background,
+    bgBottom: background,
+    text,
+    muted: text === '#ffffff' ? '#e7eee9' : '#4b5b53'
+  };
+}
+
 function validatePack(pack) {
   assertNoMojibake(pack.caption);
   assertPortugueseAccents(pack.caption);
@@ -1020,7 +1065,7 @@ async function main() {
     return;
   }
 
-  const style = pickDaily(styles, today);
+  const style = styleWithBrandPalette(pickDaily(styles, today), account);
   let pack = pickDaily(packs, today, slotIndex);
   let packIndex = pickDailyIndex(packs, today, slotIndex);
   let skippedDuplicates = 0;
