@@ -331,7 +331,8 @@ function updateAccountProfile(body = {}) {
     niche: String(body.niche || '').trim(),
     audience: String(body.audience || '').trim(),
     offer: String(body.offer || '').trim(),
-    tone: String(body.tone || 'consultivo').trim() || 'consultivo'
+    tone: String(body.tone || 'consultivo').trim() || 'consultivo',
+    goal: String(body.goal || accounts[index].contentProfile?.goal || 'authority').trim() || 'authority'
   };
   if (!contentProfile.niche || !contentProfile.audience || !contentProfile.offer) {
     throw new Error('Informe nicho, publico ideal e oferta principal para atualizar a conta.');

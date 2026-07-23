@@ -703,7 +703,8 @@ async function createAccountConfig(body = {}, session = null) {
     niche: String(body.niche || '').trim(),
     audience: String(body.audience || '').trim(),
     offer: String(body.offer || '').trim(),
-    tone: String(body.tone || 'consultivo').trim() || 'consultivo'
+    tone: String(body.tone || 'consultivo').trim() || 'consultivo',
+    goal: String(body.goal || 'authority').trim() || 'authority'
   };
   const brandSummary = normalizeBrandSummary(body.brandSummary || {});
   const brandPalette = normalizeBrandPalette(body.brandPalette || {});
@@ -778,7 +779,8 @@ async function updateAccountProfile(body = {}, session = null) {
     niche: String(body.niche || '').trim(),
     audience: String(body.audience || '').trim(),
     offer: String(body.offer || '').trim(),
-    tone: String(body.tone || 'consultivo').trim() || 'consultivo'
+    tone: String(body.tone || 'consultivo').trim() || 'consultivo',
+    goal: String(body.goal || accountsFile.data[index].contentProfile?.goal || 'authority').trim() || 'authority'
   };
   const brandSummary = normalizeBrandSummary(body.brandSummary || accountsFile.data[index].brandSummary || {});
   const brandPalette = normalizeBrandPalette(body.brandPalette || accountsFile.data[index].brandPalette || {});

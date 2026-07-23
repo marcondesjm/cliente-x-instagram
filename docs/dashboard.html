@@ -1329,6 +1329,16 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               </select>
             </label>
             <label>
+              Objetivo dos próximos posts
+              <select id="activeAccountGoal">
+                <option value="authority">Autoridade</option>
+                <option value="leads">Captação de leads</option>
+                <option value="offer">Oferta ou lançamento</option>
+                <option value="personalBrand">Marca pessoal</option>
+                <option value="reactivation">Reativação</option>
+              </select>
+            </label>
+            <label>
               Resumo da empresa
               <textarea id="activeBrandSummary" rows="4" placeholder="ex: Consultoria que ajuda empresas a aplicar IA em vendas, atendimento e operação com processos simples e mensuráveis."></textarea>
             </label>
@@ -1454,6 +1464,16 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
                 <option value="autoridade">Autoridade</option>
                 <option value="educativo">Educativo</option>
                 <option value="provocativo">Provocativo</option>
+              </select>
+            </label>
+            <label>
+              Objetivo dos próximos posts
+              <select id="newAccountGoal">
+                <option value="authority">Autoridade</option>
+                <option value="leads">Captação de leads</option>
+                <option value="offer">Oferta ou lançamento</option>
+                <option value="personalBrand">Marca pessoal</option>
+                <option value="reactivation">Reativação</option>
               </select>
             </label>
             <label>
@@ -1870,6 +1890,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('activeAccountAudience').value = profile.audience || '';
       document.getElementById('activeAccountOffer').value = profile.offer || '';
       document.getElementById('activeAccountTone').value = profile.tone || 'consultivo';
+      document.getElementById('activeAccountGoal').value = profile.goal || 'authority';
+      document.getElementById('brandBriefingGoal').value = profile.goal || 'authority';
       document.getElementById('activeBrandSummary').value = summary.description || '';
       document.getElementById('activeBrandPositioning').value = summary.positioning || '';
       document.getElementById('activeBrandDifferentiator').value = summary.differentiator || '';
@@ -2278,6 +2300,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const audience = document.getElementById('newAccountAudience').value.trim();
       const offer = document.getElementById('newAccountOffer').value.trim();
       const tone = document.getElementById('newAccountTone').value;
+      const goal = document.getElementById('newAccountGoal').value;
       const brandSummary = {
         description: document.getElementById('newBrandSummary').value.trim(),
         positioning: document.getElementById('newBrandPositioning').value.trim(),
@@ -2306,6 +2329,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             audience,
             offer,
             tone,
+            goal,
             brandSummary,
             brandPalette,
             sourceAccount: appState.selectedAccount
@@ -2320,6 +2344,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         document.getElementById('newAccountAudience').value = '';
         document.getElementById('newAccountOffer').value = '';
         document.getElementById('newAccountTone').value = 'consultivo';
+        document.getElementById('newAccountGoal').value = 'authority';
         document.getElementById('newBrandSummary').value = '';
         document.getElementById('newBrandPositioning').value = '';
         document.getElementById('newBrandDifferentiator').value = '';
@@ -2359,6 +2384,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             audience: document.getElementById('activeAccountAudience').value.trim(),
             offer: document.getElementById('activeAccountOffer').value.trim(),
             tone: document.getElementById('activeAccountTone').value,
+            goal: document.getElementById('activeAccountGoal').value,
             brandSummary: {
               description: document.getElementById('activeBrandSummary').value.trim(),
               positioning: document.getElementById('activeBrandPositioning').value.trim(),
@@ -2856,7 +2882,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           niche: document.getElementById('newAccountNiche').value.trim(),
           audience: document.getElementById('newAccountAudience').value.trim(),
           offer: document.getElementById('newAccountOffer').value.trim(),
-          tone: document.getElementById('newAccountTone').value
+          tone: document.getElementById('newAccountTone').value,
+          goal: document.getElementById('newAccountGoal').value
         },
         brandSummary: {
           description: document.getElementById('newBrandSummary').value.trim(),
@@ -3570,6 +3597,14 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('brandBriefingGoal').addEventListener('change', () => fillBrandBriefingTemplate({ force: true }));
       document.getElementById('newAccountBriefingModel').addEventListener('change', () => fillNewAccountBriefingTemplate({ force: true }));
       document.getElementById('newAccountBriefingGoal').addEventListener('change', () => fillNewAccountBriefingTemplate({ force: true }));
+      document.getElementById('activeAccountGoal').addEventListener('change', (event) => {
+        document.getElementById('brandBriefingGoal').value = event.target.value;
+        fillBrandBriefingTemplate({ force: true });
+      });
+      document.getElementById('newAccountGoal').addEventListener('change', (event) => {
+        document.getElementById('newAccountBriefingGoal').value = event.target.value;
+        fillNewAccountBriefingTemplate({ force: true });
+      });
       ['activeBrandPrimary', 'activeBrandSecondary', 'activeBrandBackground'].forEach((id) => {
         document.getElementById(id).addEventListener('input', () => {
           renderPalettePreview('activePalettePreview', {

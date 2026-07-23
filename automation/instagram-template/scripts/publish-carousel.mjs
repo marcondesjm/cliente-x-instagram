@@ -464,6 +464,74 @@ const ENGAGEMENT_INTELLIGENCE = {
   visualVariants: ['focus', 'numbered', 'quote', 'signal']
 };
 
+const CONTENT_GOALS = {
+  authority: {
+    label: 'Autoridade',
+    eyebrowHooks: ['Ponto de vista', 'Autoridade', 'Critério', 'Experiência real'],
+    captionAngles: [
+      'Ângulo de autoridade: mostre o critério antes de mostrar a ferramenta.',
+      'Sinal de maturidade: quem entende o processo decide melhor onde aplicar IA.',
+      'Ponto de vista da marca: automação boa começa com diagnóstico, não com pressa.'
+    ],
+    ctas: [
+      'Salve este post como referência para discutir IA com mais critério.',
+      'Envie para alguém que precisa decidir com mais clareza antes de automatizar.'
+    ]
+  },
+  leads: {
+    label: 'Captação de leads',
+    eyebrowHooks: ['Oportunidade', 'Lead qualificado', 'Próxima conversa', 'Sinal de demanda'],
+    captionAngles: [
+      'Ângulo de lead: quando a dor aparece com frequência, existe conversa comercial para abrir.',
+      'Sinal para captação: transforme dúvida repetida em convite para diagnóstico.',
+      'Ponto comercial: conteúdo bom reduz atrito antes do primeiro contato.'
+    ],
+    ctas: [
+      'Chame no direct com a palavra IA para mapear uma rotina que pode virar sistema.',
+      'Envie uma mensagem se você quer identificar onde a IA pode gerar resultado primeiro.'
+    ]
+  },
+  offer: {
+    label: 'Oferta ou lançamento',
+    eyebrowHooks: ['Oferta clara', 'Decisão', 'Momento de agir', 'Aplicação'],
+    captionAngles: [
+      'Ângulo de oferta: deixe claro o problema, o ganho e o próximo passo.',
+      'Ponto de decisão: uma oferta funciona melhor quando resolve uma dor concreta.',
+      'Sinal de compra: quando o custo do improviso fica visível, a solução ganha urgência.'
+    ],
+    ctas: [
+      'Fale comigo para entender como aplicar isso na sua empresa.',
+      'Peça uma análise rápida para ver se essa automação faz sentido no seu cenário.'
+    ]
+  },
+  personalBrand: {
+    label: 'Marca pessoal',
+    eyebrowHooks: ['Bastidor', 'Opinião', 'Aprendizado', 'Experiência'],
+    captionAngles: [
+      'Ângulo de marca pessoal: opinião forte com exemplo real cria memória.',
+      'Bastidor útil: conte o que você aprendeu observando a operação por dentro.',
+      'Ponto humano: autoridade cresce quando a experiência vira orientação prática.'
+    ],
+    ctas: [
+      'Comente se essa visão também aparece na sua rotina.',
+      'Envie para alguém que acompanha esse tema e quer pensar com mais profundidade.'
+    ]
+  },
+  reactivation: {
+    label: 'Reativação',
+    eyebrowHooks: ['Retomada', 'Volte a olhar', 'Ainda dá tempo', 'Nova chance'],
+    captionAngles: [
+      'Ângulo de reativação: às vezes o problema não sumiu, só ficou parado esperando decisão.',
+      'Sinal de retomada: uma pequena melhoria pode reabrir uma conversa que esfriou.',
+      'Ponto de reentrada: mostre uma oportunidade simples para voltar ao assunto.'
+    ],
+    ctas: [
+      'Se isso ainda está parado aí, me chame para retomar com um primeiro passo simples.',
+      'Envie para quem precisa voltar a olhar para essa rotina antes que ela pese mais.'
+    ]
+  }
+};
+
 function autoPack(topic, angle, context, sequence, runStamp = null) {
   const runLine = runStamp ? `\n\nEdição operacional ${runStamp}.` : '';
   return {
@@ -522,14 +590,20 @@ function engagementVariant(dateString, slotIndex, offset = 0) {
   ];
 }
 
-function enhanceSlide(slide, index, dateString, slotIndex) {
+function contentGoalFromAccount(account = {}) {
+  const goal = account.contentProfile?.goal || 'authority';
+  return CONTENT_GOALS[goal] || CONTENT_GOALS.authority;
+}
+
+function enhanceSlide(slide, index, dateString, slotIndex, goal = CONTENT_GOALS.authority) {
   const next = { ...slide };
   if (next.imagePath || next.imageUrl) return next;
 
   next.visualVariant = engagementVariant(dateString, slotIndex, index);
   if (index === 0) {
-    next.eyebrow = ENGAGEMENT_INTELLIGENCE.eyebrowHooks[
-      pickDailyIndex(ENGAGEMENT_INTELLIGENCE.eyebrowHooks, dateString, slotIndex)
+    const eyebrowHooks = goal.eyebrowHooks || ENGAGEMENT_INTELLIGENCE.eyebrowHooks;
+    next.eyebrow = eyebrowHooks[
+      pickDailyIndex(eyebrowHooks, dateString, slotIndex)
     ];
     if (next.body && !/[?!.]$/.test(next.body.trim())) next.body = `${next.body.trim()}.`;
   } else if (next.body && next.body.length > 150) {
@@ -546,14 +620,12 @@ function enhanceSlide(slide, index, dateString, slotIndex) {
   return next;
 }
 
-function enhanceCaption(caption, dateString, slotIndex) {
+function enhanceCaption(caption, dateString, slotIndex, goal = CONTENT_GOALS.authority) {
   const { body, hashtags } = splitCaptionParts(caption);
-  const cta = ENGAGEMENT_INTELLIGENCE.ctas[
-    pickDailyIndex(ENGAGEMENT_INTELLIGENCE.ctas, dateString, slotIndex)
-  ];
-  const angle = ENGAGEMENT_INTELLIGENCE.captionAngles[
-    pickDailyIndex(ENGAGEMENT_INTELLIGENCE.captionAngles, dateString, slotIndex)
-  ];
+  const ctas = [...(goal.ctas || []), ...ENGAGEMENT_INTELLIGENCE.ctas];
+  const angles = [...(goal.captionAngles || []), ...ENGAGEMENT_INTELLIGENCE.captionAngles];
+  const cta = ctas[pickDailyIndex(ctas, dateString, slotIndex)];
+  const angle = angles[pickDailyIndex(angles, dateString, slotIndex)];
   const slotNote = angle;
   const hasCta = /salve|envie|comente|compartilhe|mande/i.test(body);
   const bodyWithAngle = body.includes(slotNote) ? body : `${body}\n\n${slotNote}`;
@@ -561,7 +633,7 @@ function enhanceCaption(caption, dateString, slotIndex) {
   return [enhancedBody.trim(), hashtags].filter(Boolean).join('\n\n');
 }
 
-function enhancePackForEngagement(pack, dateString, slotIndex) {
+function enhancePackForEngagement(pack, dateString, slotIndex, account = {}) {
   if (process.env.INSTAGRAM_TEMPLATE_DISABLE_ENGAGEMENT_AI === 'true') {
     return {
       pack,
@@ -573,12 +645,14 @@ function enhancePackForEngagement(pack, dateString, slotIndex) {
   }
 
   const enhanced = JSON.parse(JSON.stringify(pack));
-  enhanced.slides = (enhanced.slides || []).map((slide, index) => enhanceSlide(slide, index, dateString, slotIndex));
-  enhanced.caption = enhanceCaption(enhanced.caption || '', dateString, slotIndex);
+  const goal = contentGoalFromAccount(account);
+  enhanced.slides = (enhanced.slides || []).map((slide, index) => enhanceSlide(slide, index, dateString, slotIndex, goal));
+  enhanced.caption = enhanceCaption(enhanced.caption || '', dateString, slotIndex, goal);
   enhanced.engagementIntelligence = {
     version: 1,
     appliedAt: new Date().toISOString(),
-    strategy: 'hook + CTA + visual variance',
+    strategy: `hook + CTA + visual variance + ${goal.label}`,
+    goal: goal.label,
     visualVariants: enhanced.slides.map((slide) => slide.visualVariant || 'custom-image'),
     captionCtaAdded: enhanced.caption !== pack.caption
   };
@@ -671,6 +745,7 @@ function profileTopicFromAccount(account = {}) {
   const audience = profile.audience || 'clientes';
   const offer = profile.offer || 'solução com IA';
   const tone = profile.tone || 'consultivo';
+  const goal = contentGoalFromAccount(account);
   const brandContext = buildBrandContext(account);
   const documentKeywords = Array.isArray(documentAnalysis.keywords) ? documentAnalysis.keywords.slice(0, 5).join(', ') : '';
   const differentiator = shortPhrase(brandSummary.differentiator || documentAnalysis.summary, offer);
@@ -679,13 +754,14 @@ function profileTopicFromAccount(account = {}) {
     pain: industry?.pain || `${shortPhrase(audience, 'clientes')} ainda precisa entender o valor de ${differentiator}`,
     process: industry
       ? `${industry.process}. Oferta da marca: ${shortPhrase(offer, 'solução com IA')}. Tom ${tone}. Contexto: ${brandContext}`
-      : `dor do público, promessa, prova, objeções e próximo passo em tom ${tone}. Contexto da empresa: ${brandContext}`,
+      : `dor do público, promessa, prova, objeções e próximo passo em tom ${tone}. Objetivo dos posts: ${goal.label}. Contexto da empresa: ${brandContext}`,
     gain: industry?.gain || (documentKeywords
       ? `transformar ${documentKeywords} em conversa prática sobre ${offer}`
       : `transformar interesse em conversa sobre ${offer}`),
     hashtag: industry?.hashtag || '#inteligenciaartificial #automacao #marketingdigital #negocios #conteudo',
     industryId: industry?.id || 'perfil',
-    industryExamples: industry?.examples || []
+    industryExamples: industry?.examples || [],
+    goal: goal.label
   };
 }
 
@@ -1421,7 +1497,7 @@ async function main() {
   const runId = `${timestampSaoPaulo()}-slot-${slotIndex}${args.renderOnly ? '-render-only' : ''}`;
   const runDir = join(RUNS_DIR, account.account, runId);
   mkdirSync(runDir, { recursive: true });
-  const enhancement = enhancePackForEngagement(pack, today, slotIndex);
+  const enhancement = enhancePackForEngagement(pack, today, slotIndex, account);
   pack = enhancement.pack;
   validatePack(pack);
   writeFileSync(join(runDir, 'engagement-intelligence.json'), JSON.stringify(enhancement.intelligence, null, 2), 'utf8');
