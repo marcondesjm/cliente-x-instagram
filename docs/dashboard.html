@@ -560,6 +560,30 @@
       overflow-wrap: anywhere;
     }
 
+    .briefing-template {
+      display: grid;
+      gap: 8px;
+    }
+
+    .briefing-template textarea {
+      min-height: 220px;
+      resize: vertical;
+      font-family: inherit;
+      line-height: 1.45;
+    }
+
+    .briefing-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .briefing-actions button {
+      min-height: 34px;
+      padding: 7px 10px;
+      font-size: 12px;
+    }
+
     .password-row {
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
@@ -1323,6 +1347,14 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <div class="document-box">
               <strong>Documento da empresa</strong>
               <span id="activeBrandDocumentStatus">Nenhum PDF/TXT anexado.</span>
+              <div class="briefing-template">
+                <textarea id="brandBriefingTemplate" rows="10" placeholder="Preencha o briefing padrão da empresa aqui."></textarea>
+                <div class="briefing-actions">
+                  <button type="button" id="fillBrandBriefing">Modelo padrão</button>
+                  <button type="button" id="copyBrandBriefing">Copiar briefing</button>
+                  <button type="button" id="downloadBrandBriefing">Baixar TXT</button>
+                </div>
+              </div>
               <label>
                 Anexar PDF ou TXT
                 <input id="activeBrandDocument" type="file" accept=".pdf,.txt,application/pdf,text/plain">
@@ -1784,6 +1816,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('activeBrandDocumentStatus').textContent = documentInfo.path
         ? `${documentInfo.name || 'Documento anexado'} · ${(documentInfo.mimeType || '').replace('application/', '').replace('text/', '') || 'arquivo'} · ${documentInfo.uploadedAt ? new Date(documentInfo.uploadedAt).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }) : 'salvo'}${keywords}`
         : 'Nenhum PDF/TXT anexado.';
+      fillBrandBriefingTemplate();
       document.getElementById('activeProfileResult').textContent = hasProfile
         ? `Perfil ativo para @${account.expectedUsername || appState.selectedAccount}.`
         : 'Informe nicho, público e oferta para orientar as próximas postagens.';
@@ -2743,6 +2776,75 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       });
     }
 
+    function buildBrandBriefingTemplate() {
+      const account = appState.account || {};
+      const profile = account.contentProfile || {};
+      const summary = account.brandSummary || {};
+      const palette = account.brandPalette || {};
+      return [
+        'BRIEFING PADRAO DA EMPRESA',
+        '',
+        `1. Nome da empresa/marca: ${account.brandName || ''}`,
+        `2. Instagram/site: ${account.expectedUsername ? `@${account.expectedUsername}` : ''}`,
+        `3. O que a empresa faz: ${summary.description || profile.niche || ''}`,
+        `4. Publico ideal: ${profile.audience || ''}`,
+        `5. Principal oferta/produto/servico: ${profile.offer || ''}`,
+        `6. Problemas que resolve: `,
+        `7. Principais beneficios para o cliente: `,
+        `8. Diferenciais da marca: ${summary.differentiator || ''}`,
+        `9. Posicionamento/frase da marca: ${summary.positioning || ''}`,
+        `10. Tom de voz desejado: ${profile.tone || 'consultivo'}`,
+        `11. Provas, cases, numeros ou resultados: `,
+        `12. Objecoes comuns dos clientes: `,
+        `13. Temas que devem aparecer nos criativos: `,
+        `14. Temas/palavras que devem ser evitados: `,
+        `15. Chamada para acao preferida: `,
+        `16. Cores da marca: primaria ${palette.primary || ''}, secundaria ${palette.secondary || ''}, fundo ${palette.background || ''}`,
+        '',
+        'Observacoes extras:',
+        ''
+      ].join('\n');
+    }
+
+    function fillBrandBriefingTemplate({ force = false } = {}) {
+      const field = document.getElementById('brandBriefingTemplate');
+      if (!force && field.value.trim()) return;
+      field.value = buildBrandBriefingTemplate();
+    }
+
+    async function copyBrandBriefingTemplate() {
+      const field = document.getElementById('brandBriefingTemplate');
+      const result = document.getElementById('activeProfileResult');
+      if (!field.value.trim()) fillBrandBriefingTemplate({ force: true });
+      try {
+        await navigator.clipboard.writeText(field.value);
+        result.className = 'access-result good';
+        result.textContent = 'Briefing copiado. Cole em um TXT ou envie para o cliente responder.';
+      } catch {
+        field.focus();
+        field.select();
+        result.className = 'access-result warn';
+        result.textContent = 'Selecionei o briefing. Use Ctrl+C para copiar.';
+      }
+    }
+
+    function downloadBrandBriefingTemplate() {
+      const field = document.getElementById('brandBriefingTemplate');
+      const result = document.getElementById('activeProfileResult');
+      if (!field.value.trim()) fillBrandBriefingTemplate({ force: true });
+      const blob = new Blob([field.value], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'briefing-da-empresa.txt';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      result.className = 'access-result good';
+      result.textContent = 'TXT do briefing gerado. Depois de preencher, anexe esse arquivo aqui.';
+    }
+
     async function uploadBrandDocument() {
       const input = document.getElementById('activeBrandDocument');
       const file = input.files?.[0];
@@ -3161,6 +3263,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('saveActiveProfile').addEventListener('click', saveActiveProfile);
       document.getElementById('createAccount').addEventListener('click', createAccount);
       document.getElementById('uploadBrandDocument').addEventListener('click', uploadBrandDocument);
+      document.getElementById('fillBrandBriefing').addEventListener('click', () => fillBrandBriefingTemplate({ force: true }));
+      document.getElementById('copyBrandBriefing').addEventListener('click', copyBrandBriefingTemplate);
+      document.getElementById('downloadBrandBriefing').addEventListener('click', downloadBrandBriefingTemplate);
       ['activeBrandPrimary', 'activeBrandSecondary', 'activeBrandBackground'].forEach((id) => {
         document.getElementById(id).addEventListener('input', () => {
           renderPalettePreview('activePalettePreview', {
