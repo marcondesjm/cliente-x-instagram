@@ -1489,7 +1489,10 @@ function anatexSlideHtml(slide, index, total, account, style) {
   const noteWidth = mode === 'minimal' ? 650 : mode === 'poster' || mode === 'magazine' ? 430 : mode === 'split' || placement?.includes?.('layout-left') ? 380 : 390;
   const noteFontSize = body.length > 170 ? 21 : body.length > 125 ? 23 : body.length > 95 ? 25 : 27;
   const noteLines = estimateTextLines(body, noteWidth, noteFontSize);
-  const noteMinHeight = Math.min(420, Math.max(282, 118 + (noteLines * noteFontSize * 1.18)));
+  const closeFontScale = creativeBody.close.length > 92 ? 0.68 : creativeBody.close.length > 68 ? 0.70 : 0.74;
+  const closeLines = estimateTextLines(creativeBody.close, noteWidth - 20, noteFontSize * closeFontScale);
+  const closeMinHeight = Math.max(78, Math.min(136, 32 + (closeLines * noteFontSize * closeFontScale * 1.22)));
+  const noteMinHeight = Math.min(460, Math.max(310, 144 + closeMinHeight + (noteLines * noteFontSize * 1.03)));
   const progressItems = Array.from({ length: total }, (_, itemIndex) => (
     `<span class="${itemIndex + 1 <= index ? 'active' : ''}"></span>`
   )).join('');
@@ -1582,7 +1585,7 @@ function anatexSlideHtml(slide, index, total, account, style) {
     .note::before { content: "${String(index).padStart(2, '0')}"; position: absolute; left: 28px; top: 30px; width: 56px; height: 56px; border-radius: 50%; background: ${accent}; color: #fff6ef; display: grid; place-items: center; font-size: 25px; font-weight: 900; }
     .note .lead { display: block; margin-bottom: 5px; color: ${accent}; font-size: 0.78em; line-height: 1.05; font-weight: 900; }
     .note .emphasis { display: block; max-width: 100%; color: ${slideStyle.text}; font-size: 1.12em; line-height: 1; font-weight: 900; }
-    .note .close { display: inline-block; max-width: 100%; margin-top: 12px; padding: 8px 10px 9px; border-radius: 8px; background: ${accent}; color: #fff6ef; font-size: 0.72em; line-height: 1.04; font-weight: 900; }
+    .note .close { display: block; max-width: 100%; min-height: ${closeMinHeight}px; margin-top: 14px; padding: 12px 14px 13px; border-radius: 10px; background: ${accent}; color: #fff6ef; font-size: ${closeFontScale}em; line-height: 1.12; font-weight: 900; overflow-wrap: anywhere; }
     .panel {
       position: absolute;
       right: 56px;
