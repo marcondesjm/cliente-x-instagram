@@ -4203,7 +4203,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       if (source === '/docs/uploads/avatar-marcondes.png' && previewAvatarDataUrl) return previewAvatarDataUrl;
       try {
         const path = /^https?:\/\//i.test(source)
-          ? `/api/image-proxy?url=${encodeURIComponent(source)}`
+          ? `${source}${source.includes('?') ? '&' : '?'}preview=${Date.now()}`
           : source.startsWith('/')
             ? source
             : `/${source.replace(/^\/+/, '')}`;
@@ -4219,7 +4219,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         previewAvatarDataUrls[source] = dataUrl;
         if (source === '/docs/uploads/avatar-marcondes.png') previewAvatarDataUrl = dataUrl;
       } catch {
-        previewAvatarDataUrls[source] = '';
+        previewAvatarDataUrls[source] = /^https?:\/\//i.test(source) ? `${source}${source.includes('?') ? '&' : '?'}preview=${Date.now()}` : '';
       }
       return previewAvatarDataUrls[source] || '';
     }
