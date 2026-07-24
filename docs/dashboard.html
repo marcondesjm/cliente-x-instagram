@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v3.3</div>
+        <div class="header-version" id="headerVersion">Versão atual: v3.4</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -4202,6 +4202,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const isHook = index === 1;
       const isCta = index === totalSlides;
       const isProof = index === totalSlides - 1;
+      const useSectorPhoto = Boolean(sectorPhotoHref && (isHook || isCta));
       const dateSeed = previewSeedFromText(item.previewDate || item.planDate || item.date || '');
       const modeNames = ['paper', 'split', 'poster', 'minimal', 'magazine'];
       const modeSeed = ((Number.parseInt(String(item.slotIndex || '0').replace(/\D/g, ''), 10) || 0) * 2) + (dateSeed * 3);
@@ -4292,7 +4293,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <rect x="72" y="1192" width="250" height="56" rx="28" fill="${theme.text}"/>
             <text x="102" y="1229" fill="#fff6ef" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900">SALVE ESTE PASSO</text>
           ` : ''}
-          ${sectorPhotoHref ? `
+          ${useSectorPhoto ? `
             <rect x="${photo.x - 8}" y="${photo.y - 8}" width="${photo.w + 16}" height="${photo.h + 16}" rx="${photo.r + 8}" fill="#fffaf7" opacity="0.82"/>
             <image href="${sectorPhotoHref}" x="${photo.x}" y="${photo.y}" width="${photo.w}" height="${photo.h}" preserveAspectRatio="xMidYMid slice" clip-path="url(#sectorPhotoClip)" opacity="0.88"/>
             <rect x="${photo.x}" y="${photo.y}" width="${photo.w}" height="${photo.h}" rx="${photo.r}" fill="#17211c" opacity="0.10"/>

@@ -1437,9 +1437,10 @@ function anatexSlideHtml(slide, index, total, account, style) {
   const avatarClass = avatarImage ? ' has-avatar' : '';
   const mode = slideStyle.templateMode || 'paper';
   const visualCue = slide.visualCue || visualCueFromText(`${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
-  const sectorPhotoImage = sectorPhotoCssImage(visualCue);
-  const sectorPhotoClass = sectorPhotoImage ? ' has-sector-photo' : '';
   const engagementRole = index === 1 ? 'hook' : index === total ? 'cta' : index === total - 1 ? 'proof' : 'value';
+  const useSectorPhoto = engagementRole === 'hook' || engagementRole === 'cta';
+  const sectorPhotoImage = useSectorPhoto ? sectorPhotoCssImage(visualCue) : '';
+  const sectorPhotoClass = sectorPhotoImage ? ' has-sector-photo' : '';
   const swipeCue = index === 1 ? '<div class="swipe-cue">arraste para ver</div>' : '';
   const saveCue = index === total ? '<div class="save-cue">link na bio</div>' : index === 3 ? '<div class="save-cue">salve este passo</div>' : '';
   const placement = [
