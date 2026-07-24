@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v1.8</div>
+        <div class="header-version" id="headerVersion">Versão atual: v1.9</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1223,6 +1223,15 @@
             <span class="status-pill" id="dailyPlanStatus">Carregando</span>
           </div>
           <div class="daily-plan" id="dailyPlan"></div>
+          <div style="height: 16px;"></div>
+          <div class="panel-head" style="margin-bottom: 10px;">
+            <div>
+              <div class="section-label" id="tomorrowPreviewDate">Amanhã</div>
+              <h2>Primeiros posts de amanhã</h2>
+            </div>
+            <span class="status-pill" id="tomorrowPreviewStatus">Carregando</span>
+          </div>
+          <div class="daily-plan" id="tomorrowPreview"></div>
           <div class="plan-preview" id="dailyPlanPreview">
             <div>
               <img id="dailyPlanPreviewImage" src="" alt="Prévia renderizada do horário">
@@ -1832,6 +1841,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       packs: [],
       scheduleBrt: [],
       dailyPlan: [],
+      tomorrowPreview: { date: '', items: [] },
       scheduledPosts: [],
       weeklyPrograms: [],
       selectedPack: 0,
@@ -1990,6 +2000,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         appState.packs = state.packs || [];
         appState.scheduleBrt = state.scheduleBrt || [];
         appState.dailyPlan = state.dailyPlan || [];
+        appState.tomorrowPreview = state.tomorrowPreview || { date: '', items: [] };
         appState.scheduledPosts = state.scheduledPosts || [];
         appState.weeklyPrograms = state.weeklyPrograms || [];
         appState.secrets = state.secrets || [];
@@ -2008,6 +2019,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         renderWatchdog();
         renderSchedule();
         renderDailyPlan();
+        renderTomorrowPreview();
         renderWeeklyPrograms();
         renderScheduleEditor();
         renderQueue();
@@ -3972,6 +3984,57 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
                 : canRender
                 ? `<button type="button" data-render-plan-slot="${escapeHtml(item.slotIndex)}">Ver arte</button>`
                 : `<button type="button" data-preview-plan="${escapeHtml(item.slotIndex)}">Ver prévia</button>`}
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function formatDateLabel(dateString = '') {
+      if (!dateString) return 'Amanhã';
+      const [year, month, day] = String(dateString).split('-').map(Number);
+      if (!year || !month || !day) return 'Amanhã';
+      return new Intl.DateTimeFormat('pt-BR', {
+        timeZone: 'America/Sao_Paulo',
+        weekday: 'short',
+        day: '2-digit',
+        month: '2-digit'
+      }).format(new Date(Date.UTC(year, month - 1, day, 15, 0, 0)));
+    }
+
+    function renderTomorrowPreview() {
+      const list = document.getElementById('tomorrowPreview');
+      const status = document.getElementById('tomorrowPreviewStatus');
+      const dateLabel = document.getElementById('tomorrowPreviewDate');
+      const preview = appState.tomorrowPreview || {};
+      const items = preview.items || [];
+      if (dateLabel) dateLabel.textContent = `Amanhã · ${formatDateLabel(preview.date)}`;
+
+      if (!items.length) {
+        status.textContent = 'Vazio';
+        status.className = 'status-pill warn';
+        list.innerHTML = '<div class="empty">Ainda não há previsão para amanhã.</div>';
+        return;
+      }
+
+      status.textContent = `${items.length} previstos`;
+      status.className = 'status-pill good';
+      list.innerHTML = items.map((item) => {
+        const typeLabel = item.type === 'manual' ? 'Manual' : item.type === 'program' ? 'Programa' : 'Automático';
+        const typeClass = item.type === 'automatic' ? 'good' : 'warn';
+        const slot = item.type === 'program'
+          ? `programa ${item.programId || ''}`.trim()
+          : `slot ${item.slotIndex}${item.packIndex !== undefined && item.packIndex !== null ? ` · ${item.packIndex}` : ''}`;
+        return `
+          <article class="plan-card">
+            <div class="plan-top">
+              <div class="plan-time">${escapeHtml(item.time || '--:--')}</div>
+              <span class="status-pill ${typeClass}">${typeLabel}</span>
+            </div>
+            <div class="plan-title">${escapeHtml(item.title || 'Conteúdo previsto')}</div>
+            <div class="plan-caption">${escapeHtml(item.caption || 'Legenda será montada pelo gerador automático.')}</div>
+            <div class="plan-actions">
+              <div class="run-meta">${escapeHtml(slot)} · ${escapeHtml(item.mode || 'feed + story')}</div>
             </div>
           </article>
         `;

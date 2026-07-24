@@ -55,6 +55,7 @@ function parseArgs(argv) {
     dryRun: argv.includes('--dry-run'),
     renderOnly: argv.includes('--render-only'),
     planDay: argv.includes('--plan-day'),
+    planDate: getValue('--plan-date', ''),
     storyOnly: argv.includes('--story-only'),
     validateCopy: argv.includes('--validate-copy'),
     scheduledOnly: argv.includes('--scheduled-only')
@@ -2197,7 +2198,7 @@ async function main() {
   const packs = mergePacks(supabasePacks, localPacks);
   validatePacks(packs);
 
-  const today = todaySaoPaulo();
+  const today = args.planDate || todaySaoPaulo();
   if (args.planDay) {
     console.log(JSON.stringify({
       ok: true,

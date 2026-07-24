@@ -35,7 +35,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v1.8',
+  appVersion: 'v1.9',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -217,6 +217,16 @@ function saoPauloParts(date = new Date()) {
 function todaySaoPaulo() {
   const parts = saoPauloParts();
   return `${parts.year}-${parts.month}-${parts.day}`;
+}
+
+function addDaysToDateString(dateString, days = 1) {
+  const [year, month, day] = String(dateString || todaySaoPaulo()).split('-').map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day + days, 15, 0, 0));
+  return date.toISOString().slice(0, 10);
+}
+
+function tomorrowSaoPaulo() {
+  return addDaysToDateString(todaySaoPaulo(), 1);
 }
 
 function weekdaySaoPaulo(dateString = todaySaoPaulo()) {
@@ -442,12 +452,14 @@ function dailyPlan(scheduleBrt = [], packs = [], scheduledPosts = [], dateString
   });
 }
 
-function publisherDailyPlan(accountKey = 'cliente-x') {
+function publisherDailyPlan(accountKey = 'cliente-x', dateString = todaySaoPaulo()) {
   const result = spawnSync(process.execPath, [
     'automation/instagram-template/scripts/publish-carousel.mjs',
     '--account',
     accountKey,
-    '--plan-day'
+    '--plan-day',
+    '--plan-date',
+    dateString
   ], {
     cwd: ROOT,
     encoding: 'utf8',
@@ -1392,6 +1404,7 @@ export default async function handler(req, res) {
       secrets: [],
       scheduleBrt: [],
       dailyPlan: [],
+      tomorrowPreview: { date: tomorrowSaoPaulo(), items: [] },
       weeklyPrograms: [],
       packs: [],
       packCount: 0,
@@ -1434,6 +1447,14 @@ export default async function handler(req, res) {
     }
   }
   plan = mergeProgramItems(plan, weeklyPrograms);
+  const tomorrowDate = tomorrowSaoPaulo();
+  let tomorrowPlan = [];
+  try {
+    tomorrowPlan = publisherDailyPlan(accountKey, tomorrowDate);
+  } catch {
+    tomorrowPlan = editorialDailyPlan(scheduleBrt, account, packs, scheduledPosts, tomorrowDate);
+  }
+  tomorrowPlan = mergeProgramItems(tomorrowPlan, weeklyPrograms, tomorrowDate).slice(0, 3);
 
   res.setHeader('cache-control', 'no-store');
   res.status(200).json({
@@ -1463,6 +1484,10 @@ export default async function handler(req, res) {
     secrets: session ? secretStatuses(accounts) : [],
     scheduleBrt,
     dailyPlan: plan,
+    tomorrowPreview: {
+      date: tomorrowDate,
+      items: tomorrowPlan
+    },
     weeklyPrograms,
     packs,
     packCount: packs.length,

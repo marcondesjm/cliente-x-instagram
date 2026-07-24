@@ -91,6 +91,16 @@ function todaySaoPaulo() {
   return `${parts.year}-${parts.month}-${parts.day}`;
 }
 
+function addDaysToDateString(dateString, days = 1) {
+  const [year, month, day] = String(dateString || todaySaoPaulo()).split('-').map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day + days, 15, 0, 0));
+  return date.toISOString().slice(0, 10);
+}
+
+function tomorrowSaoPaulo() {
+  return addDaysToDateString(todaySaoPaulo(), 1);
+}
+
 function weekdaySaoPaulo(dateString = todaySaoPaulo()) {
   const [year, month, day] = dateString.split('-').map(Number);
   return new Date(Date.UTC(year, month - 1, day, 15, 0, 0)).getUTCDay();
@@ -198,12 +208,14 @@ function dailyPlan(scheduleBrt = [], packs = [], scheduledPosts = [], dateString
   });
 }
 
-function publisherDailyPlan(accountKey = ACCOUNT) {
+function publisherDailyPlan(accountKey = ACCOUNT, dateString = todaySaoPaulo()) {
   const result = spawnSync(process.execPath, [
     'automation/instagram-template/scripts/publish-carousel.mjs',
     '--account',
     accountKey,
-    '--plan-day'
+    '--plan-day',
+    '--plan-date',
+    dateString
   ], {
     cwd: ROOT,
     encoding: 'utf8',
@@ -454,6 +466,14 @@ function getState() {
     plan = dailyPlan(scheduleBrt, packs, scheduledPosts);
   }
   plan = mergeProgramItems(plan, weeklyPrograms);
+  const tomorrowDate = tomorrowSaoPaulo();
+  let tomorrowPlan = [];
+  try {
+    tomorrowPlan = publisherDailyPlan(account?.account || ACCOUNT, tomorrowDate);
+  } catch {
+    tomorrowPlan = dailyPlan(scheduleBrt, packs, scheduledPosts, tomorrowDate);
+  }
+  tomorrowPlan = mergeProgramItems(tomorrowPlan, weeklyPrograms, tomorrowDate).slice(0, 3);
   const latestResultFile = latestFiles(join(RUNS_DIR, ACCOUNT), (path) => path.endsWith('result.json'), 30)
     .find((file) => {
       const result = readJson(file.path);
@@ -485,6 +505,10 @@ function getState() {
     },
     scheduleBrt,
     dailyPlan: plan,
+    tomorrowPreview: {
+      date: tomorrowDate,
+      items: tomorrowPlan
+    },
     weeklyPrograms,
     packs,
     packCount: packs.length,
