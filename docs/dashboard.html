@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.0</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.1</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1577,6 +1577,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <label>
               Diferencial
               <input id="activeBrandDifferentiator" placeholder="ex: transforma rotina real em automação, sem linguagem técnica demais">
+            </label>
+            <label class="check" style="align-items:center;">
+              <input id="activeBrandPaletteEnabled" type="checkbox">
+              <div>
+                <strong>Habilitar paleta manual</strong>
+                <span>Quando ligado, as próximas postagens usam as cores escolhidas abaixo.</span>
+              </div>
             </label>
             <div class="brand-palette">
               <label class="color-field">
@@ -2116,12 +2123,22 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       return ((r * 299 + g * 587 + b * 114) / 1000) > 150 ? '#17211c' : '#ffffff';
     }
 
+    function mixPreviewColor(hexA, hexB, weight = 0.5) {
+      const a = parseInt(paletteColor(hexA, '#ffffff').slice(1), 16);
+      const b = parseInt(paletteColor(hexB, '#ffffff').slice(1), 16);
+      const channel = (shift) => Math.round((((a >> shift) & 255) * (1 - weight)) + (((b >> shift) & 255) * weight));
+      return `#${[16, 8, 0].map((shift) => channel(shift).toString(16).padStart(2, '0')).join('')}`;
+    }
+
     function renderPalettePreview(targetId, palette = {}) {
       const target = document.getElementById(targetId);
       if (!target) return;
+      const manualEnabled = targetId === 'activePalettePreview'
+        ? document.getElementById('activeBrandPaletteEnabled')?.checked
+        : Boolean(palette.enabled);
       const colors = [
-        ['Primária', paletteColor(palette.primary, '#17211c')],
-        ['Secundária', paletteColor(palette.secondary, '#0e7c5a')],
+        [manualEnabled ? 'Manual primária' : 'Primária salva', paletteColor(palette.primary, '#17211c')],
+        [manualEnabled ? 'Manual destaque' : 'Destaque salvo', paletteColor(palette.secondary, '#0e7c5a')],
         ['Fundo', paletteColor(palette.background, '#f4f7f5')]
       ];
       target.innerHTML = colors.map(([label, color]) => `
@@ -2154,6 +2171,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('activeBrandSummary').value = summary.description || '';
       document.getElementById('activeBrandPositioning').value = summary.positioning || '';
       document.getElementById('activeBrandDifferentiator').value = summary.differentiator || '';
+      document.getElementById('activeBrandPaletteEnabled').checked = Boolean(palette.enabled);
       document.getElementById('activeBrandPrimary').value = paletteColor(palette.primary, '#17211c');
       document.getElementById('activeBrandSecondary').value = paletteColor(palette.secondary, '#0e7c5a');
       document.getElementById('activeBrandBackground').value = paletteColor(palette.background, '#f4f7f5');
@@ -2664,6 +2682,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               secondary: document.getElementById('activeBrandSecondary').value,
               background: document.getElementById('activeBrandBackground').value
             },
+            brandPaletteEnabled: document.getElementById('activeBrandPaletteEnabled').checked,
             avatarRotationEnabled: document.getElementById('activeAvatarRotationEnabled').checked,
             avatarUrls: document.getElementById('activeAvatarUrls').value
               .split(/\r?\n/)
@@ -4322,13 +4341,29 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const modeNames = ['paper', 'split', 'poster', 'minimal', 'magazine'];
       const modeSeed = ((Number.parseInt(String(item.slotIndex || '0').replace(/\D/g, ''), 10) || 0) * 2) + (dateSeed * 3);
       const mode = modeNames[(modeSeed + index) % modeNames.length];
-      const theme = [
+      let theme = [
         { accent: '#c46a32', soft: '#dfc8b8', top: '#f7f4ee', bottom: '#e7edf0', text: '#17211c', muted: '#ead4c8', cue: '#2f7d73', stripe: '' },
         { accent: '#2f766d', soft: '#cfe5de', top: '#f5f8f3', bottom: '#dfe9dc', text: '#14262f', muted: '#c7ddd4', cue: '#c46a32', stripe: '<rect x="0" y="92" width="1080" height="26" fill="#ffffff" opacity="0.34"/>' },
         { accent: '#315f7d', soft: '#cbdde7', top: '#f7fbfb', bottom: '#ddebf0', text: '#102333', muted: '#c7dbe4', cue: '#8f5c42', stripe: '<rect x="0" y="1040" width="1080" height="310" fill="#ffffff" opacity="0.34"/>' },
         { accent: '#8f5c42', soft: '#e5d3c7', top: '#fbf8f2', bottom: '#e5e9e2', text: '#17211c', muted: '#e4cfc1', cue: '#2f766d', stripe: '<rect x="0" y="0" width="118" height="1350" fill="#e5e9e2" opacity="0.92"/>' },
         { accent: '#7b6957', soft: '#ded7cc', top: '#f8f6f0', bottom: '#e9ece7', text: '#17211c', muted: '#d7cec2', cue: '#315f7d', stripe: '<rect x="828" y="0" width="252" height="1350" fill="#ffffff" opacity="0.42"/>' }
       ][modeSeed % 5];
+      const manualPalette = appState.account?.brandPalette || {};
+      if (manualPalette.enabled) {
+        const primary = paletteColor(manualPalette.primary, theme.text);
+        const secondary = paletteColor(manualPalette.secondary, theme.accent);
+        const background = paletteColor(manualPalette.background, theme.top);
+        theme = {
+          ...theme,
+          accent: secondary,
+          soft: mixPreviewColor(background, secondary, 0.22),
+          top: mixPreviewColor(background, '#ffffff', 0.18),
+          bottom: mixPreviewColor(background, secondary, 0.08),
+          text: mixPreviewColor(primary, '#000000', 0.18),
+          muted: mixPreviewColor(background, secondary, 0.18),
+          cue: primary
+        };
+      }
       const layout = {
         paper: { titleX: 58, titleY: 245, titleW: 620, titleSize: title.length > 58 ? 54 : 64, panelX: 650, panelY: 470, panelW: 380, panelH: 454, panelR: 3, noteX: 78, noteY: 730, noteW: 540, noteTextX: 188, noteTextW: 380 },
         split: { titleX: 470, titleY: 250, titleW: 540, titleSize: title.length > 52 ? 48 : 56, panelX: 58, panelY: 438, panelW: 370, panelH: 470, panelR: -3, noteX: 470, noteY: 740, noteW: 540, noteTextX: 580, noteTextW: 380 },
@@ -4834,6 +4869,14 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('activeAccountGoal').addEventListener('change', (event) => {
         document.getElementById('brandBriefingGoal').value = event.target.value;
         fillBrandBriefingTemplate({ force: true });
+      });
+      document.getElementById('activeBrandPaletteEnabled').addEventListener('change', () => {
+        renderPalettePreview('activePalettePreview', {
+          primary: document.getElementById('activeBrandPrimary').value,
+          secondary: document.getElementById('activeBrandSecondary').value,
+          background: document.getElementById('activeBrandBackground').value
+        });
+        refreshDailyPlanFromLocalState();
       });
       document.getElementById('newAccountGoal').addEventListener('change', (event) => {
         document.getElementById('newAccountBriefingGoal').value = event.target.value;

@@ -35,7 +35,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.0',
+  appVersion: 'v4.1',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -1041,7 +1041,10 @@ async function createAccountConfig(body = {}, session = null) {
     goal: String(body.goal || 'authority').trim() || 'authority'
   };
   const brandSummary = normalizeBrandSummary(body.brandSummary || {});
-  const brandPalette = normalizeBrandPalette(body.brandPalette || {});
+  const brandPalette = {
+    ...normalizeBrandPalette(body.brandPalette || {}),
+    enabled: Boolean(body.brandPaletteEnabled)
+  };
   const sourceAccount = normalizeAccountKey(body.sourceAccount || 'cliente-x');
   if (!expectedUsername) throw userError('Informe o @ do Instagram sem espaco.');
   if (!contentProfile.niche || !contentProfile.audience || !contentProfile.offer) {
@@ -1117,7 +1120,10 @@ async function updateAccountProfile(body = {}, session = null) {
     goal: String(body.goal || accountsFile.data[index].contentProfile?.goal || 'authority').trim() || 'authority'
   };
   const brandSummary = normalizeBrandSummary(body.brandSummary || accountsFile.data[index].brandSummary || {});
-  const brandPalette = normalizeBrandPalette(body.brandPalette || accountsFile.data[index].brandPalette || {});
+  const brandPalette = {
+    ...normalizeBrandPalette(body.brandPalette || accountsFile.data[index].brandPalette || {}),
+    enabled: Boolean(body.brandPaletteEnabled)
+  };
   const avatarUrls = Array.isArray(body.avatarUrls)
     ? body.avatarUrls.map((item) => String(item || '').trim()).filter(Boolean).slice(0, 24)
     : Array.isArray(accountsFile.data[index].avatarRotation?.urls)

@@ -1775,6 +1775,7 @@ function anatexSlideHtml(slide, index, total, account, style) {
 
 function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo(), slotIndex = 0 } = {}) {
   const palette = account.brandPalette || {};
+  if (!palette.enabled) return style;
   if (!validHexColor(palette.primary) && !validHexColor(palette.secondary) && !validHexColor(palette.background)) {
     return style;
   }
