@@ -28,13 +28,14 @@ const CONTENT_FILE_PATH = 'automation/instagram-template/config/content-packs.js
 const SCHEDULED_FILE_PATH = 'automation/instagram-template/config/scheduled-posts.json';
 const WEEKLY_PROGRAMS_FILE_PATH = 'automation/instagram-template/config/weekly-programs.json';
 const WATCHDOG_ERRORS_FILE_PATH = 'automation/instagram-template/config/watchdog-errors.json';
+const FORCE_WATCHDOG_FILE_PATH = '.github/force-instagram-watchdog.txt';
 const VERCEL_PROJECT_ID = process.env.VERCEL_PROJECT_ID || 'prj_AVyS8LGjVuhUOxkpfZZwOF5vMmPj';
 const VERCEL_TEAM_ID = process.env.VERCEL_TEAM_ID || 'team_T4Th6hb1UxtrbtcWfLxlWNRQ';
 const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instagram';
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v1.5',
+  appVersion: 'v1.6',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -860,6 +861,26 @@ async function writeGithubFile(filePath, base64Content, message) {
   });
 }
 
+async function forceInstagramWatchdog(session) {
+  if (!isOwner(session)) throw userError('Apenas o admin principal pode forcar o vigia.', 403);
+  const now = new Date().toISOString();
+  const content = [
+    `force=${now}`,
+    'reason=dashboard-watchdog-force',
+    'target=instagram-feed-cliente-x'
+  ].join('\n');
+  await writeGithubFile(
+    FORCE_WATCHDOG_FILE_PATH,
+    Buffer.from(`${content}\n`, 'utf8').toString('base64'),
+    `Force Instagram watchdog ${now}`
+  );
+  return {
+    ok: true,
+    message: 'Vigia acionado. O GitHub Actions deve iniciar em alguns instantes.',
+    forcedAt: now
+  };
+}
+
 function envPrefixFromAccount(accountKey) {
   return accountKey.toUpperCase().replace(/[^A-Z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'CLIENTE';
 }
@@ -1299,6 +1320,12 @@ export default async function handler(req, res) {
       }
       if (body.action === 'redeploy-vercel') {
         const result = await redeployVercelProduction();
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json(result);
+        return;
+      }
+      if (body.action === 'force-watchdog') {
+        const result = await forceInstagramWatchdog(session);
         res.setHeader('cache-control', 'no-store');
         res.status(200).json(result);
         return;

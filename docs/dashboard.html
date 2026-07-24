@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v1.5</div>
+        <div class="header-version" id="headerVersion">Versão atual: v1.6</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1394,7 +1394,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               <div class="section-label">Automação</div>
               <h2>Vigia automático</h2>
             </div>
-            <span class="status-pill good" id="watchdogStatus">Ativo</span>
+            <div class="actions">
+              <button id="forceWatchdog" type="button">Forçar vigia</button>
+              <span class="status-pill good" id="watchdogStatus">Ativo</span>
+            </div>
           </div>
           <div class="checks" id="watchdogPanel">
             <div class="check">
@@ -2358,8 +2361,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         },
         {
           level: 'good',
+          title: 'Forçar vigia',
+          body: 'Se o schedule do GitHub atrasar, o botão Forçar vigia atualiza o arquivo de disparo e coloca o workflow principal na fila por push.'
+        },
+        {
+          level: 'good',
           title: 'Workflow principal',
-          body: 'Instagram Feed Cliente X roda nos minutos 03, 08, 13, 18, 23, 28, 33, 38, 43, 48, 53 e 58.'
+          body: 'Instagram Feed Cliente X roda nos minutos 03, 08, 13, 18, 23, 28, 33, 38, 43, 48, 53 e 58, e também por empurrão manual do vigia.'
         },
         {
           level: 'good',
@@ -2799,6 +2807,30 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         deployMessage.textContent = `Redeploy falhou: ${error.message}`;
         deployMessage.className = 'message bad';
         setMessage(error.message, 'bad');
+      } finally {
+        button.disabled = false;
+        setTimeout(() => {
+          button.textContent = original;
+        }, 4000);
+      }
+    }
+
+    async function forceWatchdog() {
+      const button = document.getElementById('forceWatchdog');
+      if (!button) return;
+      const original = button.textContent;
+      button.disabled = true;
+      button.textContent = 'Acionando...';
+      setMessage('Acionando o vigia pelo GitHub...', 'warn');
+      try {
+        const payload = await api('/api/state', {
+          method: 'POST',
+          body: JSON.stringify({ action: 'force-watchdog' })
+        });
+        button.textContent = 'Vigia acionado';
+        setMessage(payload.message || 'Vigia acionado. Aguarde o GitHub Actions iniciar.', 'good');
+      } catch (error) {
+        setMessage(`Falha ao acionar vigia: ${error.message}`, 'bad');
       } finally {
         button.disabled = false;
         setTimeout(() => {
@@ -4456,6 +4488,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('refreshRuns').addEventListener('click', refreshRuns);
       document.getElementById('accountSelect').addEventListener('change', switchAccount);
       document.getElementById('redeployVercel').addEventListener('click', redeployVercel);
+      document.getElementById('forceWatchdog').addEventListener('click', forceWatchdog);
       document.getElementById('saveActiveProfile').addEventListener('click', saveActiveProfile);
       document.getElementById('createAccount').addEventListener('click', createAccount);
       document.getElementById('uploadBrandDocument').addEventListener('click', uploadBrandDocument);
