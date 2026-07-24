@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v3.2</div>
+        <div class="header-version" id="headerVersion">Versão atual: v3.3</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -4251,6 +4251,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         <rect x="${72 + (progressIndex * 182)}" y="${progressY}" width="160" height="8" rx="4" fill="${progressIndex < index ? theme.accent : 'rgba(20,38,47,0.13)'}"/>
       `).join('');
       const badgeY = 136;
+      const headerAccent = '#2f766d';
+      const headerText = '#17342f';
       const svg = `
         <svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
           <defs>
@@ -4265,16 +4267,17 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           ${mode === 'poster' ? `<rect x="0" y="0" width="1080" height="676" fill="#ffffff" opacity="0.66"/>` : ''}
           ${theme.stripe}
           ${mode === 'magazine' ? `<rect x="0" y="0" width="96" height="1350" fill="${theme.bottom}" opacity="0.9"/>` : ''}
-          <line x1="56" y1="50" x2="1000" y2="50" stroke="${theme.accent}" stroke-width="3" opacity="0.78"/>
-          <text x="118" y="72" fill="${theme.accent}" opacity="1" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">Marcondes Machado</text>
-          <text x="940" y="72" fill="${theme.accent}" opacity="1" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">&gt;&gt;</text>
+          ${mode === 'split' ? '<rect x="0" y="0" width="520" height="1350" fill="#fffaf7" opacity="0.72"/>' : ''}
+          <line x1="56" y1="50" x2="1000" y2="50" stroke="${headerAccent}" stroke-width="3" opacity="0.88"/>
+          <text x="118" y="72" fill="${headerText}" opacity="1" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">Marcondes Machado</text>
+          <text x="940" y="72" fill="${headerAccent}" opacity="1" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">&gt;&gt;</text>
           <circle cx="948" cy="166" r="150" fill="${theme.soft}" opacity="0.42"/>
           <circle cx="944" cy="1180" r="238" fill="${theme.muted}" opacity="0.32"/>
           <g opacity="0.42" fill="${theme.accent}">
             ${Array.from({ length: 28 }, (_, i) => `<circle cx="${28 + (i % 7) * 22}" cy="${110 + Math.floor(i / 7) * 22}" r="4"/>`).join('')}
           </g>
           <text x="664" y="210" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">*</text>
-          <rect x="84" y="${badgeY}" width="360" height="60" rx="12" fill="${theme.accent}" opacity="1"/>
+          <rect x="84" y="${badgeY}" width="360" height="60" rx="12" fill="${headerAccent}" opacity="1"/>
           <circle cx="124" cy="${badgeY + 30}" r="18" fill="none" stroke="#fff5ed" stroke-width="4"/>
           <path d="M114 ${badgeY + 29}l8 9 15-20" fill="none" stroke="#fff5ed" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
           <text x="158" y="${badgeY + 40}" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900">${kicker}</text>
@@ -4289,7 +4292,6 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <rect x="72" y="1192" width="250" height="56" rx="28" fill="${theme.text}"/>
             <text x="102" y="1229" fill="#fff6ef" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900">SALVE ESTE PASSO</text>
           ` : ''}
-          ${mode === 'split' ? '<rect x="0" y="0" width="520" height="1350" fill="#fffaf7" opacity="0.72"/>' : ''}
           ${sectorPhotoHref ? `
             <rect x="${photo.x - 8}" y="${photo.y - 8}" width="${photo.w + 16}" height="${photo.h + 16}" rx="${photo.r + 8}" fill="#fffaf7" opacity="0.82"/>
             <image href="${sectorPhotoHref}" x="${photo.x}" y="${photo.y}" width="${photo.w}" height="${photo.h}" preserveAspectRatio="xMidYMid slice" clip-path="url(#sectorPhotoClip)" opacity="0.88"/>
