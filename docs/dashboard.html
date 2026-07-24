@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v3.1</div>
+        <div class="header-version" id="headerVersion">Versão atual: v3.2</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -4246,8 +4246,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         minimal: { x: 86, y: 540, w: 520, h: 180, r: 24 },
         magazine: { x: 124, y: 560, w: 500, h: 174, r: 24 }
       }[mode];
+      const progressY = isCta ? 1172 : 1236;
       const progress = Array.from({ length: totalSlides }, (_, progressIndex) => `
-        <rect x="${72 + (progressIndex * 182)}" y="1236" width="160" height="8" rx="4" fill="${progressIndex < index ? theme.accent : 'rgba(20,38,47,0.13)'}"/>
+        <rect x="${72 + (progressIndex * 182)}" y="${progressY}" width="160" height="8" rx="4" fill="${progressIndex < index ? theme.accent : 'rgba(20,38,47,0.13)'}"/>
       `).join('');
       const badgeY = 136;
       const svg = `
@@ -4282,8 +4283,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <text x="784" y="1229" fill="#fff6ef" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900">ARRASTE PARA VER</text>
           ` : ''}
           ${isCta ? `
-            <rect x="72" y="1212" width="218" height="58" rx="29" fill="${theme.text}"/>
-            <text x="104" y="1249" fill="#fff6ef" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900">LINK NA BIO</text>
+            <rect x="72" y="1210" width="244" height="62" rx="31" fill="${theme.text}"/>
+            <text x="104" y="1250" fill="#fff6ef" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900">LINK NA BIO</text>
           ` : index === 3 ? `
             <rect x="72" y="1192" width="250" height="56" rx="28" fill="${theme.text}"/>
             <text x="102" y="1229" fill="#fff6ef" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900">SALVE ESTE PASSO</text>

@@ -1692,6 +1692,8 @@ function anatexSlideHtml(slide, index, total, account, style) {
     .role-cta .headline { max-width: 860px; font-size: 82px; }
     .role-cta .note { background: ${accent}; color: #fff6ef; border: 0; font-size: 34px; }
     .role-cta .note::before { background: #fff6ef; color: ${accent}; }
+    .role-cta .progress { bottom: 156px; }
+    .role-cta .save-cue { bottom: 56px; min-width: 230px; text-align: center; }
     .bubble { display: none; position: absolute; right: 116px; bottom: 270px; width: 132px; height: 96px; border-radius: 34px; background: #f1d8c7; z-index: 3; }
     .bubble::before { content: "..."; position: absolute; inset: 0; display: grid; place-items: center; color: ${accent}; font-size: 58px; line-height: 0.5; font-weight: 900; letter-spacing: 5px; }
     .spark { position: absolute; color: ${accent}; opacity: 0.7; z-index: 2; font-size: 42px; font-weight: 900; }
