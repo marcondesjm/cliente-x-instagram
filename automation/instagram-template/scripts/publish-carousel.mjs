@@ -1350,6 +1350,11 @@ function accountAvatarCssImage(account = {}, index = 1, visualCue = '') {
   return cssUrl(`file:///${source.replace(/\\/g, '/')}`);
 }
 
+function accountUsernameDisplay(account = {}) {
+  const username = String(account.expectedUsername || '').replace(/^@/, '').trim();
+  return username ? `@${username}` : (account.brandName || 'Marcondes Machado');
+}
+
 function localAssetCssImage(path = '') {
   const source = resolve(ROOT, String(path || '').replace(/^\/+/, ''));
   if (!existsSync(source)) return '';
@@ -1475,7 +1480,7 @@ function anatexSlideHtml(slide, index, total, account, style) {
   const avatarImage = accountAvatarCssImage(account, index, visualCue);
   const avatarClass = avatarImage ? ' has-avatar' : '';
   const brandDisplay = account.brandName || account.expectedUsername || 'Marcondes Machado';
-  const usernameDisplay = account.expectedUsername ? `@${account.expectedUsername}` : brandDisplay;
+  const usernameDisplay = accountUsernameDisplay(account);
   const engagementRole = index === 1 ? 'hook' : index === total ? 'cta' : index === total - 1 ? 'proof' : 'value';
   const useSectorPhoto = engagementRole === 'hook' || engagementRole === 'cta';
   const sectorPhotoImage = useSectorPhoto ? sectorPhotoCssImage(visualCue) : '';
@@ -1757,7 +1762,7 @@ function anatexSlideHtml(slide, index, total, account, style) {
 </head>
 <body>
   <main class="${placement}${sectorPhotoClass}">
-    <div class="brand">${mode === 'magazine' ? usernameDisplay : brandDisplay}</div>
+    <div class="brand">${usernameDisplay}</div>
     <div class="arrows">&gt;&gt;</div>
     <div class="badge"><span></span>${eyebrow}</div>
     ${swipeCue}
@@ -2030,6 +2035,7 @@ function slideHtml(slide, index, total, account, style) {
   const signal = variant === 'signal'
     ? '<div class="signal"><span></span><span></span><span></span></div>'
     : '';
+  const usernameDisplay = accountUsernameDisplay(account);
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -2085,7 +2091,7 @@ function slideHtml(slide, index, total, account, style) {
     ${rail}
     ${signal}
     <section class="top">
-      <div class="brand">${account.brandName}</div>
+      <div class="brand">${usernameDisplay}</div>
       <div class="eyebrow">${slide.eyebrow}</div>
     </section>
     <section class="content">
@@ -2145,6 +2151,7 @@ function anatexStoryHtml(slide, account, style) {
   const avatarBlock = avatarImage
     ? `<div class="avatar"></div>`
     : `<div class="panel"><span>IA</span></div>`;
+  const usernameDisplay = accountUsernameDisplay(account);
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -2191,7 +2198,7 @@ function anatexStoryHtml(slide, account, style) {
 </head>
 <body>
   <main>
-    <div class="brand">${account.brandName}</div>
+    <div class="brand">${usernameDisplay}</div>
     <div class="badge">${eyebrow}</div>
     <h1>${title.replace(/\s+IA\b/i, ' <strong>IA</strong>')}</h1>
     <p>${body}</p>
@@ -2211,6 +2218,7 @@ function storyHtml(slide, account, style) {
   const variant = slide.visualVariant || 'focus';
   const titleSize = variant === 'quote' ? 82 : 90;
   const align = variant === 'quote' ? 'center' : 'left';
+  const usernameDisplay = accountUsernameDisplay(account);
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -2260,7 +2268,7 @@ function storyHtml(slide, account, style) {
   <main>
     <div class="story-mark"></div>
     <section>
-      <div class="brand">${account.brandName}</div>
+      <div class="brand">${usernameDisplay}</div>
       <div class="eyebrow">${slide.eyebrow}</div>
     </section>
     <section class="content">

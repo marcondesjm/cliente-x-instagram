@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.4</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.5</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -4430,7 +4430,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           ${mode === 'magazine' ? `<rect x="0" y="0" width="96" height="1350" fill="${theme.bottom}" opacity="0.9"/>` : ''}
           ${mode === 'split' ? '<rect x="0" y="0" width="520" height="1350" fill="#fffaf7" opacity="0.72"/>' : ''}
           <line x1="56" y1="50" x2="1000" y2="50" stroke="${headerAccent}" stroke-width="3" opacity="0.88"/>
-          <text x="118" y="72" fill="${headerText}" opacity="1" font-family="Arial, Helvetica, sans-serif" font-size="${mode === 'magazine' ? 28 : 34}" font-weight="900">${escapeHtml(mode === 'magazine' ? usernameDisplay : brandDisplay)}</text>
+          <text x="118" y="72" fill="${headerText}" opacity="1" font-family="Arial, Helvetica, sans-serif" font-size="${usernameDisplay.length > 28 ? 25 : 30}" font-weight="900">${escapeHtml(usernameDisplay)}</text>
           <text x="940" y="72" fill="${headerAccent}" opacity="1" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">&gt;&gt;</text>
           <circle cx="948" cy="166" r="150" fill="${theme.soft}" opacity="0.42"/>
           <circle cx="944" cy="1180" r="238" fill="${theme.muted}" opacity="0.32"/>
