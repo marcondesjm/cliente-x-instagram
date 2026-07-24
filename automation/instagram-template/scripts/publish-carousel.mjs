@@ -794,6 +794,24 @@ function callMaybe(value, ...args) {
   return typeof value === 'function' ? value(...args) : value;
 }
 
+function estimateTextLines(text = '', width = 400, fontSize = 30) {
+  const avgCharWidth = fontSize * 0.54;
+  const charsPerLine = Math.max(12, Math.floor(width / avgCharWidth));
+  const words = String(text || '').replace(/\s+/g, ' ').trim().split(' ').filter(Boolean);
+  let lines = 1;
+  let current = 0;
+  for (const word of words) {
+    const length = word.length + (current ? 1 : 0);
+    if (current + length > charsPerLine) {
+      lines += 1;
+      current = word.length;
+    } else {
+      current += length;
+    }
+  }
+  return lines;
+}
+
 function autoPack(topic, angle, context, sequence, runStamp = null, dateString = todaySaoPaulo(), slotIndex = 0) {
   const runLine = runStamp ? `\n\nEdição operacional ${runStamp}.` : '';
   const editorial = creativeEditorialAngle(dateString, slotIndex, sequence);
@@ -1424,17 +1442,19 @@ function anatexSlideHtml(slide, index, total, account, style) {
   const engagementRole = index === 1 ? 'hook' : index === total ? 'cta' : index === total - 1 ? 'proof' : 'value';
   const swipeCue = index === 1 ? '<div class="swipe-cue">arraste para ver</div>' : '';
   const saveCue = index === total ? '<div class="save-cue">link na bio</div>' : index === 3 ? '<div class="save-cue">salve este passo</div>' : '';
-  const noteFontSize = body.length > 170 ? 24 : body.length > 125 ? 26 : body.length > 95 ? 28 : 30;
-  const noteMinHeight = body.length > 170 ? 330 : body.length > 125 ? 295 : body.length > 95 ? 258 : 238;
-  const progressItems = Array.from({ length: total }, (_, itemIndex) => (
-    `<span class="${itemIndex + 1 <= index ? 'active' : ''}"></span>`
-  )).join('');
   const placement = [
     mode === 'split' ? 'layout-left' : index % 3 === 2 ? 'layout-left' : index % 3 === 0 ? 'layout-corner' : 'layout-right',
     `mode-${mode}`,
     `role-${engagementRole}`,
     index % 2 === 0 ? 'slide-even' : 'slide-odd'
   ].join(' ');
+  const noteWidth = mode === 'minimal' ? 650 : mode === 'poster' || mode === 'magazine' ? 430 : mode === 'split' || placement?.includes?.('layout-left') ? 380 : 390;
+  const noteFontSize = body.length > 170 ? 23 : body.length > 125 ? 25 : body.length > 95 ? 26 : 29;
+  const noteLines = estimateTextLines(body, noteWidth, noteFontSize);
+  const noteMinHeight = Math.min(380, Math.max(250, 86 + (noteLines * noteFontSize * 1.15)));
+  const progressItems = Array.from({ length: total }, (_, itemIndex) => (
+    `<span class="${itemIndex + 1 <= index ? 'active' : ''}"></span>`
+  )).join('');
   return `<!DOCTYPE html>
 <html>
 <head>

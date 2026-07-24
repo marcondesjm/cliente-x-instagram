@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v2.7</div>
+        <div class="header-version" id="headerVersion">Versão atual: v2.8</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -4173,6 +4173,24 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       return String(text || '').split('').reduce((total, char) => total + char.charCodeAt(0), 0);
     }
 
+    function estimateSvgTextLines(text = '', width = 400, fontSize = 30) {
+      const avgCharWidth = fontSize * 0.54;
+      const charsPerLine = Math.max(12, Math.floor(width / avgCharWidth));
+      const words = String(text || '').replace(/\s+/g, ' ').trim().split(' ').filter(Boolean);
+      let lines = 1;
+      let current = 0;
+      for (const word of words) {
+        const length = word.length + (current ? 1 : 0);
+        if (current + length > charsPerLine) {
+          lines += 1;
+          current = word.length;
+        } else {
+          current += length;
+        }
+      }
+      return lines;
+    }
+
     function previewSlideSvg(item = {}, slide = {}, avatarHref = '', sectorPhotoHref = '') {
       const label = item.type === 'program' ? 'PROGRAMA' : 'POSTAGEM';
       const kicker = escapeHtml(slide.kicker || label);
@@ -4207,25 +4225,20 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const cue = item.visualCue || previewVisualCueFromText(`${title} ${body} ${item.caption || ''}`);
       const cueX = mode === 'split' ? 746 : mode === 'magazine' ? 756 : 726;
       const cueY = mode === 'minimal' ? 390 : mode === 'poster' ? 280 : 250;
-      const noteHeight = isCta
-        ? 236
-        : body.length > 170
-          ? 360
-          : body.length > 125
-            ? 320
-            : body.length > 90
-              ? 280
-              : 236;
       const bodyFontSize = isCta
         ? 36
         : body.length > 170
-          ? 25
+          ? 24
           : body.length > 125
-            ? 27
+            ? 25
             : body.length > 95
-              ? 30
-              : 36;
-      const noteTextHeight = Math.max(150, noteHeight - 58);
+              ? 27
+              : 32;
+      const estimatedLines = estimateSvgTextLines(body, layout.noteTextW, bodyFontSize);
+      const noteHeight = isCta
+        ? 236
+        : Math.min(390, Math.max(256, 80 + (estimatedLines * bodyFontSize * 1.16)));
+      const noteTextHeight = Math.max(170, noteHeight - 48);
       const photo = {
         paper: { x: 664, y: 250, w: 330, h: 220, r: 26 },
         split: { x: 70, y: 214, w: 330, h: 220, r: 26 },
@@ -4298,7 +4311,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           <rect x="${layout.noteX}" y="${layout.noteY}" width="${layout.noteW}" height="${noteHeight}" rx="22" fill="${isCta ? theme.accent : '#fffaf7'}" stroke="${isCta ? theme.accent : theme.muted}" stroke-width="2"/>
           <circle cx="${layout.noteX + 54}" cy="${layout.noteY + 60}" r="30" fill="${isCta ? '#fff6ef' : theme.accent}"/>
           <text x="${layout.noteX + 34}" y="${layout.noteY + 72}" fill="${isCta ? theme.accent : '#ffffff'}" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="900">${cardNumber}</text>
-          ${!isCta && index > 1 ? `<rect x="${layout.noteX + layout.noteW - 110}" y="${layout.noteY + 34}" width="78" height="78" rx="18" fill="none" stroke="${theme.accent}" stroke-width="4" opacity="0.18"/>` : ''}
+          ${!isCta && index > 1 && layout.noteW > 600 ? `<rect x="${layout.noteX + layout.noteW - 110}" y="${layout.noteY + 34}" width="78" height="78" rx="18" fill="none" stroke="${theme.accent}" stroke-width="4" opacity="0.18"/>` : ''}
           ${svgBoxText(body, layout.noteTextX, layout.noteY + 42, layout.noteTextW, bodyFontSize, isCta ? '#fff6ef' : theme.text, 900, 1.12, noteTextHeight)}
           ${progress}
           <text x="948" y="1274" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900">${index}/5</text>
