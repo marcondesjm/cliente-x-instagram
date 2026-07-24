@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v1.4</div>
+        <div class="header-version" id="headerVersion">Versão atual: v1.5</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -4093,8 +4093,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             ${avatarHref
               ? `<image href="${avatarHref}" x="${layout.panelW * 0.11}" y="${layout.panelH * 0.12}" width="${layout.panelW * 0.78}" height="${layout.panelH * 0.72}" preserveAspectRatio="xMidYMid slice" clip-path="url(#avatarClip)"/>`
               : `<circle cx="${layout.panelW / 2}" cy="${layout.panelH / 2}" r="${Math.min(layout.panelW, layout.panelH) * 0.32}" fill="#fffaf7"/>`}
-            <rect x="20" y="18" width="${layout.panelW - 40}" height="54" rx="12" fill="#ffffff" opacity="0.55"/>
-            <rect x="20" y="${layout.panelH - 72}" width="${layout.panelW - 40}" height="54" rx="12" fill="#ffffff" opacity="0.55"/>
+            ${avatarHref ? '' : `
+              <rect x="20" y="18" width="${layout.panelW - 40}" height="54" rx="12" fill="#ffffff" opacity="0.55"/>
+              <rect x="20" y="${layout.panelH - 72}" width="${layout.panelW - 40}" height="54" rx="12" fill="#ffffff" opacity="0.55"/>
+            `}
           </g>
           <rect x="${layout.noteX}" y="${layout.noteY}" width="${layout.noteW}" height="236" rx="22" fill="#fffaf7" stroke="#ead4c8" stroke-width="2"/>
           <circle cx="${layout.noteX + 54}" cy="${layout.noteY + 60}" r="30" fill="#c46a32"/>

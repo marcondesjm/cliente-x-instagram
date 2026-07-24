@@ -1385,8 +1385,8 @@ function anatexSlideHtml(slide, index, total, account, style) {
     .panel::before { content: "IA"; position: absolute; left: 42px; top: 38px; color: rgba(167,86,61,0.18); font-size: 110px; line-height: 1; font-weight: 900; }
     .panel::after { content: ""; position: absolute; left: 42px; right: 42px; bottom: 68px; height: 230px; background: repeating-linear-gradient(180deg, rgba(167,86,61,0.24) 0 10px, transparent 10px 34px); }
     .panel.has-avatar { background: ${avatarImage || 'rgba(255,255,255,0.48)'} center center / contain no-repeat; border: 7px solid rgba(255,250,246,0.9); box-shadow: 0 28px 70px rgba(94,50,34,0.24); }
-    .panel.has-avatar::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,246,239,0.02), rgba(33,25,21,0.10)); }
-    .panel.has-avatar::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 128px; background: linear-gradient(180deg, transparent, rgba(17,17,17,0.22)); }
+    .panel.has-avatar::before,
+    .panel.has-avatar::after { display: none; }
     .sector-cue {
       position: absolute;
       right: 64px;
