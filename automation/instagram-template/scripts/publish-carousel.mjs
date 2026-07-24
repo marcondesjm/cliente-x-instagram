@@ -450,6 +450,7 @@ const INDUSTRY_SPECIALISTS = [
     hashtag: '#advocacia #juridico #inteligenciaartificial #automacao #gestaojuridica',
     trigger: 'quando o escritório recebe muitas conversas e cada atendimento começa do zero',
     proof: 'triagem melhor, histórico salvo e reunião inicial com mais contexto',
+    visualCue: 'legal',
     examples: ['triagem de leads', 'organização de documentos', 'follow-up de consulta', 'contratos e prazos']
   },
   {
@@ -462,6 +463,7 @@ const INDUSTRY_SPECIALISTS = [
     hashtag: '#clinicas #saude #atendimento #inteligenciaartificial #automacao',
     trigger: 'quando a recepção lida com muitas mensagens e pouca visibilidade de prioridade',
     proof: 'menos mensagens perdidas, agenda mais clara e experiência mais consistente',
+    visualCue: 'clinic',
     examples: ['agendamento', 'confirmação de consulta', 'retorno de pacientes', 'triagem inicial']
   },
   {
@@ -474,6 +476,7 @@ const INDUSTRY_SPECIALISTS = [
     hashtag: '#imobiliario #corretordeimoveis #vendas #inteligenciaartificial #automacao',
     trigger: 'quando muitos leads chegam por anúncio e poucos viram visita qualificada',
     proof: 'lead qualificado, follow-up no prazo e histórico de preferência salvo',
+    visualCue: 'real-estate',
     examples: ['captação de lead', 'agendamento de visita', 'qualificação financeira', 'follow-up de proposta']
   },
   {
@@ -486,6 +489,7 @@ const INDUSTRY_SPECIALISTS = [
     hashtag: '#restaurante #delivery #atendimento #inteligenciaartificial #automacao',
     trigger: 'quando o movimento aumenta e cada mensagem disputa atenção com a operação',
     proof: 'respostas mais rápidas, menos erro de pedido e retorno de cliente melhor acompanhado',
+    visualCue: 'restaurant',
     examples: ['reservas', 'pedidos', 'cardápio', 'avaliações']
   },
   {
@@ -498,6 +502,7 @@ const INDUSTRY_SPECIALISTS = [
     hashtag: '#estetica #beleza #atendimento #inteligenciaartificial #automacao',
     trigger: 'quando o atendimento precisa educar sem parecer resposta genérica',
     proof: 'mais agendamentos, retornos lembrados e comunicação com padrão',
+    visualCue: 'beauty',
     examples: ['pré-atendimento', 'agenda', 'retorno', 'reativação']
   },
   {
@@ -510,6 +515,7 @@ const INDUSTRY_SPECIALISTS = [
     hashtag: '#educacao #cursos #atendimento #inteligenciaartificial #automacao',
     trigger: 'quando dúvidas repetidas atrapalham matrícula e suporte',
     proof: 'respostas consistentes, menos evasão de lead e acompanhamento mais visível',
+    visualCue: 'education',
     examples: ['captação de alunos', 'matrícula', 'suporte', 'trilhas de estudo']
   },
   {
@@ -522,6 +528,7 @@ const INDUSTRY_SPECIALISTS = [
     hashtag: '#ecommerce #vendasonline #atendimento #inteligenciaartificial #automacao',
     trigger: 'quando atendimento e operação não conversam no mesmo ritmo',
     proof: 'menos abandono, status mais claro e recompra melhor trabalhada',
+    visualCue: 'ecommerce',
     examples: ['carrinho abandonado', 'status de pedido', 'trocas', 'recompra']
   },
   {
@@ -534,6 +541,7 @@ const INDUSTRY_SPECIALISTS = [
     hashtag: '#contabilidade #financeiro #gestao #inteligenciaartificial #automacao',
     trigger: 'quando a rotina mensal repete a mesma cobrança e os mesmos atrasos',
     proof: 'menos pendências, prazos visíveis e fechamento mais previsível',
+    visualCue: 'finance',
     examples: ['documentos mensais', 'cobranças', 'conciliação', 'alertas']
   },
   {
@@ -546,6 +554,7 @@ const INDUSTRY_SPECIALISTS = [
     hashtag: '#servicos #consultoria #vendas #inteligenciaartificial #automacao',
     trigger: 'quando cada proposta nasce do zero e o follow-up fica solto',
     proof: 'propostas mais rápidas, histórico salvo e próximos passos claros',
+    visualCue: 'services',
     examples: ['briefing', 'propostas', 'follow-up', 'entrega']
   }
 ];
@@ -718,27 +727,32 @@ function autoPack(topic, angle, context, sequence, runStamp = null) {
       {
         eyebrow: angle.label,
         title: `${topic.area}: onde a IA realmente ajuda?`,
-        body: angle.hook
+        body: angle.hook,
+        visualCue: topic.visualCue || 'business'
       },
       {
         eyebrow: 'Dor',
         title: `O sinal aparece quando ${topic.pain}.`,
-        body: `Isso fica mais claro ${context.trigger}.`
+        body: `Isso fica mais claro ${context.trigger}.`,
+        visualCue: topic.visualCue || 'business'
       },
       {
         eyebrow: 'Base',
         title: 'Sem processo claro, a IA improvisa.',
-        body: `Organize ${topic.process}. Depois disso, a tecnologia consegue trabalhar com contexto.`
+        body: `Organize ${topic.process}. Depois disso, a tecnologia consegue trabalhar com contexto.`,
+        visualCue: topic.visualCue || 'business'
       },
       {
         eyebrow: 'Aplicação',
         title: 'Automatize uma parte verificável.',
-        body: angle.insight
+        body: angle.insight,
+        visualCue: topic.visualCue || 'business'
       },
       {
         eyebrow: 'Próximo passo',
         title: `O ganho é ${topic.gain}.`,
-        body: `Procure ${context.proof}.`
+        body: `Procure ${context.proof}.`,
+        visualCue: topic.visualCue || 'business'
       }
     ],
     caption: `${topic.area} com IA não começa pela ferramenta.\n\nComeça quando você identifica que ${topic.pain}, descreve o processo e define o que precisa ser conferido antes de escalar.\n\n${angle.action}\n\nO melhor sinal para acompanhar é ${context.proof}.${runLine}\n\nSérie prática ${String(sequence + 1).padStart(3, '0')}: automação boa transforma rotina em sistema.\n\n${topic.hashtag}`
@@ -998,6 +1012,7 @@ function profileTopicFromAccount(account = {}, dateString = todaySaoPaulo(), slo
     hashtag: industry?.hashtag || '#inteligenciaartificial #automacao #marketingdigital #negocios #conteudo',
     industryId: industry?.id || 'perfil',
     industryExamples: industry?.examples || [],
+    visualCue: industry?.visualCue || 'business',
     goal: goal.label
   };
 }
@@ -1157,10 +1172,11 @@ function readableMuted(text) {
   return text === '#ffffff' ? '#e7eee9' : '#4b5b53';
 }
 
-function paletteVariant(style, name, { accent, accentSoft, grid, bgTop, bgBottom }) {
+function paletteVariant(style, name, { accent, accentSoft, grid, bgTop, bgBottom, ...extra }) {
   const text = contrastColor(bgTop);
   return {
     ...style,
+    ...extra,
     name,
     accent,
     accentSoft,
@@ -1201,6 +1217,87 @@ function accountAvatarCssImage(account = {}) {
   return cssUrl(`file:///${source.replace(/\\/g, '/')}`);
 }
 
+function visualCueFromText(text = '') {
+  const value = normalizeSearchText(text);
+  if (/\b(imobiliaria|imobiliario|corretor|imovel|imoveis|casa|apartamento)\b/.test(value)) return 'real-estate';
+  if (/\b(juridico|advocacia|advogado|escritorio juridico|contrato|processo)\b/.test(value)) return 'legal';
+  if (/\b(clinica|medico|paciente|consulta|saude|dentista)\b/.test(value)) return 'clinic';
+  if (/\b(restaurante|delivery|cardapio|pedido|mesa|cozinha)\b/.test(value)) return 'restaurant';
+  if (/\b(estetica|beleza|agenda|procedimento|salao)\b/.test(value)) return 'beauty';
+  if (/\b(educacao|curso|aluno|aula|escola|treinamento)\b/.test(value)) return 'education';
+  if (/\b(ecommerce|e-commerce|loja|produto|carrinho|pedido)\b/.test(value)) return 'ecommerce';
+  if (/\b(financeiro|cobranca|relatorio|caixa|pagamento|boleto)\b/.test(value)) return 'finance';
+  if (/\b(servico|suporte|atendimento|projeto|operacao)\b/.test(value)) return 'services';
+  return 'business';
+}
+
+function sectorVisualHtml(cue = 'business') {
+  const common = 'fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"';
+  const shapes = {
+    'real-estate': `
+      <path ${common} d="M80 198V122l70-56 70 56v76"/>
+      <path ${common} d="M58 122l92-74 92 74"/>
+      <path ${common} d="M126 198v-52h48v52"/>
+      <path ${common} d="M42 218h216"/>
+      <path ${common} d="M208 74h38v138"/>
+      <circle cx="230" cy="65" r="18" fill="currentColor" opacity="0.22"/>
+    `,
+    legal: `
+      <path ${common} d="M150 58v168M82 88h136M98 88l-42 72h84L98 88ZM202 88l-42 72h84l-42-72Z"/>
+      <path ${common} d="M110 226h80M128 202h44"/>
+      <circle cx="150" cy="58" r="18" fill="currentColor" opacity="0.24"/>
+    `,
+    clinic: `
+      <rect x="62" y="78" width="176" height="154" rx="28" ${common}/>
+      <path ${common} d="M150 112v86M107 155h86"/>
+      <path ${common} d="M104 78V52M196 78V52"/>
+      <circle cx="74" cy="216" r="18" fill="currentColor" opacity="0.22"/>
+    `,
+    restaurant: `
+      <circle cx="154" cy="154" r="70" ${common}/>
+      <circle cx="154" cy="154" r="34" ${common}/>
+      <path ${common} d="M58 62v168M82 62v168M58 118h24"/>
+      <path ${common} d="M244 62c-28 30-28 70 0 102v66"/>
+      <circle cx="230" cy="214" r="18" fill="currentColor" opacity="0.22"/>
+    `,
+    beauty: `
+      <path ${common} d="M150 48l24 70 70 24-70 24-24 70-24-70-70-24 70-24 24-70Z"/>
+      <path ${common} d="M72 58l10 28 28 10-28 10-10 28-10-28-28-10 28-10 10-28Z"/>
+      <circle cx="228" cy="214" r="18" fill="currentColor" opacity="0.22"/>
+    `,
+    education: `
+      <path ${common} d="M42 96l108-44 108 44-108 44L42 96Z"/>
+      <path ${common} d="M86 122v58c34 28 94 28 128 0v-58"/>
+      <path ${common} d="M258 96v78"/>
+      <circle cx="258" cy="190" r="15" fill="currentColor" opacity="0.24"/>
+    `,
+    ecommerce: `
+      <path ${common} d="M58 72h32l24 112h112l24-76H104"/>
+      <circle cx="126" cy="216" r="18" ${common}/>
+      <circle cx="214" cy="216" r="18" ${common}/>
+      <path ${common} d="M142 58h62l28 36"/>
+      <circle cx="230" cy="70" r="18" fill="currentColor" opacity="0.22"/>
+    `,
+    finance: `
+      <path ${common} d="M62 214h182"/>
+      <path ${common} d="M84 182v-48M132 182V96M180 182v-70M228 182V72"/>
+      <path ${common} d="M76 88c36 22 58 20 90-2s54-26 90-2"/>
+      <circle cx="88" cy="66" r="20" fill="currentColor" opacity="0.22"/>
+    `,
+    services: `
+      <rect x="60" y="84" width="180" height="132" rx="26" ${common}/>
+      <path ${common} d="M114 84V62h72v22M96 134h108M96 172h76"/>
+      <circle cx="220" cy="176" r="20" fill="currentColor" opacity="0.22"/>
+    `,
+    business: `
+      <rect x="66" y="82" width="168" height="142" rx="24" ${common}/>
+      <path ${common} d="M108 82V58h84v24M104 132h92M104 172h58"/>
+      <circle cx="218" cy="178" r="18" fill="currentColor" opacity="0.22"/>
+    `
+  };
+  return `<svg class="sector-cue" viewBox="0 0 300 280" aria-hidden="true">${shapes[cue] || shapes.business}</svg>`;
+}
+
 function anatexSlideHtml(slide, index, total, account, style) {
   const slideStyle = styleForSlide(style, index);
   const title = anatexTitle(slide.title || '');
@@ -1211,7 +1308,13 @@ function anatexSlideHtml(slide, index, total, account, style) {
   const headline = title.replace(/\s+IA\b/i, ' <strong>IA</strong>');
   const avatarImage = accountAvatarCssImage(account);
   const avatarClass = avatarImage ? ' has-avatar' : '';
-  const placement = index % 3 === 2 ? 'layout-left' : index % 3 === 0 ? 'layout-corner' : 'layout-right';
+  const mode = slideStyle.templateMode || 'paper';
+  const visualCue = slide.visualCue || visualCueFromText(`${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
+  const placement = [
+    mode === 'split' ? 'layout-left' : index % 3 === 2 ? 'layout-left' : index % 3 === 0 ? 'layout-corner' : 'layout-right',
+    `mode-${mode}`,
+    index % 2 === 0 ? 'slide-even' : 'slide-odd'
+  ].join(' ');
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -1284,12 +1387,24 @@ function anatexSlideHtml(slide, index, total, account, style) {
     .panel.has-avatar { background: ${avatarImage || 'rgba(255,255,255,0.48)'} center center / contain no-repeat; border: 7px solid rgba(255,250,246,0.9); box-shadow: 0 28px 70px rgba(94,50,34,0.24); }
     .panel.has-avatar::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,246,239,0.02), rgba(33,25,21,0.10)); }
     .panel.has-avatar::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 128px; background: linear-gradient(180deg, transparent, rgba(17,17,17,0.22)); }
+    .sector-cue {
+      position: absolute;
+      right: 64px;
+      top: 228px;
+      width: 278px;
+      height: 260px;
+      z-index: 2;
+      color: ${accent};
+      opacity: 0.34;
+      filter: drop-shadow(0 18px 28px rgba(94,50,34,0.10));
+    }
     .layout-left .panel { left: 58px; right: auto; top: 450px; width: 360px; height: 470px; transform: rotate(-3deg); }
     .layout-left .badge { left: 470px; }
     .layout-left .headline { margin-left: 420px; max-width: 540px; font-size: 58px; }
     .layout-left .subline { margin-left: 372px; max-width: 600px; }
     .layout-left .note { left: 470px; top: 720px; width: 540px; min-height: 230px; font-size: 28px; }
     .layout-left main::after { left: auto; right: 16px; }
+    .layout-left .sector-cue { left: 92px; right: auto; top: 198px; width: 238px; opacity: 0.28; }
     .layout-corner .badge { top: 112px; }
     .layout-corner .headline { max-width: 760px; font-size: 62px; line-height: 1.02; }
     .layout-corner .headline::after {
@@ -1311,6 +1426,52 @@ function anatexSlideHtml(slide, index, total, account, style) {
     .layout-corner .panel::after { display: none; }
     .layout-corner .note { left: 70px; top: 610px; bottom: auto; width: 610px; min-height: 250px; padding: 34px 34px 32px 104px; font-size: 26px; line-height: 1.13; }
     .layout-corner .bubble { display: none; }
+    .layout-corner .sector-cue { right: 72px; top: 248px; width: 250px; opacity: 0.30; }
+    .mode-split main {
+      background:
+        linear-gradient(90deg, rgba(255,250,246,0.82) 0 52%, transparent 52%),
+        radial-gradient(circle at 82% 24%, ${soft} 0 230px, transparent 231px),
+        linear-gradient(180deg, ${slideStyle.bgTop} 0%, ${slideStyle.bgBottom} 100%);
+    }
+    .mode-split .panel { top: 350px; width: 410px; height: 540px; border-radius: 34px; }
+    .mode-split .headline { margin-top: 126px; font-size: 60px; }
+    .mode-split .note { top: 812px; min-height: 210px; }
+    .mode-split .sector-cue { right: 82px; top: 118px; width: 250px; opacity: 0.28; }
+    .mode-poster main {
+      background:
+        radial-gradient(circle at 50% 112%, ${soft} 0 390px, transparent 391px),
+        linear-gradient(180deg, ${slideStyle.bgTop} 0%, ${slideStyle.bgBottom} 100%);
+    }
+    .mode-poster .badge { left: 78px; top: 106px; }
+    .mode-poster .headline { margin-top: 150px; max-width: 880px; font-size: 78px; text-align: left; }
+    .mode-poster .panel { right: 70px; top: 650px; width: 286px; height: 286px; border-radius: 50%; transform: none; }
+    .mode-poster .note { left: 70px; top: 690px; width: 620px; min-height: 260px; font-size: 28px; }
+    .mode-poster .sector-cue { right: 78px; top: 248px; width: 260px; opacity: 0.24; }
+    .mode-minimal main::after { display: none; }
+    .mode-minimal main {
+      background:
+        linear-gradient(180deg, ${slideStyle.bgTop} 0%, ${slideStyle.bgBottom} 100%);
+    }
+    .mode-minimal .badge { background: rgba(255,250,246,0.82); color: ${accent}; border: 2px solid ${accent}; }
+    .mode-minimal .badge span { border-color: ${accent}; }
+    .mode-minimal .badge span::after { border-color: ${accent}; }
+    .mode-minimal .headline { margin-top: 132px; max-width: 820px; font-size: 64px; }
+    .mode-minimal .panel { top: 744px; right: 82px; width: 250px; height: 250px; border-radius: 50%; opacity: 0.94; }
+    .mode-minimal .note { top: 640px; width: 620px; min-height: 220px; background: rgba(255,255,255,0.42); }
+    .mode-minimal .sector-cue { right: 80px; top: 360px; width: 210px; opacity: 0.26; }
+    .mode-magazine main {
+      background:
+        linear-gradient(90deg, ${slideStyle.bgBottom} 0 34%, transparent 34%),
+        radial-gradient(circle at 86% 16%, ${soft} 0 190px, transparent 191px),
+        linear-gradient(180deg, ${slideStyle.bgTop} 0%, ${slideStyle.bgBottom} 100%);
+    }
+    .mode-magazine .brand { margin-left: 0; writing-mode: vertical-rl; transform: rotate(180deg); position: absolute; left: 30px; top: 112px; font-size: 28px; }
+    .mode-magazine main::before { left: 104px; }
+    .mode-magazine .badge { left: 124px; }
+    .mode-magazine .headline { margin-top: 136px; margin-left: 70px; max-width: 610px; font-size: 62px; }
+    .mode-magazine .panel { top: 420px; right: 70px; width: 320px; height: 430px; transform: rotate(-2deg); }
+    .mode-magazine .note { left: 124px; top: 745px; width: 560px; }
+    .mode-magazine .sector-cue { right: 100px; top: 142px; width: 220px; opacity: 0.24; }
     .bubble { display: none; position: absolute; right: 116px; bottom: 270px; width: 132px; height: 96px; border-radius: 34px; background: #f1d8c7; z-index: 3; }
     .bubble::before { content: "..."; position: absolute; inset: 0; display: grid; place-items: center; color: ${accent}; font-size: 58px; line-height: 0.5; font-weight: 900; letter-spacing: 5px; }
     .spark { position: absolute; color: ${accent}; opacity: 0.7; z-index: 2; font-size: 42px; font-weight: 900; }
@@ -1324,6 +1485,7 @@ function anatexSlideHtml(slide, index, total, account, style) {
     <div class="brand">${account.brandName}</div>
     <div class="arrows">&gt;&gt;</div>
     <div class="badge"><span></span>${eyebrow}</div>
+    ${sectorVisualHtml(visualCue)}
     <div class="panel${avatarClass}"></div>
     <div class="spark s1">*</div>
     <div class="spark s2">*</div>
@@ -1389,6 +1551,7 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
 
   const anatexVariants = [
     paletteVariant(style, `${style.name}-paper`, {
+      templateMode: 'paper',
       accent: secondary,
       accentSoft: rgba(secondary, 0.14),
       grid: rgba(secondary, 0.12),
@@ -1398,6 +1561,7 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
       muted: '#3b4654'
     }),
     paletteVariant(style, `${style.name}-linen`, {
+      templateMode: 'split',
       accent: '#b45f35',
       accentSoft: 'rgba(180,95,53,0.13)',
       grid: 'rgba(35,54,72,0.11)',
@@ -1407,6 +1571,7 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
       muted: '#46515c'
     }),
     paletteVariant(style, `${style.name}-sage`, {
+      templateMode: 'poster',
       accent: '#2f766d',
       accentSoft: 'rgba(47,118,109,0.12)',
       grid: 'rgba(47,118,109,0.10)',
@@ -1416,6 +1581,7 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
       muted: '#394a46'
     }),
     paletteVariant(style, `${style.name}-sky`, {
+      templateMode: 'minimal',
       accent: '#315f7d',
       accentSoft: 'rgba(49,95,125,0.12)',
       grid: 'rgba(49,95,125,0.10)',
@@ -1423,6 +1589,16 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
       bgBottom: '#ddebf0',
       text: '#102333',
       muted: '#354a58'
+    }),
+    paletteVariant(style, `${style.name}-magazine`, {
+      templateMode: 'magazine',
+      accent: '#8f5c42',
+      accentSoft: 'rgba(143,92,66,0.13)',
+      grid: 'rgba(143,92,66,0.10)',
+      bgTop: '#fbf8f2',
+      bgBottom: '#e5e9e2',
+      text: '#17211c',
+      muted: '#4c5650'
     })
   ];
 

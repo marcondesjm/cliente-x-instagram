@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v1.2</div>
+        <div class="header-version" id="headerVersion">Versão atual: v1.3</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -3988,49 +3988,166 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       `;
     }
 
-    function previewSlideSvg(item = {}, slide = {}) {
+    let previewAvatarDataUrl = '';
+
+    async function getPreviewAvatarDataUrl() {
+      if (previewAvatarDataUrl) return previewAvatarDataUrl;
+      try {
+        const response = await fetch('/docs/uploads/avatar-marcondes.png', { cache: 'force-cache' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const blob = await response.blob();
+        previewAvatarDataUrl = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(String(reader.result || ''));
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+      } catch {
+        previewAvatarDataUrl = '';
+      }
+      return previewAvatarDataUrl;
+    }
+
+    function previewVisualCueFromText(text = '') {
+      const value = String(text || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      if (/\b(imobiliaria|imobiliario|corretor|imovel|imoveis|casa|apartamento)\b/.test(value)) return 'real-estate';
+      if (/\b(juridico|advocacia|advogado|contrato|processo)\b/.test(value)) return 'legal';
+      if (/\b(clinica|medico|paciente|consulta|saude|dentista)\b/.test(value)) return 'clinic';
+      if (/\b(restaurante|delivery|cardapio|pedido|mesa|cozinha)\b/.test(value)) return 'restaurant';
+      if (/\b(estetica|beleza|procedimento|salao)\b/.test(value)) return 'beauty';
+      if (/\b(educacao|curso|aluno|aula|escola|treinamento)\b/.test(value)) return 'education';
+      if (/\b(ecommerce|e-commerce|loja|produto|carrinho|pedido)\b/.test(value)) return 'ecommerce';
+      if (/\b(financeiro|cobranca|relatorio|caixa|pagamento|boleto)\b/.test(value)) return 'finance';
+      return 'business';
+    }
+
+    function previewSectorCueSvg(cue = 'business', x = 730, y = 248, size = 250) {
+      const common = 'fill="none" stroke="#2f7d73" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"';
+      const shapes = {
+        'real-estate': `<path ${common} d="M80 198V122l70-56 70 56v76"/><path ${common} d="M58 122l92-74 92 74"/><path ${common} d="M126 198v-52h48v52"/><path ${common} d="M42 218h216"/><path ${common} d="M208 74h38v138"/>`,
+        legal: `<path ${common} d="M150 58v168M82 88h136M98 88l-42 72h84L98 88ZM202 88l-42 72h84l-42-72Z"/><path ${common} d="M110 226h80M128 202h44"/>`,
+        clinic: `<rect x="62" y="78" width="176" height="154" rx="28" ${common}/><path ${common} d="M150 112v86M107 155h86"/><path ${common} d="M104 78V52M196 78V52"/>`,
+        restaurant: `<circle cx="154" cy="154" r="70" ${common}/><circle cx="154" cy="154" r="34" ${common}/><path ${common} d="M58 62v168M82 62v168M58 118h24"/><path ${common} d="M244 62c-28 30-28 70 0 102v66"/>`,
+        beauty: `<path ${common} d="M150 48l24 70 70 24-70 24-24 70-24-70-70-24 70-24 24-70Z"/><path ${common} d="M72 58l10 28 28 10-28 10-10 28-10-28-28-10 28-10 10-28Z"/>`,
+        education: `<path ${common} d="M42 96l108-44 108 44-108 44L42 96Z"/><path ${common} d="M86 122v58c34 28 94 28 128 0v-58"/><path ${common} d="M258 96v78"/>`,
+        ecommerce: `<path ${common} d="M58 72h32l24 112h112l24-76H104"/><circle cx="126" cy="216" r="18" ${common}/><circle cx="214" cy="216" r="18" ${common}/><path ${common} d="M142 58h62l28 36"/>`,
+        finance: `<path ${common} d="M62 214h182"/><path ${common} d="M84 182v-48M132 182V96M180 182v-70M228 182V72"/><path ${common} d="M76 88c36 22 58 20 90-2s54-26 90-2"/>`,
+        business: `<rect x="66" y="82" width="168" height="142" rx="24" ${common}/><path ${common} d="M108 82V58h84v24M104 132h92M104 172h58"/>`
+      };
+      return `<g transform="translate(${x} ${y}) scale(${size / 300})" opacity="0.28">${shapes[cue] || shapes.business}</g>`;
+    }
+
+    function previewSlideSvg(item = {}, slide = {}, avatarHref = '') {
       const label = item.type === 'program' ? 'PROGRAMA' : 'POSTAGEM';
-      const time = escapeHtml(item.time || '--:--');
       const kicker = escapeHtml(slide.kicker || label);
       const title = slide.title || item.title || 'Conteúdo programado';
       const body = slide.body || item.caption || 'Legenda será montada pelo gerador automático.';
       const index = Number(slide.index || 1);
+      const cardNumber = String(index).padStart(2, '0');
+      const modeNames = ['paper', 'split', 'poster', 'minimal', 'magazine'];
+      const modeSeed = Number.parseInt(String(item.slotIndex || '0').replace(/\D/g, ''), 10) || 0;
+      const mode = modeNames[(modeSeed + index) % modeNames.length];
+      const layout = {
+        paper: { titleX: 58, titleY: 190, titleW: 620, titleSize: title.length > 58 ? 58 : 68, panelX: 650, panelY: 444, panelW: 380, panelH: 454, panelR: 3, noteX: 78, noteY: 700, noteW: 540, noteTextX: 188, noteTextW: 380 },
+        split: { titleX: 470, titleY: 205, titleW: 540, titleSize: title.length > 52 ? 50 : 58, panelX: 58, panelY: 438, panelW: 370, panelH: 470, panelR: -3, noteX: 470, noteY: 720, noteW: 540, noteTextX: 580, noteTextW: 380 },
+        poster: { titleX: 70, titleY: 220, titleW: 890, titleSize: title.length > 58 ? 60 : 78, panelX: 706, panelY: 650, panelW: 278, panelH: 278, panelR: 0, noteX: 70, noteY: 688, noteW: 610, noteTextX: 180, noteTextW: 440 },
+        minimal: { titleX: 84, titleY: 240, titleW: 840, titleSize: title.length > 60 ? 56 : 64, panelX: 718, panelY: 760, panelW: 250, panelH: 250, panelR: 0, noteX: 84, noteY: 644, noteW: 610, noteTextX: 194, noteTextW: 440 },
+        magazine: { titleX: 126, titleY: 210, titleW: 610, titleSize: title.length > 56 ? 54 : 62, panelX: 680, panelY: 420, panelW: 320, panelH: 430, panelR: -2, noteX: 124, noteY: 744, noteW: 560, noteTextX: 234, noteTextW: 400 }
+      }[mode];
+      const titleSize = layout.titleSize;
+      const panelRadius = mode === 'poster' || mode === 'minimal' ? Math.round(layout.panelW / 2) : 26;
+      const cue = item.visualCue || previewVisualCueFromText(`${title} ${body} ${item.caption || ''}`);
+      const cueX = mode === 'split' ? 746 : mode === 'magazine' ? 756 : 726;
+      const cueY = mode === 'minimal' ? 390 : mode === 'poster' ? 280 : 250;
       const svg = `
         <svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
           <defs>
-            <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#f4f7f5"/>
-              <stop offset="1" stop-color="#e7f0eb"/>
+            <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#f7f4ee"/>
+              <stop offset="1" stop-color="#e7edf0"/>
             </linearGradient>
+            <clipPath id="avatarClip"><circle cx="${layout.panelW / 2}" cy="${layout.panelH / 2}" r="${Math.min(layout.panelW, layout.panelH) * 0.39}"/></clipPath>
           </defs>
-          <rect width="1080" height="1350" fill="url(#bg)"/>
-          <circle cx="910" cy="190" r="190" fill="#dfe9e3"/>
-          <circle cx="150" cy="1110" r="230" fill="#ffffff" opacity="0.78"/>
-          <rect x="76" y="76" width="928" height="1198" rx="34" fill="#ffffff" stroke="#d8e2dc" stroke-width="4"/>
-          <rect x="126" y="132" width="290" height="70" rx="18" fill="#e8fff1" stroke="#9de8bd" stroke-width="3"/>
-          <text x="154" y="178" fill="#0e7c5a" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="900">${kicker}</text>
-          <text x="812" y="178" fill="#235b95" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="900">${time}</text>
-          ${svgBoxText(title, 126, 292, 828, title.length > 56 ? 58 : 70, '#17211c', 900, 1.08)}
-          <rect x="126" y="640" width="828" height="4" fill="#d8e2dc"/>
-          ${svgBoxText(body, 126, 730, 828, 42, '#5d6b64', 800, 1.24)}
-          <rect x="126" y="1080" width="828" height="118" rx="24" fill="#17211c"/>
-          <text x="168" y="1152" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="900">${slide.footer || 'Acompanhe pelo Instagram'}</text>
-          <text x="126" y="1240" fill="#0e7c5a" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900">Slide ${index}/5 · Prévia antes da postagem</text>
+          <rect width="1080" height="1350" fill="url(#paper)"/>
+          <line x1="56" y1="50" x2="1000" y2="50" stroke="#c46a32" stroke-width="2" opacity="0.55"/>
+          <text x="118" y="72" fill="#c46a32" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">Marcondes Machado</text>
+          <text x="940" y="72" fill="#c46a32" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">&gt;&gt;</text>
+          <circle cx="948" cy="166" r="150" fill="#dfc8b8" opacity="0.42"/>
+          <circle cx="944" cy="1180" r="238" fill="#c9beb4" opacity="0.32"/>
+          <g opacity="0.42" fill="#c46a32">
+            ${Array.from({ length: 28 }, (_, i) => `<circle cx="${28 + (i % 7) * 22}" cy="${110 + Math.floor(i / 7) * 22}" r="4"/>`).join('')}
+          </g>
+          <text x="664" y="210" fill="#c46a32" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">*</text>
+          <rect x="84" y="122" width="360" height="60" rx="12" fill="#c46a32"/>
+          <circle cx="124" cy="152" r="18" fill="none" stroke="#fff5ed" stroke-width="4"/>
+          <path d="M114 151l8 9 15-20" fill="none" stroke="#fff5ed" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="158" y="162" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900">${kicker}</text>
+          ${mode === 'magazine' ? '<rect x="0" y="0" width="96" height="1350" fill="#e5e9e2" opacity="0.9"/>' : ''}
+          ${mode === 'split' ? '<rect x="0" y="0" width="520" height="1350" fill="#fffaf7" opacity="0.72"/>' : ''}
+          ${previewSectorCueSvg(cue, cueX, cueY, 250)}
+          ${svgBoxText(title, layout.titleX, layout.titleY, layout.titleW, titleSize, '#17211c', 900, 0.98)}
+          <g transform="translate(${layout.panelX} ${layout.panelY}) rotate(${layout.panelR})">
+            <rect x="0" y="0" width="${layout.panelW}" height="${layout.panelH}" rx="${panelRadius}" fill="#ffffff" opacity="0.96"/>
+            <rect x="18" y="18" width="${layout.panelW - 36}" height="${layout.panelH - 36}" rx="${Math.max(18, panelRadius - 6)}" fill="#eef2ef"/>
+            <circle cx="${layout.panelW / 2}" cy="${layout.panelH / 2}" r="${Math.min(layout.panelW, layout.panelH) * 0.39}" fill="#f7f4ee" stroke="#c46a32" stroke-width="10"/>
+            ${avatarHref
+              ? `<image href="${avatarHref}" x="${layout.panelW * 0.11}" y="${layout.panelH * 0.12}" width="${layout.panelW * 0.78}" height="${layout.panelH * 0.72}" preserveAspectRatio="xMidYMid slice" clip-path="url(#avatarClip)"/>`
+              : `<circle cx="${layout.panelW / 2}" cy="${layout.panelH / 2}" r="${Math.min(layout.panelW, layout.panelH) * 0.32}" fill="#fffaf7"/>`}
+            <rect x="20" y="18" width="${layout.panelW - 40}" height="54" rx="12" fill="#ffffff" opacity="0.55"/>
+            <rect x="20" y="${layout.panelH - 72}" width="${layout.panelW - 40}" height="54" rx="12" fill="#ffffff" opacity="0.55"/>
+          </g>
+          <rect x="${layout.noteX}" y="${layout.noteY}" width="${layout.noteW}" height="236" rx="22" fill="#fffaf7" stroke="#ead4c8" stroke-width="2"/>
+          <circle cx="${layout.noteX + 54}" cy="${layout.noteY + 60}" r="30" fill="#c46a32"/>
+          <text x="${layout.noteX + 34}" y="${layout.noteY + 72}" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="900">${cardNumber}</text>
+          ${svgBoxText(body, layout.noteTextX, layout.noteY + 42, layout.noteTextW, body.length > 95 ? 30 : 36, '#17211c', 900, 1.15)}
+          <text x="948" y="1274" fill="#c46a32" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900">${index}/5</text>
         </svg>
       `.trim();
       return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
     }
 
-    function previewSlidesForItem(item = {}) {
+    async function previewSlidesForItem(item = {}) {
       const title = item.title || 'Conteúdo programado';
       const caption = item.caption || 'Legenda será montada pelo gerador automático.';
+      const avatarHref = await getPreviewAvatarDataUrl();
       return [
         { index: 1, kicker: item.type === 'program' ? 'PROGRAMA' : 'POSTAGEM', title, body: caption, footer: 'Acompanhe pelo Instagram' },
         { index: 2, kicker: 'CONTEXTO', title: 'O que esta por trás disso?', body: caption, footer: 'Entenda antes de agir' },
         { index: 3, kicker: 'PROCESSO', title: 'O caminho começa simples.', body: 'Organize o atendimento, a rotina e os pontos de decisão antes de automatizar qualquer etapa.', footer: 'Processo antes da ferramenta' },
         { index: 4, kicker: 'AÇÃO', title: 'A IA entra para acelerar.', body: 'Depois que o processo está claro, a automação ajuda a responder, registrar, lembrar e acompanhar com mais consistência.', footer: 'Mais clareza na operação' },
         { index: 5, kicker: 'CONVITE', title: 'Quer aplicar isso na prática?', body: 'Acesse o link da bio e marque gratuitamente uma call de 30 minutos.', footer: 'Call gratuita de 30 minutos' }
-      ].map((slide) => previewSlideSvg(item, slide));
+      ].map((slide) => previewSlideSvg(item, slide, avatarHref));
+    }
+
+    let activePreviewImageSrc = '';
+    let activePreviewFileName = 'previa-postagem.svg';
+
+    function openPreviewImage(event) {
+      event?.preventDefault();
+      if (!activePreviewImageSrc) return;
+      if (!activePreviewImageSrc.startsWith('data:')) {
+        window.open(activePreviewImageSrc, '_blank', 'noopener,noreferrer');
+        return;
+      }
+      const view = window.open('', '_blank', 'noopener,noreferrer');
+      if (!view) {
+        setMessage('O navegador bloqueou a nova aba. Use Baixar prévia.', 'warn');
+        return;
+      }
+      view.document.write(`<!doctype html>
+        <html lang="pt-BR">
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Prévia da postagem</title>
+            <style>
+              body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #f4f7f5; font-family: Arial, sans-serif; }
+              img { width: min(96vw, 720px); max-height: 96vh; object-fit: contain; background: #fff; box-shadow: 0 20px 60px rgba(0,0,0,.16); }
+            </style>
+          </head>
+          <body><img src="${activePreviewImageSrc}" alt="Prévia da postagem"></body>
+        </html>`);
+      view.document.close();
     }
 
     function setPreviewImages(imageSrcs, fileName = 'previa-postagem.svg') {
@@ -4041,10 +4158,12 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const strip = document.getElementById('dailyPlanPreviewSlides');
       const activate = (index) => {
         const source = sources[index] || sources[0] || '';
+        activePreviewImageSrc = source;
+        activePreviewFileName = fileName.replace(/(\.[a-z0-9]+)$/i, `-${index + 1}$1`);
         image.src = source;
-        link.href = source;
+        link.href = '#';
         download.href = source;
-        download.download = fileName.replace(/(\.[a-z0-9]+)$/i, `-${index + 1}$1`);
+        download.download = activePreviewFileName;
         strip.querySelectorAll('[data-preview-slide]').forEach((button) => {
           button.classList.toggle('active', Number(button.dataset.previewSlide) === index);
         });
@@ -4066,14 +4185,15 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       setPreviewImages([imageSrc], fileName);
     }
 
-    function previewProgramPlan(programKey) {
+    async function previewProgramPlan(programKey) {
       const item = (appState.dailyPlan || []).find((planItem) => (
         planItem.type === 'program' &&
         String(planItem.programId || planItem.slotIndex) === String(programKey)
       )) || {};
       const imagePath = item.imagePath || item.imageUrl || '';
       const preview = document.getElementById('dailyPlanPreview');
-      const generatedSlides = previewSlidesForItem(item);
+      document.getElementById('dailyPlanPreviewStatus').textContent = 'Carregando avatar';
+      const generatedSlides = await previewSlidesForItem(item);
       setPreviewImages(imagePath ? [imagePath, ...generatedSlides.slice(1)] : generatedSlides, `previa-${item.programId || 'programa'}.svg`);
       document.getElementById('dailyPlanPreviewTitle').textContent = `${item.time || '--:--'} · ${item.title || 'Programa da rádio'}`;
       document.getElementById('dailyPlanPreviewCaption').textContent = item.caption || 'Chamada recorrente da programação semanal.';
@@ -4083,10 +4203,11 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       setMessage('Prévia do programa aberta antes da postagem.', 'good');
     }
 
-    function previewPlanItem(slotIndex) {
+    async function previewPlanItem(slotIndex) {
       const item = (appState.dailyPlan || []).find((planItem) => String(planItem.slotIndex) === String(slotIndex)) || {};
       const preview = document.getElementById('dailyPlanPreview');
-      setPreviewImages(previewSlidesForItem(item), `previa-slot-${slotIndex}.svg`);
+      document.getElementById('dailyPlanPreviewStatus').textContent = 'Carregando avatar';
+      setPreviewImages(await previewSlidesForItem(item), `previa-slot-${slotIndex}.svg`);
       document.getElementById('dailyPlanPreviewTitle').textContent = `${item.time || '--:--'} · ${item.title || 'Conteúdo programado'}`;
       document.getElementById('dailyPlanPreviewCaption').textContent = item.caption || 'Legenda será montada pelo gerador automático.';
       document.getElementById('dailyPlanPreviewStatus').textContent = 'Prévia antes de postar';
@@ -4436,13 +4557,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('renderSlot').addEventListener('click', (event) => {
         runServerAction('/api/render', event.currentTarget, 'Renderizando');
       });
-      document.getElementById('dailyPlan').addEventListener('click', (event) => {
+      document.getElementById('dailyPlan').addEventListener('click', async (event) => {
         const renderButton = event.target.closest('[data-render-plan-slot]');
         if (renderButton) renderPlanSlot(Number(renderButton.dataset.renderPlanSlot), renderButton);
         const programButton = event.target.closest('[data-preview-program]');
-        if (programButton) previewProgramPlan(programButton.dataset.previewProgram);
+        if (programButton) await previewProgramPlan(programButton.dataset.previewProgram);
         const planButton = event.target.closest('[data-preview-plan]');
-        if (planButton) previewPlanItem(planButton.dataset.previewPlan);
+        if (planButton) await previewPlanItem(planButton.dataset.previewPlan);
       });
       document.getElementById('queuePost').addEventListener('click', () => scheduleSelectedPost(false));
       document.getElementById('publishNow').addEventListener('click', () => scheduleSelectedPost(true));
@@ -4452,6 +4573,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('pushScheduled').addEventListener('click', (event) => {
         runQueueAction('/api/push-scheduled-posts', event.currentTarget, 'Enviando agenda');
       });
+      document.getElementById('dailyPlanPreviewLink').addEventListener('click', openPreviewImage);
       document.getElementById('queueList').addEventListener('click', (event) => {
         const button = event.target.closest('[data-cancel-post]');
         if (button) cancelScheduledPost(button.dataset.cancelPost);
