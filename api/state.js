@@ -35,7 +35,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v2.6',
+  appVersion: 'v2.7',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -368,6 +368,39 @@ const DEFAULT_CLIENTE_X_ROTATION = [
   'diretoria'
 ];
 
+const PLAN_CREATIVE_ANGLES = [
+  {
+    title: (topic) => `O problema escondido em ${topic.area}.`,
+    caption: (topic) => `Em ${topic.area}, o prejuízo aparece quando ${topic.pain}. Antes da IA, mapeie entrada, resposta e conferência.`
+  },
+  {
+    title: (topic) => `${topic.area}: 3 pontos para arrumar antes da IA.`,
+    caption: (topic) => `Checklist rápido: onde a demanda entra, quem confere a informação e qual resposta pode virar padrão.`
+  },
+  {
+    title: (topic) => `O erro caro que ${topic.area} normaliza.`,
+    caption: (topic) => `Tratar rotina repetida como caso isolado custa tempo e contexto. O primeiro passo é transformar repetição em processo.`
+  },
+  {
+    title: (topic) => `Um teste de 30 minutos para ${topic.area}.`,
+    caption: (topic) => `Acompanhe uma demanda real do começo ao fim. Se aparecer ${topic.pain}, você achou um bom fluxo para automatizar.`
+  },
+  {
+    title: (topic) => `${topic.area} antes e depois de organizar o fluxo.`,
+    caption: (topic) => `Antes cada pessoa resolve do seu jeito. Depois existe registro, padrão e acompanhamento para a IA trabalhar com contexto.`
+  },
+  {
+    title: (topic) => `O bastidor que melhora ${topic.area}.`,
+    caption: (topic) => `Cliente vê velocidade, mas o que sustenta isso é bastidor organizado: triagem, registro, resposta e acompanhamento.`
+  }
+];
+
+function creativePlanAngle(dateString, slotIndex) {
+  return PLAN_CREATIVE_ANGLES[
+    ((daysSinceEpoch(dateString) * 5) + (slotIndex * 3) + Math.floor(slotIndex / 6)) % PLAN_CREATIVE_ANGLES.length
+  ];
+}
+
 function editorialDailyPlan(scheduleBrt = [], account = {}, packs = [], scheduledPosts = [], dateString = todaySaoPaulo()) {
   let rotation = Array.isArray(account.contentProfile?.topicRotation)
     ? account.contentProfile.topicRotation.map((item) => String(item || '').trim().toLowerCase()).filter(Boolean)
@@ -401,14 +434,14 @@ function editorialDailyPlan(scheduleBrt = [], account = {}, packs = [], schedule
     const topicId = rotation[pickDailyIndex(rotation, dateString, slotIndex)];
     const topic = PLAN_TOPICS[topicId] || { area: topicId || 'Conteúdo', pain: 'uma rotina importante ainda depende de esforço manual' };
     const packNumber = pickDailyIndex(Array.from({ length: automaticSelectionCount || 1 }), dateString, slotIndex);
-    const caption = `${topic.area} com IA não começa pela ferramenta. Começa quando você identifica que ${topic.pain}, descreve o processo e define o que precisa ser conferido antes de escalar.`;
+    const angle = creativePlanAngle(dateString, slotIndex);
     return {
       time,
       slotIndex,
       type: 'automatic',
       status: 'planned',
-      title: `${topic.area}: onde a IA realmente ajuda.`,
-      caption: compactText(caption),
+      title: angle.title(topic),
+      caption: compactText(angle.caption(topic)),
       mode: 'feed + story',
       packIndex: `profile-${packNumber}`
     };

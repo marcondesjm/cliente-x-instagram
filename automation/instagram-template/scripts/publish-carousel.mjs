@@ -721,43 +721,118 @@ const ANATEX_COPY_RULES = {
   ]
 };
 
-function autoPack(topic, angle, context, sequence, runStamp = null) {
+const CREATIVE_EDITORIAL_ANGLES = [
+  {
+    label: 'Gargalo invisível',
+    title: (topic) => `O problema escondido em ${topic.area}.`,
+    opener: (topic) => `Em ${topic.area}, o prejuízo quase nunca aparece como "falta de IA". Ele aparece quando ${topic.pain}.`,
+    slide2Title: (topic) => `O sintoma: ${topic.pain}.`,
+    slide3Title: 'Antes da ferramenta, vem o mapa.',
+    slide4Title: 'Escolha uma rotina para testar.',
+    slide5Title: (topic) => `Menos improviso em ${topic.area}.`,
+    caption: (topic, angle, context, sequence, runLine) => `${topic.area} tem um gargalo que costuma passar batido.\n\nEle aparece quando ${topic.pain}. A equipe sente como correria, retrabalho ou resposta atrasada.\n\nAntes de pensar em ferramenta, escolha uma rotina pequena, escreva o passo a passo e defina o que precisa ser conferido.\n\n${angle.action}\n\nObserve este sinal: ${context.proof}.${runLine}\n\nSérie prática ${String(sequence + 1).padStart(3, '0')}: IA boa começa em rotina bem descrita.\n\n${topic.hashtag}`
+  },
+  {
+    label: 'Checklist',
+    title: (topic) => `${topic.area}: 3 pontos para arrumar antes da IA.`,
+    opener: (topic) => `Se ${topic.pain}, a primeira automação não precisa ser grande. Ela precisa ser clara.`,
+    slide2Title: '1. Onde a conversa começa.',
+    slide3Title: '2. Quem confere a informação.',
+    slide4Title: '3. Qual resposta vira padrão.',
+    slide5Title: 'Comece pelo menor fluxo.',
+    caption: (topic, angle, context, sequence, runLine) => `Checklist rápido para ${topic.area}.\n\n1. Onde a demanda entra.\n2. Quem confere a informação.\n3. Qual resposta pode virar padrão.\n\nSe hoje ${topic.pain}, esse mapa já mostra onde a IA pode ajudar sem bagunçar a operação.\n\n${angle.action}\n\nPonto para acompanhar: ${context.proof}.${runLine}\n\nSérie prática ${String(sequence + 1).padStart(3, '0')}: menos promessa, mais processo.\n\n${topic.hashtag}`
+  },
+  {
+    label: 'Erro caro',
+    title: (topic) => `O erro caro que ${topic.area} normaliza.`,
+    opener: (topic) => `O custo não está só no tempo perdido. Está na decisão tomada com informação incompleta.`,
+    slide2Title: (topic) => `Quando ${topic.pain}, alguém paga a conta.`,
+    slide3Title: 'A IA precisa de critério.',
+    slide4Title: 'Transforme repetição em alerta.',
+    slide5Title: 'Automação boa evita surpresa.',
+    caption: (topic, angle, context, sequence, runLine) => `Existe um erro caro em ${topic.area}: tratar rotina repetida como se fosse caso isolado.\n\nQuando ${topic.pain}, a empresa perde tempo, contexto e oportunidade.\n\nA saída começa com critério: o que entra, o que precisa ser conferido e qual resposta não pode depender da memória.\n\n${angle.action}\n\nMétrica simples: ${context.proof}.${runLine}\n\nSérie prática ${String(sequence + 1).padStart(3, '0')}: automação serve para reduzir surpresa.\n\n${topic.hashtag}`
+  },
+  {
+    label: 'Roteiro prático',
+    title: (topic) => `Um teste de 30 minutos para ${topic.area}.`,
+    opener: (topic) => `Pegue uma demanda real da semana e acompanhe do começo ao fim. O ponto fraco aparece rápido.`,
+    slide2Title: 'Anote a primeira pergunta.',
+    slide3Title: 'Marque onde trava.',
+    slide4Title: 'Padronize só uma resposta.',
+    slide5Title: 'Depois pense em escala.',
+    caption: (topic, angle, context, sequence, runLine) => `Teste simples para ${topic.area}.\n\nSepare 30 minutos e acompanhe uma demanda real: de onde veio, quem respondeu, onde travou e o que ficou sem registro.\n\nSe aparecer ${topic.pain}, você encontrou um bom primeiro fluxo para automatizar.\n\n${angle.action}\n\nValide com este sinal: ${context.proof}.${runLine}\n\nSérie prática ${String(sequence + 1).padStart(3, '0')}: comece pequeno para crescer certo.\n\n${topic.hashtag}`
+  },
+  {
+    label: 'Antes e depois',
+    title: (topic) => `${topic.area} antes e depois de organizar o fluxo.`,
+    opener: (topic) => `Antes, cada pessoa resolve do seu jeito. Depois, a operação tem contexto, padrão e acompanhamento.`,
+    slide2Title: 'Antes: resposta solta.',
+    slide3Title: 'Durante: processo visível.',
+    slide4Title: 'Depois: IA com contexto.',
+    slide5Title: (topic) => `O ganho aparece em ${topic.gain}.`,
+    caption: (topic, angle, context, sequence, runLine) => `Antes e depois em ${topic.area}.\n\nAntes: ${topic.pain}.\nDepois: entrada clara, informação registrada, resposta padronizada e acompanhamento simples.\n\nÉ aí que a IA deixa de ser novidade e vira apoio real na rotina.\n\n${angle.action}\n\nProcure este sinal: ${context.proof}.${runLine}\n\nSérie prática ${String(sequence + 1).padStart(3, '0')}: clareza antes de escala.\n\n${topic.hashtag}`
+  },
+  {
+    label: 'Bastidor',
+    title: (topic) => `O bastidor que melhora ${topic.area}.`,
+    opener: (topic) => `Cliente vê velocidade. A equipe sente alívio. Mas o que sustenta isso é bastidor bem organizado.`,
+    slide2Title: (topic) => `O bastidor quebra quando ${topic.pain}.`,
+    slide3Title: 'Documente o caminho real.',
+    slide4Title: 'Deixe a IA apoiar o repetitivo.',
+    slide5Title: 'A experiência melhora fora da tela.',
+    caption: (topic, angle, context, sequence, runLine) => `O que melhora ${topic.area} muitas vezes não aparece na vitrine.\n\nAparece no bastidor: registro, triagem, resposta, acompanhamento e conferência.\n\nQuando ${topic.pain}, a IA pode ajudar, mas só depois que esse caminho está visível.\n\n${angle.action}\n\nAcompanhe: ${context.proof}.${runLine}\n\nSérie prática ${String(sequence + 1).padStart(3, '0')}: bastidor organizado vende melhor.\n\n${topic.hashtag}`
+  }
+];
+
+function creativeEditorialAngle(dateString, slotIndex, sequence = 0) {
+  return CREATIVE_EDITORIAL_ANGLES[
+    ((daysSinceEpoch(dateString) * 5) + (slotIndex * 3) + Math.floor(slotIndex / 6) + sequence) % CREATIVE_EDITORIAL_ANGLES.length
+  ];
+}
+
+function callMaybe(value, ...args) {
+  return typeof value === 'function' ? value(...args) : value;
+}
+
+function autoPack(topic, angle, context, sequence, runStamp = null, dateString = todaySaoPaulo(), slotIndex = 0) {
   const runLine = runStamp ? `\n\nEdição operacional ${runStamp}.` : '';
+  const editorial = creativeEditorialAngle(dateString, slotIndex, sequence);
+  const editorialLabel = callMaybe(editorial.label, topic, angle, context);
   return {
     autoGenerated: true,
     slides: [
       {
-        eyebrow: angle.label,
-        title: `${topic.area}: onde a IA realmente ajuda?`,
-        body: angle.hook,
+        eyebrow: editorialLabel,
+        title: callMaybe(editorial.title, topic, angle, context),
+        body: callMaybe(editorial.opener, topic, angle, context),
         visualCue: topic.visualCue || 'business'
       },
       {
-        eyebrow: 'Dor',
-        title: `O sinal aparece quando ${topic.pain}.`,
+        eyebrow: 'Diagnóstico',
+        title: callMaybe(editorial.slide2Title, topic, angle, context),
         body: `Isso fica mais claro ${context.trigger}.`,
         visualCue: topic.visualCue || 'business'
       },
       {
-        eyebrow: 'Base',
-        title: 'Sem processo claro, a IA improvisa.',
+        eyebrow: 'Organização',
+        title: callMaybe(editorial.slide3Title, topic, angle, context),
         body: `Organize ${topic.process}. Depois disso, a tecnologia consegue trabalhar com contexto.`,
         visualCue: topic.visualCue || 'business'
       },
       {
         eyebrow: 'Aplicação',
-        title: 'Automatize uma parte verificável.',
+        title: callMaybe(editorial.slide4Title, topic, angle, context),
         body: angle.insight,
         visualCue: topic.visualCue || 'business'
       },
       {
         eyebrow: 'Próximo passo',
-        title: `O ganho é ${topic.gain}.`,
+        title: callMaybe(editorial.slide5Title, topic, angle, context),
         body: `Procure ${context.proof}.`,
         visualCue: topic.visualCue || 'business'
       }
     ],
-    caption: `${topic.area} com IA não começa pela ferramenta.\n\nComeça quando você identifica que ${topic.pain}, descreve o processo e define o que precisa ser conferido antes de escalar.\n\n${angle.action}\n\nO melhor sinal para acompanhar é ${context.proof}.${runLine}\n\nSérie prática ${String(sequence + 1).padStart(3, '0')}: automação boa transforma rotina em sistema.\n\n${topic.hashtag}`
+    caption: editorial.caption(topic, angle, context, sequence, runLine)
   };
 }
 
@@ -916,7 +991,7 @@ function buildAutoContentPacks(dateString, slotIndex, runStamp = null) {
         const sequence = (topicIndex * AUTO_CONTENT_ANGLES.length * AUTO_CONTENT_CONTEXTS.length)
           + (angleIndex * AUTO_CONTENT_CONTEXTS.length)
           + contextIndex;
-        packs.push(autoPack(topic, angle, context, sequence, runStamp));
+        packs.push(autoPack(topic, angle, context, sequence, runStamp, dateString, slotIndex));
       }
     }
   }
@@ -939,7 +1014,9 @@ function buildLastResortPack(dateString, slotIndex) {
     AUTO_CONTENT_ANGLES[pickDailyIndex(AUTO_CONTENT_ANGLES, dateString, slotIndex + AUTO_CONTENT_TOPICS.length)],
     AUTO_CONTENT_CONTEXTS[pickDailyIndex(AUTO_CONTENT_CONTEXTS, dateString, slotIndex + AUTO_CONTENT_ANGLES.length)],
     AUTO_CONTENT_TOPICS.length * AUTO_CONTENT_ANGLES.length * AUTO_CONTENT_CONTEXTS.length,
-    stamp
+    stamp,
+    dateString,
+    slotIndex
   );
 }
 
@@ -1030,7 +1107,7 @@ function buildProfileContentPacks(account, dateString, slotIndex, runStamp = nul
   for (const [angleIndex, angle] of AUTO_CONTENT_ANGLES.entries()) {
     for (const [contextIndex, context] of contexts.entries()) {
       const sequence = (angleIndex * contexts.length) + contextIndex;
-      packs.push(autoPack(topic, angle, context, sequence, runStamp));
+      packs.push(autoPack(topic, angle, context, sequence, runStamp, dateString, slotIndex));
     }
   }
   const start = pickDailyIndex(packs, dateString, slotIndex);
