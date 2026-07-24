@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { spawnSync } from 'node:child_process';
 import {
   clearSessionCookie,
   configuredAdminEmail,
@@ -18,12 +19,14 @@ const ROOT = process.cwd();
 const CONTENT_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'content-packs.json');
 const ACCOUNTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'accounts.json');
 const SCHEDULED_POSTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'scheduled-posts.json');
+const WEEKLY_PROGRAMS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'weekly-programs.json');
 const WATCHDOG_ERRORS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'watchdog-errors.json');
 const OWNER = 'marcondesjm';
 const REPO = 'cliente-x-instagram';
 const ACCOUNTS_FILE_PATH = 'automation/instagram-template/config/accounts.json';
 const CONTENT_FILE_PATH = 'automation/instagram-template/config/content-packs.json';
 const SCHEDULED_FILE_PATH = 'automation/instagram-template/config/scheduled-posts.json';
+const WEEKLY_PROGRAMS_FILE_PATH = 'automation/instagram-template/config/weekly-programs.json';
 const WATCHDOG_ERRORS_FILE_PATH = 'automation/instagram-template/config/watchdog-errors.json';
 const VERCEL_PROJECT_ID = process.env.VERCEL_PROJECT_ID || 'prj_AVyS8LGjVuhUOxkpfZZwOF5vMmPj';
 const VERCEL_TEAM_ID = process.env.VERCEL_TEAM_ID || 'team_T4Th6hb1UxtrbtcWfLxlWNRQ';
@@ -31,6 +34,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
+  appVersion: 'v1.2',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -194,6 +198,270 @@ function cronToBrtTime(cron) {
   const [minute, hour] = cron.split(' ').map(Number);
   const brtHour = (hour + 21) % 24;
   return `${String(brtHour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+}
+
+function saoPauloParts(date = new Date()) {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Sao_Paulo',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  }).formatToParts(date);
+  return Object.fromEntries(parts.map((part) => [part.type, part.value]));
+}
+
+function todaySaoPaulo() {
+  const parts = saoPauloParts();
+  return `${parts.year}-${parts.month}-${parts.day}`;
+}
+
+function weekdaySaoPaulo(dateString = todaySaoPaulo()) {
+  const [year, month, day] = dateString.split('-').map(Number);
+  return new Date(Date.UTC(year, month - 1, day, 15, 0, 0)).getUTCDay();
+}
+
+function brtDateAndTime(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return { date: '', time: '' };
+  const parts = saoPauloParts(date);
+  return {
+    date: `${parts.year}-${parts.month}-${parts.day}`,
+    time: `${parts.hour}:${parts.minute}`
+  };
+}
+
+function daysSinceEpoch(dateString) {
+  const [year, month, day] = dateString.split('-').map(Number);
+  return Math.floor(Date.UTC(year, month - 1, day) / 86_400_000);
+}
+
+function pickDailyIndex(items, dateString, slotIndex = 0) {
+  if (!items.length) return -1;
+  return (daysSinceEpoch(dateString) + slotIndex) % items.length;
+}
+
+function compactText(text = '', maxLength = 150) {
+  const clean = String(text || '').replace(/\s+/g, ' ').trim();
+  if (clean.length <= maxLength) return clean;
+  const sliced = clean.slice(0, maxLength);
+  const cut = sliced.lastIndexOf(' ');
+  return `${sliced.slice(0, cut > 80 ? cut : maxLength).trim()}...`;
+}
+
+function activeWeeklyProgramsForDate(programs = [], dateString = todaySaoPaulo()) {
+  const weekday = weekdaySaoPaulo(dateString);
+  return programs
+    .filter((program) => program.status !== 'paused')
+    .filter((program) => Array.isArray(program.weekdays) && program.weekdays.map(Number).includes(weekday))
+    .filter((program) => /^([01]\d|2[0-3]):([0-5]\d)$/.test(String(program.time || '')))
+    .sort((a, b) => String(a.time).localeCompare(String(b.time)));
+}
+
+function weeklyProgramPlanItems(programs = [], dateString = todaySaoPaulo()) {
+  return activeWeeklyProgramsForDate(programs, dateString).map((program, index) => ({
+    time: program.time,
+    slotIndex: `program-${program.id || index}`,
+    type: 'program',
+    status: 'planned',
+    title: program.title || program.name || 'Programa da rádio',
+    caption: compactText(program.description || program.callToAction || 'Chamada recorrente da programação semanal.'),
+    mode: program.mode === 'story-only' ? 'story' : 'feed + story',
+    programId: program.id,
+    host: program.host || '',
+    imagePath: program.imagePath || '',
+    imageUrl: program.imageUrl || '',
+    weekdays: program.weekdays || []
+  }));
+}
+
+function mergeProgramItems(plan = [], programs = [], dateString = todaySaoPaulo()) {
+  const programItems = weeklyProgramPlanItems(programs, dateString);
+  if (!programItems.length) return plan;
+  const byTime = new Map(programItems.map((item) => [item.time, item]));
+  const merged = plan.map((item) => {
+    if (item.type === 'manual') return item;
+    return byTime.get(item.time) || item;
+  });
+  for (const item of programItems) {
+    if (!merged.some((planItem) => planItem.time === item.time)) merged.push(item);
+  }
+  return merged.sort((a, b) => String(a.time).localeCompare(String(b.time)));
+}
+
+const PLAN_TOPICS = {
+  juridico: {
+    area: 'Advocacia',
+    pain: 'lead chega pelo WhatsApp sem contexto, documento ou urgência clara'
+  },
+  servicos: {
+    area: 'Serviços profissionais',
+    pain: 'briefing, proposta e follow-up dependem demais da memória de quem vende'
+  },
+  clinicas: {
+    area: 'Clínicas',
+    pain: 'paciente chama, pergunta preço, some e volta sem histórico'
+  },
+  imobiliario: {
+    area: 'Imobiliário',
+    pain: 'interessado pergunta por imóvel, mas o atendimento demora e perde intenção de compra'
+  },
+  ecommerce: {
+    area: 'E-commerce',
+    pain: 'cliente pergunta sobre produto, prazo ou troca e a venda esfria antes do fechamento'
+  },
+  financeiro: {
+    area: 'Financeiro',
+    pain: 'conferência manual consome tempo todo mês'
+  },
+  estetica: {
+    area: 'Estética e beleza',
+    pain: 'cliente pergunta procedimento, preço e horário, mas a conversa não vira agenda'
+  },
+  restaurantes: {
+    area: 'Restaurantes',
+    pain: 'pedido, reserva e dúvida chegam misturados e a equipe perde tempo respondendo repetição'
+  },
+  comercial: {
+    area: 'Comercial',
+    pain: 'proposta demora para sair'
+  },
+  atendimento: {
+    area: 'Atendimento',
+    pain: 'cliente precisa repetir informação'
+  },
+  operacao: {
+    area: 'Operação',
+    pain: 'gargalo pequeno trava entrega importante'
+  },
+  diretoria: {
+    area: 'Diretoria',
+    pain: 'reunião discute número em vez de decisão'
+  }
+};
+
+const DEFAULT_CLIENTE_X_ROTATION = [
+  'juridico',
+  'servicos',
+  'clinicas',
+  'imobiliario',
+  'ecommerce',
+  'financeiro',
+  'estetica',
+  'restaurantes',
+  'comercial',
+  'atendimento',
+  'operacao',
+  'diretoria'
+];
+
+function editorialDailyPlan(scheduleBrt = [], account = {}, packs = [], scheduledPosts = [], dateString = todaySaoPaulo()) {
+  let rotation = Array.isArray(account.contentProfile?.topicRotation)
+    ? account.contentProfile.topicRotation.map((item) => String(item || '').trim().toLowerCase()).filter(Boolean)
+    : [];
+  if (!rotation.length && account.account === 'cliente-x') rotation = DEFAULT_CLIENTE_X_ROTATION;
+  if (!rotation.length) return dailyPlan(scheduleBrt, packs, scheduledPosts, dateString);
+
+  const pendingManual = scheduledPosts.filter((post) => {
+    if (post.status !== 'pending') return false;
+    return brtDateAndTime(post.scheduledFor).date === dateString;
+  });
+  const profilePackCount = 18;
+  const automaticSelectionCount = profilePackCount + packs.length;
+
+  return scheduleBrt.map((time, slotIndex) => {
+    const manual = pendingManual.find((post) => brtDateAndTime(post.scheduledFor).time === time);
+    if (manual) {
+      const manualPack = manual.pack || packs[manual.packIndex] || {};
+      return {
+        time,
+        slotIndex,
+        type: 'manual',
+        status: 'pending',
+        title: manual.title || manualPack.slides?.[0]?.title || `Pack ${manual.packIndex}`,
+        caption: compactText(manualPack.caption || ''),
+        mode: manual.mode === 'story-only' ? 'story' : 'feed + story',
+        postId: manual.id
+      };
+    }
+
+    const topicId = rotation[pickDailyIndex(rotation, dateString, slotIndex)];
+    const topic = PLAN_TOPICS[topicId] || { area: topicId || 'Conteúdo', pain: 'uma rotina importante ainda depende de esforço manual' };
+    const packNumber = pickDailyIndex(Array.from({ length: automaticSelectionCount || 1 }), dateString, slotIndex);
+    const caption = `${topic.area} com IA não começa pela ferramenta. Começa quando você identifica que ${topic.pain}, descreve o processo e define o que precisa ser conferido antes de escalar.`;
+    return {
+      time,
+      slotIndex,
+      type: 'automatic',
+      status: 'planned',
+      title: `${topic.area}: onde a IA realmente ajuda.`,
+      caption: compactText(caption),
+      mode: 'feed + story',
+      packIndex: `profile-${packNumber}`
+    };
+  });
+}
+
+function dailyPlan(scheduleBrt = [], packs = [], scheduledPosts = [], dateString = todaySaoPaulo()) {
+  const pendingManual = scheduledPosts.filter((post) => {
+    if (post.status !== 'pending') return false;
+    return brtDateAndTime(post.scheduledFor).date === dateString;
+  });
+
+  return scheduleBrt.map((time, slotIndex) => {
+    const manual = pendingManual.find((post) => brtDateAndTime(post.scheduledFor).time === time);
+    if (manual) {
+      const manualPack = manual.pack || packs[manual.packIndex] || {};
+      return {
+        time,
+        slotIndex,
+        type: 'manual',
+        status: 'pending',
+        title: manual.title || manualPack.slides?.[0]?.title || `Pack ${manual.packIndex}`,
+        caption: compactText(manualPack.caption || ''),
+        mode: manual.mode === 'story-only' ? 'story' : 'feed + story',
+        postId: manual.id
+      };
+    }
+
+    const packIndex = pickDailyIndex(packs, dateString, slotIndex);
+    const pack = packIndex >= 0 ? packs[packIndex] : {};
+    return {
+      time,
+      slotIndex,
+      type: 'automatic',
+      status: 'planned',
+      title: pack.slides?.[0]?.title || 'Conteúdo automático pelo perfil da conta',
+      caption: compactText(pack.caption || ''),
+      mode: 'feed + story',
+      packIndex
+    };
+  });
+}
+
+function publisherDailyPlan(accountKey = 'cliente-x') {
+  const result = spawnSync(process.execPath, [
+    'automation/instagram-template/scripts/publish-carousel.mjs',
+    '--account',
+    accountKey,
+    '--plan-day'
+  ], {
+    cwd: ROOT,
+    encoding: 'utf8',
+    env: {
+      ...process.env,
+      INSTAGRAM_TEMPLATE_DISABLE_ENGAGEMENT_AI: process.env.INSTAGRAM_TEMPLATE_DISABLE_ENGAGEMENT_AI || ''
+    },
+    timeout: 20_000
+  });
+  if (result.status !== 0) {
+    const message = result.stderr || result.stdout || `exit ${result.status}`;
+    throw new Error(`Nao consegui calcular plano real do publicador: ${message.trim()}`);
+  }
+  const payload = JSON.parse(result.stdout);
+  return Array.isArray(payload.dailyPlan) ? payload.dailyPlan : [];
 }
 
 function maskSecret(value = '') {
@@ -863,6 +1131,64 @@ async function readScheduledGroups() {
   }
 }
 
+async function readWeeklyProgramGroups() {
+  return readConfigGroups(WEEKLY_PROGRAMS_FILE_PATH, WEEKLY_PROGRAMS_PATH);
+}
+
+function normalizeWeeklyProgram(program = {}) {
+  const id = String(program.id || `program-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`).trim();
+  const name = String(program.name || '').trim();
+  const title = String(program.title || name).trim();
+  const time = String(program.time || '').trim();
+  const weekdays = Array.from(new Set((program.weekdays || []).map(Number)))
+    .filter((day) => Number.isInteger(day) && day >= 0 && day <= 6)
+    .sort((a, b) => a - b);
+  if (!name) throw userError('Informe o nome do programa.');
+  if (!/^([01]\d|2[0-3]):([0-5]\d)$/.test(time)) throw userError(`Horario invalido em ${name}. Use HH:MM.`);
+  if (!weekdays.length) throw userError(`Escolha pelo menos um dia da semana para ${name}.`);
+  return {
+    id,
+    status: program.status === 'paused' ? 'paused' : 'active',
+    name,
+    title,
+    host: String(program.host || '').trim(),
+    weekdays,
+    time,
+    mode: program.mode === 'story-only' ? 'story-only' : 'feed-and-story',
+    description: String(program.description || '').trim(),
+    callToAction: String(program.callToAction || '').trim(),
+    imagePath: String(program.imagePath || '').trim(),
+    imageUrl: String(program.imageUrl || '').trim(),
+    lastPublishedDate: String(program.lastPublishedDate || '').trim(),
+    lastPublishedAt: String(program.lastPublishedAt || '').trim(),
+    updatedAt: new Date().toISOString()
+  };
+}
+
+async function updateWeeklyPrograms(body = {}, session = null) {
+  const accountKey = normalizeAccountKey(body.account);
+  const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
+  const account = accounts.find((item) => item.account === accountKey);
+  if (!account) throw userError(`Conta ${accountKey} nao encontrada.`, 404);
+  if (!canAccessAccount(session, account)) {
+    throw userError('Seu usuario nao pode alterar esta conta.', 403);
+  }
+
+  const weeklyFile = await readGithubConfig(WEEKLY_PROGRAMS_FILE_PATH);
+  let group = weeklyFile.data.find((item) => item.account === accountKey);
+  if (!group) {
+    group = { account: accountKey, programs: [] };
+    weeklyFile.data.push(group);
+  }
+  group.programs = (Array.isArray(body.programs) ? body.programs : []).map(normalizeWeeklyProgram);
+  await writeGithubConfig(WEEKLY_PROGRAMS_FILE_PATH, weeklyFile.data, weeklyFile.sha, `Update weekly programs for ${accountKey}`);
+  return {
+    ok: true,
+    weeklyPrograms: group.programs,
+    message: 'Grade semanal salva no GitHub.'
+  };
+}
+
 async function readWatchdogErrors() {
   return readConfigGroups(WATCHDOG_ERRORS_FILE_PATH, WATCHDOG_ERRORS_PATH);
 }
@@ -959,6 +1285,12 @@ export default async function handler(req, res) {
         res.status(200).json(result);
         return;
       }
+      if (body.action === 'update-weekly-programs') {
+        const result = await updateWeeklyPrograms(body, session);
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json(result);
+        return;
+      }
       if (body.action === 'upload-brand-document') {
         const result = await uploadBrandDocument(body, session);
         res.setHeader('cache-control', 'no-store');
@@ -1032,6 +1364,8 @@ export default async function handler(req, res) {
       accessConfig: [],
       secrets: [],
       scheduleBrt: [],
+      dailyPlan: [],
+      weeklyPrograms: [],
       packs: [],
       packCount: 0,
       uniqueCaptions: 0,
@@ -1056,9 +1390,23 @@ export default async function handler(req, res) {
   }));
   const group = content.find((item) => item.account === accountKey);
   const scheduledGroups = await readScheduledGroups();
+  const weeklyProgramGroups = await readWeeklyProgramGroups();
   const watchdogErrors = await readWatchdogErrors();
   const scheduledGroup = scheduledGroups.find((item) => item.account === accountKey);
+  const weeklyProgramGroup = weeklyProgramGroups.find((item) => item.account === accountKey);
   const packs = group?.packs || [];
+  const scheduleBrt = account?.scheduleUtc?.map(cronToBrtTime) || [];
+  const scheduledPosts = scheduledGroup?.posts || [];
+  const weeklyPrograms = weeklyProgramGroup?.programs || [];
+  let plan = editorialDailyPlan(scheduleBrt, account, packs, scheduledPosts);
+  if (!plan.length) {
+    try {
+      plan = publisherDailyPlan(accountKey);
+    } catch {
+      plan = dailyPlan(scheduleBrt, packs, scheduledPosts);
+    }
+  }
+  plan = mergeProgramItems(plan, weeklyPrograms);
 
   res.setHeader('cache-control', 'no-store');
   res.status(200).json({
@@ -1086,11 +1434,13 @@ export default async function handler(req, res) {
     watchdogErrors: watchdogErrors.filter((item) => !item.account || item.account === accountKey).slice(-10).reverse(),
     accessConfig: accessConfigForAccount(account),
     secrets: session ? secretStatuses(accounts) : [],
-    scheduleBrt: account?.scheduleUtc?.map(cronToBrtTime) || [],
+    scheduleBrt,
+    dailyPlan: plan,
+    weeklyPrograms,
     packs,
     packCount: packs.length,
     uniqueCaptions: new Set(packs.map((pack) => normalizeCaption(pack.caption))).size,
-    scheduledPosts: scheduledGroup?.posts || [],
+    scheduledPosts,
     latestResult: null,
     latestFailure: null
   });

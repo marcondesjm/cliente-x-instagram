@@ -9,6 +9,8 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const TEMPLATE_DIR = resolve(ROOT, 'automation', 'instagram-template');
 const DEFAULT_CONFIG_DIR = join(TEMPLATE_DIR, 'config');
 const RUNS_DIR = join(TEMPLATE_DIR, 'runs');
+const FEED_WIDTH = 1080;
+const FEED_HEIGHT = 1350;
 const IG_BASE = 'https://graph.facebook.com/v21.0';
 const RETRY_ATTEMPTS = Number.parseInt(process.env.INSTAGRAM_TEMPLATE_RETRY_ATTEMPTS || '3', 10);
 const RETRY_BASE_DELAY_MS = Number.parseInt(process.env.INSTAGRAM_TEMPLATE_RETRY_BASE_DELAY_MS || '2500', 10);
@@ -51,6 +53,7 @@ function parseArgs(argv) {
     configDir: resolve(getValue('--config-dir', DEFAULT_CONFIG_DIR)),
     dryRun: argv.includes('--dry-run'),
     renderOnly: argv.includes('--render-only'),
+    planDay: argv.includes('--plan-day'),
     storyOnly: argv.includes('--story-only'),
     validateCopy: argv.includes('--validate-copy'),
     scheduledOnly: argv.includes('--scheduled-only')
@@ -128,6 +131,129 @@ function updateScheduledPost(configDir, accountName, id, patch) {
   Object.assign(post, patch);
   writeJson(state.path, state.groups);
   return post;
+}
+
+function loadWeeklyPrograms(configDir, accountName) {
+  const path = configPath(configDir, 'weekly-programs');
+  if (!existsSync(path)) return { path, groups: [{ account: accountName, programs: [] }], group: { account: accountName, programs: [] } };
+  const groups = readJson(path);
+  let group = groups.find((item) => item.account === accountName);
+  if (!group) {
+    group = { account: accountName, programs: [] };
+    groups.push(group);
+  }
+  if (!Array.isArray(group.programs)) group.programs = [];
+  return { path, groups, group };
+}
+
+function weekdaySaoPaulo(dateString) {
+  const [year, month, day] = dateString.split('-').map(Number);
+  return new Date(Date.UTC(year, month - 1, day, 15, 0, 0)).getUTCDay();
+}
+
+function currentBrtDateTime(now = new Date()) {
+  const stamp = timestampSaoPaulo();
+  return {
+    date: stamp.slice(0, 10),
+    time: `${stamp.slice(11, 13)}:${stamp.slice(13, 15)}`,
+    timestamp: now.toISOString()
+  };
+}
+
+function isWeeklyProgramDue(program, now = new Date()) {
+  if (!program || program.status === 'paused') return false;
+  if (!/^([01]\d|2[0-3]):([0-5]\d)$/.test(String(program.time || ''))) return false;
+  const current = currentBrtDateTime(now);
+  if (program.lastPublishedDate === current.date) return false;
+  const weekdays = Array.isArray(program.weekdays) ? program.weekdays.map(Number) : [];
+  if (!weekdays.includes(weekdaySaoPaulo(current.date))) return false;
+  return String(program.time) <= current.time;
+}
+
+function programImageSlide(program) {
+  const rawImagePath = String(program.imagePath || '').trim();
+  const imageUrl = String(program.imageUrl || (/^https?:\/\//i.test(rawImagePath) ? rawImagePath : '')).trim();
+  const imagePath = /^https?:\/\//i.test(rawImagePath) ? '' : rawImagePath;
+  if (!imagePath && !imageUrl) return null;
+  return {
+    eyebrow: 'No ar',
+    title: program.name,
+    body: program.description || program.callToAction || 'Confira a programação.',
+    ...(imagePath ? { imagePath } : {}),
+    ...(imageUrl ? { imageUrl } : {})
+  };
+}
+
+function packFromWeeklyProgram(program, account = {}) {
+  const brand = account.brandName || account.expectedUsername || 'Rádio';
+  const title = program.title || `Hoje tem ${program.name}`;
+  const hostLine = program.host ? `Com ${program.host}.` : `Na programação da ${brand}.`;
+  const cta = program.callToAction || 'Acompanhe ao vivo, participe e compartilhe com quem gosta da nossa programação.';
+  const slides = [
+    programImageSlide(program),
+    {
+      eyebrow: 'Programação',
+      title,
+      body: `${program.name} começa às ${program.time}. ${hostLine}`
+    },
+    {
+      eyebrow: 'Ao vivo',
+      title: 'Sintonize no horário certo.',
+      body: program.description || 'Uma chamada rápida para lembrar o público do programa e aumentar a audiência no momento certo.'
+    },
+    {
+      eyebrow: 'Participe',
+      title: 'Chame quem acompanha com você.',
+      body: cta
+    }
+  ].filter(Boolean);
+  return {
+    slides,
+    caption: `${title}\n\n${program.description || hostLine}\n\n${cta}`
+  };
+}
+
+function dueWeeklyProgramPost(configDir, accountName, account, now = new Date()) {
+  const state = loadWeeklyPrograms(configDir, accountName);
+  const program = state.group.programs
+    .filter((item) => isWeeklyProgramDue(item, now))
+    .sort((a, b) => String(a.time).localeCompare(String(b.time)))[0];
+  if (!program) return { ...state, post: null, program: null };
+  const current = currentBrtDateTime(now);
+  return {
+    ...state,
+    program,
+    post: {
+      id: `weekly-${program.id}-${current.date}`,
+      status: 'pending',
+      packIndex: program.id || program.name,
+      pack: packFromWeeklyProgram(program, account),
+      scheduledFor: `${current.date}T${program.time}:00-03:00`,
+      mode: program.mode === 'story-only' ? 'story-only' : 'feed-and-story',
+      title: program.title || program.name,
+      source: 'weekly-program',
+      programId: program.id
+    }
+  };
+}
+
+function updateWeeklyProgramPost(configDir, accountName, id, patch) {
+  const match = String(id || '').match(/^weekly-(.+)-(\d{4}-\d{2}-\d{2})$/);
+  if (!match) return null;
+  const [, programId, dateString] = match;
+  const state = loadWeeklyPrograms(configDir, accountName);
+  const program = state.group.programs.find((item) => String(item.id) === programId);
+  if (!program) return null;
+  if (patch.status === 'published') {
+    program.lastPublishedDate = dateString;
+    program.lastPublishedAt = patch.publishedAt || new Date().toISOString();
+  }
+  if (patch.status === 'failed') {
+    program.lastFailureAt = patch.failedAt || new Date().toISOString();
+    program.lastFailureMessage = patch.error || patch.message || 'Falha ao publicar programa.';
+  }
+  writeJson(state.path, state.groups);
+  return program;
 }
 
 async function loadSupabasePacks(env, accountName) {
@@ -424,6 +550,24 @@ const INDUSTRY_SPECIALISTS = [
   }
 ];
 
+const PROFILE_ROTATION_TOPICS = new Map([
+  ...INDUSTRY_SPECIALISTS.map((industry) => [industry.id, industry]),
+  ...AUTO_CONTENT_TOPICS.map((topic) => [
+    normalizeSearchText(topic.area),
+    {
+      id: normalizeSearchText(topic.area),
+      area: topic.area,
+      pain: topic.pain,
+      process: topic.process,
+      gain: topic.gain,
+      hashtag: topic.hashtag,
+      trigger: `quando ${topic.pain}`,
+      proof: topic.gain,
+      examples: []
+    }
+  ])
+]);
+
 const ENGAGEMENT_INTELLIGENCE = {
   eyebrowHooks: [
     'Para salvar',
@@ -462,6 +606,12 @@ const ENGAGEMENT_INTELLIGENCE = {
     'Próximo passo possível: transforme uma tarefa repetida em checklist antes de pedir IA.'
   ],
   visualVariants: ['focus', 'numbered', 'quote', 'signal']
+};
+
+const FINAL_SLIDE_CALL_CTA = {
+  eyebrow: 'Convite',
+  title: 'Call gratuita de 30 minutos.',
+  body: 'Acesse o link da bio e escolha um horário para uma conversa prática sobre IA na sua operação.'
 };
 
 const CONTENT_GOALS = {
@@ -532,6 +682,34 @@ const CONTENT_GOALS = {
   }
 };
 
+const ANATEX_COPY_RULES = {
+  replacements: [
+    [/\bN[aã]o [ée] sobre tirar humanidade\.\s*[ÉE]\s*sobre liberar a equipe para atender melhor\./gi, 'A tecnologia fica nos bastidores para a equipe atender melhor.'],
+    [/\bN[aã]o [ée] sobre ([^.!?\n]+),\s*[ée]\s*sobre ([^.!?\n]+)\./gi, 'O foco sai de $1 e vai para $2.'],
+    [/\bisso muda tudo\b/gi, 'isso muda a rotina'],
+    [/\bTodo mundo\b/g, 'A equipe'],
+    [/\btexto gen[eé]rico\b/gi, 'texto sem voz própria'],
+    [/\bmensagem gen[eé]rica\b/gi, 'mensagem sem contexto'],
+    [/Toda tarefa que se repete muito merece uma pergunta: por que ainda depende de esforço manual\?/gi, 'Toda tarefa que se repete muito merece virar processo antes de depender de esforço manual.']
+  ],
+  questionTitles: [
+    [/^Seu primeiro atendimento vende confiança ou perde contexto\?$/i, 'O primeiro atendimento precisa vender confiança e preservar contexto.'],
+    [/^Sua venda termina na reunião ou começa depois dela\?$/i, 'A venda continua depois da reunião.'],
+    [/^Seu financeiro controla ou só descobre depois\?$/i, 'O financeiro precisa enxergar antes da urgência.'],
+    [/^Seu atendimento tem memória\?$/i, 'Atendimento bom tem memória.'],
+    [/^Seu relatório informa ou ajuda a decidir\?$/i, 'Relatório bom ajuda a decidir.'],
+    [/^Você atende leads ou escolhe prioridades\?$/i, 'Lead bom precisa virar prioridade clara.'],
+    [/^Sua empresa sabe o que sabe\?$/i, 'A empresa precisa organizar o que sabe.'],
+    [/^Quantas marcações sua clínica perde por falta de fluxo\?$/i, 'Clínicas perdem marcações quando falta fluxo.'],
+    [/^Sua equipe está ocupada ou organizada\?$/i, 'Equipe ocupada precisa virar equipe organizada.'],
+    [/^Seu pós-venda fideliza ou só apaga incêndio\?$/i, 'Pós-venda bom fideliza antes de apagar incêndio.'],
+    [/^Seu cliente acompanha o projeto ou adivinha\?$/i, 'Cliente bom acompanhado não precisa adivinhar o projeto.'],
+    [/^Sua rotina mensal ainda depende de memória\?$/i, 'Rotina mensal não pode depender de memória.'],
+    [/^Você lidera a empresa ou segura a fila\?$/i, 'Liderança precisa sair da fila operacional.'],
+    [/^Qual rotina da sua empresa já deveria virar sistema\?$/i, 'Toda empresa tem uma rotina pronta para virar sistema.']
+  ]
+};
+
 function autoPack(topic, angle, context, sequence, runStamp = null) {
   const runLine = runStamp ? `\n\nEdição operacional ${runStamp}.` : '';
   return {
@@ -584,6 +762,46 @@ function compactSentence(text = '', maxLength = 132) {
   return `${sliced.slice(0, Math.max(0, sliced.lastIndexOf(' '))).trim()}.`;
 }
 
+function applyAnatexCopyRules(text = '') {
+  let next = String(text || '').replace(/[—–]/g, '-');
+  for (const [pattern, replacement] of ANATEX_COPY_RULES.replacements) {
+    next = next.replace(pattern, replacement);
+  }
+  return next.replace(/\?/g, '.');
+}
+
+function anatexTitle(title = '') {
+  let next = applyAnatexCopyRules(title).trim();
+  for (const [pattern, replacement] of ANATEX_COPY_RULES.questionTitles) {
+    if (pattern.test(next)) return replacement;
+  }
+  if (/\?$/.test(next)) {
+    next = next
+      .replace(/^Você já\s+/i, 'Quando você ')
+      .replace(/^Você\s+/i, '')
+      .replace(/^Seu\s+/i, 'O seu ')
+      .replace(/^Sua\s+/i, 'A sua ')
+      .replace(/\?$/, '.');
+  }
+  return next;
+}
+
+function sanitizePackForAnatexStyle(pack = {}) {
+  const next = JSON.parse(JSON.stringify(pack));
+  next.slides = (next.slides || []).map((slide) => ({
+    ...slide,
+    eyebrow: applyAnatexCopyRules(slide.eyebrow || ''),
+    title: anatexTitle(slide.title || ''),
+    body: applyAnatexCopyRules(slide.body || '')
+  }));
+  next.caption = applyAnatexCopyRules(next.caption || '')
+    .split(/\n{3,}/)
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .join('\n\n');
+  return next;
+}
+
 function engagementVariant(dateString, slotIndex, offset = 0) {
   return ENGAGEMENT_INTELLIGENCE.visualVariants[
     pickDailyIndex(ENGAGEMENT_INTELLIGENCE.visualVariants, dateString, slotIndex + offset)
@@ -595,11 +813,18 @@ function contentGoalFromAccount(account = {}) {
   return CONTENT_GOALS[goal] || CONTENT_GOALS.authority;
 }
 
-function enhanceSlide(slide, index, dateString, slotIndex, goal = CONTENT_GOALS.authority) {
+function enhanceSlide(slide, index, dateString, slotIndex, goal = CONTENT_GOALS.authority, totalSlides = 0) {
   const next = { ...slide };
   if (next.imagePath || next.imageUrl) return next;
 
   next.visualVariant = engagementVariant(dateString, slotIndex, index);
+  if (totalSlides > 1 && index === totalSlides - 1) {
+    return {
+      ...next,
+      ...FINAL_SLIDE_CALL_CTA
+    };
+  }
+
   if (index === 0) {
     const eyebrowHooks = goal.eyebrowHooks || ENGAGEMENT_INTELLIGENCE.eyebrowHooks;
     next.eyebrow = eyebrowHooks[
@@ -646,8 +871,12 @@ function enhancePackForEngagement(pack, dateString, slotIndex, account = {}) {
 
   const enhanced = JSON.parse(JSON.stringify(pack));
   const goal = contentGoalFromAccount(account);
-  enhanced.slides = (enhanced.slides || []).map((slide, index) => enhanceSlide(slide, index, dateString, slotIndex, goal));
+  const totalSlides = (enhanced.slides || []).length;
+  enhanced.slides = (enhanced.slides || []).map((slide, index) => enhanceSlide(slide, index, dateString, slotIndex, goal, totalSlides));
   enhanced.caption = enhanceCaption(enhanced.caption || '', dateString, slotIndex, goal);
+  if (account.contentProfile?.visualDirection === 'anatex-editorial') {
+    Object.assign(enhanced, sanitizePackForAnatexStyle(enhanced));
+  }
   enhanced.engagementIntelligence = {
     version: 1,
     appliedAt: new Date().toISOString(),
@@ -735,12 +964,20 @@ function detectIndustrySpecialist(account = {}) {
   )) || null;
 }
 
-function profileTopicFromAccount(account = {}) {
+function pickProfileRotationTopic(profile = {}, dateString = todaySaoPaulo(), slotIndex = 0) {
+  const rotation = Array.isArray(profile.topicRotation) ? profile.topicRotation : [];
+  const ids = rotation.map((item) => normalizeSearchText(item)).filter(Boolean);
+  if (!ids.length) return null;
+  const selected = ids[pickDailyIndex(ids, dateString, slotIndex)];
+  return PROFILE_ROTATION_TOPICS.get(selected) || null;
+}
+
+function profileTopicFromAccount(account = {}, dateString = todaySaoPaulo(), slotIndex = 0) {
   const profile = account.contentProfile || {};
   const brandSummary = account.brandSummary || {};
   const documentAnalysis = account.brandDocument?.analysis || {};
   if (!profile.niche && !profile.audience && !profile.offer && !brandSummary.description && !documentAnalysis.summary) return null;
-  const industry = detectIndustrySpecialist(account);
+  const industry = pickProfileRotationTopic(profile, dateString, slotIndex) || detectIndustrySpecialist(account);
   const niche = profile.niche || account.brandName || 'negócio';
   const audience = profile.audience || 'clientes';
   const offer = profile.offer || 'solução com IA';
@@ -766,7 +1003,7 @@ function profileTopicFromAccount(account = {}) {
 }
 
 function buildProfileContentPacks(account, dateString, slotIndex, runStamp = null) {
-  const topic = profileTopicFromAccount(account);
+  const topic = profileTopicFromAccount(account, dateString, slotIndex);
   if (!topic) return [];
   const specialistContext = topic.industryId !== 'perfil'
     ? [{ trigger: `quando ${topic.pain}`, proof: `${topic.gain}; exemplos: ${topic.industryExamples.join(', ')}` }]
@@ -813,6 +1050,41 @@ function pickDaily(items, dateString, slotIndex = 0) {
 
 function pickDailyIndex(items, dateString, slotIndex = 0) {
   return (daysSinceEpoch(dateString) + slotIndex) % items.length;
+}
+
+function cronToBrtTime(cron) {
+  const [minute, hour] = String(cron).split(' ').map(Number);
+  const brtHour = (hour + 21) % 24;
+  return `${String(brtHour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+}
+
+function compactPlanText(text = '', maxLength = 160) {
+  const clean = String(text || '').replace(/\s+/g, ' ').trim();
+  if (clean.length <= maxLength) return clean;
+  const sliced = clean.slice(0, maxLength);
+  const cut = sliced.lastIndexOf(' ');
+  return `${sliced.slice(0, cut > 80 ? cut : maxLength).trim()}...`;
+}
+
+function planForAutomaticSlots(account, localPacks, dateString) {
+  return (account.scheduleUtc || []).map((cron, slotIndex) => {
+    const profilePacks = buildProfileContentPacks(account, dateString, slotIndex);
+    const automaticSelectionPacks = profilePacks.length ? mergePacks(profilePacks, localPacks) : localPacks;
+    const packIndexNumber = pickDailyIndex(automaticSelectionPacks, dateString, slotIndex);
+    const rawPack = automaticSelectionPacks[packIndexNumber] || {};
+    const enhancement = enhancePackForEngagement(rawPack, dateString, slotIndex, account);
+    const pack = enhancement.pack || rawPack;
+    return {
+      time: cronToBrtTime(cron),
+      slotIndex,
+      type: 'automatic',
+      status: 'planned',
+      title: pack.slides?.[0]?.title || 'Conteúdo automático pelo perfil da conta',
+      caption: compactPlanText(pack.caption || ''),
+      mode: 'feed + story',
+      packIndex: profilePacks.length ? `profile-${packIndexNumber}` : packIndexNumber
+    };
+  });
 }
 
 function readSlotIndex() {
@@ -910,6 +1182,162 @@ function styleForSlide(style, index = 1) {
   return style.slidePalettes[(index - 1) % style.slidePalettes.length];
 }
 
+function cssUrl(value = '') {
+  return `url("${String(value).replace(/\\/g, '/').replace(/"/g, '%22')}")`;
+}
+
+function accountAvatarCssImage(account = {}) {
+  const avatarUrl = String(account.avatarUrl || '').trim();
+  if (avatarUrl) return cssUrl(avatarUrl);
+
+  const avatarPath = String(account.avatarPath || '').trim();
+  if (!avatarPath) return '';
+
+  const source = resolve(ROOT, avatarPath.replace(/^\/+/, ''));
+  if (!existsSync(source)) {
+    console.warn(`Avatar configurado nao encontrado: ${account.avatarPath}`);
+    return '';
+  }
+  return cssUrl(`file:///${source.replace(/\\/g, '/')}`);
+}
+
+function anatexSlideHtml(slide, index, total, account, style) {
+  const slideStyle = styleForSlide(style, index);
+  const title = anatexTitle(slide.title || '');
+  const body = applyAnatexCopyRules(slide.body || '');
+  const eyebrow = applyAnatexCopyRules(slide.eyebrow || 'Pra saber');
+  const accent = slideStyle.accent || '#a7563d';
+  const soft = slideStyle.accentSoft || 'rgba(167,86,61,0.16)';
+  const headline = title.replace(/\s+IA\b/i, ' <strong>IA</strong>');
+  const avatarImage = accountAvatarCssImage(account);
+  const avatarClass = avatarImage ? ' has-avatar' : '';
+  const placement = index % 3 === 2 ? 'layout-left' : index % 3 === 0 ? 'layout-corner' : 'layout-right';
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { width: ${FEED_WIDTH}px; height: ${FEED_HEIGHT}px; overflow: hidden; font-family: Arial, Helvetica, sans-serif; background: ${slideStyle.bgTop}; color: ${slideStyle.text}; }
+    main {
+      width: ${FEED_WIDTH}px;
+      height: ${FEED_HEIGHT}px;
+      padding: 42px 58px 58px;
+      position: relative;
+      background:
+        radial-gradient(circle at 88% 12%, ${soft} 0 150px, transparent 151px),
+        radial-gradient(circle at 88% 90%, rgba(167,86,61,0.10) 0 240px, transparent 241px),
+        linear-gradient(180deg, ${slideStyle.bgTop} 0%, ${slideStyle.bgBottom} 100%);
+    }
+    main::before { content: ""; position: absolute; left: 56px; right: 56px; top: 48px; height: 2px; background: rgba(167,86,61,0.42); }
+    main::after {
+      content: "";
+      position: absolute;
+      left: 16px;
+      top: 98px;
+      width: 120px;
+      height: 210px;
+      opacity: 0.26;
+      background-image: radial-gradient(${accent} 3px, transparent 4px);
+      background-size: 22px 22px;
+    }
+    .brand { position: relative; z-index: 2; margin-left: 60px; font-size: 32px; line-height: 1; font-weight: 900; color: ${accent}; }
+    .arrows { position: absolute; right: 96px; top: 37px; display: flex; gap: 6px; color: ${accent}; font-size: 34px; font-weight: 900; z-index: 2; }
+    .badge { position: absolute; left: 84px; top: 122px; z-index: 2; display: inline-flex; align-items: center; gap: 14px; max-width: 560px; padding: 14px 28px; border-radius: 14px; background: ${accent}; color: #fff6ef; font-size: 27px; line-height: 1; font-weight: 900; text-transform: uppercase; }
+    .badge span { width: 32px; height: 32px; flex: 0 0 32px; border-radius: 50%; border: 3px solid #fff6ef; display: inline-block; position: relative; }
+    .badge span::after { content: ""; position: absolute; left: 8px; top: 7px; width: 9px; height: 14px; border-right: 4px solid #fff6ef; border-bottom: 4px solid #fff6ef; transform: rotate(40deg); }
+    .headline { position: relative; z-index: 2; margin-top: 98px; max-width: 600px; font-size: 68px; line-height: 0.98; letter-spacing: 0; font-weight: 900; color: ${slideStyle.text}; overflow-wrap: break-word; }
+    .headline strong { display: inline; color: ${accent}; font: inherit; }
+    .note {
+      position: absolute;
+      left: 78px;
+      top: 700px;
+      width: 540px;
+      min-height: 238px;
+      padding: 34px 38px 30px 108px;
+      border: 2px solid rgba(167,86,61,0.20);
+      border-radius: 24px;
+      background: rgba(255,250,246,0.76);
+      z-index: 2;
+      font-size: 30px;
+      line-height: 1.18;
+      font-weight: 800;
+      color: ${slideStyle.text};
+    }
+    .note::before { content: "${String(index).padStart(2, '0')}"; position: absolute; left: 28px; top: 30px; width: 56px; height: 56px; border-radius: 50%; background: ${accent}; color: #fff6ef; display: grid; place-items: center; font-size: 25px; font-weight: 900; }
+    .panel {
+      position: absolute;
+      right: 56px;
+      top: 450px;
+      width: 360px;
+      height: 470px;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.48);
+      border: 2px solid rgba(167,86,61,0.16);
+      box-shadow: 0 26px 60px rgba(94,50,34,0.14);
+      transform: rotate(3deg);
+      z-index: 1;
+      overflow: hidden;
+    }
+    .panel::before { content: "IA"; position: absolute; left: 42px; top: 38px; color: rgba(167,86,61,0.18); font-size: 110px; line-height: 1; font-weight: 900; }
+    .panel::after { content: ""; position: absolute; left: 42px; right: 42px; bottom: 68px; height: 230px; background: repeating-linear-gradient(180deg, rgba(167,86,61,0.24) 0 10px, transparent 10px 34px); }
+    .panel.has-avatar { background: ${avatarImage || 'rgba(255,255,255,0.48)'} center center / contain no-repeat; border: 7px solid rgba(255,250,246,0.9); box-shadow: 0 28px 70px rgba(94,50,34,0.24); }
+    .panel.has-avatar::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,246,239,0.02), rgba(33,25,21,0.10)); }
+    .panel.has-avatar::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 128px; background: linear-gradient(180deg, transparent, rgba(17,17,17,0.22)); }
+    .layout-left .panel { left: 58px; right: auto; top: 450px; width: 360px; height: 470px; transform: rotate(-3deg); }
+    .layout-left .badge { left: 470px; }
+    .layout-left .headline { margin-left: 420px; max-width: 540px; font-size: 58px; }
+    .layout-left .subline { margin-left: 372px; max-width: 600px; }
+    .layout-left .note { left: 470px; top: 720px; width: 540px; min-height: 230px; font-size: 28px; }
+    .layout-left main::after { left: auto; right: 16px; }
+    .layout-corner .badge { top: 112px; }
+    .layout-corner .headline { max-width: 760px; font-size: 62px; line-height: 1.02; }
+    .layout-corner .headline::after {
+      content: "Processo antes da ferramenta";
+      display: inline-flex;
+      margin-top: 38px;
+      padding: 16px 24px;
+      border-radius: 16px;
+      background: rgba(255,250,246,0.68);
+      border: 2px solid rgba(167,86,61,0.18);
+      color: ${accent};
+      font-size: 26px;
+      line-height: 1;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .layout-corner .panel { top: 610px; right: 70px; bottom: auto; width: 310px; height: 310px; border-radius: 50%; transform: rotate(0deg); z-index: 3; }
+    .layout-corner .panel::before { font-size: 62px; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+    .layout-corner .panel::after { display: none; }
+    .layout-corner .note { left: 70px; top: 610px; bottom: auto; width: 610px; min-height: 250px; padding: 34px 34px 32px 104px; font-size: 26px; line-height: 1.13; }
+    .layout-corner .bubble { display: none; }
+    .bubble { display: none; position: absolute; right: 116px; bottom: 270px; width: 132px; height: 96px; border-radius: 34px; background: #f1d8c7; z-index: 3; }
+    .bubble::before { content: "..."; position: absolute; inset: 0; display: grid; place-items: center; color: ${accent}; font-size: 58px; line-height: 0.5; font-weight: 900; letter-spacing: 5px; }
+    .spark { position: absolute; color: ${accent}; opacity: 0.7; z-index: 2; font-size: 42px; font-weight: 900; }
+    .s1 { right: 400px; top: 170px; }
+    .s2 { right: 126px; bottom: 108px; }
+    footer { position: absolute; right: 58px; bottom: 58px; z-index: 3; color: ${accent}; font-size: 27px; font-weight: 900; }
+  </style>
+</head>
+<body>
+  <main class="${placement}">
+    <div class="brand">${account.brandName}</div>
+    <div class="arrows">&gt;&gt;</div>
+    <div class="badge"><span></span>${eyebrow}</div>
+    <div class="panel${avatarClass}"></div>
+    <div class="spark s1">*</div>
+    <div class="spark s2">*</div>
+    <section>
+      <h1 class="headline">${headline}</h1>
+    </section>
+    <div class="note">${body}</div>
+    <div class="bubble"></div>
+    <footer>${index}/${total}</footer>
+  </main>
+</body>
+</html>`;
+}
+
 function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo(), slotIndex = 0 } = {}) {
   const palette = account.brandPalette || {};
   if (!validHexColor(palette.primary) && !validHexColor(palette.secondary) && !validHexColor(palette.background)) {
@@ -928,7 +1356,7 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
   const editorialTop = mixHex(primary, style.bgTop, 0.58);
   const editorialBottom = mixHex(secondary, style.bgBottom, 0.50);
 
-  const variants = [
+  const defaultVariants = [
     paletteVariant(style, `${style.name}-brand-light`, {
       accent: secondary,
       accentSoft: rgba(secondary, 0.16),
@@ -959,6 +1387,46 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
     })
   ];
 
+  const anatexVariants = [
+    paletteVariant(style, `${style.name}-paper`, {
+      accent: secondary,
+      accentSoft: rgba(secondary, 0.14),
+      grid: rgba(secondary, 0.12),
+      bgTop: '#f7f4ee',
+      bgBottom: '#e7edf0',
+      text: '#132238',
+      muted: '#3b4654'
+    }),
+    paletteVariant(style, `${style.name}-linen`, {
+      accent: '#b45f35',
+      accentSoft: 'rgba(180,95,53,0.13)',
+      grid: 'rgba(35,54,72,0.11)',
+      bgTop: '#f8f1e8',
+      bgBottom: '#e6ddd2',
+      text: '#192736',
+      muted: '#46515c'
+    }),
+    paletteVariant(style, `${style.name}-sage`, {
+      accent: '#2f766d',
+      accentSoft: 'rgba(47,118,109,0.12)',
+      grid: 'rgba(47,118,109,0.10)',
+      bgTop: '#f5f6f0',
+      bgBottom: '#dfe8dc',
+      text: '#14262f',
+      muted: '#394a46'
+    }),
+    paletteVariant(style, `${style.name}-sky`, {
+      accent: '#315f7d',
+      accentSoft: 'rgba(49,95,125,0.12)',
+      grid: 'rgba(49,95,125,0.10)',
+      bgTop: '#f7fbfb',
+      bgBottom: '#ddebf0',
+      text: '#102333',
+      muted: '#354a58'
+    })
+  ];
+
+  const variants = style.layout === 'anatex-editorial' ? anatexVariants : defaultVariants;
   const selectedIndex = pickDailyIndex(variants, dateString, slotIndex);
   const slidePalettes = rotateItems(variants, selectedIndex);
   return {
@@ -966,6 +1434,15 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
     name: `${slidePalettes[0].name}-slot-${slotIndex}`,
     slidePalettes
   };
+}
+
+function pickVisualStyle(styles, account, dateString, slotIndex) {
+  const requested = account.contentProfile?.visualDirection;
+  if (requested) {
+    const configured = styles.find((style) => style.name === requested || style.layout === requested);
+    if (configured) return configured;
+  }
+  return pickDaily(styles, dateString, slotIndex);
 }
 
 function validatePack(pack) {
@@ -1077,6 +1554,9 @@ async function launchChromium() {
 }
 
 function slideHtml(slide, index, total, account, style) {
+  if (style.layout === 'anatex-editorial' || account.contentProfile?.visualDirection === 'anatex-editorial') {
+    return anatexSlideHtml(slide, index, total, account, style);
+  }
   const slideStyle = styleForSlide(style, index);
   const variant = slide.visualVariant || 'focus';
   const titleSize = variant === 'quote' ? 74 : variant === 'signal' ? 86 : 82;
@@ -1094,10 +1574,10 @@ function slideHtml(slide, index, total, account, style) {
   <meta charset="UTF-8">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { width: 1080px; height: 1080px; overflow: hidden; font-family: Arial, Helvetica, sans-serif; background: ${slideStyle.bgTop}; color: ${slideStyle.text}; }
+    body { width: ${FEED_WIDTH}px; height: ${FEED_HEIGHT}px; overflow: hidden; font-family: Arial, Helvetica, sans-serif; background: ${slideStyle.bgTop}; color: ${slideStyle.text}; }
     main {
-      width: 1080px;
-      height: 1080px;
+      width: ${FEED_WIDTH}px;
+      height: ${FEED_HEIGHT}px;
       padding: 62px 70px 58px;
       display: flex;
       flex-direction: column;
@@ -1162,7 +1642,7 @@ function slideHtml(slide, index, total, account, style) {
 
 async function renderSlides(runDir, slides, account, style) {
   const browser = await launchChromium();
-  const page = await browser.newPage({ viewport: { width: 1080, height: 1080 }, deviceScaleFactor: 1 });
+  const page = await browser.newPage({ viewport: { width: FEED_WIDTH, height: FEED_HEIGHT }, deviceScaleFactor: 1 });
   const imagePaths = [];
   for (let index = 0; index < slides.length; index += 1) {
     const slide = slides[index];
@@ -1192,7 +1672,79 @@ async function renderSlides(runDir, slides, account, style) {
   return imagePaths;
 }
 
+function anatexStoryHtml(slide, account, style) {
+  const slideStyle = styleForSlide(style, 1);
+  const title = anatexTitle(slide.title || '');
+  const body = applyAnatexCopyRules(slide.body || '');
+  const eyebrow = applyAnatexCopyRules(slide.eyebrow || 'Pra saber');
+  const accent = slideStyle.accent || '#a7563d';
+  const soft = slideStyle.accentSoft || 'rgba(167,86,61,0.16)';
+  const avatarImage = accountAvatarCssImage(account);
+  const avatarBlock = avatarImage
+    ? `<div class="avatar"></div>`
+    : `<div class="panel"><span>IA</span></div>`;
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { width: 1080px; height: 1920px; overflow: hidden; font-family: Arial, Helvetica, sans-serif; background: ${slideStyle.bgTop}; color: ${slideStyle.text}; }
+    main {
+      width: 1080px;
+      height: 1920px;
+      padding: 84px 72px 92px;
+      position: relative;
+      background:
+        radial-gradient(circle at 84% 8%, ${soft} 0 210px, transparent 211px),
+        radial-gradient(circle at 14% 92%, rgba(167,86,61,0.10) 0 260px, transparent 261px),
+        linear-gradient(180deg, ${slideStyle.bgTop} 0%, ${slideStyle.bgBottom} 100%);
+    }
+    main::before { content: ""; position: absolute; left: 72px; right: 72px; top: 92px; height: 2px; background: rgba(167,86,61,0.42); }
+    .brand { position: relative; z-index: 2; margin-left: 52px; color: ${accent}; font-size: 42px; font-weight: 900; }
+    .badge { position: relative; z-index: 2; margin-top: 96px; display: inline-flex; padding: 18px 32px; border-radius: 18px; background: ${accent}; color: #fff6ef; font-size: 34px; line-height: 1; font-weight: 900; text-transform: uppercase; }
+    h1 { position: relative; z-index: 2; margin-top: 54px; max-width: 850px; font-size: 92px; line-height: 0.98; letter-spacing: 0; font-weight: 900; color: #111; }
+    h1 strong { color: ${accent}; font: inherit; }
+    p { position: relative; z-index: 2; margin-top: 34px; max-width: 820px; font-size: 46px; line-height: 1.16; font-weight: 800; color: #3f332d; }
+    .avatar, .panel {
+      position: absolute;
+      right: 82px;
+      bottom: 250px;
+      width: 390px;
+      height: 520px;
+      border-radius: 36px;
+      transform: rotate(3deg);
+      border: 8px solid rgba(255,250,246,0.92);
+      box-shadow: 0 30px 80px rgba(94,50,34,0.22);
+      overflow: hidden;
+      z-index: 1;
+    }
+    .avatar { background: ${avatarImage || 'rgba(255,255,255,0.50)'} center center / cover no-repeat; }
+    .avatar::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,246,239,0.03), rgba(17,17,17,0.18)); }
+    .panel { background: rgba(255,255,255,0.50); display: grid; place-items: center; }
+    .panel span { color: rgba(167,86,61,0.18); font-size: 124px; font-weight: 900; }
+    .note { position: absolute; left: 72px; bottom: 120px; z-index: 2; width: 640px; padding: 34px 42px; border-radius: 28px; background: rgba(255,250,246,0.78); border: 2px solid rgba(167,86,61,0.18); color: #211915; font-size: 34px; line-height: 1.18; font-weight: 900; }
+    footer { position: absolute; left: 72px; bottom: 54px; color: ${accent}; font-size: 30px; font-weight: 900; z-index: 2; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="brand">${account.brandName}</div>
+    <div class="badge">${eyebrow}</div>
+    <h1>${title.replace(/\s+IA\b/i, ' <strong>IA</strong>')}</h1>
+    <p>${body}</p>
+    ${avatarBlock}
+    <div class="note">${account.footerText}</div>
+    <footer>${account.brandName}</footer>
+  </main>
+</body>
+</html>`;
+}
+
 function storyHtml(slide, account, style) {
+  if (style.layout === 'anatex-editorial' || account.contentProfile?.visualDirection === 'anatex-editorial') {
+    return anatexStoryHtml(slide, account, style);
+  }
   const slideStyle = styleForSlide(style, 1);
   const variant = slide.visualVariant || 'focus';
   const titleSize = variant === 'quote' ? 82 : 90;
@@ -1393,6 +1945,16 @@ async function main() {
   validatePacks(packs);
 
   const today = todaySaoPaulo();
+  if (args.planDay) {
+    console.log(JSON.stringify({
+      ok: true,
+      account: account.account,
+      date: today,
+      dailyPlan: planForAutomaticSlots(account, packs, today)
+    }, null, 2));
+    return;
+  }
+
   const slotIndex = readSlotIndex();
   const profilePacks = buildProfileContentPacks(account, today, slotIndex);
   const autoPacks = profilePacks.length ? profilePacks : buildAutoContentPacks(today, slotIndex);
@@ -1410,7 +1972,7 @@ async function main() {
     return;
   }
 
-  const style = styleWithBrandPalette(pickDaily(styles, today, slotIndex), account, { dateString: today, slotIndex });
+  const style = styleWithBrandPalette(pickVisualStyle(styles, account, today, slotIndex), account, { dateString: today, slotIndex });
   let pack = pickDaily(automaticSelectionPacks, today, slotIndex);
   let packIndex = profilePacks.length
     ? `profile-${pickDailyIndex(automaticSelectionPacks, today, slotIndex)}`
@@ -1430,6 +1992,7 @@ async function main() {
 
   if (!args.renderOnly) {
     scheduledPost = dueScheduledPost(args.configDir, account.account).post;
+    if (!scheduledPost) scheduledPost = dueWeeklyProgramPost(args.configDir, account.account, account).post;
     if (scheduledPost) {
       process.env.INSTAGRAM_TEMPLATE_ACTIVE_SCHEDULED_POST_ID = scheduledPost.id;
       if (scheduledPost.pack) {
@@ -1440,7 +2003,9 @@ async function main() {
       } else {
         pack = packs[scheduledPost.packIndex];
       }
-      packIndex = `scheduled-${scheduledPost.packIndex}`;
+      packIndex = scheduledPost.source === 'weekly-program'
+        ? `weekly-${scheduledPost.packIndex}`
+        : `scheduled-${scheduledPost.packIndex}`;
       publishMode = scheduledPost.mode === 'story-only' ? 'story-only' : 'feed-and-story';
       console.log(`Post agendado selecionado: ${scheduledPost.id} pack ${scheduledPost.packIndex} (${scheduledPost.scheduledFor}).`);
     } else if (args.scheduledOnly) {
@@ -1571,13 +2136,18 @@ async function main() {
   const storyDetails = await graphGet(`/${storyMedia.id}`, { fields: 'id,timestamp', access_token: token });
   const result = { ...baseResult, mediaId: media?.id, ...(details || {}), storyMediaId: storyMedia.id, story: storyDetails };
   if (scheduledPost) {
-    updateScheduledPost(args.configDir, account.account, scheduledPost.id, {
+    const scheduledPatch = {
       status: 'published',
       publishedAt: new Date().toISOString(),
       mediaId: media?.id,
       permalink: details?.permalink,
       storyMediaId: storyMedia.id
-    });
+    };
+    if (scheduledPost.source === 'weekly-program') {
+      updateWeeklyProgramPost(args.configDir, account.account, scheduledPost.id, scheduledPatch);
+    } else {
+      updateScheduledPost(args.configDir, account.account, scheduledPost.id, scheduledPatch);
+    }
     delete process.env.INSTAGRAM_TEMPLATE_ACTIVE_SCHEDULED_POST_ID;
   }
   writeFileSync(join(runDir, 'result.json'), JSON.stringify(result, null, 2), 'utf8');
@@ -1589,11 +2159,14 @@ main().catch((error) => {
   const scheduledPostId = process.env.INSTAGRAM_TEMPLATE_ACTIVE_SCHEDULED_POST_ID;
   if (scheduledPostId) {
     try {
-      updateScheduledPost(args.configDir, args.account, scheduledPostId, {
+      const failurePatch = {
         status: 'failed',
         failedAt: new Date().toISOString(),
         error: error.message
-      });
+      };
+      if (!updateScheduledPost(args.configDir, args.account, scheduledPostId, failurePatch)) {
+        updateWeeklyProgramPost(args.configDir, args.account, scheduledPostId, failurePatch);
+      }
     } catch {
       // Keep the original publication error as the main failure signal.
     }

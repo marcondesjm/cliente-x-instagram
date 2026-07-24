@@ -2,7 +2,7 @@
 import { createServer } from 'node:http';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { extname, join, resolve } from 'node:path';
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { analyzeBrandDocument } from '../lib/brand-analysis.js';
 
@@ -12,6 +12,7 @@ const UPLOADS_DIR = join(DOCS_DIR, 'uploads');
 const CONTENT_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'content-packs.json');
 const ACCOUNTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'accounts.json');
 const SCHEDULED_POSTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'scheduled-posts.json');
+const WEEKLY_PROGRAMS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'weekly-programs.json');
 const WATCHDOG_ERRORS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'watchdog-errors.json');
 const WORKFLOW_PATH = join(ROOT, '.github', 'workflows', 'instagram-feed-cliente-x.yml');
 const README_PATH = join(ROOT, 'README.md');
@@ -72,6 +73,154 @@ function cronToBrtTime(cron) {
   return `${String(brtHour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
 }
 
+function saoPauloParts(date = new Date()) {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Sao_Paulo',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  }).formatToParts(date);
+  return Object.fromEntries(parts.map((part) => [part.type, part.value]));
+}
+
+function todaySaoPaulo() {
+  const parts = saoPauloParts();
+  return `${parts.year}-${parts.month}-${parts.day}`;
+}
+
+function weekdaySaoPaulo(dateString = todaySaoPaulo()) {
+  const [year, month, day] = dateString.split('-').map(Number);
+  return new Date(Date.UTC(year, month - 1, day, 15, 0, 0)).getUTCDay();
+}
+
+function brtDateAndTime(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return { date: '', time: '' };
+  const parts = saoPauloParts(date);
+  return {
+    date: `${parts.year}-${parts.month}-${parts.day}`,
+    time: `${parts.hour}:${parts.minute}`
+  };
+}
+
+function daysSinceEpoch(dateString) {
+  const [year, month, day] = dateString.split('-').map(Number);
+  return Math.floor(Date.UTC(year, month - 1, day) / 86_400_000);
+}
+
+function pickDailyIndex(items, dateString, slotIndex = 0) {
+  if (!items.length) return -1;
+  return (daysSinceEpoch(dateString) + slotIndex) % items.length;
+}
+
+function compactText(text = '', maxLength = 150) {
+  const clean = String(text || '').replace(/\s+/g, ' ').trim();
+  if (clean.length <= maxLength) return clean;
+  const sliced = clean.slice(0, maxLength);
+  const cut = sliced.lastIndexOf(' ');
+  return `${sliced.slice(0, cut > 80 ? cut : maxLength).trim()}...`;
+}
+
+function activeWeeklyProgramsForDate(programs = [], dateString = todaySaoPaulo()) {
+  const weekday = weekdaySaoPaulo(dateString);
+  return programs
+    .filter((program) => program.status !== 'paused')
+    .filter((program) => Array.isArray(program.weekdays) && program.weekdays.map(Number).includes(weekday))
+    .filter((program) => /^([01]\d|2[0-3]):([0-5]\d)$/.test(String(program.time || '')))
+    .sort((a, b) => String(a.time).localeCompare(String(b.time)));
+}
+
+function weeklyProgramPlanItems(programs = [], dateString = todaySaoPaulo()) {
+  return activeWeeklyProgramsForDate(programs, dateString).map((program, index) => ({
+    time: program.time,
+    slotIndex: `program-${program.id || index}`,
+    type: 'program',
+    status: 'planned',
+    title: program.title || program.name || 'Programa da rádio',
+    caption: compactText(program.description || program.callToAction || 'Chamada recorrente da programação semanal.'),
+    mode: program.mode === 'story-only' ? 'story' : 'feed + story',
+    programId: program.id,
+    host: program.host || '',
+    imagePath: program.imagePath || '',
+    imageUrl: program.imageUrl || '',
+    weekdays: program.weekdays || []
+  }));
+}
+
+function mergeProgramItems(plan = [], programs = [], dateString = todaySaoPaulo()) {
+  const programItems = weeklyProgramPlanItems(programs, dateString);
+  if (!programItems.length) return plan;
+  const byTime = new Map(programItems.map((item) => [item.time, item]));
+  const merged = plan.map((item) => item.type === 'manual' ? item : (byTime.get(item.time) || item));
+  for (const item of programItems) {
+    if (!merged.some((planItem) => planItem.time === item.time)) merged.push(item);
+  }
+  return merged.sort((a, b) => String(a.time).localeCompare(String(b.time)));
+}
+
+function dailyPlan(scheduleBrt = [], packs = [], scheduledPosts = [], dateString = todaySaoPaulo()) {
+  const pendingManual = scheduledPosts.filter((post) => {
+    if (post.status !== 'pending') return false;
+    return brtDateAndTime(post.scheduledFor).date === dateString;
+  });
+
+  return scheduleBrt.map((time, slotIndex) => {
+    const manual = pendingManual.find((post) => brtDateAndTime(post.scheduledFor).time === time);
+    if (manual) {
+      const manualPack = manual.pack || packs[manual.packIndex] || {};
+      return {
+        time,
+        slotIndex,
+        type: 'manual',
+        status: 'pending',
+        title: manual.title || manualPack.slides?.[0]?.title || `Pack ${manual.packIndex}`,
+        caption: compactText(manualPack.caption || ''),
+        mode: manual.mode === 'story-only' ? 'story' : 'feed + story',
+        postId: manual.id
+      };
+    }
+
+    const packIndex = pickDailyIndex(packs, dateString, slotIndex);
+    const pack = packIndex >= 0 ? packs[packIndex] : {};
+    return {
+      time,
+      slotIndex,
+      type: 'automatic',
+      status: 'planned',
+      title: pack.slides?.[0]?.title || 'Conteúdo automático pelo perfil da conta',
+      caption: compactText(pack.caption || ''),
+      mode: 'feed + story',
+      packIndex
+    };
+  });
+}
+
+function publisherDailyPlan(accountKey = ACCOUNT) {
+  const result = spawnSync(process.execPath, [
+    'automation/instagram-template/scripts/publish-carousel.mjs',
+    '--account',
+    accountKey,
+    '--plan-day'
+  ], {
+    cwd: ROOT,
+    encoding: 'utf8',
+    env: {
+      ...process.env,
+      INSTAGRAM_TEMPLATE_DISABLE_ENGAGEMENT_AI: process.env.INSTAGRAM_TEMPLATE_DISABLE_ENGAGEMENT_AI || ''
+    },
+    timeout: 20_000
+  });
+  if (result.status !== 0) {
+    const message = result.stderr || result.stdout || `exit ${result.status}`;
+    throw new Error(`Nao consegui calcular plano real do publicador: ${message.trim()}`);
+  }
+  const payload = JSON.parse(result.stdout);
+  return Array.isArray(payload.dailyPlan) ? payload.dailyPlan : [];
+}
+
 function brtTimeToCron(time) {
   const match = String(time).trim().match(/^([01]?\d|2[0-3]):([0-5]\d)$/);
   if (!match) throw new Error(`Horario invalido: ${time}. Use HH:MM.`);
@@ -113,6 +262,66 @@ function readScheduledPosts() {
   return ensureScheduledPosts().group.posts
     .slice()
     .sort((a, b) => String(a.scheduledFor).localeCompare(String(b.scheduledFor)));
+}
+
+function ensureWeeklyPrograms() {
+  if (!existsSync(WEEKLY_PROGRAMS_PATH)) {
+    writeJson(WEEKLY_PROGRAMS_PATH, [{ account: ACCOUNT, programs: [] }]);
+  }
+  const groups = readJson(WEEKLY_PROGRAMS_PATH);
+  let group = groups.find((item) => item.account === ACCOUNT);
+  if (!group) {
+    group = { account: ACCOUNT, programs: [] };
+    groups.push(group);
+    writeJson(WEEKLY_PROGRAMS_PATH, groups);
+  }
+  if (!Array.isArray(group.programs)) group.programs = [];
+  return { groups, group };
+}
+
+function readWeeklyPrograms() {
+  return ensureWeeklyPrograms().group.programs;
+}
+
+function normalizeWeeklyProgram(program = {}) {
+  const id = String(program.id || `program-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`).trim();
+  const name = String(program.name || '').trim();
+  const title = String(program.title || name).trim();
+  const time = String(program.time || '').trim();
+  const weekdays = Array.from(new Set((program.weekdays || []).map(Number)))
+    .filter((day) => Number.isInteger(day) && day >= 0 && day <= 6)
+    .sort((a, b) => a - b);
+  if (!name) throw new Error('Informe o nome do programa.');
+  if (!/^([01]\d|2[0-3]):([0-5]\d)$/.test(time)) throw new Error(`Horario invalido em ${name}. Use HH:MM.`);
+  if (!weekdays.length) throw new Error(`Escolha pelo menos um dia da semana para ${name}.`);
+  return {
+    id,
+    status: program.status === 'paused' ? 'paused' : 'active',
+    name,
+    title,
+    host: String(program.host || '').trim(),
+    weekdays,
+    time,
+    mode: program.mode === 'story-only' ? 'story-only' : 'feed-and-story',
+    description: String(program.description || '').trim(),
+    callToAction: String(program.callToAction || '').trim(),
+    imagePath: String(program.imagePath || '').trim(),
+    imageUrl: String(program.imageUrl || '').trim(),
+    lastPublishedDate: String(program.lastPublishedDate || '').trim(),
+    lastPublishedAt: String(program.lastPublishedAt || '').trim(),
+    updatedAt: new Date().toISOString()
+  };
+}
+
+function saveWeeklyPrograms(programs = []) {
+  const { groups, group } = ensureWeeklyPrograms();
+  group.programs = programs.map(normalizeWeeklyProgram);
+  writeJson(WEEKLY_PROGRAMS_PATH, groups);
+  return {
+    ok: true,
+    weeklyPrograms: group.programs,
+    message: 'Grade semanal salva localmente.'
+  };
 }
 
 function brtDateTimeToIso(date, time) {
@@ -235,6 +444,16 @@ function getState() {
   const group = content.find((item) => item.account === ACCOUNT);
   const packs = group?.packs || [];
   const uniqueCaptions = new Set(packs.map((pack) => normalizeCaption(pack.caption))).size;
+  const scheduledPosts = readScheduledPosts();
+  const weeklyPrograms = readWeeklyPrograms();
+  const scheduleBrt = account?.scheduleUtc?.map(cronToBrtTime) || [];
+  let plan = [];
+  try {
+    plan = publisherDailyPlan(account?.account || ACCOUNT);
+  } catch {
+    plan = dailyPlan(scheduleBrt, packs, scheduledPosts);
+  }
+  plan = mergeProgramItems(plan, weeklyPrograms);
   const latestResultFile = latestFiles(join(RUNS_DIR, ACCOUNT), (path) => path.endsWith('result.json'), 30)
     .find((file) => {
       const result = readJson(file.path);
@@ -264,11 +483,13 @@ function getState() {
       adminConfigured: true,
       adminEmail: 'local@dashboard'
     },
-    scheduleBrt: account?.scheduleUtc?.map(cronToBrtTime) || [],
+    scheduleBrt,
+    dailyPlan: plan,
+    weeklyPrograms,
     packs,
     packCount: packs.length,
     uniqueCaptions,
-    scheduledPosts: readScheduledPosts(),
+    scheduledPosts,
     watchdogErrors: existsSync(WATCHDOG_ERRORS_PATH) ? readJson(WATCHDOG_ERRORS_PATH) : [],
     latestResult,
     latestFailure
@@ -596,10 +817,37 @@ function runCommand(command, args, env = {}) {
   });
 }
 
+function jsonFromCommandOutput(output = '') {
+  const text = String(output || '').trim();
+  const start = text.lastIndexOf('\n{');
+  const jsonText = start >= 0 ? text.slice(start + 1) : text.slice(text.indexOf('{'));
+  return JSON.parse(jsonText);
+}
+
+function renderResultWithImages(result) {
+  if (!result.ok) return result;
+  try {
+    const render = jsonFromCommandOutput(result.stdout || '');
+    const imagePaths = Array.isArray(render.imagePaths) ? render.imagePaths.map(relativeWebPath) : [];
+    return {
+      ...result,
+      render,
+      imagePaths,
+      storyImagePath: render.storyImagePath ? relativeWebPath(render.storyImagePath) : '',
+      firstImagePath: imagePaths[0] || (render.storyImagePath ? relativeWebPath(render.storyImagePath) : '')
+    };
+  } catch (error) {
+    return {
+      ...result,
+      parseError: error.message
+    };
+  }
+}
+
 async function pushScheduledPosts() {
   const steps = [];
   for (const [command, args] of [
-    ['git', ['add', 'automation/instagram-template/config/scheduled-posts.json', 'automation/instagram-template/config/content-packs.json', 'docs/uploads']],
+    ['git', ['add', 'automation/instagram-template/config/scheduled-posts.json', 'automation/instagram-template/config/weekly-programs.json', 'automation/instagram-template/config/content-packs.json', 'docs/uploads']],
     ['git', ['diff', '--cached', '--quiet']],
     ['git', ['commit', '-m', 'Update scheduled Instagram posts']],
     ['git', ['pull', '--rebase', 'origin', 'main']],
@@ -661,6 +909,10 @@ async function handleApi(req, res, url) {
       const body = await readBody(req);
       return json(res, 200, saveScheduledPost(body));
     }
+    if (req.method === 'POST' && url.pathname === '/api/weekly-programs') {
+      const body = await readBody(req);
+      return json(res, 200, saveWeeklyPrograms(body.programs || []));
+    }
     if (req.method === 'POST' && url.pathname.startsWith('/api/scheduled-posts/') && url.pathname.endsWith('/cancel')) {
       const id = url.pathname.split('/').at(-2);
       return json(res, 200, cancelScheduledPost(id));
@@ -671,9 +923,10 @@ async function handleApi(req, res, url) {
     if (req.method === 'POST' && url.pathname === '/api/render') {
       const body = await readBody(req);
       const slotIndex = Number.isInteger(body.slotIndex) ? body.slotIndex : 0;
-      return json(res, 200, await runCommand('npm', ['run', 'render-only'], {
+      const result = await runCommand('npm', ['run', 'render-only'], {
         INSTAGRAM_TEMPLATE_SLOT_INDEX: String(slotIndex)
-      }));
+      });
+      return json(res, 200, renderResultWithImages(result));
     }
     if (req.method === 'POST' && url.pathname === '/api/publish-scheduled') {
       return json(res, 200, await runCommand('npm', ['run', 'instagram', '--', '--account', ACCOUNT, '--scheduled-only']));

@@ -182,7 +182,7 @@
     }
 
     button:disabled {
-      cursor: progress;
+      cursor: not-allowed;
       opacity: 0.7;
     }
 
@@ -344,6 +344,184 @@
       color: var(--muted);
       font-size: 12px;
       font-weight: 800;
+    }
+
+    .daily-plan {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    .weekly-programs {
+      display: grid;
+      gap: 10px;
+    }
+
+    .program-card {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdfc;
+    }
+
+    .program-grid {
+      display: grid;
+      grid-template-columns: minmax(150px, 1.2fr) minmax(100px, 0.8fr) minmax(86px, 0.5fr) minmax(130px, 1fr);
+      gap: 10px;
+      align-items: end;
+    }
+
+    .day-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .day-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 38px;
+      min-height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .day-pill input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .day-pill:has(input:checked) {
+      border-color: rgba(14, 124, 90, 0.35);
+      background: #e8fff1;
+      color: var(--good);
+    }
+
+    .plan-card {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdfc;
+      min-width: 0;
+    }
+
+    .plan-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .plan-time {
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .plan-title {
+      font-size: 14px;
+      line-height: 1.2;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+
+    .plan-caption {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .plan-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .plan-actions button {
+      min-height: 34px;
+      padding: 7px 10px;
+      font-size: 12px;
+    }
+
+    .plan-preview {
+      display: none;
+      grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+      margin-top: 12px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdfc;
+    }
+
+    .plan-preview.active {
+      display: grid;
+    }
+
+    .plan-preview img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: contain;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .preview-slide-strip {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(44px, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .preview-slide-thumb {
+      min-height: auto;
+      padding: 4px;
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .preview-slide-thumb.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(14, 124, 90, 0.12);
+    }
+
+    .preview-slide-thumb img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: contain;
+      display: block;
+      border: 0;
+      border-radius: 6px;
+    }
+
+    .plan-preview-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .plan-preview-title {
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.2;
     }
 
     .runs {
@@ -906,7 +1084,9 @@
       }
       .preview { grid-template-columns: 1fr; }
       .preview img { width: min(260px, 100%); }
-      .two-fields, .editor-actions, .queue-actions, .queue-row, .image-tools, .briefing-controls { grid-template-columns: 1fr; }
+      .plan-preview { grid-template-columns: 1fr; }
+      .plan-preview img { width: min(420px, 100%); }
+      .two-fields, .editor-actions, .queue-actions, .queue-row, .image-tools, .briefing-controls, .program-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 520px) {
@@ -976,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: 3314cfb</div>
+        <div class="header-version" id="headerVersion">Versão atual: v1.2</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1034,6 +1214,42 @@
             <span class="status-pill good" id="scheduleStatus">Coberto</span>
           </div>
           <div class="timeline" id="timeline"></div>
+          <div style="height: 16px;"></div>
+          <div class="panel-head" style="margin-bottom: 10px;">
+            <div>
+              <div class="section-label">Programação do dia</div>
+              <h2>O que vai ser postado hoje</h2>
+            </div>
+            <span class="status-pill" id="dailyPlanStatus">Carregando</span>
+          </div>
+          <div class="daily-plan" id="dailyPlan"></div>
+          <div class="plan-preview" id="dailyPlanPreview">
+            <div>
+              <img id="dailyPlanPreviewImage" src="" alt="Prévia renderizada do horário">
+              <div class="preview-slide-strip" id="dailyPlanPreviewSlides"></div>
+            </div>
+            <div>
+              <div class="status-pill good" id="dailyPlanPreviewStatus">Prévia pronta</div>
+              <div class="plan-preview-title" id="dailyPlanPreviewTitle">Arte do horário</div>
+              <p class="caption" id="dailyPlanPreviewCaption"></p>
+              <div class="plan-preview-actions">
+                <a class="button" id="dailyPlanPreviewLink" href="#" target="_blank" rel="noreferrer">Abrir imagem</a>
+                <a class="button" id="dailyPlanPreviewDownload" href="#" download="previa-postagem.svg">Baixar prévia</a>
+              </div>
+            </div>
+          </div>
+          <div style="height: 16px;"></div>
+          <div class="panel-head" style="margin-bottom: 10px;">
+            <div>
+              <div class="section-label">Grade semanal</div>
+              <h2>Programas recorrentes</h2>
+            </div>
+            <button id="addWeeklyProgram" type="button">Adicionar programa</button>
+          </div>
+          <div class="weekly-programs" id="weeklyPrograms"></div>
+          <div class="editor-actions">
+            <button class="primary" id="saveWeeklyPrograms" type="button">Salvar grade semanal</button>
+          </div>
           <div style="height: 16px;"></div>
           <div class="panel-head" style="margin-bottom: 10px;">
             <div>
@@ -1612,7 +1828,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     let appState = {
       packs: [],
       scheduleBrt: [],
+      dailyPlan: [],
       scheduledPosts: [],
+      weeklyPrograms: [],
       selectedPack: 0,
       selectedSlide: 0,
       serverMode: location.protocol.startsWith('http'),
@@ -1768,7 +1986,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         appState.account = state.account || null;
         appState.packs = state.packs || [];
         appState.scheduleBrt = state.scheduleBrt || [];
+        appState.dailyPlan = state.dailyPlan || [];
         appState.scheduledPosts = state.scheduledPosts || [];
+        appState.weeklyPrograms = state.weeklyPrograms || [];
         appState.secrets = state.secrets || [];
         appState.accessConfig = state.accessConfig || [];
         appState.watchdogErrors = state.watchdogErrors || [];
@@ -1784,6 +2004,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         renderMaintenance(state.maintenance);
         renderWatchdog();
         renderSchedule();
+        renderDailyPlan();
+        renderWeeklyPrograms();
         renderScheduleEditor();
         renderQueue();
         renderChecks();
@@ -1805,18 +2027,18 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const commit = document.getElementById('versionCommit');
       const description = document.getElementById('versionDescription');
       const headerVersion = document.getElementById('headerVersion');
+      const appVersion = version.appVersion || 'v1.0';
       const statusText = version.status || 'funcionando';
       const currentCommit = version.currentCommit || version.stableCommit || 'main';
       const currentCommitUrl = version.currentCommitUrl || version.stableCommitUrl || `https://github.com/${DATA.repo}`;
       const stableCommit = version.stableCommit ? ` · base ${escapeHtml(version.stableCommit)}` : '';
-      const stableText = version.stableCommit && version.stableCommit !== currentCommit ? ` · base ${version.stableCommit}` : '';
 
       status.textContent = statusText.charAt(0).toUpperCase() + statusText.slice(1);
       status.className = `status-pill ${statusText === 'funcionando' ? 'good' : 'warn'}`;
-      name.textContent = `${version.name || 'cliente-x-funcionando'} · ${version.label || 'última versão funcionando'}.`;
+      name.textContent = `${appVersion} · ${version.label || 'última versão funcionando'}.`;
       commit.innerHTML = `<a href="${escapeHtml(currentCommitUrl)}" target="_blank" rel="noreferrer">${escapeHtml(currentCommit)}</a>${stableCommit}`;
       description.textContent = version.description || 'Projeto operacional confirmado.';
-      headerVersion.textContent = `Versão atual: ${currentCommit}${stableText}`;
+      headerVersion.textContent = `Versão atual: ${appVersion}`;
     }
 
     function renderAccountSwitcher() {
@@ -2673,6 +2895,299 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       return 'warn';
     }
 
+    function localDateTimeInBrt(value) {
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return { date: '', time: '' };
+      const parts = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'America/Sao_Paulo',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      }).formatToParts(date);
+      const map = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+      return {
+        date: `${map.year}-${map.month}-${map.day}`,
+        time: `${map.hour}:${map.minute}`
+      };
+    }
+
+    const WEEKDAY_LABELS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'];
+
+    function weekdayFromDateString(dateString) {
+      const [year, month, day] = dateString.split('-').map(Number);
+      return new Date(Date.UTC(year, month - 1, day, 15, 0, 0)).getUTCDay();
+    }
+
+    function weeklyProgramItemsForToday() {
+      const today = localDateTimeInBrt(new Date()).date;
+      const weekday = weekdayFromDateString(today);
+      return (appState.weeklyPrograms || [])
+        .filter((program) => program.status !== 'paused')
+        .filter((program) => (program.weekdays || []).map(Number).includes(weekday))
+        .filter((program) => /^([01]\d|2[0-3]):([0-5]\d)$/.test(program.time || ''))
+        .map((program, index) => ({
+          time: program.time,
+          slotIndex: `program-${program.id || index}`,
+          type: 'program',
+          status: 'planned',
+          title: program.title || program.name || 'Programa da rádio',
+          caption: (program.description || program.callToAction || 'Chamada recorrente da programação semanal.').replace(/\s+/g, ' ').slice(0, 150),
+          mode: program.mode === 'story-only' ? 'story' : 'feed + story',
+          programId: program.id,
+          host: program.host || '',
+          imagePath: program.imagePath || '',
+          imageUrl: program.imageUrl || ''
+        }));
+    }
+
+    function mergeProgramsIntoDailyPlan(plan) {
+      const programItems = weeklyProgramItemsForToday();
+      if (!programItems.length) return plan;
+      const byTime = new Map(programItems.map((item) => [item.time, item]));
+      const merged = plan.map((item) => item.type === 'manual' ? item : (byTime.get(item.time) || item));
+      programItems.forEach((item) => {
+        if (!merged.some((planItem) => planItem.time === item.time)) merged.push(item);
+      });
+      return merged.sort((a, b) => String(a.time).localeCompare(String(b.time)));
+    }
+
+    function refreshDailyPlanFromLocalState() {
+      const today = localDateTimeInBrt(new Date()).date;
+      const times = appState.scheduleBrt.length ? appState.scheduleBrt : [];
+      appState.dailyPlan = mergeProgramsIntoDailyPlan(times.map((time, slotIndex) => {
+        const manual = (appState.scheduledPosts || []).find((post) => {
+          const when = localDateTimeInBrt(post.scheduledFor);
+          return post.status === 'pending' && when.date === today && when.time === time;
+        });
+        if (manual) {
+          const manualPack = manual.pack || appState.packs[manual.packIndex] || {};
+          return {
+            time,
+            slotIndex,
+            type: 'manual',
+            title: manual.title || manualPack.slides?.[0]?.title || `Pack ${manual.packIndex}`,
+            caption: (manualPack.caption || '').replace(/\s+/g, ' ').slice(0, 150),
+            mode: manual.mode === 'story-only' ? 'story' : 'feed + story',
+            postId: manual.id
+          };
+        }
+        const packIndex = appState.packs.length ? (slotIndex % appState.packs.length) : -1;
+        const pack = packIndex >= 0 ? appState.packs[packIndex] : {};
+        return {
+          time,
+          slotIndex,
+          type: 'automatic',
+          title: pack.slides?.[0]?.title || 'Conteúdo automático pelo perfil da conta',
+          caption: (pack.caption || '').replace(/\s+/g, ' ').slice(0, 150),
+          mode: 'feed + story',
+          packIndex
+        };
+      }));
+      renderDailyPlan();
+    }
+
+    function newWeeklyProgram() {
+      return {
+        id: `program-${Date.now()}`,
+        status: 'active',
+        name: 'Programa da rádio',
+        title: 'Hoje tem Programa da rádio',
+        host: '',
+        weekdays: [1, 2, 3, 4, 5],
+        time: '08:00',
+        mode: 'feed-and-story',
+        description: 'Acompanhe a programação ao vivo no horário certo.',
+        callToAction: 'Sintonize, participe e compartilhe com quem gosta da nossa rádio.',
+        imagePath: '',
+        imageUrl: ''
+      };
+    }
+
+    function dayPillsHtml(program, index) {
+      const selected = new Set((program.weekdays || []).map(Number));
+      return WEEKDAY_LABELS.map((label, day) => `
+        <label class="day-pill">
+          <input type="checkbox" data-program-weekday="${index}" value="${day}" ${selected.has(day) ? 'checked' : ''}>
+          ${label}
+        </label>
+      `).join('');
+    }
+
+    function renderWeeklyPrograms() {
+      const list = document.getElementById('weeklyPrograms');
+      const programs = appState.weeklyPrograms || [];
+      if (!programs.length) {
+        list.innerHTML = '<div class="empty">Nenhum programa recorrente cadastrado. Adicione a grade da rádio por dia e horário.</div>';
+        return;
+      }
+      list.innerHTML = programs.map((program, index) => `
+        <article class="program-card" data-program-card="${index}">
+          <div class="program-grid">
+            <label>
+              Nome do programa
+              <input data-program-field="name" value="${escapeHtml(program.name || '')}" placeholder="Manhã Sertaneja">
+            </label>
+            <label>
+              Apresentador
+              <input data-program-field="host" value="${escapeHtml(program.host || '')}" placeholder="Locutor ou equipe">
+            </label>
+            <label>
+              Horário
+              <input data-program-field="time" type="time" value="${escapeHtml(program.time || '08:00')}">
+            </label>
+            <label>
+              Publicação
+              <select data-program-field="mode">
+                <option value="feed-and-story" ${program.mode !== 'story-only' ? 'selected' : ''}>Feed + story</option>
+                <option value="story-only" ${program.mode === 'story-only' ? 'selected' : ''}>Story</option>
+              </select>
+            </label>
+          </div>
+          <label>
+            Dias da semana
+            <div class="day-pills">${dayPillsHtml(program, index)}</div>
+          </label>
+          <label>
+            Título do post
+            <input data-program-field="title" value="${escapeHtml(program.title || '')}" placeholder="Hoje tem Programa X">
+          </label>
+          <label>
+            Chamada/descrição
+            <textarea data-program-field="description" placeholder="Convide o público para ouvir no horário.">${escapeHtml(program.description || '')}</textarea>
+          </label>
+          <div class="two-fields">
+            <label>
+              Status
+              <select data-program-field="status">
+                <option value="active" ${program.status !== 'paused' ? 'selected' : ''}>Ativo</option>
+                <option value="paused" ${program.status === 'paused' ? 'selected' : ''}>Pausado</option>
+              </select>
+            </label>
+            <label>
+              Imagem do programa
+              <input data-program-field="imagePath" value="${escapeHtml(program.imagePath || program.imageUrl || '')}" placeholder="/docs/uploads/programa.jpg ou URL">
+            </label>
+          </div>
+          <div class="image-tools">
+            <label>
+              Puxar do computador
+              <input type="file" data-program-image-upload="${index}" accept="image/png,image/jpeg,image/webp">
+            </label>
+            <button type="button" data-clear-program-image="${index}">Remover imagem</button>
+          </div>
+          ${program.imagePath || program.imageUrl ? `<img class="image-preview" src="${escapeHtml(program.imagePath || program.imageUrl)}" alt="Imagem do programa ${escapeHtml(program.name || '')}">` : ''}
+          <div class="plan-actions">
+            <div class="run-meta">${escapeHtml((program.weekdays || []).map((day) => WEEKDAY_LABELS[day]).join(', ') || 'sem dias')} · ${escapeHtml(program.time || '--:--')}</div>
+            <button type="button" data-remove-weekly-program="${index}">Remover</button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function syncWeeklyProgramsFromInputs() {
+      const cards = Array.from(document.querySelectorAll('[data-program-card]'));
+      appState.weeklyPrograms = cards.map((card, index) => {
+        const current = appState.weeklyPrograms[index] || {};
+        const fieldValue = (name) => card.querySelector(`[data-program-field="${name}"]`)?.value || '';
+        return {
+          ...current,
+          name: fieldValue('name').trim(),
+          title: fieldValue('title').trim(),
+          host: fieldValue('host').trim(),
+          time: fieldValue('time').trim(),
+          mode: fieldValue('mode') === 'story-only' ? 'story-only' : 'feed-and-story',
+          status: fieldValue('status') === 'paused' ? 'paused' : 'active',
+          description: fieldValue('description').trim(),
+          callToAction: current.callToAction || '',
+          imagePath: fieldValue('imagePath').trim(),
+          weekdays: Array.from(card.querySelectorAll(`[data-program-weekday="${index}"]:checked`)).map((input) => Number(input.value))
+        };
+      });
+    }
+
+    function addWeeklyProgram() {
+      syncWeeklyProgramsFromInputs();
+      appState.weeklyPrograms.push(newWeeklyProgram());
+      renderWeeklyPrograms();
+      refreshDailyPlanFromLocalState();
+    }
+
+    function removeWeeklyProgram(index) {
+      syncWeeklyProgramsFromInputs();
+      appState.weeklyPrograms.splice(index, 1);
+      renderWeeklyPrograms();
+      refreshDailyPlanFromLocalState();
+    }
+
+    async function saveWeeklyPrograms() {
+      const button = document.getElementById('saveWeeklyPrograms');
+      const original = button.textContent;
+      syncWeeklyProgramsFromInputs();
+      button.disabled = true;
+      button.textContent = 'Salvando';
+      setMessage('Salvando grade semanal dos programas...', 'warn');
+      try {
+        const payload = await api('/api/state', {
+          method: 'POST',
+          body: bodyWithAccount({
+            action: 'update-weekly-programs',
+            programs: appState.weeklyPrograms
+          })
+        });
+        appState.weeklyPrograms = payload.weeklyPrograms || appState.weeklyPrograms;
+        renderWeeklyPrograms();
+        refreshDailyPlanFromLocalState();
+        setMessage(payload.message || 'Grade semanal salva.', 'good');
+      } catch (error) {
+        setMessage(error.message, 'bad');
+      } finally {
+        button.disabled = false;
+        button.textContent = original;
+      }
+    }
+
+    async function uploadWeeklyProgramImage(input) {
+      const file = input.files?.[0];
+      if (!file) return;
+      const programIndex = Number(input.dataset.programImageUpload);
+      syncWeeklyProgramsFromInputs();
+      const program = appState.weeklyPrograms[programIndex];
+      if (!program) return;
+      setMessage('Enviando imagem do programa...', 'warn');
+      try {
+        const payload = await api('/api/upload-image', {
+          method: 'POST',
+          body: JSON.stringify({
+            name: file.name,
+            dataUrl: await readFileAsDataUrl(file)
+          })
+        });
+        program.imagePath = payload.imagePath || '';
+        program.imageUrl = payload.imageUrl || '';
+        if (!program.imagePath && program.imageUrl) program.imagePath = program.imageUrl;
+        renderWeeklyPrograms();
+        refreshDailyPlanFromLocalState();
+        setMessage('Imagem anexada ao programa. Clique em Salvar grade semanal para gravar.', 'good');
+      } catch (error) {
+        setMessage(error.message, 'bad');
+      } finally {
+        input.value = '';
+      }
+    }
+
+    function clearWeeklyProgramImage(index) {
+      syncWeeklyProgramsFromInputs();
+      const program = appState.weeklyPrograms[index];
+      if (!program) return;
+      program.imagePath = '';
+      program.imageUrl = '';
+      renderWeeklyPrograms();
+      setMessage('Imagem removida do programa. Clique em Salvar grade semanal para gravar.', 'warn');
+    }
+
     function renderQueue() {
       const list = document.getElementById('queueList');
       const status = document.getElementById('queueStatus');
@@ -2722,6 +3237,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         });
         appState.scheduledPosts = payload.scheduledPosts || appState.scheduledPosts;
         renderQueue();
+        refreshDailyPlanFromLocalState();
         setMessage(payload.message || (publishNow ? 'Publicação enviada para o GitHub Actions.' : 'Agendamento salvo no GitHub.'), 'good');
       } catch (error) {
         setMessage(error.message, 'bad');
@@ -2734,6 +3250,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         const payload = await api(withAccount(`/api/scheduled-posts/${encodeURIComponent(id)}/cancel`), { method: 'POST' });
         appState.scheduledPosts = payload.scheduledPosts || [];
         renderQueue();
+        refreshDailyPlanFromLocalState();
         setMessage('Post cancelado.', 'good');
       } catch (error) {
         setMessage(error.message, 'bad');
@@ -2758,9 +3275,11 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           body: bodyWithAccount({ times: scheduleTimesFromInputs() })
         });
         appState.scheduleBrt = state.scheduleBrt || [];
+        appState.dailyPlan = state.dailyPlan || appState.dailyPlan;
         DATA.schedulesUtc = state.account?.scheduleUtc || DATA.schedulesUtc;
         document.getElementById('contentNote').textContent = `${DATA.schedulesUtc.length} horários ativos`;
         renderSchedule();
+        renderDailyPlan();
         renderScheduleEditor();
         renderChecks();
         setMessage('Horários salvos. O vigia automático do GitHub usa essa agenda.', 'good');
@@ -3378,6 +3897,236 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       });
     }
 
+    function renderDailyPlan() {
+      const list = document.getElementById('dailyPlan');
+      const status = document.getElementById('dailyPlanStatus');
+      const items = appState.dailyPlan || [];
+      if (!items.length) {
+        status.textContent = 'Vazio';
+        status.className = 'status-pill warn';
+        list.innerHTML = '<div class="empty">Nenhum horário configurado para hoje.</div>';
+        return;
+      }
+
+      const manualCount = items.filter((item) => item.type === 'manual').length;
+      const programCount = items.filter((item) => item.type === 'program').length;
+      status.textContent = manualCount
+        ? `${manualCount} manual`
+        : programCount
+          ? `${programCount} programa`
+          : `${items.length} automáticos`;
+      status.className = `status-pill ${manualCount || programCount ? 'warn' : 'good'}`;
+      list.innerHTML = items.map((item) => {
+        const typeLabel = item.type === 'manual' ? 'Manual' : item.type === 'program' ? 'Programa' : 'Automático';
+        const typeClass = item.type === 'automatic' ? 'good' : 'warn';
+        const slot = item.type === 'manual'
+          ? `fila ${item.postId || ''}`.trim()
+          : item.type === 'program'
+            ? `programa ${item.programId || ''}`.trim()
+          : `slot ${item.slotIndex}${item.packIndex !== undefined && item.packIndex !== null ? ` · ${item.packIndex}` : ''}`;
+        const canRender = appState.localWriteMode && item.type !== 'program';
+        return `
+          <article class="plan-card">
+            <div class="plan-top">
+              <div class="plan-time">${escapeHtml(item.time || '--:--')}</div>
+              <span class="status-pill ${typeClass}">${typeLabel}</span>
+            </div>
+            <div class="plan-title">${escapeHtml(item.title || 'Conteúdo sem título')}</div>
+            <div class="plan-caption">${escapeHtml(item.caption || 'Legenda será montada pelo gerador automático.')}</div>
+            <div class="plan-actions">
+              <div class="run-meta">${escapeHtml(slot)} · ${escapeHtml(item.mode || 'feed + story')}</div>
+              ${item.type === 'program'
+                ? `<button type="button" data-preview-program="${escapeHtml(item.programId || item.slotIndex)}">Ver prévia</button>`
+                : canRender
+                ? `<button type="button" data-render-plan-slot="${escapeHtml(item.slotIndex)}">Ver arte</button>`
+                : `<button type="button" data-preview-plan="${escapeHtml(item.slotIndex)}">Ver prévia</button>`}
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function jsonFromCommandOutput(output = '') {
+      const text = String(output || '').trim();
+      const start = text.lastIndexOf('\n{');
+      const jsonText = start >= 0 ? text.slice(start + 1) : text.slice(text.indexOf('{'));
+      return JSON.parse(jsonText);
+    }
+
+    function localRunImagePath(path = '') {
+      const normalized = String(path || '').replace(/\\/g, '/');
+      const marker = '/automation/instagram-template/';
+      const index = normalized.indexOf(marker);
+      return index >= 0 ? normalized.slice(index) : normalized;
+    }
+
+    function svgLines(text = '', maxChars = 24, maxLines = 4) {
+      const words = String(text || '').replace(/\s+/g, ' ').trim().split(' ').filter(Boolean);
+      const lines = [];
+      let current = '';
+      for (const word of words) {
+        const next = current ? `${current} ${word}` : word;
+        if (next.length > maxChars && current) {
+          lines.push(current);
+          current = word;
+        } else {
+          current = next;
+        }
+        if (lines.length === maxLines) break;
+      }
+      if (current && lines.length < maxLines) lines.push(current);
+      return lines;
+    }
+
+    function svgBoxText(text = '', x = 126, y = 300, width = 828, size = 52, color = '#17211c', weight = 900, lineHeight = 1.12) {
+      return `
+        <foreignObject x="${x}" y="${y}" width="${width}" height="560">
+          <div xmlns="http://www.w3.org/1999/xhtml" style="font-family:Arial, Helvetica, sans-serif;font-size:${size}px;font-weight:${weight};line-height:${lineHeight};color:${color};word-break:normal;overflow-wrap:break-word;">
+            ${escapeHtml(text)}
+          </div>
+        </foreignObject>
+      `;
+    }
+
+    function previewSlideSvg(item = {}, slide = {}) {
+      const label = item.type === 'program' ? 'PROGRAMA' : 'POSTAGEM';
+      const time = escapeHtml(item.time || '--:--');
+      const kicker = escapeHtml(slide.kicker || label);
+      const title = slide.title || item.title || 'Conteúdo programado';
+      const body = slide.body || item.caption || 'Legenda será montada pelo gerador automático.';
+      const index = Number(slide.index || 1);
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
+          <defs>
+            <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#f4f7f5"/>
+              <stop offset="1" stop-color="#e7f0eb"/>
+            </linearGradient>
+          </defs>
+          <rect width="1080" height="1350" fill="url(#bg)"/>
+          <circle cx="910" cy="190" r="190" fill="#dfe9e3"/>
+          <circle cx="150" cy="1110" r="230" fill="#ffffff" opacity="0.78"/>
+          <rect x="76" y="76" width="928" height="1198" rx="34" fill="#ffffff" stroke="#d8e2dc" stroke-width="4"/>
+          <rect x="126" y="132" width="290" height="70" rx="18" fill="#e8fff1" stroke="#9de8bd" stroke-width="3"/>
+          <text x="154" y="178" fill="#0e7c5a" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="900">${kicker}</text>
+          <text x="812" y="178" fill="#235b95" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="900">${time}</text>
+          ${svgBoxText(title, 126, 292, 828, title.length > 56 ? 58 : 70, '#17211c', 900, 1.08)}
+          <rect x="126" y="640" width="828" height="4" fill="#d8e2dc"/>
+          ${svgBoxText(body, 126, 730, 828, 42, '#5d6b64', 800, 1.24)}
+          <rect x="126" y="1080" width="828" height="118" rx="24" fill="#17211c"/>
+          <text x="168" y="1152" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="900">${slide.footer || 'Acompanhe pelo Instagram'}</text>
+          <text x="126" y="1240" fill="#0e7c5a" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900">Slide ${index}/5 · Prévia antes da postagem</text>
+        </svg>
+      `.trim();
+      return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+    }
+
+    function previewSlidesForItem(item = {}) {
+      const title = item.title || 'Conteúdo programado';
+      const caption = item.caption || 'Legenda será montada pelo gerador automático.';
+      return [
+        { index: 1, kicker: item.type === 'program' ? 'PROGRAMA' : 'POSTAGEM', title, body: caption, footer: 'Acompanhe pelo Instagram' },
+        { index: 2, kicker: 'CONTEXTO', title: 'O que esta por trás disso?', body: caption, footer: 'Entenda antes de agir' },
+        { index: 3, kicker: 'PROCESSO', title: 'O caminho começa simples.', body: 'Organize o atendimento, a rotina e os pontos de decisão antes de automatizar qualquer etapa.', footer: 'Processo antes da ferramenta' },
+        { index: 4, kicker: 'AÇÃO', title: 'A IA entra para acelerar.', body: 'Depois que o processo está claro, a automação ajuda a responder, registrar, lembrar e acompanhar com mais consistência.', footer: 'Mais clareza na operação' },
+        { index: 5, kicker: 'CONVITE', title: 'Quer aplicar isso na prática?', body: 'Acesse o link da bio e marque gratuitamente uma call de 30 minutos.', footer: 'Call gratuita de 30 minutos' }
+      ].map((slide) => previewSlideSvg(item, slide));
+    }
+
+    function setPreviewImages(imageSrcs, fileName = 'previa-postagem.svg') {
+      const sources = Array.isArray(imageSrcs) && imageSrcs.length ? imageSrcs : [];
+      const image = document.getElementById('dailyPlanPreviewImage');
+      const link = document.getElementById('dailyPlanPreviewLink');
+      const download = document.getElementById('dailyPlanPreviewDownload');
+      const strip = document.getElementById('dailyPlanPreviewSlides');
+      const activate = (index) => {
+        const source = sources[index] || sources[0] || '';
+        image.src = source;
+        link.href = source;
+        download.href = source;
+        download.download = fileName.replace(/(\.[a-z0-9]+)$/i, `-${index + 1}$1`);
+        strip.querySelectorAll('[data-preview-slide]').forEach((button) => {
+          button.classList.toggle('active', Number(button.dataset.previewSlide) === index);
+        });
+      };
+      strip.innerHTML = sources.map((source, index) => `
+        <button class="preview-slide-thumb ${index === 0 ? 'active' : ''}" type="button" data-preview-slide="${index}" title="Ver slide ${index + 1}">
+          <img src="${source}" alt="Slide ${index + 1}">
+        </button>
+      `).join('');
+      strip.onclick = (event) => {
+        const button = event.target.closest('[data-preview-slide]');
+        if (button) activate(Number(button.dataset.previewSlide));
+      };
+      download.download = fileName;
+      activate(0);
+    }
+
+    function setPreviewImage(imageSrc, fileName = 'previa-postagem.svg') {
+      setPreviewImages([imageSrc], fileName);
+    }
+
+    function previewProgramPlan(programKey) {
+      const item = (appState.dailyPlan || []).find((planItem) => (
+        planItem.type === 'program' &&
+        String(planItem.programId || planItem.slotIndex) === String(programKey)
+      )) || {};
+      const imagePath = item.imagePath || item.imageUrl || '';
+      const preview = document.getElementById('dailyPlanPreview');
+      const generatedSlides = previewSlidesForItem(item);
+      setPreviewImages(imagePath ? [imagePath, ...generatedSlides.slice(1)] : generatedSlides, `previa-${item.programId || 'programa'}.svg`);
+      document.getElementById('dailyPlanPreviewTitle').textContent = `${item.time || '--:--'} · ${item.title || 'Programa da rádio'}`;
+      document.getElementById('dailyPlanPreviewCaption').textContent = item.caption || 'Chamada recorrente da programação semanal.';
+      document.getElementById('dailyPlanPreviewStatus').textContent = imagePath ? 'Imagem do programa' : 'Prévia simples';
+      preview.classList.add('active');
+      preview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      setMessage('Prévia do programa aberta antes da postagem.', 'good');
+    }
+
+    function previewPlanItem(slotIndex) {
+      const item = (appState.dailyPlan || []).find((planItem) => String(planItem.slotIndex) === String(slotIndex)) || {};
+      const preview = document.getElementById('dailyPlanPreview');
+      setPreviewImages(previewSlidesForItem(item), `previa-slot-${slotIndex}.svg`);
+      document.getElementById('dailyPlanPreviewTitle').textContent = `${item.time || '--:--'} · ${item.title || 'Conteúdo programado'}`;
+      document.getElementById('dailyPlanPreviewCaption').textContent = item.caption || 'Legenda será montada pelo gerador automático.';
+      document.getElementById('dailyPlanPreviewStatus').textContent = 'Prévia antes de postar';
+      preview.classList.add('active');
+      preview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      setMessage('Prévia simples aberta. A arte final completa aparece no render local.', 'good');
+    }
+
+    async function renderPlanSlot(slotIndex, button) {
+      const item = (appState.dailyPlan || []).find((planItem) => Number(planItem.slotIndex) === Number(slotIndex)) || {};
+      const original = button.textContent;
+      button.disabled = true;
+      button.textContent = 'Renderizando';
+      setMessage(`Renderizando arte das ${item.time || '--:--'}...`, 'warn');
+      try {
+        const payload = await api('/api/render', {
+          method: 'POST',
+          body: JSON.stringify({ slotIndex: Number(slotIndex), account: appState.selectedAccount })
+        });
+        if (!payload.ok) throw new Error(payload.stderr || payload.stdout || 'Renderização falhou.');
+        const result = payload.render || jsonFromCommandOutput(payload.stdout || '');
+        const imagePath = payload.firstImagePath || localRunImagePath(result.imagePaths?.[0] || result.storyImagePath || '');
+        if (!imagePath) throw new Error('Renderização terminou sem imagem.');
+
+        const preview = document.getElementById('dailyPlanPreview');
+        setPreviewImage(`${imagePath}?v=${Date.now()}`, `arte-slot-${slotIndex}.jpg`);
+        document.getElementById('dailyPlanPreviewTitle').textContent = `${item.time || '--:--'} · ${item.title || 'Arte renderizada'}`;
+        document.getElementById('dailyPlanPreviewCaption').textContent = item.caption || 'Prévia gerada pelo publicador local.';
+        document.getElementById('dailyPlanPreviewStatus').textContent = `slot ${slotIndex} renderizado`;
+        preview.classList.add('active');
+        preview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        setMessage(`Prévia das ${item.time || '--:--'} renderizada.`, 'good');
+      } catch (error) {
+        setMessage(error.message, 'bad');
+      } finally {
+        button.disabled = false;
+        button.textContent = original;
+      }
+    }
+
     function renderChecks() {
       const privateMetrics = appState.privateMetrics;
       let privateCheck = {
@@ -3657,6 +4406,26 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('savePack').addEventListener('click', saveSelectedPack);
       document.getElementById('addTime').addEventListener('click', addScheduleTime);
       document.getElementById('saveSchedule').addEventListener('click', saveSchedule);
+      document.getElementById('addWeeklyProgram').addEventListener('click', addWeeklyProgram);
+      document.getElementById('saveWeeklyPrograms').addEventListener('click', saveWeeklyPrograms);
+      document.getElementById('weeklyPrograms').addEventListener('input', () => {
+        syncWeeklyProgramsFromInputs();
+        refreshDailyPlanFromLocalState();
+      });
+      document.getElementById('weeklyPrograms').addEventListener('change', () => {
+        syncWeeklyProgramsFromInputs();
+        refreshDailyPlanFromLocalState();
+      });
+      document.getElementById('weeklyPrograms').addEventListener('click', (event) => {
+        const removeProgram = event.target.closest('[data-remove-weekly-program]');
+        if (removeProgram) removeWeeklyProgram(Number(removeProgram.dataset.removeWeeklyProgram));
+        const clearImage = event.target.closest('[data-clear-program-image]');
+        if (clearImage) clearWeeklyProgramImage(Number(clearImage.dataset.clearProgramImage));
+      });
+      document.getElementById('weeklyPrograms').addEventListener('change', (event) => {
+        const input = event.target.closest('[data-program-image-upload]');
+        if (input) uploadWeeklyProgramImage(input);
+      });
       document.getElementById('scheduleEditor').addEventListener('click', (event) => {
         const button = event.target.closest('[data-remove-time]');
         if (button) removeScheduleTime(Number(button.dataset.removeTime));
@@ -3666,6 +4435,14 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       });
       document.getElementById('renderSlot').addEventListener('click', (event) => {
         runServerAction('/api/render', event.currentTarget, 'Renderizando');
+      });
+      document.getElementById('dailyPlan').addEventListener('click', (event) => {
+        const renderButton = event.target.closest('[data-render-plan-slot]');
+        if (renderButton) renderPlanSlot(Number(renderButton.dataset.renderPlanSlot), renderButton);
+        const programButton = event.target.closest('[data-preview-program]');
+        if (programButton) previewProgramPlan(programButton.dataset.previewProgram);
+        const planButton = event.target.closest('[data-preview-plan]');
+        if (planButton) previewPlanItem(planButton.dataset.previewPlan);
       });
       document.getElementById('queuePost').addEventListener('click', () => scheduleSelectedPost(false));
       document.getElementById('publishNow').addEventListener('click', () => scheduleSelectedPost(true));
