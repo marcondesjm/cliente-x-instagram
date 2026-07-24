@@ -1487,12 +1487,14 @@ function anatexSlideHtml(slide, index, total, account, style) {
     index % 2 === 0 ? 'slide-even' : 'slide-odd'
   ].join(' ');
   const noteWidth = mode === 'minimal' ? 650 : mode === 'poster' || mode === 'magazine' ? 430 : mode === 'split' || placement?.includes?.('layout-left') ? 380 : 390;
-  const noteFontSize = body.length > 170 ? 21 : body.length > 125 ? 23 : body.length > 95 ? 25 : 27;
+  const noteFontSize = engagementRole === 'cta' ? 24 : body.length > 170 ? 21 : body.length > 125 ? 23 : body.length > 95 ? 25 : 27;
   const noteLines = estimateTextLines(body, noteWidth, noteFontSize);
   const closeFontScale = creativeBody.close.length > 110 ? 0.58 : creativeBody.close.length > 82 ? 0.62 : creativeBody.close.length > 58 ? 0.66 : 0.72;
   const closeLines = estimateTextLines(creativeBody.close, noteWidth - 32, noteFontSize * closeFontScale);
   const closeMinHeight = Math.max(92, Math.min(184, 40 + (closeLines * noteFontSize * closeFontScale * 1.34)));
-  const noteMinHeight = Math.min(520, Math.max(330, 160 + closeMinHeight + (noteLines * noteFontSize * 0.98)));
+  const noteMinHeight = engagementRole === 'cta'
+    ? Math.min(440, Math.max(340, 178 + closeMinHeight + (noteLines * noteFontSize * 0.72)))
+    : Math.min(520, Math.max(330, 160 + closeMinHeight + (noteLines * noteFontSize * 0.98)));
   const progressItems = Array.from({ length: total }, (_, itemIndex) => (
     `<span class="${itemIndex + 1 <= index ? 'active' : ''}"></span>`
   )).join('');
@@ -1734,11 +1736,13 @@ function anatexSlideHtml(slide, index, total, account, style) {
     .role-cta .badge span { border-color: #fff6ef; }
     .role-cta .badge span::after { border-color: #fff6ef; }
     .role-cta .headline { max-width: 860px; font-size: 82px; }
-    .role-cta .note { background: ${accent}; color: #fff6ef; border: 0; font-size: 34px; }
+    .role-cta .note { background: ${accent}; color: #fff6ef; border: 0; font-size: 24px; line-height: 1.08; min-height: ${Math.max(340, noteMinHeight)}px; padding-top: 36px; }
     .role-cta .note::before { background: #fff6ef; color: ${accent}; }
     .role-cta .note .lead,
     .role-cta .note .emphasis { color: #fff6ef; }
-    .role-cta .note .close { background: #fff6ef; color: ${accent}; }
+    .role-cta .note .lead { font-size: 0.82em; }
+    .role-cta .note .emphasis { font-size: 1.12em; line-height: 1.02; }
+    .role-cta .note .close { background: #fff6ef; color: ${accent}; margin-top: 18px; }
     .role-cta .progress { bottom: 156px; }
     .role-cta .save-cue { bottom: 56px; min-width: 230px; text-align: center; }
     .bubble { display: none; position: absolute; right: 116px; bottom: 270px; width: 132px; height: 96px; border-radius: 34px; background: #f1d8c7; z-index: 3; }

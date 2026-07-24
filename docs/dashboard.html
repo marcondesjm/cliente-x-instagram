@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.2</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.3</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -4381,7 +4381,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const cueX = mode === 'split' ? 746 : mode === 'magazine' ? 756 : 726;
       const cueY = mode === 'minimal' ? 390 : mode === 'poster' ? 280 : 250;
       const bodyFontSize = isCta
-        ? 32
+        ? 24
         : body.length > 170
           ? 21
           : body.length > 125
@@ -4395,7 +4395,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const closeLines = estimateSvgTextLines(creativeBody.close, closeTextWidth, closeFontSize);
       const closeHeight = Math.max(92, Math.min(184, 38 + (closeLines * closeFontSize * 1.34)));
       const noteHeight = isCta
-        ? Math.max(278, 196 + closeHeight)
+        ? Math.max(348, 204 + closeHeight)
         : Math.min(520, Math.max(330, 160 + closeHeight + (estimatedLines * bodyFontSize * 1.02)));
       const photo = {
         paper: { x: 664, y: 280, w: 330, h: 220, r: 26 },
@@ -4474,8 +4474,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           <circle cx="${layout.noteX + 54}" cy="${layout.noteY + 60}" r="30" fill="${isCta ? '#fff6ef' : theme.accent}"/>
           <text x="${layout.noteX + 34}" y="${layout.noteY + 72}" fill="${isCta ? theme.accent : '#ffffff'}" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="900">${cardNumber}</text>
           ${!isCta && index > 1 && layout.noteW > 600 ? `<rect x="${layout.noteX + layout.noteW - 110}" y="${layout.noteY + 34}" width="78" height="78" rx="18" fill="none" stroke="${theme.accent}" stroke-width="4" opacity="0.18"/>` : ''}
-          ${svgBoxText(creativeBody.lead, layout.noteTextX, layout.noteY + 38, layout.noteTextW, Math.max(20, bodyFontSize - 5), isCta ? '#fff6ef' : theme.accent, 900, 1.05, 80)}
-          ${svgBoxText(creativeBody.emphasis, layout.noteTextX, layout.noteY + 72, layout.noteTextW, Math.min(40, bodyFontSize + 7), isCta ? '#fff6ef' : theme.text, 900, 0.98, 118)}
+          ${svgBoxText(creativeBody.lead, layout.noteTextX, layout.noteY + 38, layout.noteTextW, isCta ? 20 : Math.max(20, bodyFontSize - 5), isCta ? '#fff6ef' : theme.accent, 900, 1.05, isCta ? 48 : 80)}
+          ${svgBoxText(creativeBody.emphasis, layout.noteTextX, layout.noteY + 72, layout.noteTextW, isCta ? 27 : Math.min(40, bodyFontSize + 7), isCta ? '#fff6ef' : theme.text, 900, isCta ? 1.04 : 0.98, isCta ? 108 : 118)}
           <rect x="${layout.noteTextX}" y="${layout.noteY + noteHeight - closeHeight - 20}" width="${Math.min(layout.noteTextW, 430)}" height="${closeHeight}" rx="10" fill="${isCta ? '#fff6ef' : theme.accent}"/>
           ${svgBoxText(creativeBody.close, layout.noteTextX + 16, layout.noteY + noteHeight - closeHeight + 2, closeTextWidth, closeFontSize, isCta ? theme.accent : '#fff6ef', 900, 1.16, closeHeight - 28)}
           ${progress}
