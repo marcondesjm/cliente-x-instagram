@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.5</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.6</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -4181,11 +4181,20 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     const previewAvatarDataUrls = {};
     const previewSectorPhotoDataUrls = {};
 
-    function previewPickAvatarSource(account = {}, index = 1, cue = '') {
+    function previewPickAvatarSource(account = {}, index = 1, cue = '', item = {}) {
       const rotation = account.avatarRotation || {};
       const urls = Array.isArray(rotation.urls) ? rotation.urls.filter(Boolean) : [];
       if (rotation.enabled && urls.length) {
-        const seed = `${itemDateSeed()}-${index}-${cue}`;
+        const seed = [
+          item.previewDate || item.planDate || item.date || itemDateSeed(),
+          item.slotIndex ?? '',
+          item.time || item.scheduledFor || '',
+          item.packIndex ?? '',
+          item.scheduledFor || '',
+          'feed',
+          index,
+          cue
+        ].join('-');
         const offset = seed.split('').reduce((total, char) => total + char.charCodeAt(0), 0);
         return urls[offset % urls.length];
       }
@@ -4501,7 +4510,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         { index: 5, kicker: 'CONVITE', title: 'Quer aplicar isso na prática?', body: 'Acesse o link da bio e marque gratuitamente uma call de 30 minutos.', footer: 'Call gratuita de 30 minutos' }
       ];
       const account = appState.account || {};
-      const avatarHrefs = await Promise.all(slides.map((slide) => getPreviewImageDataUrl(previewPickAvatarSource(account, slide.index, cue))));
+      const avatarHrefs = await Promise.all(slides.map((slide) => getPreviewImageDataUrl(previewPickAvatarSource(account, slide.index, cue, item))));
       return slides.map((slide, index) => previewSlideSvg({ ...item, visualCue: cue }, slide, avatarHrefs[index], sectorPhotoHref));
     }
 

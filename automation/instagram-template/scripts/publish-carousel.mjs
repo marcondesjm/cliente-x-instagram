@@ -1319,21 +1319,30 @@ function cssUrl(value = '') {
   return `url("${String(value).replace(/\\/g, '/').replace(/"/g, '%22')}")`;
 }
 
-function pickAccountAvatar(account = {}, index = 1, visualCue = '') {
+function pickAccountAvatar(account = {}, index = 1, visualCue = '', context = {}) {
   const rotation = account.avatarRotation || {};
   const urls = Array.isArray(rotation.urls)
     ? rotation.urls.map((item) => String(item || '').trim()).filter(Boolean)
     : [];
   if (rotation.enabled && urls.length) {
-    const seed = `${todaySaoPaulo()}-${index}-${visualCue}`;
+    const seed = [
+      context.dateString || todaySaoPaulo(),
+      context.slotIndex ?? '',
+      context.slotTime || '',
+      context.packIndex ?? '',
+      context.scheduledFor || '',
+      context.story ? 'story' : 'feed',
+      index,
+      visualCue
+    ].join('-');
     const offset = seed.split('').reduce((total, char) => total + char.charCodeAt(0), 0);
     return urls[offset % urls.length];
   }
   return String(account.avatarUrl || account.avatarPath || '').trim();
 }
 
-function accountAvatarCssImage(account = {}, index = 1, visualCue = '') {
-  const pickedAvatar = pickAccountAvatar(account, index, visualCue);
+function accountAvatarCssImage(account = {}, index = 1, visualCue = '', context = {}) {
+  const pickedAvatar = pickAccountAvatar(account, index, visualCue, context);
   if (/^https?:\/\//i.test(pickedAvatar) || /^data:image\//i.test(pickedAvatar)) return cssUrl(pickedAvatar);
 
   const avatarUrl = String(account.avatarUrl || '').trim();
@@ -1466,7 +1475,7 @@ function sectorVisualHtml(cue = 'business') {
   return `<svg class="sector-cue" viewBox="0 0 300 280" aria-hidden="true">${shapes[cue] || shapes.business}</svg>`;
 }
 
-function anatexSlideHtml(slide, index, total, account, style) {
+function anatexSlideHtml(slide, index, total, account, style, renderContext = {}) {
   const slideStyle = styleForSlide(style, index);
   const title = anatexTitle(slide.title || '');
   const body = applyAnatexCopyRules(slide.body || '');
@@ -1477,9 +1486,8 @@ function anatexSlideHtml(slide, index, total, account, style) {
   const headline = title.replace(/\s+IA\b/i, ' <strong>IA</strong>');
   const mode = slideStyle.templateMode || 'paper';
   const visualCue = slide.visualCue || visualCueFromText(`${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
-  const avatarImage = accountAvatarCssImage(account, index, visualCue);
+  const avatarImage = accountAvatarCssImage(account, index, visualCue, renderContext);
   const avatarClass = avatarImage ? ' has-avatar' : '';
-  const brandDisplay = account.brandName || account.expectedUsername || 'Marcondes Machado';
   const usernameDisplay = accountUsernameDisplay(account);
   const engagementRole = index === 1 ? 'hook' : index === total ? 'cta' : index === total - 1 ? 'proof' : 'value';
   const useSectorPhoto = engagementRole === 'hook' || engagementRole === 'cta';
@@ -2020,9 +2028,9 @@ async function launchChromium() {
   return executablePath ? chromium.launch({ executablePath }) : chromium.launch();
 }
 
-function slideHtml(slide, index, total, account, style) {
+function slideHtml(slide, index, total, account, style, renderContext = {}) {
   if (style.layout === 'anatex-editorial' || account.contentProfile?.visualDirection === 'anatex-editorial') {
-    return anatexSlideHtml(slide, index, total, account, style);
+    return anatexSlideHtml(slide, index, total, account, style, renderContext);
   }
   const slideStyle = styleForSlide(style, index);
   const variant = slide.visualVariant || 'focus';
@@ -2108,7 +2116,7 @@ function slideHtml(slide, index, total, account, style) {
 </html>`;
 }
 
-async function renderSlides(runDir, slides, account, style) {
+async function renderSlides(runDir, slides, account, style, renderContext = {}) {
   const browser = await launchChromium();
   const page = await browser.newPage({ viewport: { width: FEED_WIDTH, height: FEED_HEIGHT }, deviceScaleFactor: 1 });
   const imagePaths = [];
@@ -2127,7 +2135,7 @@ async function renderSlides(runDir, slides, account, style) {
       imagePaths.push(customImagePath);
       continue;
     }
-    const html = slideHtml(slide, index + 1, slides.length, account, style);
+    const html = slideHtml(slide, index + 1, slides.length, account, style, renderContext);
     assertNoMojibake(html);
     assertPortugueseAccents(`${slide.eyebrow}\n${slide.title}\n${slide.body}`);
     const htmlPath = join(runDir, `slide-${String(index + 1).padStart(2, '0')}.html`);
@@ -2140,14 +2148,15 @@ async function renderSlides(runDir, slides, account, style) {
   return imagePaths;
 }
 
-function anatexStoryHtml(slide, account, style) {
+function anatexStoryHtml(slide, account, style, renderContext = {}) {
   const slideStyle = styleForSlide(style, 1);
   const title = anatexTitle(slide.title || '');
   const body = applyAnatexCopyRules(slide.body || '');
   const eyebrow = applyAnatexCopyRules(slide.eyebrow || 'Pra saber');
   const accent = slideStyle.accent || '#a7563d';
   const soft = slideStyle.accentSoft || 'rgba(167,86,61,0.16)';
-  const avatarImage = accountAvatarCssImage(account);
+  const visualCue = slide.visualCue || visualCueFromText(`${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
+  const avatarImage = accountAvatarCssImage(account, 0, visualCue, { ...renderContext, story: true });
   const avatarBlock = avatarImage
     ? `<div class="avatar"></div>`
     : `<div class="panel"><span>IA</span></div>`;
@@ -2210,9 +2219,9 @@ function anatexStoryHtml(slide, account, style) {
 </html>`;
 }
 
-function storyHtml(slide, account, style) {
+function storyHtml(slide, account, style, renderContext = {}) {
   if (style.layout === 'anatex-editorial' || account.contentProfile?.visualDirection === 'anatex-editorial') {
-    return anatexStoryHtml(slide, account, style);
+    return anatexStoryHtml(slide, account, style, renderContext);
   }
   const slideStyle = styleForSlide(style, 1);
   const variant = slide.visualVariant || 'focus';
@@ -2282,10 +2291,10 @@ function storyHtml(slide, account, style) {
 </html>`;
 }
 
-async function renderStory(runDir, pack, account, style) {
+async function renderStory(runDir, pack, account, style, renderContext = {}) {
   const browser = await launchChromium();
   const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
-  const html = storyHtml(pack.slides[0], account, style);
+  const html = storyHtml(pack.slides[0], account, style, renderContext);
   assertNoMojibake(html);
   assertPortugueseAccents(`${pack.slides[0].eyebrow}\n${pack.slides[0].title}\n${pack.slides[0].body}`);
   const htmlPath = join(runDir, 'story.html');
@@ -2600,8 +2609,16 @@ async function main() {
   writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, account: account.account, visualStyle: style.name, intelligence: enhancement.intelligence, ...pack }, null, 2), 'utf8');
   writeFileSync(join(runDir, 'caption.txt'), pack.caption, 'utf8');
   const storyOnly = publishMode === 'story-only';
-  const imagePaths = storyOnly ? [] : await renderSlides(runDir, pack.slides, account, style);
-  const storyImagePath = await renderStory(runDir, pack, account, style);
+  const slotCron = (account.scheduleUtc || [])[slotIndex] || '';
+  const renderContext = {
+    dateString: today,
+    slotIndex,
+    slotTime: scheduledPost?.scheduledFor || (slotCron ? cronToBrtTime(slotCron) : ''),
+    packIndex,
+    scheduledFor: scheduledPost?.scheduledFor || ''
+  };
+  const imagePaths = storyOnly ? [] : await renderSlides(runDir, pack.slides, account, style, renderContext);
+  const storyImagePath = await renderStory(runDir, pack, account, style, renderContext);
 
   if (args.renderOnly) {
     console.log(JSON.stringify({ ok: true, renderOnly: true, account: account.account, runDir, visualStyle: style.name, slotIndex, packIndex, imagePaths, storyImagePath }, null, 2));
