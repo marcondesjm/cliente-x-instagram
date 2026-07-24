@@ -1344,9 +1344,16 @@ function anatexSlideHtml(slide, index, total, account, style) {
   const visualCue = slide.visualCue || visualCueFromText(`${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
   const sectorPhotoImage = sectorPhotoCssImage(visualCue);
   const sectorPhotoClass = sectorPhotoImage ? ' has-sector-photo' : '';
+  const engagementRole = index === 1 ? 'hook' : index === total ? 'cta' : index === total - 1 ? 'proof' : 'value';
+  const swipeCue = index === 1 ? '<div class="swipe-cue">arraste para ver</div>' : '';
+  const saveCue = index === total ? '<div class="save-cue">link na bio</div>' : index === 3 ? '<div class="save-cue">salve este passo</div>' : '';
+  const progressItems = Array.from({ length: total }, (_, itemIndex) => (
+    `<span class="${itemIndex + 1 <= index ? 'active' : ''}"></span>`
+  )).join('');
   const placement = [
     mode === 'split' ? 'layout-left' : index % 3 === 2 ? 'layout-left' : index % 3 === 0 ? 'layout-corner' : 'layout-right',
     `mode-${mode}`,
+    `role-${engagementRole}`,
     index % 2 === 0 ? 'slide-even' : 'slide-odd'
   ].join(' ');
   return `<!DOCTYPE html>
@@ -1385,6 +1392,25 @@ function anatexSlideHtml(slide, index, total, account, style) {
     .badge span::after { content: ""; position: absolute; left: 8px; top: 7px; width: 9px; height: 14px; border-right: 4px solid #fff6ef; border-bottom: 4px solid #fff6ef; transform: rotate(40deg); }
     .headline { position: relative; z-index: 2; margin-top: 98px; max-width: 600px; font-size: 68px; line-height: 0.98; letter-spacing: 0; font-weight: 900; color: ${slideStyle.text}; overflow-wrap: break-word; }
     .headline strong { display: inline; color: ${accent}; font: inherit; }
+    .swipe-cue, .save-cue {
+      position: absolute;
+      z-index: 4;
+      right: 58px;
+      bottom: 58px;
+      padding: 14px 24px;
+      border-radius: 999px;
+      background: ${accent};
+      color: #fff6ef;
+      font-size: 25px;
+      line-height: 1;
+      font-weight: 900;
+      text-transform: uppercase;
+      box-shadow: 0 18px 36px rgba(56,42,32,0.16);
+    }
+    .save-cue { right: auto; left: 72px; bottom: 56px; background: ${slideStyle.text}; }
+    .progress { position: absolute; left: 72px; right: 72px; bottom: 108px; z-index: 4; display: flex; gap: 8px; }
+    .progress span { height: 8px; flex: 1; border-radius: 999px; background: rgba(20,38,47,0.13); }
+    .progress span.active { background: ${accent}; }
     .context-photo {
       position: absolute;
       right: 58px;
@@ -1539,6 +1565,34 @@ function anatexSlideHtml(slide, index, total, account, style) {
     .layout-left.mode-magazine .panel { left: 62px; right: auto; top: 420px; width: 320px; height: 430px; }
     .layout-left.mode-magazine .note { left: 430px; top: 745px; width: 560px; }
     .layout-left.mode-magazine .sector-cue { left: 122px; right: auto; top: 190px; width: 190px; opacity: 0.22; }
+    .role-hook .headline { font-size: 74px; }
+    .role-hook .note { min-height: 214px; font-size: 28px; }
+    .role-value .note::after {
+      content: "";
+      position: absolute;
+      right: 28px;
+      top: 34px;
+      width: 78px;
+      height: 78px;
+      border-radius: 18px;
+      border: 4px solid ${accent};
+      opacity: 0.18;
+    }
+    .role-proof .headline::before {
+      content: "ANTES / DEPOIS";
+      display: block;
+      margin-bottom: 18px;
+      color: ${accent};
+      font-size: 26px;
+      line-height: 1;
+      font-weight: 900;
+    }
+    .role-cta .badge { background: ${slideStyle.text}; color: #fff6ef; border-color: ${slideStyle.text}; }
+    .role-cta .badge span { border-color: #fff6ef; }
+    .role-cta .badge span::after { border-color: #fff6ef; }
+    .role-cta .headline { max-width: 860px; font-size: 82px; }
+    .role-cta .note { background: ${accent}; color: #fff6ef; border: 0; font-size: 34px; }
+    .role-cta .note::before { background: #fff6ef; color: ${accent}; }
     .bubble { display: none; position: absolute; right: 116px; bottom: 270px; width: 132px; height: 96px; border-radius: 34px; background: #f1d8c7; z-index: 3; }
     .bubble::before { content: "..."; position: absolute; inset: 0; display: grid; place-items: center; color: ${accent}; font-size: 58px; line-height: 0.5; font-weight: 900; letter-spacing: 5px; }
     .spark { position: absolute; color: ${accent}; opacity: 0.7; z-index: 2; font-size: 42px; font-weight: 900; }
@@ -1552,6 +1606,8 @@ function anatexSlideHtml(slide, index, total, account, style) {
     <div class="brand">${account.brandName}</div>
     <div class="arrows">&gt;&gt;</div>
     <div class="badge"><span></span>${eyebrow}</div>
+    ${swipeCue}
+    ${saveCue}
     ${sectorPhotoImage ? '<div class="context-photo"></div>' : ''}
     ${sectorVisualHtml(visualCue)}
     <div class="panel${avatarClass}"></div>
@@ -1562,6 +1618,7 @@ function anatexSlideHtml(slide, index, total, account, style) {
     </section>
     <div class="note">${body}</div>
     <div class="bubble"></div>
+    <div class="progress">${progressItems}</div>
     <footer>${index}/${total}</footer>
   </main>
 </body>

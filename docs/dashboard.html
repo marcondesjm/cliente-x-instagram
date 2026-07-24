@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v2.4</div>
+        <div class="header-version" id="headerVersion">Versão atual: v2.5</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -4180,6 +4180,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const body = slide.body || item.caption || 'Legenda será montada pelo gerador automático.';
       const index = Number(slide.index || 1);
       const cardNumber = String(index).padStart(2, '0');
+      const totalSlides = 5;
+      const isHook = index === 1;
+      const isCta = index === totalSlides;
+      const isProof = index === totalSlides - 1;
       const dateSeed = previewSeedFromText(item.previewDate || item.planDate || item.date || '');
       const modeNames = ['paper', 'split', 'poster', 'minimal', 'magazine'];
       const modeSeed = ((Number.parseInt(String(item.slotIndex || '0').replace(/\D/g, ''), 10) || 0) * 2) + (dateSeed * 3);
@@ -4210,6 +4214,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         minimal: { x: 86, y: 510, w: 520, h: 190, r: 24 },
         magazine: { x: 124, y: 508, w: 500, h: 190, r: 24 }
       }[mode];
+      const progress = Array.from({ length: totalSlides }, (_, progressIndex) => `
+        <rect x="${72 + (progressIndex * 182)}" y="1236" width="160" height="8" rx="4" fill="${progressIndex < index ? theme.accent : 'rgba(20,38,47,0.13)'}"/>
+      `).join('');
       const svg = `
         <svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
           <defs>
@@ -4236,6 +4243,17 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           <circle cx="124" cy="152" r="18" fill="none" stroke="#fff5ed" stroke-width="4"/>
           <path d="M114 151l8 9 15-20" fill="none" stroke="#fff5ed" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
           <text x="158" y="162" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900">${kicker}</text>
+          ${isHook ? `
+            <rect x="752" y="1192" width="250" height="56" rx="28" fill="${theme.accent}"/>
+            <text x="784" y="1229" fill="#fff6ef" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900">ARRASTE PARA VER</text>
+          ` : ''}
+          ${isCta ? `
+            <rect x="72" y="1192" width="190" height="56" rx="28" fill="${theme.text}"/>
+            <text x="104" y="1229" fill="#fff6ef" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900">LINK NA BIO</text>
+          ` : index === 3 ? `
+            <rect x="72" y="1192" width="250" height="56" rx="28" fill="${theme.text}"/>
+            <text x="102" y="1229" fill="#fff6ef" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900">SALVE ESTE PASSO</text>
+          ` : ''}
           ${mode === 'magazine' ? `<rect x="0" y="0" width="96" height="1350" fill="${theme.bottom}" opacity="0.9"/>` : ''}
           ${mode === 'split' ? '<rect x="0" y="0" width="520" height="1350" fill="#fffaf7" opacity="0.72"/>' : ''}
           ${sectorPhotoHref ? `
@@ -4244,7 +4262,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <rect x="${photo.x}" y="${photo.y}" width="${photo.w}" height="${photo.h}" rx="${photo.r}" fill="#17211c" opacity="0.10"/>
           ` : ''}
           ${previewSectorCueSvg(cue, cueX, cueY, 250, theme.cue)}
-          ${svgBoxText(title, layout.titleX, layout.titleY, layout.titleW, titleSize, theme.text, 900, 0.98)}
+          ${isProof ? `<text x="${layout.titleX}" y="${layout.titleY - 24}" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="900">ANTES / DEPOIS</text>` : ''}
+          ${svgBoxText(title, layout.titleX, layout.titleY, layout.titleW, isHook ? Math.min(titleSize + 6, 86) : titleSize, theme.text, 900, 0.98)}
           <g transform="translate(${layout.panelX} ${layout.panelY}) rotate(${layout.panelR})">
             <rect x="0" y="0" width="${layout.panelW}" height="${layout.panelH}" rx="${panelRadius}" fill="#ffffff" opacity="0.96"/>
             <rect x="18" y="18" width="${layout.panelW - 36}" height="${layout.panelH - 36}" rx="${Math.max(18, panelRadius - 6)}" fill="#eef2ef"/>
@@ -4257,10 +4276,12 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               <rect x="20" y="${layout.panelH - 72}" width="${layout.panelW - 40}" height="54" rx="12" fill="#ffffff" opacity="0.55"/>
             `}
           </g>
-          <rect x="${layout.noteX}" y="${layout.noteY}" width="${layout.noteW}" height="236" rx="22" fill="#fffaf7" stroke="${theme.muted}" stroke-width="2"/>
-          <circle cx="${layout.noteX + 54}" cy="${layout.noteY + 60}" r="30" fill="${theme.accent}"/>
-          <text x="${layout.noteX + 34}" y="${layout.noteY + 72}" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="900">${cardNumber}</text>
-          ${svgBoxText(body, layout.noteTextX, layout.noteY + 42, layout.noteTextW, body.length > 95 ? 30 : 36, theme.text, 900, 1.15)}
+          <rect x="${layout.noteX}" y="${layout.noteY}" width="${layout.noteW}" height="236" rx="22" fill="${isCta ? theme.accent : '#fffaf7'}" stroke="${isCta ? theme.accent : theme.muted}" stroke-width="2"/>
+          <circle cx="${layout.noteX + 54}" cy="${layout.noteY + 60}" r="30" fill="${isCta ? '#fff6ef' : theme.accent}"/>
+          <text x="${layout.noteX + 34}" y="${layout.noteY + 72}" fill="${isCta ? theme.accent : '#ffffff'}" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="900">${cardNumber}</text>
+          ${!isCta && index > 1 ? `<rect x="${layout.noteX + layout.noteW - 110}" y="${layout.noteY + 34}" width="78" height="78" rx="18" fill="none" stroke="${theme.accent}" stroke-width="4" opacity="0.18"/>` : ''}
+          ${svgBoxText(body, layout.noteTextX, layout.noteY + 42, layout.noteTextW, body.length > 95 ? 30 : 36, isCta ? '#fff6ef' : theme.text, 900, 1.15)}
+          ${progress}
           <text x="948" y="1274" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900">${index}/5</text>
         </svg>
       `.trim();
