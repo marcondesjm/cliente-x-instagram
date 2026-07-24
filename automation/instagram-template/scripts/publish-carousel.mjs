@@ -1441,18 +1441,19 @@ function anatexSlideHtml(slide, index, total, account, style) {
     .mode-split .sector-cue { right: 82px; top: 118px; width: 250px; opacity: 0.28; }
     .mode-poster main {
       background:
-        radial-gradient(circle at 50% 112%, ${soft} 0 390px, transparent 391px),
+        radial-gradient(circle at 50% 112%, ${soft} 0 430px, transparent 431px),
+        linear-gradient(180deg, rgba(255,255,255,0.66) 0 50%, transparent 50%),
         linear-gradient(180deg, ${slideStyle.bgTop} 0%, ${slideStyle.bgBottom} 100%);
     }
-    .mode-poster .badge { left: 78px; top: 106px; }
-    .mode-poster .headline { margin-top: 150px; max-width: 880px; font-size: 78px; text-align: left; }
-    .mode-poster .panel { right: 70px; top: 650px; width: 286px; height: 286px; border-radius: 50%; transform: none; }
-    .mode-poster .note { left: 70px; top: 690px; width: 620px; min-height: 260px; font-size: 28px; }
-    .mode-poster .sector-cue { right: 78px; top: 248px; width: 260px; opacity: 0.24; }
-    .layout-left.mode-poster .headline { margin-left: 420px; max-width: 560px; font-size: 60px; }
-    .layout-left.mode-poster .panel { left: 62px; right: auto; top: 660px; width: 300px; height: 300px; }
-    .layout-left.mode-poster .note { left: 430px; top: 730px; width: 560px; min-height: 240px; }
-    .layout-left.mode-poster .sector-cue { left: 112px; right: auto; top: 250px; width: 210px; opacity: 0.24; }
+    .mode-poster .badge { left: 50%; top: 118px; transform: translateX(-50%); }
+    .mode-poster .headline { margin: 185px auto 0; max-width: 900px; font-size: 86px; line-height: 0.96; text-align: center; }
+    .mode-poster .panel { right: 84px; top: 760px; width: 300px; height: 300px; border-radius: 50%; transform: none; z-index: 3; }
+    .mode-poster .note { left: 86px; top: 760px; width: 610px; min-height: 250px; font-size: 29px; background: rgba(255,250,246,0.90); }
+    .mode-poster .sector-cue { left: 50%; right: auto; top: 508px; width: 310px; transform: translateX(-50%); opacity: 0.22; }
+    .layout-left.mode-poster .headline { margin: 185px auto 0; max-width: 900px; font-size: 86px; }
+    .layout-left.mode-poster .panel { left: auto; right: 84px; top: 760px; width: 300px; height: 300px; }
+    .layout-left.mode-poster .note { left: 86px; top: 760px; width: 610px; min-height: 250px; }
+    .layout-left.mode-poster .sector-cue { left: 50%; right: auto; top: 508px; width: 310px; transform: translateX(-50%); }
     .mode-minimal main::after { display: none; }
     .mode-minimal main {
       background:
@@ -1461,14 +1462,14 @@ function anatexSlideHtml(slide, index, total, account, style) {
     .mode-minimal .badge { background: rgba(255,250,246,0.82); color: ${accent}; border: 2px solid ${accent}; }
     .mode-minimal .badge span { border-color: ${accent}; }
     .mode-minimal .badge span::after { border-color: ${accent}; }
-    .mode-minimal .headline { margin-top: 132px; max-width: 820px; font-size: 64px; }
-    .mode-minimal .panel { top: 744px; right: 82px; width: 250px; height: 250px; border-radius: 50%; opacity: 0.94; }
-    .mode-minimal .note { top: 640px; width: 620px; min-height: 220px; background: rgba(255,255,255,0.42); }
-    .mode-minimal .sector-cue { right: 80px; top: 360px; width: 210px; opacity: 0.26; }
-    .layout-left.mode-minimal .headline { margin-left: 420px; max-width: 560px; font-size: 58px; }
-    .layout-left.mode-minimal .panel { left: 72px; right: auto; top: 720px; width: 280px; height: 280px; }
-    .layout-left.mode-minimal .note { left: 430px; top: 690px; width: 560px; }
-    .layout-left.mode-minimal .sector-cue { left: 108px; right: auto; top: 340px; width: 190px; opacity: 0.24; }
+    .mode-minimal .headline { margin-top: 150px; max-width: 760px; font-size: 70px; }
+    .mode-minimal .panel { top: 210px; right: 72px; width: 260px; height: 260px; border-radius: 50%; opacity: 0.94; }
+    .mode-minimal .note { left: 86px; top: 780px; width: 840px; min-height: 210px; padding-left: 128px; background: rgba(255,255,255,0.58); }
+    .mode-minimal .sector-cue { right: 98px; top: 520px; width: 250px; opacity: 0.22; }
+    .layout-left.mode-minimal .headline { margin-left: 0; max-width: 760px; font-size: 70px; }
+    .layout-left.mode-minimal .panel { left: auto; right: 72px; top: 210px; width: 260px; height: 260px; }
+    .layout-left.mode-minimal .note { left: 86px; top: 780px; width: 840px; }
+    .layout-left.mode-minimal .sector-cue { left: auto; right: 98px; top: 520px; width: 250px; }
     .mode-magazine main {
       background:
         linear-gradient(90deg, ${slideStyle.bgBottom} 0 34%, transparent 34%),
@@ -1616,7 +1617,9 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
   ];
 
   const variants = style.layout === 'anatex-editorial' ? anatexVariants : defaultVariants;
-  const selectedIndex = pickDailyIndex(variants, dateString, slotIndex);
+  const selectedIndex = style.layout === 'anatex-editorial'
+    ? ((daysSinceEpoch(dateString) * 3) + (slotIndex * 2)) % variants.length
+    : pickDailyIndex(variants, dateString, slotIndex);
   const slidePalettes = rotateItems(variants, selectedIndex);
   return {
     ...slidePalettes[0],

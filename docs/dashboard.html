@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v2.1</div>
+        <div class="header-version" id="headerVersion">Versão atual: v2.3</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -4148,7 +4148,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const cardNumber = String(index).padStart(2, '0');
       const dateSeed = previewSeedFromText(item.previewDate || item.planDate || item.date || '');
       const modeNames = ['paper', 'split', 'poster', 'minimal', 'magazine'];
-      const modeSeed = (Number.parseInt(String(item.slotIndex || '0').replace(/\D/g, ''), 10) || 0) + dateSeed;
+      const modeSeed = ((Number.parseInt(String(item.slotIndex || '0').replace(/\D/g, ''), 10) || 0) * 2) + (dateSeed * 3);
       const mode = modeNames[(modeSeed + index) % modeNames.length];
       const theme = [
         { accent: '#c46a32', soft: '#dfc8b8', top: '#f7f4ee', bottom: '#e7edf0', text: '#17211c', muted: '#ead4c8', cue: '#2f7d73', stripe: '' },
@@ -4160,8 +4160,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const layout = {
         paper: { titleX: 58, titleY: 190, titleW: 620, titleSize: title.length > 58 ? 58 : 68, panelX: 650, panelY: 444, panelW: 380, panelH: 454, panelR: 3, noteX: 78, noteY: 700, noteW: 540, noteTextX: 188, noteTextW: 380 },
         split: { titleX: 470, titleY: 205, titleW: 540, titleSize: title.length > 52 ? 50 : 58, panelX: 58, panelY: 438, panelW: 370, panelH: 470, panelR: -3, noteX: 470, noteY: 720, noteW: 540, noteTextX: 580, noteTextW: 380 },
-        poster: { titleX: 70, titleY: 220, titleW: 890, titleSize: title.length > 58 ? 60 : 78, panelX: 706, panelY: 650, panelW: 278, panelH: 278, panelR: 0, noteX: 70, noteY: 688, noteW: 610, noteTextX: 180, noteTextW: 440 },
-        minimal: { titleX: 84, titleY: 240, titleW: 840, titleSize: title.length > 60 ? 56 : 64, panelX: 718, panelY: 760, panelW: 250, panelH: 250, panelR: 0, noteX: 84, noteY: 644, noteW: 610, noteTextX: 194, noteTextW: 440 },
+        poster: { titleX: 88, titleY: 210, titleW: 904, titleSize: title.length > 58 ? 66 : 84, panelX: 742, panelY: 760, panelW: 278, panelH: 278, panelR: 0, noteX: 86, noteY: 760, noteW: 610, noteTextX: 196, noteTextW: 430 },
+        minimal: { titleX: 84, titleY: 240, titleW: 720, titleSize: title.length > 60 ? 58 : 70, panelX: 742, panelY: 212, panelW: 250, panelH: 250, panelR: 0, noteX: 86, noteY: 780, noteW: 840, noteTextX: 214, noteTextW: 650 },
         magazine: { titleX: 126, titleY: 210, titleW: 610, titleSize: title.length > 56 ? 54 : 62, panelX: 680, panelY: 420, panelW: 320, panelH: 430, panelR: -2, noteX: 124, noteY: 744, noteW: 560, noteTextX: 234, noteTextW: 400 }
       }[mode];
       const titleSize = layout.titleSize;
@@ -4179,6 +4179,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <clipPath id="avatarClip"><circle cx="${layout.panelW / 2}" cy="${layout.panelH / 2}" r="${Math.min(layout.panelW, layout.panelH) * 0.39}"/></clipPath>
           </defs>
           <rect width="1080" height="1350" fill="url(#paper)"/>
+          ${mode === 'poster' ? `<rect x="0" y="0" width="1080" height="676" fill="#ffffff" opacity="0.66"/>` : ''}
           ${theme.stripe}
           <line x1="56" y1="50" x2="1000" y2="50" stroke="${theme.accent}" stroke-width="2" opacity="0.55"/>
           <text x="118" y="72" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">Marcondes Machado</text>
