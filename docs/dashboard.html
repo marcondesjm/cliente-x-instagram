@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v3.6</div>
+        <div class="header-version" id="headerVersion">Versão atual: v3.7</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -4169,31 +4169,6 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       return `<g transform="translate(${x} ${y}) scale(${size / 300})" opacity="0.28">${shapes[cue] || shapes.business}</g>`;
     }
 
-    function previewAvatarSceneForSlide(index = 1, cue = 'business') {
-      const scenes = ['laptop', 'phone', 'thinking', 'coffee', 'writing'];
-      const cueWeight = String(cue || '').split('').reduce((total, char) => total + char.charCodeAt(0), 0);
-      return scenes[(Number(index || 1) + cueWeight) % scenes.length];
-    }
-
-    function previewAvatarSceneSvg(scene, panelW, panelH, accent) {
-      const color = accent || '#c46a32';
-      const white = '#fffaf7';
-      const muted = '#eef2ef';
-      if (scene === 'phone') {
-        return `<rect x="${panelW - 98}" y="${panelH - 160}" width="70" height="118" rx="18" fill="${white}" stroke="${white}" stroke-width="8"/><rect x="${panelW - 86}" y="${panelH - 146}" width="46" height="84" rx="9" fill="${color}" opacity="0.92"/><circle cx="${panelW - 63}" cy="${panelH - 52}" r="5" fill="${color}"/>`;
-      }
-      if (scene === 'thinking') {
-        return `<rect x="${panelW - 152}" y="34" width="124" height="72" rx="28" fill="${white}" stroke="${color}" stroke-width="4" opacity="0.96"/><circle cx="${panelW - 70}" cy="68" r="6" fill="${color}"/><circle cx="${panelW - 96}" cy="68" r="6" fill="${color}"/><circle cx="${panelW - 122}" cy="68" r="6" fill="${color}"/><circle cx="${panelW - 176}" cy="128" r="16" fill="${white}" opacity="0.96"/><circle cx="${panelW - 205}" cy="162" r="10" fill="${white}" opacity="0.96"/>`;
-      }
-      if (scene === 'coffee') {
-        return `<rect x="30" y="${panelH - 110}" width="86" height="64" rx="0 0 30 30" fill="${color}" stroke="${white}" stroke-width="8"/><path d="M116 ${panelH - 96}c42 0 42 42 0 42" fill="none" stroke="${white}" stroke-width="10" stroke-linecap="round"/><rect x="28" y="${panelH - 124}" width="92" height="16" rx="8" fill="${white}"/>`;
-      }
-      if (scene === 'writing') {
-        return `<rect x="${panelW - 150}" y="${panelH - 132}" width="116" height="90" rx="16" fill="${white}" stroke="${white}" stroke-width="6"/><path d="M${panelW - 128} ${panelH - 106}h68M${panelW - 128} ${panelH - 84}h54M${panelW - 128} ${panelH - 62}h74" stroke="${color}" stroke-width="7" stroke-linecap="round" opacity="0.45"/><path d="M${panelW - 64} ${panelH - 134}l42 42" stroke="${color}" stroke-width="10" stroke-linecap="round"/>`;
-      }
-      return `<rect x="42" y="${panelH - 104}" width="${panelW - 84}" height="70" rx="14" fill="${white}" stroke="${muted}" stroke-width="6"/><rect x="${panelW * 0.36}" y="${panelH - 62}" width="${panelW * 0.28}" height="10" rx="5" fill="${color}" opacity="0.28"/><rect x="${panelW * 0.22}" y="${panelH - 28}" width="${panelW * 0.56}" height="12" rx="6" fill="${color}" opacity="0.52"/>`;
-    }
-
     function previewSeedFromText(text = '') {
       return String(text || '').split('').reduce((total, char) => total + char.charCodeAt(0), 0);
     }
@@ -4270,23 +4245,21 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const titleSize = layout.titleSize;
       const panelRadius = mode === 'poster' || mode === 'minimal' ? Math.round(layout.panelW / 2) : 26;
       const cue = item.visualCue || previewVisualCueFromText(`${title} ${body} ${item.caption || ''}`);
-      const avatarScene = previewAvatarSceneForSlide(index, cue);
       const cueX = mode === 'split' ? 746 : mode === 'magazine' ? 756 : 726;
       const cueY = mode === 'minimal' ? 390 : mode === 'poster' ? 280 : 250;
       const bodyFontSize = isCta
-        ? 36
+        ? 32
         : body.length > 170
-          ? 24
+          ? 21
           : body.length > 125
-            ? 25
+            ? 23
             : body.length > 95
-              ? 27
-              : 32;
+              ? 25
+              : 29;
       const estimatedLines = estimateSvgTextLines(body, layout.noteTextW, bodyFontSize);
       const noteHeight = isCta
-        ? 236
-        : Math.min(390, Math.max(256, 80 + (estimatedLines * bodyFontSize * 1.16)));
-      const noteTextHeight = Math.max(170, noteHeight - 48);
+        ? 278
+        : Math.min(430, Math.max(292, 118 + (estimatedLines * bodyFontSize * 1.22)));
       const photo = {
         paper: { x: 664, y: 280, w: 330, h: 220, r: 26 },
         split: { x: 70, y: 214, w: 330, h: 220, r: 26 },
@@ -4330,8 +4303,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           <path d="M114 ${badgeY + 29}l8 9 15-20" fill="none" stroke="#fff5ed" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
           <text x="158" y="${badgeY + 40}" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900">${kicker}</text>
           ${isHook ? `
-            <rect x="752" y="1192" width="250" height="56" rx="28" fill="${theme.accent}"/>
-            <text x="784" y="1229" fill="#fff6ef" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900">ARRASTE PARA VER</text>
+            <rect x="708" y="1192" width="310" height="56" rx="28" fill="${theme.accent}"/>
+            <text x="738" y="1229" fill="#fff6ef" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="900">ARRASTE PARA VER</text>
           ` : ''}
           ${isCta ? `
             <rect x="72" y="1210" width="244" height="62" rx="31" fill="${theme.text}"/>
@@ -4355,7 +4328,6 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             ${avatarHref
               ? `<image href="${avatarHref}" x="${layout.panelW * 0.11}" y="${layout.panelH * 0.12}" width="${layout.panelW * 0.78}" height="${layout.panelH * 0.72}" preserveAspectRatio="xMidYMid slice" clip-path="url(#avatarClip)"/>`
               : `<circle cx="${layout.panelW / 2}" cy="${layout.panelH / 2}" r="${Math.min(layout.panelW, layout.panelH) * 0.32}" fill="#fffaf7"/>`}
-            ${avatarHref ? previewAvatarSceneSvg(avatarScene, layout.panelW, layout.panelH, theme.accent) : ''}
             ${avatarHref ? '' : `
               <rect x="20" y="18" width="${layout.panelW - 40}" height="54" rx="12" fill="#ffffff" opacity="0.55"/>
               <rect x="20" y="${layout.panelH - 72}" width="${layout.panelW - 40}" height="54" rx="12" fill="#ffffff" opacity="0.55"/>
@@ -4367,8 +4339,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           ${!isCta && index > 1 && layout.noteW > 600 ? `<rect x="${layout.noteX + layout.noteW - 110}" y="${layout.noteY + 34}" width="78" height="78" rx="18" fill="none" stroke="${theme.accent}" stroke-width="4" opacity="0.18"/>` : ''}
           ${svgBoxText(creativeBody.lead, layout.noteTextX, layout.noteY + 38, layout.noteTextW, Math.max(20, bodyFontSize - 5), isCta ? '#fff6ef' : theme.accent, 900, 1.05, 80)}
           ${svgBoxText(creativeBody.emphasis, layout.noteTextX, layout.noteY + 72, layout.noteTextW, Math.min(40, bodyFontSize + 7), isCta ? '#fff6ef' : theme.text, 900, 0.98, 118)}
-          <rect x="${layout.noteTextX}" y="${layout.noteY + noteHeight - 68}" width="${Math.min(layout.noteTextW, 390)}" height="48" rx="8" fill="${isCta ? '#fff6ef' : theme.accent}"/>
-          ${svgBoxText(creativeBody.close, layout.noteTextX + 10, layout.noteY + noteHeight - 58, Math.min(layout.noteTextW - 20, 370), 21, isCta ? theme.accent : '#fff6ef', 900, 1.03, 44)}
+          <rect x="${layout.noteTextX}" y="${layout.noteY + noteHeight - 86}" width="${Math.min(layout.noteTextW, 430)}" height="66" rx="8" fill="${isCta ? '#fff6ef' : theme.accent}"/>
+          ${svgBoxText(creativeBody.close, layout.noteTextX + 10, layout.noteY + noteHeight - 72, Math.min(layout.noteTextW - 20, 410), 18, isCta ? theme.accent : '#fff6ef', 900, 1.06, 48)}
           ${progress}
           <text x="948" y="1274" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900">${index}/5</text>
         </svg>

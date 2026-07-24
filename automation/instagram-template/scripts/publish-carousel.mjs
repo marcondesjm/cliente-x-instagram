@@ -1371,12 +1371,6 @@ function sectorPhotoCssImage(cue = 'business') {
   return localAssetCssImage(photos[cue] || photos.business);
 }
 
-function avatarSceneForSlide(index = 1, visualCue = 'business') {
-  const scenes = ['laptop', 'phone', 'thinking', 'coffee', 'writing'];
-  const cueWeight = String(visualCue || '').split('').reduce((total, char) => total + char.charCodeAt(0), 0);
-  return scenes[(Number(index || 1) + cueWeight) % scenes.length];
-}
-
 function sectorVisualHtml(cue = 'business') {
   const common = 'fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"';
   const shapes = {
@@ -1464,7 +1458,6 @@ function anatexSlideHtml(slide, index, total, account, style) {
   const avatarClass = avatarImage ? ' has-avatar' : '';
   const mode = slideStyle.templateMode || 'paper';
   const visualCue = slide.visualCue || visualCueFromText(`${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
-  const avatarScene = avatarSceneForSlide(index, visualCue);
   const engagementRole = index === 1 ? 'hook' : index === total ? 'cta' : index === total - 1 ? 'proof' : 'value';
   const useSectorPhoto = engagementRole === 'hook' || engagementRole === 'cta';
   const sectorPhotoImage = useSectorPhoto ? sectorPhotoCssImage(visualCue) : '';
@@ -1478,9 +1471,9 @@ function anatexSlideHtml(slide, index, total, account, style) {
     index % 2 === 0 ? 'slide-even' : 'slide-odd'
   ].join(' ');
   const noteWidth = mode === 'minimal' ? 650 : mode === 'poster' || mode === 'magazine' ? 430 : mode === 'split' || placement?.includes?.('layout-left') ? 380 : 390;
-  const noteFontSize = body.length > 170 ? 23 : body.length > 125 ? 25 : body.length > 95 ? 26 : 29;
+  const noteFontSize = body.length > 170 ? 21 : body.length > 125 ? 23 : body.length > 95 ? 25 : 27;
   const noteLines = estimateTextLines(body, noteWidth, noteFontSize);
-  const noteMinHeight = Math.min(380, Math.max(250, 86 + (noteLines * noteFontSize * 1.15)));
+  const noteMinHeight = Math.min(420, Math.max(282, 118 + (noteLines * noteFontSize * 1.18)));
   const progressItems = Array.from({ length: total }, (_, itemIndex) => (
     `<span class="${itemIndex + 1 <= index ? 'active' : ''}"></span>`
   )).join('');
@@ -1571,9 +1564,9 @@ function anatexSlideHtml(slide, index, total, account, style) {
       color: ${slideStyle.text};
     }
     .note::before { content: "${String(index).padStart(2, '0')}"; position: absolute; left: 28px; top: 30px; width: 56px; height: 56px; border-radius: 50%; background: ${accent}; color: #fff6ef; display: grid; place-items: center; font-size: 25px; font-weight: 900; }
-    .note .lead { display: block; margin-bottom: 4px; color: ${accent}; font-size: 0.82em; line-height: 1.05; font-weight: 900; }
-    .note .emphasis { display: block; max-width: 100%; color: ${slideStyle.text}; font-size: 1.22em; line-height: 0.98; font-weight: 900; }
-    .note .close { display: inline-block; margin-top: 12px; padding: 7px 10px 8px; border-radius: 8px; background: ${accent}; color: #fff6ef; font-size: 0.80em; line-height: 1.02; font-weight: 900; }
+    .note .lead { display: block; margin-bottom: 5px; color: ${accent}; font-size: 0.78em; line-height: 1.05; font-weight: 900; }
+    .note .emphasis { display: block; max-width: 100%; color: ${slideStyle.text}; font-size: 1.12em; line-height: 1; font-weight: 900; }
+    .note .close { display: inline-block; max-width: 100%; margin-top: 12px; padding: 8px 10px 9px; border-radius: 8px; background: ${accent}; color: #fff6ef; font-size: 0.72em; line-height: 1.04; font-weight: 900; }
     .panel {
       position: absolute;
       right: 56px;
@@ -1591,69 +1584,8 @@ function anatexSlideHtml(slide, index, total, account, style) {
     .panel::before { content: "IA"; position: absolute; left: 42px; top: 38px; color: rgba(167,86,61,0.18); font-size: 110px; line-height: 1; font-weight: 900; }
     .panel::after { content: ""; position: absolute; left: 42px; right: 42px; bottom: 68px; height: 230px; background: repeating-linear-gradient(180deg, rgba(167,86,61,0.24) 0 10px, transparent 10px 34px); }
     .panel.has-avatar { background: ${avatarImage || 'rgba(255,255,255,0.48)'} center center / contain no-repeat; border: 7px solid rgba(255,250,246,0.9); box-shadow: 0 28px 70px rgba(94,50,34,0.24); }
-    .panel.has-avatar::before { display: none; }
-    .panel.has-avatar::after {
-      content: "";
-      position: absolute;
-      display: block;
-      z-index: 3;
-      opacity: 1;
-      background: none;
-    }
-    .scene-laptop::after {
-      left: 42px;
-      right: 42px;
-      bottom: 18px;
-      height: 84px;
-      border-radius: 12px 12px 22px 22px;
-      background:
-        linear-gradient(90deg, rgba(255,250,246,0.98) 0 58%, rgba(238,242,239,0.98) 58%),
-        linear-gradient(180deg, #fffaf7, #dfe9e5);
-      border: 5px solid rgba(23,33,28,0.12);
-      box-shadow: 0 18px 28px rgba(56,42,32,0.14);
-    }
-    .scene-phone::after {
-      right: 28px;
-      bottom: 40px;
-      width: 74px;
-      height: 122px;
-      border-radius: 18px;
-      background: linear-gradient(180deg, ${accent}, #fff6ef 19%, #fff6ef 82%, ${accent} 82%);
-      border: 5px solid #fffaf7;
-      box-shadow: 0 16px 28px rgba(56,42,32,0.18);
-    }
-    .scene-thinking::after {
-      right: 24px;
-      top: 28px;
-      width: 124px;
-      height: 76px;
-      border-radius: 28px;
-      background: #fffaf7;
-      border: 4px solid rgba(167,86,61,0.22);
-      box-shadow: -20px 62px 0 -24px #fffaf7, -44px 94px 0 -30px #fffaf7;
-    }
-    .scene-coffee::after {
-      left: 28px;
-      bottom: 34px;
-      width: 92px;
-      height: 70px;
-      border-radius: 0 0 32px 32px;
-      background: linear-gradient(180deg, #fffaf7 0 22%, ${accent} 22%);
-      border: 5px solid #fffaf7;
-      box-shadow: 60px 16px 0 -16px rgba(255,250,246,0.94), 0 18px 30px rgba(56,42,32,0.16);
-    }
-    .scene-writing::after {
-      right: 26px;
-      bottom: 36px;
-      width: 118px;
-      height: 92px;
-      border-radius: 16px;
-      background:
-        linear-gradient(160deg, transparent 0 66%, ${accent} 67% 72%, transparent 73%),
-        repeating-linear-gradient(180deg, #fffaf7 0 16px, rgba(167,86,61,0.22) 17px 20px);
-      border: 5px solid rgba(255,250,246,0.94);
-      box-shadow: 0 16px 28px rgba(56,42,32,0.16);
-    }
+    .panel.has-avatar::before,
+    .panel.has-avatar::after { display: none; }
     .sector-cue {
       position: absolute;
       right: 64px;
@@ -1807,7 +1739,7 @@ function anatexSlideHtml(slide, index, total, account, style) {
     ${saveCue}
     ${sectorPhotoImage ? '<div class="context-photo"></div>' : ''}
     ${sectorVisualHtml(visualCue)}
-    <div class="panel${avatarClass} scene-${avatarScene}"></div>
+    <div class="panel${avatarClass}"></div>
     <div class="spark s1">*</div>
     <div class="spark s2">*</div>
     <section>
