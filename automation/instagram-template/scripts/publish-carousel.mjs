@@ -1635,10 +1635,10 @@ function anatexSlideHtml(slide, index, total, account, style) {
       background:
         linear-gradient(180deg, ${slideStyle.bgTop} 0%, ${slideStyle.bgBottom} 100%);
     }
-    .mode-minimal .badge { background: rgba(255,250,246,0.82); color: ${accent}; border: 2px solid ${accent}; }
+    .mode-minimal .badge { top: 138px; background: rgba(255,250,246,0.82); color: ${accent}; border: 2px solid ${accent}; }
     .mode-minimal .badge span { border-color: ${accent}; }
     .mode-minimal .badge span::after { border-color: ${accent}; }
-    .mode-minimal .headline { margin-top: 150px; max-width: 760px; font-size: 70px; }
+    .mode-minimal .headline { margin-top: 188px; max-width: 760px; font-size: 70px; }
     .mode-minimal .panel { top: 210px; right: 72px; width: 260px; height: 260px; border-radius: 50%; opacity: 0.94; }
     .mode-minimal .context-photo { left: 86px; top: 510px; width: 520px; height: 190px; border-radius: 24px; opacity: 0.80; }
     .mode-minimal .note { left: 86px; top: 780px; width: 840px; min-height: 210px; padding-left: 128px; background: rgba(255,255,255,0.58); }
@@ -1655,14 +1655,14 @@ function anatexSlideHtml(slide, index, total, account, style) {
     }
     .mode-magazine .brand { margin-left: 0; writing-mode: vertical-rl; transform: rotate(180deg); position: absolute; left: 30px; top: 112px; font-size: 28px; }
     .mode-magazine main::before { left: 104px; }
-    .mode-magazine .badge { left: 124px; }
-    .mode-magazine .headline { margin-top: 136px; margin-left: 70px; max-width: 610px; font-size: 62px; }
-    .mode-magazine .context-photo { left: 124px; right: auto; top: 508px; width: 500px; height: 190px; border-radius: 24px; }
+    .mode-magazine .badge { left: 124px; top: 132px; }
+    .mode-magazine .headline { margin-top: 196px; margin-left: 70px; max-width: 610px; font-size: 60px; }
+    .mode-magazine .context-photo { left: 124px; right: auto; top: 570px; width: 500px; height: 174px; border-radius: 24px; }
     .mode-magazine .panel { top: 420px; right: 70px; width: 320px; height: 430px; transform: rotate(-2deg); }
-    .mode-magazine .note { left: 124px; top: 745px; width: 560px; }
+    .mode-magazine .note { left: 124px; top: 790px; width: 560px; }
     .mode-magazine .sector-cue { right: 100px; top: 142px; width: 220px; opacity: 0.24; }
     .layout-left.mode-magazine .panel { left: 62px; right: auto; top: 420px; width: 320px; height: 430px; }
-    .layout-left.mode-magazine .note { left: 430px; top: 745px; width: 560px; }
+    .layout-left.mode-magazine .note { left: 430px; top: 790px; width: 560px; }
     .layout-left.mode-magazine .sector-cue { left: 122px; right: auto; top: 190px; width: 190px; opacity: 0.22; }
     .role-hook .headline { font-size: 74px; }
     .role-hook .note { min-height: ${Math.max(234, noteMinHeight)}px; font-size: ${Math.min(noteFontSize, 28)}px; }
