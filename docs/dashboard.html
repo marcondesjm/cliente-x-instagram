@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v3.0</div>
+        <div class="header-version" id="headerVersion">Versão atual: v3.1</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -4208,7 +4208,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const mode = modeNames[(modeSeed + index) % modeNames.length];
       const theme = [
         { accent: '#c46a32', soft: '#dfc8b8', top: '#f7f4ee', bottom: '#e7edf0', text: '#17211c', muted: '#ead4c8', cue: '#2f7d73', stripe: '' },
-        { accent: '#2f766d', soft: '#cfe5de', top: '#f5f8f3', bottom: '#dfe9dc', text: '#14262f', muted: '#c7ddd4', cue: '#c46a32', stripe: '<rect x="0" y="0" width="1080" height="92" fill="#ffffff" opacity="0.64"/>' },
+        { accent: '#2f766d', soft: '#cfe5de', top: '#f5f8f3', bottom: '#dfe9dc', text: '#14262f', muted: '#c7ddd4', cue: '#c46a32', stripe: '<rect x="0" y="92" width="1080" height="26" fill="#ffffff" opacity="0.34"/>' },
         { accent: '#315f7d', soft: '#cbdde7', top: '#f7fbfb', bottom: '#ddebf0', text: '#102333', muted: '#c7dbe4', cue: '#8f5c42', stripe: '<rect x="0" y="1040" width="1080" height="310" fill="#ffffff" opacity="0.34"/>' },
         { accent: '#8f5c42', soft: '#e5d3c7', top: '#fbf8f2', bottom: '#e5e9e2', text: '#17211c', muted: '#e4cfc1', cue: '#2f766d', stripe: '<rect x="0" y="0" width="118" height="1350" fill="#e5e9e2" opacity="0.92"/>' },
         { accent: '#7b6957', soft: '#ded7cc', top: '#f8f6f0', bottom: '#e9ece7', text: '#17211c', muted: '#d7cec2', cue: '#315f7d', stripe: '<rect x="828" y="0" width="252" height="1350" fill="#ffffff" opacity="0.42"/>' }
@@ -4264,16 +4264,16 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           ${mode === 'poster' ? `<rect x="0" y="0" width="1080" height="676" fill="#ffffff" opacity="0.66"/>` : ''}
           ${theme.stripe}
           ${mode === 'magazine' ? `<rect x="0" y="0" width="96" height="1350" fill="${theme.bottom}" opacity="0.9"/>` : ''}
-          <line x1="56" y1="50" x2="1000" y2="50" stroke="${theme.accent}" stroke-width="2" opacity="0.55"/>
-          <text x="118" y="72" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">Marcondes Machado</text>
-          <text x="940" y="72" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">&gt;&gt;</text>
+          <line x1="56" y1="50" x2="1000" y2="50" stroke="${theme.accent}" stroke-width="3" opacity="0.78"/>
+          <text x="118" y="72" fill="${theme.accent}" opacity="1" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">Marcondes Machado</text>
+          <text x="940" y="72" fill="${theme.accent}" opacity="1" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">&gt;&gt;</text>
           <circle cx="948" cy="166" r="150" fill="${theme.soft}" opacity="0.42"/>
           <circle cx="944" cy="1180" r="238" fill="${theme.muted}" opacity="0.32"/>
           <g opacity="0.42" fill="${theme.accent}">
             ${Array.from({ length: 28 }, (_, i) => `<circle cx="${28 + (i % 7) * 22}" cy="${110 + Math.floor(i / 7) * 22}" r="4"/>`).join('')}
           </g>
           <text x="664" y="210" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">*</text>
-          <rect x="84" y="${badgeY}" width="360" height="60" rx="12" fill="${theme.accent}"/>
+          <rect x="84" y="${badgeY}" width="360" height="60" rx="12" fill="${theme.accent}" opacity="1"/>
           <circle cx="124" cy="${badgeY + 30}" r="18" fill="none" stroke="#fff5ed" stroke-width="4"/>
           <path d="M114 ${badgeY + 29}l8 9 15-20" fill="none" stroke="#fff5ed" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
           <text x="158" y="${badgeY + 40}" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900">${kicker}</text>
@@ -4282,8 +4282,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <text x="784" y="1229" fill="#fff6ef" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900">ARRASTE PARA VER</text>
           ` : ''}
           ${isCta ? `
-            <rect x="72" y="1192" width="190" height="56" rx="28" fill="${theme.text}"/>
-            <text x="104" y="1229" fill="#fff6ef" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900">LINK NA BIO</text>
+            <rect x="72" y="1212" width="218" height="58" rx="29" fill="${theme.text}"/>
+            <text x="104" y="1249" fill="#fff6ef" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900">LINK NA BIO</text>
           ` : index === 3 ? `
             <rect x="72" y="1192" width="250" height="56" rx="28" fill="${theme.text}"/>
             <text x="102" y="1229" fill="#fff6ef" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900">SALVE ESTE PASSO</text>
