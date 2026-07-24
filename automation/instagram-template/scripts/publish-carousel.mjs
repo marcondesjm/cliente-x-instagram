@@ -1371,6 +1371,12 @@ function sectorPhotoCssImage(cue = 'business') {
   return localAssetCssImage(photos[cue] || photos.business);
 }
 
+function avatarSceneForSlide(index = 1, visualCue = 'business') {
+  const scenes = ['laptop', 'phone', 'thinking', 'coffee', 'writing'];
+  const cueWeight = String(visualCue || '').split('').reduce((total, char) => total + char.charCodeAt(0), 0);
+  return scenes[(Number(index || 1) + cueWeight) % scenes.length];
+}
+
 function sectorVisualHtml(cue = 'business') {
   const common = 'fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"';
   const shapes = {
@@ -1458,6 +1464,7 @@ function anatexSlideHtml(slide, index, total, account, style) {
   const avatarClass = avatarImage ? ' has-avatar' : '';
   const mode = slideStyle.templateMode || 'paper';
   const visualCue = slide.visualCue || visualCueFromText(`${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
+  const avatarScene = avatarSceneForSlide(index, visualCue);
   const engagementRole = index === 1 ? 'hook' : index === total ? 'cta' : index === total - 1 ? 'proof' : 'value';
   const useSectorPhoto = engagementRole === 'hook' || engagementRole === 'cta';
   const sectorPhotoImage = useSectorPhoto ? sectorPhotoCssImage(visualCue) : '';
@@ -1584,8 +1591,69 @@ function anatexSlideHtml(slide, index, total, account, style) {
     .panel::before { content: "IA"; position: absolute; left: 42px; top: 38px; color: rgba(167,86,61,0.18); font-size: 110px; line-height: 1; font-weight: 900; }
     .panel::after { content: ""; position: absolute; left: 42px; right: 42px; bottom: 68px; height: 230px; background: repeating-linear-gradient(180deg, rgba(167,86,61,0.24) 0 10px, transparent 10px 34px); }
     .panel.has-avatar { background: ${avatarImage || 'rgba(255,255,255,0.48)'} center center / contain no-repeat; border: 7px solid rgba(255,250,246,0.9); box-shadow: 0 28px 70px rgba(94,50,34,0.24); }
-    .panel.has-avatar::before,
-    .panel.has-avatar::after { display: none; }
+    .panel.has-avatar::before { display: none; }
+    .panel.has-avatar::after {
+      content: "";
+      position: absolute;
+      display: block;
+      z-index: 3;
+      opacity: 1;
+      background: none;
+    }
+    .scene-laptop::after {
+      left: 42px;
+      right: 42px;
+      bottom: 18px;
+      height: 84px;
+      border-radius: 12px 12px 22px 22px;
+      background:
+        linear-gradient(90deg, rgba(255,250,246,0.98) 0 58%, rgba(238,242,239,0.98) 58%),
+        linear-gradient(180deg, #fffaf7, #dfe9e5);
+      border: 5px solid rgba(23,33,28,0.12);
+      box-shadow: 0 18px 28px rgba(56,42,32,0.14);
+    }
+    .scene-phone::after {
+      right: 28px;
+      bottom: 40px;
+      width: 74px;
+      height: 122px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, ${accent}, #fff6ef 19%, #fff6ef 82%, ${accent} 82%);
+      border: 5px solid #fffaf7;
+      box-shadow: 0 16px 28px rgba(56,42,32,0.18);
+    }
+    .scene-thinking::after {
+      right: 24px;
+      top: 28px;
+      width: 124px;
+      height: 76px;
+      border-radius: 28px;
+      background: #fffaf7;
+      border: 4px solid rgba(167,86,61,0.22);
+      box-shadow: -20px 62px 0 -24px #fffaf7, -44px 94px 0 -30px #fffaf7;
+    }
+    .scene-coffee::after {
+      left: 28px;
+      bottom: 34px;
+      width: 92px;
+      height: 70px;
+      border-radius: 0 0 32px 32px;
+      background: linear-gradient(180deg, #fffaf7 0 22%, ${accent} 22%);
+      border: 5px solid #fffaf7;
+      box-shadow: 60px 16px 0 -16px rgba(255,250,246,0.94), 0 18px 30px rgba(56,42,32,0.16);
+    }
+    .scene-writing::after {
+      right: 26px;
+      bottom: 36px;
+      width: 118px;
+      height: 92px;
+      border-radius: 16px;
+      background:
+        linear-gradient(160deg, transparent 0 66%, ${accent} 67% 72%, transparent 73%),
+        repeating-linear-gradient(180deg, #fffaf7 0 16px, rgba(167,86,61,0.22) 17px 20px);
+      border: 5px solid rgba(255,250,246,0.94);
+      box-shadow: 0 16px 28px rgba(56,42,32,0.16);
+    }
     .sector-cue {
       position: absolute;
       right: 64px;
@@ -1739,7 +1807,7 @@ function anatexSlideHtml(slide, index, total, account, style) {
     ${saveCue}
     ${sectorPhotoImage ? '<div class="context-photo"></div>' : ''}
     ${sectorVisualHtml(visualCue)}
-    <div class="panel${avatarClass}"></div>
+    <div class="panel${avatarClass} scene-${avatarScene}"></div>
     <div class="spark s1">*</div>
     <div class="spark s2">*</div>
     <section>
