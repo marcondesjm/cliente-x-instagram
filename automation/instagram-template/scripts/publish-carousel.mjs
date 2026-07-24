@@ -1472,6 +1472,9 @@ function anatexSlideHtml(slide, index, total, account, style) {
     .mode-magazine .panel { top: 420px; right: 70px; width: 320px; height: 430px; transform: rotate(-2deg); }
     .mode-magazine .note { left: 124px; top: 745px; width: 560px; }
     .mode-magazine .sector-cue { right: 100px; top: 142px; width: 220px; opacity: 0.24; }
+    .layout-left.mode-magazine .panel { left: 62px; right: auto; top: 420px; width: 320px; height: 430px; }
+    .layout-left.mode-magazine .note { left: 430px; top: 745px; width: 560px; }
+    .layout-left.mode-magazine .sector-cue { left: 122px; right: auto; top: 190px; width: 190px; opacity: 0.22; }
     .bubble { display: none; position: absolute; right: 116px; bottom: 270px; width: 132px; height: 96px; border-radius: 34px; background: #f1d8c7; z-index: 3; }
     .bubble::before { content: "..."; position: absolute; inset: 0; display: grid; place-items: center; color: ${accent}; font-size: 58px; line-height: 0.5; font-weight: 900; letter-spacing: 5px; }
     .spark { position: absolute; color: ${accent}; opacity: 0.7; z-index: 2; font-size: 42px; font-weight: 900; }
