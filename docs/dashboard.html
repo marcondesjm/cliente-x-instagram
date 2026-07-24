@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v2.9</div>
+        <div class="header-version" id="headerVersion">Versão atual: v3.0</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -4214,11 +4214,11 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         { accent: '#7b6957', soft: '#ded7cc', top: '#f8f6f0', bottom: '#e9ece7', text: '#17211c', muted: '#d7cec2', cue: '#315f7d', stripe: '<rect x="828" y="0" width="252" height="1350" fill="#ffffff" opacity="0.42"/>' }
       ][modeSeed % 5];
       const layout = {
-        paper: { titleX: 58, titleY: 190, titleW: 620, titleSize: title.length > 58 ? 58 : 68, panelX: 650, panelY: 444, panelW: 380, panelH: 454, panelR: 3, noteX: 78, noteY: 700, noteW: 540, noteTextX: 188, noteTextW: 380 },
-        split: { titleX: 470, titleY: 205, titleW: 540, titleSize: title.length > 52 ? 50 : 58, panelX: 58, panelY: 438, panelW: 370, panelH: 470, panelR: -3, noteX: 470, noteY: 720, noteW: 540, noteTextX: 580, noteTextW: 380 },
-        poster: { titleX: 88, titleY: 210, titleW: 904, titleSize: title.length > 58 ? 66 : 84, panelX: 742, panelY: 760, panelW: 278, panelH: 278, panelR: 0, noteX: 86, noteY: 760, noteW: 610, noteTextX: 196, noteTextW: 430 },
-        minimal: { titleX: 84, titleY: 240, titleW: 720, titleSize: title.length > 60 ? 58 : 70, panelX: 742, panelY: 212, panelW: 250, panelH: 250, panelR: 0, noteX: 86, noteY: 780, noteW: 840, noteTextX: 214, noteTextW: 650 },
-        magazine: { titleX: 126, titleY: 210, titleW: 610, titleSize: title.length > 56 ? 54 : 62, panelX: 680, panelY: 420, panelW: 320, panelH: 430, panelR: -2, noteX: 124, noteY: 744, noteW: 560, noteTextX: 234, noteTextW: 400 }
+        paper: { titleX: 58, titleY: 245, titleW: 620, titleSize: title.length > 58 ? 54 : 64, panelX: 650, panelY: 470, panelW: 380, panelH: 454, panelR: 3, noteX: 78, noteY: 730, noteW: 540, noteTextX: 188, noteTextW: 380 },
+        split: { titleX: 470, titleY: 250, titleW: 540, titleSize: title.length > 52 ? 48 : 56, panelX: 58, panelY: 438, panelW: 370, panelH: 470, panelR: -3, noteX: 470, noteY: 740, noteW: 540, noteTextX: 580, noteTextW: 380 },
+        poster: { titleX: 88, titleY: 260, titleW: 904, titleSize: title.length > 58 ? 62 : 78, panelX: 742, panelY: 780, panelW: 278, panelH: 278, panelR: 0, noteX: 86, noteY: 790, noteW: 610, noteTextX: 196, noteTextW: 430 },
+        minimal: { titleX: 84, titleY: 286, titleW: 720, titleSize: title.length > 60 ? 54 : 64, panelX: 742, panelY: 240, panelW: 250, panelH: 250, panelR: 0, noteX: 86, noteY: 805, noteW: 840, noteTextX: 214, noteTextW: 650 },
+        magazine: { titleX: 126, titleY: 270, titleW: 610, titleSize: title.length > 56 ? 50 : 58, panelX: 680, panelY: 450, panelW: 320, panelH: 430, panelR: -2, noteX: 124, noteY: 790, noteW: 560, noteTextX: 234, noteTextW: 400 }
       }[mode];
       const titleSize = layout.titleSize;
       const panelRadius = mode === 'poster' || mode === 'minimal' ? Math.round(layout.panelW / 2) : 26;
@@ -4240,16 +4240,16 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         : Math.min(390, Math.max(256, 80 + (estimatedLines * bodyFontSize * 1.16)));
       const noteTextHeight = Math.max(170, noteHeight - 48);
       const photo = {
-        paper: { x: 664, y: 250, w: 330, h: 220, r: 26 },
+        paper: { x: 664, y: 280, w: 330, h: 220, r: 26 },
         split: { x: 70, y: 214, w: 330, h: 220, r: 26 },
-        poster: { x: 260, y: 500, w: 560, h: 216, r: 30 },
-        minimal: { x: 86, y: 510, w: 520, h: 190, r: 24 },
-        magazine: { x: 124, y: 508, w: 500, h: 190, r: 24 }
+        poster: { x: 260, y: 540, w: 560, h: 196, r: 30 },
+        minimal: { x: 86, y: 540, w: 520, h: 180, r: 24 },
+        magazine: { x: 124, y: 560, w: 500, h: 174, r: 24 }
       }[mode];
       const progress = Array.from({ length: totalSlides }, (_, progressIndex) => `
         <rect x="${72 + (progressIndex * 182)}" y="1236" width="160" height="8" rx="4" fill="${progressIndex < index ? theme.accent : 'rgba(20,38,47,0.13)'}"/>
       `).join('');
-      const badgeY = mode === 'minimal' || mode === 'magazine' ? 142 : 122;
+      const badgeY = 136;
       const svg = `
         <svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
           <defs>
@@ -4263,6 +4263,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           <rect width="1080" height="1350" fill="url(#paper)"/>
           ${mode === 'poster' ? `<rect x="0" y="0" width="1080" height="676" fill="#ffffff" opacity="0.66"/>` : ''}
           ${theme.stripe}
+          ${mode === 'magazine' ? `<rect x="0" y="0" width="96" height="1350" fill="${theme.bottom}" opacity="0.9"/>` : ''}
           <line x1="56" y1="50" x2="1000" y2="50" stroke="${theme.accent}" stroke-width="2" opacity="0.55"/>
           <text x="118" y="72" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">Marcondes Machado</text>
           <text x="940" y="72" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">&gt;&gt;</text>
@@ -4287,7 +4288,6 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <rect x="72" y="1192" width="250" height="56" rx="28" fill="${theme.text}"/>
             <text x="102" y="1229" fill="#fff6ef" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900">SALVE ESTE PASSO</text>
           ` : ''}
-          ${mode === 'magazine' ? `<rect x="0" y="0" width="96" height="1350" fill="${theme.bottom}" opacity="0.9"/>` : ''}
           ${mode === 'split' ? '<rect x="0" y="0" width="520" height="1350" fill="#fffaf7" opacity="0.72"/>' : ''}
           ${sectorPhotoHref ? `
             <rect x="${photo.x - 8}" y="${photo.y - 8}" width="${photo.w + 16}" height="${photo.h + 16}" rx="${photo.r + 8}" fill="#fffaf7" opacity="0.82"/>
