@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v1.9</div>
+        <div class="header-version" id="headerVersion">Versão atual: v2.0</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -4035,6 +4035,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <div class="plan-caption">${escapeHtml(item.caption || 'Legenda será montada pelo gerador automático.')}</div>
             <div class="plan-actions">
               <div class="run-meta">${escapeHtml(slot)} · ${escapeHtml(item.mode || 'feed + story')}</div>
+              ${item.type === 'program'
+                ? `<button type="button" data-preview-tomorrow-program="${escapeHtml(item.programId || item.slotIndex)}">Ver prévia</button>`
+                : `<button type="button" data-preview-tomorrow="${escapeHtml(item.slotIndex)}">Ver prévia</button>`}
             </div>
           </article>
         `;
@@ -4282,8 +4285,18 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       setPreviewImages([imageSrc], fileName);
     }
 
-    async function previewProgramPlan(programKey) {
-      const item = (appState.dailyPlan || []).find((planItem) => (
+    function findPreviewPlanItem(slotIndex, source = 'today') {
+      const items = source === 'tomorrow'
+        ? ((appState.tomorrowPreview || {}).items || [])
+        : (appState.dailyPlan || []);
+      return items.find((planItem) => String(planItem.slotIndex) === String(slotIndex)) || {};
+    }
+
+    async function previewProgramPlan(programKey, source = 'today') {
+      const items = source === 'tomorrow'
+        ? ((appState.tomorrowPreview || {}).items || [])
+        : (appState.dailyPlan || []);
+      const item = items.find((planItem) => (
         planItem.type === 'program' &&
         String(planItem.programId || planItem.slotIndex) === String(programKey)
       )) || {};
@@ -4300,17 +4313,19 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       setMessage('Prévia do programa aberta antes da postagem.', 'good');
     }
 
-    async function previewPlanItem(slotIndex) {
-      const item = (appState.dailyPlan || []).find((planItem) => String(planItem.slotIndex) === String(slotIndex)) || {};
+    async function previewPlanItem(slotIndex, source = 'today') {
+      const item = findPreviewPlanItem(slotIndex, source);
       const preview = document.getElementById('dailyPlanPreview');
       document.getElementById('dailyPlanPreviewStatus').textContent = 'Carregando avatar';
       setPreviewImages(await previewSlidesForItem(item), `previa-slot-${slotIndex}.svg`);
       document.getElementById('dailyPlanPreviewTitle').textContent = `${item.time || '--:--'} · ${item.title || 'Conteúdo programado'}`;
       document.getElementById('dailyPlanPreviewCaption').textContent = item.caption || 'Legenda será montada pelo gerador automático.';
-      document.getElementById('dailyPlanPreviewStatus').textContent = 'Prévia antes de postar';
+      document.getElementById('dailyPlanPreviewStatus').textContent = source === 'tomorrow' ? 'Prévia de amanhã' : 'Prévia antes de postar';
       preview.classList.add('active');
       preview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      setMessage('Prévia simples aberta. A arte final completa aparece no render local.', 'good');
+      setMessage(source === 'tomorrow'
+        ? 'Prévia de amanhã aberta com todos os slides.'
+        : 'Prévia simples aberta. A arte final completa aparece no render local.', 'good');
     }
 
     async function renderPlanSlot(slotIndex, button) {
@@ -4662,6 +4677,12 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         if (programButton) await previewProgramPlan(programButton.dataset.previewProgram);
         const planButton = event.target.closest('[data-preview-plan]');
         if (planButton) await previewPlanItem(planButton.dataset.previewPlan);
+      });
+      document.getElementById('tomorrowPreview').addEventListener('click', async (event) => {
+        const tomorrowProgramButton = event.target.closest('[data-preview-tomorrow-program]');
+        if (tomorrowProgramButton) await previewProgramPlan(tomorrowProgramButton.dataset.previewTomorrowProgram, 'tomorrow');
+        const tomorrowButton = event.target.closest('[data-preview-tomorrow]');
+        if (tomorrowButton) await previewPlanItem(tomorrowButton.dataset.previewTomorrow, 'tomorrow');
       });
       document.getElementById('queuePost').addEventListener('click', () => scheduleSelectedPost(false));
       document.getElementById('publishNow').addEventListener('click', () => scheduleSelectedPost(true));
