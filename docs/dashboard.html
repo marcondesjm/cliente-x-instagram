@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v2.3</div>
+        <div class="header-version" id="headerVersion">Versão atual: v2.4</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -4087,6 +4087,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     }
 
     let previewAvatarDataUrl = '';
+    const previewSectorPhotoDataUrls = {};
 
     async function getPreviewAvatarDataUrl() {
       if (previewAvatarDataUrl) return previewAvatarDataUrl;
@@ -4106,8 +4107,40 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       return previewAvatarDataUrl;
     }
 
+    async function getPreviewSectorPhotoDataUrl(cue = 'business') {
+      const paths = {
+        legal: '/docs/uploads/sector-photos/legal.jpg',
+        tourism: '/docs/uploads/sector-photos/tourism.jpg',
+        'real-estate': '/docs/uploads/sector-photos/real-estate.jpg',
+        restaurant: '/docs/uploads/sector-photos/restaurant.jpg',
+        clinic: '/docs/uploads/sector-photos/clinic.jpg',
+        beauty: '/docs/uploads/sector-photos/beauty.jpg',
+        ecommerce: '/docs/uploads/sector-photos/ecommerce.jpg',
+        finance: '/docs/uploads/sector-photos/finance.jpg',
+        services: '/docs/uploads/sector-photos/ecommerce.jpg',
+        business: '/docs/uploads/sector-photos/finance.jpg'
+      };
+      const key = paths[cue] ? cue : 'business';
+      if (previewSectorPhotoDataUrls[key]) return previewSectorPhotoDataUrls[key];
+      try {
+        const response = await fetch(paths[key], { cache: 'force-cache' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const blob = await response.blob();
+        previewSectorPhotoDataUrls[key] = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(String(reader.result || ''));
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+      } catch {
+        previewSectorPhotoDataUrls[key] = '';
+      }
+      return previewSectorPhotoDataUrls[key];
+    }
+
     function previewVisualCueFromText(text = '') {
       const value = String(text || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      if (/\b(turismo|turistica|turistico|viagem|viagens|pousada|hotel|praia|destino|radio)\b/.test(value)) return 'tourism';
       if (/\b(imobiliaria|imobiliario|corretor|imovel|imoveis|casa|apartamento)\b/.test(value)) return 'real-estate';
       if (/\b(juridico|advocacia|advogado|contrato|processo)\b/.test(value)) return 'legal';
       if (/\b(clinica|medico|paciente|consulta|saude|dentista)\b/.test(value)) return 'clinic';
@@ -4130,6 +4163,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         education: `<path ${common} d="M42 96l108-44 108 44-108 44L42 96Z"/><path ${common} d="M86 122v58c34 28 94 28 128 0v-58"/><path ${common} d="M258 96v78"/>`,
         ecommerce: `<path ${common} d="M58 72h32l24 112h112l24-76H104"/><circle cx="126" cy="216" r="18" ${common}/><circle cx="214" cy="216" r="18" ${common}/><path ${common} d="M142 58h62l28 36"/>`,
         finance: `<path ${common} d="M62 214h182"/><path ${common} d="M84 182v-48M132 182V96M180 182v-70M228 182V72"/><path ${common} d="M76 88c36 22 58 20 90-2s54-26 90-2"/>`,
+        tourism: `<path ${common} d="M58 184c42-34 82-34 124 0s74 34 116 0"/><path ${common} d="M108 170l42-104 42 104M126 126h48"/><path ${common} d="M76 216h160"/><circle cx="226" cy="76" r="30" ${common}/>`,
         business: `<rect x="66" y="82" width="168" height="142" rx="24" ${common}/><path ${common} d="M108 82V58h84v24M104 132h92M104 172h58"/>`
       };
       return `<g transform="translate(${x} ${y}) scale(${size / 300})" opacity="0.28">${shapes[cue] || shapes.business}</g>`;
@@ -4139,7 +4173,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       return String(text || '').split('').reduce((total, char) => total + char.charCodeAt(0), 0);
     }
 
-    function previewSlideSvg(item = {}, slide = {}, avatarHref = '') {
+    function previewSlideSvg(item = {}, slide = {}, avatarHref = '', sectorPhotoHref = '') {
       const label = item.type === 'program' ? 'PROGRAMA' : 'POSTAGEM';
       const kicker = escapeHtml(slide.kicker || label);
       const title = slide.title || item.title || 'Conteúdo programado';
@@ -4169,6 +4203,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const cue = item.visualCue || previewVisualCueFromText(`${title} ${body} ${item.caption || ''}`);
       const cueX = mode === 'split' ? 746 : mode === 'magazine' ? 756 : 726;
       const cueY = mode === 'minimal' ? 390 : mode === 'poster' ? 280 : 250;
+      const photo = {
+        paper: { x: 664, y: 250, w: 330, h: 220, r: 26 },
+        split: { x: 70, y: 214, w: 330, h: 220, r: 26 },
+        poster: { x: 260, y: 500, w: 560, h: 216, r: 30 },
+        minimal: { x: 86, y: 510, w: 520, h: 190, r: 24 },
+        magazine: { x: 124, y: 508, w: 500, h: 190, r: 24 }
+      }[mode];
       const svg = `
         <svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
           <defs>
@@ -4177,6 +4218,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               <stop offset="1" stop-color="${theme.bottom}"/>
             </linearGradient>
             <clipPath id="avatarClip"><circle cx="${layout.panelW / 2}" cy="${layout.panelH / 2}" r="${Math.min(layout.panelW, layout.panelH) * 0.39}"/></clipPath>
+            <clipPath id="sectorPhotoClip"><rect x="${photo.x}" y="${photo.y}" width="${photo.w}" height="${photo.h}" rx="${photo.r}"/></clipPath>
           </defs>
           <rect width="1080" height="1350" fill="url(#paper)"/>
           ${mode === 'poster' ? `<rect x="0" y="0" width="1080" height="676" fill="#ffffff" opacity="0.66"/>` : ''}
@@ -4196,6 +4238,11 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           <text x="158" y="162" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900">${kicker}</text>
           ${mode === 'magazine' ? `<rect x="0" y="0" width="96" height="1350" fill="${theme.bottom}" opacity="0.9"/>` : ''}
           ${mode === 'split' ? '<rect x="0" y="0" width="520" height="1350" fill="#fffaf7" opacity="0.72"/>' : ''}
+          ${sectorPhotoHref ? `
+            <rect x="${photo.x - 8}" y="${photo.y - 8}" width="${photo.w + 16}" height="${photo.h + 16}" rx="${photo.r + 8}" fill="#fffaf7" opacity="0.82"/>
+            <image href="${sectorPhotoHref}" x="${photo.x}" y="${photo.y}" width="${photo.w}" height="${photo.h}" preserveAspectRatio="xMidYMid slice" clip-path="url(#sectorPhotoClip)" opacity="0.88"/>
+            <rect x="${photo.x}" y="${photo.y}" width="${photo.w}" height="${photo.h}" rx="${photo.r}" fill="#17211c" opacity="0.10"/>
+          ` : ''}
           ${previewSectorCueSvg(cue, cueX, cueY, 250, theme.cue)}
           ${svgBoxText(title, layout.titleX, layout.titleY, layout.titleW, titleSize, theme.text, 900, 0.98)}
           <g transform="translate(${layout.panelX} ${layout.panelY}) rotate(${layout.panelR})">
@@ -4224,13 +4271,15 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const title = item.title || 'Conteúdo programado';
       const caption = item.caption || 'Legenda será montada pelo gerador automático.';
       const avatarHref = await getPreviewAvatarDataUrl();
+      const cue = item.visualCue || previewVisualCueFromText(`${title} ${caption}`);
+      const sectorPhotoHref = await getPreviewSectorPhotoDataUrl(cue);
       return [
         { index: 1, kicker: item.type === 'program' ? 'PROGRAMA' : 'POSTAGEM', title, body: caption, footer: 'Acompanhe pelo Instagram' },
         { index: 2, kicker: 'CONTEXTO', title: 'O que esta por trás disso?', body: caption, footer: 'Entenda antes de agir' },
         { index: 3, kicker: 'PROCESSO', title: 'O caminho começa simples.', body: 'Organize o atendimento, a rotina e os pontos de decisão antes de automatizar qualquer etapa.', footer: 'Processo antes da ferramenta' },
         { index: 4, kicker: 'AÇÃO', title: 'A IA entra para acelerar.', body: 'Depois que o processo está claro, a automação ajuda a responder, registrar, lembrar e acompanhar com mais consistência.', footer: 'Mais clareza na operação' },
         { index: 5, kicker: 'CONVITE', title: 'Quer aplicar isso na prática?', body: 'Acesse o link da bio e marque gratuitamente uma call de 30 minutos.', footer: 'Call gratuita de 30 minutos' }
-      ].map((slide) => previewSlideSvg(item, slide, avatarHref));
+      ].map((slide) => previewSlideSvg({ ...item, visualCue: cue }, slide, avatarHref, sectorPhotoHref));
     }
 
     let activePreviewImageSrc = '';

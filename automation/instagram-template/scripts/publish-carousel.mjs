@@ -1219,8 +1219,15 @@ function accountAvatarCssImage(account = {}) {
   return cssUrl(`file:///${source.replace(/\\/g, '/')}`);
 }
 
+function localAssetCssImage(path = '') {
+  const source = resolve(ROOT, String(path || '').replace(/^\/+/, ''));
+  if (!existsSync(source)) return '';
+  return cssUrl(`file:///${source.replace(/\\/g, '/')}`);
+}
+
 function visualCueFromText(text = '') {
   const value = normalizeSearchText(text);
+  if (/\b(turismo|turistica|turistico|viagem|viagens|pousada|hotel|praia|destino|radio)\b/.test(value)) return 'tourism';
   if (/\b(imobiliaria|imobiliario|corretor|imovel|imoveis|casa|apartamento)\b/.test(value)) return 'real-estate';
   if (/\b(juridico|advocacia|advogado|escritorio juridico|contrato|processo)\b/.test(value)) return 'legal';
   if (/\b(clinica|medico|paciente|consulta|saude|dentista)\b/.test(value)) return 'clinic';
@@ -1231,6 +1238,22 @@ function visualCueFromText(text = '') {
   if (/\b(financeiro|cobranca|relatorio|caixa|pagamento|boleto)\b/.test(value)) return 'finance';
   if (/\b(servico|suporte|atendimento|projeto|operacao)\b/.test(value)) return 'services';
   return 'business';
+}
+
+function sectorPhotoCssImage(cue = 'business') {
+  const photos = {
+    legal: 'docs/uploads/sector-photos/legal.jpg',
+    tourism: 'docs/uploads/sector-photos/tourism.jpg',
+    'real-estate': 'docs/uploads/sector-photos/real-estate.jpg',
+    restaurant: 'docs/uploads/sector-photos/restaurant.jpg',
+    clinic: 'docs/uploads/sector-photos/clinic.jpg',
+    beauty: 'docs/uploads/sector-photos/beauty.jpg',
+    ecommerce: 'docs/uploads/sector-photos/ecommerce.jpg',
+    finance: 'docs/uploads/sector-photos/finance.jpg',
+    services: 'docs/uploads/sector-photos/ecommerce.jpg',
+    business: 'docs/uploads/sector-photos/finance.jpg'
+  };
+  return localAssetCssImage(photos[cue] || photos.business);
 }
 
 function sectorVisualHtml(cue = 'business') {
@@ -1286,6 +1309,13 @@ function sectorVisualHtml(cue = 'business') {
       <path ${common} d="M76 88c36 22 58 20 90-2s54-26 90-2"/>
       <circle cx="88" cy="66" r="20" fill="currentColor" opacity="0.22"/>
     `,
+    tourism: `
+      <path ${common} d="M58 184c42-34 82-34 124 0s74 34 116 0"/>
+      <path ${common} d="M108 170l42-104 42 104M126 126h48"/>
+      <path ${common} d="M76 216h160"/>
+      <circle cx="226" cy="76" r="30" ${common}/>
+      <circle cx="80" cy="72" r="18" fill="currentColor" opacity="0.22"/>
+    `,
     services: `
       <rect x="60" y="84" width="180" height="132" rx="26" ${common}/>
       <path ${common} d="M114 84V62h72v22M96 134h108M96 172h76"/>
@@ -1312,6 +1342,8 @@ function anatexSlideHtml(slide, index, total, account, style) {
   const avatarClass = avatarImage ? ' has-avatar' : '';
   const mode = slideStyle.templateMode || 'paper';
   const visualCue = slide.visualCue || visualCueFromText(`${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
+  const sectorPhotoImage = sectorPhotoCssImage(visualCue);
+  const sectorPhotoClass = sectorPhotoImage ? ' has-sector-photo' : '';
   const placement = [
     mode === 'split' ? 'layout-left' : index % 3 === 2 ? 'layout-left' : index % 3 === 0 ? 'layout-corner' : 'layout-right',
     `mode-${mode}`,
@@ -1353,6 +1385,21 @@ function anatexSlideHtml(slide, index, total, account, style) {
     .badge span::after { content: ""; position: absolute; left: 8px; top: 7px; width: 9px; height: 14px; border-right: 4px solid #fff6ef; border-bottom: 4px solid #fff6ef; transform: rotate(40deg); }
     .headline { position: relative; z-index: 2; margin-top: 98px; max-width: 600px; font-size: 68px; line-height: 0.98; letter-spacing: 0; font-weight: 900; color: ${slideStyle.text}; overflow-wrap: break-word; }
     .headline strong { display: inline; color: ${accent}; font: inherit; }
+    .context-photo {
+      position: absolute;
+      right: 58px;
+      top: 246px;
+      width: 370px;
+      height: 236px;
+      border-radius: 28px;
+      background: ${sectorPhotoImage || 'rgba(255,255,255,0.24)'} center center / cover no-repeat;
+      border: 8px solid rgba(255,250,246,0.82);
+      box-shadow: 0 24px 58px rgba(56,42,32,0.15);
+      overflow: hidden;
+      z-index: 1;
+      opacity: 0.88;
+    }
+    .context-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,250,246,0.10), rgba(19,34,56,0.18)); }
     .note {
       position: absolute;
       left: 78px;
@@ -1401,6 +1448,7 @@ function anatexSlideHtml(slide, index, total, account, style) {
       filter: drop-shadow(0 18px 28px rgba(94,50,34,0.10));
     }
     .layout-left .panel { left: 58px; right: auto; top: 450px; width: 360px; height: 470px; transform: rotate(-3deg); }
+    .layout-left .context-photo { left: 58px; right: auto; top: 204px; width: 360px; height: 230px; }
     .layout-left .badge { left: 470px; }
     .layout-left .headline { margin-left: 420px; max-width: 540px; font-size: 58px; }
     .layout-left .subline { margin-left: 372px; max-width: 600px; }
@@ -1424,6 +1472,7 @@ function anatexSlideHtml(slide, index, total, account, style) {
       text-transform: uppercase;
     }
     .layout-corner .panel { top: 610px; right: 70px; bottom: auto; width: 310px; height: 310px; border-radius: 50%; transform: rotate(0deg); z-index: 3; }
+    .layout-corner .context-photo { right: 72px; top: 284px; width: 316px; height: 220px; border-radius: 34px; }
     .layout-corner .panel::before { font-size: 62px; left: 50%; top: 50%; transform: translate(-50%, -50%); }
     .layout-corner .panel::after { display: none; }
     .layout-corner .note { left: 70px; top: 610px; bottom: auto; width: 610px; min-height: 250px; padding: 34px 34px 32px 104px; font-size: 26px; line-height: 1.13; }
@@ -1436,6 +1485,7 @@ function anatexSlideHtml(slide, index, total, account, style) {
         linear-gradient(180deg, ${slideStyle.bgTop} 0%, ${slideStyle.bgBottom} 100%);
     }
     .mode-split .panel { top: 350px; width: 410px; height: 540px; border-radius: 34px; }
+    .mode-split .context-photo { top: 150px; right: 76px; width: 330px; height: 210px; }
     .mode-split .headline { margin-top: 126px; font-size: 60px; }
     .mode-split .note { top: 812px; min-height: 210px; }
     .mode-split .sector-cue { right: 82px; top: 118px; width: 250px; opacity: 0.28; }
@@ -1448,6 +1498,7 @@ function anatexSlideHtml(slide, index, total, account, style) {
     .mode-poster .badge { left: 50%; top: 118px; transform: translateX(-50%); }
     .mode-poster .headline { margin: 185px auto 0; max-width: 900px; font-size: 86px; line-height: 0.96; text-align: center; }
     .mode-poster .panel { right: 84px; top: 760px; width: 300px; height: 300px; border-radius: 50%; transform: none; z-index: 3; }
+    .mode-poster .context-photo { left: 50%; top: 500px; width: 560px; height: 216px; transform: translateX(-50%); border-radius: 30px; }
     .mode-poster .note { left: 86px; top: 760px; width: 610px; min-height: 250px; font-size: 29px; background: rgba(255,250,246,0.90); }
     .mode-poster .sector-cue { left: 50%; right: auto; top: 508px; width: 310px; transform: translateX(-50%); opacity: 0.22; }
     .layout-left.mode-poster .headline { margin: 185px auto 0; max-width: 900px; font-size: 86px; }
@@ -1464,6 +1515,7 @@ function anatexSlideHtml(slide, index, total, account, style) {
     .mode-minimal .badge span::after { border-color: ${accent}; }
     .mode-minimal .headline { margin-top: 150px; max-width: 760px; font-size: 70px; }
     .mode-minimal .panel { top: 210px; right: 72px; width: 260px; height: 260px; border-radius: 50%; opacity: 0.94; }
+    .mode-minimal .context-photo { left: 86px; top: 510px; width: 520px; height: 190px; border-radius: 24px; opacity: 0.80; }
     .mode-minimal .note { left: 86px; top: 780px; width: 840px; min-height: 210px; padding-left: 128px; background: rgba(255,255,255,0.58); }
     .mode-minimal .sector-cue { right: 98px; top: 520px; width: 250px; opacity: 0.22; }
     .layout-left.mode-minimal .headline { margin-left: 0; max-width: 760px; font-size: 70px; }
@@ -1480,6 +1532,7 @@ function anatexSlideHtml(slide, index, total, account, style) {
     .mode-magazine main::before { left: 104px; }
     .mode-magazine .badge { left: 124px; }
     .mode-magazine .headline { margin-top: 136px; margin-left: 70px; max-width: 610px; font-size: 62px; }
+    .mode-magazine .context-photo { left: 124px; right: auto; top: 508px; width: 500px; height: 190px; border-radius: 24px; }
     .mode-magazine .panel { top: 420px; right: 70px; width: 320px; height: 430px; transform: rotate(-2deg); }
     .mode-magazine .note { left: 124px; top: 745px; width: 560px; }
     .mode-magazine .sector-cue { right: 100px; top: 142px; width: 220px; opacity: 0.24; }
@@ -1495,10 +1548,11 @@ function anatexSlideHtml(slide, index, total, account, style) {
   </style>
 </head>
 <body>
-  <main class="${placement}">
+  <main class="${placement}${sectorPhotoClass}">
     <div class="brand">${account.brandName}</div>
     <div class="arrows">&gt;&gt;</div>
     <div class="badge"><span></span>${eyebrow}</div>
+    ${sectorPhotoImage ? '<div class="context-photo"></div>' : ''}
     ${sectorVisualHtml(visualCue)}
     <div class="panel${avatarClass}"></div>
     <div class="spark s1">*</div>
