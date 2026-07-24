@@ -812,6 +812,26 @@ function estimateTextLines(text = '', width = 400, fontSize = 30) {
   return lines;
 }
 
+function splitCreativeDescription(text = '') {
+  const clean = applyAnatexCopyRules(text).replace(/\s+/g, ' ').trim();
+  const sentences = clean.split(/(?<=[.!])\s+/).filter(Boolean);
+  const first = sentences[0] || clean;
+  const rest = sentences.slice(1).join(' ');
+  const words = first.split(' ').filter(Boolean);
+  const leadWords = Math.min(4, Math.max(2, Math.floor(words.length / 3)));
+  const lead = words.slice(0, leadWords).join(' ');
+  const remaining = words.slice(leadWords);
+  const emphasisLimit = remaining.length <= 7 ? remaining.length : 5;
+  let emphasisWords = remaining.slice(0, emphasisLimit);
+  let closeWords = remaining.slice(emphasisLimit);
+  if (!rest && closeWords.length && emphasisWords.length && emphasisWords.at(-1).length <= 2) {
+    closeWords.unshift(emphasisWords.pop());
+  }
+  const emphasis = emphasisWords.length ? emphasisWords.join(' ') : first;
+  const close = rest || closeWords.join(' ') || clean;
+  return { lead, emphasis, close };
+}
+
 function autoPack(topic, angle, context, sequence, runStamp = null, dateString = todaySaoPaulo(), slotIndex = 0) {
   const runLine = runStamp ? `\n\nEdição operacional ${runStamp}.` : '';
   const editorial = creativeEditorialAngle(dateString, slotIndex, sequence);
@@ -1429,6 +1449,7 @@ function anatexSlideHtml(slide, index, total, account, style) {
   const slideStyle = styleForSlide(style, index);
   const title = anatexTitle(slide.title || '');
   const body = applyAnatexCopyRules(slide.body || '');
+  const creativeBody = splitCreativeDescription(body);
   const eyebrow = applyAnatexCopyRules(slide.eyebrow || 'Pra saber');
   const accent = slideStyle.accent || '#a7563d';
   const soft = slideStyle.accentSoft || 'rgba(167,86,61,0.16)';
@@ -1543,6 +1564,9 @@ function anatexSlideHtml(slide, index, total, account, style) {
       color: ${slideStyle.text};
     }
     .note::before { content: "${String(index).padStart(2, '0')}"; position: absolute; left: 28px; top: 30px; width: 56px; height: 56px; border-radius: 50%; background: ${accent}; color: #fff6ef; display: grid; place-items: center; font-size: 25px; font-weight: 900; }
+    .note .lead { display: block; margin-bottom: 4px; color: ${accent}; font-size: 0.82em; line-height: 1.05; font-weight: 900; }
+    .note .emphasis { display: block; max-width: 100%; color: ${slideStyle.text}; font-size: 1.22em; line-height: 0.98; font-weight: 900; }
+    .note .close { display: inline-block; margin-top: 12px; padding: 7px 10px 8px; border-radius: 8px; background: ${accent}; color: #fff6ef; font-size: 0.80em; line-height: 1.02; font-weight: 900; }
     .panel {
       position: absolute;
       right: 56px;
@@ -1693,6 +1717,9 @@ function anatexSlideHtml(slide, index, total, account, style) {
     .role-cta .headline { max-width: 860px; font-size: 82px; }
     .role-cta .note { background: ${accent}; color: #fff6ef; border: 0; font-size: 34px; }
     .role-cta .note::before { background: #fff6ef; color: ${accent}; }
+    .role-cta .note .lead,
+    .role-cta .note .emphasis { color: #fff6ef; }
+    .role-cta .note .close { background: #fff6ef; color: ${accent}; }
     .role-cta .progress { bottom: 156px; }
     .role-cta .save-cue { bottom: 56px; min-width: 230px; text-align: center; }
     .bubble { display: none; position: absolute; right: 116px; bottom: 270px; width: 132px; height: 96px; border-radius: 34px; background: #f1d8c7; z-index: 3; }
@@ -1718,7 +1745,7 @@ function anatexSlideHtml(slide, index, total, account, style) {
     <section>
       <h1 class="headline">${headline}</h1>
     </section>
-    <div class="note">${body}</div>
+    <div class="note"><span class="lead">${creativeBody.lead}</span><span class="emphasis">${creativeBody.emphasis}</span><span class="close">${creativeBody.close}</span></div>
     <div class="bubble"></div>
     <div class="progress">${progressItems}</div>
     <footer>${index}/${total}</footer>
