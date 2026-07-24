@@ -1347,6 +1347,8 @@ function anatexSlideHtml(slide, index, total, account, style) {
   const engagementRole = index === 1 ? 'hook' : index === total ? 'cta' : index === total - 1 ? 'proof' : 'value';
   const swipeCue = index === 1 ? '<div class="swipe-cue">arraste para ver</div>' : '';
   const saveCue = index === total ? '<div class="save-cue">link na bio</div>' : index === 3 ? '<div class="save-cue">salve este passo</div>' : '';
+  const noteFontSize = body.length > 170 ? 24 : body.length > 125 ? 26 : body.length > 95 ? 28 : 30;
+  const noteMinHeight = body.length > 170 ? 330 : body.length > 125 ? 295 : body.length > 95 ? 258 : 238;
   const progressItems = Array.from({ length: total }, (_, itemIndex) => (
     `<span class="${itemIndex + 1 <= index ? 'active' : ''}"></span>`
   )).join('');
@@ -1431,14 +1433,14 @@ function anatexSlideHtml(slide, index, total, account, style) {
       left: 78px;
       top: 700px;
       width: 540px;
-      min-height: 238px;
+      min-height: ${noteMinHeight}px;
       padding: 34px 38px 30px 108px;
       border: 2px solid rgba(167,86,61,0.20);
       border-radius: 24px;
       background: rgba(255,250,246,0.76);
       z-index: 2;
-      font-size: 30px;
-      line-height: 1.18;
+      font-size: ${noteFontSize}px;
+      line-height: 1.13;
       font-weight: 800;
       color: ${slideStyle.text};
     }
@@ -1566,7 +1568,7 @@ function anatexSlideHtml(slide, index, total, account, style) {
     .layout-left.mode-magazine .note { left: 430px; top: 745px; width: 560px; }
     .layout-left.mode-magazine .sector-cue { left: 122px; right: auto; top: 190px; width: 190px; opacity: 0.22; }
     .role-hook .headline { font-size: 74px; }
-    .role-hook .note { min-height: 214px; font-size: 28px; }
+    .role-hook .note { min-height: ${Math.max(234, noteMinHeight)}px; font-size: ${Math.min(noteFontSize, 28)}px; }
     .role-value .note::after {
       content: "";
       position: absolute;
