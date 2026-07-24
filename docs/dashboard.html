@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v3.7</div>
+        <div class="header-version" id="headerVersion">Versão atual: v3.8</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1593,6 +1593,26 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               </label>
             </div>
             <div class="palette-preview" id="activePalettePreview"></div>
+            <div class="document-box">
+              <strong>Avatares manuais</strong>
+              <span id="activeAvatarStatus">Usando avatar padrão.</span>
+              <label class="check" style="align-items:center;">
+                <input id="activeAvatarRotationEnabled" type="checkbox">
+                <div>
+                  <strong>Ativar rotação manual</strong>
+                  <span>Quando ligado, as próximas postagens alternam entre os avatares cadastrados abaixo.</span>
+                </div>
+              </label>
+              <label>
+                Enviar novos avatares do computador
+                <input id="activeAvatarUpload" type="file" accept="image/png,image/jpeg,image/webp" multiple>
+              </label>
+              <button type="button" id="uploadActiveAvatars">Enviar avatares</button>
+              <label>
+                URLs dos avatares cadastrados
+                <textarea id="activeAvatarUrls" rows="4" placeholder="Uma URL por linha. O upload preenche este campo automaticamente."></textarea>
+              </label>
+            </div>
             <div class="document-box">
               <strong>Documento da empresa</strong>
               <span id="activeBrandDocumentStatus">Nenhum PDF/TXT anexado.</span>
@@ -2117,6 +2137,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const summary = account.brandSummary || {};
       const palette = account.brandPalette || {};
       const documentInfo = account.brandDocument || {};
+      const avatarRotation = account.avatarRotation || {};
+      const avatarUrls = Array.isArray(avatarRotation.urls) ? avatarRotation.urls.filter(Boolean) : [];
       const hasProfile = Boolean(profile.niche && profile.audience && profile.offer);
       document.getElementById('activeProfileStatus').textContent = hasProfile ? 'Configurado' : 'Pendente';
       document.getElementById('activeProfileStatus').className = `status-pill ${hasProfile ? 'good' : 'warn'}`;
@@ -2140,6 +2162,11 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         secondary: document.getElementById('activeBrandSecondary').value,
         background: document.getElementById('activeBrandBackground').value
       });
+      document.getElementById('activeAvatarRotationEnabled').checked = Boolean(avatarRotation.enabled);
+      document.getElementById('activeAvatarUrls').value = avatarUrls.join('\n');
+      document.getElementById('activeAvatarStatus').textContent = avatarUrls.length
+        ? `${avatarUrls.length} avatar(es) cadastrado(s)${avatarRotation.enabled ? ' · rotação ligada' : ' · rotação desligada'}.`
+        : 'Usando avatar padrão.';
       const keywords = documentInfo.analysis?.keywords?.length
         ? ` · analisado: ${documentInfo.analysis.keywords.slice(0, 5).join(', ')}`
         : '';
@@ -2636,7 +2663,12 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               primary: document.getElementById('activeBrandPrimary').value,
               secondary: document.getElementById('activeBrandSecondary').value,
               background: document.getElementById('activeBrandBackground').value
-            }
+            },
+            avatarRotationEnabled: document.getElementById('activeAvatarRotationEnabled').checked,
+            avatarUrls: document.getElementById('activeAvatarUrls').value
+              .split(/\r?\n/)
+              .map((item) => item.trim())
+              .filter(Boolean)
           })
         });
         appState.account = payload.account || appState.account;
@@ -3772,6 +3804,46 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       }
     }
 
+    async function uploadActiveAvatars() {
+      const input = document.getElementById('activeAvatarUpload');
+      const files = Array.from(input.files || []);
+      const result = document.getElementById('activeProfileResult');
+      if (!files.length) {
+        result.className = 'access-result warn';
+        result.textContent = 'Escolha uma ou mais imagens de avatar.';
+        return;
+      }
+      result.className = 'access-result warn';
+      result.textContent = `Enviando ${files.length} avatar(es)...`;
+      try {
+        const textarea = document.getElementById('activeAvatarUrls');
+        const existing = textarea.value.split(/\r?\n/).map((item) => item.trim()).filter(Boolean);
+        const uploaded = [];
+        for (const file of files) {
+          const payload = await api('/api/upload-image', {
+            method: 'POST',
+            body: JSON.stringify({
+              name: `avatar-${appState.selectedAccount}-${file.name}`,
+              dataUrl: await readFileAsDataUrl(file)
+            })
+          });
+          const url = payload.imageUrl || payload.imagePath || '';
+          if (url) uploaded.push(url);
+        }
+        const next = [...new Set([...existing, ...uploaded])];
+        textarea.value = next.join('\n');
+        document.getElementById('activeAvatarRotationEnabled').checked = next.length > 0;
+        document.getElementById('activeAvatarStatus').textContent = `${next.length} avatar(es) cadastrado(s) · rotação ligada.`;
+        result.className = 'access-result good';
+        result.textContent = 'Avatar(es) enviados. Clique em Salvar perfil da marca para gravar a rotação.';
+      } catch (error) {
+        result.className = 'access-result bad';
+        result.textContent = error.message;
+      } finally {
+        input.value = '';
+      }
+    }
+
     async function uploadSlideImage(input) {
       const file = input.files?.[0];
       if (!file) return;
@@ -4087,24 +4159,46 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     }
 
     let previewAvatarDataUrl = '';
+    const previewAvatarDataUrls = {};
     const previewSectorPhotoDataUrls = {};
 
-    async function getPreviewAvatarDataUrl() {
-      if (previewAvatarDataUrl) return previewAvatarDataUrl;
+    function previewPickAvatarSource(account = {}, index = 1, cue = '') {
+      const rotation = account.avatarRotation || {};
+      const urls = Array.isArray(rotation.urls) ? rotation.urls.filter(Boolean) : [];
+      if (rotation.enabled && urls.length) {
+        const seed = `${itemDateSeed()}-${index}-${cue}`;
+        const offset = seed.split('').reduce((total, char) => total + char.charCodeAt(0), 0);
+        return urls[offset % urls.length];
+      }
+      return account.avatarUrl || account.avatarPath || '/docs/uploads/avatar-marcondes.png';
+    }
+
+    function itemDateSeed() {
+      return new Date().toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+    }
+
+    async function getPreviewImageDataUrl(source = '/docs/uploads/avatar-marcondes.png') {
+      if (!source) return '';
+      if (/^data:image\//i.test(source)) return source;
+      if (previewAvatarDataUrls[source]) return previewAvatarDataUrls[source];
+      if (source === '/docs/uploads/avatar-marcondes.png' && previewAvatarDataUrl) return previewAvatarDataUrl;
       try {
-        const response = await fetch('/docs/uploads/avatar-marcondes.png', { cache: 'force-cache' });
+        const path = /^https?:\/\//i.test(source) || source.startsWith('/') ? source : `/${source.replace(/^\/+/, '')}`;
+        const response = await fetch(path, { cache: 'force-cache' });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const blob = await response.blob();
-        previewAvatarDataUrl = await new Promise((resolve, reject) => {
+        const dataUrl = await new Promise((resolve, reject) => {
           const reader = new FileReader();
           reader.onload = () => resolve(String(reader.result || ''));
           reader.onerror = reject;
           reader.readAsDataURL(blob);
         });
+        previewAvatarDataUrls[source] = dataUrl;
+        if (source === '/docs/uploads/avatar-marcondes.png') previewAvatarDataUrl = dataUrl;
       } catch {
-        previewAvatarDataUrl = '';
+        previewAvatarDataUrls[source] = /^https?:\/\//i.test(source) ? source : '';
       }
-      return previewAvatarDataUrl;
+      return previewAvatarDataUrls[source] || '';
     }
 
     async function getPreviewSectorPhotoDataUrl(cue = 'business') {
@@ -4351,16 +4445,18 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     async function previewSlidesForItem(item = {}) {
       const title = item.title || 'Conteúdo programado';
       const caption = item.caption || 'Legenda será montada pelo gerador automático.';
-      const avatarHref = await getPreviewAvatarDataUrl();
       const cue = item.visualCue || previewVisualCueFromText(`${title} ${caption}`);
       const sectorPhotoHref = await getPreviewSectorPhotoDataUrl(cue);
-      return [
+      const slides = [
         { index: 1, kicker: item.type === 'program' ? 'PROGRAMA' : 'POSTAGEM', title, body: caption, footer: 'Acompanhe pelo Instagram' },
         { index: 2, kicker: 'CONTEXTO', title: 'O que esta por trás disso?', body: caption, footer: 'Entenda antes de agir' },
         { index: 3, kicker: 'PROCESSO', title: 'O caminho começa simples.', body: 'Organize o atendimento, a rotina e os pontos de decisão antes de automatizar qualquer etapa.', footer: 'Processo antes da ferramenta' },
         { index: 4, kicker: 'AÇÃO', title: 'A IA entra para acelerar.', body: 'Depois que o processo está claro, a automação ajuda a responder, registrar, lembrar e acompanhar com mais consistência.', footer: 'Mais clareza na operação' },
         { index: 5, kicker: 'CONVITE', title: 'Quer aplicar isso na prática?', body: 'Acesse o link da bio e marque gratuitamente uma call de 30 minutos.', footer: 'Call gratuita de 30 minutos' }
-      ].map((slide) => previewSlideSvg({ ...item, visualCue: cue }, slide, avatarHref, sectorPhotoHref));
+      ];
+      const account = appState.account || {};
+      const avatarHrefs = await Promise.all(slides.map((slide) => getPreviewImageDataUrl(previewPickAvatarSource(account, slide.index, cue))));
+      return slides.map((slide, index) => previewSlideSvg({ ...item, visualCue: cue }, slide, avatarHrefs[index], sectorPhotoHref));
     }
 
     let activePreviewImageSrc = '';
@@ -4720,6 +4816,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('saveActiveProfile').addEventListener('click', saveActiveProfile);
       document.getElementById('createAccount').addEventListener('click', createAccount);
       document.getElementById('uploadBrandDocument').addEventListener('click', uploadBrandDocument);
+      document.getElementById('uploadActiveAvatars').addEventListener('click', uploadActiveAvatars);
       document.getElementById('fillBrandBriefing').addEventListener('click', () => fillBrandBriefingTemplate({ force: true }));
       document.getElementById('copyBrandBriefing').addEventListener('click', copyBrandBriefingTemplate);
       document.getElementById('downloadBrandBriefing').addEventListener('click', downloadBrandBriefingTemplate);

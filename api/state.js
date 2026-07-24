@@ -35,7 +35,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v3.7',
+  appVersion: 'v3.8',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -1118,6 +1118,15 @@ async function updateAccountProfile(body = {}, session = null) {
   };
   const brandSummary = normalizeBrandSummary(body.brandSummary || accountsFile.data[index].brandSummary || {});
   const brandPalette = normalizeBrandPalette(body.brandPalette || accountsFile.data[index].brandPalette || {});
+  const avatarUrls = Array.isArray(body.avatarUrls)
+    ? body.avatarUrls.map((item) => String(item || '').trim()).filter(Boolean).slice(0, 24)
+    : Array.isArray(accountsFile.data[index].avatarRotation?.urls)
+      ? accountsFile.data[index].avatarRotation.urls
+      : [];
+  const avatarRotation = {
+    enabled: Boolean(body.avatarRotationEnabled),
+    urls: avatarUrls
+  };
   if (!contentProfile.niche || !contentProfile.audience || !contentProfile.offer) {
     throw userError('Informe nicho, publico ideal e oferta principal para atualizar a conta.');
   }
@@ -1129,7 +1138,8 @@ async function updateAccountProfile(body = {}, session = null) {
     footerText: String(body.footerText || accountsFile.data[index].footerText || 'IA aplicada a empresas').trim(),
     contentProfile,
     brandSummary,
-    brandPalette
+    brandPalette,
+    avatarRotation
   };
 
   await writeGithubConfig(ACCOUNTS_FILE_PATH, accountsFile.data, accountsFile.sha, `Update profile for ${accountKey}`);

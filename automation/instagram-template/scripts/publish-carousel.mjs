@@ -1319,11 +1319,27 @@ function cssUrl(value = '') {
   return `url("${String(value).replace(/\\/g, '/').replace(/"/g, '%22')}")`;
 }
 
-function accountAvatarCssImage(account = {}) {
-  const avatarUrl = String(account.avatarUrl || '').trim();
-  if (avatarUrl) return cssUrl(avatarUrl);
+function pickAccountAvatar(account = {}, index = 1, visualCue = '') {
+  const rotation = account.avatarRotation || {};
+  const urls = Array.isArray(rotation.urls)
+    ? rotation.urls.map((item) => String(item || '').trim()).filter(Boolean)
+    : [];
+  if (rotation.enabled && urls.length) {
+    const seed = `${todaySaoPaulo()}-${index}-${visualCue}`;
+    const offset = seed.split('').reduce((total, char) => total + char.charCodeAt(0), 0);
+    return urls[offset % urls.length];
+  }
+  return String(account.avatarUrl || account.avatarPath || '').trim();
+}
 
-  const avatarPath = String(account.avatarPath || '').trim();
+function accountAvatarCssImage(account = {}, index = 1, visualCue = '') {
+  const pickedAvatar = pickAccountAvatar(account, index, visualCue);
+  if (/^https?:\/\//i.test(pickedAvatar) || /^data:image\//i.test(pickedAvatar)) return cssUrl(pickedAvatar);
+
+  const avatarUrl = String(account.avatarUrl || '').trim();
+  if (!pickedAvatar && avatarUrl) return cssUrl(avatarUrl);
+
+  const avatarPath = pickedAvatar || String(account.avatarPath || '').trim();
   if (!avatarPath) return '';
 
   const source = resolve(ROOT, avatarPath.replace(/^\/+/, ''));
@@ -1454,10 +1470,10 @@ function anatexSlideHtml(slide, index, total, account, style) {
   const accent = slideStyle.accent || '#a7563d';
   const soft = slideStyle.accentSoft || 'rgba(167,86,61,0.16)';
   const headline = title.replace(/\s+IA\b/i, ' <strong>IA</strong>');
-  const avatarImage = accountAvatarCssImage(account);
-  const avatarClass = avatarImage ? ' has-avatar' : '';
   const mode = slideStyle.templateMode || 'paper';
   const visualCue = slide.visualCue || visualCueFromText(`${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
+  const avatarImage = accountAvatarCssImage(account, index, visualCue);
+  const avatarClass = avatarImage ? ' has-avatar' : '';
   const engagementRole = index === 1 ? 'hook' : index === total ? 'cta' : index === total - 1 ? 'proof' : 'value';
   const useSectorPhoto = engagementRole === 'hook' || engagementRole === 'cta';
   const sectorPhotoImage = useSectorPhoto ? sectorPhotoCssImage(visualCue) : '';
