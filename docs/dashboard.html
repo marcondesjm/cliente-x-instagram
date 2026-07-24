@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v2.0</div>
+        <div class="header-version" id="headerVersion">Versão atual: v2.1</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -4119,8 +4119,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       return 'business';
     }
 
-    function previewSectorCueSvg(cue = 'business', x = 730, y = 248, size = 250) {
-      const common = 'fill="none" stroke="#2f7d73" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"';
+    function previewSectorCueSvg(cue = 'business', x = 730, y = 248, size = 250, color = '#2f7d73') {
+      const common = `fill="none" stroke="${color}" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"`;
       const shapes = {
         'real-estate': `<path ${common} d="M80 198V122l70-56 70 56v76"/><path ${common} d="M58 122l92-74 92 74"/><path ${common} d="M126 198v-52h48v52"/><path ${common} d="M42 218h216"/><path ${common} d="M208 74h38v138"/>`,
         legal: `<path ${common} d="M150 58v168M82 88h136M98 88l-42 72h84L98 88ZM202 88l-42 72h84l-42-72Z"/><path ${common} d="M110 226h80M128 202h44"/>`,
@@ -4135,6 +4135,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       return `<g transform="translate(${x} ${y}) scale(${size / 300})" opacity="0.28">${shapes[cue] || shapes.business}</g>`;
     }
 
+    function previewSeedFromText(text = '') {
+      return String(text || '').split('').reduce((total, char) => total + char.charCodeAt(0), 0);
+    }
+
     function previewSlideSvg(item = {}, slide = {}, avatarHref = '') {
       const label = item.type === 'program' ? 'PROGRAMA' : 'POSTAGEM';
       const kicker = escapeHtml(slide.kicker || label);
@@ -4142,9 +4146,17 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const body = slide.body || item.caption || 'Legenda será montada pelo gerador automático.';
       const index = Number(slide.index || 1);
       const cardNumber = String(index).padStart(2, '0');
+      const dateSeed = previewSeedFromText(item.previewDate || item.planDate || item.date || '');
       const modeNames = ['paper', 'split', 'poster', 'minimal', 'magazine'];
-      const modeSeed = Number.parseInt(String(item.slotIndex || '0').replace(/\D/g, ''), 10) || 0;
+      const modeSeed = (Number.parseInt(String(item.slotIndex || '0').replace(/\D/g, ''), 10) || 0) + dateSeed;
       const mode = modeNames[(modeSeed + index) % modeNames.length];
+      const theme = [
+        { accent: '#c46a32', soft: '#dfc8b8', top: '#f7f4ee', bottom: '#e7edf0', text: '#17211c', muted: '#ead4c8', cue: '#2f7d73', stripe: '' },
+        { accent: '#2f766d', soft: '#cfe5de', top: '#f5f8f3', bottom: '#dfe9dc', text: '#14262f', muted: '#c7ddd4', cue: '#c46a32', stripe: '<rect x="0" y="0" width="1080" height="92" fill="#ffffff" opacity="0.64"/>' },
+        { accent: '#315f7d', soft: '#cbdde7', top: '#f7fbfb', bottom: '#ddebf0', text: '#102333', muted: '#c7dbe4', cue: '#8f5c42', stripe: '<rect x="0" y="1040" width="1080" height="310" fill="#ffffff" opacity="0.34"/>' },
+        { accent: '#8f5c42', soft: '#e5d3c7', top: '#fbf8f2', bottom: '#e5e9e2', text: '#17211c', muted: '#e4cfc1', cue: '#2f766d', stripe: '<rect x="0" y="0" width="118" height="1350" fill="#e5e9e2" opacity="0.92"/>' },
+        { accent: '#7b6957', soft: '#ded7cc', top: '#f8f6f0', bottom: '#e9ece7', text: '#17211c', muted: '#d7cec2', cue: '#315f7d', stripe: '<rect x="828" y="0" width="252" height="1350" fill="#ffffff" opacity="0.42"/>' }
+      ][modeSeed % 5];
       const layout = {
         paper: { titleX: 58, titleY: 190, titleW: 620, titleSize: title.length > 58 ? 58 : 68, panelX: 650, panelY: 444, panelW: 380, panelH: 454, panelR: 3, noteX: 78, noteY: 700, noteW: 540, noteTextX: 188, noteTextW: 380 },
         split: { titleX: 470, titleY: 205, titleW: 540, titleSize: title.length > 52 ? 50 : 58, panelX: 58, panelY: 438, panelW: 370, panelH: 470, panelR: -3, noteX: 470, noteY: 720, noteW: 540, noteTextX: 580, noteTextW: 380 },
@@ -4161,33 +4173,34 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         <svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
           <defs>
             <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#f7f4ee"/>
-              <stop offset="1" stop-color="#e7edf0"/>
+              <stop offset="0" stop-color="${theme.top}"/>
+              <stop offset="1" stop-color="${theme.bottom}"/>
             </linearGradient>
             <clipPath id="avatarClip"><circle cx="${layout.panelW / 2}" cy="${layout.panelH / 2}" r="${Math.min(layout.panelW, layout.panelH) * 0.39}"/></clipPath>
           </defs>
           <rect width="1080" height="1350" fill="url(#paper)"/>
-          <line x1="56" y1="50" x2="1000" y2="50" stroke="#c46a32" stroke-width="2" opacity="0.55"/>
-          <text x="118" y="72" fill="#c46a32" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">Marcondes Machado</text>
-          <text x="940" y="72" fill="#c46a32" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">&gt;&gt;</text>
-          <circle cx="948" cy="166" r="150" fill="#dfc8b8" opacity="0.42"/>
-          <circle cx="944" cy="1180" r="238" fill="#c9beb4" opacity="0.32"/>
-          <g opacity="0.42" fill="#c46a32">
+          ${theme.stripe}
+          <line x1="56" y1="50" x2="1000" y2="50" stroke="${theme.accent}" stroke-width="2" opacity="0.55"/>
+          <text x="118" y="72" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">Marcondes Machado</text>
+          <text x="940" y="72" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">&gt;&gt;</text>
+          <circle cx="948" cy="166" r="150" fill="${theme.soft}" opacity="0.42"/>
+          <circle cx="944" cy="1180" r="238" fill="${theme.muted}" opacity="0.32"/>
+          <g opacity="0.42" fill="${theme.accent}">
             ${Array.from({ length: 28 }, (_, i) => `<circle cx="${28 + (i % 7) * 22}" cy="${110 + Math.floor(i / 7) * 22}" r="4"/>`).join('')}
           </g>
-          <text x="664" y="210" fill="#c46a32" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">*</text>
-          <rect x="84" y="122" width="360" height="60" rx="12" fill="#c46a32"/>
+          <text x="664" y="210" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900">*</text>
+          <rect x="84" y="122" width="360" height="60" rx="12" fill="${theme.accent}"/>
           <circle cx="124" cy="152" r="18" fill="none" stroke="#fff5ed" stroke-width="4"/>
           <path d="M114 151l8 9 15-20" fill="none" stroke="#fff5ed" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
           <text x="158" y="162" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900">${kicker}</text>
-          ${mode === 'magazine' ? '<rect x="0" y="0" width="96" height="1350" fill="#e5e9e2" opacity="0.9"/>' : ''}
+          ${mode === 'magazine' ? `<rect x="0" y="0" width="96" height="1350" fill="${theme.bottom}" opacity="0.9"/>` : ''}
           ${mode === 'split' ? '<rect x="0" y="0" width="520" height="1350" fill="#fffaf7" opacity="0.72"/>' : ''}
-          ${previewSectorCueSvg(cue, cueX, cueY, 250)}
-          ${svgBoxText(title, layout.titleX, layout.titleY, layout.titleW, titleSize, '#17211c', 900, 0.98)}
+          ${previewSectorCueSvg(cue, cueX, cueY, 250, theme.cue)}
+          ${svgBoxText(title, layout.titleX, layout.titleY, layout.titleW, titleSize, theme.text, 900, 0.98)}
           <g transform="translate(${layout.panelX} ${layout.panelY}) rotate(${layout.panelR})">
             <rect x="0" y="0" width="${layout.panelW}" height="${layout.panelH}" rx="${panelRadius}" fill="#ffffff" opacity="0.96"/>
             <rect x="18" y="18" width="${layout.panelW - 36}" height="${layout.panelH - 36}" rx="${Math.max(18, panelRadius - 6)}" fill="#eef2ef"/>
-            <circle cx="${layout.panelW / 2}" cy="${layout.panelH / 2}" r="${Math.min(layout.panelW, layout.panelH) * 0.39}" fill="#f7f4ee" stroke="#c46a32" stroke-width="10"/>
+            <circle cx="${layout.panelW / 2}" cy="${layout.panelH / 2}" r="${Math.min(layout.panelW, layout.panelH) * 0.39}" fill="${theme.top}" stroke="${theme.accent}" stroke-width="10"/>
             ${avatarHref
               ? `<image href="${avatarHref}" x="${layout.panelW * 0.11}" y="${layout.panelH * 0.12}" width="${layout.panelW * 0.78}" height="${layout.panelH * 0.72}" preserveAspectRatio="xMidYMid slice" clip-path="url(#avatarClip)"/>`
               : `<circle cx="${layout.panelW / 2}" cy="${layout.panelH / 2}" r="${Math.min(layout.panelW, layout.panelH) * 0.32}" fill="#fffaf7"/>`}
@@ -4196,11 +4209,11 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               <rect x="20" y="${layout.panelH - 72}" width="${layout.panelW - 40}" height="54" rx="12" fill="#ffffff" opacity="0.55"/>
             `}
           </g>
-          <rect x="${layout.noteX}" y="${layout.noteY}" width="${layout.noteW}" height="236" rx="22" fill="#fffaf7" stroke="#ead4c8" stroke-width="2"/>
-          <circle cx="${layout.noteX + 54}" cy="${layout.noteY + 60}" r="30" fill="#c46a32"/>
+          <rect x="${layout.noteX}" y="${layout.noteY}" width="${layout.noteW}" height="236" rx="22" fill="#fffaf7" stroke="${theme.muted}" stroke-width="2"/>
+          <circle cx="${layout.noteX + 54}" cy="${layout.noteY + 60}" r="30" fill="${theme.accent}"/>
           <text x="${layout.noteX + 34}" y="${layout.noteY + 72}" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="900">${cardNumber}</text>
-          ${svgBoxText(body, layout.noteTextX, layout.noteY + 42, layout.noteTextW, body.length > 95 ? 30 : 36, '#17211c', 900, 1.15)}
-          <text x="948" y="1274" fill="#c46a32" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900">${index}/5</text>
+          ${svgBoxText(body, layout.noteTextX, layout.noteY + 42, layout.noteTextW, body.length > 95 ? 30 : 36, theme.text, 900, 1.15)}
+          <text x="948" y="1274" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900">${index}/5</text>
         </svg>
       `.trim();
       return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
@@ -4296,10 +4309,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const items = source === 'tomorrow'
         ? ((appState.tomorrowPreview || {}).items || [])
         : (appState.dailyPlan || []);
-      const item = items.find((planItem) => (
+      const baseItem = items.find((planItem) => (
         planItem.type === 'program' &&
         String(planItem.programId || planItem.slotIndex) === String(programKey)
       )) || {};
+      const item = source === 'tomorrow'
+        ? { ...baseItem, previewDate: (appState.tomorrowPreview || {}).date }
+        : baseItem;
       const imagePath = item.imagePath || item.imageUrl || '';
       const preview = document.getElementById('dailyPlanPreview');
       document.getElementById('dailyPlanPreviewStatus').textContent = 'Carregando avatar';
@@ -4314,7 +4330,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     }
 
     async function previewPlanItem(slotIndex, source = 'today') {
-      const item = findPreviewPlanItem(slotIndex, source);
+      const baseItem = findPreviewPlanItem(slotIndex, source);
+      const item = source === 'tomorrow'
+        ? { ...baseItem, previewDate: (appState.tomorrowPreview || {}).date }
+        : baseItem;
       const preview = document.getElementById('dailyPlanPreview');
       document.getElementById('dailyPlanPreviewStatus').textContent = 'Carregando avatar';
       setPreviewImages(await previewSlidesForItem(item), `previa-slot-${slotIndex}.svg`);
