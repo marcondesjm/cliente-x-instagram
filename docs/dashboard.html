@@ -1156,7 +1156,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v3.9</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.0</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -4351,12 +4351,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               ? 25
               : 29;
       const estimatedLines = estimateSvgTextLines(body, layout.noteTextW, bodyFontSize);
-      const closeFontSize = creativeBody.close.length > 92 ? 16 : creativeBody.close.length > 68 ? 17 : 18;
-      const closeLines = estimateSvgTextLines(creativeBody.close, Math.min(layout.noteTextW - 20, 410), closeFontSize);
-      const closeHeight = Math.max(78, Math.min(128, 32 + (closeLines * closeFontSize * 1.22)));
+      const closeFontSize = creativeBody.close.length > 110 ? 13 : creativeBody.close.length > 82 ? 14 : creativeBody.close.length > 58 ? 15 : 17;
+      const closeTextWidth = Math.min(layout.noteTextW - 32, 398);
+      const closeLines = estimateSvgTextLines(creativeBody.close, closeTextWidth, closeFontSize);
+      const closeHeight = Math.max(92, Math.min(184, 38 + (closeLines * closeFontSize * 1.34)));
       const noteHeight = isCta
         ? Math.max(278, 196 + closeHeight)
-        : Math.min(470, Math.max(310, 146 + closeHeight + (estimatedLines * bodyFontSize * 1.08)));
+        : Math.min(520, Math.max(330, 160 + closeHeight + (estimatedLines * bodyFontSize * 1.02)));
       const photo = {
         paper: { x: 664, y: 280, w: 330, h: 220, r: 26 },
         split: { x: 70, y: 214, w: 330, h: 220, r: 26 },
@@ -4437,7 +4438,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           ${svgBoxText(creativeBody.lead, layout.noteTextX, layout.noteY + 38, layout.noteTextW, Math.max(20, bodyFontSize - 5), isCta ? '#fff6ef' : theme.accent, 900, 1.05, 80)}
           ${svgBoxText(creativeBody.emphasis, layout.noteTextX, layout.noteY + 72, layout.noteTextW, Math.min(40, bodyFontSize + 7), isCta ? '#fff6ef' : theme.text, 900, 0.98, 118)}
           <rect x="${layout.noteTextX}" y="${layout.noteY + noteHeight - closeHeight - 20}" width="${Math.min(layout.noteTextW, 430)}" height="${closeHeight}" rx="10" fill="${isCta ? '#fff6ef' : theme.accent}"/>
-          ${svgBoxText(creativeBody.close, layout.noteTextX + 14, layout.noteY + noteHeight - closeHeight - 1, Math.min(layout.noteTextW - 28, 402), closeFontSize, isCta ? theme.accent : '#fff6ef', 900, 1.12, closeHeight - 24)}
+          ${svgBoxText(creativeBody.close, layout.noteTextX + 16, layout.noteY + noteHeight - closeHeight + 2, closeTextWidth, closeFontSize, isCta ? theme.accent : '#fff6ef', 900, 1.16, closeHeight - 28)}
           ${progress}
           <text x="948" y="1274" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900">${index}/5</text>
         </svg>
