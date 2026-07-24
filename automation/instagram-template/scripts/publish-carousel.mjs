@@ -1474,6 +1474,8 @@ function anatexSlideHtml(slide, index, total, account, style) {
   const visualCue = slide.visualCue || visualCueFromText(`${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
   const avatarImage = accountAvatarCssImage(account, index, visualCue);
   const avatarClass = avatarImage ? ' has-avatar' : '';
+  const brandDisplay = account.brandName || account.expectedUsername || 'Marcondes Machado';
+  const usernameDisplay = account.expectedUsername ? `@${account.expectedUsername}` : brandDisplay;
   const engagementRole = index === 1 ? 'hook' : index === total ? 'cta' : index === total - 1 ? 'proof' : 'value';
   const useSectorPhoto = engagementRole === 'hook' || engagementRole === 'cta';
   const sectorPhotoImage = useSectorPhoto ? sectorPhotoCssImage(visualCue) : '';
@@ -1755,7 +1757,7 @@ function anatexSlideHtml(slide, index, total, account, style) {
 </head>
 <body>
   <main class="${placement}${sectorPhotoClass}">
-    <div class="brand">${account.brandName}</div>
+    <div class="brand">${mode === 'magazine' ? usernameDisplay : brandDisplay}</div>
     <div class="arrows">&gt;&gt;</div>
     <div class="badge"><span></span>${eyebrow}</div>
     ${swipeCue}
