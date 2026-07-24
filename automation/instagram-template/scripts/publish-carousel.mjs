@@ -1448,6 +1448,10 @@ function anatexSlideHtml(slide, index, total, account, style) {
     .mode-poster .panel { right: 70px; top: 650px; width: 286px; height: 286px; border-radius: 50%; transform: none; }
     .mode-poster .note { left: 70px; top: 690px; width: 620px; min-height: 260px; font-size: 28px; }
     .mode-poster .sector-cue { right: 78px; top: 248px; width: 260px; opacity: 0.24; }
+    .layout-left.mode-poster .headline { margin-left: 420px; max-width: 560px; font-size: 60px; }
+    .layout-left.mode-poster .panel { left: 62px; right: auto; top: 660px; width: 300px; height: 300px; }
+    .layout-left.mode-poster .note { left: 430px; top: 730px; width: 560px; min-height: 240px; }
+    .layout-left.mode-poster .sector-cue { left: 112px; right: auto; top: 250px; width: 210px; opacity: 0.24; }
     .mode-minimal main::after { display: none; }
     .mode-minimal main {
       background:
@@ -1460,6 +1464,10 @@ function anatexSlideHtml(slide, index, total, account, style) {
     .mode-minimal .panel { top: 744px; right: 82px; width: 250px; height: 250px; border-radius: 50%; opacity: 0.94; }
     .mode-minimal .note { top: 640px; width: 620px; min-height: 220px; background: rgba(255,255,255,0.42); }
     .mode-minimal .sector-cue { right: 80px; top: 360px; width: 210px; opacity: 0.26; }
+    .layout-left.mode-minimal .headline { margin-left: 420px; max-width: 560px; font-size: 58px; }
+    .layout-left.mode-minimal .panel { left: 72px; right: auto; top: 720px; width: 280px; height: 280px; }
+    .layout-left.mode-minimal .note { left: 430px; top: 690px; width: 560px; }
+    .layout-left.mode-minimal .sector-cue { left: 108px; right: auto; top: 340px; width: 190px; opacity: 0.24; }
     .mode-magazine main {
       background:
         linear-gradient(90deg, ${slideStyle.bgBottom} 0 34%, transparent 34%),
