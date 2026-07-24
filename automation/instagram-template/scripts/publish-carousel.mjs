@@ -14,6 +14,7 @@ const FEED_HEIGHT = 1350;
 const IG_BASE = 'https://graph.facebook.com/v21.0';
 const RETRY_ATTEMPTS = Number.parseInt(process.env.INSTAGRAM_TEMPLATE_RETRY_ATTEMPTS || '3', 10);
 const RETRY_BASE_DELAY_MS = Number.parseInt(process.env.INSTAGRAM_TEMPLATE_RETRY_BASE_DELAY_MS || '2500', 10);
+const MEDIA_URL_RETRY_ATTEMPTS = Number.parseInt(process.env.INSTAGRAM_TEMPLATE_MEDIA_URL_RETRY_ATTEMPTS || '3', 10);
 const RETRYABLE_STATUS = new Set([408, 409, 425, 429, 500, 502, 503, 504]);
 const RETRYABLE_CODES = new Set([
   'ECONNRESET',
@@ -1679,10 +1680,14 @@ function createHttpError(label, status, body) {
     && (graphError.code === -2
       || graphError.error_subcode === 2207003
       || /timeout|tempo limite|download da m[ií]dia/i.test(`${graphError.message || ''} ${graphError.error_user_msg || ''}`));
+  const graphMediaDownloadRejected = graphError
+    && graphError.code === 9004
+    && graphError.error_subcode === 2207052;
   error.stage = label;
   error.status = status;
   error.responseBody = bodyPreview;
-  error.retryable = RETRYABLE_STATUS.has(status) || Boolean(graphMediaTimeout);
+  error.retryable = RETRYABLE_STATUS.has(status) || Boolean(graphMediaTimeout) || Boolean(graphMediaDownloadRejected);
+  error.mediaUrlRejected = Boolean(graphMediaDownloadRejected);
   return error;
 }
 
@@ -2094,6 +2099,50 @@ async function uploadToImgBB(imagePath, apiKey) {
   });
 }
 
+async function assertRemoteImageReady(imageUrl) {
+  await withRetry('Media URL check', async () => {
+    const res = await fetchWithContext(imageUrl, {
+      method: 'GET',
+      headers: { 'user-agent': 'facebookexternalhit/1.1' }
+    }, 'Media URL check');
+    const contentType = res.headers.get('content-type') || '';
+    if (!res.ok || !contentType.toLowerCase().startsWith('image/')) {
+      const error = new Error(`URL de imagem ainda nao pronta: HTTP ${res.status} ${contentType}`);
+      error.stage = 'Media URL check';
+      error.retryable = true;
+      throw error;
+    }
+    await res.arrayBuffer();
+  }, 4);
+}
+
+async function uploadReadyImageToImgBB(imagePath, apiKey) {
+  const imageUrl = await uploadToImgBB(imagePath, apiKey);
+  await assertRemoteImageReady(imageUrl);
+  return imageUrl;
+}
+
+async function createCarouselChildFromImage(userId, token, imagePath, apiKey) {
+  return withRetry('Create carousel child', async (attempt) => {
+    const imageUrl = isHttpUrl(imagePath)
+      ? imagePath
+      : await uploadReadyImageToImgBB(imagePath, apiKey);
+    try {
+      const child = await graphPost(`/${userId}/media`, {
+        image_url: imageUrl,
+        is_carousel_item: 'true',
+        access_token: token
+      });
+      return { child, imageUrl };
+    } catch (error) {
+      if (error.mediaUrlRejected && attempt < MEDIA_URL_RETRY_ATTEMPTS) {
+        console.warn(`Meta recusou a URL ${imageUrl}; reenviando a imagem para gerar outra URL.`);
+      }
+      throw error;
+    }
+  }, MEDIA_URL_RETRY_ATTEMPTS);
+}
+
 async function pollContainer(containerId, token) {
   const deadline = Date.now() + 90_000;
   while (Date.now() < deadline) {
@@ -2113,6 +2162,23 @@ async function createStory(userId, token, imageUrl) {
   });
   await pollContainer(story.id, token);
   return story;
+}
+
+async function createStoryFromImage(userId, token, imagePath, apiKey) {
+  return withRetry('Create story media', async (attempt) => {
+    const imageUrl = isHttpUrl(imagePath)
+      ? imagePath
+      : await uploadReadyImageToImgBB(imagePath, apiKey);
+    try {
+      const story = await createStory(userId, token, imageUrl);
+      return { story, imageUrl };
+    } catch (error) {
+      if (error.mediaUrlRejected && attempt < MEDIA_URL_RETRY_ATTEMPTS) {
+        console.warn(`Meta recusou a URL do story ${imageUrl}; reenviando a imagem para gerar outra URL.`);
+      }
+      throw error;
+    }
+  }, MEDIA_URL_RETRY_ATTEMPTS);
 }
 
 async function main() {
@@ -2256,19 +2322,18 @@ async function main() {
     return;
   }
 
-  const storyImageUrl = await uploadToImgBB(storyImagePath, imgbbKey);
+  let storyImageUrl = '';
+  let story = null;
   let imageUrls = [];
   let childIds = [];
   let carousel = null;
   if (!storyOnly) {
-    imageUrls = await Promise.all(imagePaths.map((imagePath) => (
-      isHttpUrl(imagePath) ? imagePath : uploadToImgBB(imagePath, imgbbKey)
-    )));
-    const children = await Promise.all(imageUrls.map((imageUrl) => graphPost(`/${userId}/media`, {
-      image_url: imageUrl,
-      is_carousel_item: 'true',
-      access_token: token
-    })));
+    const children = [];
+    for (const imagePath of imagePaths) {
+      const result = await createCarouselChildFromImage(userId, token, imagePath, imgbbKey);
+      children.push(result.child);
+      imageUrls.push(result.imageUrl);
+    }
     childIds = children.map((child) => child.id);
     await Promise.all(childIds.map((childId) => pollContainer(childId, token)));
     carousel = await graphPost(`/${userId}/media`, {
@@ -2279,7 +2344,7 @@ async function main() {
     });
     await pollContainer(carousel.id, token);
   }
-  const story = await createStory(userId, token, storyImageUrl);
+  ({ story, imageUrl: storyImageUrl } = await createStoryFromImage(userId, token, storyImagePath, imgbbKey));
 
   const baseResult = {
     ok: true,
