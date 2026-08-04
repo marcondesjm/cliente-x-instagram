@@ -817,7 +817,7 @@
   },
   {
     "key": "cliente-x:2026-08-04:2:30913022174",
-    "status": "open",
+    "status": "resolved",
     "account": "cliente-x",
     "date": "2026-08-04",
     "slotIndex": 2,
@@ -829,11 +829,13 @@
     "stage": "Media URL check",
     "error": "terminated",
     "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o token, conteúdo ou dependência indicada antes da próxima tentativa.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-08-04-101746.json"
+    "failurePath": "automation/instagram-template/runs/failure-2026-08-04-101746.json",
+    "resolvedAt": "2026-08-04T15:39:22.519Z",
+    "resolvedRun": "30925096256"
   },
   {
     "key": "cliente-x:2026-08-04:2:30913788705",
-    "status": "open",
+    "status": "resolved",
     "account": "cliente-x",
     "date": "2026-08-04",
     "slotIndex": 2,
@@ -845,6 +847,8 @@
     "stage": "Graph POST /17841404470203300/media",
     "error": "Graph POST /17841404470203300/media failed [400]: {\"error\":{\"message\":\"Only photo or video can be accepted as media type.\",\"type\":\"OAuthException\",\"code\":9004,\"error_subcode\":2207052,\"is_transient\":false,\"error_user_title\":\"Falha ao baixar m\\u00eddia. O URI da m\\u00eddia n\\u00e3o atende aos nossos requisitos.\",\"error_user_msg\":\"N\\u00e3o foi poss\\u00edvel obter a m\\u00eddia deste URI: https:\\/\\/i.ibb.co\\/v4tWsjBW\\/bddc42f92d2f.jpg.Verifique a se\\u00e7\\u00e3o de limita\\u00e7\\u00f5es no nosso documento de desenvolvimento para mais informa\\u00e7\\u00f5es: https:\\/\\/developers.facebook.com\\/docs\\/instagram-platform\\/instagram-graph-api\\/reference\\/ig-user\\/media#creating\",\"fbtrace_id\":\"A2XcXaK1eZ-9vSUo7B-I0WO\"}}",
     "solution": "Gerar novo token Meta/Instagram, atualizar o secret da conta no Vercel e no GitHub, depois rodar validar acessos no painel.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-08-04-102727.json"
+    "failurePath": "automation/instagram-template/runs/failure-2026-08-04-102727.json",
+    "resolvedAt": "2026-08-04T15:39:22.519Z",
+    "resolvedRun": "30925096256"
   }
 ]
