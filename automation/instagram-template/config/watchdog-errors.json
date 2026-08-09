@@ -1,21 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-07-30:0:30567335241",
-    "status": "open",
-    "account": "cliente-x",
-    "date": "2026-07-30",
-    "slotIndex": 0,
-    "scheduledAt": "2026-07-30T09:30:00.000Z",
-    "failedAt": "2026-07-30T17:45:44.186Z",
-    "workflowRun": "30567335241",
-    "workflowName": "Instagram Watchdog Backup",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/30567335241",
-    "stage": "ImgBB upload",
-    "error": "ImgBB upload failed [400]: {\"status_code\":400,\"error\":{\"message\":\"Rate limit reached.\",\"code\":100},\"status_txt\":\"Bad Request\"}",
-    "solution": "Validar ou trocar IMGBB_API_KEY no painel, salvar no Vercel/GitHub Secrets e redeployar se necessário.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-07-30-144544.json"
-  },
-  {
     "key": "cliente-x:2026-07-30:0:30567427317",
     "status": "open",
     "account": "cliente-x",
@@ -862,5 +846,21 @@
     "error": "ImgBB upload failed [400]: {\"status_code\":400,\"error\":{\"message\":\"Rate limit reached.\",\"code\":100},\"status_txt\":\"Bad Request\"}",
     "solution": "Validar ou trocar IMGBB_API_KEY no painel, salvar no Vercel/GitHub Secrets e redeployar se necessário.",
     "failurePath": "automation/instagram-template/runs/failure-2026-08-09-195012.json"
+  },
+  {
+    "key": "cliente-x:2026-08-09:11:31340961692",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-08-09",
+    "slotIndex": 11,
+    "scheduledAt": "2026-08-09T22:00:00.000Z",
+    "failedAt": "2026-08-09T23:05:10.019Z",
+    "workflowRun": "31340961692",
+    "workflowName": "Instagram Watchdog Backup",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/31340961692",
+    "stage": "unknown",
+    "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"file:///home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-08-09-200437-slot-11/slide-01.html\", waiting until \"load\"\n",
+    "solution": "Corrigir o texto do pack indicado no painel, rodar validar textos e salvar antes da próxima publicação.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-08-09-200509.json"
   }
 ]
