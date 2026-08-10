@@ -1,23 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-08-06:5:31134712517",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-08-06",
-    "slotIndex": 5,
-    "scheduledAt": "2026-08-06T16:00:00.000Z",
-    "failedAt": "2026-08-07T00:29:56.208Z",
-    "workflowRun": "31134712517",
-    "workflowName": "Instagram Watchdog Backup",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/31134712517",
-    "stage": "Graph POST /17841404470203300/media",
-    "error": "Graph POST /17841404470203300/media failed [400]: {\"error\":{\"message\":\"Only photo or video can be accepted as media type.\",\"type\":\"OAuthException\",\"code\":9004,\"error_subcode\":2207052,\"is_transient\":false,\"error_user_title\":\"Falha ao baixar m\\u00eddia. O URI da m\\u00eddia n\\u00e3o atende aos nossos requisitos.\",\"error_user_msg\":\"N\\u00e3o foi poss\\u00edvel obter a m\\u00eddia deste URI: https:\\/\\/i.ibb.co\\/nqPYBRLK\\/b725fdf4e7cc.jpg.Verifique a se\\u00e7\\u00e3o de limita\\u00e7\\u00f5es no nosso documento de desenvolvimento para mais informa\\u00e7\\u00f5es: https:\\/\\/developers.facebook.com\\/docs\\/instagram-platform\\/instagram-graph-api\\/reference\\/ig-user\\/media#creating\",\"fbtrace_id\":\"AMCXKcbOI7rmcjIhlW9u5dE\"}}",
-    "solution": "Gerar novo token Meta/Instagram, atualizar o secret da conta no Vercel e no GitHub, depois rodar validar acessos no painel.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-08-06-212956.json",
-    "resolvedAt": "2026-08-07T00:37:43.827Z",
-    "resolvedRun": "31134782371"
-  },
-  {
     "key": "cliente-x:2026-08-07:3:31192267777",
     "status": "resolved",
     "account": "cliente-x",
@@ -806,5 +788,21 @@
     "error": "ImgBB upload failed [400]: {\"status_code\":400,\"error\":{\"message\":\"Rate limit reached.\",\"code\":100},\"status_txt\":\"Bad Request\"}",
     "solution": "Validar ou trocar IMGBB_API_KEY no painel, salvar no Vercel/GitHub Secrets e redeployar se necessário.",
     "failurePath": "automation/instagram-template/runs/failure-2026-08-10-204105.json"
+  },
+  {
+    "key": "cliente-x:2026-08-10:0:31444042561",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-08-10",
+    "slotIndex": 0,
+    "scheduledAt": "2026-08-10T09:30:00.000Z",
+    "failedAt": "2026-08-10T23:54:04.330Z",
+    "workflowRun": "31444042561",
+    "workflowName": "Instagram Watchdog Backup",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/31444042561",
+    "stage": "ImgBB upload",
+    "error": "ImgBB upload failed [400]: {\"status_code\":400,\"error\":{\"message\":\"Rate limit reached.\",\"code\":100},\"status_txt\":\"Bad Request\"}",
+    "solution": "Validar ou trocar IMGBB_API_KEY no painel, salvar no Vercel/GitHub Secrets e redeployar se necessário.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-08-10-205404.json"
   }
 ]
