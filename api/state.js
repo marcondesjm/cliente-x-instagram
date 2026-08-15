@@ -40,7 +40,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.47',
+  appVersion: 'v4.48',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -459,7 +459,7 @@ const PLAN_CREATIVE_ANGLES = [
   },
   {
     title: (topic) => `Um teste de 30 minutos para ${topic.area}.`,
-    caption: (topic) => `Acompanhe uma demanda real do começo ao fim. Se aparecer ${topic.pain}, você achou um bom fluxo para automatizar.`
+    caption: (topic) => `Acompanhe uma demanda real do começo ao fim. Se você identificar que ${topic.pain}, encontrou um bom fluxo para automatizar.`
   },
   {
     title: (topic) => `${topic.areaTitle || topic.area} antes e depois de organizar o fluxo.`,

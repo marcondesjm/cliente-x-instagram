@@ -764,7 +764,7 @@ const CREATIVE_EDITORIAL_ANGLES = [
     slide3Title: 'Marque onde trava.',
     slide4Title: 'Padronize só uma resposta.',
     slide5Title: 'Depois pense em escala.',
-    caption: (topic, angle, context, sequence, runLine) => `Teste simples para ${topic.area}.\n\nSepare 30 minutos e acompanhe uma demanda real: de onde veio, quem respondeu, onde travou e o que ficou sem registro.\n\nSe aparecer ${topic.pain}, você encontrou um bom primeiro fluxo para automatizar.\n\n${angle.action}\n\nValide com este sinal: ${context.proof}.${runLine}\n\nSérie prática ${String(sequence + 1).padStart(3, '0')}: comece pequeno para crescer certo.\n\n${topic.hashtag}`
+    caption: (topic, angle, context, sequence, runLine) => `Teste simples para ${topic.area}.\n\nSepare 30 minutos e acompanhe uma demanda real: de onde veio, quem respondeu, onde travou e o que ficou sem registro.\n\nSe você identificar que ${topic.pain}, encontrou um bom primeiro fluxo para automatizar.\n\n${angle.action}\n\nValide com este sinal: ${context.proof}.${runLine}\n\nSérie prática ${String(sequence + 1).padStart(3, '0')}: comece pequeno para crescer certo.\n\n${topic.hashtag}`
   },
   {
     label: 'Antes e depois',
