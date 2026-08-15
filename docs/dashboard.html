@@ -140,6 +140,43 @@
       min-width: 0;
     }
 
+    .dashboard-nav {
+      position: sticky;
+      top: 10px;
+      z-index: 20;
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 8px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.92);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      scrollbar-width: none;
+    }
+
+    .dashboard-nav::-webkit-scrollbar { display: none; }
+
+    .dashboard-nav button {
+      flex: 1 0 auto;
+      min-height: 42px;
+      border: 0;
+      border-radius: 12px;
+      background: transparent;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .dashboard-nav button.active {
+      background: var(--text);
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(23,33,28,.18);
+    }
+
+    .dashboard-view-hidden { display: none !important; }
+
     .account-switcher {
       min-width: min(100%, 320px);
       padding: 12px;
@@ -1101,6 +1138,7 @@
       .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .actions { justify-content: stretch; }
       .actions > * { flex: 1 1 180px; }
+      .dashboard-nav button { flex: 0 0 auto; padding-inline: 16px; }
       .panel-head {
         align-items: stretch;
         flex-direction: column;
@@ -1194,7 +1232,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.13</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.14</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1205,13 +1243,22 @@
             </select>
           </label>
         </div>
-        <a class="button" href="https://github.com/marcondesjm/cliente-x-instagram/actions/workflows/instagram-feed-cliente-x.yml" target="_blank" rel="noreferrer">GitHub Actions</a>
-        <button id="redeployVercel" type="button">Redeploy Vercel</button>
-        <button class="primary" id="refreshRuns" type="button">Atualizar runs</button>
+        <a class="button advanced-action" href="https://github.com/marcondesjm/cliente-x-instagram/actions/workflows/instagram-feed-cliente-x.yml" target="_blank" rel="noreferrer">GitHub Actions</a>
+        <button class="advanced-action" id="redeployVercel" type="button">Redeploy Vercel</button>
+        <button class="primary advanced-action" id="refreshRuns" type="button">Atualizar runs</button>
         <button id="logoutButton" type="button">Sair</button>
       </div>
     </header>
     <div class="message" id="deployMessage">Redeploy Vercel ainda não iniciado nesta sessão.</div>
+
+    <nav class="dashboard-nav" aria-label="Áreas do painel">
+      <button type="button" class="active" data-dashboard-view="overview">Visão geral</button>
+      <button type="button" data-dashboard-view="content">Conteúdo</button>
+      <button type="button" data-dashboard-view="schedule">Agenda</button>
+      <button type="button" data-dashboard-view="clients">Clientes</button>
+      <button type="button" data-dashboard-view="billing">Cobrança</button>
+      <button type="button" data-dashboard-view="system">Sistema</button>
+    </nav>
 
     <main>
       <section class="grid">
@@ -2014,6 +2061,52 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       selectedAccount: 'cliente-x',
       account: null
     };
+
+    const DASHBOARD_GROUPS = {
+      overview: ['latestPostTitle', 'checks'],
+      content: ['packSelect', 'activeProfileStatus'],
+      schedule: ['timeline', 'queueStatus'],
+      clients: ['clientPortfolio', 'newAccountStatus', 'usersStatus'],
+      billing: ['stripeSetupStatus', 'accessStatus'],
+      system: ['runsList', 'watchdogPanel', 'versionStatus', 'maintenanceStatus']
+    };
+
+    function activateDashboardView(view = 'overview') {
+      const selected = DASHBOARD_GROUPS[view] ? view : 'overview';
+      document.querySelectorAll('[data-dashboard-group]').forEach((element) => {
+        element.classList.toggle('dashboard-view-hidden', element.dataset.dashboardGroup !== selected);
+      });
+      document.querySelectorAll('[data-dashboard-view]').forEach((button) => {
+        const active = button.dataset.dashboardView === selected;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-current', active ? 'page' : 'false');
+      });
+      document.querySelectorAll('.advanced-action').forEach((element) => {
+        element.classList.toggle('dashboard-view-hidden', selected !== 'system');
+      });
+      document.getElementById('deployMessage')?.classList.toggle('dashboard-view-hidden', selected !== 'system');
+      try { localStorage.setItem('dashboard-active-view', selected); } catch {}
+    }
+
+    function setupDashboardNavigation() {
+      const assignedPanels = new Set();
+      for (const [group, ids] of Object.entries(DASHBOARD_GROUPS)) {
+        for (const id of ids) {
+          const panel = document.getElementById(id)?.closest('.panel');
+          if (!panel) continue;
+          panel.dataset.dashboardGroup = group;
+          assignedPanels.add(panel);
+        }
+      }
+      document.querySelectorAll('main .panel').forEach((panel) => {
+        if (!assignedPanels.has(panel)) panel.dataset.dashboardGroup = 'system';
+      });
+      const metrics = document.querySelector('.metrics');
+      if (metrics) metrics.dataset.dashboardGroup = 'overview';
+      let savedView = 'overview';
+      try { savedView = localStorage.getItem('dashboard-active-view') || 'overview'; } catch {}
+      activateDashboardView(savedView);
+    }
 
     function escapeHtml(value = '') {
       return String(value)
@@ -5168,6 +5261,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     }
 
     async function boot() {
+      setupDashboardNavigation();
       renderSchedule();
       renderChecks();
       renderEditor();
@@ -5182,6 +5276,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     }
 
     function bindEvents() {
+      document.querySelector('.dashboard-nav').addEventListener('click', (event) => {
+        const button = event.target.closest('[data-dashboard-view]');
+        if (button) activateDashboardView(button.dataset.dashboardView);
+      });
       document.getElementById('loginForm').addEventListener('submit', login);
       document.addEventListener('click', (event) => {
         const toggle = event.target.closest('[data-toggle-password]');
