@@ -1490,7 +1490,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const avatarClass = avatarImage ? ' has-avatar' : '';
   const usernameDisplay = accountUsernameDisplay(account);
   const engagementRole = index === 1 ? 'hook' : index === total ? 'cta' : index === total - 1 ? 'proof' : 'value';
-  const useSectorPhoto = engagementRole === 'hook' || engagementRole === 'cta';
+  const useSectorPhoto = engagementRole === 'hook' || engagementRole === 'cta' || mode === 'visual' || mode === 'editorial';
   const sectorPhotoImage = useSectorPhoto ? sectorPhotoCssImage(visualCue) : '';
   const sectorPhotoClass = sectorPhotoImage ? ' has-sector-photo' : '';
   const swipeCue = index === 1 ? '<div class="swipe-cue">arraste para ver</div>' : '';
@@ -1760,6 +1760,71 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .role-cta .note .close { background: #fff6ef; color: ${accent}; margin-top: 18px; }
     .role-cta .progress { bottom: 156px; }
     .role-cta .save-cue { bottom: 56px; min-width: 230px; text-align: center; }
+    /* Modern editorial system: inspired by native posts, product proof and clean magazine layouts. */
+    .mode-native main, .mode-visual main, .mode-statement main, .mode-profile main, .mode-editorial main {
+      background: linear-gradient(180deg, #ffffff 0%, ${slideStyle.bgTop} 100%);
+    }
+    .mode-native main::after, .mode-visual main::after, .mode-statement main::after,
+    .mode-profile main::after, .mode-editorial main::after,
+    .mode-native .sector-cue, .mode-visual .sector-cue, .mode-statement .sector-cue,
+    .mode-profile .sector-cue, .mode-editorial .sector-cue,
+    .mode-native .arrows, .mode-visual .arrows, .mode-statement .arrows,
+    .mode-profile .arrows, .mode-editorial .arrows { display: none; }
+    .mode-native main::before, .mode-visual main::before, .mode-statement main::before,
+    .mode-profile main::before, .mode-editorial main::before { left: 58px; right: 58px; background: rgba(19,34,56,0.12); }
+    .mode-native .brand, .mode-visual .brand, .mode-statement .brand,
+    .mode-profile .brand, .mode-editorial .brand { margin-left: 78px; color: ${slideStyle.text}; font-size: 28px; }
+    .mode-native .brand::before, .mode-visual .brand::before, .mode-statement .brand::before,
+    .mode-profile .brand::before, .mode-editorial .brand::before {
+      content: ""; position: absolute; left: -62px; top: -10px; width: 46px; height: 46px;
+      border-radius: 50%; background: ${avatarImage || accent} center / cover no-repeat; border: 3px solid #fff;
+      box-shadow: 0 5px 18px rgba(19,34,56,0.14);
+    }
+    .mode-native .badge, .mode-visual .badge, .mode-statement .badge,
+    .mode-profile .badge, .mode-editorial .badge {
+      top: 112px; left: 58px; padding: 0; border: 0; border-radius: 0; background: transparent;
+      color: ${accent}; font-size: 23px; letter-spacing: .08em;
+    }
+    .mode-native .badge span, .mode-visual .badge span, .mode-statement .badge span,
+    .mode-profile .badge span, .mode-editorial .badge span { display: none; }
+    .mode-native .headline { margin-top: 118px; max-width: 900px; font-size: 66px; line-height: 1.02; }
+    .mode-native .context-photo { left: 58px; right: 58px; top: 510px; width: auto; height: 430px; border: 0; border-radius: 12px; box-shadow: none; opacity: 1; }
+    .mode-native .panel { display: none; }
+    .mode-native .note { left: 58px; top: 970px; width: 964px; min-height: 210px; padding: 26px 30px; border: 0; border-radius: 12px; background: ${slideStyle.bgBottom}; }
+    .mode-native .note::before { display: none; }
+    .mode-native .note .close { background: transparent; color: ${slideStyle.text}; padding: 8px 0 0; min-height: 0; }
+    .mode-visual .headline { margin: 118px 0 0; max-width: 880px; font-size: 70px; }
+    .mode-visual .context-photo { left: 58px; right: 58px; top: 430px; width: auto; height: 560px; border: 0; border-radius: 18px; box-shadow: none; opacity: 1; }
+    .mode-visual .panel { left: auto; right: 82px; top: 765px; width: 220px; height: 220px; border-radius: 50%; transform: none; z-index: 3; }
+    .mode-visual .note { left: 58px; top: 1018px; width: 964px; min-height: 185px; padding: 24px 30px; border: 0; background: transparent; }
+    .mode-visual .note::before, .mode-visual .note .close { display: none; }
+    .mode-statement .badge { left: 50%; transform: translateX(-50%); }
+    .mode-statement .brand { margin-left: 78px; }
+    .mode-statement .headline { margin: 260px auto 0; max-width: 920px; font-size: 92px; line-height: .98; text-align: center; }
+    .mode-statement .headline::before { content: ""; display: block; width: 84px; height: 8px; margin: 0 auto 42px; background: ${accent}; }
+    .mode-statement .context-photo, .mode-statement .panel { display: none; }
+    .mode-statement .note { left: 130px; top: 790px; width: 820px; min-height: 250px; padding: 36px 44px; border: 0; background: transparent; text-align: center; }
+    .mode-statement .note::before, .mode-statement .note .close { display: none; }
+    .mode-profile .headline { margin-top: 118px; max-width: 820px; font-size: 72px; }
+    .mode-profile .context-photo { display: none; }
+    .mode-profile .panel { left: 58px; right: 58px; top: 510px; width: auto; height: 610px; border: 0; border-radius: 20px; transform: none; background-size: cover; background-position: center 18%; }
+    .mode-profile .note { left: 620px; top: 890px; width: 400px; min-height: 240px; padding: 28px; border: 0; background: rgba(255,255,255,.92); }
+    .mode-profile .note::before, .mode-profile .note .close { display: none; }
+    .mode-editorial main { background: linear-gradient(90deg, #fff 0 43%, ${slideStyle.bgBottom} 43% 100%); }
+    .mode-editorial .headline { margin: 150px 0 0 430px; max-width: 560px; font-size: 66px; }
+    .mode-editorial .context-photo { left: 58px; right: auto; top: 175px; width: 380px; height: 760px; border: 0; border-radius: 12px; box-shadow: none; opacity: 1; }
+    .mode-editorial .panel { display: none; }
+    .mode-editorial .note { left: 480px; top: 610px; width: 520px; min-height: 360px; padding: 34px; border: 0; background: rgba(255,255,255,.66); }
+    .mode-editorial .note::before { display: none; }
+    .mode-editorial .note .lead { color: ${accent}; }
+    .mode-editorial .note .emphasis, .mode-editorial .note .close { color: ${slideStyle.text}; }
+    .mode-editorial .note .close { background: transparent; padding: 12px 0 0; }
+    .mode-native .progress, .mode-visual .progress, .mode-statement .progress,
+    .mode-profile .progress, .mode-editorial .progress { bottom: 82px; }
+    .mode-native .save-cue, .mode-visual .save-cue, .mode-statement .save-cue,
+    .mode-profile .save-cue, .mode-editorial .save-cue { bottom: 118px; }
+    .mode-native .swipe-cue, .mode-visual .swipe-cue, .mode-statement .swipe-cue,
+    .mode-profile .swipe-cue, .mode-editorial .swipe-cue { background: ${slideStyle.text}; font-size: 20px; }
     .bubble { display: none; position: absolute; right: 116px; bottom: 270px; width: 132px; height: 96px; border-radius: 34px; background: #f1d8c7; z-index: 3; }
     .bubble::before { content: "..."; position: absolute; inset: 0; display: grid; place-items: center; color: ${accent}; font-size: 58px; line-height: 0.5; font-weight: 900; letter-spacing: 5px; }
     .spark { position: absolute; color: ${accent}; opacity: 0.7; z-index: 2; font-size: 42px; font-weight: 900; }
@@ -1844,7 +1909,7 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
 
   const anatexVariants = [
     paletteVariant(style, `${style.name}-paper`, {
-      templateMode: 'paper',
+      templateMode: 'native',
       accent: secondary,
       accentSoft: rgba(secondary, 0.14),
       grid: rgba(secondary, 0.12),
@@ -1854,7 +1919,7 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
       muted: '#3b4654'
     }),
     paletteVariant(style, `${style.name}-linen`, {
-      templateMode: 'split',
+      templateMode: 'visual',
       accent: '#b45f35',
       accentSoft: 'rgba(180,95,53,0.13)',
       grid: 'rgba(35,54,72,0.11)',
@@ -1864,7 +1929,7 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
       muted: '#46515c'
     }),
     paletteVariant(style, `${style.name}-sage`, {
-      templateMode: 'poster',
+      templateMode: 'statement',
       accent: '#2f766d',
       accentSoft: 'rgba(47,118,109,0.12)',
       grid: 'rgba(47,118,109,0.10)',
@@ -1874,7 +1939,7 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
       muted: '#394a46'
     }),
     paletteVariant(style, `${style.name}-sky`, {
-      templateMode: 'minimal',
+      templateMode: 'profile',
       accent: '#315f7d',
       accentSoft: 'rgba(49,95,125,0.12)',
       grid: 'rgba(49,95,125,0.10)',
@@ -1884,7 +1949,7 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
       muted: '#354a58'
     }),
     paletteVariant(style, `${style.name}-magazine`, {
-      templateMode: 'magazine',
+      templateMode: 'editorial',
       accent: '#8f5c42',
       accentSoft: 'rgba(143,92,66,0.13)',
       grid: 'rgba(143,92,66,0.10)',
@@ -2154,9 +2219,11 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
   const body = applyAnatexCopyRules(slide.body || '');
   const eyebrow = applyAnatexCopyRules(slide.eyebrow || 'Pra saber');
   const accent = slideStyle.accent || '#a7563d';
+  const mode = slideStyle.templateMode || 'native';
   const soft = slideStyle.accentSoft || 'rgba(167,86,61,0.16)';
   const visualCue = slide.visualCue || visualCueFromText(`${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
   const avatarImage = accountAvatarCssImage(account, 0, visualCue, { ...renderContext, story: true });
+  const sectorPhotoImage = sectorPhotoCssImage(visualCue);
   const avatarBlock = avatarImage
     ? `<div class="avatar"></div>`
     : `<div class="panel"><span>IA</span></div>`;
@@ -2203,14 +2270,39 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     .panel span { color: rgba(167,86,61,0.18); font-size: 124px; font-weight: 900; }
     .note { position: absolute; left: 72px; bottom: 120px; z-index: 2; width: 640px; padding: 34px 42px; border-radius: 28px; background: rgba(255,250,246,0.78); border: 2px solid rgba(167,86,61,0.18); color: #211915; font-size: 34px; line-height: 1.18; font-weight: 900; }
     footer { position: absolute; left: 72px; bottom: 54px; color: ${accent}; font-size: 30px; font-weight: 900; z-index: 2; }
+    .visual-card { display: none; position: absolute; left: 72px; right: 72px; top: 820px; height: 610px; border-radius: 24px; background: ${sectorPhotoImage || slideStyle.bgBottom} center / cover no-repeat; }
+    .mode-native main, .mode-visual main, .mode-statement main, .mode-profile main, .mode-editorial main { background: linear-gradient(180deg, #fff 0%, ${slideStyle.bgTop} 100%); }
+    .mode-native main::before, .mode-visual main::before, .mode-statement main::before, .mode-profile main::before, .mode-editorial main::before { background: rgba(19,34,56,.12); }
+    .mode-native .brand, .mode-visual .brand, .mode-statement .brand, .mode-profile .brand, .mode-editorial .brand { color: ${slideStyle.text}; }
+    .mode-native .badge, .mode-visual .badge, .mode-statement .badge, .mode-profile .badge, .mode-editorial .badge { background: transparent; color: ${accent}; padding: 0; letter-spacing: .08em; }
+    .mode-native h1 { font-size: 86px; max-width: 900px; }
+    .mode-native .avatar { right: 72px; bottom: 220px; width: 420px; height: 560px; border-radius: 22px; transform: none; }
+    .mode-visual h1 { margin-top: 46px; font-size: 80px; }
+    .mode-visual p { font-size: 40px; }
+    .mode-visual .visual-card { display: block; }
+    .mode-visual .avatar { width: 220px; height: 220px; right: 100px; bottom: 330px; border-radius: 50%; transform: none; }
+    .mode-statement .badge { display: block; margin-top: 170px; text-align: center; }
+    .mode-statement h1 { margin: 160px auto 0; max-width: 920px; font-size: 104px; text-align: center; }
+    .mode-statement h1::before { content: ""; display: block; width: 100px; height: 10px; margin: 0 auto 56px; background: ${accent}; }
+    .mode-statement p { margin: 52px auto 0; max-width: 850px; text-align: center; }
+    .mode-statement .avatar, .mode-statement .panel, .mode-statement .note { display: none; }
+    .mode-profile h1 { font-size: 86px; }
+    .mode-profile .avatar { left: 72px; right: 72px; bottom: 210px; width: auto; height: 760px; border-radius: 26px; transform: none; background-position: center 18%; }
+    .mode-profile .note { left: 520px; bottom: 250px; width: 488px; background: rgba(255,255,255,.92); }
+    .mode-editorial main { background: linear-gradient(90deg, #fff 0 60%, ${slideStyle.bgBottom} 60%); }
+    .mode-editorial h1 { max-width: 610px; font-size: 82px; }
+    .mode-editorial p { max-width: 560px; font-size: 39px; }
+    .mode-editorial .visual-card { display: block; left: 650px; right: 56px; top: 520px; height: 720px; }
+    .mode-editorial .avatar { right: 92px; bottom: 250px; width: 300px; height: 390px; transform: none; }
   </style>
 </head>
 <body>
-  <main>
+  <main class="mode-${mode}">
     <div class="brand">${usernameDisplay}</div>
     <div class="badge">${eyebrow}</div>
     <h1>${title.replace(/\s+IA\b/i, ' <strong>IA</strong>')}</h1>
     <p>${body}</p>
+    <div class="visual-card"></div>
     ${avatarBlock}
     <div class="note">${account.footerText}</div>
     <footer>${account.brandName}</footer>
