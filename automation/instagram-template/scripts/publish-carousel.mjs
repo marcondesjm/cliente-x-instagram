@@ -1492,7 +1492,11 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const avatarClass = avatarImage ? ' has-avatar' : '';
   const usernameDisplay = accountUsernameDisplay(account);
   const engagementRole = index === 1 ? 'hook' : index === total ? 'cta' : index === total - 1 ? 'proof' : 'value';
-  const useSectorPhoto = engagementRole === 'hook' || engagementRole === 'cta' || mode === 'visual' || mode === 'editorial';
+  const useSectorPhoto = engagementRole === 'hook'
+    || engagementRole === 'proof'
+    || engagementRole === 'cta'
+    || mode === 'visual'
+    || mode === 'editorial';
   const sectorPhotoImage = useSectorPhoto ? sectorPhotoCssImage(visualCue) : '';
   const sectorPhotoClass = sectorPhotoImage ? ' has-sector-photo' : '';
   const swipeCue = index === 1 ? '<div class="swipe-cue">arraste para ver</div>' : '';
@@ -1804,8 +1808,21 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .mode-statement .brand { margin-left: 78px; }
     .mode-statement .headline { margin: 260px auto 0; max-width: 920px; font-size: 92px; line-height: .98; text-align: center; }
     .mode-statement .headline::before { content: ""; display: block; width: 84px; height: 8px; margin: 0 auto 42px; background: ${accent}; }
-    .mode-statement .context-photo, .mode-statement .panel { display: none; }
-    .mode-statement .note { left: 130px; top: 790px; width: 820px; min-height: 250px; padding: 36px 44px; border: 0; background: transparent; text-align: center; }
+    .mode-statement .context-photo { display: none; }
+    .mode-statement .panel {
+      display: block;
+      left: 350px;
+      right: auto;
+      top: 500px;
+      width: 380px;
+      height: 270px;
+      border-radius: 28px;
+      transform: none;
+      background-size: cover;
+      background-position: center 22%;
+      box-shadow: 0 24px 54px rgba(19,34,56,.16);
+    }
+    .mode-statement .note { left: 130px; top: 820px; width: 820px; min-height: 250px; padding: 36px 44px; border: 0; background: transparent; text-align: center; }
     .mode-statement .note::before, .mode-statement .note .close { display: none; }
     .mode-profile .headline { margin-top: 118px; max-width: 820px; font-size: 72px; }
     .mode-profile .context-photo { display: none; }
