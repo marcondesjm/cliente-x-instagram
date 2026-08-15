@@ -40,7 +40,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.41',
+  appVersion: 'v4.42',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -1550,7 +1550,7 @@ function retainedDirectDeliveries(deliveries = [], now = Date.now()) {
 }
 
 function normalizeDirectAutomation(value = {}) {
-  const keyword = String(value.keyword || '').trim().replace(/^#/, '').slice(0, 40);
+  const keyword = String(value.keyword || '').trim().replace(/^#/, '').slice(0, 200);
   const materialUrl = String(value.materialUrl || '').trim().slice(0, 2000);
   const message = String(value.message || '').trim().slice(0, 850);
   if (!keyword) throw userError('Informe a palavra-chave que a pessoa deve comentar.');
