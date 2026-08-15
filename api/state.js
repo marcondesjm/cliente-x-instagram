@@ -39,7 +39,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.27',
+  appVersion: 'v4.28',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -119,8 +119,8 @@ function accessConfigForAccount(account) {
     platform: 'Meta',
     account: username,
     project: 'Instagram Graph API',
-    purpose: 'Autorizar publicação no feed/story e leitura de métricas.',
-    envKeys: [accessTokenEnv, userIdEnv],
+    purpose: 'Autorizar publicação, métricas e automação de comentários para o Direct.',
+    envKeys: [accessTokenEnv, userIdEnv, 'INSTAGRAM_WEBHOOK_VERIFY_TOKEN', 'INSTAGRAM_APP_SECRET'],
     managementUrl: 'https://developers.facebook.com/tools/explorer/',
     secondaryUrl: 'https://developers.facebook.com/apps/',
     status: 'Usado pelas rotas de publicação e métricas privadas.',
@@ -166,6 +166,8 @@ const SECRET_KEYS = [
   'STRIPE_PRICE_AGENCY'
   ,'THREADS_APP_ID'
   ,'THREADS_APP_SECRET'
+  ,'INSTAGRAM_WEBHOOK_VERIFY_TOKEN'
+  ,'INSTAGRAM_APP_SECRET'
 ];
 const EDITABLE_SECRET_KEYS = new Set([
   'VERCEL_TOKEN',
@@ -184,6 +186,8 @@ const EDITABLE_SECRET_KEYS = new Set([
   'STRIPE_PRICE_AGENCY'
   ,'THREADS_APP_ID'
   ,'THREADS_APP_SECRET'
+  ,'INSTAGRAM_WEBHOOK_VERIFY_TOKEN'
+  ,'INSTAGRAM_APP_SECRET'
 ]);
 
 function accountSecretKeys(accounts = readJson(ACCOUNTS_PATH)) {
@@ -1568,6 +1572,107 @@ async function uploadDirectMaterial(body = {}, session = null) {
   return { ok: true, name: String(body.name || name), url: `/${filePath}`, message: 'Material anexado ao painel.' };
 }
 
+function secureEqualText(left = '', right = '') {
+  const a = Buffer.from(String(left));
+  const b = Buffer.from(String(right));
+  return a.length === b.length && timingSafeEqual(a, b);
+}
+
+function verifyInstagramWebhookSignature(raw, signature = '') {
+  const secret = String(process.env.INSTAGRAM_APP_SECRET || '').trim();
+  if (!secret) return true;
+  const expected = `sha256=${createHmac('sha256', secret).update(raw).digest('hex')}`;
+  return secureEqualText(expected, signature);
+}
+
+function directMessageText(automation, req) {
+  const forwardedHost = String(req.headers['x-forwarded-host'] || req.headers.host || 'cliente-x-instagram.vercel.app').split(',')[0].trim();
+  const protocol = String(req.headers['x-forwarded-proto'] || 'https').split(',')[0].trim();
+  const material = new URL(automation.materialUrl, `${protocol}://${forwardedHost}`).toString();
+  return automation.message.includes('{link}')
+    ? automation.message.replaceAll('{link}', material)
+    : `${automation.message}\n\n${material}`;
+}
+
+async function instagramRequest(path, accessToken, body) {
+  const response = await fetch(`https://graph.instagram.com/v23.0/${path}`, {
+    method: 'POST',
+    headers: { authorization: `Bearer ${accessToken}`, 'content-type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  const result = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(result?.error?.message || `Instagram HTTP ${response.status}`);
+  return result;
+}
+
+function keywordMatches(text, automation) {
+  const cleanText = String(text || '').trim().toLocaleLowerCase('pt-BR');
+  const keyword = String(automation.keyword || '').trim().toLocaleLowerCase('pt-BR');
+  return automation.matchMode === 'exact' ? cleanText === keyword : cleanText.includes(keyword);
+}
+
+async function handleInstagramWebhook(body, raw, signature, req) {
+  if (!verifyInstagramWebhookSignature(raw, signature)) throw userError('Assinatura do webhook da Meta invalida.', 401);
+  if (body?.object !== 'instagram') return { ignored: true, reason: 'object' };
+
+  const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
+  const automationsFile = await readGithubConfig(DIRECT_AUTOMATIONS_FILE_PATH);
+  let changed = false;
+  let processed = 0;
+
+  for (const entry of Array.isArray(body.entry) ? body.entry : []) {
+    const account = accounts.find((item) => String(process.env[item.userIdEnv] || '') === String(entry.id || ''));
+    if (!account) continue;
+    const group = automationsFile.data.find((item) => item.account === account.account);
+    const automation = group?.automation;
+    const token = String(process.env[account.accessTokenEnv] || '').trim();
+    if (!group || !automation?.enabled || !token) continue;
+    group.deliveries = Array.isArray(group.deliveries) ? group.deliveries : [];
+
+    for (const change of Array.isArray(entry.changes) ? entry.changes : []) {
+      if (change.field !== 'comments') continue;
+      const value = change.value || {};
+      const commentId = String(value.id || value.comment_id || '');
+      const mediaId = String(value.media?.id || value.media_id || '');
+      if (!commentId || group.deliveries.some((item) => String(item.commentId) === commentId)) continue;
+      if (automation.mediaId && automation.mediaId !== mediaId) continue;
+      if (!keywordMatches(value.text, automation)) continue;
+
+      const delivery = {
+        commentId,
+        mediaId,
+        username: String(value.from?.username || ''),
+        receivedAt: new Date().toISOString(),
+        status: 'failed'
+      };
+      try {
+        const privateReply = await instagramRequest(`${encodeURIComponent(entry.id)}/messages`, token, {
+          recipient: { comment_id: commentId },
+          message: { text: directMessageText(automation, req) }
+        });
+        delivery.status = 'sent';
+        delivery.messageId = privateReply.message_id || null;
+        delivery.recipientId = privateReply.recipient_id || null;
+        if (automation.publicReply) {
+          const publicReply = await instagramRequest(`${encodeURIComponent(commentId)}/replies`, token, { message: automation.publicReply });
+          delivery.publicReplyId = publicReply.id || null;
+        }
+        processed += 1;
+      } catch (error) {
+        delivery.error = String(error.message || error).slice(0, 300);
+      }
+      group.deliveries.push(delivery);
+      group.deliveries = group.deliveries.slice(-50);
+      changed = true;
+    }
+  }
+
+  if (changed) {
+    await writeGithubConfig(DIRECT_AUTOMATIONS_FILE_PATH, automationsFile.data, automationsFile.sha, 'Record Instagram Direct automation delivery');
+  }
+  return { processed };
+}
+
 async function readWatchdogErrors() {
   return readConfigGroups(WATCHDOG_ERRORS_FILE_PATH, WATCHDOG_ERRORS_PATH);
 }
@@ -1689,6 +1794,12 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
       const { body, raw } = await readBody(req);
+      if (String(req.query?.instagram || '') === 'webhook') {
+        const result = await handleInstagramWebhook(body, raw, req.headers['x-hub-signature-256'] || '', req);
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json({ received: true, ...result });
+        return;
+      }
       if (String(req.query?.billing || '') === 'webhook') {
         const result = await handleStripeWebhook(raw, req.headers['stripe-signature'] || '');
         res.setHeader('cache-control', 'no-store');
@@ -1842,6 +1953,20 @@ export default async function handler(req, res) {
 
   if (req.method !== 'GET') {
     res.status(405).json({ error: 'Metodo nao permitido.' });
+    return;
+  }
+
+  if (String(req.query?.instagram || '') === 'webhook') {
+    const mode = String(req.query?.['hub.mode'] || '');
+    const token = String(req.query?.['hub.verify_token'] || '');
+    const challenge = String(req.query?.['hub.challenge'] || '');
+    const expected = String(process.env.INSTAGRAM_WEBHOOK_VERIFY_TOKEN || '').trim();
+    if (mode === 'subscribe' && expected && secureEqualText(token, expected)) {
+      res.setHeader('content-type', 'text/plain');
+      res.status(200).send(challenge);
+    } else {
+      res.status(403).json({ error: 'Token de verificacao do webhook invalido.' });
+    }
     return;
   }
 
