@@ -15,6 +15,7 @@ import {
 } from '../lib/auth.js';
 import { accountFromQuery, normalizeAccountKey, requireConfiguredAccount } from '../lib/accounts.js';
 import { analyzeBrandDocument } from '../lib/brand-analysis.js';
+import { researchFreshEditorialPacks } from '../lib/editorial-research.js';
 import Stripe from 'stripe';
 
 const ROOT = process.cwd();
@@ -42,7 +43,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.57',
+  appVersion: 'v4.58',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -567,7 +568,28 @@ function dailyPlan(scheduleBrt = [], packs = [], scheduledPosts = [], dateString
   });
 }
 
-function publisherDailyPlan(accountKey = 'cliente-x', dateString = todaySaoPaulo()) {
+async function publisherDailyPlan(accountKey = 'cliente-x', dateString = todaySaoPaulo(), account = null) {
+  if (accountKey === 'cliente-x' && account) {
+    const news = await researchFreshEditorialPacks({ maxAgeDays: 60, limit: 13, timeoutMs: 7000 });
+    if (news.packs.length) {
+      return (account.scheduleUtc || []).map((cron, slotIndex) => {
+        const packIndex = pickDailyIndex(news.packs, dateString, slotIndex);
+        const pack = news.packs[packIndex] || {};
+        return {
+          time: cronToBrtTime(cron),
+          slotIndex,
+          type: 'automatic',
+          status: 'planned',
+          title: pack.slides?.[0]?.title || 'Notícia recente de IA para empresas',
+          caption: compactText(pack.caption || ''),
+          mode: 'feed + story',
+          packIndex: `news-${packIndex}`,
+          sourceUrl: pack.research?.sourceUrl || '',
+          source: pack.research?.source || ''
+        };
+      });
+    }
+  }
   const result = spawnSync(process.execPath, [
     'automation/instagram-template/scripts/publish-carousel.mjs',
     '--account',
@@ -2250,7 +2272,7 @@ export default async function handler(req, res) {
   const weeklyPrograms = weeklyProgramGroup?.programs || [];
   let plan = [];
   try {
-    plan = publisherDailyPlan(accountKey);
+    plan = await publisherDailyPlan(accountKey, todaySaoPaulo(), account);
   } catch {
     plan = editorialDailyPlan(scheduleBrt, account, packs, scheduledPosts);
   }
@@ -2259,7 +2281,7 @@ export default async function handler(req, res) {
   const tomorrowDate = tomorrowSaoPaulo();
   let tomorrowPlan = [];
   try {
-    tomorrowPlan = publisherDailyPlan(accountKey, tomorrowDate);
+    tomorrowPlan = await publisherDailyPlan(accountKey, tomorrowDate, account);
   } catch {
     tomorrowPlan = editorialDailyPlan(scheduleBrt, account, packs, scheduledPosts, tomorrowDate);
   }
