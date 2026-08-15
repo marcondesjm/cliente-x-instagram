@@ -1359,7 +1359,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.52</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.53</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1616,6 +1616,8 @@
           </div>
           <div class="field-stack">
             <label>URL da foto<input id="bioAvatarUrl" placeholder="/docs/uploads/avatar-marcondes.png ou https://..."></label>
+            <label>Anexar foto<input id="bioAvatarFile" type="file" accept="image/png,image/jpeg,image/webp"></label>
+            <div class="editor-actions"><button id="uploadBioAvatar" type="button">Enviar foto</button></div>
             <label>Texto superior<input id="bioEyebrow" maxlength="60"></label>
             <label>Título principal<textarea id="bioHeadline" rows="2" maxlength="120"></textarea></label>
             <label>Apresentação em destaque<textarea id="bioIntroStrong" rows="2" maxlength="220"></textarea></label>
@@ -1633,6 +1635,12 @@
             <button class="primary" id="saveBioPage" type="button">Salvar página Bio</button>
           </div>
           <div class="access-result" id="bioPageResult">Edite os campos e salve para atualizar a página pública.</div>
+          <div style="height: 22px;"></div>
+          <div class="panel-head" style="margin-bottom: 10px;">
+            <div><div class="section-label">Prévia</div><h2>Como a página Bio ficará</h2></div>
+            <button id="refreshBioPreview" type="button">Atualizar prévia</button>
+          </div>
+          <iframe id="bioPagePreview" src="/docs/bio.html?preview=dashboard" title="Prévia da página Bio" style="width:100%;height:900px;border:1px solid #d9e1dc;border-radius:18px;background:#071326;"></iframe>
         </div>
 
         <div class="panel">
@@ -3962,6 +3970,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           <label class="check"><input type="radio" name="bioPrimaryLink" data-bio-primary="${index}" ${link.primary ? 'checked' : ''}><span>Destacar como botão principal</span></label>
         </div>
       `).join('') : '<div class="empty">Nenhum botão cadastrado. Clique em Adicionar link.</div>';
+      setTimeout(renderBioPreview, 0);
     }
 
     function collectBioPageEditor() {
@@ -3997,6 +4006,51 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       renderBioPageEditor();
     }
 
+    function renderBioPreview() {
+      const frame = document.getElementById('bioPagePreview');
+      const doc = frame?.contentDocument;
+      if (!doc?.getElementById('bioHeadline')) return;
+      const bio = collectBioPageEditor();
+      const avatar = doc.getElementById('bioAvatar');
+      if (bio.avatarUrl) avatar.src = bio.avatarUrl;
+      doc.getElementById('bioEyebrow').textContent = bio.eyebrow;
+      doc.getElementById('bioHeadline').textContent = bio.headline;
+      doc.getElementById('bioIntroStrong').textContent = bio.introStrong;
+      doc.getElementById('bioIntroText').textContent = bio.introText;
+      const links = doc.getElementById('bioLinks');
+      const createLink = frame.contentWindow?.renderBioLink;
+      if (links && typeof createLink === 'function') links.replaceChildren(...bio.links.map(createLink));
+      const instagram = doc.getElementById('bioInstagram');
+      if (instagram) {
+        instagram.href = bio.instagramUrl || '#';
+        instagram.textContent = bio.instagramLabel;
+      }
+    }
+
+    async function uploadBioAvatar() {
+      const input = document.getElementById('bioAvatarFile');
+      const file = input.files?.[0];
+      const result = document.getElementById('bioPageResult');
+      if (!file) {
+        result.textContent = 'Escolha uma foto JPG, PNG ou WEBP.';
+        return;
+      }
+      result.textContent = 'Enviando foto...';
+      try {
+        const payload = await api('/api/upload-image', {
+          method: 'POST',
+          body: JSON.stringify({ name: `bio-avatar-${file.name}`, dataUrl: await readFileAsDataUrl(file) })
+        });
+        document.getElementById('bioAvatarUrl').value = payload.imageUrl || payload.imagePath || '';
+        renderBioPreview();
+        result.textContent = 'Foto enviada. Clique em Salvar página Bio para publicar.';
+      } catch (error) {
+        result.textContent = `Erro ao enviar a foto: ${error.message}`;
+      } finally {
+        input.value = '';
+      }
+    }
+
     async function saveBioPage() {
       const result = document.getElementById('bioPageResult');
       result.textContent = 'Salvando página Bio...';
@@ -4007,6 +4061,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         });
         appState.bioPage = payload.bioPage;
         renderBioPageEditor();
+        document.getElementById('bioPagePreview').src = `/docs/bio.html?updated=${Date.now()}`;
         result.textContent = payload.message || 'Página Bio atualizada.';
         setMessage(`${result.textContent} Abra a página para conferir.`, 'good');
       } catch (error) {
@@ -5779,6 +5834,15 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       });
       document.getElementById('addBioLink').addEventListener('click', addBioLink);
       document.getElementById('saveBioPage').addEventListener('click', saveBioPage);
+      document.getElementById('uploadBioAvatar').addEventListener('click', uploadBioAvatar);
+      document.getElementById('refreshBioPreview').addEventListener('click', renderBioPreview);
+      document.getElementById('bioPagePreview').addEventListener('load', () => setTimeout(renderBioPreview, 150));
+      document.getElementById('bioPagePanel').addEventListener('input', (event) => {
+        if (event.target.id !== 'bioAvatarFile') renderBioPreview();
+      });
+      document.getElementById('bioPagePanel').addEventListener('change', (event) => {
+        if (event.target.id !== 'bioAvatarFile') renderBioPreview();
+      });
       document.getElementById('bioLinksEditor').addEventListener('click', (event) => {
         const button = event.target.closest('[data-remove-bio-link]');
         if (button) removeBioLink(Number(button.dataset.removeBioLink));

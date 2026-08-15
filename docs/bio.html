@@ -223,7 +223,7 @@
       anchor.append(icon, copy, arrow);
       return anchor;
     }
-    fetch('/api/state?bio=public')
+    if (!new URLSearchParams(location.search).has('preview')) fetch('/api/state?bio=public')
       .then((response) => response.ok ? response.json() : Promise.reject(new Error('Bio indisponível')))
       .then(({ bioPage }) => {
         if (!bioPage) return;
