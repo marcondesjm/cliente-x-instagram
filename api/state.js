@@ -14,6 +14,7 @@ import {
 } from '../lib/auth.js';
 import { accountFromQuery, normalizeAccountKey, requireConfiguredAccount } from '../lib/accounts.js';
 import { analyzeBrandDocument } from '../lib/brand-analysis.js';
+import Stripe from 'stripe';
 
 const ROOT = process.cwd();
 const CONTENT_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'content-packs.json');
@@ -35,7 +36,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.11',
+  appVersion: 'v4.12',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -97,6 +98,17 @@ function accessConfigForAccount(account) {
     action: 'Alterar variáveis em Production e criar novo deploy para aplicar.'
   },
   {
+    platform: 'Stripe',
+    account: 'Plataforma SaaS',
+    project: 'Assinaturas recorrentes',
+    purpose: 'Criar checkout, receber webhooks e ativar ou pausar clientes conforme o pagamento.',
+    envKeys: ['STRIPE_SECRET_KEY', 'STRIPE_WEBHOOK_SECRET', 'STRIPE_PRICE_STARTER', 'STRIPE_PRICE_PROFESSIONAL', 'STRIPE_PRICE_AGENCY'],
+    managementUrl: 'https://dashboard.stripe.com/apikeys',
+    secondaryUrl: 'https://dashboard.stripe.com/webhooks',
+    status: 'Configure primeiro em modo de teste e valide o webhook antes de usar cobrancas reais.',
+    action: 'Cadastre os tres precos recorrentes e aponte o webhook para /api/state?billing=webhook.'
+  },
+  {
     platform: 'Meta',
     account: username,
     project: 'Instagram Graph API',
@@ -126,7 +138,12 @@ const SECRET_KEYS = [
   'IMGBB_API_KEY',
   'ADMIN_EMAIL',
   'ADMIN_PASSWORD',
-  'ADMIN_USERS_JSON'
+  'ADMIN_USERS_JSON',
+  'STRIPE_SECRET_KEY',
+  'STRIPE_WEBHOOK_SECRET',
+  'STRIPE_PRICE_STARTER',
+  'STRIPE_PRICE_PROFESSIONAL',
+  'STRIPE_PRICE_AGENCY'
 ];
 const EDITABLE_SECRET_KEYS = new Set([
   'VERCEL_TOKEN',
@@ -137,7 +154,12 @@ const EDITABLE_SECRET_KEYS = new Set([
   'ADMIN_EMAIL',
   'ADMIN_PASSWORD',
   'ADMIN_USERS_JSON',
-  'ADMIN_SESSION_SECRET'
+  'ADMIN_SESSION_SECRET',
+  'STRIPE_SECRET_KEY',
+  'STRIPE_WEBHOOK_SECRET',
+  'STRIPE_PRICE_STARTER',
+  'STRIPE_PRICE_PROFESSIONAL',
+  'STRIPE_PRICE_AGENCY'
 ]);
 
 function accountSecretKeys(accounts = readJson(ACCOUNTS_PATH)) {
@@ -835,13 +857,130 @@ function readBody(req) {
     });
     req.on('end', () => {
       try {
-        resolve(raw ? JSON.parse(raw) : {});
+        resolve({ raw, body: raw ? JSON.parse(raw) : {} });
       } catch (error) {
         reject(error);
       }
     });
     req.on('error', reject);
   });
+}
+
+function stripeClient() {
+  if (!process.env.STRIPE_SECRET_KEY) throw userError('Configure STRIPE_SECRET_KEY na Vercel.', 503);
+  return new Stripe(process.env.STRIPE_SECRET_KEY);
+}
+
+function stripePriceForPlan(plan = 'starter') {
+  const key = {
+    starter: 'STRIPE_PRICE_STARTER',
+    professional: 'STRIPE_PRICE_PROFESSIONAL',
+    agency: 'STRIPE_PRICE_AGENCY'
+  }[plan] || 'STRIPE_PRICE_STARTER';
+  const price = process.env[key];
+  if (!price) throw userError(`Configure ${key} na Vercel antes de gerar a cobrança.`, 503);
+  return price;
+}
+
+function requestOrigin(req) {
+  const configured = process.env.PUBLIC_APP_URL || process.env.APP_URL;
+  if (configured) return configured.replace(/\/$/, '');
+  const protocol = String(req.headers['x-forwarded-proto'] || 'https').split(',')[0].trim();
+  const host = String(req.headers['x-forwarded-host'] || req.headers.host || 'cliente-x-instagram.vercel.app').split(',')[0].trim();
+  return `${protocol}://${host}`;
+}
+
+async function createStripeCheckout(body, session, req) {
+  if (!isOwner(session)) throw userError('Somente o administrador principal pode gerar cobrancas.', 403);
+  const accountKey = normalizeAccountKey(body.account);
+  const accountsFile = await readGithubConfig(ACCOUNTS_FILE_PATH);
+  const account = accountsFile.data.find((item) => item.account === accountKey);
+  if (!account) throw userError(`Conta ${accountKey} nao encontrada.`, 404);
+  const client = account.clientProfile || {};
+  if (!client.email) throw userError('Cadastre o email do cliente antes de gerar a cobranca.');
+  const plan = ['starter', 'professional', 'agency'].includes(body.plan) ? body.plan : (client.plan || 'starter');
+  const origin = requestOrigin(req);
+  const sessionCheckout = await stripeClient().checkout.sessions.create({
+    mode: 'subscription',
+    line_items: [{ price: stripePriceForPlan(plan), quantity: 1 }],
+    customer: client.stripeCustomerId || undefined,
+    customer_email: client.stripeCustomerId ? undefined : client.email,
+    client_reference_id: accountKey,
+    metadata: { account: accountKey, plan },
+    subscription_data: { metadata: { account: accountKey, plan } },
+    success_url: `${origin}/?billing=success&session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${origin}/?billing=cancelled`
+  });
+  return { ok: true, checkoutUrl: sessionCheckout.url, checkoutSessionId: sessionCheckout.id, account: accountKey, plan };
+}
+
+function stripeEventIdentity(event) {
+  const object = event.data?.object || {};
+  const customerId = typeof object.customer === 'string' ? object.customer : object.customer?.id;
+  const metadata = object.metadata || object.subscription_details?.metadata || object.parent?.subscription_details?.metadata || {};
+  return {
+    object,
+    customerId,
+    accountKey: metadata.account || object.client_reference_id || '',
+    subscriptionId: typeof object.subscription === 'string' ? object.subscription : object.id?.startsWith?.('sub_') ? object.id : null
+  };
+}
+
+function billingStatusForEvent(event) {
+  const object = event.data?.object || {};
+  if (event.type === 'checkout.session.completed') return object.payment_status === 'paid' || object.payment_status === 'no_payment_required' ? 'active' : 'incomplete';
+  if (event.type === 'invoice.paid') return 'active';
+  if (event.type === 'invoice.payment_failed') return 'past_due';
+  if (event.type.startsWith('customer.subscription.')) return object.status || (event.type.endsWith('.deleted') ? 'canceled' : 'incomplete');
+  return null;
+}
+
+async function processStripeWebhook(event) {
+  const billingStatus = billingStatusForEvent(event);
+  if (!billingStatus) return { ignored: true };
+  const identity = stripeEventIdentity(event);
+  const accountsFile = await readGithubConfig(ACCOUNTS_FILE_PATH);
+  const index = accountsFile.data.findIndex((item) => item.account === identity.accountKey
+    || item.clientProfile?.stripeCustomerId === identity.customerId
+    || item.clientProfile?.stripeSubscriptionId === identity.subscriptionId);
+  if (index === -1) return { ignored: true, reason: 'account-not-found' };
+
+  const account = accountsFile.data[index];
+  const client = account.clientProfile || {};
+  const billing = client.billing || {};
+  const processedEvents = Array.isArray(billing.processedEvents) ? billing.processedEvents : [];
+  if (processedEvents.includes(event.id)) return { duplicate: true, account: account.account };
+  if (Number(billing.updatedAtEpoch || 0) > Number(event.created || 0)) return { stale: true, account: account.account };
+
+  const enabled = ['active', 'trialing'].includes(billingStatus);
+  account.clientProfile = {
+    ...client,
+    status: enabled ? 'active' : 'paused',
+    stripeCustomerId: identity.customerId || client.stripeCustomerId || null,
+    stripeSubscriptionId: identity.subscriptionId || client.stripeSubscriptionId || null,
+    billing: {
+      ...billing,
+      status: billingStatus,
+      lastEventType: event.type,
+      lastEventId: event.id,
+      updatedAt: new Date(Number(event.created || Math.floor(Date.now() / 1000)) * 1000).toISOString(),
+      updatedAtEpoch: Number(event.created || Math.floor(Date.now() / 1000)),
+      processedEvents: [...processedEvents, event.id].slice(-20)
+    }
+  };
+  await writeGithubConfig(ACCOUNTS_FILE_PATH, accountsFile.data, accountsFile.sha, `Sync Stripe billing ${account.account}`);
+  return { ok: true, account: account.account, billingStatus, clientStatus: account.clientProfile.status };
+}
+
+async function handleStripeWebhook(raw, signature) {
+  if (!process.env.STRIPE_WEBHOOK_SECRET) throw userError('Configure STRIPE_WEBHOOK_SECRET na Vercel.', 503);
+  let event;
+  try {
+    event = stripeClient().webhooks.constructEvent(raw, signature, process.env.STRIPE_WEBHOOK_SECRET);
+  } catch {
+    throw userError('Assinatura do webhook Stripe invalida.', 400);
+  }
+  return processStripeWebhook(event);
 }
 
 function githubToken() {
@@ -1325,7 +1464,13 @@ async function readConfigGroups(filePath, localPath) {
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
-      const body = await readBody(req);
+      const { body, raw } = await readBody(req);
+      if (String(req.query?.billing || '') === 'webhook') {
+        const result = await handleStripeWebhook(raw, req.headers['stripe-signature'] || '');
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json({ received: true, ...result });
+        return;
+      }
       if (body.action === 'login') {
         const email = String(body.email || '').trim();
         const password = String(body.password || '');
@@ -1384,6 +1529,12 @@ export default async function handler(req, res) {
       }
       if (body.action === 'create-account') {
         const result = await createAccountConfig(body, session);
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json(result);
+        return;
+      }
+      if (body.action === 'create-stripe-checkout') {
+        const result = await createStripeCheckout(body, session, req);
         res.setHeader('cache-control', 'no-store');
         res.status(200).json(result);
         return;

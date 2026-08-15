@@ -2711,6 +2711,10 @@ async function main() {
   const args = parseArgs(process.argv);
   const env = loadEnv();
   const { account, packs: localPacks, styles } = loadConfig(args.configDir, args.account);
+  if (!args.renderOnly && !args.dryRun && !args.validateCopy && account.clientProfile && account.clientProfile.status !== 'active') {
+    const billingStatus = account.clientProfile.billing?.status || account.clientProfile.status || 'onboarding';
+    throw new Error(`Publicacao bloqueada para ${account.account}: cliente ${billingStatus}. Regularize ou ative o contrato antes de publicar.`);
+  }
   const supabasePacks = await loadSupabasePacks(env, args.account);
   const packs = mergePacks(supabasePacks, localPacks);
   validatePacks(packs);

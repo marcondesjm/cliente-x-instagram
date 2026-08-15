@@ -53,6 +53,10 @@ function ledgerKey(entry) {
 const accounts = readJson(ACCOUNTS_PATH, []);
 const account = accounts.find((item) => item.account === ACCOUNT);
 if (!account) throw new Error(`Conta ${ACCOUNT} nao encontrada em accounts.json.`);
+if (account.clientProfile && account.clientProfile.status !== 'active') {
+  writeOutput({ has_due: 'false', reason: `client-${account.clientProfile.billing?.status || account.clientProfile.status || 'inactive'}` });
+  process.exit(0);
+}
 
 const ledger = readJson(LEDGER_PATH, []);
 const done = new Set(

@@ -1194,7 +1194,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.11</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.12</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -2203,6 +2203,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       status.textContent = `${clientAccounts.length} cliente${clientAccounts.length === 1 ? '' : 's'}`;
       list.innerHTML = clientAccounts.length ? clientAccounts.map((account) => {
         const client = account.clientProfile || {};
+        const billing = client.billing || {};
         const planLabels = { starter: 'Essencial', professional: 'Profissional', agency: 'Agência' };
         const statusLabels = { onboarding: 'Em implantação', active: 'Ativo', paused: 'Pausado' };
         const automatic = client.approvalMode !== 'approval';
@@ -2212,7 +2213,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <strong>${escapeHtml(account.brandName || account.account)}</strong>
             <span>${escapeHtml(planLabels[client.plan] || client.plan || 'Operação própria')} · ${escapeHtml(statusLabels[client.status] || client.status || 'Ativo')} · ${automatic ? 'publicação automática' : 'com aprovação'}</span>
             <span>${escapeHtml(client.contactName || 'Responsável não informado')}${client.monthlyPrice ? ` · R$ ${Number(client.monthlyPrice).toFixed(2).replace('.', ',')}/mês` : ''}</span>
+            <span>Cobrança: ${escapeHtml(billing.status || (client.stripeCustomerId ? 'configurando' : 'não vinculada'))}</span>
             ${appState.sessionRole === 'owner' ? `<div class="access-actions">
+              ${client.email ? `<button type="button" data-billing-checkout data-client-account="${escapeHtml(account.account)}" data-client-plan="${escapeHtml(client.plan || 'starter')}">Gerar pagamento</button>` : ''}
               ${client.status === 'paused'
                 ? `<button type="button" data-client-status="active" data-client-account="${escapeHtml(account.account)}">Ativar</button>`
                 : `<button type="button" data-client-status="paused" data-client-account="${escapeHtml(account.account)}">Pausar</button>`}
@@ -2223,6 +2226,33 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     }
 
     async function handleClientPortfolioClick(event) {
+      const checkoutButton = event.target.closest('[data-billing-checkout]');
+      if (checkoutButton) {
+        const original = checkoutButton.textContent;
+        checkoutButton.disabled = true;
+        checkoutButton.textContent = 'Gerando link';
+        const checkoutWindow = window.open('', '_blank');
+        try {
+          const payload = await api('/api/state', {
+            method: 'POST',
+            body: JSON.stringify({
+              action: 'create-stripe-checkout',
+              account: checkoutButton.dataset.clientAccount,
+              plan: checkoutButton.dataset.clientPlan
+            })
+          });
+          if (checkoutWindow) checkoutWindow.location.href = payload.checkoutUrl;
+          else window.location.href = payload.checkoutUrl;
+          setMessage('Link de pagamento criado na Stripe.', 'good');
+        } catch (error) {
+          checkoutWindow?.close();
+          setMessage(error.message, 'bad');
+        } finally {
+          checkoutButton.disabled = false;
+          checkoutButton.textContent = original;
+        }
+        return;
+      }
       const button = event.target.closest('[data-client-status]');
       if (!button) return;
       const original = button.textContent;
