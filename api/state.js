@@ -40,7 +40,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.37',
+  appVersion: 'v4.38',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -1552,7 +1552,7 @@ function retainedDirectDeliveries(deliveries = [], now = Date.now()) {
 function normalizeDirectAutomation(value = {}) {
   const keyword = String(value.keyword || '').trim().replace(/^#/, '').slice(0, 40);
   const materialUrl = String(value.materialUrl || '').trim().slice(0, 2000);
-  const message = String(value.message || '').trim().slice(0, 1000);
+  const message = String(value.message || '').trim().slice(0, 850);
   if (!keyword) throw userError('Informe a palavra-chave que a pessoa deve comentar.');
   if (!materialUrl) throw userError('Anexe um material ou informe o link para envio.');
   if (!message) throw userError('Escreva a mensagem que sera enviada no Direct.');
@@ -1611,12 +1611,19 @@ function verifyInstagramWebhookSignature(raw, signature = '') {
 }
 
 function directMessageText(automation, req) {
+  const maxMessageLength = 950;
   const forwardedHost = String(req.headers['x-forwarded-host'] || req.headers.host || 'cliente-x-instagram.vercel.app').split(',')[0].trim();
   const protocol = String(req.headers['x-forwarded-proto'] || 'https').split(',')[0].trim();
   const material = new URL(automation.materialUrl, `${protocol}://${forwardedHost}`).toString();
-  return automation.message.includes('{link}')
+  const expanded = automation.message.includes('{link}')
     ? automation.message.replaceAll('{link}', material)
     : `${automation.message}\n\n${material}`;
+  if (expanded.length <= maxMessageLength) return expanded;
+
+  const suffix = `\n\nMaterial: ${material}`;
+  const available = Math.max(0, maxMessageLength - suffix.length);
+  const messageWithoutPlaceholder = automation.message.replaceAll('{link}', '').trim();
+  return `${messageWithoutPlaceholder.slice(0, available).trimEnd()}${suffix}`;
 }
 
 async function instagramRequest(path, accessToken, body) {
