@@ -39,7 +39,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.30',
+  appVersion: 'v4.31',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -63,6 +63,7 @@ const MAINTENANCE = {
 };
 function accessConfigForAccount(account) {
   const accessTokenEnv = account?.accessTokenEnv || 'CLIENTE_X_INSTAGRAM_ACCESS_TOKEN';
+  const messagingTokenEnv = accessTokenEnv.replace(/_INSTAGRAM_ACCESS_TOKEN$/, '_INSTAGRAM_MESSAGING_ACCESS_TOKEN');
   const userIdEnv = account?.userIdEnv || 'CLIENTE_X_INSTAGRAM_USER_ID';
   const imgbbKeyEnv = account?.imgbbKeyEnv || 'IMGBB_API_KEY';
   const username = account?.expectedUsername || 'marcondes.machado.oficial';
@@ -120,7 +121,7 @@ function accessConfigForAccount(account) {
     account: username,
     project: 'Instagram Graph API',
     purpose: 'Autorizar publicação, métricas e automação de comentários para o Direct.',
-    envKeys: [accessTokenEnv, userIdEnv, 'INSTAGRAM_WEBHOOK_VERIFY_TOKEN', 'INSTAGRAM_APP_SECRET'],
+    envKeys: [accessTokenEnv, messagingTokenEnv, userIdEnv, 'INSTAGRAM_WEBHOOK_VERIFY_TOKEN', 'INSTAGRAM_APP_SECRET'],
     managementUrl: 'https://developers.facebook.com/tools/explorer/',
     secondaryUrl: 'https://developers.facebook.com/apps/',
     status: 'Usado pelas rotas de publicação e métricas privadas.',
@@ -173,6 +174,7 @@ const EDITABLE_SECRET_KEYS = new Set([
   'VERCEL_TOKEN',
   'GITHUB_TOKEN',
   'CLIENTE_X_INSTAGRAM_ACCESS_TOKEN',
+  'CLIENTE_X_INSTAGRAM_MESSAGING_ACCESS_TOKEN',
   'CLIENTE_X_INSTAGRAM_USER_ID',
   'IMGBB_API_KEY',
   'ADMIN_EMAIL',
@@ -193,6 +195,7 @@ const EDITABLE_SECRET_KEYS = new Set([
 function accountSecretKeys(accounts = readJson(ACCOUNTS_PATH)) {
   return accounts.flatMap((account) => [
     account.accessTokenEnv,
+    account.accessTokenEnv.replace(/_INSTAGRAM_ACCESS_TOKEN$/, '_INSTAGRAM_MESSAGING_ACCESS_TOKEN'),
     account.userIdEnv,
     account.imgbbKeyEnv,
     `${account.accessTokenEnv.replace(/_INSTAGRAM_ACCESS_TOKEN$/, '')}_THREADS_ACCESS_TOKEN`,
@@ -203,22 +206,25 @@ function accountSecretKeys(accounts = readJson(ACCOUNTS_PATH)) {
 function isEditableSecretKey(key) {
   return EDITABLE_SECRET_KEYS.has(key) ||
     accountSecretKeys().includes(key) ||
-    /^[A-Z0-9_]+_(INSTAGRAM_ACCESS_TOKEN|INSTAGRAM_USER_ID|THREADS_ACCESS_TOKEN|THREADS_USER_ID|IMGBB_API_KEY)$/.test(key);
+    /^[A-Z0-9_]+_(INSTAGRAM_ACCESS_TOKEN|INSTAGRAM_MESSAGING_ACCESS_TOKEN|INSTAGRAM_USER_ID|THREADS_ACCESS_TOKEN|THREADS_USER_ID|IMGBB_API_KEY)$/.test(key);
 }
 
 function accountEnvRole(key) {
   const accounts = readJson(ACCOUNTS_PATH);
   const account = accounts.find((item) => (
     item.accessTokenEnv === key ||
+    item.accessTokenEnv.replace(/_INSTAGRAM_ACCESS_TOKEN$/, '_INSTAGRAM_MESSAGING_ACCESS_TOKEN') === key ||
     item.userIdEnv === key ||
     item.imgbbKeyEnv === key
   ));
   if (!account) {
+    if (key.endsWith('_INSTAGRAM_MESSAGING_ACCESS_TOKEN')) return { role: 'instagram-messaging-token', account: null };
     if (key.endsWith('_INSTAGRAM_ACCESS_TOKEN')) return { role: 'instagram-token', account: null };
     if (key.endsWith('_INSTAGRAM_USER_ID')) return { role: 'instagram-user-id', account: null };
     if (key.endsWith('_IMGBB_API_KEY')) return { role: 'imgbb-key', account: null };
     return { role: null, account: null };
   }
+  if (account.accessTokenEnv.replace(/_INSTAGRAM_ACCESS_TOKEN$/, '_INSTAGRAM_MESSAGING_ACCESS_TOKEN') === key) return { role: 'instagram-messaging-token', account };
   if (account.accessTokenEnv === key) return { role: 'instagram-token', account };
   if (account.userIdEnv === key) return { role: 'instagram-user-id', account };
   if (account.imgbbKeyEnv === key) return { role: 'imgbb-key', account };
@@ -228,6 +234,7 @@ function accountEnvRole(key) {
 function accountForSecretKey(accounts, key) {
   return accounts.find((account) => (
     account.accessTokenEnv === key ||
+    account.accessTokenEnv.replace(/_INSTAGRAM_ACCESS_TOKEN$/, '_INSTAGRAM_MESSAGING_ACCESS_TOKEN') === key ||
     account.userIdEnv === key ||
     account.imgbbKeyEnv === key ||
     `${account.accessTokenEnv.replace(/_INSTAGRAM_ACCESS_TOKEN$/, '')}_THREADS_ACCESS_TOKEN` === key ||
@@ -706,6 +713,11 @@ async function validateAccessValue(key, value, companion = {}) {
   }
 
   const envRole = accountEnvRole(key);
+
+  if (envRole.role === 'instagram-messaging-token') {
+    if (!/^IG[A-Za-z0-9_-]{40,}$/.test(text)) throw userError('Token do Instagram Login parece incompleto.');
+    return { ok: true, message: 'Token de mensagens do Instagram com formato valido.' };
+  }
 
   if (envRole.role === 'instagram-token' || envRole.role === 'instagram-user-id') {
     const token = envRole.role === 'instagram-token'
@@ -1625,7 +1637,8 @@ async function handleInstagramWebhook(body, raw, signature, req) {
     if (!account) continue;
     const group = automationsFile.data.find((item) => item.account === account.account);
     const automation = group?.automation;
-    const token = String(process.env[account.accessTokenEnv] || '').trim();
+    const messagingTokenEnv = account.accessTokenEnv.replace(/_INSTAGRAM_ACCESS_TOKEN$/, '_INSTAGRAM_MESSAGING_ACCESS_TOKEN');
+    const token = String(process.env[messagingTokenEnv] || process.env[account.accessTokenEnv] || '').trim();
     if (!group || !automation?.enabled || !token) continue;
     group.deliveries = Array.isArray(group.deliveries) ? group.deliveries : [];
 
@@ -2131,7 +2144,14 @@ export default async function handler(req, res) {
       items: tomorrowPlan
     },
     weeklyPrograms,
-    directAutomation: directAutomationGroup || { account: accountKey, automation: null, deliveries: [] },
+    directAutomation: {
+      ...(directAutomationGroup || { account: accountKey, automation: null, deliveries: [] }),
+      connected: Boolean(
+        process.env.INSTAGRAM_WEBHOOK_VERIFY_TOKEN &&
+        process.env.INSTAGRAM_APP_SECRET &&
+        (process.env[account.accessTokenEnv.replace(/_INSTAGRAM_ACCESS_TOKEN$/, '_INSTAGRAM_MESSAGING_ACCESS_TOKEN')] || process.env[account.accessTokenEnv])
+      )
+    },
     packs,
     packCount: packs.length,
     uniqueCaptions: new Set(packs.map((pack) => normalizeCaption(pack.caption))).size,

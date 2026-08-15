@@ -1307,7 +1307,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.30</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.31</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1394,7 +1394,7 @@
             <span class="status-pill warn" id="directAutomationStatus">Rascunho</span>
           </div>
           <div class="checks">
-            <div class="check"><span class="dot warn"></span><div><strong>Configuração preparada</strong><span>O envio real ficará desligado até conectarmos o webhook e as permissões da Meta.</span></div></div>
+            <div class="check" id="directConnectionCheck"><span class="dot warn"></span><div><strong>Configuração preparada</strong><span>O envio real ficará desligado até conectarmos o webhook e as permissões da Meta.</span></div></div>
           </div>
           <div class="access-manager">
             <label>Palavra-chave do comentário<input id="directKeyword" placeholder="ex: GUIA"></label>
@@ -3295,13 +3295,18 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('directPublicReply').value = automation.publicReply || 'Enviei o material no seu Direct.';
       document.getElementById('directEnabled').checked = Boolean(automation.enabled);
       const status = document.getElementById('directAutomationStatus');
-      status.textContent = automation.enabled ? 'Pronta para conectar' : 'Rascunho';
-      status.className = `status-pill ${automation.enabled ? 'good' : 'warn'}`;
+      const connected = Boolean(group.connected);
+      status.textContent = connected ? (automation.enabled ? 'Ativa' : 'Meta conectada') : (automation.enabled ? 'Pronta para conectar' : 'Rascunho');
+      status.className = `status-pill ${connected ? 'good' : 'warn'}`;
+      const connection = document.getElementById('directConnectionCheck');
+      connection.innerHTML = connected
+        ? '<span class="dot good"></span><div><strong>Meta conectada</strong><span>Webhook, permissões e token de mensagens estão configurados.</span></div>'
+        : '<span class="dot warn"></span><div><strong>Configuração preparada</strong><span>O envio real ficará desligado até conectarmos o webhook e as permissões da Meta.</span></div>';
       if (automation.materialName) document.getElementById('directMaterialResult').textContent = `Material salvo: ${automation.materialName}`;
       const deliveries = Array.isArray(group.deliveries) ? group.deliveries : [];
       document.getElementById('directDeliveries').innerHTML = deliveries.length
         ? deliveries.slice().reverse().map((item) => `<div class="check"><span class="dot ${item.status === 'sent' ? 'good' : 'warn'}"></span><div><strong>${escapeHtml(item.username || 'Contato')}</strong><span>${escapeHtml(item.keyword || '')} · ${escapeHtml(item.status || 'pendente')}</span></div></div>`).join('')
-        : '<div class="empty">Nenhum envio registrado. A integração com a Meta ainda está desligada.</div>';
+        : `<div class="empty">Nenhum envio registrado. ${connected ? 'A conexão está pronta; ative e salve uma campanha para começar.' : 'A integração com a Meta ainda está desligada.'}</div>`;
     }
 
     async function uploadDirectMaterial() {
