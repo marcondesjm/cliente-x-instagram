@@ -622,10 +622,12 @@ const ENGAGEMENT_INTELLIGENCE = {
 };
 
 const FINAL_SLIDE_CALL_CTA = {
-  eyebrow: 'Convite',
-  title: 'Call gratuita de 30 minutos.',
-  body: 'Acesse o link da bio e escolha um horário para uma conversa prática sobre IA na sua operação.'
+  eyebrow: 'Material gratuito',
+  title: 'Comente IA para receber.',
+  body: '🚀 50 PROMPTS DE IA GRÁTIS! Escreva IA nos comentários e confira o material no seu Direct.'
 };
+
+const FREE_PROMPTS_CTA = 'Comente IA para receber 🚀 50 PROMPTS DE IA GRÁTIS!';
 
 const CONTENT_GOALS = {
   authority: {
@@ -978,14 +980,13 @@ function enhanceSlide(slide, index, dateString, slotIndex, goal = CONTENT_GOALS.
 
 function enhanceCaption(caption, dateString, slotIndex, goal = CONTENT_GOALS.authority) {
   const { body, hashtags } = splitCaptionParts(caption);
-  const ctas = [...(goal.ctas || []), ...ENGAGEMENT_INTELLIGENCE.ctas];
   const angles = [...(goal.captionAngles || []), ...ENGAGEMENT_INTELLIGENCE.captionAngles];
-  const cta = ctas[pickDailyIndex(ctas, dateString, slotIndex)];
   const angle = angles[pickDailyIndex(angles, dateString, slotIndex)];
   const slotNote = angle;
-  const hasCta = /salve|envie|comente|compartilhe|mande/i.test(body);
   const bodyWithAngle = body.includes(slotNote) ? body : `${body}\n\n${slotNote}`;
-  const enhancedBody = hasCta ? bodyWithAngle : `${bodyWithAngle}\n\n${cta}`;
+  const enhancedBody = bodyWithAngle.includes(FREE_PROMPTS_CTA)
+    ? bodyWithAngle
+    : `${bodyWithAngle}\n\n${FREE_PROMPTS_CTA}`;
   return [enhancedBody.trim(), hashtags].filter(Boolean).join('\n\n');
 }
 
