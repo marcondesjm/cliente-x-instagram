@@ -40,7 +40,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.46',
+  appVersion: 'v4.47',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -365,10 +365,29 @@ function mergeProgramItems(plan = [], programs = [], dateString = todaySaoPaulo(
 }
 
 const PLAN_TOPICS = {
-  cliente_x_ia: {
-    area: 'sua empresa',
-    areaTitle: 'Sua empresa',
-    pain: 'tarefas repetitivas consomem tempo, informações ficam espalhadas e decisões chegam sem contexto'
+  cliente_x_ia_pratica: {
+    area: 'a aplicação prática de IA', areaTitle: 'Aplicação prática de IA', areaIn: 'na aplicação prática de IA',
+    pain: 'a equipe testa ferramentas, mas ainda não transforma uma rotina real em resultado'
+  },
+  cliente_x_codex: {
+    area: 'o uso do Codex', areaTitle: 'Uso do Codex', areaIn: 'no uso do Codex',
+    pain: 'tarefas de desenvolvimento e documentação ainda começam do zero'
+  },
+  cliente_x_agentes: {
+    area: 'o uso de agentes de IA', areaTitle: 'Agentes de IA', areaIn: 'no uso de agentes de IA',
+    pain: 'processos com várias etapas dependem de acompanhamento manual e perdem contexto'
+  },
+  cliente_x_automacao: {
+    area: 'a automação empresarial', areaTitle: 'Automação empresarial', areaIn: 'na automação empresarial',
+    pain: 'atendimento, vendas e operação repetem tarefas que poderiam virar um fluxo claro'
+  },
+  cliente_x_prompts: {
+    area: 'a criação de prompts úteis', areaTitle: 'Prompts úteis', areaIn: 'na criação de prompts úteis',
+    pain: 'pedidos genéricos produzem respostas genéricas e pouco aproveitáveis'
+  },
+  cliente_x_saas: {
+    area: 'a criação de SaaS com IA', areaTitle: 'SaaS com IA', areaIn: 'na criação de SaaS com IA',
+    pain: 'uma boa ideia não avança porque falta transformar problema, fluxo e oferta em produto'
   },
   juridico: {
     area: 'Advocacia',
@@ -421,20 +440,21 @@ const PLAN_TOPICS = {
 };
 
 const DEFAULT_CLIENTE_X_ROTATION = [
-  'cliente_x_ia'
+  'cliente_x_ia_pratica', 'cliente_x_codex', 'cliente_x_agentes',
+  'cliente_x_automacao', 'cliente_x_prompts', 'cliente_x_saas'
 ];
 
 const PLAN_CREATIVE_ANGLES = [
   {
-    title: (topic) => `O problema escondido em ${topic.area}.`,
-    caption: (topic) => `Em ${topic.area}, o prejuízo aparece quando ${topic.pain}. Antes da IA, mapeie entrada, resposta e conferência.`
+    title: (topic) => `O problema escondido ${topic.areaIn || `em ${topic.area}`}.`,
+    caption: (topic) => `${topic.areaIn ? `O prejuízo ${topic.areaIn}` : `Em ${topic.area}, o prejuízo`} aparece quando ${topic.pain}. Antes da IA, mapeie entrada, resposta e conferência.`
   },
   {
     title: (topic) => `${topic.areaTitle || topic.area}: 3 pontos para arrumar antes da IA.`,
     caption: (topic) => `Checklist rápido: onde a demanda entra, quem confere a informação e qual resposta pode virar padrão.`
   },
   {
-    title: (topic) => `O erro caro que ${topic.area} normaliza.`,
+    title: (topic) => `O erro caro que aparece ${topic.areaIn || `em ${topic.area}`}.`,
     caption: (topic) => `Tratar rotina repetida como caso isolado custa tempo e contexto. O primeiro passo é transformar repetição em processo.`
   },
   {
@@ -446,7 +466,7 @@ const PLAN_CREATIVE_ANGLES = [
     caption: (topic) => `Antes cada pessoa resolve do seu jeito. Depois existe registro, padrão e acompanhamento para a IA trabalhar com contexto.`
   },
   {
-    title: (topic) => `O bastidor que melhora ${topic.area}.`,
+    title: (topic) => `Bastidores: ${topic.areaTitle || topic.area}.`,
     caption: (topic) => `Cliente vê velocidade, mas o que sustenta isso é bastidor organizado: triagem, registro, resposta e acompanhamento.`
   }
 ];

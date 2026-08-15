@@ -728,13 +728,13 @@ const ANATEX_COPY_RULES = {
 const CREATIVE_EDITORIAL_ANGLES = [
   {
     label: 'Gargalo invisível',
-    title: (topic) => `O problema escondido em ${topic.area}.`,
-    opener: (topic) => `Em ${topic.area}, o prejuízo quase nunca aparece como "falta de IA". Ele aparece quando ${topic.pain}.`,
+    title: (topic) => `O problema escondido ${topic.areaIn || `em ${topic.area}`}.`,
+    opener: (topic) => `${topic.areaIn ? `O prejuízo ${topic.areaIn}` : `Em ${topic.area}, o prejuízo`} quase nunca aparece como "falta de IA". Ele aparece quando ${topic.pain}.`,
     slide2Title: (topic) => `O sintoma: ${topic.pain}.`,
     slide3Title: 'Antes da ferramenta, vem o mapa.',
     slide4Title: 'Escolha uma rotina para testar.',
     slide5Title: (topic) => `Menos improviso em ${topic.area}.`,
-    caption: (topic, angle, context, sequence, runLine) => `${topic.areaTitle || topic.area} tem um gargalo que costuma passar batido.\n\nEle aparece quando ${topic.pain}. A equipe sente como correria, retrabalho ou resposta atrasada.\n\nAntes de pensar em ferramenta, escolha uma rotina pequena, escreva o passo a passo e defina o que precisa ser conferido.\n\n${angle.action}\n\nObserve este sinal: ${context.proof}.${runLine}\n\nSérie prática ${String(sequence + 1).padStart(3, '0')}: IA boa começa em rotina bem descrita.\n\n${topic.hashtag}`
+    caption: (topic, angle, context, sequence, runLine) => `Há um gargalo que costuma passar batido ${topic.areaIn || `em ${topic.area}`}.\n\nEle aparece quando ${topic.pain}. A equipe sente como correria, retrabalho ou resposta atrasada.\n\nAntes de pensar em ferramenta, escolha uma rotina pequena, escreva o passo a passo e defina o que precisa ser conferido.\n\n${angle.action}\n\nObserve este sinal: ${context.proof}.${runLine}\n\nSérie prática ${String(sequence + 1).padStart(3, '0')}: IA boa começa em rotina bem descrita.\n\n${topic.hashtag}`
   },
   {
     label: 'Checklist',
@@ -748,13 +748,13 @@ const CREATIVE_EDITORIAL_ANGLES = [
   },
   {
     label: 'Erro caro',
-    title: (topic) => `O erro caro que ${topic.area} normaliza.`,
+    title: (topic) => `O erro caro que aparece ${topic.areaIn || `em ${topic.area}`}.`,
     opener: (topic) => `O custo não está só no tempo perdido. Está na decisão tomada com informação incompleta.`,
     slide2Title: (topic) => `Quando ${topic.pain}, alguém paga a conta.`,
     slide3Title: 'A IA precisa de critério.',
     slide4Title: 'Transforme repetição em alerta.',
     slide5Title: 'Automação boa evita surpresa.',
-    caption: (topic, angle, context, sequence, runLine) => `Existe um erro caro em ${topic.area}: tratar rotina repetida como se fosse caso isolado.\n\nQuando ${topic.pain}, a empresa perde tempo, contexto e oportunidade.\n\nA saída começa com critério: o que entra, o que precisa ser conferido e qual resposta não pode depender da memória.\n\n${angle.action}\n\nMétrica simples: ${context.proof}.${runLine}\n\nSérie prática ${String(sequence + 1).padStart(3, '0')}: automação serve para reduzir surpresa.\n\n${topic.hashtag}`
+    caption: (topic, angle, context, sequence, runLine) => `Existe um erro caro ${topic.areaIn || `em ${topic.area}`}: tratar rotina repetida como se fosse caso isolado.\n\nQuando ${topic.pain}, a empresa perde tempo, contexto e oportunidade.\n\nA saída começa com critério: o que entra, o que precisa ser conferido e qual resposta não pode depender da memória.\n\n${angle.action}\n\nMétrica simples: ${context.proof}.${runLine}\n\nSérie prática ${String(sequence + 1).padStart(3, '0')}: automação serve para reduzir surpresa.\n\n${topic.hashtag}`
   },
   {
     label: 'Roteiro prático',
@@ -774,17 +774,17 @@ const CREATIVE_EDITORIAL_ANGLES = [
     slide3Title: 'Durante: processo visível.',
     slide4Title: 'Depois: IA com contexto.',
     slide5Title: (topic) => `O ganho aparece em ${topic.gain}.`,
-    caption: (topic, angle, context, sequence, runLine) => `Antes e depois em ${topic.area}.\n\nAntes: ${topic.pain}.\nDepois: entrada clara, informação registrada, resposta padronizada e acompanhamento simples.\n\nÉ aí que a IA deixa de ser novidade e vira apoio real na rotina.\n\n${angle.action}\n\nProcure este sinal: ${context.proof}.${runLine}\n\nSérie prática ${String(sequence + 1).padStart(3, '0')}: clareza antes de escala.\n\n${topic.hashtag}`
+    caption: (topic, angle, context, sequence, runLine) => `Antes e depois ${topic.areaIn || `em ${topic.area}`}.\n\nAntes: ${topic.pain}.\nDepois: entrada clara, informação registrada, resposta padronizada e acompanhamento simples.\n\nÉ aí que a IA deixa de ser novidade e vira apoio real na rotina.\n\n${angle.action}\n\nProcure este sinal: ${context.proof}.${runLine}\n\nSérie prática ${String(sequence + 1).padStart(3, '0')}: clareza antes de escala.\n\n${topic.hashtag}`
   },
   {
     label: 'Bastidor',
-    title: (topic) => `O bastidor que melhora ${topic.area}.`,
+    title: (topic) => `Bastidores: ${topic.areaTitle || topic.area}.`,
     opener: (topic) => `Cliente vê velocidade. A equipe sente alívio. Mas o que sustenta isso é bastidor bem organizado.`,
     slide2Title: (topic) => `O bastidor quebra quando ${topic.pain}.`,
     slide3Title: 'Documente o caminho real.',
     slide4Title: 'Deixe a IA apoiar o repetitivo.',
     slide5Title: 'A experiência melhora fora da tela.',
-    caption: (topic, angle, context, sequence, runLine) => `O que melhora ${topic.area} muitas vezes não aparece na vitrine.\n\nAparece no bastidor: registro, triagem, resposta, acompanhamento e conferência.\n\nQuando ${topic.pain}, a IA pode ajudar, mas só depois que esse caminho está visível.\n\n${angle.action}\n\nAcompanhe: ${context.proof}.${runLine}\n\nSérie prática ${String(sequence + 1).padStart(3, '0')}: bastidor organizado vende melhor.\n\n${topic.hashtag}`
+    caption: (topic, angle, context, sequence, runLine) => `O resultado melhora quando existe um bastidor organizado ${topic.areaIn || `em ${topic.area}`}.\n\nEsse bastidor reúne registro, triagem, resposta, acompanhamento e conferência.\n\nQuando ${topic.pain}, a IA pode ajudar, mas só depois que esse caminho está visível.\n\n${angle.action}\n\nAcompanhe: ${context.proof}.${runLine}\n\nSérie prática ${String(sequence + 1).padStart(3, '0')}: bastidor organizado vende melhor.\n\n${topic.hashtag}`
   }
 ];
 
@@ -1106,6 +1106,57 @@ function pickProfileRotationTopic(profile = {}, dateString = todaySaoPaulo(), sl
   return PROFILE_ROTATION_TOPICS.get(selected) || null;
 }
 
+const CLIENTE_X_ESSENCE_TOPICS = [
+  {
+    id: 'cliente-x-ia-pratica', area: 'a aplicação prática de IA', areaTitle: 'Aplicação prática de IA', areaIn: 'na aplicação prática de IA',
+    pain: 'a equipe testa ferramentas, mas ainda não transforma uma rotina real em resultado',
+    process: 'problema, rotina, regra, ferramenta, revisão humana e métrica',
+    gain: 'tirar a IA do teste e colocá-la para economizar tempo no trabalho',
+    hashtag: '#inteligenciaartificial #produtividade #negocios #automacao #gestao', visualCue: 'business',
+    examples: ['rotinas administrativas', 'análise', 'documentação', 'decisão']
+  },
+  {
+    id: 'cliente-x-codex', area: 'o uso do Codex', areaTitle: 'Uso do Codex', areaIn: 'no uso do Codex',
+    pain: 'tarefas de desenvolvimento e documentação ainda começam do zero',
+    process: 'objetivo, contexto do projeto, instrução, execução, teste e revisão',
+    gain: 'desenvolver, revisar e documentar projetos com mais velocidade e controle',
+    hashtag: '#codex #inteligenciaartificial #desenvolvimento #produtividade #tecnologia', visualCue: 'business',
+    examples: ['criação de sistemas', 'revisão de código', 'documentação', 'automação']
+  },
+  {
+    id: 'cliente-x-agentes', area: 'o uso de agentes de IA', areaTitle: 'Agentes de IA', areaIn: 'no uso de agentes de IA',
+    pain: 'processos com várias etapas dependem de acompanhamento manual e perdem contexto',
+    process: 'objetivo, ferramentas, memória, regras, permissões, logs e supervisão humana',
+    gain: 'transformar tarefas encadeadas em operações acompanháveis',
+    hashtag: '#agentesdeia #inteligenciaartificial #automacao #processos #negocios', visualCue: 'business',
+    examples: ['pesquisa', 'atendimento', 'relatórios', 'tarefas encadeadas']
+  },
+  {
+    id: 'cliente-x-automacao', area: 'a automação empresarial', areaTitle: 'Automação empresarial', areaIn: 'na automação empresarial',
+    pain: 'atendimento, vendas e operação repetem tarefas que poderiam virar um fluxo claro',
+    process: 'entrada, triagem, registro, resposta, acompanhamento, alerta e indicador',
+    gain: 'economizar horas sem perder contexto nem controle humano',
+    hashtag: '#automacao #inteligenciaartificial #atendimento #vendas #gestao', visualCue: 'services',
+    examples: ['atendimento', 'follow-up', 'propostas', 'relatórios']
+  },
+  {
+    id: 'cliente-x-prompts', area: 'a criação de prompts úteis', areaTitle: 'Prompts úteis', areaIn: 'na criação de prompts úteis',
+    pain: 'pedidos genéricos produzem respostas genéricas e pouco aproveitáveis',
+    process: 'papel, contexto, tarefa, restrições, formato de saída e exemplo',
+    gain: 'obter respostas mais claras, reutilizáveis e próximas do resultado esperado',
+    hashtag: '#prompts #inteligenciaartificial #chatgpt #produtividade #ia', visualCue: 'business',
+    examples: ['análise', 'conteúdo', 'planejamento', 'atendimento']
+  },
+  {
+    id: 'cliente-x-saas', area: 'a criação de SaaS com IA', areaTitle: 'SaaS com IA', areaIn: 'na criação de SaaS com IA',
+    pain: 'uma boa ideia não avança porque falta transformar problema, fluxo e oferta em produto',
+    process: 'dor real, público, proposta, protótipo, validação, cobrança e melhoria',
+    gain: 'tirar um projeto do papel e aproximá-lo de uma oferta vendável',
+    hashtag: '#saas #inteligenciaartificial #empreendedorismo #produto #tecnologia', visualCue: 'business',
+    examples: ['MVP', 'validação', 'automação', 'monetização']
+  }
+];
+
 function profileTopicFromAccount(account = {}, dateString = todaySaoPaulo(), slotIndex = 0) {
   const profile = account.contentProfile || {};
   const brandSummary = account.brandSummary || {};
@@ -1113,19 +1164,7 @@ function profileTopicFromAccount(account = {}, dateString = todaySaoPaulo(), slo
   if (!profile.niche && !profile.audience && !profile.offer && !brandSummary.description && !documentAnalysis.summary) return null;
   const selectedRotationTopic = pickProfileRotationTopic(profile, dateString, slotIndex);
   const clienteXTopic = account.account === 'cliente-x' && !selectedRotationTopic
-    ? {
-        id: 'cliente-x-ia',
-        area: 'sua empresa',
-        areaTitle: 'Sua empresa',
-        pain: 'tarefas repetitivas consomem tempo, informações ficam espalhadas e decisões chegam sem contexto',
-        process: 'mapeamento da rotina, regra clara, integração, revisão humana, registro e acompanhamento',
-        gain: 'economizar tempo, atender melhor e decidir com informações organizadas',
-        hashtag: '#inteligenciaartificial #automacao #gestao #processos #negocios #produtividade',
-        trigger: 'quando a equipe repete tarefas e ainda depende de memória ou improviso',
-        proof: 'menos retrabalho, respostas consistentes e operação visível para a liderança',
-        visualCue: 'business',
-        examples: ['atendimento', 'vendas', 'follow-up', 'relatórios', 'tarefas administrativas']
-      }
+    ? CLIENTE_X_ESSENCE_TOPICS[pickDailyIndex(CLIENTE_X_ESSENCE_TOPICS, dateString, slotIndex)]
     : null;
   const industry = selectedRotationTopic || clienteXTopic || detectIndustrySpecialist(account);
   const niche = profile.niche || account.brandName || 'negócio';
@@ -1139,6 +1178,7 @@ function profileTopicFromAccount(account = {}, dateString = todaySaoPaulo(), slo
   return {
     area: industry?.area || niche,
     areaTitle: industry?.areaTitle || industry?.area || niche,
+    areaIn: industry?.areaIn || '',
     pain: industry?.pain || `${shortPhrase(audience, 'clientes')} ainda precisa entender o valor de ${differentiator}`,
     process: industry
       ? `${industry.process}. Oferta da marca: ${shortPhrase(offer, 'solução com IA')}. Tom ${tone}. Contexto: ${brandContext}`
