@@ -1321,24 +1321,27 @@ function cssUrl(value = '') {
   return `url("${String(value).replace(/\\/g, '/').replace(/"/g, '%22')}")`;
 }
 
+function stableAvatarOffset(value = '') {
+  let hash = 2166136261;
+  for (const char of String(value)) {
+    hash ^= char.charCodeAt(0);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
 function pickAccountAvatar(account = {}, index = 1, visualCue = '', context = {}) {
   const rotation = account.avatarRotation || {};
   const urls = Array.isArray(rotation.urls)
     ? rotation.urls.map((item) => String(item || '').trim()).filter(Boolean)
     : [];
   if (rotation.enabled && urls.length) {
-    const seed = [
-      context.dateString || todaySaoPaulo(),
-      context.slotIndex ?? '',
-      context.slotTime || '',
-      context.packIndex ?? '',
-      context.scheduledFor || '',
-      context.story ? 'story' : 'feed',
-      context.creativeGeneration || 1,
-      index,
-      visualCue
-    ].join('-');
-    const offset = seed.split('').reduce((total, char) => total + char.charCodeAt(0), 0);
+    const dateOffset = stableAvatarOffset(context.dateString || todaySaoPaulo()) % urls.length;
+    const slotOffset = Number.isInteger(Number(context.slotIndex)) ? Number(context.slotIndex) : 0;
+    const slideOffset = Math.max(0, Number(index || 1) - 1);
+    const storyOffset = context.story ? Math.max(1, Math.ceil(urls.length / 2)) : 0;
+    const generationOffset = Math.max(0, Number(context.creativeGeneration || 1) - 1);
+    const offset = dateOffset + slotOffset + slideOffset + storyOffset + generationOffset;
     return urls[offset % urls.length];
   }
   return String(account.avatarUrl || account.avatarPath || '').trim();
