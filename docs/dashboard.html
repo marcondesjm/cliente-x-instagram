@@ -1359,7 +1359,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.45</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.46</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1555,7 +1555,7 @@
           <div class="panel-head" style="margin-bottom: 10px;">
             <div>
               <div class="section-label" id="tomorrowPreviewDate">Amanhã</div>
-              <h2>Primeiros posts de amanhã</h2>
+              <h2>Todos os posts de amanhã</h2>
             </div>
             <span class="status-pill" id="tomorrowPreviewStatus">Carregando</span>
           </div>
@@ -4894,7 +4894,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         return;
       }
 
-      status.textContent = `${items.length} previstos`;
+      const reviewedAt = preview.reviewedAt ? new Date(preview.reviewedAt) : null;
+      const reviewedTime = reviewedAt && !Number.isNaN(reviewedAt.getTime()) ? ` · atualizado ${brtFormatter.format(reviewedAt)}` : '';
+      status.textContent = `${items.length} previstos${reviewedTime}`;
       status.className = 'status-pill good';
       list.innerHTML = items.map((item) => {
         const typeLabel = item.type === 'manual' ? 'Manual' : item.type === 'program' ? 'Programa' : 'Automático';

@@ -40,7 +40,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.45',
+  appVersion: 'v4.46',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -2176,7 +2176,7 @@ export default async function handler(req, res) {
   } catch {
     tomorrowPlan = editorialDailyPlan(scheduleBrt, account, packs, scheduledPosts, tomorrowDate);
   }
-  tomorrowPlan = mergeProgramItems(tomorrowPlan, weeklyPrograms, tomorrowDate).slice(0, 3);
+  tomorrowPlan = mergeProgramItems(tomorrowPlan, weeklyPrograms, tomorrowDate);
 
   res.setHeader('cache-control', 'no-store');
   res.status(200).json({
@@ -2208,7 +2208,8 @@ export default async function handler(req, res) {
     dailyPlan: plan,
     tomorrowPreview: {
       date: tomorrowDate,
-      items: tomorrowPlan
+      items: tomorrowPlan,
+      reviewedAt: new Date().toISOString()
     },
     weeklyPrograms,
     directAutomation: {
