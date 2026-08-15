@@ -1279,6 +1279,27 @@ function planForAutomaticSlots(account, localPacks, dateString) {
   });
 }
 
+function planForNewsSlots(account, newsPacks, dateString) {
+  return (account.scheduleUtc || []).map((cron, slotIndex) => {
+    const packIndexNumber = pickDailyIndex(newsPacks, dateString, slotIndex);
+    const rawPack = newsPacks[packIndexNumber] || {};
+    const enhancement = enhancePackForEngagement(rawPack, dateString, slotIndex, account);
+    const pack = enhancement.pack || rawPack;
+    return {
+      time: cronToBrtTime(cron),
+      slotIndex,
+      type: 'automatic',
+      status: 'planned',
+      title: pack.slides?.[0]?.title || 'Notícia recente de IA para empresas',
+      caption: compactPlanText(pack.caption || ''),
+      mode: 'feed + story',
+      packIndex: `news-${packIndexNumber}`,
+      sourceUrl: rawPack.research?.sourceUrl || '',
+      source: rawPack.research?.source || ''
+    };
+  });
+}
+
 function readSlotIndex() {
   const raw = process.env.INSTAGRAM_TEMPLATE_SLOT_INDEX || '0';
   const value = Number.parseInt(raw, 10);
@@ -1619,7 +1640,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .badge { position: absolute; left: 84px; top: 122px; z-index: 2; display: inline-flex; align-items: center; gap: 14px; max-width: 560px; padding: 14px 28px; border-radius: 14px; background: ${accent}; color: #fff6ef; font-size: 27px; line-height: 1; font-weight: 900; text-transform: uppercase; }
     .badge span { width: 32px; height: 32px; flex: 0 0 32px; border-radius: 50%; border: 3px solid #fff6ef; display: inline-block; position: relative; }
     .badge span::after { content: ""; position: absolute; left: 8px; top: 7px; width: 9px; height: 14px; border-right: 4px solid #fff6ef; border-bottom: 4px solid #fff6ef; transform: rotate(40deg); }
-    .headline { position: relative; z-index: 2; margin-top: 98px; max-width: 600px; font-size: 68px; line-height: 0.98; letter-spacing: 0; font-weight: 900; color: ${slideStyle.text}; overflow-wrap: break-word; }
+    .headline { position: relative; z-index: 2; margin-top: 98px; max-width: 570px; font-size: 68px; line-height: 0.98; letter-spacing: 0; font-weight: 900; color: ${slideStyle.text}; overflow-wrap: break-word; }
     .headline strong { display: inline; color: ${accent}; font: inherit; }
     .swipe-cue, .save-cue {
       position: absolute;
@@ -1798,7 +1819,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .layout-left.mode-magazine .panel { left: 62px; right: auto; top: 420px; width: 320px; height: 430px; }
     .layout-left.mode-magazine .note { left: 430px; top: 790px; width: 560px; }
     .layout-left.mode-magazine .sector-cue { left: 122px; right: auto; top: 190px; width: 190px; opacity: 0.22; }
-    .role-hook .headline { font-size: 74px; }
+    .role-hook .headline { max-width: 560px; font-size: 68px; }
     .role-hook .note { min-height: ${Math.max(234, noteMinHeight)}px; font-size: ${Math.min(noteFontSize, 28)}px; }
     .role-value .note::after {
       content: "";
@@ -2894,11 +2915,19 @@ async function main() {
 
   const today = args.planDate || todaySaoPaulo();
   if (args.planDay) {
+    let plannedNews = [];
+    if (account.account === 'cliente-x') {
+      try {
+        plannedNews = (await researchFreshEditorialPacks({ maxAgeDays: 60, limit: 13 })).packs;
+      } catch {}
+    }
     console.log(JSON.stringify({
       ok: true,
       account: account.account,
       date: today,
-      dailyPlan: planForAutomaticSlots(account, packs, today)
+      dailyPlan: plannedNews.length
+        ? planForNewsSlots(account, plannedNews, today)
+        : planForAutomaticSlots(account, packs, today)
     }, null, 2));
     return;
   }
@@ -2916,7 +2945,7 @@ async function main() {
   let editorialResearch = { packs: [], items: [], failures: [], researchedAt: new Date().toISOString() };
   if (!args.validateCopy) {
     try {
-      editorialResearch = await researchFreshEditorialPacks();
+      editorialResearch = await researchFreshEditorialPacks({ maxAgeDays: 60, limit: 13 });
       console.log(`Radar editorial: ${editorialResearch.packs.length} temas recentes encontrados em fontes oficiais.`);
       if (editorialResearch.failures.length) console.log(`Radar editorial: ${editorialResearch.failures.length} fonte(s) indisponivel(is); fluxo continuara com as demais.`);
     } catch (error) {
@@ -2924,13 +2953,14 @@ async function main() {
     }
   }
   const baseSelectionPacks = profilePacks.length ? mergePacks(profilePacks, packs) : packs;
-  const useResearchThisSlot = account.account !== 'cliente-x'
-    && editorialResearch.packs.length > 0
-    && generationSlotIndex % 3 === 0;
+  const useResearchThisSlot = editorialResearch.packs.length > 0
+    && (account.account === 'cliente-x' || generationSlotIndex % 3 === 0);
   const automaticSelectionPacks = useResearchThisSlot
     ? editorialResearch.packs
     : baseSelectionPacks;
-  if (useResearchThisSlot) console.log('Radar editorial priorizado neste horario; os demais horarios continuam alternando conteudos evergreen.');
+  if (useResearchThisSlot) console.log(account.account === 'cliente-x'
+    ? 'Radar editorial recente priorizado em todos os horarios do Cliente X.'
+    : 'Radar editorial priorizado neste horario; os demais horarios continuam alternando conteudos evergreen.');
   validatePacks(autoPacks);
   validatePacks(automaticSelectionPacks);
   if (args.validateCopy) {
@@ -2953,9 +2983,11 @@ async function main() {
 
   const style = styleWithBrandPalette(pickVisualStyle(styles, account, today, generationSlotIndex), account, { dateString: today, slotIndex: generationSlotIndex });
   let pack = pickDaily(automaticSelectionPacks, today, generationSlotIndex);
-  let packIndex = profilePacks.length
-    ? `profile-${pickDailyIndex(automaticSelectionPacks, today, generationSlotIndex)}`
-    : pickDailyIndex(automaticSelectionPacks, today, generationSlotIndex);
+  let packIndex = useResearchThisSlot
+    ? `news-${pickDailyIndex(automaticSelectionPacks, today, generationSlotIndex)}`
+    : profilePacks.length
+      ? `profile-${pickDailyIndex(automaticSelectionPacks, today, generationSlotIndex)}`
+      : pickDailyIndex(automaticSelectionPacks, today, generationSlotIndex);
   let skippedDuplicates = 0;
   let scheduledPost = null;
   let publishMode = process.env.INSTAGRAM_TEMPLATE_PUBLISH_MODE === 'story-only' || args.storyOnly
@@ -3040,7 +3072,7 @@ async function main() {
         }
       } else {
         pack = fresh.pack;
-        packIndex = profilePacks.length ? `profile-${fresh.packIndex}` : fresh.packIndex;
+        packIndex = useResearchThisSlot ? `news-${fresh.packIndex}` : profilePacks.length ? `profile-${fresh.packIndex}` : fresh.packIndex;
         skippedDuplicates = fresh.skippedDuplicates;
       }
     }
