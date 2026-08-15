@@ -1307,7 +1307,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.25</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.26</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1383,6 +1383,36 @@
               <span>Assim que a Meta confirmar o post, ele aparecerá ao vivo neste espaço.</span>
             </div>
           </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="section-label">Instagram Direct</div>
+              <h2>Comentou e recebeu o material</h2>
+            </div>
+            <span class="status-pill warn" id="directAutomationStatus">Rascunho</span>
+          </div>
+          <div class="checks">
+            <div class="check"><span class="dot warn"></span><div><strong>Configuração preparada</strong><span>O envio real ficará desligado até conectarmos o webhook e as permissões da Meta.</span></div></div>
+          </div>
+          <div class="access-manager">
+            <label>Palavra-chave do comentário<input id="directKeyword" placeholder="ex: GUIA"></label>
+            <label>Correspondência<select id="directMatchMode"><option value="contains">Contém a palavra</option><option value="exact">Comentário exato</option></select></label>
+            <label>ID da publicação (opcional)<input id="directMediaId" placeholder="Vazio = qualquer publicação"></label>
+            <label>Link do material<input id="directMaterialUrl" placeholder="https://... ou arquivo anexado"></label>
+            <label>Anexar material<input id="directMaterialFile" type="file" accept="application/pdf,text/plain,image/png,image/jpeg,image/webp"></label>
+            <div class="access-result" id="directMaterialResult">PDF, TXT ou imagem de até 8 MB.</div>
+            <label>Mensagem enviada no Direct<textarea id="directMessage" rows="5" placeholder="Olá! Aqui está o material que você pediu: {link}"></textarea></label>
+            <label>Resposta pública no comentário<input id="directPublicReply" value="Enviei o material no seu Direct."></label>
+            <label class="check"><input id="directEnabled" type="checkbox"><span>Deixar pronta para ativação quando a Meta for conectada</span></label>
+            <div class="editor-actions">
+              <button type="button" id="uploadDirectMaterial">Anexar material</button>
+              <button class="primary" type="button" id="saveDirectAutomation">Salvar automação</button>
+            </div>
+            <div class="access-result" id="directAutomationResult">Preencha a campanha e salve no projeto.</div>
+          </div>
+          <div class="checks" id="directDeliveries"><div class="empty">Nenhum envio registrado. A integração com a Meta ainda está desligada.</div></div>
         </div>
 
         <div class="panel">
@@ -2139,6 +2169,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       tomorrowPreview: { date: '', items: [] },
       scheduledPosts: [],
       weeklyPrograms: [],
+      directAutomation: { automation: null, deliveries: [] },
       selectedPack: 0,
       selectedSlide: 0,
       serverMode: location.protocol.startsWith('http'),
@@ -2161,7 +2192,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
 
     const DASHBOARD_GROUPS = {
       overview: ['instagramShowcase', 'latestPostTitle', 'checks'],
-      content: ['packSelect', 'activeProfileStatus'],
+      content: ['packSelect', 'activeProfileStatus', 'directAutomationStatus'],
       schedule: ['timeline', 'queueStatus'],
       clients: ['clientPortfolio', 'newAccountStatus', 'usersStatus'],
       billing: ['stripeSetupStatus', 'accessStatus'],
@@ -2346,6 +2377,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         appState.tomorrowPreview = state.tomorrowPreview || { date: '', items: [] };
         appState.scheduledPosts = state.scheduledPosts || [];
         appState.weeklyPrograms = state.weeklyPrograms || [];
+        appState.directAutomation = state.directAutomation || { automation: null, deliveries: [] };
         appState.secrets = state.secrets || [];
         appState.accessConfig = state.accessConfig || [];
         appState.watchdogErrors = state.watchdogErrors || [];
@@ -2366,6 +2398,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         renderDailyPlan();
         renderTomorrowPreview();
         renderWeeklyPrograms();
+        renderDirectAutomation();
         renderScheduleEditor();
         renderQueue();
         renderChecks();
@@ -3249,6 +3282,71 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         button.disabled = false;
         button.textContent = original;
       }
+    }
+
+    function renderDirectAutomation() {
+      const group = appState.directAutomation || {};
+      const automation = group.automation || {};
+      document.getElementById('directKeyword').value = automation.keyword || '';
+      document.getElementById('directMatchMode').value = automation.matchMode || 'contains';
+      document.getElementById('directMediaId').value = automation.mediaId || '';
+      document.getElementById('directMaterialUrl').value = automation.materialUrl || '';
+      document.getElementById('directMessage').value = automation.message || 'Olá! Aqui está o material que você pediu: {link}';
+      document.getElementById('directPublicReply').value = automation.publicReply || 'Enviei o material no seu Direct.';
+      document.getElementById('directEnabled').checked = Boolean(automation.enabled);
+      const status = document.getElementById('directAutomationStatus');
+      status.textContent = automation.enabled ? 'Pronta para conectar' : 'Rascunho';
+      status.className = `status-pill ${automation.enabled ? 'good' : 'warn'}`;
+      if (automation.materialName) document.getElementById('directMaterialResult').textContent = `Material salvo: ${automation.materialName}`;
+      const deliveries = Array.isArray(group.deliveries) ? group.deliveries : [];
+      document.getElementById('directDeliveries').innerHTML = deliveries.length
+        ? deliveries.slice().reverse().map((item) => `<div class="check"><span class="dot ${item.status === 'sent' ? 'good' : 'warn'}"></span><div><strong>${escapeHtml(item.username || 'Contato')}</strong><span>${escapeHtml(item.keyword || '')} · ${escapeHtml(item.status || 'pendente')}</span></div></div>`).join('')
+        : '<div class="empty">Nenhum envio registrado. A integração com a Meta ainda está desligada.</div>';
+    }
+
+    async function uploadDirectMaterial() {
+      const input = document.getElementById('directMaterialFile');
+      const file = input.files?.[0];
+      const result = document.getElementById('directMaterialResult');
+      if (!file) { result.textContent = 'Escolha um PDF, TXT ou imagem.'; return; }
+      if (file.size > 8_000_000) { result.textContent = 'Arquivo maior que 8 MB.'; return; }
+      result.textContent = 'Enviando material...';
+      try {
+        const dataUrl = await new Promise((resolve, reject) => {
+          const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = reject; reader.readAsDataURL(file);
+        });
+        const payload = await api('/api/state', { method: 'POST', body: JSON.stringify({ action: 'upload-direct-material', account: appState.selectedAccount, name: file.name, dataUrl }) });
+        document.getElementById('directMaterialUrl').value = payload.url;
+        document.getElementById('directMaterialUrl').dataset.materialName = payload.name;
+        result.textContent = `${payload.message} ${payload.name}`;
+      } catch (error) { result.textContent = error.message; }
+    }
+
+    async function saveDirectAutomation() {
+      const button = document.getElementById('saveDirectAutomation');
+      const result = document.getElementById('directAutomationResult');
+      const original = button.textContent;
+      button.disabled = true; button.textContent = 'Salvando...'; result.textContent = 'Salvando configuração...';
+      try {
+        const materialUrl = document.getElementById('directMaterialUrl');
+        const payload = await api('/api/state', { method: 'POST', body: JSON.stringify({
+          action: 'update-direct-automation', account: appState.selectedAccount,
+          automation: {
+            enabled: document.getElementById('directEnabled').checked,
+            keyword: document.getElementById('directKeyword').value,
+            matchMode: document.getElementById('directMatchMode').value,
+            mediaId: document.getElementById('directMediaId').value,
+            materialUrl: materialUrl.value,
+            materialName: materialUrl.dataset.materialName || '',
+            message: document.getElementById('directMessage').value,
+            publicReply: document.getElementById('directPublicReply').value
+          }
+        }) });
+        appState.directAutomation = payload.directAutomation;
+        renderDirectAutomation();
+        result.textContent = `${payload.message} Confirmado às ${new Date().toLocaleTimeString('pt-BR')}.`;
+      } catch (error) { result.textContent = error.message; }
+      finally { button.disabled = false; button.textContent = original; }
     }
 
     async function createUser() {
@@ -5463,6 +5561,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('redeployVercel').addEventListener('click', redeployVercel);
       document.getElementById('forceWatchdog').addEventListener('click', forceWatchdog);
       document.getElementById('saveActiveProfile').addEventListener('click', saveActiveProfile);
+      document.getElementById('uploadDirectMaterial').addEventListener('click', uploadDirectMaterial);
+      document.getElementById('saveDirectAutomation').addEventListener('click', saveDirectAutomation);
       document.getElementById('createAccount').addEventListener('click', createAccount);
       document.getElementById('uploadBrandDocument').addEventListener('click', uploadBrandDocument);
       document.getElementById('uploadActiveAvatars').addEventListener('click', uploadActiveAvatars);

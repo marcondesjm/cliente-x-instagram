@@ -23,6 +23,7 @@ const ACCOUNTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', '
 const SCHEDULED_POSTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'scheduled-posts.json');
 const WEEKLY_PROGRAMS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'weekly-programs.json');
 const WATCHDOG_ERRORS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'watchdog-errors.json');
+const DIRECT_AUTOMATIONS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'direct-automations.json');
 const OWNER = 'marcondesjm';
 const REPO = 'cliente-x-instagram';
 const ACCOUNTS_FILE_PATH = 'automation/instagram-template/config/accounts.json';
@@ -30,6 +31,7 @@ const CONTENT_FILE_PATH = 'automation/instagram-template/config/content-packs.js
 const SCHEDULED_FILE_PATH = 'automation/instagram-template/config/scheduled-posts.json';
 const WEEKLY_PROGRAMS_FILE_PATH = 'automation/instagram-template/config/weekly-programs.json';
 const WATCHDOG_ERRORS_FILE_PATH = 'automation/instagram-template/config/watchdog-errors.json';
+const DIRECT_AUTOMATIONS_FILE_PATH = 'automation/instagram-template/config/direct-automations.json';
 const FORCE_WATCHDOG_FILE_PATH = '.github/force-instagram-watchdog.txt';
 const VERCEL_PROJECT_ID = process.env.VERCEL_PROJECT_ID || 'prj_AVyS8LGjVuhUOxkpfZZwOF5vMmPj';
 const VERCEL_TEAM_ID = process.env.VERCEL_TEAM_ID || 'team_T4Th6hb1UxtrbtcWfLxlWNRQ';
@@ -37,7 +39,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.25',
+  appVersion: 'v4.26',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -1514,6 +1516,58 @@ async function updateWeeklyPrograms(body = {}, session = null) {
   };
 }
 
+async function readDirectAutomationGroups() {
+  return readConfigGroups(DIRECT_AUTOMATIONS_FILE_PATH, DIRECT_AUTOMATIONS_PATH);
+}
+
+function normalizeDirectAutomation(value = {}) {
+  const keyword = String(value.keyword || '').trim().replace(/^#/, '').slice(0, 40);
+  const materialUrl = String(value.materialUrl || '').trim().slice(0, 2000);
+  const message = String(value.message || '').trim().slice(0, 1000);
+  if (!keyword) throw userError('Informe a palavra-chave que a pessoa deve comentar.');
+  if (!materialUrl) throw userError('Anexe um material ou informe o link para envio.');
+  if (!message) throw userError('Escreva a mensagem que sera enviada no Direct.');
+  return {
+    enabled: Boolean(value.enabled), keyword,
+    matchMode: value.matchMode === 'exact' ? 'exact' : 'contains',
+    mediaId: String(value.mediaId || '').trim().slice(0, 100),
+    materialUrl, materialName: String(value.materialName || '').trim().slice(0, 160), message,
+    publicReply: String(value.publicReply || 'Enviei o material no seu Direct.').trim().slice(0, 300),
+    updatedAt: new Date().toISOString()
+  };
+}
+
+async function updateDirectAutomation(body = {}, session = null) {
+  const accountKey = normalizeAccountKey(body.account);
+  const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
+  const account = accounts.find((item) => item.account === accountKey);
+  if (!account) throw userError(`Conta ${accountKey} nao encontrada.`, 404);
+  if (!canAccessAccount(session, account)) throw userError('Seu usuario nao pode alterar esta conta.', 403);
+  const file = await readGithubConfig(DIRECT_AUTOMATIONS_FILE_PATH);
+  let group = file.data.find((item) => item.account === accountKey);
+  if (!group) { group = { account: accountKey, automation: null, deliveries: [] }; file.data.push(group); }
+  group.automation = normalizeDirectAutomation(body.automation || {});
+  group.deliveries = Array.isArray(group.deliveries) ? group.deliveries.slice(-50) : [];
+  await writeGithubConfig(DIRECT_AUTOMATIONS_FILE_PATH, file.data, file.sha, `Update Direct automation for ${accountKey}`);
+  return { ok: true, directAutomation: group, message: 'Automacao de Direct salva no painel.' };
+}
+
+async function uploadDirectMaterial(body = {}, session = null) {
+  const accountKey = normalizeAccountKey(body.account);
+  const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
+  const account = accounts.find((item) => item.account === accountKey);
+  if (!account || !canAccessAccount(session, account)) throw userError('Seu usuario nao pode enviar material para esta conta.', 403);
+  const match = String(body.dataUrl || '').match(/^data:(application\/pdf|text\/plain|image\/png|image\/jpeg|image\/webp);base64,([A-Za-z0-9+/=]+)$/);
+  if (!match) throw userError('Envie PDF, TXT, PNG, JPG ou WEBP.');
+  const bytes = Buffer.from(match[2], 'base64');
+  if (bytes.length > 8_000_000) throw userError('Material muito grande. Use arquivo de ate 8 MB.', 413);
+  const extensions = { 'application/pdf': '.pdf', 'text/plain': '.txt', 'image/png': '.png', 'image/jpeg': '.jpg', 'image/webp': '.webp' };
+  const name = `${Date.now()}-${safeUploadName(body.name || 'material')}${extensions[match[1]]}`;
+  const filePath = `docs/uploads/direct-materials/${accountKey}/${name}`;
+  await writeGithubFile(filePath, match[2], `Upload Direct material for ${accountKey}`);
+  return { ok: true, name: String(body.name || name), url: `/${filePath}`, message: 'Material anexado ao painel.' };
+}
+
 async function readWatchdogErrors() {
   return readConfigGroups(WATCHDOG_ERRORS_FILE_PATH, WATCHDOG_ERRORS_PATH);
 }
@@ -1727,6 +1781,14 @@ export default async function handler(req, res) {
         res.status(200).json(result);
         return;
       }
+      if (body.action === 'update-direct-automation') {
+        const result = await updateDirectAutomation(body, session);
+        res.setHeader('cache-control', 'no-store'); res.status(200).json(result); return;
+      }
+      if (body.action === 'upload-direct-material') {
+        const result = await uploadDirectMaterial(body, session);
+        res.setHeader('cache-control', 'no-store'); res.status(200).json(result); return;
+      }
       if (body.action === 'upload-brand-document') {
         const result = await uploadBrandDocument(body, session);
         res.setHeader('cache-control', 'no-store');
@@ -1884,9 +1946,11 @@ export default async function handler(req, res) {
   const group = content.find((item) => item.account === accountKey);
   const scheduledGroups = await readScheduledGroups();
   const weeklyProgramGroups = await readWeeklyProgramGroups();
+  const directAutomationGroups = await readDirectAutomationGroups();
   const watchdogErrors = await readWatchdogErrors();
   const scheduledGroup = scheduledGroups.find((item) => item.account === accountKey);
   const weeklyProgramGroup = weeklyProgramGroups.find((item) => item.account === accountKey);
+  const directAutomationGroup = directAutomationGroups.find((item) => item.account === accountKey);
   const packs = group?.packs || [];
   const scheduleBrt = account?.scheduleUtc?.map(cronToBrtTime) || [];
   const scheduledPosts = scheduledGroup?.posts || [];
@@ -1942,6 +2006,7 @@ export default async function handler(req, res) {
       items: tomorrowPlan
     },
     weeklyPrograms,
+    directAutomation: directAutomationGroup || { account: accountKey, automation: null, deliveries: [] },
     packs,
     packCount: packs.length,
     uniqueCaptions: new Set(packs.map((pack) => normalizeCaption(pack.caption))).size,
