@@ -5,6 +5,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from
 import { basename, dirname, extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildBrandContext } from '../../../lib/brand-analysis.js';
+import { researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const TEMPLATE_DIR = resolve(ROOT, 'automation', 'instagram-template');
@@ -2564,7 +2565,8 @@ function recordPublicationHistory(configDir, accountKey, pack, result) {
       publishedAt: new Date().toISOString(),
       mediaId: result.mediaId || null,
       storyMediaId: result.storyMediaId || null,
-      permalink: result.permalink || null
+      permalink: result.permalink || null,
+      research: pack.research || null
     });
   }
   history[accountKey] = entries;
@@ -2790,7 +2792,22 @@ async function main() {
   const creativeBatchRemaining = creativeBatchSize - (publicationHistory.length % creativeBatchSize);
   const profilePacks = buildProfileContentPacks(account, today, generationSlotIndex);
   const autoPacks = profilePacks.length ? profilePacks : buildAutoContentPacks(today, generationSlotIndex);
-  const automaticSelectionPacks = profilePacks.length ? mergePacks(profilePacks, packs) : packs;
+  let editorialResearch = { packs: [], items: [], failures: [], researchedAt: new Date().toISOString() };
+  if (!args.validateCopy) {
+    try {
+      editorialResearch = await researchFreshEditorialPacks();
+      console.log(`Radar editorial: ${editorialResearch.packs.length} temas recentes encontrados em fontes oficiais.`);
+      if (editorialResearch.failures.length) console.log(`Radar editorial: ${editorialResearch.failures.length} fonte(s) indisponivel(is); fluxo continuara com as demais.`);
+    } catch (error) {
+      console.log(`Radar editorial indisponivel (${error.message}). Acervo local mantido para a postagem nao parar.`);
+    }
+  }
+  const baseSelectionPacks = profilePacks.length ? mergePacks(profilePacks, packs) : packs;
+  const useResearchThisSlot = editorialResearch.packs.length > 0 && generationSlotIndex % 3 === 0;
+  const automaticSelectionPacks = useResearchThisSlot
+    ? editorialResearch.packs
+    : baseSelectionPacks;
+  if (useResearchThisSlot) console.log('Radar editorial priorizado neste horario; os demais horarios continuam alternando conteudos evergreen.');
   validatePacks(autoPacks);
   validatePacks(automaticSelectionPacks);
   if (args.validateCopy) {
@@ -2925,6 +2942,7 @@ async function main() {
     }
   }
   writeFileSync(join(runDir, 'engagement-intelligence.json'), JSON.stringify(enhancement.intelligence, null, 2), 'utf8');
+  writeFileSync(join(runDir, 'editorial-research.json'), JSON.stringify(editorialResearch, null, 2), 'utf8');
   writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, creativeGeneration, creativeBatchRemaining, account: account.account, visualStyle: style.name, intelligence: enhancement.intelligence, ...pack }, null, 2), 'utf8');
   writeFileSync(join(runDir, 'caption.txt'), pack.caption, 'utf8');
   const storyOnly = publishMode === 'story-only';
