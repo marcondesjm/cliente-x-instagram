@@ -1359,7 +1359,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.55</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.56</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -3966,6 +3966,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <label>Imagem do ícone<input data-bio-field="iconUrl" value="${escapeHtml(link.iconUrl || '')}" placeholder="https://..."></label>
             <label>Anexar ícone<input type="file" data-bio-icon-file accept="image/png,image/jpeg,image/webp"></label>
             <div class="editor-actions"><button type="button" data-upload-bio-icon="${index}">Enviar ícone</button></div>
+            <div class="access-result" data-bio-icon-result>Escolha uma imagem para atualizar este ícone.</div>
             <label>Título<input data-bio-field="title" maxlength="80" value="${escapeHtml(link.title || '')}"></label>
             <label>Descrição<input data-bio-field="description" maxlength="180" value="${escapeHtml(link.description || '')}"></label>
             <label>Link<input data-bio-field="url" value="${escapeHtml(link.url || '')}" placeholder="https://..."></label>
@@ -4060,23 +4061,45 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const input = card?.querySelector('[data-bio-icon-file]');
       const file = input?.files?.[0];
       const result = document.getElementById('bioPageResult');
+      const inlineResult = card?.querySelector('[data-bio-icon-result]');
+      if (card?.dataset.uploadingIcon === 'true') return;
       if (!file) {
-        result.textContent = 'Escolha uma imagem JPG, PNG ou WEBP para o ícone.';
+        const message = 'Escolha uma imagem JPG, PNG ou WEBP para o ícone.';
+        result.textContent = message;
+        if (inlineResult) inlineResult.textContent = message;
         return;
       }
+      if (file.size > 4_000_000) {
+        const message = 'A imagem do ícone deve ter no máximo 4 MB.';
+        result.textContent = message;
+        if (inlineResult) inlineResult.textContent = message;
+        return;
+      }
+      card.dataset.uploadingIcon = 'true';
+      const iconUrlField = card.querySelector('[data-bio-field="iconUrl"]');
+      const previousUrl = iconUrlField.value;
       result.textContent = `Enviando ícone do botão ${index + 1}...`;
+      if (inlineResult) inlineResult.textContent = 'Carregando e enviando ícone...';
       try {
+        const dataUrl = await readFileAsDataUrl(file);
+        iconUrlField.value = dataUrl;
+        renderBioPreview();
+        if (inlineResult) inlineResult.textContent = 'Prévia atualizada. Finalizando envio...';
         const payload = await api('/api/upload-image', {
           method: 'POST',
-          body: JSON.stringify({ name: `bio-icon-${index + 1}-${file.name}`, dataUrl: await readFileAsDataUrl(file) })
+          body: JSON.stringify({ name: `bio-icon-${index + 1}-${file.name}`, dataUrl })
         });
-        card.querySelector('[data-bio-field="iconUrl"]').value = payload.imageUrl || payload.imagePath || '';
+        iconUrlField.value = payload.imageUrl || payload.imagePath || '';
         renderBioPreview();
         result.textContent = 'Ícone enviado. Clique em Salvar página Bio para publicar.';
+        if (inlineResult) inlineResult.textContent = 'Ícone enviado e exibido na prévia.';
       } catch (error) {
+        iconUrlField.value = previousUrl;
+        renderBioPreview();
         result.textContent = `Erro ao enviar o ícone: ${error.message}`;
+        if (inlineResult) inlineResult.textContent = result.textContent;
       } finally {
-        input.value = '';
+        delete card.dataset.uploadingIcon;
       }
     }
 
@@ -5860,6 +5883,11 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         if (event.target.id !== 'bioAvatarFile') renderBioPreview();
       });
       document.getElementById('bioPagePanel').addEventListener('change', (event) => {
+        if (event.target.matches('[data-bio-icon-file]')) {
+          const card = event.target.closest('[data-bio-link]');
+          uploadBioIcon(Number(card?.dataset.bioLink));
+          return;
+        }
         if (event.target.id !== 'bioAvatarFile') renderBioPreview();
       });
       document.getElementById('bioLinksEditor').addEventListener('click', (event) => {
