@@ -1706,12 +1706,12 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .mode-minimal .badge span { border-color: ${accent}; }
     .mode-minimal .badge span::after { border-color: ${accent}; }
     .mode-minimal .headline { margin-top: 188px; max-width: 760px; font-size: 70px; }
-    .mode-minimal .panel { top: 210px; right: 72px; width: 260px; height: 260px; border-radius: 50%; opacity: 0.94; }
+    .mode-minimal .panel { top: 510px; right: 72px; width: 260px; height: 230px; border-radius: 28px; opacity: 0.94; }
     .mode-minimal .context-photo { left: 86px; top: 510px; width: 520px; height: 190px; border-radius: 24px; opacity: 0.80; }
     .mode-minimal .note { left: 86px; top: 780px; width: 840px; min-height: 210px; padding-left: 128px; background: rgba(255,255,255,0.58); }
     .mode-minimal .sector-cue { right: 98px; top: 520px; width: 250px; opacity: 0.22; }
     .layout-left.mode-minimal .headline { margin-left: 0; max-width: 760px; font-size: 70px; }
-    .layout-left.mode-minimal .panel { left: auto; right: 72px; top: 210px; width: 260px; height: 260px; }
+    .layout-left.mode-minimal .panel { left: auto; right: 72px; top: 510px; width: 260px; height: 230px; }
     .layout-left.mode-minimal .note { left: 86px; top: 780px; width: 840px; }
     .layout-left.mode-minimal .sector-cue { left: auto; right: 98px; top: 520px; width: 250px; }
     .mode-magazine main {
@@ -2224,6 +2224,41 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
     const htmlPath = join(runDir, `slide-${String(index + 1).padStart(2, '0')}.html`);
     writeFileSync(htmlPath, html, 'utf8');
     await page.goto(`file://${htmlPath.replace(/\\/g, '/')}`);
+    const overlapCheck = await page.evaluate(() => {
+      const headline = document.querySelector('.headline');
+      const note = document.querySelector('.note');
+      if (!headline) return { corrected: 0, collisions: [] };
+      const headlineRect = headline.getBoundingClientRect();
+      const noteRect = note?.getBoundingClientRect();
+      const visuals = [...document.querySelectorAll('.panel, .context-photo')].filter((element) => {
+        const style = getComputedStyle(element);
+        return style.display !== 'none' && style.visibility !== 'hidden' && Number(style.opacity) > 0;
+      });
+      let corrected = 0;
+      const intersectsHeadline = (rect) => !(
+        rect.right <= headlineRect.left
+        || rect.left >= headlineRect.right
+        || rect.bottom <= headlineRect.top
+        || rect.top >= headlineRect.bottom
+      );
+      for (const visual of visuals) {
+        const rect = visual.getBoundingClientRect();
+        if (!intersectsHeadline(rect)) continue;
+        const safeTop = Math.ceil(headlineRect.bottom + 34);
+        const safeBottom = Math.floor(Math.min(noteRect?.top ? noteRect.top - 28 : 1120, 1120));
+        const safeHeight = safeBottom - safeTop;
+        if (safeHeight >= 150) {
+          visual.style.top = `${safeTop}px`;
+          visual.style.height = `${Math.min(Math.round(rect.height), safeHeight)}px`;
+          corrected += 1;
+        }
+      }
+      const collisions = visuals.filter((visual) => intersectsHeadline(visual.getBoundingClientRect())).map((visual) => visual.className);
+      return { corrected, collisions };
+    });
+    if (overlapCheck.collisions.length) {
+      throw new Error(`Slide ${index + 1} rejeitado: imagem sobrepoe o titulo (${overlapCheck.collisions.join(', ')}).`);
+    }
     await page.screenshot({ path: imagePath, type: 'jpeg', quality: 94, fullPage: false });
     imagePaths.push(imagePath);
   }
