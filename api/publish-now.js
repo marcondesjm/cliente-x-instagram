@@ -71,7 +71,7 @@ export default async function handler(req, res) {
       account,
       dry_run: 'false',
       slot_index: String(Number.isInteger(body.packIndex) ? body.packIndex : 0),
-      publish_mode: body.mode === 'story-only' ? 'story-only' : 'feed-and-story',
+      publish_mode: ['story-only', 'feed-only'].includes(body.mode) ? body.mode : 'feed-and-story',
       scheduled_only: 'false',
       pack_json: packJson
     });

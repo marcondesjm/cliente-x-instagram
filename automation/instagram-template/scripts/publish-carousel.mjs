@@ -2844,7 +2844,9 @@ async function main() {
   let scheduledPost = null;
   let publishMode = process.env.INSTAGRAM_TEMPLATE_PUBLISH_MODE === 'story-only' || args.storyOnly
     ? 'story-only'
-    : 'feed-and-story';
+    : process.env.INSTAGRAM_TEMPLATE_PUBLISH_MODE === 'feed-only'
+      ? 'feed-only'
+      : 'feed-and-story';
   let dashboardPack = null;
   if (process.env.INSTAGRAM_TEMPLATE_PACK_JSON?.trim()) {
     dashboardPack = JSON.parse(process.env.INSTAGRAM_TEMPLATE_PACK_JSON);
@@ -2954,6 +2956,7 @@ async function main() {
   writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, creativeGeneration, creativeBatchRemaining, account: account.account, visualStyle: style.name, intelligence: enhancement.intelligence, ...pack }, null, 2), 'utf8');
   writeFileSync(join(runDir, 'caption.txt'), pack.caption, 'utf8');
   const storyOnly = publishMode === 'story-only';
+  const feedOnly = publishMode === 'feed-only';
   const slotCron = (account.scheduleUtc || [])[slotIndex] || '';
   const renderContext = {
     dateString: today,
@@ -2964,7 +2967,7 @@ async function main() {
     scheduledFor: scheduledPost?.scheduledFor || ''
   };
   const imagePaths = storyOnly ? [] : await renderSlides(runDir, pack.slides, account, style, renderContext);
-  const storyImagePath = await renderStory(runDir, pack, account, style, renderContext);
+  const storyImagePath = feedOnly ? null : await renderStory(runDir, pack, account, style, renderContext);
 
   if (args.renderOnly) {
     console.log(JSON.stringify({ ok: true, renderOnly: true, account: account.account, runDir, visualStyle: style.name, slotIndex, packIndex, imagePaths, storyImagePath }, null, 2));
@@ -2995,9 +2998,9 @@ async function main() {
   let imageUrls = [];
   let childIds = [];
   let carousel = null;
-  const githubHostedUrls = await hostRenderedImagesOnGitHub([...imagePaths, storyImagePath], account.account, runId);
+  const githubHostedUrls = await hostRenderedImagesOnGitHub(storyImagePath ? [...imagePaths, storyImagePath] : imagePaths, account.account, runId);
   const publishImagePaths = githubHostedUrls ? githubHostedUrls.slice(0, imagePaths.length) : imagePaths;
-  const publishStoryImagePath = githubHostedUrls ? githubHostedUrls.at(-1) : storyImagePath;
+  const publishStoryImagePath = storyImagePath ? (githubHostedUrls ? githubHostedUrls.at(-1) : storyImagePath) : null;
   if (!storyOnly) {
     const children = [];
     for (const imagePath of publishImagePaths) {
@@ -3015,7 +3018,7 @@ async function main() {
     });
     await pollContainer(carousel.id, token);
   }
-  ({ story, imageUrl: storyImageUrl } = await createStoryFromImage(userId, token, publishStoryImagePath, imgbbKey));
+  if (!feedOnly) ({ story, imageUrl: storyImageUrl } = await createStoryFromImage(userId, token, publishStoryImagePath, imgbbKey));
 
   const baseResult = {
     ok: true,
@@ -3033,7 +3036,7 @@ async function main() {
     storyImageUrl,
     childIds,
     carouselId: carousel?.id,
-    storyContainerId: story.id
+    storyContainerId: story?.id || null
   };
   let media = null;
   let details = null;
@@ -3041,9 +3044,13 @@ async function main() {
     media = await graphPost(`/${userId}/media_publish`, { creation_id: carousel.id, access_token: token });
     details = await graphGet(`/${media.id}`, { fields: 'id,permalink,timestamp', access_token: token });
   }
-  const storyMedia = await graphPost(`/${userId}/media_publish`, { creation_id: story.id, access_token: token });
-  const storyDetails = await graphGet(`/${storyMedia.id}`, { fields: 'id,timestamp', access_token: token });
-  const result = { ...baseResult, mediaId: media?.id, ...(details || {}), storyMediaId: storyMedia.id, story: storyDetails };
+  let storyMedia = null;
+  let storyDetails = null;
+  if (!feedOnly) {
+    storyMedia = await graphPost(`/${userId}/media_publish`, { creation_id: story.id, access_token: token });
+    storyDetails = await graphGet(`/${storyMedia.id}`, { fields: 'id,timestamp', access_token: token });
+  }
+  const result = { ...baseResult, mediaId: media?.id, ...(details || {}), storyMediaId: storyMedia?.id || null, story: storyDetails };
   recordPublicationHistory(args.configDir, account.account, historyPack, result);
   if (scheduledPost) {
     const scheduledPatch = {
@@ -3051,7 +3058,7 @@ async function main() {
       publishedAt: new Date().toISOString(),
       mediaId: media?.id,
       permalink: details?.permalink,
-      storyMediaId: storyMedia.id
+      storyMediaId: storyMedia?.id || null
     };
     if (scheduledPost.source === 'weekly-program') {
       updateWeeklyProgramPost(args.configDir, account.account, scheduledPost.id, scheduledPatch);
