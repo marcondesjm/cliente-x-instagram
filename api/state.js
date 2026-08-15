@@ -39,7 +39,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.33',
+  appVersion: 'v4.34',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -1545,7 +1545,7 @@ function normalizeDirectAutomation(value = {}) {
   if (!message) throw userError('Escreva a mensagem que sera enviada no Direct.');
   return {
     enabled: Boolean(value.enabled), keyword,
-    matchMode: value.matchMode === 'exact' ? 'exact' : 'contains',
+    matchMode: ['exact', 'similar'].includes(value.matchMode) ? value.matchMode : 'contains',
     mediaId: String(value.mediaId || '').trim().slice(0, 100),
     materialUrl, materialName: String(value.materialName || '').trim().slice(0, 160), message,
     publicReply: String(value.publicReply || 'Enviei o material no seu Direct.').trim().slice(0, 300),
@@ -1617,10 +1617,63 @@ async function instagramRequest(path, accessToken, body) {
   return result;
 }
 
+function normalizeDirectMatchText(value = '') {
+  return String(value || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLocaleLowerCase('pt-BR')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function directKeywordTerms(value = '') {
+  return String(value || '').split(/[,;\n]+/).map(normalizeDirectMatchText).filter(Boolean);
+}
+
+function editDistance(left = '', right = '') {
+  const a = String(left);
+  const b = String(right);
+  const row = Array.from({ length: b.length + 1 }, (_, index) => index);
+  for (let i = 1; i <= a.length; i += 1) {
+    let previous = row[0];
+    row[0] = i;
+    for (let j = 1; j <= b.length; j += 1) {
+      const current = row[j];
+      row[j] = Math.min(row[j] + 1, row[j - 1] + 1, previous + (a[i - 1] === b[j - 1] ? 0 : 1));
+      previous = current;
+    }
+  }
+  return row[b.length];
+}
+
+function similarDirectTermMatches(cleanText, term) {
+  const words = cleanText.split(' ').filter(Boolean);
+  const termWords = term.split(' ').filter(Boolean);
+  if (term === 'ia') {
+    return words.some((word) => ['ia', 'ai', 'iaa'].includes(word)) || cleanText === 'i a';
+  }
+  if (termWords.length === 1) {
+    const expected = termWords[0];
+    const tolerance = expected.length >= 8 ? 2 : expected.length >= 4 ? 1 : 0;
+    return words.some((word) => editDistance(word, expected) <= tolerance);
+  }
+  return words.some((_, start) => termWords.every((expected, offset) => {
+    const actual = words[start + offset];
+    if (!actual) return false;
+    const tolerance = expected.length >= 8 ? 2 : expected.length >= 4 ? 1 : 0;
+    return editDistance(actual, expected) <= tolerance;
+  }));
+}
+
 function keywordMatches(text, automation) {
-  const cleanText = String(text || '').trim().toLocaleLowerCase('pt-BR');
-  const keyword = String(automation.keyword || '').trim().toLocaleLowerCase('pt-BR');
-  return automation.matchMode === 'exact' ? cleanText === keyword : cleanText.includes(keyword);
+  const cleanText = normalizeDirectMatchText(text);
+  const terms = directKeywordTerms(automation.keyword);
+  if (!cleanText || !terms.length) return false;
+  if (automation.matchMode === 'exact') return terms.includes(cleanText);
+  if (automation.matchMode === 'similar') return terms.some((term) => similarDirectTermMatches(cleanText, term));
+  const padded = ` ${cleanText} `;
+  return terms.some((term) => padded.includes(` ${term} `));
 }
 
 async function handleInstagramWebhook(body, raw, signature, req) {
