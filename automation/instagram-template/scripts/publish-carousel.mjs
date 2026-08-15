@@ -2907,7 +2907,9 @@ async function main() {
   const publicationHistory = readPublicationHistory(args.configDir, account.account);
   const creativeBatchSize = 74;
   const creativeGeneration = Math.floor(publicationHistory.length / creativeBatchSize) + 1;
-  const generationSlotIndex = slotIndex + ((creativeGeneration - 1) * 13);
+  // Keep the real publication aligned with the dashboard preview. Freshness is
+  // still enforced by date rotation and the publication-history duplicate guard.
+  const generationSlotIndex = slotIndex;
   const creativeBatchRemaining = creativeBatchSize - (publicationHistory.length % creativeBatchSize);
   const profilePacks = buildProfileContentPacks(account, today, generationSlotIndex);
   const autoPacks = profilePacks.length ? profilePacks : buildAutoContentPacks(today, generationSlotIndex);

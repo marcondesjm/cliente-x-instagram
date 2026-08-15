@@ -40,7 +40,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.49',
+  appVersion: 'v4.50',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -471,9 +471,9 @@ const PLAN_CREATIVE_ANGLES = [
   }
 ];
 
-function creativePlanAngle(dateString, slotIndex) {
+function creativePlanAngle(dateString, slotIndex, sequence = 0) {
   return PLAN_CREATIVE_ANGLES[
-    ((daysSinceEpoch(dateString) * 5) + (slotIndex * 3) + Math.floor(slotIndex / 6)) % PLAN_CREATIVE_ANGLES.length
+    ((daysSinceEpoch(dateString) * 5) + (slotIndex * 3) + Math.floor(slotIndex / 6) + sequence) % PLAN_CREATIVE_ANGLES.length
   ];
 }
 
@@ -488,7 +488,7 @@ function editorialDailyPlan(scheduleBrt = [], account = {}, packs = [], schedule
     if (post.status !== 'pending') return false;
     return brtDateAndTime(post.scheduledFor).date === dateString;
   });
-  const profilePackCount = 18;
+  const profilePackCount = 54;
   const automaticSelectionCount = profilePackCount + packs.length;
 
   return scheduleBrt.map((time, slotIndex) => {
@@ -510,7 +510,11 @@ function editorialDailyPlan(scheduleBrt = [], account = {}, packs = [], schedule
     const topicId = rotation[pickDailyIndex(rotation, dateString, slotIndex)];
     const topic = PLAN_TOPICS[topicId] || { area: topicId || 'Conteúdo', pain: 'uma rotina importante ainda depende de esforço manual' };
     const packNumber = pickDailyIndex(Array.from({ length: automaticSelectionCount || 1 }), dateString, slotIndex);
-    const angle = creativePlanAngle(dateString, slotIndex);
+    const profileRotationStart = pickDailyIndex(Array.from({ length: profilePackCount }), dateString, slotIndex);
+    const sequence = packNumber < profilePackCount
+      ? (profileRotationStart + packNumber) % profilePackCount
+      : 0;
+    const angle = creativePlanAngle(dateString, slotIndex, sequence);
     return {
       time,
       slotIndex,
