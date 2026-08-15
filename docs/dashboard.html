@@ -1307,7 +1307,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.24</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.25</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -3005,7 +3005,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         ` : '';
         const links = [
           `<button type="button" data-access-edit="${index}">${appState.openAccessIndex === index ? 'Fechar' : 'Gerenciar'}</button>`,
-          item.secondaryUrl ? `<a href="${escapeHtml(item.secondaryUrl)}" target="_blank" rel="noreferrer">Abrir</a>` : ''
+          item.testAction ? `<button type="button" data-threads-test="${escapeHtml(appState.selectedAccount || 'cliente-x')}">Publicar teste</button>` : '',
+          item.secondaryUrl ? `<a href="${escapeHtml(item.secondaryUrl)}" ${item.platform === 'Threads' ? '' : 'target="_blank" rel="noreferrer"'}>${escapeHtml(item.secondaryLabel || 'Abrir')}</a>` : ''
         ].filter(Boolean).join('');
 
         return `
@@ -3072,6 +3073,26 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         form.panel.querySelector('[data-access-value]').value = '';
       } catch (error) {
         form.result.textContent = error.message;
+      }
+    }
+
+    async function publishThreadsTest(button) {
+      const original = button.textContent;
+      button.disabled = true;
+      button.textContent = 'Publicando...';
+      setMessage('Validando e publicando o teste no Threads...', 'warn');
+      try {
+        const payload = await api('/api/state', {
+          method: 'POST',
+          body: JSON.stringify({ action: 'publish-threads-test', account: button.dataset.threadsTest })
+        });
+        setMessage(`${payload.message}${payload.permalink ? `\n${payload.permalink}` : `\nID: ${payload.threadId}`}`, 'good');
+        button.textContent = 'Teste publicado';
+      } catch (error) {
+        setMessage(`Threads: ${error.message}`, 'bad');
+        button.textContent = original;
+      } finally {
+        button.disabled = false;
       }
     }
 
@@ -5400,6 +5421,14 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         await loadState();
         await refreshRuns();
       }
+      const threadsParams = new URLSearchParams(window.location.search);
+      if (threadsParams.get('threads') === 'connected') {
+        setMessage(`Threads conectado: @${threadsParams.get('username') || 'conta autorizada'}.`, 'good');
+        window.history.replaceState({}, '', window.location.pathname);
+      } else if (threadsParams.get('threads') === 'error') {
+        setMessage(`Threads não conectado: ${threadsParams.get('message') || 'verifique a configuração.'}`, 'bad');
+        window.history.replaceState({}, '', window.location.pathname);
+      }
       setInterval(renderSchedule, 60_000);
     }
 
@@ -5481,6 +5510,11 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         const edit = event.target.closest('[data-access-edit]');
         const validate = event.target.closest('[data-access-validate]');
         const save = event.target.closest('[data-access-save]');
+        const threadsTest = event.target.closest('[data-threads-test]');
+        if (threadsTest) {
+          publishThreadsTest(threadsTest);
+          return;
+        }
         if (edit) {
           const index = Number(edit.dataset.accessEdit);
           appState.openAccessIndex = appState.openAccessIndex === index ? null : index;

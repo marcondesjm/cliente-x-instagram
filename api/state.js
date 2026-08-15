@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { createHmac, timingSafeEqual } from 'node:crypto';
 import {
   clearSessionCookie,
   configuredAdminEmail,
@@ -36,7 +37,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.24',
+  appVersion: 'v4.25',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -63,6 +64,10 @@ function accessConfigForAccount(account) {
   const userIdEnv = account?.userIdEnv || 'CLIENTE_X_INSTAGRAM_USER_ID';
   const imgbbKeyEnv = account?.imgbbKeyEnv || 'IMGBB_API_KEY';
   const username = account?.expectedUsername || 'marcondes.machado.oficial';
+  const accountKey = account?.account || 'cliente-x';
+  const threadsPrefix = accessTokenEnv.replace(/_INSTAGRAM_ACCESS_TOKEN$/, '');
+  const threadsTokenEnv = `${threadsPrefix}_THREADS_ACCESS_TOKEN`;
+  const threadsUserIdEnv = `${threadsPrefix}_THREADS_USER_ID`;
 
   return [
   {
@@ -129,6 +134,19 @@ function accessConfigForAccount(account) {
     secondaryUrl: 'https://business.facebook.com/latest/settings/instagram_accounts',
     status: `Conta esperada pelo projeto: ${username}.`,
     action: `Se trocar a conta, atualizar ${userIdEnv} e validar o usuário antes de publicar.`
+  },
+  {
+    platform: 'Threads',
+    account: username,
+    project: 'Threads API',
+    purpose: 'Publicar textos, imagens e carrosseis com texto adaptado para ate 500 caracteres.',
+    envKeys: ['THREADS_APP_ID', 'THREADS_APP_SECRET', threadsTokenEnv, threadsUserIdEnv],
+    managementUrl: 'https://developers.facebook.com/apps/',
+    secondaryUrl: `/api/state?threads=connect&account=${encodeURIComponent(accountKey)}`,
+    secondaryLabel: 'Conectar Threads',
+    testAction: 'publish-threads-test',
+    status: process.env[threadsTokenEnv] && process.env[threadsUserIdEnv] ? 'Conta Threads conectada.' : 'Aguardando autorização OAuth.',
+    action: 'Cadastre o App ID e App Secret, salve, faça o redeploy e clique em Conectar Threads.'
   }
 ];
 }
@@ -144,6 +162,8 @@ const SECRET_KEYS = [
   'STRIPE_PRICE_STARTER',
   'STRIPE_PRICE_PROFESSIONAL',
   'STRIPE_PRICE_AGENCY'
+  ,'THREADS_APP_ID'
+  ,'THREADS_APP_SECRET'
 ];
 const EDITABLE_SECRET_KEYS = new Set([
   'VERCEL_TOKEN',
@@ -160,20 +180,24 @@ const EDITABLE_SECRET_KEYS = new Set([
   'STRIPE_PRICE_STARTER',
   'STRIPE_PRICE_PROFESSIONAL',
   'STRIPE_PRICE_AGENCY'
+  ,'THREADS_APP_ID'
+  ,'THREADS_APP_SECRET'
 ]);
 
 function accountSecretKeys(accounts = readJson(ACCOUNTS_PATH)) {
   return accounts.flatMap((account) => [
     account.accessTokenEnv,
     account.userIdEnv,
-    account.imgbbKeyEnv
+    account.imgbbKeyEnv,
+    `${account.accessTokenEnv.replace(/_INSTAGRAM_ACCESS_TOKEN$/, '')}_THREADS_ACCESS_TOKEN`,
+    `${account.accessTokenEnv.replace(/_INSTAGRAM_ACCESS_TOKEN$/, '')}_THREADS_USER_ID`
   ]).filter(Boolean);
 }
 
 function isEditableSecretKey(key) {
   return EDITABLE_SECRET_KEYS.has(key) ||
     accountSecretKeys().includes(key) ||
-    /^[A-Z0-9_]+_(INSTAGRAM_ACCESS_TOKEN|INSTAGRAM_USER_ID|IMGBB_API_KEY)$/.test(key);
+    /^[A-Z0-9_]+_(INSTAGRAM_ACCESS_TOKEN|INSTAGRAM_USER_ID|THREADS_ACCESS_TOKEN|THREADS_USER_ID|IMGBB_API_KEY)$/.test(key);
 }
 
 function accountEnvRole(key) {
@@ -199,7 +223,9 @@ function accountForSecretKey(accounts, key) {
   return accounts.find((account) => (
     account.accessTokenEnv === key ||
     account.userIdEnv === key ||
-    account.imgbbKeyEnv === key
+    account.imgbbKeyEnv === key ||
+    `${account.accessTokenEnv.replace(/_INSTAGRAM_ACCESS_TOKEN$/, '')}_THREADS_ACCESS_TOKEN` === key ||
+    `${account.accessTokenEnv.replace(/_INSTAGRAM_ACCESS_TOKEN$/, '')}_THREADS_USER_ID` === key
   ));
 }
 
@@ -607,6 +633,27 @@ async function validateAccessValue(key, value, companion = {}) {
   if (key === 'ADMIN_SESSION_SECRET') {
     if (text.length < 32) throw userError('ADMIN_SESSION_SECRET precisa ter pelo menos 32 caracteres.');
     return { ok: true, message: 'Chave de sessao com tamanho valido.' };
+  }
+
+  if (key === 'THREADS_APP_ID') {
+    if (!/^\d{6,30}$/.test(text)) throw userError('THREADS_APP_ID deve ser o ID numerico do aplicativo Meta.');
+    return { ok: true, message: 'Formato do App ID do Threads valido.' };
+  }
+
+  if (key === 'THREADS_APP_SECRET') {
+    if (text.length < 16) throw userError('THREADS_APP_SECRET parece incompleto.');
+    return { ok: true, message: 'Formato do App Secret do Threads valido.' };
+  }
+
+  if (key.endsWith('_THREADS_ACCESS_TOKEN') || key.endsWith('_THREADS_USER_ID')) {
+    const prefix = key.replace(/_THREADS_(?:ACCESS_TOKEN|USER_ID)$/, '');
+    const token = key.endsWith('_THREADS_ACCESS_TOKEN') ? text : String(companion.threadsAccessToken || process.env[`${prefix}_THREADS_ACCESS_TOKEN`] || '').trim();
+    const userId = key.endsWith('_THREADS_USER_ID') ? text : String(companion.threadsUserId || process.env[`${prefix}_THREADS_USER_ID`] || 'me').trim();
+    if (!token) return { ok: true, message: `${key} preenchido. Conecte a conta para validar o token.` };
+    const response = await fetch(`https://graph.threads.net/v1.0/${encodeURIComponent(userId || 'me')}?fields=id,username&access_token=${encodeURIComponent(token)}`);
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok || payload.error) throw userError(payload.error?.message || `Threads recusou os dados: HTTP ${response.status}.`, response.status);
+    return { ok: true, message: `Threads validado: @${payload.username || payload.id}.` };
   }
 
   if (key === 'GITHUB_TOKEN') {
@@ -1491,6 +1538,99 @@ async function readConfigGroups(filePath, localPath) {
   }
 }
 
+function threadsRedirectUri(req) {
+  const forwardedHost = String(req.headers['x-forwarded-host'] || req.headers.host || 'cliente-x-instagram.vercel.app').split(',')[0].trim();
+  const protocol = String(req.headers['x-forwarded-proto'] || 'https').split(',')[0].trim();
+  return `${protocol}://${forwardedHost}/api/state?threads=callback`;
+}
+
+function threadsStateSecret() {
+  return process.env.ADMIN_SESSION_SECRET || process.env.ADMIN_PASSWORD || '';
+}
+
+function createThreadsState(accountKey) {
+  const payload = Buffer.from(JSON.stringify({ account: accountKey, expiresAt: Date.now() + 15 * 60 * 1000 })).toString('base64url');
+  const signature = createHmac('sha256', threadsStateSecret()).update(payload).digest('base64url');
+  return `${payload}.${signature}`;
+}
+
+function verifyThreadsState(value) {
+  const [payload, signature] = String(value || '').split('.');
+  if (!payload || !signature || !threadsStateSecret()) throw userError('Estado OAuth do Threads invalido.', 400);
+  const expected = createHmac('sha256', threadsStateSecret()).update(payload).digest('base64url');
+  const left = Buffer.from(signature);
+  const right = Buffer.from(expected);
+  if (left.length !== right.length || !timingSafeEqual(left, right)) throw userError('Assinatura OAuth do Threads invalida.', 400);
+  const decoded = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
+  if (!decoded.account || Number(decoded.expiresAt) < Date.now()) throw userError('Autorização do Threads expirou. Inicie novamente.', 400);
+  return decoded;
+}
+
+async function completeThreadsOAuth(req, account, code) {
+  const appId = String(process.env.THREADS_APP_ID || '').trim();
+  const appSecret = String(process.env.THREADS_APP_SECRET || '').trim();
+  if (!appId || !appSecret) throw userError('Configure THREADS_APP_ID e THREADS_APP_SECRET antes de conectar.', 503);
+  const redirectUri = threadsRedirectUri(req);
+  const shortResponse = await fetch('https://graph.threads.net/oauth/access_token', {
+    method: 'POST',
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ client_id: appId, client_secret: appSecret, grant_type: 'authorization_code', redirect_uri: redirectUri, code })
+  });
+  const shortPayload = await shortResponse.json().catch(() => ({}));
+  if (!shortResponse.ok || !shortPayload.access_token) throw userError(shortPayload.error_message || shortPayload.error?.message || 'Threads recusou o código OAuth.', shortResponse.status);
+  const longUrl = new URL('https://graph.threads.net/access_token');
+  longUrl.searchParams.set('grant_type', 'th_exchange_token');
+  longUrl.searchParams.set('client_secret', appSecret);
+  longUrl.searchParams.set('access_token', shortPayload.access_token);
+  const longResponse = await fetch(longUrl);
+  const longPayload = await longResponse.json().catch(() => ({}));
+  const accessToken = longResponse.ok && longPayload.access_token ? longPayload.access_token : shortPayload.access_token;
+  const profileResponse = await fetch(`https://graph.threads.net/v1.0/me?fields=id,username&access_token=${encodeURIComponent(accessToken)}`);
+  const profile = await profileResponse.json().catch(() => ({}));
+  if (!profileResponse.ok || !profile.id) throw userError(profile.error?.message || 'Não foi possível validar o perfil do Threads.', profileResponse.status);
+  const prefix = account.accessTokenEnv.replace(/_INSTAGRAM_ACCESS_TOKEN$/, '');
+  await saveVercelEnv(`${prefix}_THREADS_ACCESS_TOKEN`, accessToken);
+  await saveVercelEnv(`${prefix}_THREADS_USER_ID`, String(profile.id));
+  await redeployVercelProduction();
+  return profile;
+}
+
+async function publishThreadsTest(account, text) {
+  const cleanText = String(text || '').trim();
+  const characterCount = Array.from(cleanText).length;
+  if (!cleanText) throw userError('O texto de teste do Threads está vazio.');
+  if (characterCount > 470) throw userError(`Texto bloqueado com ${characterCount} caracteres. O sistema permite no máximo 470 para manter margem segura.`);
+  const prefix = account.accessTokenEnv.replace(/_INSTAGRAM_ACCESS_TOKEN$/, '');
+  const accessToken = String(process.env[`${prefix}_THREADS_ACCESS_TOKEN`] || '').trim();
+  const userId = String(process.env[`${prefix}_THREADS_USER_ID`] || '').trim();
+  if (!accessToken || !userId) throw userError('Conecte a conta do Threads antes de publicar o teste.', 409);
+  const createResponse = await fetch(`https://graph.threads.net/v1.0/${encodeURIComponent(userId)}/threads`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ media_type: 'TEXT', text: cleanText, access_token: accessToken })
+  });
+  const container = await createResponse.json().catch(() => ({}));
+  if (!createResponse.ok || !container.id) throw userError(container.error?.message || `Threads recusou a criação: HTTP ${createResponse.status}.`, createResponse.status);
+  const publishResponse = await fetch(`https://graph.threads.net/v1.0/${encodeURIComponent(userId)}/threads_publish`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ creation_id: String(container.id), access_token: accessToken })
+  });
+  const published = await publishResponse.json().catch(() => ({}));
+  if (!publishResponse.ok || !published.id) throw userError(published.error?.message || `Threads recusou a publicação: HTTP ${publishResponse.status}.`, publishResponse.status);
+  const detailsResponse = await fetch(`https://graph.threads.net/v1.0/${encodeURIComponent(published.id)}?fields=id,permalink,username,timestamp&access_token=${encodeURIComponent(accessToken)}`);
+  const details = await detailsResponse.json().catch(() => ({}));
+  return {
+    ok: true,
+    threadId: String(published.id),
+    permalink: details.permalink || null,
+    username: details.username || null,
+    timestamp: details.timestamp || new Date().toISOString(),
+    characterCount,
+    message: `Teste publicado no Threads com ${characterCount} caracteres.`
+  };
+}
+
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
@@ -1605,6 +1745,16 @@ export default async function handler(req, res) {
         res.status(200).json(result);
         return;
       }
+      if (body.action === 'publish-threads-test') {
+        const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
+        const account = requireConfiguredAccount(accounts, String(body.account || 'cliente-x'));
+        if (!canAccessAccount(session, account)) throw userError('Seu usuário não pode publicar nesta conta.', 403);
+        const defaultText = 'Automação boa não começa pela ferramenta. Começa por uma tarefa repetitiva, um resultado esperado e alguém responsável por revisar as exceções.\n\nEscolha um processo que consome tempo da sua equipe. Meça antes, automatize uma etapa e compare o resultado.\n\nQual tarefa você automatizaria primeiro?\n\n#automação #inteligênciaartificial #negócios';
+        const result = await publishThreadsTest(account, body.text || defaultText);
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json(result);
+        return;
+      }
       if (body.action === 'create-user') {
         if (!isOwner(session)) throw userError('Apenas o admin principal pode criar usuarios.', 403);
         const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
@@ -1630,6 +1780,45 @@ export default async function handler(req, res) {
 
   if (req.method !== 'GET') {
     res.status(405).json({ error: 'Metodo nao permitido.' });
+    return;
+  }
+
+  if (String(req.query?.threads || '') === 'connect') {
+    try {
+      const session = getSession(req);
+      if (!session) throw userError('Faça login no painel antes de conectar o Threads.', 401);
+      const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
+      const account = requireConfiguredAccount(accounts, String(req.query?.account || 'cliente-x'));
+      if (!canAccessAccount(session, account)) throw userError('Seu usuário não pode conectar esta conta.', 403);
+      const appId = String(process.env.THREADS_APP_ID || '').trim();
+      if (!appId || !process.env.THREADS_APP_SECRET) throw userError('Cadastre THREADS_APP_ID e THREADS_APP_SECRET em Acessos conectados e faça o redeploy.', 503);
+      const authorize = new URL('https://threads.net/oauth/authorize');
+      authorize.searchParams.set('client_id', appId);
+      authorize.searchParams.set('redirect_uri', threadsRedirectUri(req));
+      authorize.searchParams.set('scope', 'threads_basic,threads_content_publish');
+      authorize.searchParams.set('response_type', 'code');
+      authorize.searchParams.set('state', createThreadsState(account.account));
+      res.redirect(302, authorize.toString());
+    } catch (error) {
+      res.redirect(302, `/?threads=error&message=${encodeURIComponent(error.message)}`);
+    }
+    return;
+  }
+
+  if (String(req.query?.threads || '') === 'callback') {
+    try {
+      const session = getSession(req);
+      if (!session) throw userError('Sua sessão expirou. Entre novamente e conecte o Threads.', 401);
+      if (req.query?.error) throw userError(String(req.query.error_description || req.query.error));
+      const state = verifyThreadsState(req.query?.state);
+      const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
+      const account = requireConfiguredAccount(accounts, state.account);
+      if (!canAccessAccount(session, account)) throw userError('Seu usuário não pode conectar esta conta.', 403);
+      const profile = await completeThreadsOAuth(req, account, String(req.query?.code || ''));
+      res.redirect(302, `/?threads=connected&username=${encodeURIComponent(profile.username || profile.id)}`);
+    } catch (error) {
+      res.redirect(302, `/?threads=error&message=${encodeURIComponent(error.message)}`);
+    }
     return;
   }
 
