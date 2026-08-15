@@ -830,7 +830,7 @@ function splitCreativeDescription(text = '') {
     closeWords.unshift(emphasisWords.pop());
   }
   const emphasis = emphasisWords.length ? emphasisWords.join(' ') : first;
-  const close = rest || closeWords.join(' ') || clean;
+  const close = rest || closeWords.join(' ');
   return { lead, emphasis, close };
 }
 
