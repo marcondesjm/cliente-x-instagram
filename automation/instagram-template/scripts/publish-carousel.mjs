@@ -949,7 +949,7 @@ function enhanceSlide(slide, index, dateString, slotIndex, goal = CONTENT_GOALS.
   if (next.imagePath || next.imageUrl) return next;
 
   next.visualVariant = engagementVariant(dateString, slotIndex, index);
-  if (totalSlides > 1 && index === totalSlides - 1) {
+  if (totalSlides > 1 && index === totalSlides - 1 && !next.preserveEngagementCopy) {
     return {
       ...next,
       ...FINAL_SLIDE_CALL_CTA
@@ -1504,7 +1504,8 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const sectorPhotoImage = useSectorPhoto ? sectorPhotoCssImage(visualCue) : '';
   const sectorPhotoClass = sectorPhotoImage ? ' has-sector-photo' : '';
   const swipeCue = index === 1 ? '<div class="swipe-cue">arraste para ver</div>' : '';
-  const saveCue = index === total ? '<div class="save-cue">link na bio</div>' : index === 3 ? '<div class="save-cue">salve este passo</div>' : '';
+  const finalCue = /\bcomente\b/i.test(`${title} ${body}`) ? 'comente IA' : 'link na bio';
+  const saveCue = index === total ? `<div class="save-cue">${finalCue}</div>` : index === 3 ? '<div class="save-cue">salve este passo</div>' : '';
   const placement = [
     mode === 'split' ? 'layout-left' : index % 3 === 2 ? 'layout-left' : index % 3 === 0 ? 'layout-corner' : 'layout-right',
     `mode-${mode}`,
@@ -2848,6 +2849,7 @@ async function main() {
   if (process.env.INSTAGRAM_TEMPLATE_PACK_JSON?.trim()) {
     dashboardPack = JSON.parse(process.env.INSTAGRAM_TEMPLATE_PACK_JSON);
     validatePack(dashboardPack);
+    if (dashboardPack.slides?.length) dashboardPack.slides.at(-1).preserveEngagementCopy = true;
     pack = dashboardPack;
     packIndex = `dashboard-${slotIndex}`;
   }
