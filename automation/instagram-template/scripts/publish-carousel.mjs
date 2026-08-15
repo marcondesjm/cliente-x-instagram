@@ -2872,7 +2872,7 @@ async function main() {
       packIndex = scheduledPost.source === 'weekly-program'
         ? `weekly-${scheduledPost.packIndex}`
         : `scheduled-${scheduledPost.packIndex}`;
-      publishMode = scheduledPost.mode === 'story-only' ? 'story-only' : 'feed-and-story';
+      publishMode = ['story-only', 'feed-only'].includes(scheduledPost.mode) ? scheduledPost.mode : 'feed-and-story';
       console.log(`Post agendado selecionado: ${scheduledPost.id} pack ${scheduledPost.packIndex} (${scheduledPost.scheduledFor}).`);
     } else if (args.scheduledOnly) {
       console.log(JSON.stringify({
