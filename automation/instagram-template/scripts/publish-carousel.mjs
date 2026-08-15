@@ -1808,19 +1808,18 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .mode-statement .brand { margin-left: 78px; }
     .mode-statement .headline { margin: 260px auto 0; max-width: 920px; font-size: 92px; line-height: .98; text-align: center; }
     .mode-statement .headline::before { content: ""; display: block; width: 84px; height: 8px; margin: 0 auto 42px; background: ${accent}; }
-    .mode-statement .context-photo { display: none; }
-    .mode-statement .panel {
+    .mode-statement .context-photo, .mode-statement .panel { display: none; }
+    .mode-statement.role-proof .context-photo {
       display: block;
-      left: 350px;
-      right: auto;
+      left: 180px;
+      right: 180px;
       top: 500px;
-      width: 380px;
-      height: 270px;
-      border-radius: 28px;
-      transform: none;
-      background-size: cover;
-      background-position: center 22%;
-      box-shadow: 0 24px 54px rgba(19,34,56,.16);
+      width: auto;
+      height: 290px;
+      border: 0;
+      border-radius: 20px;
+      box-shadow: 0 24px 54px rgba(19,34,56,.14);
+      opacity: 1;
     }
     .mode-statement .note { left: 130px; top: 820px; width: 820px; min-height: 250px; padding: 36px 44px; border: 0; background: transparent; text-align: center; }
     .mode-statement .note::before, .mode-statement .note .close { display: none; }
@@ -2875,6 +2874,14 @@ async function main() {
   const historyPack = JSON.parse(JSON.stringify(pack));
   const enhancement = enhancePackForEngagement(pack, today, generationSlotIndex, account);
   pack = enhancement.pack;
+  const packVisualCue = visualCueFromText([
+    pack.caption,
+    ...(pack.slides || []).flatMap((slide) => [slide.eyebrow, slide.title, slide.body])
+  ].filter(Boolean).join(' '));
+  pack.slides = pack.slides.map((slide) => ({
+    ...slide,
+    visualCue: slide.visualCue || packVisualCue
+  }));
   validatePack(pack);
   if (!args.renderOnly && !args.dryRun && (scheduledPost || dashboardPack || args.storyOnly)) {
     const duplicate = findDuplicatePack(publicationHistory, historyPack);
