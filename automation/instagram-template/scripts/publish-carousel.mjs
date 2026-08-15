@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { chromium } from 'playwright';
+import { createHash } from 'node:crypto';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -2448,22 +2449,94 @@ async function fetchRecentMedia(userId, token) {
 
 function findDuplicateCaption(media, caption) {
   const expectedCaption = normalizeCaption(caption);
-  return media.find((item) => item.caption && normalizeCaption(item.caption) === expectedCaption);
+  const expectedCore = normalizeContentFingerprint(caption);
+  const expectedTokens = new Set(expectedCore.split(' ').filter((token) => token.length > 3));
+  return media.find((item) => {
+    if (!item.caption) return false;
+    const actualCaption = normalizeCaption(item.caption);
+    if (actualCaption === expectedCaption) return true;
+    const actualCore = normalizeContentFingerprint(item.caption);
+    if (Math.min(actualCore.length, expectedCore.length) > 120
+      && (actualCore.includes(expectedCore) || expectedCore.includes(actualCore))) return true;
+    const actualTokens = new Set(actualCore.split(' ').filter((token) => token.length > 3));
+    if (!expectedTokens.size || !actualTokens.size) return false;
+    let common = 0;
+    for (const token of expectedTokens) if (actualTokens.has(token)) common += 1;
+    return common / Math.min(expectedTokens.size, actualTokens.size) >= 0.86;
+  });
 }
 
-function pickFreshPack(packs, dateString, slotIndex, recentMedia = []) {
+function normalizeContentFingerprint(value = '') {
+  return String(value || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/https?:\/\/\S+/g, ' ')
+    .replace(/#\S+/g, ' ')
+    .replace(/\b(?:serie pratica|slot|run)\b[^\n.]*/g, ' ')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function packContentFingerprint(pack = {}) {
+  const content = (pack.slides || []).map((slide) => ({
+    eyebrow: normalizeContentFingerprint(slide.eyebrow),
+    title: normalizeContentFingerprint(slide.title),
+    body: normalizeContentFingerprint(slide.body)
+  }));
+  return createHash('sha256').update(JSON.stringify(content)).digest('hex');
+}
+
+function publicationHistoryPath(configDir) {
+  return join(configDir, 'publication-history.json');
+}
+
+function readPublicationHistory(configDir, accountKey) {
+  const path = publicationHistoryPath(configDir);
+  if (!existsSync(path)) return [];
+  const history = readJson(path);
+  return Array.isArray(history?.[accountKey]) ? history[accountKey] : [];
+}
+
+function recordPublicationHistory(configDir, accountKey, pack, result) {
+  const path = publicationHistoryPath(configDir);
+  const history = existsSync(path) ? readJson(path) : {};
+  const entries = Array.isArray(history[accountKey]) ? history[accountKey] : [];
+  const fingerprint = packContentFingerprint(pack);
+  if (!entries.some((entry) => entry.feedFingerprint === fingerprint || entry.storyFingerprint === fingerprint)) {
+    entries.push({
+      feedFingerprint: result.storyOnly ? null : fingerprint,
+      storyFingerprint: fingerprint,
+      captionFingerprint: createHash('sha256').update(normalizeCaption(pack.caption || '')).digest('hex'),
+      publishedAt: new Date().toISOString(),
+      mediaId: result.mediaId || null,
+      storyMediaId: result.storyMediaId || null,
+      permalink: result.permalink || null
+    });
+  }
+  history[accountKey] = entries;
+  writeJson(path, history);
+}
+
+function findDuplicatePack(history, pack) {
+  const fingerprint = packContentFingerprint(pack);
+  return history.find((entry) => entry.feedFingerprint === fingerprint || entry.storyFingerprint === fingerprint);
+}
+
+function pickFreshPack(packs, dateString, slotIndex, recentMedia = [], publicationHistory = []) {
   const startIndex = pickDailyIndex(packs, dateString, slotIndex);
   for (let offset = 0; offset < packs.length; offset += 1) {
     const packIndex = (startIndex + offset) % packs.length;
     const pack = packs[packIndex];
-    const duplicate = findDuplicateCaption(recentMedia, pack.caption);
+    const duplicate = findDuplicateCaption(recentMedia, pack.caption) || findDuplicatePack(publicationHistory, pack);
     if (!duplicate) return { pack, packIndex, skippedDuplicates: offset };
   }
   return {
     pack: null,
     packIndex: null,
     skippedDuplicates: packs.length,
-    duplicate: findDuplicateCaption(recentMedia, packs[startIndex].caption)
+    duplicate: findDuplicateCaption(recentMedia, packs[startIndex].caption) || findDuplicatePack(publicationHistory, packs[startIndex])
   };
 }
 
@@ -2660,12 +2733,19 @@ async function main() {
   validatePacks(autoPacks);
   validatePacks(automaticSelectionPacks);
   if (args.validateCopy) {
+    const duplicateProbePack = automaticSelectionPacks[0];
+    const duplicateProbe = pickFreshPack([duplicateProbePack], today, slotIndex, [], [{
+      feedFingerprint: packContentFingerprint(duplicateProbePack),
+      storyFingerprint: packContentFingerprint(duplicateProbePack)
+    }]);
+    if (duplicateProbe.pack) throw new Error('Protecao anti-repeticao falhou no teste de historico.');
     console.log(JSON.stringify({
       ok: true,
       account: account.account,
       checkedPacks: packs.length,
       checkedAutoPacks: autoPacks.length,
-      checkedAutomaticSelectionPacks: automaticSelectionPacks.length
+      checkedAutomaticSelectionPacks: automaticSelectionPacks.length,
+      duplicateHistoryGuard: 'ok'
     }, null, 2));
     return;
   }
@@ -2738,9 +2818,10 @@ async function main() {
 
     if (!scheduledPost && !dashboardPack && !args.storyOnly) {
       const recentMedia = await fetchRecentMedia(userId, token);
-      const fresh = pickFreshPack(automaticSelectionPacks, today, slotIndex, recentMedia);
+      const publicationHistory = readPublicationHistory(args.configDir, account.account);
+      const fresh = pickFreshPack(automaticSelectionPacks, today, slotIndex, recentMedia, publicationHistory);
       if (!fresh.pack) {
-        const autoFresh = pickFreshPack(autoPacks, today, slotIndex, recentMedia);
+        const autoFresh = pickFreshPack(autoPacks, today, slotIndex, recentMedia, publicationHistory);
         if (!autoFresh.pack) {
           const fallbackPack = buildLastResortPack(today, slotIndex);
           validatePack(fallbackPack);
@@ -2765,9 +2846,17 @@ async function main() {
   const runId = `${timestampSaoPaulo()}-slot-${slotIndex}${args.renderOnly ? '-render-only' : ''}`;
   const runDir = join(RUNS_DIR, account.account, runId);
   mkdirSync(runDir, { recursive: true });
+  const historyPack = JSON.parse(JSON.stringify(pack));
   const enhancement = enhancePackForEngagement(pack, today, slotIndex, account);
   pack = enhancement.pack;
   validatePack(pack);
+  if (!args.renderOnly && !args.dryRun && (scheduledPost || dashboardPack || args.storyOnly)) {
+    const publicationHistory = readPublicationHistory(args.configDir, account.account);
+    const duplicate = findDuplicatePack(publicationHistory, historyPack);
+    if (duplicate) {
+      throw new Error(`Conteudo repetido bloqueado: este tema ja foi publicado em ${duplicate.publishedAt || 'uma publicacao anterior'}. Escolha outro conteudo.`);
+    }
+  }
   writeFileSync(join(runDir, 'engagement-intelligence.json'), JSON.stringify(enhancement.intelligence, null, 2), 'utf8');
   writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, account: account.account, visualStyle: style.name, intelligence: enhancement.intelligence, ...pack }, null, 2), 'utf8');
   writeFileSync(join(runDir, 'caption.txt'), pack.caption, 'utf8');
@@ -2859,6 +2948,7 @@ async function main() {
   const storyMedia = await graphPost(`/${userId}/media_publish`, { creation_id: story.id, access_token: token });
   const storyDetails = await graphGet(`/${storyMedia.id}`, { fields: 'id,timestamp', access_token: token });
   const result = { ...baseResult, mediaId: media?.id, ...(details || {}), storyMediaId: storyMedia.id, story: storyDetails };
+  recordPublicationHistory(args.configDir, account.account, historyPack, result);
   if (scheduledPost) {
     const scheduledPatch = {
       status: 'published',

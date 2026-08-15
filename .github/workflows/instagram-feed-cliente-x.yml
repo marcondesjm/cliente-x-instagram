@@ -175,6 +175,7 @@ jobs:
           git add automation/instagram-template/config/weekly-programs.json
           git add automation/instagram-template/config/published-slots.json
           git add automation/instagram-template/config/watchdog-errors.json
+          git add automation/instagram-template/config/publication-history.json
           if git diff --cached --quiet; then
             echo "No schedule state changes to persist."
           else
