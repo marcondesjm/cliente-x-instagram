@@ -745,6 +745,31 @@
       gap: 10px;
     }
 
+    .delivery-day {
+      display: grid;
+      gap: 8px;
+    }
+
+    .delivery-day + .delivery-day {
+      margin-top: 8px;
+    }
+
+    .delivery-day-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: capitalize;
+    }
+
+    .delivery-day-title span {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: none;
+    }
+
     .check {
       display: grid;
       grid-template-columns: 24px minmax(0, 1fr);
@@ -1307,7 +1332,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.36</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.37</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1412,6 +1437,7 @@
             </div>
             <div class="access-result" id="directAutomationResult">Preencha a campanha e salve no projeto.</div>
           </div>
+          <div class="access-result">Histórico dos últimos 30 dias, organizado por data e horário de Brasília.</div>
           <div class="checks" id="directDeliveries"><div class="empty">Nenhum envio registrado. A integração com a Meta ainda está desligada.</div></div>
         </div>
 
@@ -3304,8 +3330,24 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         : '<span class="dot warn"></span><div><strong>Configuração preparada</strong><span>O envio real ficará desligado até conectarmos o webhook e as permissões da Meta.</span></div>';
       if (automation.materialName) document.getElementById('directMaterialResult').textContent = `Material salvo: ${automation.materialName}`;
       const deliveries = Array.isArray(group.deliveries) ? group.deliveries : [];
+      const statusLabels = { sent: 'Enviado', failed: 'Falhou', pending: 'Pendente' };
+      const dateFormatter = new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: 'long', year: 'numeric' });
+      const timeFormatter = new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit' });
+      const groupedDeliveries = deliveries.slice().reverse().reduce((groups, item) => {
+        const date = new Date(item.receivedAt);
+        const label = Number.isNaN(date.getTime()) ? 'Data não informada' : dateFormatter.format(date);
+        if (!groups[label]) groups[label] = [];
+        groups[label].push(item);
+        return groups;
+      }, {});
       document.getElementById('directDeliveries').innerHTML = deliveries.length
-        ? deliveries.slice().reverse().map((item) => `<div class="check"><span class="dot ${item.status === 'sent' ? 'good' : 'warn'}"></span><div><strong>${escapeHtml(item.username || 'Contato')}</strong><span>${escapeHtml(item.keyword || '')} · ${escapeHtml(item.status || 'pendente')}</span></div></div>`).join('')
+        ? Object.entries(groupedDeliveries).map(([dateLabel, items]) => `<section class="delivery-day"><div class="delivery-day-title">${escapeHtml(dateLabel)}<span>${items.length} ${items.length === 1 ? 'registro' : 'registros'}</span></div>${items.map((item) => {
+          const date = new Date(item.receivedAt);
+          const time = Number.isNaN(date.getTime()) ? '--:--' : timeFormatter.format(date);
+          const comment = item.commentText || item.keyword || 'Comentário não registrado';
+          const error = item.error ? ` · ${item.error}` : '';
+          return `<div class="check"><span class="dot ${item.status === 'sent' ? 'good' : 'warn'}"></span><div><strong>@${escapeHtml(item.username || 'contato')}</strong><span>${escapeHtml(time)} · comentário: “${escapeHtml(comment)}” · ${escapeHtml(statusLabels[item.status] || item.status || 'Pendente')}${escapeHtml(error)}</span></div></div>`;
+        }).join('')}</section>`).join('')
         : `<div class="empty">Nenhum envio registrado. ${connected ? 'A conexão está pronta; ative e salve uma campanha para começar.' : 'A integração com a Meta ainda está desligada.'}</div>`;
     }
 

@@ -32,6 +32,7 @@ const SCHEDULED_FILE_PATH = 'automation/instagram-template/config/scheduled-post
 const WEEKLY_PROGRAMS_FILE_PATH = 'automation/instagram-template/config/weekly-programs.json';
 const WATCHDOG_ERRORS_FILE_PATH = 'automation/instagram-template/config/watchdog-errors.json';
 const DIRECT_AUTOMATIONS_FILE_PATH = 'automation/instagram-template/config/direct-automations.json';
+const DIRECT_DELIVERY_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
 const FORCE_WATCHDOG_FILE_PATH = '.github/force-instagram-watchdog.txt';
 const VERCEL_PROJECT_ID = process.env.VERCEL_PROJECT_ID || 'prj_AVyS8LGjVuhUOxkpfZZwOF5vMmPj';
 const VERCEL_TEAM_ID = process.env.VERCEL_TEAM_ID || 'team_T4Th6hb1UxtrbtcWfLxlWNRQ';
@@ -39,7 +40,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.36',
+  appVersion: 'v4.37',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -1533,7 +1534,19 @@ async function updateWeeklyPrograms(body = {}, session = null) {
 }
 
 async function readDirectAutomationGroups() {
-  return readConfigGroups(DIRECT_AUTOMATIONS_FILE_PATH, DIRECT_AUTOMATIONS_PATH);
+  const groups = await readConfigGroups(DIRECT_AUTOMATIONS_FILE_PATH, DIRECT_AUTOMATIONS_PATH);
+  return groups.map((group) => ({ ...group, deliveries: retainedDirectDeliveries(group.deliveries) }));
+}
+
+function retainedDirectDeliveries(deliveries = [], now = Date.now()) {
+  const cutoff = now - DIRECT_DELIVERY_RETENTION_MS;
+  return (Array.isArray(deliveries) ? deliveries : [])
+    .filter((item) => {
+      const timestamp = Date.parse(item?.receivedAt || '');
+      return Number.isFinite(timestamp) && timestamp >= cutoff;
+    })
+    .sort((a, b) => Date.parse(a.receivedAt) - Date.parse(b.receivedAt))
+    .slice(-1000);
 }
 
 function normalizeDirectAutomation(value = {}) {
@@ -1563,7 +1576,7 @@ async function updateDirectAutomation(body = {}, session = null) {
   let group = file.data.find((item) => item.account === accountKey);
   if (!group) { group = { account: accountKey, automation: null, deliveries: [] }; file.data.push(group); }
   group.automation = normalizeDirectAutomation(body.automation || {});
-  group.deliveries = Array.isArray(group.deliveries) ? group.deliveries.slice(-50) : [];
+  group.deliveries = retainedDirectDeliveries(group.deliveries);
   await writeGithubConfig(DIRECT_AUTOMATIONS_FILE_PATH, file.data, file.sha, `Update Direct automation for ${accountKey}`);
   return { ok: true, directAutomation: group, message: 'Automacao de Direct salva no painel.' };
 }
@@ -1693,7 +1706,7 @@ async function handleInstagramWebhook(body, raw, signature, req) {
     const messagingTokenEnv = account.accessTokenEnv.replace(/_INSTAGRAM_ACCESS_TOKEN$/, '_INSTAGRAM_MESSAGING_ACCESS_TOKEN');
     const token = String(process.env[messagingTokenEnv] || process.env[account.accessTokenEnv] || '').trim();
     if (!group || !automation?.enabled || !token) continue;
-    group.deliveries = Array.isArray(group.deliveries) ? group.deliveries : [];
+    group.deliveries = retainedDirectDeliveries(group.deliveries);
 
     for (const change of Array.isArray(entry.changes) ? entry.changes : []) {
       if (change.field !== 'comments') continue;
@@ -1708,6 +1721,7 @@ async function handleInstagramWebhook(body, raw, signature, req) {
         commentId,
         mediaId,
         username: String(value.from?.username || ''),
+        commentText: String(value.text || '').trim().slice(0, 120),
         receivedAt: new Date().toISOString(),
         status: 'failed'
       };
@@ -1728,7 +1742,7 @@ async function handleInstagramWebhook(body, raw, signature, req) {
         delivery.error = String(error.message || error).slice(0, 300);
       }
       group.deliveries.push(delivery);
-      group.deliveries = group.deliveries.slice(-50);
+      group.deliveries = retainedDirectDeliveries(group.deliveries);
       changed = true;
     }
   }
