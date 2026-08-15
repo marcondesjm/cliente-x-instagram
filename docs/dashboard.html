@@ -1332,7 +1332,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.38</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.39</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1354,6 +1354,7 @@
     <nav class="dashboard-nav" aria-label="Áreas do painel">
       <button type="button" class="active" data-dashboard-view="overview">Visão geral</button>
       <button type="button" data-dashboard-view="content">Conteúdo</button>
+      <button type="button" data-dashboard-view="direct-history">Histórico do Direct</button>
       <button type="button" data-dashboard-view="schedule">Agenda</button>
       <button type="button" data-dashboard-view="clients">Clientes</button>
       <button type="button" data-dashboard-view="billing">Cobrança</button>
@@ -1437,7 +1438,17 @@
             </div>
             <div class="access-result" id="directAutomationResult">Preencha a campanha e salve no projeto.</div>
           </div>
-          <div class="access-result">Histórico dos últimos 30 dias, organizado por data e horário de Brasília.</div>
+        </div>
+
+        <div class="panel" id="directHistoryPanel">
+          <div class="panel-head">
+            <div>
+              <div class="section-label">Instagram Direct</div>
+              <h2>Histórico de envios</h2>
+            </div>
+            <span class="status-pill good" id="directHistoryStatus">30 dias</span>
+          </div>
+          <div class="access-result">Registros organizados por dia e horário de Brasília. Os dados ficam salvos por 30 dias.</div>
           <div class="checks" id="directDeliveries"><div class="empty">Nenhum envio registrado. A integração com a Meta ainda está desligada.</div></div>
         </div>
 
@@ -2219,6 +2230,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     const DASHBOARD_GROUPS = {
       overview: ['instagramShowcase', 'latestPostTitle', 'checks'],
       content: ['packSelect', 'activeProfileStatus', 'directAutomationStatus'],
+      'direct-history': ['directHistoryPanel'],
       schedule: ['timeline', 'queueStatus'],
       clients: ['clientPortfolio', 'newAccountStatus', 'usersStatus'],
       billing: ['stripeSetupStatus', 'accessStatus'],
@@ -3340,6 +3352,11 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         groups[label].push(item);
         return groups;
       }, {});
+      const sentCount = deliveries.filter((item) => item.status === 'sent').length;
+      const failedCount = deliveries.filter((item) => item.status === 'failed').length;
+      const historyStatus = document.getElementById('directHistoryStatus');
+      historyStatus.textContent = deliveries.length ? `${sentCount} enviados · ${failedCount} falhas` : '30 dias';
+      historyStatus.className = `status-pill ${failedCount ? 'warn' : 'good'}`;
       document.getElementById('directDeliveries').innerHTML = deliveries.length
         ? Object.entries(groupedDeliveries).map(([dateLabel, items]) => `<section class="delivery-day"><div class="delivery-day-title">${escapeHtml(dateLabel)}<span>${items.length} ${items.length === 1 ? 'registro' : 'registros'}</span></div>${items.map((item) => {
           const date = new Date(item.receivedAt);
