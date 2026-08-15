@@ -1359,7 +1359,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.54</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.55</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -5292,6 +5292,12 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       return String(text || '').split('').reduce((total, char) => total + char.charCodeAt(0), 0);
     }
 
+    function previewDaysSinceEpoch(dateString = '') {
+      const match = String(dateString).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+      if (!match) return previewSeedFromText(dateString);
+      return Math.floor(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3])) / 86_400_000);
+    }
+
     function estimateSvgTextLines(text = '', width = 400, fontSize = 30) {
       const avgCharWidth = fontSize * 0.54;
       const charsPerLine = Math.max(12, Math.floor(width / avgCharWidth));
@@ -5326,7 +5332,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         closeWords.unshift(emphasisWords.pop());
       }
       const emphasis = emphasisWords.join(' ') || first;
-      const close = rest || closeWords.join(' ') || clean;
+      const close = [closeWords.join(' '), rest].filter(Boolean).join(' ');
       return { lead, emphasis, close };
     }
 
@@ -5346,33 +5352,17 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const isCta = index === totalSlides;
       const isProof = index === totalSlides - 1;
       const useSectorPhoto = Boolean(sectorPhotoHref && (isHook || isCta));
-      const dateSeed = previewSeedFromText(item.previewDate || item.planDate || item.date || '');
-      const modeNames = ['paper', 'split', 'poster', 'minimal', 'magazine'];
-      const modeSeed = ((Number.parseInt(String(item.slotIndex || '0').replace(/\D/g, ''), 10) || 0) * 2) + (dateSeed * 3);
-      const mode = modeNames[(modeSeed + index) % modeNames.length];
+      const modeSeed = previewDaysSinceEpoch(item.previewDate || item.planDate || item.date || '');
+      const mode = 'paper';
       let theme = [
         { accent: '#c46a32', soft: '#dfc8b8', top: '#f7f4ee', bottom: '#e7edf0', text: '#17211c', muted: '#ead4c8', cue: '#2f7d73', stripe: '' },
+        { accent: '#b45f35', soft: '#ead6c7', top: '#f8f1e8', bottom: '#e6ddd2', text: '#192736', muted: '#ddc9bb', cue: '#315f7d', stripe: '' },
         { accent: '#2f766d', soft: '#cfe5de', top: '#f5f8f3', bottom: '#dfe9dc', text: '#14262f', muted: '#c7ddd4', cue: '#c46a32', stripe: '<rect x="0" y="92" width="1080" height="26" fill="#ffffff" opacity="0.34"/>' },
         { accent: '#315f7d', soft: '#cbdde7', top: '#f7fbfb', bottom: '#ddebf0', text: '#102333', muted: '#c7dbe4', cue: '#8f5c42', stripe: '<rect x="0" y="1040" width="1080" height="310" fill="#ffffff" opacity="0.34"/>' },
         { accent: '#8f5c42', soft: '#e5d3c7', top: '#fbf8f2', bottom: '#e5e9e2', text: '#17211c', muted: '#e4cfc1', cue: '#2f766d', stripe: '<rect x="0" y="0" width="118" height="1350" fill="#e5e9e2" opacity="0.92"/>' },
-        { accent: '#7b6957', soft: '#ded7cc', top: '#f8f6f0', bottom: '#e9ece7', text: '#17211c', muted: '#d7cec2', cue: '#315f7d', stripe: '<rect x="828" y="0" width="252" height="1350" fill="#ffffff" opacity="0.42"/>' }
-      ][modeSeed % 5];
-      const manualPalette = appState.account?.brandPalette || {};
-      if (manualPalette.enabled) {
-        const primary = paletteColor(manualPalette.primary, theme.text);
-        const secondary = paletteColor(manualPalette.secondary, theme.accent);
-        const background = paletteColor(manualPalette.background, theme.top);
-        theme = {
-          ...theme,
-          accent: secondary,
-          soft: mixPreviewColor(background, secondary, 0.22),
-          top: mixPreviewColor(background, '#ffffff', 0.18),
-          bottom: mixPreviewColor(background, secondary, 0.08),
-          text: mixPreviewColor(primary, '#000000', 0.18),
-          muted: mixPreviewColor(background, secondary, 0.18),
-          cue: primary
-        };
-      }
+        { accent: '#705b91', soft: '#ddd4e7', top: '#faf7fb', bottom: '#e8e1ed', text: '#1f2335', muted: '#d7cee1', cue: '#705b91', stripe: '' },
+        { accent: '#65713d', soft: '#dde0c9', top: '#faf9f1', bottom: '#e8e8d6', text: '#20271d', muted: '#d8dbc4', cue: '#65713d', stripe: '' }
+      ][modeSeed % 7];
       const layout = {
         paper: { titleX: 58, titleY: 245, titleW: 620, titleSize: title.length > 58 ? 54 : 64, panelX: 650, panelY: 470, panelW: 380, panelH: 454, panelR: 3, noteX: 78, noteY: 730, noteW: 540, noteTextX: 188, noteTextW: 380 },
         split: { titleX: 470, titleY: 250, titleW: 540, titleSize: title.length > 52 ? 48 : 56, panelX: 58, panelY: 438, panelW: 370, panelH: 470, panelR: -3, noteX: 470, noteY: 740, noteW: 540, noteTextX: 580, noteTextW: 380 },
@@ -5397,8 +5387,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const estimatedLines = estimateSvgTextLines(body, layout.noteTextW, bodyFontSize);
       const closeFontSize = creativeBody.close.length > 110 ? 13 : creativeBody.close.length > 82 ? 14 : creativeBody.close.length > 58 ? 15 : 17;
       const closeTextWidth = Math.min(layout.noteTextW - 32, 398);
-      const closeLines = estimateSvgTextLines(creativeBody.close, closeTextWidth, closeFontSize);
-      const closeHeight = Math.max(92, Math.min(184, 38 + (closeLines * closeFontSize * 1.34)));
+      const closeLines = creativeBody.close ? estimateSvgTextLines(creativeBody.close, closeTextWidth, closeFontSize) : 0;
+      const closeHeight = creativeBody.close ? Math.max(92, Math.min(184, 38 + (closeLines * closeFontSize * 1.34))) : 0;
       const noteHeight = isCta
         ? Math.max(348, 204 + closeHeight)
         : Math.min(520, Math.max(330, 160 + closeHeight + (estimatedLines * bodyFontSize * 1.02)));
