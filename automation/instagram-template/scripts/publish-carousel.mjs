@@ -734,11 +734,11 @@ const CREATIVE_EDITORIAL_ANGLES = [
     slide3Title: 'Antes da ferramenta, vem o mapa.',
     slide4Title: 'Escolha uma rotina para testar.',
     slide5Title: (topic) => `Menos improviso em ${topic.area}.`,
-    caption: (topic, angle, context, sequence, runLine) => `${topic.area} tem um gargalo que costuma passar batido.\n\nEle aparece quando ${topic.pain}. A equipe sente como correria, retrabalho ou resposta atrasada.\n\nAntes de pensar em ferramenta, escolha uma rotina pequena, escreva o passo a passo e defina o que precisa ser conferido.\n\n${angle.action}\n\nObserve este sinal: ${context.proof}.${runLine}\n\nSérie prática ${String(sequence + 1).padStart(3, '0')}: IA boa começa em rotina bem descrita.\n\n${topic.hashtag}`
+    caption: (topic, angle, context, sequence, runLine) => `${topic.areaTitle || topic.area} tem um gargalo que costuma passar batido.\n\nEle aparece quando ${topic.pain}. A equipe sente como correria, retrabalho ou resposta atrasada.\n\nAntes de pensar em ferramenta, escolha uma rotina pequena, escreva o passo a passo e defina o que precisa ser conferido.\n\n${angle.action}\n\nObserve este sinal: ${context.proof}.${runLine}\n\nSérie prática ${String(sequence + 1).padStart(3, '0')}: IA boa começa em rotina bem descrita.\n\n${topic.hashtag}`
   },
   {
     label: 'Checklist',
-    title: (topic) => `${topic.area}: 3 pontos para arrumar antes da IA.`,
+    title: (topic) => `${topic.areaTitle || topic.area}: 3 pontos para arrumar antes da IA.`,
     opener: (topic) => `Se ${topic.pain}, a primeira automação não precisa ser grande. Ela precisa ser clara.`,
     slide2Title: '1. Onde a conversa começa.',
     slide3Title: '2. Quem confere a informação.',
@@ -768,7 +768,7 @@ const CREATIVE_EDITORIAL_ANGLES = [
   },
   {
     label: 'Antes e depois',
-    title: (topic) => `${topic.area} antes e depois de organizar o fluxo.`,
+    title: (topic) => `${topic.areaTitle || topic.area} antes e depois de organizar o fluxo.`,
     opener: (topic) => `Antes, cada pessoa resolve do seu jeito. Depois, a operação tem contexto, padrão e acompanhamento.`,
     slide2Title: 'Antes: resposta solta.',
     slide3Title: 'Durante: processo visível.',
@@ -1111,7 +1111,23 @@ function profileTopicFromAccount(account = {}, dateString = todaySaoPaulo(), slo
   const brandSummary = account.brandSummary || {};
   const documentAnalysis = account.brandDocument?.analysis || {};
   if (!profile.niche && !profile.audience && !profile.offer && !brandSummary.description && !documentAnalysis.summary) return null;
-  const industry = pickProfileRotationTopic(profile, dateString, slotIndex) || detectIndustrySpecialist(account);
+  const selectedRotationTopic = pickProfileRotationTopic(profile, dateString, slotIndex);
+  const clienteXTopic = account.account === 'cliente-x' && !selectedRotationTopic
+    ? {
+        id: 'cliente-x-ia',
+        area: 'sua empresa',
+        areaTitle: 'Sua empresa',
+        pain: 'tarefas repetitivas consomem tempo, informações ficam espalhadas e decisões chegam sem contexto',
+        process: 'mapeamento da rotina, regra clara, integração, revisão humana, registro e acompanhamento',
+        gain: 'economizar tempo, atender melhor e decidir com informações organizadas',
+        hashtag: '#inteligenciaartificial #automacao #gestao #processos #negocios #produtividade',
+        trigger: 'quando a equipe repete tarefas e ainda depende de memória ou improviso',
+        proof: 'menos retrabalho, respostas consistentes e operação visível para a liderança',
+        visualCue: 'business',
+        examples: ['atendimento', 'vendas', 'follow-up', 'relatórios', 'tarefas administrativas']
+      }
+    : null;
+  const industry = selectedRotationTopic || clienteXTopic || detectIndustrySpecialist(account);
   const niche = profile.niche || account.brandName || 'negócio';
   const audience = profile.audience || 'clientes';
   const offer = profile.offer || 'solução com IA';
@@ -1122,6 +1138,7 @@ function profileTopicFromAccount(account = {}, dateString = todaySaoPaulo(), slo
   const differentiator = shortPhrase(brandSummary.differentiator || documentAnalysis.summary, offer);
   return {
     area: industry?.area || niche,
+    areaTitle: industry?.areaTitle || industry?.area || niche,
     pain: industry?.pain || `${shortPhrase(audience, 'clientes')} ainda precisa entender o valor de ${differentiator}`,
     process: industry
       ? `${industry.process}. Oferta da marca: ${shortPhrase(offer, 'solução com IA')}. Tom ${tone}. Contexto: ${brandContext}`

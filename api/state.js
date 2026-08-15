@@ -40,7 +40,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.44',
+  appVersion: 'v4.45',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -365,6 +365,11 @@ function mergeProgramItems(plan = [], programs = [], dateString = todaySaoPaulo(
 }
 
 const PLAN_TOPICS = {
+  cliente_x_ia: {
+    area: 'sua empresa',
+    areaTitle: 'Sua empresa',
+    pain: 'tarefas repetitivas consomem tempo, informações ficam espalhadas e decisões chegam sem contexto'
+  },
   juridico: {
     area: 'Advocacia',
     pain: 'lead chega pelo WhatsApp sem contexto, documento ou urgência clara'
@@ -416,18 +421,7 @@ const PLAN_TOPICS = {
 };
 
 const DEFAULT_CLIENTE_X_ROTATION = [
-  'juridico',
-  'servicos',
-  'clinicas',
-  'imobiliario',
-  'ecommerce',
-  'financeiro',
-  'estetica',
-  'restaurantes',
-  'comercial',
-  'atendimento',
-  'operacao',
-  'diretoria'
+  'cliente_x_ia'
 ];
 
 const PLAN_CREATIVE_ANGLES = [
@@ -436,7 +430,7 @@ const PLAN_CREATIVE_ANGLES = [
     caption: (topic) => `Em ${topic.area}, o prejuízo aparece quando ${topic.pain}. Antes da IA, mapeie entrada, resposta e conferência.`
   },
   {
-    title: (topic) => `${topic.area}: 3 pontos para arrumar antes da IA.`,
+    title: (topic) => `${topic.areaTitle || topic.area}: 3 pontos para arrumar antes da IA.`,
     caption: (topic) => `Checklist rápido: onde a demanda entra, quem confere a informação e qual resposta pode virar padrão.`
   },
   {
@@ -448,7 +442,7 @@ const PLAN_CREATIVE_ANGLES = [
     caption: (topic) => `Acompanhe uma demanda real do começo ao fim. Se aparecer ${topic.pain}, você achou um bom fluxo para automatizar.`
   },
   {
-    title: (topic) => `${topic.area} antes e depois de organizar o fluxo.`,
+    title: (topic) => `${topic.areaTitle || topic.area} antes e depois de organizar o fluxo.`,
     caption: (topic) => `Antes cada pessoa resolve do seu jeito. Depois existe registro, padrão e acompanhamento para a IA trabalhar com contexto.`
   },
   {
@@ -2167,14 +2161,13 @@ export default async function handler(req, res) {
   const scheduleBrt = account?.scheduleUtc?.map(cronToBrtTime) || [];
   const scheduledPosts = scheduledGroup?.posts || [];
   const weeklyPrograms = weeklyProgramGroup?.programs || [];
-  let plan = editorialDailyPlan(scheduleBrt, account, packs, scheduledPosts);
-  if (!plan.length) {
-    try {
-      plan = publisherDailyPlan(accountKey);
-    } catch {
-      plan = dailyPlan(scheduleBrt, packs, scheduledPosts);
-    }
+  let plan = [];
+  try {
+    plan = publisherDailyPlan(accountKey);
+  } catch {
+    plan = editorialDailyPlan(scheduleBrt, account, packs, scheduledPosts);
   }
+  if (!plan.length) plan = dailyPlan(scheduleBrt, packs, scheduledPosts);
   plan = mergeProgramItems(plan, weeklyPrograms);
   const tomorrowDate = tomorrowSaoPaulo();
   let tomorrowPlan = [];
