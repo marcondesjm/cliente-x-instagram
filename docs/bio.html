@@ -157,16 +157,16 @@
 <body>
   <main class="shell">
     <div class="avatar-wrap">
-      <img class="avatar" src="/docs/uploads/avatar-marcondes.png" alt="Marcondes Machado">
+      <img class="avatar" id="bioAvatar" src="/docs/uploads/avatar-marcondes.png" alt="Marcondes Machado">
     </div>
-    <p class="eyebrow">IA aplicada a empresas</p>
-    <h1>Transforme horas de trabalho em minutos com IA</h1>
+    <p class="eyebrow" id="bioEyebrow">IA aplicada a empresas</p>
+    <h1 id="bioHeadline">Transforme horas de trabalho em minutos com IA</h1>
     <p class="intro">
-      <strong>Especialista em Inteligência Artificial e autor de livros sobre Codex e Agentes de IA.</strong><br>
-      Automações e ferramentas práticas para empresas e profissionais. Comece por aqui.
+      <strong id="bioIntroStrong">Especialista em Inteligência Artificial e autor de livros sobre Codex e Agentes de IA.</strong><br>
+      <span id="bioIntroText">Automações e ferramentas práticas para empresas e profissionais. Comece por aqui.</span>
     </p>
 
-    <section class="links" aria-label="Links principais">
+    <section class="links" id="bioLinks" aria-label="Links principais">
       <a class="link-card primary" href="https://type-diagnostico-nerion.vercel.app/" target="_blank" rel="noopener noreferrer">
         <span class="icon" aria-hidden="true">🚀</span>
         <span class="copy"><strong>Call Estratégica 30 min</strong><span>Faça o diagnóstico gratuito e descubra os próximos passos.</span></span>
@@ -195,8 +195,50 @@
     </section>
 
     <footer>
-      <a href="https://www.instagram.com/marcondes.machado.oficial/" target="_blank" rel="noopener noreferrer">@marcondes.machado.oficial</a>
+      <a id="bioInstagram" href="https://www.instagram.com/marcondes.machado.oficial/" target="_blank" rel="noopener noreferrer">@marcondes.machado.oficial</a>
     </footer>
   </main>
+  <script>
+    function renderBioLink(link) {
+      const anchor = document.createElement('a');
+      anchor.className = `link-card${link.primary ? ' primary' : ''}`;
+      anchor.href = link.url;
+      anchor.target = '_blank';
+      anchor.rel = 'noopener noreferrer';
+      const icon = document.createElement('span');
+      icon.className = 'icon';
+      icon.setAttribute('aria-hidden', 'true');
+      icon.textContent = link.icon || '🔗';
+      const copy = document.createElement('span');
+      copy.className = 'copy';
+      const title = document.createElement('strong');
+      title.textContent = link.title || 'Link';
+      const description = document.createElement('span');
+      description.textContent = link.description || '';
+      copy.append(title, description);
+      const arrow = document.createElement('span');
+      arrow.className = 'arrow';
+      arrow.setAttribute('aria-hidden', 'true');
+      arrow.textContent = '→';
+      anchor.append(icon, copy, arrow);
+      return anchor;
+    }
+    fetch('/api/state?bio=public')
+      .then((response) => response.ok ? response.json() : Promise.reject(new Error('Bio indisponível')))
+      .then(({ bioPage }) => {
+        if (!bioPage) return;
+        document.getElementById('bioAvatar').src = bioPage.avatarUrl;
+        document.getElementById('bioEyebrow').textContent = bioPage.eyebrow;
+        document.getElementById('bioHeadline').textContent = bioPage.headline;
+        document.getElementById('bioIntroStrong').textContent = bioPage.introStrong;
+        document.getElementById('bioIntroText').textContent = bioPage.introText;
+        const links = document.getElementById('bioLinks');
+        links.replaceChildren(...(bioPage.links || []).map(renderBioLink));
+        const instagram = document.getElementById('bioInstagram');
+        instagram.href = bioPage.instagramUrl;
+        instagram.textContent = bioPage.instagramLabel;
+      })
+      .catch(() => {});
+  </script>
 </body>
 </html>

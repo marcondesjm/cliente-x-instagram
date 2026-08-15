@@ -1359,7 +1359,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.51</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.52</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1384,6 +1384,7 @@
       <button type="button" data-dashboard-view="direct-history">Histórico do Direct</button>
       <button type="button" data-dashboard-view="schedule">Agenda</button>
       <button type="button" data-dashboard-view="weekly">Grade semanal</button>
+      <button type="button" data-dashboard-view="bio">Página Bio</button>
       <button type="button" data-dashboard-view="clients">Clientes</button>
       <button type="button" data-dashboard-view="billing">Cobrança</button>
       <button type="button" data-dashboard-view="system">Sistema</button>
@@ -1603,6 +1604,35 @@
           <div class="editor-actions">
             <button class="primary" id="saveWeeklyPrograms" type="button">Salvar grade semanal</button>
           </div>
+        </div>
+
+        <div class="panel" id="bioPagePanel">
+          <div class="panel-head">
+            <div>
+              <div class="section-label">Link da bio</div>
+              <h2>Editar página Bio</h2>
+            </div>
+            <a class="button" href="/docs/bio.html" target="_blank" rel="noreferrer">Abrir página</a>
+          </div>
+          <div class="field-stack">
+            <label>URL da foto<input id="bioAvatarUrl" placeholder="/docs/uploads/avatar-marcondes.png ou https://..."></label>
+            <label>Texto superior<input id="bioEyebrow" maxlength="60"></label>
+            <label>Título principal<textarea id="bioHeadline" rows="2" maxlength="120"></textarea></label>
+            <label>Apresentação em destaque<textarea id="bioIntroStrong" rows="2" maxlength="220"></textarea></label>
+            <label>Descrição<textarea id="bioIntroText" rows="3" maxlength="300"></textarea></label>
+            <label>Link do Instagram<input id="bioInstagramUrl" placeholder="https://www.instagram.com/..."></label>
+            <label>Texto do Instagram<input id="bioInstagramLabel" maxlength="80"></label>
+          </div>
+          <div style="height: 18px;"></div>
+          <div class="panel-head" style="margin-bottom: 10px;">
+            <div><div class="section-label">Botões</div><h2>Links principais</h2></div>
+            <button id="addBioLink" type="button">Adicionar link</button>
+          </div>
+          <div class="weekly-programs" id="bioLinksEditor"></div>
+          <div class="editor-actions">
+            <button class="primary" id="saveBioPage" type="button">Salvar página Bio</button>
+          </div>
+          <div class="access-result" id="bioPageResult">Edite os campos e salve para atualizar a página pública.</div>
         </div>
 
         <div class="panel">
@@ -2239,6 +2269,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       tomorrowPreview: { date: '', items: [] },
       scheduledPosts: [],
       weeklyPrograms: [],
+      bioPage: null,
       directAutomation: { automation: null, deliveries: [] },
       selectedPack: 0,
       selectedSlide: 0,
@@ -2268,6 +2299,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       'direct-history': ['directHistoryPanel'],
       schedule: ['timeline', 'queueStatus'],
       weekly: ['weeklyProgramsPanel'],
+      bio: ['bioPagePanel'],
       clients: ['clientPortfolio', 'newAccountStatus', 'usersStatus'],
       billing: ['stripeSetupStatus', 'accessStatus'],
       system: ['runsList', 'watchdogPanel', 'versionStatus', 'maintenanceStatus']
@@ -2451,6 +2483,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         appState.tomorrowPreview = state.tomorrowPreview || { date: '', items: [] };
         appState.scheduledPosts = state.scheduledPosts || [];
         appState.weeklyPrograms = state.weeklyPrograms || [];
+        appState.bioPage = state.bioPage || null;
         appState.directAutomation = state.directAutomation || { automation: null, deliveries: [] };
         appState.secrets = state.secrets || [];
         appState.accessConfig = state.accessConfig || [];
@@ -2472,6 +2505,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         renderDailyPlan();
         renderTomorrowPreview();
         renderWeeklyPrograms();
+        renderBioPageEditor();
         renderDirectAutomation();
         renderScheduleEditor();
         renderQueue();
@@ -3900,6 +3934,85 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           ${label}
         </label>
       `).join('');
+    }
+
+    function renderBioPageEditor() {
+      const bio = appState.bioPage || {};
+      document.getElementById('bioAvatarUrl').value = bio.avatarUrl || '';
+      document.getElementById('bioEyebrow').value = bio.eyebrow || '';
+      document.getElementById('bioHeadline').value = bio.headline || '';
+      document.getElementById('bioIntroStrong').value = bio.introStrong || '';
+      document.getElementById('bioIntroText').value = bio.introText || '';
+      document.getElementById('bioInstagramUrl').value = bio.instagramUrl || '';
+      document.getElementById('bioInstagramLabel').value = bio.instagramLabel || '';
+      const list = document.getElementById('bioLinksEditor');
+      const links = Array.isArray(bio.links) ? bio.links : [];
+      list.innerHTML = links.length ? links.map((link, index) => `
+        <div class="weekly-program" data-bio-link="${index}">
+          <div class="weekly-program-head">
+            <strong>Botão ${index + 1}</strong>
+            <button type="button" data-remove-bio-link="${index}">Remover</button>
+          </div>
+          <div class="schedule-editor">
+            <label>Ícone<input data-bio-field="icon" maxlength="8" value="${escapeHtml(link.icon || '🔗')}"></label>
+            <label>Título<input data-bio-field="title" maxlength="80" value="${escapeHtml(link.title || '')}"></label>
+            <label>Descrição<input data-bio-field="description" maxlength="180" value="${escapeHtml(link.description || '')}"></label>
+            <label>Link<input data-bio-field="url" value="${escapeHtml(link.url || '')}" placeholder="https://..."></label>
+          </div>
+          <label class="check"><input type="radio" name="bioPrimaryLink" data-bio-primary="${index}" ${link.primary ? 'checked' : ''}><span>Destacar como botão principal</span></label>
+        </div>
+      `).join('') : '<div class="empty">Nenhum botão cadastrado. Clique em Adicionar link.</div>';
+    }
+
+    function collectBioPageEditor() {
+      const links = [...document.querySelectorAll('[data-bio-link]')].map((card, index) => ({
+        icon: card.querySelector('[data-bio-field="icon"]').value.trim(),
+        title: card.querySelector('[data-bio-field="title"]').value.trim(),
+        description: card.querySelector('[data-bio-field="description"]').value.trim(),
+        url: card.querySelector('[data-bio-field="url"]').value.trim(),
+        primary: Boolean(document.querySelector(`[data-bio-primary="${index}"]`)?.checked)
+      }));
+      return {
+        avatarUrl: document.getElementById('bioAvatarUrl').value.trim(),
+        eyebrow: document.getElementById('bioEyebrow').value.trim(),
+        headline: document.getElementById('bioHeadline').value.trim(),
+        introStrong: document.getElementById('bioIntroStrong').value.trim(),
+        introText: document.getElementById('bioIntroText').value.trim(),
+        instagramUrl: document.getElementById('bioInstagramUrl').value.trim(),
+        instagramLabel: document.getElementById('bioInstagramLabel').value.trim(),
+        links
+      };
+    }
+
+    function addBioLink() {
+      appState.bioPage = collectBioPageEditor();
+      appState.bioPage.links.push({ icon: '🔗', title: '', description: '', url: 'https://', primary: !appState.bioPage.links.length });
+      renderBioPageEditor();
+    }
+
+    function removeBioLink(index) {
+      appState.bioPage = collectBioPageEditor();
+      appState.bioPage.links.splice(index, 1);
+      if (appState.bioPage.links.length && !appState.bioPage.links.some((link) => link.primary)) appState.bioPage.links[0].primary = true;
+      renderBioPageEditor();
+    }
+
+    async function saveBioPage() {
+      const result = document.getElementById('bioPageResult');
+      result.textContent = 'Salvando página Bio...';
+      try {
+        const payload = await api('/api/state', {
+          method: 'POST',
+          body: JSON.stringify({ action: 'update-bio-page', bioPage: collectBioPageEditor() })
+        });
+        appState.bioPage = payload.bioPage;
+        renderBioPageEditor();
+        result.textContent = payload.message || 'Página Bio atualizada.';
+        setMessage(`${result.textContent} Abra a página para conferir.`, 'good');
+      } catch (error) {
+        result.textContent = `Erro: ${error.message}`;
+        setMessage(result.textContent, 'bad');
+      }
     }
 
     function renderWeeklyPrograms() {
@@ -5663,6 +5776,12 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('showcaseNext').addEventListener('click', () => {
         appState.showcaseSlideIndex += 1;
         renderShowcaseSlide();
+      });
+      document.getElementById('addBioLink').addEventListener('click', addBioLink);
+      document.getElementById('saveBioPage').addEventListener('click', saveBioPage);
+      document.getElementById('bioLinksEditor').addEventListener('click', (event) => {
+        const button = event.target.closest('[data-remove-bio-link]');
+        if (button) removeBioLink(Number(button.dataset.removeBioLink));
       });
       document.querySelector('.dashboard-nav').addEventListener('click', (event) => {
         const button = event.target.closest('[data-dashboard-view]');

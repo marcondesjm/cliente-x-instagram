@@ -24,6 +24,7 @@ const SCHEDULED_POSTS_PATH = join(ROOT, 'automation', 'instagram-template', 'con
 const WEEKLY_PROGRAMS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'weekly-programs.json');
 const WATCHDOG_ERRORS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'watchdog-errors.json');
 const DIRECT_AUTOMATIONS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'direct-automations.json');
+const BIO_PAGE_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'bio-page.json');
 const OWNER = 'marcondesjm';
 const REPO = 'cliente-x-instagram';
 const ACCOUNTS_FILE_PATH = 'automation/instagram-template/config/accounts.json';
@@ -32,6 +33,7 @@ const SCHEDULED_FILE_PATH = 'automation/instagram-template/config/scheduled-post
 const WEEKLY_PROGRAMS_FILE_PATH = 'automation/instagram-template/config/weekly-programs.json';
 const WATCHDOG_ERRORS_FILE_PATH = 'automation/instagram-template/config/watchdog-errors.json';
 const DIRECT_AUTOMATIONS_FILE_PATH = 'automation/instagram-template/config/direct-automations.json';
+const BIO_PAGE_FILE_PATH = 'automation/instagram-template/config/bio-page.json';
 const DIRECT_DELIVERY_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
 const FORCE_WATCHDOG_FILE_PATH = '.github/force-instagram-watchdog.txt';
 const VERCEL_PROJECT_ID = process.env.VERCEL_PROJECT_ID || 'prj_AVyS8LGjVuhUOxkpfZZwOF5vMmPj';
@@ -40,7 +42,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.51',
+  appVersion: 'v4.52',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -1497,6 +1499,52 @@ async function readWeeklyProgramGroups() {
   return readConfigGroups(WEEKLY_PROGRAMS_FILE_PATH, WEEKLY_PROGRAMS_PATH);
 }
 
+async function readBioPage() {
+  return readConfigGroups(BIO_PAGE_FILE_PATH, BIO_PAGE_PATH);
+}
+
+function bioText(value, maxLength = 300) {
+  return String(value || '').trim().slice(0, maxLength);
+}
+
+function bioUrl(value, { allowLocal = false } = {}) {
+  const url = String(value || '').trim().slice(0, 2000);
+  if (allowLocal && /^\/[a-z0-9/_\-.]+$/i.test(url)) return url;
+  if (!/^https:\/\//i.test(url)) throw userError('Os links da página Bio precisam começar com https://.');
+  return url;
+}
+
+function normalizeBioPage(value = {}) {
+  const links = (Array.isArray(value.links) ? value.links : []).slice(0, 10).map((link, index) => ({
+    icon: bioText(link.icon, 8) || '🔗',
+    title: bioText(link.title, 80),
+    description: bioText(link.description, 180),
+    url: bioUrl(link.url),
+    primary: Boolean(link.primary) && index === (value.links || []).findIndex((item) => item?.primary)
+  }));
+  if (!bioText(value.headline, 120)) throw userError('Informe o título principal da página Bio.');
+  if (!links.length || links.some((link) => !link.title)) throw userError('Cadastre pelo menos um botão com título e link.');
+  return {
+    avatarUrl: bioUrl(value.avatarUrl, { allowLocal: true }),
+    eyebrow: bioText(value.eyebrow, 60),
+    headline: bioText(value.headline, 120),
+    introStrong: bioText(value.introStrong, 220),
+    introText: bioText(value.introText, 300),
+    instagramUrl: bioUrl(value.instagramUrl),
+    instagramLabel: bioText(value.instagramLabel, 80),
+    links,
+    updatedAt: new Date().toISOString()
+  };
+}
+
+async function updateBioPage(body = {}, session = null) {
+  if (!isOwner(session)) throw userError('Apenas o administrador principal pode editar a página Bio.', 403);
+  const bio = normalizeBioPage(body.bioPage || {});
+  const file = await readGithubConfig(BIO_PAGE_FILE_PATH);
+  await writeGithubConfig(BIO_PAGE_FILE_PATH, bio, file.sha, 'Update public bio page');
+  return { ok: true, bioPage: bio, message: 'Página Bio salva e atualizada.' };
+}
+
 function normalizeWeeklyProgram(program = {}) {
   const id = String(program.id || `program-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`).trim();
   const name = String(program.name || '').trim();
@@ -1997,6 +2045,12 @@ export default async function handler(req, res) {
         res.status(200).json(result);
         return;
       }
+      if (body.action === 'update-bio-page') {
+        const result = await updateBioPage(body, session);
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json(result);
+        return;
+      }
       if (body.action === 'update-direct-automation') {
         const result = await updateDirectAutomation(body, session);
         res.setHeader('cache-control', 'no-store'); res.status(200).json(result); return;
@@ -2072,6 +2126,13 @@ export default async function handler(req, res) {
     } else {
       res.status(403).json({ error: 'Token de verificacao do webhook invalido.' });
     }
+    return;
+  }
+
+  if (String(req.query?.bio || '') === 'public') {
+    const bioPage = await readBioPage();
+    res.setHeader('cache-control', 'public, max-age=60, stale-while-revalidate=300');
+    res.status(200).json({ bioPage });
     return;
   }
 
@@ -2176,6 +2237,7 @@ export default async function handler(req, res) {
   const group = content.find((item) => item.account === accountKey);
   const scheduledGroups = await readScheduledGroups();
   const weeklyProgramGroups = await readWeeklyProgramGroups();
+  const bioPage = await readBioPage();
   const directAutomationGroups = await readDirectAutomationGroups();
   const watchdogErrors = await readWatchdogErrors();
   const scheduledGroup = scheduledGroups.find((item) => item.account === accountKey);
@@ -2236,6 +2298,7 @@ export default async function handler(req, res) {
       reviewedAt: new Date().toISOString()
     },
     weeklyPrograms,
+    bioPage,
     directAutomation: {
       ...(directAutomationGroup || { account: accountKey, automation: null, deliveries: [] }),
       connected: Boolean(
