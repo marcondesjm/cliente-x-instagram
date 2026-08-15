@@ -1194,7 +1194,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.10</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.11</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1241,6 +1241,17 @@
             <div class="value" id="lastFailureTime">OK</div>
             <div class="note" id="lastFailureNote">Sem erro aberto</div>
           </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="section-label">Operação SaaS</div>
+              <h2>Carteira de clientes</h2>
+            </div>
+            <span class="status-pill good" id="clientPortfolioStatus">Ativos</span>
+          </div>
+          <div class="checks" id="clientPortfolio"></div>
         </div>
 
         <div class="panel">
@@ -1727,6 +1738,41 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               <input id="newAccountKey" placeholder="ex: cliente-advogados">
             </label>
             <label>
+              Responsável pelo negócio
+              <input id="newClientContact" placeholder="ex: Ana Souza">
+            </label>
+            <label>
+              Email do cliente
+              <input id="newClientEmail" type="email" placeholder="ex: ana@empresa.com.br">
+            </label>
+            <label>
+              WhatsApp
+              <input id="newClientWhatsapp" placeholder="ex: 48 99999-9999">
+            </label>
+            <label>
+              Segmento do negócio
+              <input id="newClientBusinessType" placeholder="ex: clínica odontológica">
+            </label>
+            <label>
+              Plano contratado
+              <select id="newClientPlan">
+                <option value="starter">Essencial</option>
+                <option value="professional">Profissional</option>
+                <option value="agency">Agência</option>
+              </select>
+            </label>
+            <label>
+              Publicação
+              <select id="newClientApprovalMode">
+                <option value="automatic">Automática</option>
+                <option value="approval">Aprovação antes de publicar</option>
+              </select>
+            </label>
+            <label>
+              Mensalidade (R$)
+              <input id="newClientMonthlyPrice" type="number" min="0" step="0.01" placeholder="ex: 497">
+            </label>
+            <label>
               Instagram
               <input id="newAccountUsername" placeholder="ex: novo.instagram.oficial">
             </label>
@@ -2077,6 +2123,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         document.getElementById('contentCount').textContent = DATA.packCount;
         document.getElementById('contentNote').textContent = `${DATA.schedulesUtc.length} horários ativos`;
         renderAccountSwitcher();
+        renderClientPortfolio();
         renderActiveProfile();
         renderUsers();
         renderVersion(state.activeVersion);
@@ -2145,6 +2192,58 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       subline.textContent = `${username} · ${footer}`;
       document.getElementById('publishNow').textContent = `Publicar agora (${appState.selectedAccount})`;
       document.getElementById('queuePost').textContent = `Agendar pack (${appState.selectedAccount})`;
+    }
+
+    function renderClientPortfolio() {
+      const list = document.getElementById('clientPortfolio');
+      const status = document.getElementById('clientPortfolioStatus');
+      if (!list || !status) return;
+      const accounts = appState.accounts || [];
+      const clientAccounts = accounts;
+      status.textContent = `${clientAccounts.length} cliente${clientAccounts.length === 1 ? '' : 's'}`;
+      list.innerHTML = clientAccounts.length ? clientAccounts.map((account) => {
+        const client = account.clientProfile || {};
+        const planLabels = { starter: 'Essencial', professional: 'Profissional', agency: 'Agência' };
+        const statusLabels = { onboarding: 'Em implantação', active: 'Ativo', paused: 'Pausado' };
+        const automatic = client.approvalMode !== 'approval';
+        return `<div class="check">
+          <span class="dot ${client.status === 'paused' ? 'warn' : 'good'}"></span>
+          <div>
+            <strong>${escapeHtml(account.brandName || account.account)}</strong>
+            <span>${escapeHtml(planLabels[client.plan] || client.plan || 'Operação própria')} · ${escapeHtml(statusLabels[client.status] || client.status || 'Ativo')} · ${automatic ? 'publicação automática' : 'com aprovação'}</span>
+            <span>${escapeHtml(client.contactName || 'Responsável não informado')}${client.monthlyPrice ? ` · R$ ${Number(client.monthlyPrice).toFixed(2).replace('.', ',')}/mês` : ''}</span>
+            ${appState.sessionRole === 'owner' ? `<div class="access-actions">
+              ${client.status === 'paused'
+                ? `<button type="button" data-client-status="active" data-client-account="${escapeHtml(account.account)}">Ativar</button>`
+                : `<button type="button" data-client-status="paused" data-client-account="${escapeHtml(account.account)}">Pausar</button>`}
+            </div>` : ''}
+          </div>
+        </div>`;
+      }).join('') : '<div class="empty">Os novos clientes aparecerão aqui com plano, responsável e status de implantação.</div>';
+    }
+
+    async function handleClientPortfolioClick(event) {
+      const button = event.target.closest('[data-client-status]');
+      if (!button) return;
+      const original = button.textContent;
+      button.disabled = true;
+      button.textContent = 'Salvando';
+      try {
+        await api('/api/state', {
+          method: 'POST',
+          body: JSON.stringify({
+            action: 'update-client-status',
+            account: button.dataset.clientAccount,
+            status: button.dataset.clientStatus
+          })
+        });
+        await loadState();
+      } catch (error) {
+        setMessage(error.message, 'bad');
+      } finally {
+        button.disabled = false;
+        button.textContent = original;
+      }
     }
 
     function paletteColor(value, fallback) {
@@ -2626,6 +2725,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const offer = document.getElementById('newAccountOffer').value.trim();
       const tone = document.getElementById('newAccountTone').value;
       const goal = document.getElementById('newAccountGoal').value;
+      const contactName = document.getElementById('newClientContact').value.trim();
+      const clientEmail = document.getElementById('newClientEmail').value.trim();
+      const whatsapp = document.getElementById('newClientWhatsapp').value.trim();
+      const businessType = document.getElementById('newClientBusinessType').value.trim();
+      const plan = document.getElementById('newClientPlan').value;
+      const approvalMode = document.getElementById('newClientApprovalMode').value;
+      const monthlyPrice = document.getElementById('newClientMonthlyPrice').value;
       const brandSummary = {
         description: document.getElementById('newBrandSummary').value.trim(),
         positioning: document.getElementById('newBrandPositioning').value.trim(),
@@ -2655,6 +2761,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             offer,
             tone,
             goal,
+            contactName,
+            clientEmail,
+            whatsapp,
+            businessType,
+            plan,
+            approvalMode,
+            monthlyPrice,
             brandSummary,
             brandPalette,
             sourceAccount: appState.selectedAccount
@@ -2662,6 +2775,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         });
         appState.selectedAccount = payload.account?.account || account;
         document.getElementById('newAccountKey').value = '';
+        document.getElementById('newClientContact').value = '';
+        document.getElementById('newClientEmail').value = '';
+        document.getElementById('newClientWhatsapp').value = '';
+        document.getElementById('newClientBusinessType').value = '';
+        document.getElementById('newClientPlan').value = 'starter';
+        document.getElementById('newClientApprovalMode').value = 'automatic';
+        document.getElementById('newClientMonthlyPrice').value = '';
         document.getElementById('newAccountUsername').value = '';
         document.getElementById('newAccountBrand').value = '';
         document.getElementById('newAccountFooter').value = '';
@@ -4947,6 +5067,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       });
       document.getElementById('createUser').addEventListener('click', createUser);
       document.getElementById('usersList').addEventListener('click', handleUserManagementClick);
+      document.getElementById('clientPortfolio').addEventListener('click', handleClientPortfolioClick);
       document.getElementById('accessConfig').addEventListener('click', (event) => {
         const edit = event.target.closest('[data-access-edit]');
         const validate = event.target.closest('[data-access-validate]');

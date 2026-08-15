@@ -35,7 +35,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.10',
+  appVersion: 'v4.11',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -1072,9 +1072,20 @@ async function createAccountConfig(body = {}, session = null) {
     accessTokenEnv: `${envPrefix}_INSTAGRAM_ACCESS_TOKEN`,
     userIdEnv: `${envPrefix}_INSTAGRAM_USER_ID`,
     imgbbKeyEnv: `${envPrefix}_IMGBB_API_KEY`,
-    contentProfile,
+    contentProfile: { ...contentProfile, visualDirection: 'anatex-editorial' },
     brandSummary,
-    brandPalette,
+    brandPalette: { ...brandPalette, enabled: true },
+    clientProfile: {
+      contactName: String(body.contactName || '').trim(),
+      email: String(body.clientEmail || '').trim().toLowerCase(),
+      whatsapp: String(body.whatsapp || '').trim(),
+      businessType: String(body.businessType || contentProfile.niche).trim(),
+      plan: ['starter', 'professional', 'agency'].includes(body.plan) ? body.plan : 'starter',
+      status: 'onboarding',
+      approvalMode: body.approvalMode === 'approval' ? 'approval' : 'automatic',
+      monthlyPrice: Math.max(0, Number(body.monthlyPrice) || 0),
+      startedAt: new Date().toISOString()
+    },
     scheduleUtc: Array.isArray(source.scheduleUtc) ? source.scheduleUtc : [],
     ...(session && !isOwner(session) ? { ownerEmail: session.email } : {})
   };
@@ -1154,6 +1165,22 @@ async function updateAccountProfile(body = {}, session = null) {
     account: accountsFile.data[index],
     message: `Perfil editorial de ${accountKey} atualizado. As próximas postagens automáticas usarão esse direcionamento.`
   };
+}
+
+async function updateClientStatus(body = {}, session = null) {
+  if (!isOwner(session)) throw userError('Somente o administrador principal pode alterar contratos.', 403);
+  const accountKey = normalizeAccountKey(body.account);
+  const status = ['onboarding', 'active', 'paused'].includes(body.status) ? body.status : 'onboarding';
+  const accountsFile = await readGithubConfig(ACCOUNTS_FILE_PATH);
+  const index = accountsFile.data.findIndex((item) => item.account === accountKey);
+  if (index === -1) throw userError(`Conta ${accountKey} nao encontrada.`, 404);
+  accountsFile.data[index].clientProfile = {
+    ...(accountsFile.data[index].clientProfile || {}),
+    status,
+    updatedAt: new Date().toISOString()
+  };
+  await writeGithubConfig(ACCOUNTS_FILE_PATH, accountsFile.data, accountsFile.sha, `Update client status ${accountKey}`);
+  return { ok: true, account: accountsFile.data[index], message: `Cliente ${accountKey}: ${status}.` };
 }
 
 async function uploadBrandDocument(body = {}, session = null) {
@@ -1367,6 +1394,12 @@ export default async function handler(req, res) {
         res.status(200).json(result);
         return;
       }
+      if (body.action === 'update-client-status') {
+        const result = await updateClientStatus(body, session);
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json(result);
+        return;
+      }
       if (body.action === 'update-weekly-programs') {
         const result = await updateWeeklyPrograms(body, session);
         res.setHeader('cache-control', 'no-store');
@@ -1475,7 +1508,8 @@ export default async function handler(req, res) {
     account: item.account,
     expectedUsername: item.expectedUsername,
     brandName: item.brandName,
-    footerText: item.footerText
+    footerText: item.footerText,
+    clientProfile: item.clientProfile || null
   }));
   const group = content.find((item) => item.account === accountKey);
   const scheduledGroups = await readScheduledGroups();
