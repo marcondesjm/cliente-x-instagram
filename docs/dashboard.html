@@ -258,13 +258,13 @@
       background: linear-gradient(145deg, #f8faf8, #edf2ef);
     }
 
-    .instagram-embed-shell iframe {
+    .instagram-showcase-image {
       display: block;
       width: 100%;
-      height: 460px;
-      min-height: 460px;
-      border: 0;
-      background: #fff;
+      height: 390px;
+      object-fit: contain;
+      object-position: center;
+      background: #eef3f0;
     }
 
     .instagram-embed-fallback {
@@ -283,7 +283,7 @@
       font-size: 20px;
     }
 
-    .instagram-embed-shell iframe[src] + .instagram-embed-fallback { display: none; }
+    .instagram-showcase-image[src] + .instagram-embed-fallback { display: none; }
 
     .metrics {
       display: grid;
@@ -1274,7 +1274,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.16</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.17</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1341,7 +1341,7 @@
             <a class="button" id="instagramShowcaseLink" href="https://www.instagram.com/marcondes.machado.oficial/" target="_blank" rel="noreferrer">Ver no Instagram</a>
           </div>
           <div class="instagram-embed-shell">
-            <iframe id="instagramShowcaseFrame" title="Última publicação no Instagram" loading="lazy" allowtransparency="true"></iframe>
+            <img class="instagram-showcase-image" id="instagramShowcaseImage" alt="Prévia completa da última publicação" loading="lazy">
             <div class="instagram-embed-fallback">
               <strong>Aguardando a publicação confirmada</strong>
               <span>Assim que a Meta confirmar o post, ele aparecerá ao vivo neste espaço.</span>
@@ -3405,7 +3405,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const title = document.getElementById('latestPostTitle');
       const status = document.getElementById('latestPostStatus');
       const caption = document.getElementById('latestPostCaption');
-      const showcaseFrame = document.getElementById('instagramShowcaseFrame');
+      const showcaseImage = document.getElementById('instagramShowcaseImage');
       const showcaseLink = document.getElementById('instagramShowcaseLink');
 
       title.textContent = 'Postagem confirmada pela Meta';
@@ -3414,8 +3414,6 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       if (media.permalink) {
         link.href = media.permalink;
         showcaseLink.href = media.permalink;
-        const embedUrl = `${media.permalink.replace(/\/?$/, '/')}embed/`;
-        if (showcaseFrame.src !== embedUrl) showcaseFrame.src = embedUrl;
       }
       if (media.caption) caption.textContent = media.caption;
       document.getElementById('lastPostTime').textContent = formatTimeOnly(media.timestamp);
@@ -3423,8 +3421,12 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         ? `${formatDateTime(media.timestamp)} · confirmado pela Meta`
         : 'Confirmado pela Meta';
       const mediaImage = media.thumbnail_url || media.media_url;
-      if (mediaImage) image.src = mediaImage;
+      if (mediaImage) {
+        image.src = mediaImage;
+        showcaseImage.src = mediaImage;
+      }
       image.onerror = () => { image.style.display = 'none'; };
+      showcaseImage.onerror = () => { showcaseImage.removeAttribute('src'); };
     }
 
     function scheduleTimesFromInputs() {
