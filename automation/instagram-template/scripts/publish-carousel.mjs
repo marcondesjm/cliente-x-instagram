@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { chromium } from 'playwright';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { dirname, extname, join, resolve } from 'node:path';
+import { basename, dirname, extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildBrandContext } from '../../../lib/brand-analysis.js';
 
@@ -2417,6 +2417,72 @@ async function uploadReadyImageToImgBB(imagePath, apiKey) {
   return imageUrl;
 }
 
+async function githubApi(path, options = {}) {
+  const token = process.env.GITHUB_TOKEN;
+  if (!token) throw new Error('GITHUB_TOKEN ausente para hospedagem de imagens.');
+  const res = await fetchWithContext(`https://api.github.com${path}`, {
+    ...options,
+    headers: {
+      accept: 'application/vnd.github+json',
+      authorization: `Bearer ${token}`,
+      'user-agent': 'cliente-x-instagram-publisher',
+      'x-github-api-version': '2022-11-28',
+      ...(options.headers || {})
+    }
+  }, 'GitHub image hosting');
+  const text = await res.text();
+  if (!res.ok) throw createHttpError('GitHub image hosting', res.status, text);
+  return text ? JSON.parse(text) : {};
+}
+
+async function hostRenderedImagesOnGitHub(imagePaths, accountKey, runId) {
+  const repository = process.env.GITHUB_REPOSITORY;
+  const branch = process.env.GITHUB_REF_NAME || 'main';
+  if (!repository || !process.env.GITHUB_TOKEN || process.env.GITHUB_ACTIONS !== 'true') return null;
+
+  return withRetry('GitHub image hosting', async () => {
+    const ref = await githubApi(`/repos/${repository}/git/ref/heads/${encodeURIComponent(branch)}`);
+    const headSha = ref.object?.sha;
+    if (!headSha) throw new Error(`Nao foi possivel identificar o HEAD de ${repository}:${branch}.`);
+
+    const tree = [];
+    for (const imagePath of imagePaths) {
+      const blob = await githubApi(`/repos/${repository}/git/blobs`, {
+        method: 'POST',
+        body: JSON.stringify({ content: readFileSync(resolve(imagePath)).toString('base64'), encoding: 'base64' })
+      });
+      tree.push({
+        path: `docs/generated/${accountKey}/${runId}/${basename(imagePath)}`,
+        mode: '100644',
+        type: 'blob',
+        sha: blob.sha
+      });
+    }
+
+    const createdTree = await githubApi(`/repos/${repository}/git/trees`, {
+      method: 'POST',
+      body: JSON.stringify({ base_tree: headSha, tree })
+    });
+    const commit = await githubApi(`/repos/${repository}/git/commits`, {
+      method: 'POST',
+      body: JSON.stringify({
+        message: `Host Instagram images ${accountKey} ${runId}`,
+        tree: createdTree.sha,
+        parents: [headSha]
+      })
+    });
+    await githubApi(`/repos/${repository}/git/refs/heads/${encodeURIComponent(branch)}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ sha: commit.sha, force: false })
+    });
+
+    const urls = tree.map((item) => `https://raw.githubusercontent.com/${repository}/${commit.sha}/${item.path}`);
+    await Promise.all(urls.map((url) => assertRemoteImageReady(url)));
+    console.log(`Imagens hospedadas no GitHub em um unico commit: ${commit.sha}.`);
+    return urls;
+  });
+}
+
 async function createCarouselChildFromImage(userId, token, imagePath, apiKey) {
   return withRetry('Create carousel child', async (attempt) => {
     const imageUrl = isHttpUrl(imagePath)
@@ -2563,10 +2629,15 @@ async function main() {
   const token = env[account.accessTokenEnv];
   const userId = env[account.userIdEnv];
   const imgbbKey = env[account.imgbbKeyEnv];
-  if (!args.renderOnly) {
+  if (!args.renderOnly && !args.dryRun) {
     if (!token) throw new Error(`${account.accessTokenEnv} ausente.`);
     if (!userId) throw new Error(`${account.userIdEnv} ausente.`);
-    if (!imgbbKey) throw new Error(`${account.imgbbKeyEnv} ausente.`);
+    const githubHostingAvailable = process.env.GITHUB_ACTIONS === 'true'
+      && Boolean(process.env.GITHUB_TOKEN)
+      && Boolean(process.env.GITHUB_REPOSITORY);
+    if (!imgbbKey && !githubHostingAvailable) {
+      throw new Error(`${account.imgbbKeyEnv} ausente e hospedagem reserva do GitHub indisponivel.`);
+    }
 
     const igAccount = await graphGet(`/${userId}`, { fields: 'id,username', access_token: token });
     if (igAccount.username !== account.expectedUsername) {
@@ -2625,14 +2696,34 @@ async function main() {
     return;
   }
 
+  if (args.dryRun) {
+    const dryRunResult = {
+      ok: true,
+      dryRun: true,
+      account: account.account,
+      runDir,
+      visualStyle: style.name,
+      slotIndex,
+      packIndex,
+      imagePaths,
+      storyImagePath
+    };
+    writeFileSync(join(runDir, 'result.json'), JSON.stringify(dryRunResult, null, 2), 'utf8');
+    console.log(JSON.stringify(dryRunResult, null, 2));
+    return;
+  }
+
   let storyImageUrl = '';
   let story = null;
   let imageUrls = [];
   let childIds = [];
   let carousel = null;
+  const githubHostedUrls = await hostRenderedImagesOnGitHub([...imagePaths, storyImagePath], account.account, runId);
+  const publishImagePaths = githubHostedUrls ? githubHostedUrls.slice(0, imagePaths.length) : imagePaths;
+  const publishStoryImagePath = githubHostedUrls ? githubHostedUrls.at(-1) : storyImagePath;
   if (!storyOnly) {
     const children = [];
-    for (const imagePath of imagePaths) {
+    for (const imagePath of publishImagePaths) {
       const result = await createCarouselChildFromImage(userId, token, imagePath, imgbbKey);
       children.push(result.child);
       imageUrls.push(result.imageUrl);
@@ -2647,7 +2738,7 @@ async function main() {
     });
     await pollContainer(carousel.id, token);
   }
-  ({ story, imageUrl: storyImageUrl } = await createStoryFromImage(userId, token, storyImagePath, imgbbKey));
+  ({ story, imageUrl: storyImageUrl } = await createStoryFromImage(userId, token, publishStoryImagePath, imgbbKey));
 
   const baseResult = {
     ok: true,
@@ -2667,12 +2758,6 @@ async function main() {
     carouselId: carousel?.id,
     storyContainerId: story.id
   };
-  if (args.dryRun) {
-    writeFileSync(join(runDir, 'result.json'), JSON.stringify(baseResult, null, 2), 'utf8');
-    console.log(JSON.stringify(baseResult, null, 2));
-    return;
-  }
-
   let media = null;
   let details = null;
   if (!storyOnly) {

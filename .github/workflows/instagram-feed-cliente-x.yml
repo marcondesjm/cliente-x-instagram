@@ -81,6 +81,7 @@ jobs:
       IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      GITHUB_TOKEN: ${{ github.token }}
 
     steps:
       - name: Checkout
