@@ -15,7 +15,7 @@ import {
 } from '../lib/auth.js';
 import { accountFromQuery, normalizeAccountKey, requireConfiguredAccount } from '../lib/accounts.js';
 import { analyzeBrandDocument } from '../lib/brand-analysis.js';
-import { researchFreshEditorialPacks } from '../lib/editorial-research.js';
+import { EDITORIAL_SOURCES, researchFreshEditorialPacks } from '../lib/editorial-research.js';
 import Stripe from 'stripe';
 
 const ROOT = process.cwd();
@@ -43,7 +43,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.58',
+  appVersion: 'v4.59',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -2319,6 +2319,18 @@ export default async function handler(req, res) {
       date: tomorrowDate,
       items: tomorrowPlan,
       reviewedAt: new Date().toISOString()
+    },
+    editorialRadar: {
+      status: tomorrowPlan.length > 0 && tomorrowPlan.every((item) => String(item.packIndex || '').startsWith('news-')) ? 'working' : 'fallback',
+      label: tomorrowPlan.length > 0 && tomorrowPlan.every((item) => String(item.packIndex || '').startsWith('news-')) ? 'Radar funcionando' : 'Radar em modo de reserva',
+      maxAgeDays: 60,
+      sources: EDITORIAL_SOURCES,
+      safeguards: [
+        'Aceitar somente conteúdo publicado no site ou feed oficial da organização.',
+        'Registrar fonte, link original e data em cada pauta.',
+        'Traduzir e resumir sem inventar números, resultados ou declarações.',
+        'Bloquear pautas sem origem identificável e revisar alegações sensíveis antes da publicação.'
+      ]
     },
     weeklyPrograms,
     bioPage,

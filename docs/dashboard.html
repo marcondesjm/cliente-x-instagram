@@ -500,6 +500,41 @@
       gap: 10px;
     }
 
+    .news-radar {
+      margin: 0 0 12px;
+      padding: 12px;
+      border: 1px solid #abefc6;
+      border-radius: 10px;
+      background: #f0fdf4;
+    }
+
+    .news-radar.is-fallback {
+      border-color: #fedf89;
+      background: #fffaeb;
+    }
+
+    .news-radar-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      min-height: 38px;
+      color: var(--good);
+      background: #fff;
+      border-color: #86efac;
+      font-weight: 900;
+    }
+
+    .news-radar.is-fallback .news-radar-button { color: var(--warn); border-color: #fedf89; }
+    .radar-dot { width: 10px; height: 10px; flex: 0 0 10px; border-radius: 50%; background: #079455; box-shadow: 0 0 0 5px rgba(7,148,85,.12); }
+    .news-radar.is-fallback .radar-dot { background: #b54708; box-shadow: 0 0 0 5px rgba(181,71,8,.12); }
+    .news-radar-details { margin-top: 11px; color: var(--muted); font-size: 12px; line-height: 1.5; font-weight: 700; }
+    .news-radar-details strong { color: var(--text); }
+    .radar-sources { display: flex; flex-wrap: wrap; gap: 7px; margin: 8px 0; }
+    .radar-sources a, .source-reference { color: var(--good); font-weight: 900; text-decoration: none; }
+    .radar-sources a { padding: 5px 8px; border: 1px solid #abefc6; border-radius: 999px; background: #fff; }
+    .radar-safeguards { margin: 7px 0 0 18px; padding: 0; }
+    .source-reference { display: inline-flex; margin-top: 2px; font-size: 12px; }
+
     .weekly-programs {
       display: grid;
       gap: 10px;
@@ -1359,7 +1394,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.58</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.59</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1560,6 +1595,13 @@
               <h2>Todos os posts de amanhã</h2>
             </div>
             <span class="status-pill" id="tomorrowPreviewStatus">Carregando</span>
+          </div>
+          <div class="news-radar" id="newsRadar">
+            <button class="news-radar-button" id="newsRadarButton" type="button" aria-expanded="false">
+              <span class="radar-dot"></span>
+              <span id="newsRadarButtonLabel">Verificando Radar de Notícias</span>
+            </button>
+            <div class="news-radar-details" id="newsRadarDetails" hidden></div>
           </div>
           <div class="daily-plan" id="tomorrowPreview"></div>
           <div class="plan-preview" id="dailyPlanPreview">
@@ -2275,6 +2317,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       scheduleBrt: [],
       dailyPlan: [],
       tomorrowPreview: { date: '', items: [] },
+      editorialRadar: { status: 'checking', label: 'Verificando Radar de Notícias', sources: [], safeguards: [] },
       scheduledPosts: [],
       weeklyPrograms: [],
       bioPage: null,
@@ -2489,6 +2532,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         appState.scheduleBrt = state.scheduleBrt || [];
         appState.dailyPlan = state.dailyPlan || [];
         appState.tomorrowPreview = state.tomorrowPreview || { date: '', items: [] };
+        appState.editorialRadar = state.editorialRadar || { status: 'fallback', label: 'Radar indisponível', sources: [], safeguards: [] };
         appState.scheduledPosts = state.scheduledPosts || [];
         appState.weeklyPrograms = state.weeklyPrograms || [];
         appState.bioPage = state.bioPage || null;
@@ -5110,6 +5154,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const dateLabel = document.getElementById('tomorrowPreviewDate');
       const preview = appState.tomorrowPreview || {};
       const items = preview.items || [];
+      renderNewsRadar();
       if (dateLabel) dateLabel.textContent = `Amanhã · ${formatDateLabel(preview.date)}`;
 
       if (!items.length) {
@@ -5137,6 +5182,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             </div>
             <div class="plan-title">${escapeHtml(item.title || 'Conteúdo previsto')}</div>
             <div class="plan-caption">${escapeHtml(item.caption || 'Legenda será montada pelo gerador automático.')}</div>
+            ${item.sourceUrl && /^https:\/\//i.test(item.sourceUrl)
+              ? `<a class="source-reference" href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noopener noreferrer">Fonte oficial: ${escapeHtml(item.source || 'abrir publicação original')} ↗</a>`
+              : ''}
             <div class="plan-actions">
               <div class="run-meta">${escapeHtml(slot)} · ${escapeHtml(item.mode || 'feed + story')}</div>
               ${item.type === 'program'
@@ -5146,6 +5194,25 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           </article>
         `;
       }).join('');
+    }
+
+    function renderNewsRadar() {
+      const container = document.getElementById('newsRadar');
+      const label = document.getElementById('newsRadarButtonLabel');
+      const details = document.getElementById('newsRadarDetails');
+      const radar = appState.editorialRadar || {};
+      const working = radar.status === 'working';
+      container.classList.toggle('is-fallback', !working);
+      label.textContent = radar.label || (working ? 'Radar funcionando' : 'Radar em modo de reserva');
+      const sources = (radar.sources || []).filter((source) => source?.name && /^https:\/\//i.test(source?.url || ''));
+      const safeguards = radar.safeguards || [];
+      details.innerHTML = `
+        <strong>${working ? 'Notícias recentes localizadas em fontes oficiais.' : 'O radar não confirmou todas as pautas agora; revise antes de publicar.'}</strong>
+        <div class="radar-sources">${sources.map((source) => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.name)} ↗</a>`).join('')}</div>
+        <div>Período consultado: últimos ${escapeHtml(radar.maxAgeDays || 60)} dias. O link original também aparece em cada pauta.</div>
+        <strong>Proteção contra fake news:</strong>
+        <ul class="radar-safeguards">${safeguards.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
+      `;
     }
 
     function jsonFromCommandOutput(output = '') {
@@ -6062,6 +6129,12 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         if (tomorrowProgramButton) await previewProgramPlan(tomorrowProgramButton.dataset.previewTomorrowProgram, 'tomorrow');
         const tomorrowButton = event.target.closest('[data-preview-tomorrow]');
         if (tomorrowButton) await previewPlanItem(tomorrowButton.dataset.previewTomorrow, 'tomorrow');
+      });
+      document.getElementById('newsRadarButton').addEventListener('click', (event) => {
+        const details = document.getElementById('newsRadarDetails');
+        const expanded = event.currentTarget.getAttribute('aria-expanded') === 'true';
+        event.currentTarget.setAttribute('aria-expanded', String(!expanded));
+        details.hidden = expanded;
       });
       document.getElementById('queuePost').addEventListener('click', () => scheduleSelectedPost(false));
       document.getElementById('publishNow').addEventListener('click', () => scheduleSelectedPost(true));
