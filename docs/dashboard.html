@@ -243,6 +243,46 @@
       align-content: start;
     }
 
+    .instagram-showcase {
+      min-height: 610px;
+      overflow: hidden;
+    }
+
+    .instagram-embed-shell {
+      position: relative;
+      min-height: 520px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(145deg, #f8faf8, #edf2ef);
+    }
+
+    .instagram-embed-shell iframe {
+      display: block;
+      width: 100%;
+      min-height: 620px;
+      border: 0;
+      background: #fff;
+    }
+
+    .instagram-embed-fallback {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-content: center;
+      gap: 12px;
+      padding: 32px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .instagram-embed-fallback strong {
+      color: var(--text);
+      font-size: 20px;
+    }
+
+    .instagram-embed-shell iframe[src] + .instagram-embed-fallback { display: none; }
+
     .metrics {
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1232,7 +1272,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.14</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.15</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1287,6 +1327,23 @@
             <div class="label">Erro do vigia</div>
             <div class="value" id="lastFailureTime">OK</div>
             <div class="note" id="lastFailureNote">Sem erro aberto</div>
+          </div>
+        </div>
+
+        <div class="panel instagram-showcase" id="instagramShowcase">
+          <div class="panel-head">
+            <div>
+              <div class="section-label">Instagram ao vivo</div>
+              <h2>Última publicação da conta</h2>
+            </div>
+            <a class="button" id="instagramShowcaseLink" href="https://www.instagram.com/marcondes.machado.oficial/" target="_blank" rel="noreferrer">Ver no Instagram</a>
+          </div>
+          <div class="instagram-embed-shell">
+            <iframe id="instagramShowcaseFrame" title="Última publicação no Instagram" loading="lazy" allowtransparency="true"></iframe>
+            <div class="instagram-embed-fallback">
+              <strong>Aguardando a publicação confirmada</strong>
+              <span>Assim que a Meta confirmar o post, ele aparecerá ao vivo neste espaço.</span>
+            </div>
           </div>
         </div>
 
@@ -2063,7 +2120,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     };
 
     const DASHBOARD_GROUPS = {
-      overview: ['latestPostTitle', 'checks'],
+      overview: ['instagramShowcase', 'latestPostTitle', 'checks'],
       content: ['packSelect', 'activeProfileStatus'],
       schedule: ['timeline', 'queueStatus'],
       clients: ['clientPortfolio', 'newAccountStatus', 'usersStatus'],
@@ -3346,11 +3403,18 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const title = document.getElementById('latestPostTitle');
       const status = document.getElementById('latestPostStatus');
       const caption = document.getElementById('latestPostCaption');
+      const showcaseFrame = document.getElementById('instagramShowcaseFrame');
+      const showcaseLink = document.getElementById('instagramShowcaseLink');
 
       title.textContent = 'Postagem confirmada pela Meta';
       status.textContent = privateMetrics.insights?.available ? 'Publicado · métricas ok' : 'Publicado';
       status.className = 'status-pill good';
-      if (media.permalink) link.href = media.permalink;
+      if (media.permalink) {
+        link.href = media.permalink;
+        showcaseLink.href = media.permalink;
+        const embedUrl = `${media.permalink.replace(/\/?$/, '/')}embed/`;
+        if (showcaseFrame.src !== embedUrl) showcaseFrame.src = embedUrl;
+      }
       if (media.caption) caption.textContent = media.caption;
       document.getElementById('lastPostTime').textContent = formatTimeOnly(media.timestamp);
       document.getElementById('lastPostNote').textContent = media.timestamp
