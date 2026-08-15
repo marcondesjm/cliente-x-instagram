@@ -832,7 +832,7 @@ function splitCreativeDescription(text = '') {
     closeWords.unshift(emphasisWords.pop());
   }
   const emphasis = emphasisWords.length ? emphasisWords.join(' ') : first;
-  const close = rest || closeWords.join(' ');
+  const close = [closeWords.join(' '), rest].filter(Boolean).join(' ');
   return { lead, emphasis, close };
 }
 
@@ -1489,6 +1489,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const creativeBody = splitCreativeDescription(body);
   const eyebrow = applyAnatexCopyRules(slide.eyebrow || 'Pra saber');
   const accent = slideStyle.accent || '#a7563d';
+  const accentText = contrastColor(accent);
   const soft = slideStyle.accentSoft || 'rgba(167,86,61,0.16)';
   const headline = title.replace(/\s+IA\b/i, ' <strong>IA</strong>');
   const mode = slideStyle.templateMode || 'paper';
@@ -1852,6 +1853,34 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .mode-profile .save-cue, .mode-editorial .save-cue { bottom: 118px; }
     .mode-native .swipe-cue, .mode-visual .swipe-cue, .mode-statement .swipe-cue,
     .mode-profile .swipe-cue, .mode-editorial .swipe-cue { background: ${slideStyle.text}; font-size: 20px; }
+    /* Contrast guard: modern layouts always start on a white surface. */
+    .mode-native .brand, .mode-visual .brand, .mode-statement .brand,
+    .mode-profile .brand, .mode-editorial .brand,
+    .mode-native .headline, .mode-visual .headline, .mode-statement .headline,
+    .mode-profile .headline, .mode-editorial .headline { color: #132238; }
+    .mode-native .note, .mode-visual .note, .mode-statement .note,
+    .mode-profile .note, .mode-editorial .note {
+      background: rgba(255,255,255,.90);
+      color: #132238;
+    }
+    .mode-native .note .emphasis, .mode-native .note .close,
+    .mode-visual .note .emphasis, .mode-visual .note .close,
+    .mode-statement .note .emphasis, .mode-statement .note .close,
+    .mode-profile .note .emphasis, .mode-profile .note .close,
+    .mode-editorial .note .emphasis, .mode-editorial .note .close { color: #132238; }
+    .mode-native.role-cta .note, .mode-visual.role-cta .note, .mode-statement.role-cta .note,
+    .mode-profile.role-cta .note, .mode-editorial.role-cta .note {
+      background: ${accent};
+      color: ${accentText};
+    }
+    .mode-native.role-cta .note .lead, .mode-native.role-cta .note .emphasis,
+    .mode-visual.role-cta .note .lead, .mode-visual.role-cta .note .emphasis,
+    .mode-statement.role-cta .note .lead, .mode-statement.role-cta .note .emphasis,
+    .mode-profile.role-cta .note .lead, .mode-profile.role-cta .note .emphasis,
+    .mode-editorial.role-cta .note .lead, .mode-editorial.role-cta .note .emphasis { color: ${accentText}; }
+    .mode-native.role-cta .note .close, .mode-visual.role-cta .note .close,
+    .mode-statement.role-cta .note .close, .mode-profile.role-cta .note .close,
+    .mode-editorial.role-cta .note .close { background: ${accentText}; color: ${accent}; }
     .bubble { display: none; position: absolute; right: 116px; bottom: 270px; width: 132px; height: 96px; border-radius: 34px; background: #f1d8c7; z-index: 3; }
     .bubble::before { content: "..."; position: absolute; inset: 0; display: grid; place-items: center; color: ${accent}; font-size: 58px; line-height: 0.5; font-weight: 900; letter-spacing: 5px; }
     .spark { position: absolute; color: ${accent}; opacity: 0.7; z-index: 2; font-size: 42px; font-weight: 900; }
