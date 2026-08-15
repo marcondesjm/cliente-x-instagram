@@ -283,7 +283,40 @@
       font-size: 20px;
     }
 
-    .instagram-showcase-image[src] + .instagram-embed-fallback { display: none; }
+    .instagram-showcase-image[src] ~ .instagram-embed-fallback { display: none; }
+
+    .showcase-control {
+      position: absolute;
+      top: 50%;
+      z-index: 3;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border-radius: 999px;
+      background: rgba(255,255,255,.94);
+      box-shadow: 0 8px 24px rgba(23,33,28,.2);
+      transform: translateY(-50%);
+      font-size: 24px;
+    }
+
+    .showcase-control.previous { left: 14px; }
+    .showcase-control.next { right: 14px; }
+    .showcase-control[hidden] { display: none; }
+
+    .showcase-counter {
+      position: absolute;
+      right: 14px;
+      bottom: 14px;
+      z-index: 3;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(23,33,28,.86);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .showcase-counter[hidden] { display: none; }
 
     .metrics {
       display: grid;
@@ -1274,7 +1307,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.17</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.18</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1341,7 +1374,10 @@
             <a class="button" id="instagramShowcaseLink" href="https://www.instagram.com/marcondes.machado.oficial/" target="_blank" rel="noreferrer">Ver no Instagram</a>
           </div>
           <div class="instagram-embed-shell">
+            <button class="showcase-control previous" id="showcasePrevious" type="button" aria-label="Página anterior" hidden>‹</button>
             <img class="instagram-showcase-image" id="instagramShowcaseImage" alt="Prévia completa da última publicação" loading="lazy">
+            <button class="showcase-control next" id="showcaseNext" type="button" aria-label="Próxima página" hidden>›</button>
+            <span class="showcase-counter" id="showcaseCounter" hidden>1 de 1</span>
             <div class="instagram-embed-fallback">
               <strong>Aguardando a publicação confirmada</strong>
               <span>Assim que a Meta confirmar o post, ele aparecerá ao vivo neste espaço.</span>
@@ -2118,7 +2154,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       editingUserEmail: null,
       sessionRole: null,
       selectedAccount: 'cliente-x',
-      account: null
+      account: null,
+      showcaseSlides: [],
+      showcaseSlideIndex: 0
     };
 
     const DASHBOARD_GROUPS = {
@@ -3421,12 +3459,34 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         ? `${formatDateTime(media.timestamp)} · confirmado pela Meta`
         : 'Confirmado pela Meta';
       const mediaImage = media.thumbnail_url || media.media_url;
+      const carouselSlides = Array.isArray(media.children)
+        ? media.children.map((item) => item.thumbnail_url || item.media_url).filter(Boolean)
+        : [];
+      appState.showcaseSlides = carouselSlides.length ? carouselSlides : [mediaImage].filter(Boolean);
+      appState.showcaseSlideIndex = 0;
       if (mediaImage) {
         image.src = mediaImage;
-        showcaseImage.src = mediaImage;
       }
+      renderShowcaseSlide();
       image.onerror = () => { image.style.display = 'none'; };
       showcaseImage.onerror = () => { showcaseImage.removeAttribute('src'); };
+    }
+
+    function renderShowcaseSlide() {
+      const image = document.getElementById('instagramShowcaseImage');
+      const previous = document.getElementById('showcasePrevious');
+      const next = document.getElementById('showcaseNext');
+      const counter = document.getElementById('showcaseCounter');
+      const slides = appState.showcaseSlides;
+      if (!slides.length) return;
+      const total = slides.length;
+      appState.showcaseSlideIndex = (appState.showcaseSlideIndex + total) % total;
+      image.src = slides[appState.showcaseSlideIndex];
+      const carousel = total > 1;
+      previous.hidden = !carousel;
+      next.hidden = !carousel;
+      counter.hidden = !carousel;
+      counter.textContent = `${appState.showcaseSlideIndex + 1} de ${total}`;
     }
 
     function scheduleTimesFromInputs() {
@@ -5344,6 +5404,14 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     }
 
     function bindEvents() {
+      document.getElementById('showcasePrevious').addEventListener('click', () => {
+        appState.showcaseSlideIndex -= 1;
+        renderShowcaseSlide();
+      });
+      document.getElementById('showcaseNext').addEventListener('click', () => {
+        appState.showcaseSlideIndex += 1;
+        renderShowcaseSlide();
+      });
       document.querySelector('.dashboard-nav').addEventListener('click', (event) => {
         const button = event.target.closest('[data-dashboard-view]');
         if (button) activateDashboardView(button.dataset.dashboardView);

@@ -97,6 +97,18 @@ export default async function handler(req, res) {
   result.latestMedia = media.data?.[0] || null;
 
   if (result.latestMedia?.id) {
+    if (result.latestMedia.media_type === 'CAROUSEL_ALBUM') {
+      try {
+        const children = await graphGet(`/${result.latestMedia.id}/children`, {
+          fields: 'id,media_type,media_url,thumbnail_url',
+          limit: '20',
+          access_token: token
+        });
+        result.latestMedia.children = children.data || [];
+      } catch {
+        result.latestMedia.children = [];
+      }
+    }
     try {
       const insights = await graphGet(`/${result.latestMedia.id}/insights`, {
         metric: 'reach,saved,total_interactions',
