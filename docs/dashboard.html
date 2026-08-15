@@ -770,6 +770,33 @@
       text-transform: none;
     }
 
+    .direct-pagination {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      margin-top: 16px;
+    }
+
+    .direct-pagination button {
+      width: auto;
+      min-width: 38px;
+      padding: 8px 11px;
+    }
+
+    .direct-pagination button.active {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .direct-pagination .ellipsis {
+      padding: 0 4px;
+      color: var(--muted);
+      font-weight: 900;
+    }
+
     .check {
       display: grid;
       grid-template-columns: 24px minmax(0, 1fr);
@@ -1332,7 +1359,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.39</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.40</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1450,6 +1477,7 @@
           </div>
           <div class="access-result">Registros organizados por dia e horário de Brasília. Os dados ficam salvos por 30 dias.</div>
           <div class="checks" id="directDeliveries"><div class="empty">Nenhum envio registrado. A integração com a Meta ainda está desligada.</div></div>
+          <nav class="direct-pagination" id="directPagination" aria-label="Páginas do histórico do Direct" hidden></nav>
         </div>
 
         <div class="panel">
@@ -2226,6 +2254,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       showcaseSlides: [],
       showcaseSlideIndex: 0
     };
+    let directHistoryPage = 1;
+    const DIRECT_HISTORY_PAGE_SIZE = 10;
 
     const DASHBOARD_GROUPS = {
       overview: ['instagramShowcase', 'latestPostTitle', 'checks'],
@@ -3342,10 +3372,14 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         : '<span class="dot warn"></span><div><strong>Configuração preparada</strong><span>O envio real ficará desligado até conectarmos o webhook e as permissões da Meta.</span></div>';
       if (automation.materialName) document.getElementById('directMaterialResult').textContent = `Material salvo: ${automation.materialName}`;
       const deliveries = Array.isArray(group.deliveries) ? group.deliveries : [];
+      const totalPages = Math.max(1, Math.ceil(deliveries.length / DIRECT_HISTORY_PAGE_SIZE));
+      directHistoryPage = Math.min(Math.max(1, directHistoryPage), totalPages);
+      const orderedDeliveries = deliveries.slice().reverse();
+      const pageDeliveries = orderedDeliveries.slice((directHistoryPage - 1) * DIRECT_HISTORY_PAGE_SIZE, directHistoryPage * DIRECT_HISTORY_PAGE_SIZE);
       const statusLabels = { sent: 'Enviado', failed: 'Falhou', pending: 'Pendente' };
       const dateFormatter = new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: 'long', year: 'numeric' });
       const timeFormatter = new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit' });
-      const groupedDeliveries = deliveries.slice().reverse().reduce((groups, item) => {
+      const groupedDeliveries = pageDeliveries.reduce((groups, item) => {
         const date = new Date(item.receivedAt);
         const label = Number.isNaN(date.getTime()) ? 'Data não informada' : dateFormatter.format(date);
         if (!groups[label]) groups[label] = [];
@@ -3366,6 +3400,22 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           return `<div class="check"><span class="dot ${item.status === 'sent' ? 'good' : 'warn'}"></span><div><strong>@${escapeHtml(item.username || 'contato')}</strong><span>${escapeHtml(time)} · comentário: “${escapeHtml(comment)}” · ${escapeHtml(statusLabels[item.status] || item.status || 'Pendente')}${escapeHtml(error)}</span></div></div>`;
         }).join('')}</section>`).join('')
         : `<div class="empty">Nenhum envio registrado. ${connected ? 'A conexão está pronta; ative e salve uma campanha para começar.' : 'A integração com a Meta ainda está desligada.'}</div>`;
+      const pagination = document.getElementById('directPagination');
+      pagination.hidden = totalPages <= 1;
+      if (totalPages > 1) {
+        const visiblePages = Array.from({ length: totalPages }, (_, index) => index + 1)
+          .filter((page) => page === 1 || page === totalPages || Math.abs(page - directHistoryPage) <= 2);
+        let previousPage = 0;
+        const pageButtons = [];
+        for (const page of visiblePages) {
+          if (previousPage && page - previousPage > 1) pageButtons.push('<span class="ellipsis">…</span>');
+          pageButtons.push(`<button type="button" class="${page === directHistoryPage ? 'active' : ''}" data-direct-page="${page}" aria-label="Página ${page}" ${page === directHistoryPage ? 'aria-current="page"' : ''}>${page}</button>`);
+          previousPage = page;
+        }
+        pagination.innerHTML = `<button type="button" data-direct-page="${directHistoryPage - 1}" ${directHistoryPage === 1 ? 'disabled' : ''}>Anterior</button>${pageButtons.join('')}<button type="button" data-direct-page="${directHistoryPage + 1}" ${directHistoryPage === totalPages ? 'disabled' : ''}>Próxima</button>`;
+      } else {
+        pagination.innerHTML = '';
+      }
     }
 
     async function uploadDirectMaterial() {
@@ -5612,8 +5662,15 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       });
       document.getElementById('loginForm').addEventListener('submit', login);
       document.addEventListener('click', (event) => {
+        const directPageButton = event.target.closest('[data-direct-page]');
         const toggle = event.target.closest('[data-toggle-password]');
         const accessToggle = event.target.closest('[data-toggle-access-password]');
+        if (directPageButton) {
+          directHistoryPage = Number(directPageButton.dataset.directPage) || 1;
+          renderDirectAutomation();
+          document.getElementById('directHistoryPanel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return;
+        }
         if (toggle) {
           togglePassword(toggle.dataset.togglePassword, toggle);
           return;
