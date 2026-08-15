@@ -1359,7 +1359,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.50</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.51</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1383,6 +1383,7 @@
       <button type="button" data-dashboard-view="content">Conteúdo</button>
       <button type="button" data-dashboard-view="direct-history">Histórico do Direct</button>
       <button type="button" data-dashboard-view="schedule">Agenda</button>
+      <button type="button" data-dashboard-view="weekly">Grade semanal</button>
       <button type="button" data-dashboard-view="clients">Clientes</button>
       <button type="button" data-dashboard-view="billing">Cobrança</button>
       <button type="button" data-dashboard-view="system">Sistema</button>
@@ -1578,18 +1579,6 @@
           <div style="height: 16px;"></div>
           <div class="panel-head" style="margin-bottom: 10px;">
             <div>
-              <div class="section-label">Grade semanal</div>
-              <h2>Programas recorrentes</h2>
-            </div>
-            <button id="addWeeklyProgram" type="button">Adicionar programa</button>
-          </div>
-          <div class="weekly-programs" id="weeklyPrograms"></div>
-          <div class="editor-actions">
-            <button class="primary" id="saveWeeklyPrograms" type="button">Salvar grade semanal</button>
-          </div>
-          <div style="height: 16px;"></div>
-          <div class="panel-head" style="margin-bottom: 10px;">
-            <div>
               <div class="section-label">Editar agenda</div>
               <h2>Horários manuais</h2>
             </div>
@@ -1598,6 +1587,21 @@
           <div class="schedule-editor" id="scheduleEditor"></div>
           <div class="editor-actions">
             <button class="primary" id="saveSchedule" type="button">Salvar horários</button>
+          </div>
+        </div>
+
+        <div class="panel" id="weeklyProgramsPanel">
+          <div class="panel-head">
+            <div>
+              <div class="section-label">Grade semanal</div>
+              <h2>Programas recorrentes</h2>
+            </div>
+            <button id="addWeeklyProgram" type="button">Adicionar programa</button>
+          </div>
+          <p class="caption">Organize os programas fixos por dia e horário. Eles entram automaticamente na programação da data correspondente.</p>
+          <div class="weekly-programs" id="weeklyPrograms"></div>
+          <div class="editor-actions">
+            <button class="primary" id="saveWeeklyPrograms" type="button">Salvar grade semanal</button>
           </div>
         </div>
 
@@ -2263,6 +2267,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       content: ['packSelect', 'activeProfileStatus', 'directAutomationStatus'],
       'direct-history': ['directHistoryPanel'],
       schedule: ['timeline', 'queueStatus'],
+      weekly: ['weeklyProgramsPanel'],
       clients: ['clientPortfolio', 'newAccountStatus', 'usersStatus'],
       billing: ['stripeSetupStatus', 'accessStatus'],
       system: ['runsList', 'watchdogPanel', 'versionStatus', 'maintenanceStatus']
