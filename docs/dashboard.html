@@ -1194,7 +1194,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.12</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.13</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1252,6 +1252,48 @@
             <span class="status-pill good" id="clientPortfolioStatus">Ativos</span>
           </div>
           <div class="checks" id="clientPortfolio"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="section-label">Cobrança recorrente</div>
+              <h2>Configuração Stripe</h2>
+            </div>
+            <span class="status-pill warn" id="stripeSetupStatus">Não configurado</span>
+          </div>
+          <div class="checks">
+            <div class="check">
+              <span class="dot warn" id="stripeSetupDot"></span>
+              <div>
+                <strong>Checkout e bloqueio automático</strong>
+                <span>Os valores são enviados diretamente à Vercel, ficam mascarados e nunca voltam completos para o navegador.</span>
+                <span>Webhook: https://cliente-x-instagram.vercel.app/api/state?billing=webhook</span>
+              </div>
+            </div>
+          </div>
+          <div class="access-manager" id="stripeSetupForm">
+            <label>Chave secreta Stripe
+              <input type="password" autocomplete="new-password" data-stripe-key="STRIPE_SECRET_KEY" placeholder="sk_test_... ou sk_live_...">
+            </label>
+            <label>Segredo do webhook
+              <input type="password" autocomplete="new-password" data-stripe-key="STRIPE_WEBHOOK_SECRET" placeholder="whsec_...">
+            </label>
+            <label>Price ID · Essencial
+              <input type="password" autocomplete="new-password" data-stripe-key="STRIPE_PRICE_STARTER" placeholder="price_...">
+            </label>
+            <label>Price ID · Profissional
+              <input type="password" autocomplete="new-password" data-stripe-key="STRIPE_PRICE_PROFESSIONAL" placeholder="price_...">
+            </label>
+            <label>Price ID · Agência
+              <input type="password" autocomplete="new-password" data-stripe-key="STRIPE_PRICE_AGENCY" placeholder="price_...">
+            </label>
+            <div class="editor-actions">
+              <button type="button" id="validateStripeSetup">Validar campos</button>
+              <button class="primary" type="button" id="saveStripeSetup">Salvar e ativar</button>
+            </div>
+            <div class="access-result" id="stripeSetupResult">Comece com chaves de teste. Depois valide o checkout antes de trocar para o modo real.</div>
+          </div>
         </div>
 
         <div class="panel">
@@ -2124,6 +2166,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         document.getElementById('contentNote').textContent = `${DATA.schedulesUtc.length} horários ativos`;
         renderAccountSwitcher();
         renderClientPortfolio();
+        renderStripeSetup();
         renderActiveProfile();
         renderUsers();
         renderVersion(state.activeVersion);
@@ -2625,6 +2668,106 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
 
     function secretByKey(key) {
       return (appState.secrets || []).find((secret) => secret.key === key);
+    }
+
+    const STRIPE_SETUP_KEYS = [
+      'STRIPE_SECRET_KEY',
+      'STRIPE_WEBHOOK_SECRET',
+      'STRIPE_PRICE_STARTER',
+      'STRIPE_PRICE_PROFESSIONAL',
+      'STRIPE_PRICE_AGENCY'
+    ];
+
+    function stripeSetupInputs() {
+      return [...document.querySelectorAll('#stripeSetupForm [data-stripe-key]')];
+    }
+
+    function renderStripeSetup() {
+      const status = document.getElementById('stripeSetupStatus');
+      const dot = document.getElementById('stripeSetupDot');
+      if (!status || !dot) return;
+      const configured = STRIPE_SETUP_KEYS.filter((key) => secretByKey(key)?.configured).length;
+      const ready = configured === STRIPE_SETUP_KEYS.length;
+      status.textContent = ready ? '5/5 configurados' : `${configured}/5 configurados`;
+      status.className = `status-pill ${ready ? 'good' : 'warn'}`;
+      dot.className = `dot ${ready ? 'good' : 'warn'}`;
+      for (const input of stripeSetupInputs()) {
+        const secret = secretByKey(input.dataset.stripeKey);
+        input.placeholder = secret?.configured ? `${secret.masked} · cole somente para substituir` : input.placeholder;
+      }
+    }
+
+    async function validateStripeSetup() {
+      const button = document.getElementById('validateStripeSetup');
+      const result = document.getElementById('stripeSetupResult');
+      const inputs = stripeSetupInputs();
+      const secretKey = inputs.find((input) => input.dataset.stripeKey === 'STRIPE_SECRET_KEY')?.value.trim() || '';
+      button.disabled = true;
+      button.textContent = 'Validando';
+      result.textContent = 'Conferindo credenciais e preços na Stripe...';
+      try {
+        const messages = [];
+        for (const input of inputs) {
+          const key = input.dataset.stripeKey;
+          const value = input.value.trim();
+          if (!value && secretByKey(key)?.configured) {
+            messages.push(`${key}: já configurado`);
+            continue;
+          }
+          if (!value) throw new Error(`Preencha ${key}.`);
+          const payload = await api('/api/state', {
+            method: 'POST',
+            body: JSON.stringify({ action: 'validate-access', key, value, companion: { stripeSecretKey: secretKey } })
+          });
+          messages.push(payload.message || `${key}: válido`);
+        }
+        result.textContent = messages.join('\n');
+      } catch (error) {
+        result.textContent = error.message;
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Validar campos';
+      }
+    }
+
+    async function saveStripeSetup() {
+      const button = document.getElementById('saveStripeSetup');
+      const result = document.getElementById('stripeSetupResult');
+      const inputs = stripeSetupInputs();
+      const secretKey = inputs.find((input) => input.dataset.stripeKey === 'STRIPE_SECRET_KEY')?.value.trim() || '';
+      button.disabled = true;
+      button.textContent = 'Salvando';
+      result.textContent = 'Validando e salvando na Vercel...';
+      try {
+        let saved = 0;
+        for (const input of inputs) {
+          const key = input.dataset.stripeKey;
+          const value = input.value.trim();
+          if (!value && secretByKey(key)?.configured) continue;
+          if (!value) throw new Error(`Preencha ${key}.`);
+          await api('/api/state', {
+            method: 'POST',
+            body: JSON.stringify({ action: 'validate-access', key, value, companion: { stripeSecretKey: secretKey } })
+          });
+          const payload = await api('/api/state', {
+            method: 'POST',
+            body: JSON.stringify({ action: 'save-access', key, value, companion: { stripeSecretKey: secretKey } })
+          });
+          appState.secrets = payload.secrets || appState.secrets;
+          input.value = '';
+          saved += 1;
+        }
+        if (!saved) throw new Error('Nenhum valor novo foi informado.');
+        const deploy = await api('/api/state', { method: 'POST', body: JSON.stringify({ action: 'redeploy-vercel' }) });
+        renderStripeSetup();
+        renderSecretStatus();
+        result.textContent = `${saved} campo(s) salvo(s). ${deploy.message || 'Redeploy iniciado.'}`;
+      } catch (error) {
+        result.textContent = error.message;
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Salvar e ativar';
+      }
     }
 
     function renderAccessConfig() {
@@ -5098,6 +5241,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('createUser').addEventListener('click', createUser);
       document.getElementById('usersList').addEventListener('click', handleUserManagementClick);
       document.getElementById('clientPortfolio').addEventListener('click', handleClientPortfolioClick);
+      document.getElementById('validateStripeSetup').addEventListener('click', validateStripeSetup);
+      document.getElementById('saveStripeSetup').addEventListener('click', saveStripeSetup);
       document.getElementById('accessConfig').addEventListener('click', (event) => {
         const edit = event.target.closest('[data-access-edit]');
         const validate = event.target.closest('[data-access-validate]');

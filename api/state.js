@@ -36,7 +36,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.12',
+  appVersion: 'v4.13',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -620,6 +620,36 @@ async function validateAccessValue(key, value, companion = {}) {
     if (!response.ok) throw userError(`GitHub recusou o token: HTTP ${response.status}.`, response.status);
     const workflow = await response.json();
     return { ok: true, message: `GitHub validado: workflow ${workflow.name || 'instagram-feed-cliente-x.yml'} acessivel.` };
+  }
+
+  if (key === 'STRIPE_SECRET_KEY') {
+    if (!/^sk_(?:test|live)_/.test(text)) throw userError('A chave secreta Stripe deve iniciar com sk_test_ ou sk_live_.');
+    try {
+      await new Stripe(text).balance.retrieve();
+    } catch (error) {
+      throw userError(`Stripe recusou a chave secreta: ${error?.message || 'credencial invalida'}`, 400);
+    }
+    return { ok: true, message: `Stripe validada em modo ${text.startsWith('sk_live_') ? 'real' : 'teste'}.` };
+  }
+
+  if (key === 'STRIPE_WEBHOOK_SECRET') {
+    if (!/^whsec_[A-Za-z0-9]+$/.test(text) || text.length < 20) throw userError('Webhook secret invalido. Use o valor whsec_ exibido pela Stripe.');
+    return { ok: true, message: 'Formato do webhook secret valido. A assinatura final sera conferida no primeiro evento.' };
+  }
+
+  if (key.startsWith('STRIPE_PRICE_')) {
+    if (!/^price_[A-Za-z0-9]+$/.test(text)) throw userError('ID de preco invalido. Use um identificador price_ da Stripe.');
+    const secretKey = String(companion.stripeSecretKey || process.env.STRIPE_SECRET_KEY || '').trim();
+    if (!secretKey) return { ok: true, message: 'Formato do Price ID valido. Salve a chave secreta para validar o preco na Stripe.' };
+    try {
+      const price = await new Stripe(secretKey).prices.retrieve(text);
+      if (!price.active) throw userError('Esse preco esta inativo na Stripe.');
+      if (price.type !== 'recurring') throw userError('Esse preco nao e recorrente. Crie um preco mensal ou anual.');
+      return { ok: true, message: `Preco recorrente validado: ${price.nickname || price.id} · ${price.currency.toUpperCase()}.` };
+    } catch (error) {
+      if (error?.statusCode) throw error;
+      throw userError(`Stripe recusou o Price ID: ${error?.message || 'preco invalido'}`, 400);
+    }
   }
 
   const envRole = accountEnvRole(key);
