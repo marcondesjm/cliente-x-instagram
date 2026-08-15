@@ -1359,7 +1359,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.53</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.54</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -3962,7 +3962,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <button type="button" data-remove-bio-link="${index}">Remover</button>
           </div>
           <div class="schedule-editor">
-            <label>Ícone<input data-bio-field="icon" maxlength="8" value="${escapeHtml(link.icon || '🔗')}"></label>
+            <label>Ícone ou emoji<input data-bio-field="icon" maxlength="8" value="${escapeHtml(link.icon || '🔗')}"></label>
+            <label>Imagem do ícone<input data-bio-field="iconUrl" value="${escapeHtml(link.iconUrl || '')}" placeholder="https://..."></label>
+            <label>Anexar ícone<input type="file" data-bio-icon-file accept="image/png,image/jpeg,image/webp"></label>
+            <div class="editor-actions"><button type="button" data-upload-bio-icon="${index}">Enviar ícone</button></div>
             <label>Título<input data-bio-field="title" maxlength="80" value="${escapeHtml(link.title || '')}"></label>
             <label>Descrição<input data-bio-field="description" maxlength="180" value="${escapeHtml(link.description || '')}"></label>
             <label>Link<input data-bio-field="url" value="${escapeHtml(link.url || '')}" placeholder="https://..."></label>
@@ -3976,6 +3979,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     function collectBioPageEditor() {
       const links = [...document.querySelectorAll('[data-bio-link]')].map((card, index) => ({
         icon: card.querySelector('[data-bio-field="icon"]').value.trim(),
+        iconUrl: card.querySelector('[data-bio-field="iconUrl"]').value.trim(),
         title: card.querySelector('[data-bio-field="title"]').value.trim(),
         description: card.querySelector('[data-bio-field="description"]').value.trim(),
         url: card.querySelector('[data-bio-field="url"]').value.trim(),
@@ -3995,7 +3999,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
 
     function addBioLink() {
       appState.bioPage = collectBioPageEditor();
-      appState.bioPage.links.push({ icon: '🔗', title: '', description: '', url: 'https://', primary: !appState.bioPage.links.length });
+      appState.bioPage.links.push({ icon: '🔗', iconUrl: '', title: '', description: '', url: 'https://', primary: !appState.bioPage.links.length });
       renderBioPageEditor();
     }
 
@@ -4046,6 +4050,31 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         result.textContent = 'Foto enviada. Clique em Salvar página Bio para publicar.';
       } catch (error) {
         result.textContent = `Erro ao enviar a foto: ${error.message}`;
+      } finally {
+        input.value = '';
+      }
+    }
+
+    async function uploadBioIcon(index) {
+      const card = document.querySelector(`[data-bio-link="${index}"]`);
+      const input = card?.querySelector('[data-bio-icon-file]');
+      const file = input?.files?.[0];
+      const result = document.getElementById('bioPageResult');
+      if (!file) {
+        result.textContent = 'Escolha uma imagem JPG, PNG ou WEBP para o ícone.';
+        return;
+      }
+      result.textContent = `Enviando ícone do botão ${index + 1}...`;
+      try {
+        const payload = await api('/api/upload-image', {
+          method: 'POST',
+          body: JSON.stringify({ name: `bio-icon-${index + 1}-${file.name}`, dataUrl: await readFileAsDataUrl(file) })
+        });
+        card.querySelector('[data-bio-field="iconUrl"]').value = payload.imageUrl || payload.imagePath || '';
+        renderBioPreview();
+        result.textContent = 'Ícone enviado. Clique em Salvar página Bio para publicar.';
+      } catch (error) {
+        result.textContent = `Erro ao enviar o ícone: ${error.message}`;
       } finally {
         input.value = '';
       }
@@ -5844,6 +5873,11 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         if (event.target.id !== 'bioAvatarFile') renderBioPreview();
       });
       document.getElementById('bioLinksEditor').addEventListener('click', (event) => {
+        const uploadButton = event.target.closest('[data-upload-bio-icon]');
+        if (uploadButton) {
+          uploadBioIcon(Number(uploadButton.dataset.uploadBioIcon));
+          return;
+        }
         const button = event.target.closest('[data-remove-bio-link]');
         if (button) removeBioLink(Number(button.dataset.removeBioLink));
       });

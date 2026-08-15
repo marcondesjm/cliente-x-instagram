@@ -42,7 +42,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.53',
+  appVersion: 'v4.54',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -1517,6 +1517,7 @@ function bioUrl(value, { allowLocal = false } = {}) {
 function normalizeBioPage(value = {}) {
   const links = (Array.isArray(value.links) ? value.links : []).slice(0, 10).map((link, index) => ({
     icon: bioText(link.icon, 8) || '🔗',
+    iconUrl: link.iconUrl ? bioUrl(link.iconUrl, { allowLocal: true }) : '',
     title: bioText(link.title, 80),
     description: bioText(link.description, 180),
     url: bioUrl(link.url),

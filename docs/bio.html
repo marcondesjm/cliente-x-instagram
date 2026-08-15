@@ -128,6 +128,7 @@
       font-size: 21px;
     }
     .primary .icon { background: rgba(255, 255, 255, 0.30); }
+    .icon img { width: 100%; height: 100%; border-radius: 10px; object-fit: cover; display: block; }
     .copy { padding: 0 12px; }
     .copy strong { display: block; font-size: 17px; line-height: 1.2; }
     .copy span { display: block; margin-top: 4px; color: var(--muted); font-size: 13px; line-height: 1.25; }
@@ -208,7 +209,14 @@
       const icon = document.createElement('span');
       icon.className = 'icon';
       icon.setAttribute('aria-hidden', 'true');
-      icon.textContent = link.icon || '🔗';
+      if (link.iconUrl) {
+        const image = document.createElement('img');
+        image.src = link.iconUrl;
+        image.alt = '';
+        icon.append(image);
+      } else {
+        icon.textContent = link.icon || '🔗';
+      }
       const copy = document.createElement('span');
       copy.className = 'copy';
       const title = document.createElement('strong');
