@@ -1807,7 +1807,8 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .mode-visual .context-photo { left: 58px; right: 58px; top: 430px; width: auto; height: 560px; border: 0; border-radius: 18px; box-shadow: none; opacity: 1; }
     .mode-visual .panel { left: auto; right: 82px; top: 765px; width: 220px; height: 220px; border-radius: 50%; transform: none; z-index: 3; }
     .mode-visual .note { left: 58px; top: 1018px; width: 964px; min-height: 185px; padding: 24px 30px; border: 0; background: transparent; }
-    .mode-visual .note::before, .mode-visual .note .close { display: none; }
+    .mode-visual .note::before { display: none; }
+    .mode-visual .note .close { display: block; min-height: 0; padding: 8px 0 0; background: transparent; color: ${slideStyle.text}; }
     .mode-statement .badge { left: 50%; transform: translateX(-50%); }
     .mode-statement .brand { margin-left: 78px; }
     .mode-statement .headline { margin: 260px auto 0; max-width: 920px; font-size: 92px; line-height: .98; text-align: center; }
@@ -1826,12 +1827,14 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
       opacity: 1;
     }
     .mode-statement .note { left: 130px; top: 820px; width: 820px; min-height: 250px; padding: 36px 44px; border: 0; background: transparent; text-align: center; }
-    .mode-statement .note::before, .mode-statement .note .close { display: none; }
+    .mode-statement .note::before { display: none; }
+    .mode-statement .note .close { display: block; min-height: 0; padding: 10px 0 0; background: transparent; color: ${slideStyle.text}; }
     .mode-profile .headline { margin-top: 118px; max-width: 820px; font-size: 72px; }
     .mode-profile .context-photo { display: none; }
     .mode-profile .panel { left: 58px; right: 58px; top: 510px; width: auto; height: 610px; border: 0; border-radius: 20px; transform: none; background-size: cover; background-position: center 18%; }
     .mode-profile .note { left: 620px; top: 890px; width: 400px; min-height: 240px; padding: 28px; border: 0; background: rgba(255,255,255,.92); }
-    .mode-profile .note::before, .mode-profile .note .close { display: none; }
+    .mode-profile .note::before { display: none; }
+    .mode-profile .note .close { display: block; min-height: 0; padding: 8px 0 0; background: transparent; color: ${slideStyle.text}; }
     .mode-editorial main { background: linear-gradient(90deg, #fff 0 43%, ${slideStyle.bgBottom} 43% 100%); }
     .mode-editorial .headline { margin: 150px 0 0 430px; max-width: 560px; font-size: 66px; }
     .mode-editorial .context-photo { left: 58px; right: auto; top: 175px; width: 380px; height: 760px; border: 0; border-radius: 12px; box-shadow: none; opacity: 1; }
