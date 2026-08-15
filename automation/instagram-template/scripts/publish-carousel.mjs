@@ -1333,6 +1333,7 @@ function pickAccountAvatar(account = {}, index = 1, visualCue = '', context = {}
       context.packIndex ?? '',
       context.scheduledFor || '',
       context.story ? 'story' : 'feed',
+      context.creativeGeneration || 1,
       index,
       visualCue
     ].join('-');
@@ -2731,8 +2732,13 @@ async function main() {
   }
 
   const slotIndex = readSlotIndex();
-  const profilePacks = buildProfileContentPacks(account, today, slotIndex);
-  const autoPacks = profilePacks.length ? profilePacks : buildAutoContentPacks(today, slotIndex);
+  const publicationHistory = readPublicationHistory(args.configDir, account.account);
+  const creativeBatchSize = 74;
+  const creativeGeneration = Math.floor(publicationHistory.length / creativeBatchSize) + 1;
+  const generationSlotIndex = slotIndex + ((creativeGeneration - 1) * 13);
+  const creativeBatchRemaining = creativeBatchSize - (publicationHistory.length % creativeBatchSize);
+  const profilePacks = buildProfileContentPacks(account, today, generationSlotIndex);
+  const autoPacks = profilePacks.length ? profilePacks : buildAutoContentPacks(today, generationSlotIndex);
   const automaticSelectionPacks = profilePacks.length ? mergePacks(profilePacks, packs) : packs;
   validatePacks(autoPacks);
   validatePacks(automaticSelectionPacks);
@@ -2754,11 +2760,11 @@ async function main() {
     return;
   }
 
-  const style = styleWithBrandPalette(pickVisualStyle(styles, account, today, slotIndex), account, { dateString: today, slotIndex });
-  let pack = pickDaily(automaticSelectionPacks, today, slotIndex);
+  const style = styleWithBrandPalette(pickVisualStyle(styles, account, today, generationSlotIndex), account, { dateString: today, slotIndex: generationSlotIndex });
+  let pack = pickDaily(automaticSelectionPacks, today, generationSlotIndex);
   let packIndex = profilePacks.length
-    ? `profile-${pickDailyIndex(automaticSelectionPacks, today, slotIndex)}`
-    : pickDailyIndex(automaticSelectionPacks, today, slotIndex);
+    ? `profile-${pickDailyIndex(automaticSelectionPacks, today, generationSlotIndex)}`
+    : pickDailyIndex(automaticSelectionPacks, today, generationSlotIndex);
   let skippedDuplicates = 0;
   let scheduledPost = null;
   let publishMode = process.env.INSTAGRAM_TEMPLATE_PUBLISH_MODE === 'story-only' || args.storyOnly
@@ -2822,12 +2828,11 @@ async function main() {
 
     if (!scheduledPost && !dashboardPack && !args.storyOnly) {
       const recentMedia = await fetchRecentMedia(userId, token);
-      const publicationHistory = readPublicationHistory(args.configDir, account.account);
-      const fresh = pickFreshPack(automaticSelectionPacks, today, slotIndex, recentMedia, publicationHistory);
+      const fresh = pickFreshPack(automaticSelectionPacks, today, generationSlotIndex, recentMedia, publicationHistory);
       if (!fresh.pack) {
-        const autoFresh = pickFreshPack(autoPacks, today, slotIndex, recentMedia, publicationHistory);
+        const autoFresh = pickFreshPack(autoPacks, today, generationSlotIndex, recentMedia, publicationHistory);
         if (!autoFresh.pack) {
-          const fallbackPack = buildLastResortPack(today, slotIndex);
+          const fallbackPack = buildLastResortPack(today, generationSlotIndex);
           validatePack(fallbackPack);
           pack = fallbackPack;
           packIndex = `auto-unique-${slotIndex}`;
@@ -2851,24 +2856,24 @@ async function main() {
   const runDir = join(RUNS_DIR, account.account, runId);
   mkdirSync(runDir, { recursive: true });
   const historyPack = JSON.parse(JSON.stringify(pack));
-  const enhancement = enhancePackForEngagement(pack, today, slotIndex, account);
+  const enhancement = enhancePackForEngagement(pack, today, generationSlotIndex, account);
   pack = enhancement.pack;
   validatePack(pack);
   if (!args.renderOnly && !args.dryRun && (scheduledPost || dashboardPack || args.storyOnly)) {
-    const publicationHistory = readPublicationHistory(args.configDir, account.account);
     const duplicate = findDuplicatePack(publicationHistory, historyPack);
     if (duplicate) {
       throw new Error(`Conteudo repetido bloqueado: este tema ja foi publicado em ${duplicate.publishedAt || 'uma publicacao anterior'}. Escolha outro conteudo.`);
     }
   }
   writeFileSync(join(runDir, 'engagement-intelligence.json'), JSON.stringify(enhancement.intelligence, null, 2), 'utf8');
-  writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, account: account.account, visualStyle: style.name, intelligence: enhancement.intelligence, ...pack }, null, 2), 'utf8');
+  writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, creativeGeneration, creativeBatchRemaining, account: account.account, visualStyle: style.name, intelligence: enhancement.intelligence, ...pack }, null, 2), 'utf8');
   writeFileSync(join(runDir, 'caption.txt'), pack.caption, 'utf8');
   const storyOnly = publishMode === 'story-only';
   const slotCron = (account.scheduleUtc || [])[slotIndex] || '';
   const renderContext = {
     dateString: today,
     slotIndex,
+    creativeGeneration,
     slotTime: scheduledPost?.scheduledFor || (slotCron ? cronToBrtTime(slotCron) : ''),
     packIndex,
     scheduledFor: scheduledPost?.scheduledFor || ''
@@ -2890,6 +2895,8 @@ async function main() {
       visualStyle: style.name,
       slotIndex,
       packIndex,
+      creativeGeneration,
+      creativeBatchRemaining,
       imagePaths,
       storyImagePath
     };
