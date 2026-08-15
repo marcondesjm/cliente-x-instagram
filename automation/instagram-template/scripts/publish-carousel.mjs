@@ -1575,8 +1575,10 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const noteFontSize = engagementRole === 'cta' ? 24 : body.length > 170 ? 21 : body.length > 125 ? 23 : body.length > 95 ? 25 : 27;
   const noteLines = estimateTextLines(body, noteWidth, noteFontSize);
   const closeFontScale = creativeBody.close.length > 110 ? 0.58 : creativeBody.close.length > 82 ? 0.62 : creativeBody.close.length > 58 ? 0.66 : 0.72;
-  const closeLines = estimateTextLines(creativeBody.close, noteWidth - 32, noteFontSize * closeFontScale);
-  const closeMinHeight = Math.max(92, Math.min(184, 40 + (closeLines * noteFontSize * closeFontScale * 1.34)));
+  const closeLines = creativeBody.close ? estimateTextLines(creativeBody.close, noteWidth - 32, noteFontSize * closeFontScale) : 0;
+  const closeMinHeight = creativeBody.close
+    ? Math.max(92, Math.min(184, 40 + (closeLines * noteFontSize * closeFontScale * 1.34)))
+    : 0;
   const noteMinHeight = engagementRole === 'cta'
     ? Math.min(440, Math.max(340, 178 + closeMinHeight + (noteLines * noteFontSize * 0.72)))
     : Math.min(520, Math.max(330, 160 + closeMinHeight + (noteLines * noteFontSize * 0.98)));
@@ -1673,6 +1675,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .note .lead { display: block; margin-bottom: 5px; color: ${accent}; font-size: 0.78em; line-height: 1.05; font-weight: 900; }
     .note .emphasis { display: block; max-width: 100%; color: ${slideStyle.text}; font-size: 1.12em; line-height: 1; font-weight: 900; }
     .note .close { display: block; max-width: 100%; min-height: ${closeMinHeight}px; margin-top: 14px; padding: 14px 16px 15px; border-radius: 10px; background: ${accent}; color: #fff6ef; font-size: ${closeFontScale}em; line-height: 1.16; font-weight: 900; overflow-wrap: anywhere; }
+    .note .close:empty { display: none; }
     .panel {
       position: absolute;
       right: 56px;
@@ -2022,7 +2025,7 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
 
   const anatexVariants = [
     paletteVariant(style, `${style.name}-paper`, {
-      templateMode: 'native',
+      templateMode: 'paper',
       accent: secondary,
       accentSoft: rgba(secondary, 0.14),
       grid: rgba(secondary, 0.12),
@@ -2032,7 +2035,7 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
       muted: '#3b4654'
     }),
     paletteVariant(style, `${style.name}-linen`, {
-      templateMode: 'visual',
+      templateMode: 'paper',
       accent: '#b45f35',
       accentSoft: 'rgba(180,95,53,0.13)',
       grid: 'rgba(35,54,72,0.11)',
@@ -2042,7 +2045,7 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
       muted: '#46515c'
     }),
     paletteVariant(style, `${style.name}-sage`, {
-      templateMode: 'statement',
+      templateMode: 'paper',
       accent: '#2f766d',
       accentSoft: 'rgba(47,118,109,0.12)',
       grid: 'rgba(47,118,109,0.10)',
@@ -2052,7 +2055,7 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
       muted: '#394a46'
     }),
     paletteVariant(style, `${style.name}-sky`, {
-      templateMode: 'profile',
+      templateMode: 'paper',
       accent: '#315f7d',
       accentSoft: 'rgba(49,95,125,0.12)',
       grid: 'rgba(49,95,125,0.10)',
@@ -2062,7 +2065,7 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
       muted: '#354a58'
     }),
     paletteVariant(style, `${style.name}-magazine`, {
-      templateMode: 'editorial',
+      templateMode: 'paper',
       accent: '#8f5c42',
       accentSoft: 'rgba(143,92,66,0.13)',
       grid: 'rgba(143,92,66,0.10)',
@@ -2070,14 +2073,36 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
       bgBottom: '#e5e9e2',
       text: '#17211c',
       muted: '#4c5650'
+    }),
+    paletteVariant(style, `${style.name}-lavender`, {
+      templateMode: 'paper',
+      accent: '#705b91',
+      accentSoft: 'rgba(112,91,145,0.13)',
+      grid: 'rgba(112,91,145,0.10)',
+      bgTop: '#faf7fb',
+      bgBottom: '#e8e1ed',
+      text: '#1f2335',
+      muted: '#514c5e'
+    }),
+    paletteVariant(style, `${style.name}-olive`, {
+      templateMode: 'paper',
+      accent: '#65713d',
+      accentSoft: 'rgba(101,113,61,0.13)',
+      grid: 'rgba(101,113,61,0.10)',
+      bgTop: '#faf9f1',
+      bgBottom: '#e8e8d6',
+      text: '#20271d',
+      muted: '#505744'
     })
   ];
 
   const variants = style.layout === 'anatex-editorial' ? anatexVariants : defaultVariants;
   const selectedIndex = style.layout === 'anatex-editorial'
-    ? ((daysSinceEpoch(dateString) * 3) + (slotIndex * 2)) % variants.length
+    ? daysSinceEpoch(dateString) % variants.length
     : pickDailyIndex(variants, dateString, slotIndex);
-  const slidePalettes = rotateItems(variants, selectedIndex);
+  const slidePalettes = style.layout === 'anatex-editorial'
+    ? [variants[selectedIndex]]
+    : rotateItems(variants, selectedIndex);
   return {
     ...slidePalettes[0],
     name: `${slidePalettes[0].name}-slot-${slotIndex}`,
@@ -2897,7 +2922,9 @@ async function main() {
     }
   }
   const baseSelectionPacks = profilePacks.length ? mergePacks(profilePacks, packs) : packs;
-  const useResearchThisSlot = editorialResearch.packs.length > 0 && generationSlotIndex % 3 === 0;
+  const useResearchThisSlot = account.account !== 'cliente-x'
+    && editorialResearch.packs.length > 0
+    && generationSlotIndex % 3 === 0;
   const automaticSelectionPacks = useResearchThisSlot
     ? editorialResearch.packs
     : baseSelectionPacks;
