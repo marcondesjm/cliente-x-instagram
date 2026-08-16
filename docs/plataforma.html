@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Plataforma de automação editorial para Instagram: pauta, criação, agenda, publicação e Direct em um único painel.">
+  <meta name="theme-color" content="#18241e">
+  <title>Fluxo Social | Automação editorial para Instagram</title>
+  <style>
+    :root {
+      --ink: #18241e;
+      --ink-soft: #405048;
+      --paper: #f7f5ed;
+      --card: #fffdf8;
+      --olive: #68773e;
+      --olive-dark: #4c592c;
+      --mint: #dce9dc;
+      --sand: #e8ddca;
+      --line: rgba(24, 36, 30, .13);
+      --shadow: 0 24px 70px rgba(31, 46, 38, .12);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 92% 6%, rgba(104,119,62,.16), transparent 24rem),
+        radial-gradient(circle at 4% 28%, rgba(232,221,202,.8), transparent 22rem),
+        var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .wrap { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(24,36,30,.08);
+      background: rgba(247,245,237,.88);
+      backdrop-filter: blur(18px);
+    }
+    .nav-inner { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .logo { display: inline-flex; align-items: center; gap: 11px; font-weight: 900; text-decoration: none; letter-spacing: -.03em; }
+    .logo-mark { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 12px; color: white; background: var(--ink); box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
+    .logo-mark::after { content: "↗"; font-size: 20px; }
+    .nav-links { display: flex; align-items: center; gap: 24px; font-size: 14px; font-weight: 750; }
+    .nav-links a { text-decoration: none; }
+
+    .button {
+      display: inline-flex;
+      min-height: 52px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 24px;
+      border: 0;
+      border-radius: 999px;
+      color: white;
+      background: var(--ink);
+      box-shadow: 0 14px 34px rgba(24,36,30,.18);
+      font-size: 15px;
+      font-weight: 850;
+      text-decoration: none;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .button:hover { transform: translateY(-2px); background: #26372e; }
+    .button.light { color: var(--ink); background: white; border: 1px solid var(--line); box-shadow: none; }
+    .button.small { min-height: 44px; padding: 0 19px; font-size: 14px; }
+
+    .hero { padding: 88px 0 66px; overflow: hidden; }
+    .hero-grid { display: grid; grid-template-columns: 1.02fr .98fr; align-items: center; gap: 64px; }
+    .eyebrow { margin: 0 0 20px; color: var(--olive-dark); font-size: 13px; font-weight: 900; letter-spacing: .15em; text-transform: uppercase; }
+    h1 { margin: 0; max-width: 720px; font-size: clamp(48px, 6vw, 78px); line-height: .98; letter-spacing: -.065em; }
+    h1 span { color: var(--olive); }
+    .hero-copy { margin: 26px 0 0; max-width: 620px; color: var(--ink-soft); font-size: clamp(18px, 2vw, 21px); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+    .trust { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 28px; color: var(--ink-soft); font-size: 13px; font-weight: 750; }
+    .trust span::before { content: "✓"; margin-right: 7px; color: var(--olive); font-weight: 950; }
+
+    .product-stage { position: relative; min-height: 600px; }
+    .product-stage::before { content: ""; position: absolute; inset: 3% -18% 5% 4%; border-radius: 50%; background: rgba(104,119,62,.12); filter: blur(2px); }
+    .app-window { position: relative; margin-top: 18px; padding: 16px; border: 1px solid rgba(255,255,255,.7); border-radius: 32px; background: rgba(255,255,255,.72); box-shadow: var(--shadow); transform: rotate(1.2deg); }
+    .app-top { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px 18px; }
+    .dots { display: flex; gap: 6px; }
+    .dots i { width: 9px; height: 9px; border-radius: 50%; background: #c9d0c9; }
+    .app-status { padding: 7px 11px; border-radius: 999px; color: var(--olive-dark); background: var(--mint); font-size: 11px; font-weight: 900; }
+    .app-body { display: grid; grid-template-columns: 112px 1fr; min-height: 490px; overflow: hidden; border-radius: 22px; background: #f8f8f4; }
+    .sidebar { padding: 22px 14px; color: white; background: var(--ink); }
+    .side-brand { display: block; margin: 0 8px 28px; font-size: 12px; font-weight: 900; }
+    .side-item { height: 34px; margin: 7px 0; border-radius: 10px; background: rgba(255,255,255,.08); }
+    .side-item.active { background: var(--olive); }
+    .app-content { padding: 24px; }
+    .app-heading { display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+    .app-heading strong { font-size: 20px; }
+    .mini-action { width: 92px; height: 30px; border-radius: 999px; background: var(--olive); }
+    .metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 20px; }
+    .metric { padding: 15px; border: 1px solid var(--line); border-radius: 16px; background: white; }
+    .metric span { display: block; color: var(--ink-soft); font-size: 10px; font-weight: 800; }
+    .metric strong { display: block; margin-top: 5px; font-size: 20px; }
+    .content-preview { display: grid; grid-template-columns: 1fr 1.18fr; gap: 12px; margin-top: 14px; }
+    .post-card { min-height: 270px; padding: 20px; border-radius: 18px; color: white; background: linear-gradient(150deg, #50602f, #19261f); position: relative; overflow: hidden; }
+    .post-card::after { content: ""; position: absolute; right: -32px; bottom: -32px; width: 150px; height: 150px; border-radius: 50%; background: rgba(255,255,255,.08); }
+    .post-card small { font-weight: 900; letter-spacing: .1em; }
+    .post-card h3 { margin: 48px 0 0; max-width: 230px; font-size: 26px; line-height: 1; letter-spacing: -.04em; }
+    .queue { display: grid; gap: 9px; }
+    .queue-row { display: grid; grid-template-columns: 42px 1fr 12px; align-items: center; gap: 10px; padding: 11px; border: 1px solid var(--line); border-radius: 14px; background: white; }
+    .time { padding: 7px 4px; border-radius: 9px; text-align: center; background: var(--mint); font-size: 10px; font-weight: 900; }
+    .queue-row b { display: block; font-size: 11px; }
+    .queue-row span { display: block; color: var(--ink-soft); font-size: 9px; }
+    .ok { width: 9px; height: 9px; border-radius: 50%; background: #6c8940; }
+    .floating { position: absolute; z-index: 3; padding: 15px 18px; border: 1px solid var(--line); border-radius: 17px; background: rgba(255,255,255,.94); box-shadow: 0 18px 45px rgba(31,46,38,.14); font-size: 12px; font-weight: 850; }
+    .floating.direct { right: -24px; bottom: 46px; }
+    .floating.radar { left: -28px; top: 64px; }
+    .floating::before { content: "●"; margin-right: 8px; color: #6c8940; }
+
+    .proof { padding: 22px 0; border-block: 1px solid var(--line); background: rgba(255,255,255,.42); }
+    .proof-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 28px; }
+    .proof-item strong { display: block; font-size: 24px; letter-spacing: -.04em; }
+    .proof-item span { color: var(--ink-soft); font-size: 13px; }
+
+    .section { padding: 104px 0; }
+    .section-head { max-width: 760px; margin-bottom: 44px; }
+    .section h2 { margin: 0; font-size: clamp(38px, 5vw, 60px); line-height: 1; letter-spacing: -.055em; }
+    .section-lead { margin: 20px 0 0; color: var(--ink-soft); font-size: 19px; }
+    .cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .card { min-height: 245px; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,253,248,.82); box-shadow: 0 10px 34px rgba(31,46,38,.05); }
+    .card-icon { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 15px; color: white; background: var(--ink); font-size: 20px; font-weight: 900; }
+    .card h3 { margin: 26px 0 10px; font-size: 22px; letter-spacing: -.035em; }
+    .card p { margin: 0; color: var(--ink-soft); font-size: 15px; }
+
+    .dark { color: white; background: var(--ink); }
+    .dark .eyebrow { color: #cbd7aa; }
+    .dark .section-lead { color: rgba(255,255,255,.67); }
+    .steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+    .step { padding: 25px; border: 1px solid rgba(255,255,255,.13); border-radius: 24px; background: rgba(255,255,255,.045); }
+    .step b { display: block; color: #cbd7aa; font-size: 13px; }
+    .step strong { display: block; margin-top: 28px; font-size: 21px; }
+    .step p { margin: 10px 0 0; color: rgba(255,255,255,.64); font-size: 14px; }
+
+    .fit-grid { display: grid; grid-template-columns: .88fr 1.12fr; gap: 58px; align-items: start; }
+    .check-list { display: grid; gap: 13px; }
+    .check-item { display: flex; gap: 14px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.58); }
+    .check-item i { width: 28px; height: 28px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 9px; color: white; background: var(--olive); font-style: normal; font-weight: 900; }
+    .check-item strong { display: block; }
+    .check-item span { color: var(--ink-soft); font-size: 14px; }
+
+    .offers { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .offer { position: relative; padding: 36px; border: 1px solid var(--line); border-radius: 30px; background: var(--card); }
+    .offer.featured { color: white; background: var(--ink); transform: translateY(-8px); box-shadow: var(--shadow); }
+    .offer-tag { display: inline-flex; padding: 7px 12px; border-radius: 999px; color: var(--olive-dark); background: var(--mint); font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
+    .offer h3 { margin: 24px 0 8px; font-size: 31px; letter-spacing: -.045em; }
+    .offer-sub { min-height: 52px; color: var(--ink-soft); }
+    .featured .offer-sub { color: rgba(255,255,255,.67); }
+    .offer-price { margin: 28px 0; font-size: 16px; font-weight: 850; }
+    .offer-price strong { display: block; font-size: 29px; }
+    .offer ul { min-height: 190px; margin: 26px 0 30px; padding: 0; list-style: none; }
+    .offer li { margin: 12px 0; }
+    .offer li::before { content: "✓"; margin-right: 10px; color: #91a958; font-weight: 950; }
+    .featured .button { color: var(--ink); background: white; }
+
+    .faq { display: grid; gap: 12px; max-width: 900px; }
+    details { border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.62); }
+    summary { padding: 20px 22px; cursor: pointer; font-weight: 850; list-style: none; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; float: right; color: var(--olive); font-size: 22px; }
+    details[open] summary::after { content: "−"; }
+    details p { margin: 0; padding: 0 22px 22px; color: var(--ink-soft); }
+
+    .final { padding: 40px 0 104px; }
+    .final-card { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 40px; padding: 54px; border-radius: 36px; color: white; background: linear-gradient(135deg, var(--olive-dark), var(--ink)); box-shadow: var(--shadow); }
+    .final-card h2 { margin: 0; max-width: 740px; font-size: clamp(36px, 5vw, 58px); line-height: 1; letter-spacing: -.055em; }
+    .final-card p { margin: 17px 0 0; color: rgba(255,255,255,.7); }
+    .final-card .button { color: var(--ink); background: white; }
+    footer.site-footer { padding: 28px 0 42px; border-top: 1px solid var(--line); color: var(--ink-soft); font-size: 13px; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 24px; }
+
+    @media (max-width: 920px) {
+      .nav-links a:not(.button) { display: none; }
+      .hero { padding-top: 64px; }
+      .hero-grid, .fit-grid { grid-template-columns: 1fr; }
+      .product-stage { min-height: 570px; max-width: 650px; }
+      .cards { grid-template-columns: repeat(2,1fr); }
+      .steps { grid-template-columns: repeat(2,1fr); }
+      .proof-grid { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 640px) {
+      .wrap { width: min(100% - 24px, 1160px); }
+      .nav-inner { min-height: 66px; }
+      .logo span:last-child { font-size: 15px; }
+      .nav .button { min-height: 40px; padding: 0 14px; font-size: 12px; }
+      .hero { padding: 48px 0 52px; }
+      h1 { font-size: 47px; }
+      .hero-copy { font-size: 17px; }
+      .hero-actions .button { width: 100%; }
+      .product-stage { min-height: 455px; }
+      .app-window { margin-top: 10px; padding: 9px; border-radius: 22px; }
+      .app-body { grid-template-columns: 72px 1fr; min-height: 385px; }
+      .sidebar { padding: 16px 8px; }
+      .side-brand { font-size: 8px; margin-inline: 4px; }
+      .app-content { padding: 14px; }
+      .metrics { grid-template-columns: 1fr 1fr; }
+      .metric:last-child { display: none; }
+      .content-preview { grid-template-columns: 1fr; }
+      .post-card { min-height: 165px; }
+      .post-card h3 { margin-top: 26px; font-size: 21px; }
+      .queue { display: none; }
+      .floating { font-size: 10px; padding: 11px; }
+      .floating.radar { left: -5px; top: 48px; }
+      .floating.direct { right: -4px; bottom: 20px; }
+      .section { padding: 76px 0; }
+      .cards, .offers, .steps { grid-template-columns: 1fr; }
+      .offer.featured { transform: none; }
+      .offer ul, .offer-sub { min-height: auto; }
+      .final-card { grid-template-columns: 1fr; padding: 36px 25px; }
+      .final-card .button { width: 100%; }
+      .footer-inner { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .button { transition: none; } }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Navegação principal">
+    <div class="wrap nav-inner">
+      <a class="logo" href="#inicio"><span class="logo-mark" aria-hidden="true"></span><span>Fluxo Social</span></a>
+      <div class="nav-links">
+        <a href="#recursos">Recursos</a>
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#modelos">Planos</a>
+        <a class="button small" href="https://wa.me/5548996029392?text=Ol%C3%A1%2C%20Marcondes!%20Quero%20conhecer%20a%20plataforma%20de%20automa%C3%A7%C3%A3o%20para%20Instagram." target="_blank" rel="noopener noreferrer">Solicitar demonstração</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">Conteúdo, publicação e relacionamento</p>
+          <h1>Seu Instagram funcionando com <span>processo, não improviso.</span></h1>
+          <p class="hero-copy">Uma plataforma para planejar pautas, criar carrosséis, publicar na agenda e responder automaticamente quem demonstra interesse — tudo em um único painel.</p>
+          <div class="hero-actions">
+            <a class="button" href="https://wa.me/5548996029392?text=Ol%C3%A1%2C%20Marcondes!%20Quero%20agendar%20uma%20demonstra%C3%A7%C3%A3o%20da%20Fluxo%20Social." target="_blank" rel="noopener noreferrer">Quero ver funcionando <span aria-hidden="true">→</span></a>
+            <a class="button light" href="#como-funciona">Entender a plataforma</a>
+          </div>
+          <div class="trust" aria-label="Diferenciais rápidos">
+            <span>Opera na nuvem</span><span>Conteúdo adaptado à marca</span><span>Controle humano</span>
+          </div>
+        </div>
+
+        <div class="product-stage" aria-label="Prévia ilustrativa da plataforma">
+          <div class="floating radar">Radar de pautas ativo</div>
+          <div class="app-window">
+            <div class="app-top"><div class="dots"><i></i><i></i><i></i></div><span class="app-status">Automação saudável</span></div>
+            <div class="app-body">
+              <aside class="sidebar"><span class="side-brand">FLUXO</span><div class="side-item active"></div><div class="side-item"></div><div class="side-item"></div><div class="side-item"></div><div class="side-item"></div></aside>
+              <div class="app-content">
+                <div class="app-heading"><strong>Visão geral</strong><span class="mini-action"></span></div>
+                <div class="metrics"><div class="metric"><span>PRÓXIMO POST</span><strong>11:50</strong></div><div class="metric"><span>AGENDA ATIVA</span><strong>13 slots</strong></div><div class="metric"><span>DIRECT</span><strong>Ligado</strong></div></div>
+                <div class="content-preview">
+                  <article class="post-card"><small>PAUTA OFICIAL</small><h3>Quando a rotina trava, o cliente sente.</h3></article>
+                  <div class="queue"><div class="queue-row"><b class="time">11:50</b><div><b>Carrossel educativo</b><span>Pronto para publicar</span></div><i class="ok"></i></div><div class="queue-row"><b class="time">13:15</b><div><b>Prova e aplicação</b><span>Conteúdo aprovado</span></div><i class="ok"></i></div><div class="queue-row"><b class="time">15:50</b><div><b>Convite para o Direct</b><span>Automação vinculada</span></div><i class="ok"></i></div><div class="queue-row"><b class="time">17:00</b><div><b>Story complementar</b><span>Arte gerada</span></div><i class="ok"></i></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="floating direct">Direct enviado ao lead</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="proof" aria-label="Capacidades comprovadas">
+      <div class="wrap proof-grid">
+        <div class="proof-item"><strong>24/7</strong><span>Operação na nuvem</span></div>
+        <div class="proof-item"><strong>13 horários</strong><span>Agenda diária configurável</span></div>
+        <div class="proof-item"><strong>Feed + Story</strong><span>Publicação integrada</span></div>
+        <div class="proof-item"><strong>Direct</strong><span>Resposta automática por palavra-chave</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="recursos">
+      <div class="wrap">
+        <div class="section-head"><p class="eyebrow">Uma operação completa</p><h2>Menos ferramentas soltas. Mais clareza no processo.</h2><p class="section-lead">A plataforma reúne o que uma empresa precisa para manter presença, consistência e resposta rápida sem depender de tarefas manuais todos os dias.</p></div>
+        <div class="cards">
+          <article class="card"><div class="card-icon">01</div><h3>Radar editorial</h3><p>Busca pautas em fontes confiáveis e transforma assuntos técnicos em conteúdo claro para o público da marca.</p></article>
+          <article class="card"><div class="card-icon">02</div><h3>Criação com identidade</h3><p>Gera carrosséis e Stories com linguagem, cores, imagens, objetivo comercial e posicionamento próprios.</p></article>
+          <article class="card"><div class="card-icon">03</div><h3>Agenda automática</h3><p>Organiza horários em Brasília, evita repetição de conteúdo e mantém a operação ativa mesmo com o computador desligado.</p></article>
+          <article class="card"><div class="card-icon">04</div><h3>Publicação integrada</h3><p>Envia feed e Story pela integração oficial e registra o resultado para acompanhar o que realmente foi publicado.</p></article>
+          <article class="card"><div class="card-icon">05</div><h3>Direct inteligente</h3><p>Identifica comentários por palavra-chave e entrega automaticamente materiais, links ou próximos passos no privado.</p></article>
+          <article class="card"><div class="card-icon">06</div><h3>Painel multiempresa</h3><p>Centraliza clientes, contas, perfis editoriais, cobrança, histórico, agenda e saúde das automações.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark" id="como-funciona">
+      <div class="wrap">
+        <div class="section-head"><p class="eyebrow">Do briefing ao lead</p><h2>Um fluxo simples para uma operação que antes era fragmentada.</h2><p class="section-lead">Você define a estratégia. A plataforma cuida da repetição operacional e mantém os pontos importantes visíveis.</p></div>
+        <div class="steps">
+          <article class="step"><b>PASSO 01</b><strong>Configure a marca</strong><p>Nicho, público, objetivo, oferta, identidade e regras editoriais.</p></article>
+          <article class="step"><b>PASSO 02</b><strong>Aprove o conteúdo</strong><p>Revise pauta, texto, arte, chamada e horários pelo painel.</p></article>
+          <article class="step"><b>PASSO 03</b><strong>Automatize a rotina</strong><p>A agenda publica na nuvem e registra sucesso ou etapa de falha.</p></article>
+          <article class="step"><b>PASSO 04</b><strong>Converta o interesse</strong><p>Comentários acionam o Direct e aproximam o lead do próximo passo.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap fit-grid">
+        <div class="section-head"><p class="eyebrow">Para quem faz sentido</p><h2>Feita para quem precisa publicar e vender com consistência.</h2><p class="section-lead">Não é apenas um gerador de posts. É uma estrutura operacional para transformar conteúdo em rotina acompanhável.</p></div>
+        <div class="check-list">
+          <div class="check-item"><i>✓</i><div><strong>Agências e social medias</strong><span>Gerencie mais contas sem multiplicar tarefas manuais.</span></div></div>
+          <div class="check-item"><i>✓</i><div><strong>Consultores e especialistas</strong><span>Mantenha autoridade, agenda e captação funcionando de forma contínua.</span></div></div>
+          <div class="check-item"><i>✓</i><div><strong>Empresas locais e prestadores</strong><span>Transforme dúvidas, serviços e rotina em conteúdo que aproxima clientes.</span></div></div>
+          <div class="check-item"><i>✓</i><div><strong>Operações com material gratuito</strong><span>Entregue iscas, diagnósticos ou links automaticamente pelo Direct.</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="modelos">
+      <div class="wrap">
+        <div class="section-head"><p class="eyebrow">Duas formas de contratar</p><h2>Comece como serviço mensal ou leve a tecnologia para sua operação.</h2><p class="section-lead">A proposta é definida conforme quantidade de contas, volume de conteúdo, integrações e nível de acompanhamento.</p></div>
+        <div class="offers">
+          <article class="offer featured">
+            <span class="offer-tag">Recomendado para começar</span>
+            <h3>Plataforma gerenciada</h3>
+            <p class="offer-sub">Uso mensal com implantação, estrutura técnica e acompanhamento da operação.</p>
+            <p class="offer-price"><strong>Assinatura mensal</strong>Proposta conforme número de contas</p>
+            <ul><li>Painel e automações na nuvem</li><li>Configuração editorial da marca</li><li>Agenda, feed, Story e Direct</li><li>Monitoramento e suporte operacional</li><li>Evoluções contínuas da plataforma</li></ul>
+            <a class="button" href="https://wa.me/5548996029392?text=Ol%C3%A1%2C%20Marcondes!%20Quero%20uma%20proposta%20para%20usar%20a%20plataforma%20no%20modelo%20mensal." target="_blank" rel="noopener noreferrer">Solicitar proposta mensal</a>
+          </article>
+          <article class="offer">
+            <span class="offer-tag">Para operações estruturadas</span>
+            <h3>Licença personalizada</h3>
+            <p class="offer-sub">Projeto para empresas ou agências que desejam uma operação própria e adaptada.</p>
+            <p class="offer-price"><strong>Projeto sob medida</strong>Escopo, implantação e manutenção</p>
+            <ul><li>Personalização da marca e dos fluxos</li><li>Estrutura para múltiplas contas</li><li>Integrações definidas no projeto</li><li>Treinamento da equipe</li><li>Plano de suporte e evolução</li></ul>
+            <a class="button light" href="https://wa.me/5548996029392?text=Ol%C3%A1%2C%20Marcondes!%20Quero%20conversar%20sobre%20uma%20licen%C3%A7a%20personalizada%20da%20plataforma." target="_blank" rel="noopener noreferrer">Conversar sobre licença</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><p class="eyebrow">Perguntas frequentes</p><h2>Antes da demonstração.</h2></div>
+        <div class="faq">
+          <details><summary>A plataforma substitui totalmente uma pessoa?</summary><p>Não. Ela automatiza pesquisa, criação, agenda, publicação e respostas previsíveis. Estratégia, aprovação, relacionamento e decisões comerciais continuam sob controle humano.</p></details>
+          <details><summary>Funciona com o computador desligado?</summary><p>Sim. A operação é executada na nuvem. O painel é usado para configurar, revisar e acompanhar; os fluxos programados continuam ativos sem depender do computador local.</p></details>
+          <details><summary>Posso usar para vários clientes?</summary><p>Sim. A estrutura suporta contas, perfis editoriais, agendas e configurações separadas. O escopo comercial depende da quantidade de marcas e do nível de serviço desejado.</p></details>
+          <details><summary>O conteúdo fica igual para todas as empresas?</summary><p>Não. Nicho, objetivo, oferta, linguagem, identidade visual, imagens, fontes e chamadas são configurados por conta.</p></details>
+          <details><summary>É possível testar antes de contratar?</summary><p>A demonstração apresenta o fluxo completo e ajuda a definir um piloto adequado à sua operação antes da proposta final.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="final">
+      <div class="wrap final-card">
+        <div><h2>Veja como essa operação pode funcionar na sua empresa.</h2><p>Agende uma demonstração e receba uma proposta adequada ao seu número de contas e objetivo.</p></div>
+        <a class="button" href="https://wa.me/5548996029392?text=Ol%C3%A1%2C%20Marcondes!%20Quero%20agendar%20uma%20demonstra%C3%A7%C3%A3o%20da%20plataforma." target="_blank" rel="noopener noreferrer">Agendar demonstração →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner"><span>Fluxo Social · Automação editorial para Instagram</span><span>Uma solução de Marcondes Machado · IA aplicada a empresas</span></div>
+  </footer>
+</body>
+</html>
