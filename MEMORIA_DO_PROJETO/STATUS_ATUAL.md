@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 20:30 BRT
+Atualizado em: 2026-08-16 20:36 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,25 @@ Atualizado em: 2026-08-16 20:30 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `45d2515` (`Exige contexto factual nas pautas do Radar`).
+- Checkpoint funcional atual: `804d222` (`Limita contexto factual ao espaco do slide`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
-- Versao visivel atual: `v5.16`
+- Versao visivel atual: `v5.17`
+
+## Publicacao factual confirmada em 20:33 BRT
+
+- Workflow: `31979415179`, concluido com sucesso.
+- Post confirmado diretamente no Instagram: `https://www.instagram.com/p/DcHpzDUF0XY/`.
+- Feed Meta: `17971088042934886`; Story Meta: `18067488110721745`.
+- Fonte real: Olhar Digital; o slide e a legenda apresentam o contexto sobre Dario Amodei e a crise de confianca em IA.
+- A inspecao visual encontrou sobreposicao no slide 2 publicado porque o fato tinha 145 caracteres.
+- Para as proximas artes, o fato visual foi limitado a 105 caracteres e o contexto completo permanece na legenda.
+- Previa posterior verificada sem sobreposicao: `2026-08-16-203512-slot-2-render-only`.
+- O post atual nao foi apagado nem republicado novamente.
+- Producao: commit `804d222`, deploy `dpl_GRgET1xJb1fBGBUDMHoXvkpsZLMN` e versao `v5.17` confirmados.
 
 ## Contexto factual obrigatorio no Radar
 

@@ -1,5 +1,24 @@
 # Historico
 
+## 2026-08-16 20:36 BRT
+
+Publicada e verificada no Instagram a versao factual corrigida da materia da Olhar Digital.
+
+- Autorizacao de publicacao confirmada pelo usuario antes do envio.
+- Workflow real: `31979415179`, concluido com sucesso.
+- Post: `https://www.instagram.com/p/DcHpzDUF0XY/`.
+- Feed Meta: `17971088042934886`.
+- Story Meta: `18067488110721745`.
+- Fonte: Olhar Digital; materia `CEO da Anthropic: rejeicao a IA e crise de confianca no setor`.
+- O post e a legenda foram abertos diretamente no Instagram e confirmaram o fato: Dario Amodei nega pessimismo sobre IA e reconhece que o publico questiona os ganhos do avanco da tecnologia.
+- A inspecao do slide 2 encontrou o texto factual correto, mas longo demais, invadindo o cartao inferior.
+- O limite visual foi reduzido de 155 para 105 caracteres para as proximas publicacoes; a legenda continua preservando o resumo completo.
+- A nova previa `2026-08-16-203512-slot-2-render-only` foi inspecionada sem sobreposicao no cartao inferior.
+- O post publicado foi preservado; nao houve exclusao nem uma segunda republicacao automatica.
+- Commit funcional: `804d222` (`Limita contexto factual ao espaco do slide`).
+- Deploy de producao: `dpl_GRgET1xJb1fBGBUDMHoXvkpsZLMN`.
+- Producao respondeu `HTTP 200` e confirmou a versao `v5.17`.
+
 ## 2026-08-16 20:30 BRT
 
 Corrigida a pauta do Radar que repetia o titulo da materia no lugar de apresentar seu contexto real.
