@@ -1351,6 +1351,22 @@ function radarResearchOptions(account = {}) {
   };
 }
 
+async function researchRadarWithFallback(options = {}, minimumAgeDays = 7) {
+  const windows = [7, 15, 30].filter((days) => days >= minimumAgeDays);
+  let lastResult = { packs: [], items: [], failures: [], researchedAt: new Date().toISOString() };
+  for (const maxAgeDays of windows) {
+    const result = await researchFreshEditorialPacks({
+      ...options,
+      maxAgeDays,
+      limit: maxAgeDays === 30 ? 40 : 26
+    });
+    lastResult = { ...result, maxAgeDays };
+    if (result.packs.length) return lastResult;
+    console.log(`Radar editorial: nenhuma pauta elegivel nos ultimos ${maxAgeDays} dias; ampliando a busca.`);
+  }
+  return lastResult;
+}
+
 function planForNewsSlots(account, newsPacks, dateString) {
   return (account.scheduleUtc || []).map((cron, slotIndex) => {
     const packIndexNumber = pickDailyIndex(newsPacks, dateString, slotIndex);
@@ -3087,7 +3103,7 @@ async function main() {
     let plannedNews = [];
     if (radar.enabled && radar.sources.length) {
       try {
-        plannedNews = (await researchFreshEditorialPacks(radarOptions)).packs;
+        plannedNews = (await researchRadarWithFallback(radarOptions)).packs;
       } catch {}
     }
     console.log(JSON.stringify({
@@ -3114,16 +3130,16 @@ async function main() {
   let editorialResearch = { packs: [], items: [], failures: [], researchedAt: new Date().toISOString() };
   if (!args.validateCopy && radar.enabled && radar.sources.length) {
     try {
-      editorialResearch = await researchFreshEditorialPacks(radarOptions);
-      console.log(`Radar editorial: ${editorialResearch.packs.length} temas recentes encontrados em fontes oficiais.`);
+      editorialResearch = await researchRadarWithFallback(radarOptions);
+      console.log(`Radar editorial: ${editorialResearch.packs.length} temas encontrados em fontes oficiais na janela de ${editorialResearch.maxAgeDays || 7} dias.`);
       if (editorialResearch.failures.length) console.log(`Radar editorial: ${editorialResearch.failures.length} fonte(s) indisponivel(is); fluxo continuara com as demais.`);
     } catch (error) {
       console.log(`Radar editorial indisponivel (${error.message}). A publicacao real sera bloqueada para nao usar conteudo generico.`);
     }
   }
   const baseSelectionPacks = profilePacks.length ? mergePacks(profilePacks, packs) : packs;
-  const useResearchThisSlot = radar.enabled && editorialResearch.packs.length > 0;
-  const automaticSelectionPacks = useResearchThisSlot
+  let useResearchThisSlot = radar.enabled && editorialResearch.packs.length > 0;
+  let automaticSelectionPacks = useResearchThisSlot
     ? editorialResearch.packs
     : baseSelectionPacks;
   if (useResearchThisSlot) console.log('Radar editorial configurado priorizado para este horário automático.');
@@ -3220,10 +3236,30 @@ async function main() {
 
     if (!scheduledPost && !dashboardPack && !args.storyOnly) {
       const recentMedia = await fetchRecentMedia(userId, token);
-      const fresh = pickFreshPack(automaticSelectionPacks, today, generationSlotIndex, recentMedia, publicationHistory);
+      let fresh = pickFreshPack(automaticSelectionPacks, today, generationSlotIndex, recentMedia, publicationHistory);
+      if (!fresh.pack && radar.enabled) {
+        const currentWindow = Number(editorialResearch.maxAgeDays) || 7;
+        for (const maxAgeDays of [15, 30].filter((days) => days > currentWindow)) {
+          const expandedResearch = await researchFreshEditorialPacks({
+            ...radarOptions,
+            maxAgeDays,
+            limit: maxAgeDays === 30 ? 40 : 26
+          });
+          const expandedFresh = pickFreshPack(expandedResearch.packs, today, generationSlotIndex, recentMedia, publicationHistory);
+          if (expandedFresh.pack) {
+            editorialResearch = { ...expandedResearch, maxAgeDays };
+            automaticSelectionPacks = expandedResearch.packs;
+            useResearchThisSlot = true;
+            fresh = expandedFresh;
+            console.log(`Radar editorial: pautas da janela anterior estavam repetidas; pauta oficial nao repetida encontrada em ate ${maxAgeDays} dias.`);
+            break;
+          }
+          console.log(`Radar editorial: nenhuma pauta oficial nao repetida encontrada em ate ${maxAgeDays} dias.`);
+        }
+      }
       if (!fresh.pack) {
         if (radar.enabled) {
-          throw new Error('Radar ativo: nenhuma pauta oficial recente e nao repetida esta disponivel para este horario. Nenhum post foi publicado.');
+          throw new Error('Radar ativo: nenhuma pauta oficial dos ultimos 30 dias e nao repetida esta disponivel para este horario. Nenhum post foi publicado.');
         }
         const autoFresh = pickFreshPack(autoPacks, today, generationSlotIndex, recentMedia, publicationHistory);
         if (!autoFresh.pack) {

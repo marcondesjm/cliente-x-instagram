@@ -4553,7 +4553,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         publishNow,
         account: appState.selectedAccount
       };
-      setMessage(publishNow ? 'Buscando notícia oficial de IA dos últimos 7 dias...' : 'Salvando agendamento...', 'warn');
+      setMessage(publishNow ? 'Buscando notícia oficial: 7 dias, depois 15 e até 30 dias...' : 'Salvando agendamento...', 'warn');
       try {
         const payload = await api(publishNow ? '/api/publish-now' : '/api/scheduled-posts', {
           method: 'POST',

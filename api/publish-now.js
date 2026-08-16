@@ -14,8 +14,8 @@ function activeRadar(account) {
   const sources = normalizeEditorialSources(saved.sources);
   return {
     enabled: typeof saved.enabled === 'boolean' ? saved.enabled : account.account === 'cliente-x',
-    // Publicação imediata usa somente fonte oficial recente: últimos 7 dias,
-    // sem cair em pack manual ou em tema antigo.
+    // A busca começa na semana e pode avançar até 30 dias, sempre mantendo
+    // fonte oficial e sem cair em pack manual ou conteúdo genérico.
     maxAgeDays: 7,
     keywords: Array.isArray(saved.keywords) ? saved.keywords : [],
     excludeKeywords: Array.isArray(saved.excludeKeywords) ? saved.excludeKeywords : [],
@@ -28,21 +28,21 @@ async function currentRadarPack(account) {
   if (!radar.enabled) return null;
   if (!radar.sources.length) throw new Error('O Radar está ativo, mas não há fontes oficiais configuradas para esta conta.');
 
-  const result = await researchFreshEditorialPacks({
-    maxAgeDays: radar.maxAgeDays,
-    limit: 13,
-    timeoutMs: 7000,
-    sources: radar.sources,
-    keywords: radar.keywords,
-    excludeKeywords: radar.excludeKeywords,
-    niche: account.contentProfile?.niche || '',
-    offer: account.contentProfile?.offer || ''
-  });
-  const pack = result.packs.find((item) => item?.research?.sourceUrl && item?.slides?.length >= 2 && item?.caption?.trim());
-  if (!pack) {
-    throw new Error('Não encontrei nos últimos 7 dias uma notícia oficial de IA adequada para esta conta. Nenhum post foi enviado. Atualize as fontes do Radar ou tente mais tarde.');
+  for (const maxAgeDays of [7, 15, 30]) {
+    const result = await researchFreshEditorialPacks({
+      maxAgeDays,
+      limit: maxAgeDays === 30 ? 40 : 26,
+      timeoutMs: 7000,
+      sources: radar.sources,
+      keywords: radar.keywords,
+      excludeKeywords: radar.excludeKeywords,
+      niche: account.contentProfile?.niche || '',
+      offer: account.contentProfile?.offer || ''
+    });
+    const pack = result.packs.find((item) => item?.research?.sourceUrl && item?.slides?.length >= 2 && item?.caption?.trim());
+    if (pack) return pack;
   }
-  return pack;
+  throw new Error('Não encontrei nos últimos 30 dias uma notícia oficial de IA adequada para esta conta. Nenhum post foi enviado. Atualize as fontes do Radar ou tente mais tarde.');
 }
 
 function json(res, status, body) {
