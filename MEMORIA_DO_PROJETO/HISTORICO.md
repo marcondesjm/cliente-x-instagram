@@ -1,5 +1,16 @@
 # Historico
 
+## 2026-08-16 19:28 BRT
+
+Checkpoint de producao dos banners prontos e gerados da Grade semanal.
+
+- Commit funcional: `96a7058` (`Adiciona banners prontos e gerados na grade semanal`).
+- O commit operacional remoto `0ad34fb` (`Force Instagram watchdog 2026-08-16T22:09:14.597Z`) foi preservado.
+- Integracao final: merge `90f1d3e`.
+- Branch `feature/modern-editorial-system` e `origin/main` sincronizadas em `90f1d3e`.
+- Deploy de producao: `dpl_DRZVBictSUUAbwMPBdN8v7hJitDt`.
+- Producao respondeu `HTTP 200` e confirmou `v5.05`, uploads separados, dimensoes 1080 x 1350 e 1080 x 1920, botao de geracao dupla e funcao do gerador.
+
 ## 2026-08-16 19:25 BRT
 
 A Grade semanal passou a aceitar banners prontos separados e tambem gerar automaticamente as duas artes do programa.
