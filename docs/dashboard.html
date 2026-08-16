@@ -270,7 +270,8 @@
     }
 
     main[data-active-view="clients"],
-    main[data-active-view="system"] {
+    main[data-active-view="system"],
+    main[data-active-view="bio"] {
       grid-template-columns: minmax(0, 1fr);
     }
 
@@ -281,6 +282,49 @@
 
     main[data-active-view="system"] > .grid,
     main[data-active-view="system"] > aside.grid { width: 100%; }
+    main[data-active-view="bio"] > .grid { width: 100%; }
+
+    .bio-workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 430px);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .bio-editor-column { min-width: 0; }
+
+    .bio-preview-column {
+      position: sticky;
+      top: 82px;
+      min-width: 0;
+      padding: 16px;
+      border: 1px solid #d6e2da;
+      border-radius: 20px;
+      background: linear-gradient(145deg, #f7faf8, #eaf1ed);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
+    }
+
+    .bio-preview-column .panel-head { margin-bottom: 12px; }
+
+    #bioPagePreview {
+      display: block;
+      width: 100%;
+      height: min(760px, calc(100vh - 180px));
+      min-height: 620px;
+      border: 8px solid #17211c;
+      border-radius: 28px;
+      background: #071326;
+      box-shadow: 0 18px 42px rgba(23,33,28,.2);
+    }
+
+    .bio-preview-note {
+      margin: 10px 4px 0;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 750;
+      line-height: 1.4;
+      text-align: center;
+    }
 
     .capability-grid {
       display: grid;
@@ -1497,11 +1541,18 @@
 
     @media (max-width: 1180px) {
       main { grid-template-columns: 1fr; }
+      .bio-workspace { grid-template-columns: minmax(0, 1fr) minmax(330px, 390px); }
       .metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .editor-layout { grid-template-columns: 1fr; }
       .preview {
         grid-template-columns: minmax(120px, 180px) minmax(0, 1fr);
       }
+    }
+
+    @media (max-width: 920px) {
+      .bio-workspace { grid-template-columns: 1fr; }
+      .bio-preview-column { position: static; }
+      #bioPagePreview { height: 760px; min-height: 600px; }
     }
 
     @media (max-width: 760px) {
@@ -1536,6 +1587,9 @@
       .two-fields, .editor-actions, .queue-actions, .queue-row, .image-tools, .briefing-controls, .program-grid { grid-template-columns: 1fr; }
       .bio-add-button-panel { align-items: stretch; flex-direction: column; }
       .bio-add-button-panel button { width: 100%; }
+      .bio-workspace { grid-template-columns: 1fr; }
+      .bio-preview-column { position: static; }
+      #bioPagePreview { height: 720px; min-height: 560px; }
       .client-workflow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .capability-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       #newAccountPanel .access-manager,
@@ -1613,7 +1667,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v5.00</div>
+        <div class="header-version" id="headerVersion">Versão atual: v5.01</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -1894,6 +1948,8 @@
             </div>
             <a class="button" href="/docs/bio.html" target="_blank" rel="noreferrer">Abrir página</a>
           </div>
+          <div class="bio-workspace">
+            <div class="bio-editor-column">
           <div class="field-stack">
             <label>URL da foto<input id="bioAvatarUrl" placeholder="/docs/uploads/avatar-marcondes.png ou https://..."></label>
             <label>Anexar foto<input id="bioAvatarFile" type="file" accept="image/png,image/jpeg,image/webp"></label>
@@ -1919,12 +1975,16 @@
             <button class="primary" id="saveBioPage" type="button">Salvar página Bio</button>
           </div>
           <div class="access-result" id="bioPageResult">Edite os campos e salve para atualizar a página pública.</div>
-          <div style="height: 22px;"></div>
+            </div>
+            <aside class="bio-preview-column" aria-label="Prévia ao vivo da página Bio">
           <div class="panel-head" style="margin-bottom: 10px;">
-            <div><div class="section-label">Prévia</div><h2>Como a página Bio ficará</h2></div>
+            <div><div class="section-label">Prévia ao vivo</div><h2>Como a Bio ficará</h2></div>
             <button id="refreshBioPreview" type="button">Atualizar prévia</button>
           </div>
-          <iframe id="bioPagePreview" src="/docs/bio.html?preview=dashboard" title="Prévia da página Bio" style="width:100%;height:900px;border:1px solid #d9e1dc;border-radius:18px;background:#071326;"></iframe>
+          <iframe id="bioPagePreview" src="/docs/bio.html?preview=dashboard" title="Prévia da página Bio"></iframe>
+          <p class="bio-preview-note">A visualização acompanha suas alterações. Salve para atualizar a página pública.</p>
+            </aside>
+          </div>
         </div>
 
         <div class="panel">

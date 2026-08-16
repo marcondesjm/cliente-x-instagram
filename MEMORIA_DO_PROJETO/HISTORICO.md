@@ -1,5 +1,29 @@
 # Historico
 
+## 2026-08-16 18:50 BRT
+
+A aba `Pagina Bio` passou a usar o espaco lateral como previa ao vivo da pagina publica.
+
+Alteracoes:
+
+- A aba Bio ocupa toda a largura disponivel, eliminando a coluna direita vazia.
+- O painel foi dividido internamente em editor a esquerda e previa a direita.
+- A previa fica dentro de uma moldura de celular e permanece visivel com `position: sticky` enquanto o usuario percorre os campos e botoes.
+- A altura acompanha a janela do navegador, com limite confortavel para visualizar a pagina real.
+- Textos, foto, links e botoes continuam atualizando a previa durante a edicao pelo mecanismo existente.
+- O botao `Atualizar previa` permanece disponivel e a mensagem explica que salvar publica as alteracoes.
+- Em telas de ate 920 px, a previa passa para baixo do editor; no celular recebe altura reduzida sem perder o conteudo.
+- Versao visivel atualizada para `v5.01`.
+
+Validacao:
+
+- `node --check api/state.js`: passou.
+- JavaScript inline do dashboard: sintaxe valida.
+- Estrutura confirmou um unico painel Bio, iframe, botao de atualizacao e os contenedores de editor/previa.
+- Regra de largura integral para a aba Bio confirmada.
+- `npm run validate-copy`: passou com protecoes de duplicidade e balanceamento em `ok`.
+- `git diff --check`: passou.
+
 ## 2026-08-16 18:46 BRT
 
 Reorganizada a visao operacional para eliminar a coluna estreita, preencher a area central e mostrar o Radar e os principais recursos da plataforma.

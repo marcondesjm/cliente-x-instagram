@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 18:46 BRT
+Atualizado em: 2026-08-16 18:50 BRT
 
 ## Regra permanente de checkpoint
 
@@ -18,7 +18,14 @@ Atualizado em: 2026-08-16 18:46 BRT
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `b11fae5` (`Adiciona pagina da automacao do Direct na landing`).
-- Versao visivel atual: `v5.00`
+- Versao visivel atual: `v5.01`
+
+## Editor da Pagina Bio
+
+- A aba ocupa toda a largura e usa editor a esquerda e previa real a direita.
+- A previa acompanha a rolagem em uma moldura de celular e atualiza durante a edicao.
+- Abaixo de 920 px, a previa vai para baixo do formulario para preservar leitura e toque.
+- Salvar continua sendo a acao que atualiza a pagina publica.
 
 ## Visao operacional completa
 
