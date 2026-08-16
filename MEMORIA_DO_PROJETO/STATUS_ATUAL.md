@@ -1,13 +1,13 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 14:00 BRT
+Atualizado em: 2026-08-16 14:10 BRT
 
 ## Projeto ativo
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Commit de codigo em producao: `8b57824` (`Refina mensagem da oferta promocional`).
-- Checkpoint funcional completo aprovado pelo usuario antes destas evolucoes: `6ca72ab`; novo checkpoint atual: `8b57824`.
+- Commit da regra do Radar em producao: `b57aeda` (`Amplia janela do Radar ate 30 dias`); integracao final: `e8c254c`.
+- Novo checkpoint funcional atual: Radar progressivo de `7`, `15` e `30 dias` em `e8c254c`.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
@@ -22,6 +22,7 @@ Atualizado em: 2026-08-16 14:00 BRT
 - A Pagina Bio permite criar ate `10` botoes. Ha um controle no cabecalho e outro campo destacado abaixo do ultimo cartao; o novo botao recebe icone, titulo, descricao e link, com rolagem e foco automaticos.
 - Cada conta permite ate `10` automacoes de Direct, cada uma com nome, tags, material e mensagens proprias. A campanha antiga permanece compativel e o historico identifica qual automacao respondeu.
 - O Radar usa somente fontes oficiais e aceita noticias dos ultimos 7 dias; ele nao usa pack manual nem pack automatico generico como reserva.
+- Quando nao encontra pauta oficial valida e nao repetida em 7 dias, o Radar amplia automaticamente para 15 dias e depois para 30 dias. Somente bloqueia depois de esgotar as tres janelas.
 - A trava agora vale para `Publicar agora`, horarios automaticos, packs manuais e posts agendados: toda publicacao real com Radar ativo exige `research.sourceUrl`.
 - Se nao houver noticia oficial elegivel e nao repetida, o publicador bloqueia o envio em vez de publicar conteudo solto.
 - A automacao agendada roda na nuvem por GitHub Actions e Meta/Instagram; o computador do usuario pode ficar desligado. O login do painel e necessario somente para acoes manuais no dashboard e expira em 12 horas.

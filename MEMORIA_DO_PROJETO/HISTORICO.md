@@ -1,5 +1,19 @@
 # Historico
 
+## 2026-08-16 14:10 BRT
+
+Checkpoint funcional do Radar progressivo solicitado pelo usuario:
+
+- O Radar pesquisa primeiro fontes oficiais dos ultimos `7 dias`.
+- Sem pauta valida, amplia automaticamente a janela para `15 dias` e depois para `30 dias`.
+- Se as pautas encontradas ja tiverem sido usadas, o publicador tambem amplia a janela para procurar uma pauta oficial nao repetida.
+- O bloqueio permanece ativo quando nenhuma pauta oficial valida e nao repetida for encontrada nem em 30 dias; nao existe retorno para conteudo solto ou generico.
+- A regra vale para publicacao automatica e para `Publicar agora`; o painel informa a sequencia `7, 15 e 30 dias` durante a busca.
+- Validacoes aprovadas: sintaxe de `api/publish-now.js`, sintaxe do publicador, `npm run validate-copy` com `74` packs e protecao de duplicidade `ok`.
+- Commit da mudanca: `b57aeda` (`Amplia janela do Radar ate 30 dias`); integracao final com o estado automatico: `e8c254c`.
+- Deploy de producao: `dpl_4vorukSWwdxmLpc7eNe4R1wKXUXh`, alias `https://cliente-x-instagram.vercel.app`, confirmado com HTTP `200` e a nova mensagem presente.
+- Este e o novo checkpoint do Radar e deve ser preservado nas proximas alteracoes.
+
 ## 2026-08-16 14:00 BRT
 
 Checkpoint comercial solicitado pelo usuario:
