@@ -1,5 +1,30 @@
 # Historico
 
+## 2026-08-16 19:23 BRT
+
+Atualizada a demonstracao da plataforma na landing comercial.
+
+- As dez capturas em `docs/uploads/platform-tabs/` foram refeitas diretamente no dashboard autenticado atual.
+- Todas as imagens usam a mesma resolucao de captura, 1890 x 897 px.
+- Foram atualizadas as telas: Visao geral, Conteudo, Automacao do Direct, Historico do Direct, Agenda, Grade semanal, Pagina Bio, Clientes, Cobranca e Sistema.
+- O Historico do Direct mostra a nova navegacao lateral por datas.
+- A Agenda aparece em largura integral; a Grade semanal mostra a postagem pronta e os formatos Feed/Story; a Bio mostra a previa ao vivo.
+- Os textos do carrossel comercial foram atualizados para explicar Radar, filtros do Direct, banners, Bio, onboarding e operacao.
+- Foi adicionado `?v=506` nas imagens e links ampliados para impedir a reutilizacao dos prints antigos pelo cache do navegador.
+- O carrossel continua com 10 paginas e o JavaScript da landing passou na validacao de sintaxe.
+- `npm run validate-copy` e `git diff --check` passaram.
+
+Correcao preventiva realizada antes das capturas:
+
+- O erro `ENOENT` do Story no GitHub Actions era causado por um caminho absoluto sendo resolvido uma segunda vez.
+- O publicador agora preserva caminhos absolutos e resolve apenas caminhos relativos.
+- Commit da correcao: `d572c48` (`Corrige caminho absoluto do Story no vigia`).
+- Deploy da correcao: `dpl_EmgJdLddPQyCgeNgUTxxHgL1MoK1`.
+- Confirmacao real depois da correcao: o run `2026-08-16-192225-slot-0` hospedou cinco slides e um Story no commit `6317bcf`.
+- A Meta confirmou Feed `18061986080757054`, Story `18004000334979257` e permalink `https://www.instagram.com/p/DcHhtghkwu8/`.
+- O estado da agenda e o erro do vigia foram atualizados no commit `9ebbea6`.
+- As capturas de Visao geral e Sistema foram refeitas depois dessa confirmacao para nao divulgar o erro ja resolvido.
+
 ## 2026-08-16 19:43 BRT
 
 Checkpoint de producao da navegacao por datas do Direct.
