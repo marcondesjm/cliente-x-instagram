@@ -1,5 +1,20 @@
 # Historico
 
+## 2026-08-16 20:47 BRT
+
+Republicada e confirmada no Instagram a materia com legenda ampliada e continuidade factual no slide 3.
+
+- Workflow real: `31979969801`, concluido com sucesso.
+- Post: `https://www.instagram.com/p/DcHrLtois0h/`.
+- Feed Meta: `17950180794027663`.
+- Story Meta: `18123558775877294`.
+- Fonte: Olhar Digital; materia `CEO da Anthropic: rejeicao a IA e crise de confianca no setor`.
+- A legenda publicada foi aberta no Instagram e confirmou tres paragrafos factuais: contexto do debate, critica de Gavin Baker e resposta de Dario Amodei.
+- O slide 2 inicia a explicacao sobre a percepcao publica; o slide 3 continua com a reacao de Amodei as declaracoes de Gavin Baker.
+- Slides 2 e 3 foram inspecionados diretamente no carrossel publicado, sem sobreposicao visual.
+- O CTA final publicado e curto: `Comente IA e eu envio o material no seu Direct`.
+- As imagens foram hospedadas no commit automatico `497d561` e o historico tecnico foi persistido em `0c243ad`.
+
 ## 2026-08-16 20:42 BRT
 
 Corrigidas a legenda curta e a falta de continuidade da materia no slide 3 das pautas do Radar.

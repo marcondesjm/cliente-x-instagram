@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 20:42 BRT
+Atualizado em: 2026-08-16 20:47 BRT
 
 ## Regra permanente de checkpoint
 
@@ -30,6 +30,16 @@ Atualizado em: 2026-08-16 20:42 BRT
 - Validacoes: `factualArticleContextGuard` e `articleContinuationGuard` aprovadas; previa `2026-08-16-204020-slot-2-render-only` inspecionada.
 - Nenhuma postagem foi enviada nesta alteracao.
 - Producao: commit `68e3c0c`, deploy `dpl_CDgNSXa2Yy6Q1tXE83f2Bhw34mPj`, versao `v5.18` e `HTTP 200` confirmados.
+
+## Republicacao corrigida confirmada
+
+- Workflow: `31979969801`, concluido com sucesso.
+- Post: `https://www.instagram.com/p/DcHrLtois0h/`.
+- Feed Meta: `17950180794027663`; Story Meta: `18123558775877294`.
+- Legenda verificada com tres paragrafos reais da materia antes da analise e do CTA.
+- Slide 2 inicia o fato e slide 3 continua com Gavin Baker e a resposta de Dario Amodei.
+- Inspecao direta no Instagram confirmou a leitura dos dois slides sem sobreposicao.
+- Estado automatico salvo pelos commits `497d561` e `0c243ad`.
 
 ## Publicacao factual confirmada em 20:33 BRT
 
