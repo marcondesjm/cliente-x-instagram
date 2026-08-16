@@ -1482,7 +1482,8 @@ function pickAccountAvatar(account = {}, index = 1, visualCue = '', context = {}
     const slideOffset = Math.max(0, Number(index || 1) - 1);
     const storyOffset = context.story ? Math.max(1, Math.ceil(urls.length / 2)) : 0;
     const generationOffset = Math.max(0, Number(context.creativeGeneration || 1) - 1);
-    const offset = dateOffset + slotOffset + slideOffset + storyOffset + generationOffset;
+    const variationOffset = stableAvatarOffset(context.variationSeed || '') % urls.length;
+    const offset = dateOffset + slotOffset + slideOffset + storyOffset + generationOffset + variationOffset;
     return urls[offset % urls.length];
   }
   return String(account.avatarUrl || account.avatarPath || '').trim();
@@ -1568,7 +1569,8 @@ function sectorPhotoCssImage(cue = 'business', slideIndex = 1, renderContext = {
   };
   const options = photos[cue] || photos.business;
   const dateSeed = daysSinceEpoch(renderContext.dateString || todaySaoPaulo());
-  const slotSeed = Number(renderContext.slotIndex || 0) + Number(renderContext.creativeGeneration || 0);
+  const variationSeed = stableAvatarOffset(renderContext.variationSeed || '') % options.length;
+  const slotSeed = Number(renderContext.slotIndex || 0) + Number(renderContext.creativeGeneration || 0) + variationSeed;
   return localAssetCssImage(options[(dateSeed + slotSeed + slideIndex) % options.length]);
 }
 
@@ -1665,7 +1667,15 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const accentText = contrastColor(accent);
   const soft = slideStyle.accentSoft || 'rgba(167,86,61,0.16)';
   const headline = title.replace(/\s+IA\b/i, ' <strong>IA</strong>');
-  const mode = slideStyle.templateMode || 'paper';
+  const baseMode = slideStyle.templateMode || 'paper';
+  // A capa é a principal peça percebida no feed. Alternar também a composição
+  // (e não somente a paleta) evita uma sequência de capas com a mesma cara.
+  // `poster` aproxima cartão de fonte e título em algumas capas longas; as
+  // duas composições abaixo foram mantidas por preservarem a área de leitura.
+  const coverModes = ['paper', 'split'];
+  const mode = index === 1
+    ? coverModes[stableAvatarOffset(renderContext.variationSeed || slide.title || '') % coverModes.length]
+    : baseMode;
   const visualCue = slide.visualCue || visualCueForAccount(account, `${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
   const avatarImage = accountAvatarCssImage(account, index, visualCue, renderContext);
   const avatarClass = avatarImage ? ' has-avatar' : '';
@@ -1679,8 +1689,10 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const swipeCue = index === 1 ? '<div class="swipe-cue">arraste para ver</div>' : '';
   const finalCue = /\bcomente\b/i.test(`${title} ${body}`) ? 'comente IA' : 'link na bio';
   const saveCue = index === total ? `<div class="save-cue">${finalCue}</div>` : index === 3 ? '<div class="save-cue">salve este passo</div>' : '';
+  const coverLayouts = ['layout-right', 'layout-left', 'layout-corner'];
+  const coverLayout = coverLayouts[stableAvatarOffset(renderContext.variationSeed || slide.title || '') % coverLayouts.length];
   const placement = [
-    mode === 'split' ? 'layout-left' : index % 3 === 2 ? 'layout-left' : index % 3 === 0 ? 'layout-corner' : 'layout-right',
+    mode === 'split' ? 'layout-left' : index === 1 ? coverLayout : index % 3 === 2 ? 'layout-left' : index % 3 === 0 ? 'layout-corner' : 'layout-right',
     `mode-${mode}`,
     `role-${engagementRole}`,
     index % 2 === 0 ? 'slide-even' : 'slide-odd'
@@ -2095,7 +2107,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
 </html>`;
 }
 
-function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo(), slotIndex = 0 } = {}) {
+function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo(), slotIndex = 0, variationSeed = 0 } = {}) {
   const palette = account.brandPalette || {};
   if (!palette.enabled) return style;
   if (!validHexColor(palette.primary) && !validHexColor(palette.secondary) && !validHexColor(palette.background)) {
@@ -2219,9 +2231,10 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
   ];
 
   const variants = style.layout === 'anatex-editorial' ? anatexVariants : defaultVariants;
+  const variationOffset = Math.abs(Number(variationSeed) || 0) % variants.length;
   const selectedIndex = style.layout === 'anatex-editorial'
-    ? daysSinceEpoch(dateString) % variants.length
-    : pickDailyIndex(variants, dateString, slotIndex);
+    ? (daysSinceEpoch(dateString) + slotIndex + variationOffset) % variants.length
+    : (pickDailyIndex(variants, dateString, slotIndex) + variationOffset) % variants.length;
   const slidePalettes = style.layout === 'anatex-editorial'
     ? [variants[selectedIndex]]
     : rotateItems(variants, selectedIndex);
@@ -3087,7 +3100,7 @@ async function main() {
     return;
   }
 
-  const style = styleWithBrandPalette(pickVisualStyle(styles, account, today, generationSlotIndex), account, { dateString: today, slotIndex: generationSlotIndex });
+  let style = styleWithBrandPalette(pickVisualStyle(styles, account, today, generationSlotIndex), account, { dateString: today, slotIndex: generationSlotIndex });
   let pack = pickDaily(automaticSelectionPacks, today, generationSlotIndex);
   let packIndex = useResearchThisSlot
     ? `news-${pickDailyIndex(automaticSelectionPacks, today, generationSlotIndex)}`
@@ -3190,6 +3203,22 @@ async function main() {
   const historyPack = JSON.parse(JSON.stringify(pack));
   const enhancement = enhancePackForEngagement(pack, today, generationSlotIndex, account);
   pack = enhancement.pack;
+  // A mesma janela de publicação pode gerar várias pautas. A fonte e o tema
+  // precisam participar da identidade visual para que capas de notícias
+  // diferentes não pareçam cópias quando usam o mesmo slot.
+  const visualSeedInput = [
+    pack.research?.id,
+    pack.research?.sourceUrl,
+    pack.research?.source,
+    pack.caption,
+    packIndex
+  ].filter(Boolean).join('|') || String(packIndex);
+  const visualVariationSeed = stableAvatarOffset(visualSeedInput);
+  style = styleWithBrandPalette(
+    pickVisualStyle(styles, account, today, generationSlotIndex),
+    account,
+    { dateString: today, slotIndex: generationSlotIndex, variationSeed: visualVariationSeed }
+  );
   const packVisualCue = visualCueForAccount(account, [
     pack.caption,
     ...(pack.slides || []).flatMap((slide) => [slide.eyebrow, slide.title, slide.body])
@@ -3208,7 +3237,7 @@ async function main() {
   }
   writeFileSync(join(runDir, 'engagement-intelligence.json'), JSON.stringify(enhancement.intelligence, null, 2), 'utf8');
   writeFileSync(join(runDir, 'editorial-research.json'), JSON.stringify(editorialResearch, null, 2), 'utf8');
-  writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, creativeGeneration, creativeBatchRemaining, account: account.account, visualStyle: style.name, intelligence: enhancement.intelligence, ...pack }, null, 2), 'utf8');
+  writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, creativeGeneration, creativeBatchRemaining, account: account.account, visualStyle: style.name, visualVariationSeed, visualSeedInput, intelligence: enhancement.intelligence, ...pack }, null, 2), 'utf8');
   writeFileSync(join(runDir, 'caption.txt'), pack.caption, 'utf8');
   const storyOnly = publishMode === 'story-only';
   const feedOnly = publishMode === 'feed-only';
@@ -3219,6 +3248,7 @@ async function main() {
     creativeGeneration,
     slotTime: scheduledPost?.scheduledFor || (slotCron ? cronToBrtTime(slotCron) : ''),
     packIndex,
+    variationSeed: visualSeedInput,
     scheduledFor: scheduledPost?.scheduledFor || ''
   };
   const imagePaths = storyOnly ? [] : await renderSlides(runDir, pack.slides, account, style, renderContext);
