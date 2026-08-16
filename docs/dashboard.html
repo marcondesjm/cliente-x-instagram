@@ -1394,7 +1394,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.65</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.66</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -2515,14 +2515,14 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       showLogin('Sessão encerrada.');
     }
 
-    async function loadState() {
+    async function loadState({ refreshRadar = false } = {}) {
       if (!appState.serverMode) {
         setMessage('Abra pelo servidor local para salvar: npm run dashboard', 'warn');
         return;
       }
 
       try {
-        const state = await api(withAccount('/api/state'));
+        const state = await api(withAccount(`/api/state${refreshRadar ? `?refresh=${Date.now()}` : ''}`));
         appState.accounts = state.accounts || [];
         appState.users = state.users || [];
         appState.sessionRole = state.session?.role || appState.sessionRole;
@@ -5209,10 +5209,26 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       details.innerHTML = `
         <strong>${working ? 'Notícias recentes localizadas em fontes oficiais.' : 'O radar não confirmou todas as pautas agora; revise antes de publicar.'}</strong>
         <div class="radar-sources">${sources.map((source) => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.name)} ↗</a>`).join('')}</div>
+        <button class="primary" type="button" data-refresh-news-radar>Atualizar notícias agora</button>
         <div>Período consultado: últimos ${escapeHtml(radar.maxAgeDays || 60)} dias. O link original também aparece em cada pauta.</div>
         <strong>Proteção contra fake news:</strong>
         <ul class="radar-safeguards">${safeguards.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
       `;
+      details.querySelector('[data-refresh-news-radar]')?.addEventListener('click', async (event) => {
+        const button = event.currentTarget;
+        const original = button.textContent;
+        button.disabled = true;
+        button.textContent = 'Atualizando notícias...';
+        try {
+          await loadState({ refreshRadar: true });
+          setMessage('Radar atualizado com as fontes oficiais mais recentes.', 'good');
+        } catch (error) {
+          setMessage(`Não consegui atualizar o radar: ${error.message}`, 'bad');
+        } finally {
+          button.disabled = false;
+          button.textContent = original;
+        }
+      });
     }
 
     function jsonFromCommandOutput(output = '') {
