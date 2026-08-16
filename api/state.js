@@ -15,7 +15,7 @@ import {
 } from '../lib/auth.js';
 import { accountFromQuery, normalizeAccountKey, requireConfiguredAccount } from '../lib/accounts.js';
 import { analyzeBrandDocument } from '../lib/brand-analysis.js';
-import { EDITORIAL_SOURCES, researchFreshEditorialPacks } from '../lib/editorial-research.js';
+import { EDITORIAL_SOURCES, normalizeEditorialSources, researchFreshEditorialPacks } from '../lib/editorial-research.js';
 import Stripe from 'stripe';
 
 const ROOT = process.cwd();
@@ -43,7 +43,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.67',
+  appVersion: 'v4.68',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -571,9 +571,37 @@ function dailyPlan(scheduleBrt = [], packs = [], scheduledPosts = [], dateString
   });
 }
 
+function radarConfigForAccount(account = {}) {
+  const saved = account.contentProfile?.radar || {};
+  const sources = normalizeEditorialSources(saved.sources);
+  const keywords = Array.isArray(saved.keywords)
+    ? saved.keywords.map((item) => String(item || '').trim()).filter(Boolean).slice(0, 30)
+    : [];
+  const excludeKeywords = Array.isArray(saved.excludeKeywords)
+    ? saved.excludeKeywords.map((item) => String(item || '').trim()).filter(Boolean).slice(0, 30)
+    : [];
+  return {
+    enabled: typeof saved.enabled === 'boolean' ? saved.enabled : account.account === 'cliente-x',
+    maxAgeDays: Math.max(1, Math.min(90, Number(saved.maxAgeDays) || 60)),
+    keywords,
+    excludeKeywords,
+    sources: sources.length ? sources : (account.account === 'cliente-x' ? EDITORIAL_SOURCES : [])
+  };
+}
+
 async function publisherDailyPlan(accountKey = 'cliente-x', dateString = todaySaoPaulo(), account = null) {
-  if (accountKey === 'cliente-x' && account) {
-    const news = await researchFreshEditorialPacks({ maxAgeDays: 60, limit: 13, timeoutMs: 7000 });
+  const radar = radarConfigForAccount(account || {});
+  if (account && radar.enabled && radar.sources.length) {
+    const news = await researchFreshEditorialPacks({
+      maxAgeDays: radar.maxAgeDays,
+      limit: 13,
+      timeoutMs: 7000,
+      sources: radar.sources,
+      keywords: radar.keywords,
+      excludeKeywords: radar.excludeKeywords,
+      niche: account.contentProfile?.niche || '',
+      offer: account.contentProfile?.offer || ''
+    });
     if (news.packs.length) {
       return (account.scheduleUtc || []).map((cron, slotIndex) => {
         const packIndex = pickDailyIndex(news.packs, dateString, slotIndex);
@@ -583,7 +611,7 @@ async function publisherDailyPlan(accountKey = 'cliente-x', dateString = todaySa
           slotIndex,
           type: 'automatic',
           status: 'planned',
-          title: pack.slides?.[0]?.title || 'Notícia recente de IA para empresas',
+          title: pack.slides?.[0]?.title || `Notícia recente para ${account.contentProfile?.niche || 'sua área'}`,
           caption: compactText(pack.caption || ''),
           mode: 'feed + story',
           packIndex: `news-${packIndex}`,
@@ -1404,12 +1432,32 @@ async function updateAccountProfile(body = {}, session = null) {
     throw userError('Seu usuario nao pode alterar esta conta.', 403);
   }
 
+  const savedRadar = accountsFile.data[index].contentProfile?.radar || {};
+  const radarSources = normalizeEditorialSources(body.radar?.sources);
+  const radar = {
+    enabled: typeof body.radar?.enabled === 'boolean'
+      ? body.radar.enabled
+      : (typeof savedRadar.enabled === 'boolean' ? savedRadar.enabled : accountKey === 'cliente-x'),
+    maxAgeDays: Math.max(1, Math.min(90, Number(body.radar?.maxAgeDays) || Number(savedRadar.maxAgeDays) || 60)),
+    keywords: Array.isArray(body.radar?.keywords)
+      ? body.radar.keywords.map((item) => String(item || '').trim()).filter(Boolean).slice(0, 30)
+      : (Array.isArray(savedRadar.keywords) ? savedRadar.keywords : []),
+    excludeKeywords: Array.isArray(body.radar?.excludeKeywords)
+      ? body.radar.excludeKeywords.map((item) => String(item || '').trim()).filter(Boolean).slice(0, 30)
+      : (Array.isArray(savedRadar.excludeKeywords) ? savedRadar.excludeKeywords : []),
+    sources: radarSources.length ? radarSources : (Array.isArray(body.radar?.sources) ? [] : normalizeEditorialSources(savedRadar.sources))
+  };
+  if (radar.enabled && !radar.sources.length) {
+    throw userError('Para ligar o Radar, informe ao menos uma fonte oficial com nome e URL HTTPS.');
+  }
   const contentProfile = {
     niche: String(body.niche || '').trim(),
     audience: String(body.audience || '').trim(),
     offer: String(body.offer || '').trim(),
     tone: String(body.tone || 'consultivo').trim() || 'consultivo',
-    goal: String(body.goal || accountsFile.data[index].contentProfile?.goal || 'authority').trim() || 'authority'
+    goal: String(body.goal || accountsFile.data[index].contentProfile?.goal || 'authority').trim() || 'authority',
+    radar,
+    visualDirection: accountsFile.data[index].contentProfile?.visualDirection || 'anatex-editorial'
   };
   const brandSummary = normalizeBrandSummary(body.brandSummary || accountsFile.data[index].brandSummary || {});
   const brandPalette = {
@@ -2290,6 +2338,7 @@ export default async function handler(req, res) {
     tomorrowPlan = editorialDailyPlan(scheduleBrt, account, packs, scheduledPosts, tomorrowDate);
   }
   tomorrowPlan = mergeProgramItems(tomorrowPlan, weeklyPrograms, tomorrowDate);
+  const radarConfig = radarConfigForAccount(account);
 
   res.setHeader('cache-control', 'no-store');
   res.status(200).json({
@@ -2325,10 +2374,11 @@ export default async function handler(req, res) {
       reviewedAt: new Date().toISOString()
     },
     editorialRadar: {
-      status: tomorrowPlan.length > 0 && tomorrowPlan.every((item) => String(item.packIndex || '').startsWith('news-')) ? 'working' : 'fallback',
-      label: tomorrowPlan.length > 0 && tomorrowPlan.every((item) => String(item.packIndex || '').startsWith('news-')) ? 'Radar funcionando' : 'Radar em modo de reserva',
-      maxAgeDays: 60,
-      sources: EDITORIAL_SOURCES,
+      status: radarConfig.enabled && tomorrowPlan.length > 0 && tomorrowPlan.every((item) => String(item.packIndex || '').startsWith('news-')) ? 'working' : 'fallback',
+      label: radarConfig.enabled && tomorrowPlan.length > 0 && tomorrowPlan.every((item) => String(item.packIndex || '').startsWith('news-')) ? 'Radar funcionando' : (radarConfig.enabled ? 'Radar em modo de reserva' : 'Radar desativado para esta conta'),
+      maxAgeDays: radarConfig.maxAgeDays,
+      sources: radarConfig.sources,
+      keywords: radarConfig.keywords,
       safeguards: [
         'Aceitar somente conteúdo publicado no site ou feed oficial da organização.',
         'Registrar fonte, link original e data em cada pauta.',

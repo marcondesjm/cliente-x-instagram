@@ -1394,7 +1394,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.67</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.68</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1979,6 +1979,38 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
                 <option value="reactivation">Reativação</option>
               </select>
             </label>
+            <div class="document-box">
+              <strong>Radar de notícias deste cliente</strong>
+              <span>Configure assuntos e fontes oficiais do nicho. O Radar só usa estes sites para sugerir pautas automáticas.</span>
+              <label class="check" style="align-items:center;">
+                <input id="activeRadarEnabled" type="checkbox">
+                <div>
+                  <strong>Ativar Radar para esta conta</strong>
+                  <span>Desligado: a agenda continua usando o conteúdo editorial da marca.</span>
+                </div>
+              </label>
+              <label>
+                Palavras-chave do nicho
+                <input id="activeRadarKeywords" placeholder="Ex.: direito trabalhista, legislação, decisões judiciais">
+              </label>
+              <label>
+                Assuntos para ignorar
+                <input id="activeRadarExcludeKeywords" placeholder="Ex.: eventos, vagas, resultados financeiros">
+              </label>
+              <label>
+                Fontes oficiais
+                <textarea id="activeRadarSources" rows="5" placeholder="Nome da fonte | https://site-oficial.com/feed.xml&#10;Outra fonte | https://site-oficial.com/noticias/rss"></textarea>
+              </label>
+              <label>
+                Período máximo das notícias
+                <select id="activeRadarMaxAgeDays">
+                  <option value="7">7 dias</option>
+                  <option value="30">30 dias</option>
+                  <option value="60">60 dias</option>
+                  <option value="90">90 dias</option>
+                </select>
+              </label>
+            </div>
             <label>
               Resumo da empresa
               <textarea id="activeBrandSummary" rows="4" placeholder="ex: Consultoria que ajuda empresas a aplicar IA em vendas, atendimento e operação com processos simples e mensuráveis."></textarea>
@@ -2745,6 +2777,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     function renderActiveProfile() {
       const account = appState.account || {};
       const profile = account.contentProfile || {};
+      const radar = profile.radar || {};
       const summary = account.brandSummary || {};
       const palette = account.brandPalette || {};
       const documentInfo = account.brandDocument || {};
@@ -2761,6 +2794,14 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('activeAccountOffer').value = profile.offer || '';
       document.getElementById('activeAccountTone').value = profile.tone || 'consultivo';
       document.getElementById('activeAccountGoal').value = profile.goal || 'authority';
+      document.getElementById('activeRadarEnabled').checked = typeof radar.enabled === 'boolean' ? radar.enabled : account.account === 'cliente-x';
+      document.getElementById('activeRadarKeywords').value = Array.isArray(radar.keywords) ? radar.keywords.join(', ') : '';
+      document.getElementById('activeRadarExcludeKeywords').value = Array.isArray(radar.excludeKeywords) ? radar.excludeKeywords.join(', ') : '';
+      document.getElementById('activeRadarSources').value = (Array.isArray(radar.sources) && radar.sources.length ? radar.sources : (account.account === 'cliente-x' ? (appState.editorialRadar?.sources || []) : []))
+        .map((source) => `${source.name || ''} | ${source.url || ''}`.trim())
+        .filter(Boolean)
+        .join('\n');
+      document.getElementById('activeRadarMaxAgeDays').value = String(radar.maxAgeDays || appState.editorialRadar?.maxAgeDays || 60);
       document.getElementById('brandBriefingGoal').value = profile.goal || 'authority';
       document.getElementById('activeBrandSummary').value = summary.description || '';
       document.getElementById('activeBrandPositioning').value = summary.positioning || '';
@@ -3408,6 +3449,16 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             offer: document.getElementById('activeAccountOffer').value.trim(),
             tone: document.getElementById('activeAccountTone').value,
             goal: document.getElementById('activeAccountGoal').value,
+            radar: {
+              enabled: document.getElementById('activeRadarEnabled').checked,
+              maxAgeDays: Number(document.getElementById('activeRadarMaxAgeDays').value),
+              keywords: document.getElementById('activeRadarKeywords').value.split(',').map((item) => item.trim()).filter(Boolean),
+              excludeKeywords: document.getElementById('activeRadarExcludeKeywords').value.split(',').map((item) => item.trim()).filter(Boolean),
+              sources: document.getElementById('activeRadarSources').value.split(/\r?\n/).map((line) => {
+                const [name, ...urlParts] = line.split('|');
+                return { name: name.trim(), url: urlParts.join('|').trim() };
+              }).filter((source) => source.name || source.url)
+            },
             brandSummary: {
               description: document.getElementById('activeBrandSummary').value.trim(),
               positioning: document.getElementById('activeBrandPositioning').value.trim(),
