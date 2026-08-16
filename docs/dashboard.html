@@ -269,7 +269,8 @@
       min-width: 0;
     }
 
-    main[data-active-view="clients"] {
+    main[data-active-view="clients"],
+    main[data-active-view="system"] {
       grid-template-columns: minmax(0, 1fr);
     }
 
@@ -277,6 +278,33 @@
     main[data-active-view="clients"] > aside.grid {
       width: 100%;
     }
+
+    main[data-active-view="system"] > .grid,
+    main[data-active-view="system"] > aside.grid { width: 100%; }
+
+    .capability-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .capability-card {
+      min-height: 142px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: linear-gradient(145deg, #ffffff, #f3f7f4);
+    }
+
+    .capability-card.good { border-color: #b7dfc7; background: linear-gradient(145deg, #fff, #effcf5); }
+    .capability-card.warn { border-color: #ead39a; background: linear-gradient(145deg, #fff, #fff9e9); }
+    .capability-card strong { font-size: 15px; }
+    .capability-card span { color: var(--muted); font-size: 12px; font-weight: 750; line-height: 1.45; }
+    .capability-status { margin-top: auto; color: var(--good); font-size: 11px; font-weight: 900; text-transform: uppercase; }
+    .capability-card.warn .capability-status { color: var(--warn); }
 
     .client-workflow {
       display: grid;
@@ -1509,6 +1537,7 @@
       .bio-add-button-panel { align-items: stretch; flex-direction: column; }
       .bio-add-button-panel button { width: 100%; }
       .client-workflow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .capability-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       #newAccountPanel .access-manager,
       #usersPanel #userManager { grid-template-columns: 1fr; }
       #newAccountPanel .access-manager > * ,
@@ -1522,6 +1551,7 @@
       .subline { font-size: 13px; line-height: 1.35; }
       .metrics { grid-template-columns: 1fr; }
       .client-workflow { grid-template-columns: 1fr; }
+      .capability-grid { grid-template-columns: 1fr; }
       .panel, .metric { padding: 14px; }
       .metric { min-height: 96px; }
       .metric .value { font-size: 27px; }
@@ -1583,7 +1613,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.99</div>
+        <div class="header-version" id="headerVersion">Versão atual: v5.00</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -1669,7 +1699,7 @@
           </div>
         </div>
 
-        <div class="panel" id="clientPortfolioPanel">
+        <div class="panel">
           <div class="panel-head">
             <div>
               <div class="section-label">Instagram Direct</div>
@@ -1719,7 +1749,7 @@
           <nav class="direct-pagination" id="directPagination" aria-label="Páginas do histórico do Direct" hidden></nav>
         </div>
 
-        <div class="panel">
+        <div class="panel" id="clientPortfolioPanel">
           <div class="panel-head">
             <div>
               <div class="section-label">Operação SaaS</div>
@@ -1736,7 +1766,7 @@
           <div class="checks" id="clientPortfolio"></div>
         </div>
 
-        <div class="panel" id="newAccountPanel">
+        <div class="panel">
           <div class="panel-head">
             <div>
               <div class="section-label">Cobrança recorrente</div>
@@ -1973,6 +2003,19 @@
             <button id="pushScheduled" type="button">Enviar agenda</button>
           </div>
           <div class="queue-list" id="queueList"></div>
+        </div>
+
+        <div class="panel" id="systemCapabilitiesPanel">
+          <div class="panel-head">
+            <div>
+              <div class="section-label">Visão da plataforma</div>
+              <h2>O que está funcionando nesta conta</h2>
+            </div>
+            <span class="status-pill good" id="systemCapabilitiesStatus">Carregando</span>
+          </div>
+          <div class="capability-grid" id="systemCapabilitiesGrid">
+            <div class="capability-card"><strong>Carregando recursos</strong><span>Consultando Radar, agenda, Direct, Bio, clientes e automações.</span><div class="capability-status">Aguarde</div></div>
+          </div>
         </div>
 
         <div class="panel">
@@ -2331,7 +2374,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           </div>
         </div>
 
-        <div class="panel">
+        <div class="panel" id="newAccountPanel">
           <div class="panel-head">
             <div>
               <div class="section-label">Multi-conta</div>
@@ -2616,7 +2659,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     const DIRECT_HISTORY_PAGE_SIZE = 10;
 
     const DASHBOARD_GROUPS = {
-      overview: ['instagramShowcase', 'latestPostTitle', 'checks'],
+      overview: ['instagramShowcase', 'latestPostTitle'],
       content: ['packSelect', 'activeProfileStatus', 'directAutomationStatus'],
       'direct-history': ['directHistoryPanel'],
       schedule: ['timeline', 'queueStatus'],
@@ -2624,7 +2667,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       bio: ['bioPagePanel'],
       clients: ['clientPortfolio', 'newAccountStatus', 'usersStatus'],
       billing: ['stripeSetupStatus', 'accessStatus'],
-      system: ['runsList', 'watchdogPanel', 'versionStatus', 'maintenanceStatus']
+      system: ['systemCapabilitiesGrid', 'runsList', 'healthStatus', 'watchdogPanel', 'versionStatus', 'maintenanceStatus']
     };
 
     function activateDashboardView(view = 'overview') {
@@ -2825,6 +2868,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         renderVersion(state.activeVersion);
         renderMaintenance(state.maintenance);
         renderWatchdog();
+        renderSystemCapabilities();
         renderSchedule();
         renderDailyPlan();
         renderTomorrowPreview();
@@ -2866,6 +2910,71 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       commit.innerHTML = `<a href="${escapeHtml(currentCommitUrl)}" target="_blank" rel="noreferrer">${escapeHtml(currentCommit)}</a>${stableCommit}`;
       description.textContent = version.description || 'Projeto operacional confirmado.';
       headerVersion.textContent = `Versão atual: ${appVersion}`;
+    }
+
+    function renderSystemCapabilities() {
+      const grid = document.getElementById('systemCapabilitiesGrid');
+      const status = document.getElementById('systemCapabilitiesStatus');
+      if (!grid || !status) return;
+      const radar = appState.editorialRadar || {};
+      const radarSources = (radar.sources || []).filter((source) => source?.name && source?.url);
+      const automations = Array.isArray(appState.directAutomation?.automations)
+        ? appState.directAutomation.automations
+        : (appState.directAutomation?.automation ? [appState.directAutomation.automation] : []);
+      const activeAutomations = automations.filter((automation) => automation?.enabled).length;
+      const deliveries = Array.isArray(appState.directAutomation?.deliveries) ? appState.directAutomation.deliveries.length : 0;
+      const bioLinks = Array.isArray(appState.bioPage?.links) ? appState.bioPage.links.filter((link) => link?.title && link?.url).length : 0;
+      const accounts = appState.accounts || [];
+      const connectedAccounts = accounts.filter((account) => account.onboarding?.status === 'connected' || account.account === 'cliente-x').length;
+      const openWatchdogError = (appState.watchdogErrors || []).some((error) => error.status === 'open');
+      const capabilities = [
+        {
+          good: radar.status === 'working',
+          title: 'Radar editorial',
+          body: `${radarSources.length} fontes cadastradas. Pesquisa pautas recentes, registra o link original e evita fonte, notícia e capa repetidas.`,
+          state: radar.status === 'working' ? 'Pesquisando fontes' : 'Requer atenção'
+        },
+        {
+          good: DATA.packCount >= DATA.schedulesUtc.length,
+          title: 'Conteúdo e criativos',
+          body: `${DATA.packCount} conteúdos disponíveis para ${DATA.schedulesUtc.length} horários, com carrossel, Story, legenda e identidade da marca.`,
+          state: 'Criação automática'
+        },
+        {
+          good: !openWatchdogError,
+          title: 'Agenda e publicação',
+          body: 'Agenda em BRT, publicação na nuvem, workflow principal e vigia reserva para recuperar horários atrasados.',
+          state: openWatchdogError ? 'Erro aberto' : 'Automação ativa'
+        },
+        {
+          good: activeAutomations > 0,
+          title: 'Automação do Direct',
+          body: `${activeAutomations} automação(ões) ativa(s), palavras-chave, entrega de materiais e ${deliveries} envio(s) registrado(s) no histórico.`,
+          state: activeAutomations ? 'Direct configurado' : 'Configuração pendente'
+        },
+        {
+          good: bioLinks > 0,
+          title: 'Página Bio',
+          body: `${bioLinks} botão(ões) publicado(s), com avatar, textos, links comerciais e edição pelo painel.`,
+          state: bioLinks ? 'Bio configurada' : 'Adicionar links'
+        },
+        {
+          good: connectedAccounts > 0,
+          title: 'Clientes e onboarding',
+          body: `${accounts.length} empresa(s) cadastrada(s), convite seguro, conexão Meta sem compartilhar senha e usuários separados por conta.`,
+          state: `${connectedAccounts} conexão(ões) ativa(s)`
+        }
+      ];
+      const attentionCount = capabilities.filter((item) => !item.good).length;
+      status.textContent = attentionCount ? `${attentionCount} atenção` : 'Tudo operacional';
+      status.className = `status-pill ${attentionCount ? 'warn' : 'good'}`;
+      grid.innerHTML = capabilities.map((item) => `
+        <article class="capability-card ${item.good ? 'good' : 'warn'}">
+          <strong>${escapeHtml(item.title)}</strong>
+          <span>${escapeHtml(item.body)}</span>
+          <div class="capability-status">${escapeHtml(item.state)}</div>
+        </article>
+      `).join('');
     }
 
     function renderAccountSwitcher() {
@@ -6283,7 +6392,23 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           body: 'Quando uma tentativa automática falhar, o painel mostra etapa, erro, run e solução sugerida.'
         };
 
+      const radar = appState.editorialRadar || {};
+      const radarSources = (radar.sources || []).filter((source) => source?.name && source?.url);
+      const directAutomations = Array.isArray(appState.directAutomation?.automations)
+        ? appState.directAutomation.automations
+        : (appState.directAutomation?.automation ? [appState.directAutomation.automation] : []);
+      const activeDirectAutomations = directAutomations.filter((automation) => automation?.enabled).length;
+      const bioLinks = Array.isArray(appState.bioPage?.links) ? appState.bioPage.links.filter((link) => link?.title && link?.url).length : 0;
+      const accountOnboarding = appState.account?.onboarding || {};
+
       const checks = [
+        {
+          level: radar.status === 'working' && radarSources.length ? 'good' : 'warn',
+          title: `Radar editorial: ${radarSources.length} fontes`,
+          body: radar.status === 'working'
+            ? 'Pesquisa notícias recentes, balanceia origens e exige o link da fonte antes de publicar.'
+            : 'O Radar está em reserva ou ainda não confirmou uma pauta recente. Atualize as notícias e confira as fontes.'
+        },
         {
           level: DATA.packCount >= DATA.schedulesUtc.length ? 'good' : 'bad',
           title: `${DATA.packCount} conteúdos para ${DATA.schedulesUtc.length} horários`,
@@ -6300,8 +6425,27 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         },
         {
           level: 'good',
-          title: 'Fallback local ativo',
-          body: 'Se o Supabase tiver poucos posts, o script completa com os packs locais.'
+          title: 'Agenda e publicação na nuvem',
+          body: 'Os horários em BRT são monitorados pelo workflow principal e pelo vigia reserva, sem depender do painel aberto.'
+        },
+        {
+          level: activeDirectAutomations ? 'good' : 'warn',
+          title: `Direct: ${activeDirectAutomations} automação(ões) ativa(s)`,
+          body: activeDirectAutomations
+            ? 'Palavras-chave, respostas e entrega de materiais estão cadastradas para a conta.'
+            : 'Nenhuma automação do Direct está ativa nesta conta.'
+        },
+        {
+          level: bioLinks ? 'good' : 'warn',
+          title: `Página Bio: ${bioLinks} botão(ões)`,
+          body: bioLinks ? 'A página pública possui links comerciais configurados.' : 'A Página Bio ainda precisa de pelo menos um botão válido.'
+        },
+        {
+          level: accountOnboarding.status === 'connected' || appState.account?.account === 'cliente-x' ? 'good' : 'warn',
+          title: 'Onboarding e conexão da empresa',
+          body: accountOnboarding.status === 'connected' || appState.account?.account === 'cliente-x'
+            ? 'A empresa está vinculada à operação e pode receber conteúdo, agenda e automações.'
+            : 'A empresa ainda aguarda a autorização do Instagram pelo convite seguro.'
         },
         watchdogCheck,
         privateCheck

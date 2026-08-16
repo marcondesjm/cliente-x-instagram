@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 18:42 BRT
+Atualizado em: 2026-08-16 18:46 BRT
 
 ## Regra permanente de checkpoint
 
@@ -18,7 +18,15 @@ Atualizado em: 2026-08-16 18:42 BRT
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `b11fae5` (`Adiciona pagina da automacao do Direct na landing`).
-- Versao visivel atual: `v4.99`
+- Versao visivel atual: `v5.00`
+
+## Visao operacional completa
+
+- A aba Sistema ocupa toda a largura, sem deixar o centro vazio e os controles comprimidos no canto.
+- A abertura apresenta seis recursos dinamicos: Radar, criacao de conteudo, agenda/publicacao, Direct, Pagina Bio e clientes/onboarding.
+- O Checklist operacional, terminal, workflows, vigia, versao e manutencao ficam reunidos na mesma area.
+- A checkagem inclui Radar/fontes, quantidade de conteudos, duplicidade, nuvem, Direct, Bio, onboarding, vigia e Meta/metricas.
+- A grade usa tres colunas no desktop, duas em tablet e uma no celular.
 
 ## Usabilidade da aba Clientes
 

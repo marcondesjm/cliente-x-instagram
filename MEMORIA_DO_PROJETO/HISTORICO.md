@@ -1,5 +1,31 @@
 # Historico
 
+## 2026-08-16 18:46 BRT
+
+Reorganizada a visao operacional para eliminar a coluna estreita, preencher a area central e mostrar o Radar e os principais recursos da plataforma.
+
+Alteracoes:
+
+- A aba `Sistema` passa a ocupar toda a largura, com os paineis organizados verticalmente em vez de comprimidos no canto direito.
+- Foi criada a secao `O que esta funcionando nesta conta`, com seis cartoes dinamicos.
+- Os cartoes mostram: Radar editorial, conteudo/criativos, agenda/publicacao, automacao do Direct, Pagina Bio e clientes/onboarding.
+- O Radar exibe quantidade de fontes, estado da pesquisa, protecao contra repeticao e exigencia do link original.
+- Conteudo mostra packs e horarios; agenda explica publicacao na nuvem e vigias; Direct mostra automacoes e entregas; Bio mostra botoes; clientes mostra empresas e conexoes.
+- O Checklist operacional saiu da Visao geral e foi agrupado com a aba Sistema, junto dos workflows, vigia, versao e manutencao.
+- A checkagem ganhou verificacoes de Radar, publicacao na nuvem, Direct, Bio e onboarding, alem de conteudos, duplicidade, vigia e Meta.
+- O terminal passa automaticamente por todas essas verificacoes e informa o progresso no cabecalho.
+- A grade de recursos usa tres colunas no desktop, duas em tablet e uma no celular.
+- Foram corrigidos os IDs do layout anterior: `clientPortfolioPanel` agora pertence a Carteira de clientes e `newAccountPanel` ao formulario Cadastrar nova empresa.
+- Versao visivel atualizada para `v5.00`.
+
+Validacao:
+
+- `node --check api/state.js`: passou.
+- JavaScript inline do dashboard: sintaxe valida.
+- IDs unicos e associacao dos paineis Clientes foram verificados automaticamente.
+- `npm run validate-copy`: passou com `duplicateHistoryGuard` e `sourceBalanceGuard` em `ok`.
+- `git diff --check`: passou.
+
 ## 2026-08-16 18:42 BRT
 
 Reorganizada a aba `Clientes` para eliminar o grande espaco vazio e tornar o cadastro de empresas mais guiado.
