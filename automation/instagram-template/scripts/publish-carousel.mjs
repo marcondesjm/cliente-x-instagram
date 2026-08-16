@@ -1652,7 +1652,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const noteWidth = mode === 'minimal' ? 650 : mode === 'poster' || mode === 'magazine' ? 430 : mode === 'split' || placement?.includes?.('layout-left') ? 380 : 390;
   const noteFontSize = engagementRole === 'cta' ? 24 : body.length > 170 ? 21 : body.length > 125 ? 23 : body.length > 95 ? 25 : 27;
   const noteLines = estimateTextLines(body, noteWidth, noteFontSize);
-  const closeFontScale = creativeBody.close.length > 110 ? 0.58 : creativeBody.close.length > 82 ? 0.62 : creativeBody.close.length > 58 ? 0.66 : 0.72;
+  const closeFontScale = creativeBody.close.length > 110 ? 0.68 : creativeBody.close.length > 82 ? 0.72 : creativeBody.close.length > 58 ? 0.78 : 0.84;
   const closeLines = creativeBody.close ? estimateTextLines(creativeBody.close, noteWidth - 32, noteFontSize * closeFontScale) : 0;
   const closeMinHeight = creativeBody.close
     ? Math.max(92, Math.min(184, 40 + (closeLines * noteFontSize * closeFontScale * 1.34)))
