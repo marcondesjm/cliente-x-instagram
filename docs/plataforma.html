@@ -112,6 +112,27 @@
     .stage-signal.radar-live { top: 30px; left: -12px; }
     .stage-signal.publish-live { right: -8px; bottom: 35px; }
     .image-link { flex: 0 0 auto; color: var(--olive-dark); font-weight: 850; text-decoration: none; }
+    .radar-showcase { position: relative; width: min(650px, 100%); padding: 26px; overflow: hidden; border: 1px solid rgba(91,112,78,.22); border-radius: 20px; background: rgba(255,255,255,.94); box-shadow: 0 34px 80px rgba(28,43,34,.17), 0 8px 24px rgba(28,43,34,.08); }
+    .radar-showcase::after { content: ""; position: absolute; width: 220px; height: 220px; right: -110px; top: -120px; border-radius: 50%; background: rgba(112,139,75,.12); pointer-events: none; }
+    .radar-head { position: relative; z-index: 1; display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
+    .radar-kicker { display: inline-flex; align-items: center; gap: 8px; color: var(--olive-dark); font-size: 11px; font-weight: 950; letter-spacing: .07em; text-transform: uppercase; }
+    .radar-kicker::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: #769150; box-shadow: 0 0 0 5px rgba(118,145,80,.14); animation: radar-pulse 1.8s ease-in-out infinite; }
+    .radar-showcase h2 { margin: 10px 0 0; max-width: 470px; font-size: clamp(28px, 3vw, 39px); line-height: 1.02; letter-spacing: -.045em; }
+    .radar-state { flex: 0 0 auto; padding: 7px 10px; border-radius: 999px; color: #35503b; background: #e4efdf; font-size: 10px; font-weight: 950; }
+    .radar-intro { margin: 13px 0 20px; max-width: 540px; color: var(--ink-soft); font-size: 14px; }
+    .radar-flow { position: relative; display: grid; gap: 9px; }
+    .radar-step { display: grid; grid-template-columns: 38px 1fr auto; align-items: center; gap: 12px; padding: 12px 13px; border: 1px solid var(--line); border-radius: 11px; background: #fbfcfa; }
+    .radar-step-number { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 9px; color: #fff; background: var(--olive-dark); font-size: 11px; font-weight: 950; }
+    .radar-step strong { display: block; font-size: 13px; }
+    .radar-step small { display: block; margin-top: 2px; color: var(--ink-soft); font-size: 11px; line-height: 1.35; }
+    .radar-check { color: var(--olive); font-size: 16px; font-weight: 950; }
+    .radar-result { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 12px; margin-top: 14px; padding: 14px; border-radius: 12px; color: #fff; background: var(--ink); }
+    .radar-result-icon { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 10px; color: var(--ink); background: #dce9c6; font-weight: 950; }
+    .radar-result strong { display: block; font-size: 13px; }
+    .radar-result span { display: block; margin-top: 2px; color: rgba(255,255,255,.68); font-size: 11px; }
+    .radar-sources { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+    .radar-sources span { padding: 6px 8px; border: 1px solid rgba(75,101,68,.14); border-radius: 999px; color: #506057; background: #f5f8f4; font-size: 9px; font-weight: 850; }
+    @keyframes radar-pulse { 50% { transform: scale(1.18); box-shadow: 0 0 0 8px rgba(118,145,80,.08); } }
     .app-window { position: relative; margin-top: 18px; padding: 16px; border: 1px solid rgba(255,255,255,.7); border-radius: 32px; background: rgba(255,255,255,.72); box-shadow: var(--shadow); transform: rotate(1.2deg); }
     .app-top { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px 18px; }
     .dots { display: flex; gap: 6px; }
@@ -341,6 +362,13 @@
       .stage-signal { padding: 9px 11px; font-size: 10px; }
       .stage-signal.radar-live { top: 34px; left: -4px; }
       .stage-signal.publish-live { right: -3px; bottom: 34px; }
+      .radar-showcase { padding: 20px 16px; border-radius: 15px; }
+      .radar-head { display: grid; gap: 10px; }
+      .radar-state { width: max-content; }
+      .radar-showcase h2 { font-size: 29px; }
+      .radar-step { grid-template-columns: 34px 1fr auto; gap: 9px; padding: 10px; }
+      .radar-step-number { width: 31px; height: 31px; }
+      .radar-sources span:nth-child(n+5) { display: none; }
       .visual-status { top: 10px; left: 10px; padding: 8px 10px; font-size: 10px; }
       .editor-focus { min-height: 330px; }
       .editor-focus img { width: 150%; object-position: 5% 4%; }
@@ -430,12 +458,21 @@
         </div>
 
         <div class="product-stage">
-          <span class="stage-signal radar-live">Radar editorial ativo</span>
-          <figure class="real-product-shot">
-            <img src="/docs/uploads/platform-dashboard-overview.png" alt="Painel real da Nerion Social com agenda, vigia automático e publicação confirmada pela Meta">
-            <figcaption><span>Tela real da operação: agenda, saúde da automação e publicação confirmada.</span><a class="image-link" href="/docs/uploads/platform-dashboard-overview.png" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
-          </figure>
-          <span class="stage-signal publish-live">Publicação confirmada pela Meta</span>
+          <div class="radar-showcase" aria-label="Como funciona o Radar editorial">
+            <div class="radar-head">
+              <div><span class="radar-kicker">Radar editorial em execução</span><h2>Encontra pautas atuais antes de criar o conteúdo.</h2></div>
+              <span class="radar-state">ATIVO</span>
+            </div>
+            <p class="radar-intro">O Radar pesquisa assuntos recentes, confere a origem e transforma a notícia em uma oportunidade relevante para a realidade da empresa.</p>
+            <div class="radar-flow">
+              <div class="radar-step"><span class="radar-step-number">01</span><div><strong>Pesquisa fontes recentes</strong><small>Começa em 7 dias e amplia para 15 ou 30 quando necessário.</small></div><span class="radar-check">✓</span></div>
+              <div class="radar-step"><span class="radar-step-number">02</span><div><strong>Confere fonte e atualidade</strong><small>Exige um link rastreável e bloqueia conteúdo sem origem válida.</small></div><span class="radar-check">✓</span></div>
+              <div class="radar-step"><span class="radar-step-number">03</span><div><strong>Evita assuntos e capas repetidas</strong><small>Compara links, histórico e as publicações recentes do perfil.</small></div><span class="radar-check">✓</span></div>
+              <div class="radar-step"><span class="radar-step-number">04</span><div><strong>Adapta para o seu negócio</strong><small>Conecta a pauta a dores, oportunidades e objetivos da empresa.</small></div><span class="radar-check">✓</span></div>
+            </div>
+            <div class="radar-result"><span class="radar-result-icon">→</span><div><strong>Pauta aprovada para criação</strong><span>Pronta para virar carrossel, Story, legenda e entrar na agenda.</span></div></div>
+            <div class="radar-sources" aria-label="Exemplos de fontes monitoradas"><span>OpenAI</span><span>AWS</span><span>Microsoft</span><span>Google</span><span>Anthropic</span><span>NVIDIA</span><span>n8n</span></div>
+          </div>
         </div>
         <div class="trust" aria-label="Diferenciais rápidos">
           <span>Feito para empresas</span><span>Identidade da sua marca</span><span>Publicação automática</span><span>Acompanhamento no painel</span>
