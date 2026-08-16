@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 19:38 BRT
+Atualizado em: 2026-08-16 19:42 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,21 @@ Atualizado em: 2026-08-16 19:38 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `0f56d34` (`Evita repeticao de fotos nas capas`).
+- Checkpoint funcional atual: `0abd4ac` (`Remove lista duplicada de execucoes`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
-- Versao visivel atual: `v5.08`
+- Versao visivel atual: `v5.09`
+
+## Sistema simplificado
+
+- A lista `Ultimas execucoes` nao aparece mais na aba Sistema.
+- O botao `Atualizar runs` e o atalho tecnico do GitHub Actions foram removidos do cabecalho.
+- O Checklist operacional e o Vigia automatico concentram a leitura de saude e recuperacao.
+- Os workflows e registros tecnicos continuam ativos nos bastidores.
+- Producao: commit `0abd4ac`, deploy `dpl_3bbZncNTM8Btq1hN1oSRMYvZiwC6` e versao `v5.09` confirmados.
 
 ## Rotacao de fotos sem repeticao proxima
 

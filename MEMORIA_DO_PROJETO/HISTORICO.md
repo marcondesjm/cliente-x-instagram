@@ -1,5 +1,18 @@
 # Historico
 
+## 2026-08-16 19:42 BRT
+
+Removida da interface a lista tecnica `GitHub Actions - Ultimas execucoes`.
+
+- O bloco duplicava as informacoes de saude ja apresentadas no Checklist operacional e no Vigia automatico.
+- Tambem foram removidos o botao `Atualizar runs`, o atalho de GitHub Actions no cabecalho e o codigo de consulta/renderizacao que nao era mais usado.
+- A consulta operacional continua preservada internamente nos workflows e nos registros do vigia; apenas a lista redundante deixou de ser exibida.
+- O rodape agora descreve a operacao na nuvem sem mencionar runs tecnicos.
+- Checklist, Vigia, recuperacao automatica, versao e manutencao continuam disponiveis na aba Sistema.
+- Commit funcional: `0abd4ac` (`Remove lista duplicada de execucoes`).
+- Deploy de producao: `dpl_3bbZncNTM8Btq1hN1oSRMYvZiwC6`.
+- Producao respondeu `HTTP 200`, confirmou `v5.09`, ausencia da lista e presenca do Checklist e do Vigia.
+
 ## 2026-08-16 19:38 BRT
 
 Corrigida a repeticao frequente das fotos pessoais nos carrosseis.
