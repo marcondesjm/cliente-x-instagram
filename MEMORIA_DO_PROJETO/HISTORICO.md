@@ -1,5 +1,30 @@
 # Historico
 
+## 2026-08-16 17:08 BRT
+
+Retomada concluida a partir do checkpoint do painel e confirmacao da nova checkagem operacional automatica.
+
+Alteracao recuperada:
+
+- O commit `205a860` adicionou ao bloco `Checklist operacional` o botao `Atualizar checagem` e um terminal visual que mostra cada verificacao como `OK`, `ATENCAO` ou `ERRO`.
+- O terminal encerra com um resultado explicito: `CHECKAGEM CONCLUIDA: TUDO OK`, `ERRO ENCONTRADO` ou falha de finalizacao.
+- O commit `b584a48` passou a executar a checkagem automaticamente tanto ao restaurar uma sessao valida quanto depois de um novo login.
+- O botao permanece disponivel para repetir a verificacao manualmente.
+
+Validacao:
+
+- Repositorio correto: `cliente-x-instagram-modern`, branch `feature/modern-editorial-system`.
+- `HEAD`, `origin/main` e `origin/feature/modern-editorial-system` apontam para `b584a48`; workspace estava limpo antes deste registro.
+- `node --check api/state.js`: passou.
+- `npm run validate-copy`: passou com `20` packs, `54` packs automaticos e `74` selecoes automaticas; protecao de duplicidade `ok`.
+- Producao confirmou o botao, o terminal e as chamadas automaticas no login e na restauracao de sessao.
+- A pagina estava na tela protegida de login; por seguranca, nenhuma credencial salva foi procurada ou reutilizada. Por isso, a conclusao visual autenticada `TUDO OK` ainda deve ser conferida dentro de uma sessao do usuario.
+
+Deploy/publicacao:
+
+- Novo deploy nesta retomada: nao. O codigo dos commits `205a860` e `b584a48` ja foi encontrado no HTML servido por `https://cliente-x-instagram.vercel.app/`.
+- Instagram real: nao; esta mudanca e apenas operacional no dashboard.
+
 ## 2026-08-16 16:07 BRT
 
 Checkpoint do Radar salvo a pedido do usuario depois da correcao de duplicidade visual e da implantacao do rodizio de fontes.

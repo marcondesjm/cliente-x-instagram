@@ -1,18 +1,26 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 16:07 BRT
+Atualizado em: 2026-08-16 17:08 BRT
 
 ## Projeto ativo
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint operacional anterior: `ec47b1d`; novo checkpoint de memoria sera o commit que registrar esta atualizacao.
+- Checkpoint funcional atual: `b584a48`; novo checkpoint de memoria sera o commit que registrar esta atualizacao.
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `63664a1` (`Simplifica mensagem de acesso na nuvem`).
 - Versao visivel atual: `v4.96`
+
+## Checkagem operacional do painel
+
+- O bloco `Checklist operacional` possui o botao `Atualizar checagem` e um terminal que detalha as verificacoes como `OK`, `ATENCAO` ou `ERRO`.
+- A checkagem roda automaticamente ao restaurar uma sessao valida e logo depois de um novo login; tambem pode ser repetida manualmente pelo botao.
+- Os commits funcionais sao `205a860` (`Adiciona terminal de checkagem operacional`) e `b584a48` (`Executa checkagem automaticamente no painel`).
+- A producao foi inspecionada sem autenticacao e confirmou a entrega do botao, do terminal e das duas chamadas automaticas no HTML servido.
+- Falta somente conferir, dentro de uma sessao autenticada do usuario, se o terminal encerra com `CHECKAGEM CONCLUIDA: TUDO OK` ou apresenta algum item que exija correcao.
 
 ## Estado confirmado
 
@@ -115,6 +123,7 @@ Resultado:
 
 ## Proximo passo recomendado
 
+- Entrar no dashboard e aguardar a checkagem automatica terminar; registrar o resultado final e corrigir qualquer item que apareca como `ERRO`.
 - Acompanhar os proximos posts automaticos e conferir se o publico responde melhor ao novo tom humano e consultivo.
 - Acompanhar a resposta ao post `DcFh6FWG8f0` e manter a confirmacao por permalink em cada nova publicacao manual.
 - Conferir o primeiro post automatico posterior a trava estrita do Radar por permalink e inspecionar visualmente o Story publicado.
