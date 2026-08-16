@@ -94,8 +94,11 @@
     .promo-arrow { padding-bottom: 4px; color: var(--olive); font-size: 20px; font-weight: 950; }
     .promo-now strong { color: var(--olive-dark); font-size: clamp(34px, 3.5vw, 46px); line-height: .9; letter-spacing: -.05em; }
     .promo-now strong small { font-size: 15px; letter-spacing: 0; }
-    .promo-volume { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
-    .promo-volume span { padding: 6px 8px; border: 1px solid rgba(73,101,67,.13); border-radius: 7px; color: #3f5745; background: rgba(255,255,255,.7); font-size: 10px; font-weight: 850; }
+    .promo-volume { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 16px; }
+    .promo-volume-card { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 9px; padding: 10px 11px; border: 1px solid rgba(73,101,67,.18); border-radius: 10px; color: #3f5745; background: rgba(255,255,255,.86); }
+    .promo-volume-card strong { color: var(--olive-dark); font-size: 25px; line-height: 1; letter-spacing: -.04em; }
+    .promo-volume-card span { font-size: 10px; font-weight: 900; line-height: 1.2; text-transform: uppercase; }
+    .promo-gift { grid-column: 1 / -1; padding: 7px 10px; border: 1px solid rgba(73,101,67,.14); border-radius: 8px; color: #3f5745; background: rgba(255,255,255,.72); font-size: 10px; font-weight: 900; }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
     .trust { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: -8px; color: #435149; font-size: 12px; font-weight: 850; }
     .trust span { display: flex; align-items: center; gap: 9px; min-height: 44px; padding: 9px 11px; border: 1px solid rgba(78,105,75,.13); border-radius: 10px; background: rgba(247,250,247,.86); }
@@ -279,6 +282,17 @@
     .smaller-plan { margin: 22px 0 0; padding: 18px 20px; border: 1px solid var(--line); border-radius: 14px; text-align: center; background: #fff; color: var(--ink-soft); }
     .smaller-plan a { color: var(--olive-dark); font-weight: 900; }
 
+    .assurance-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .assurance-card { padding: 25px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
+    .assurance-card.featured { color: #fff; background: var(--ink); }
+    .assurance-label { display: inline-flex; padding: 6px 8px; border-radius: 6px; color: var(--olive-dark); background: var(--mint); font-size: 10px; font-weight: 950; letter-spacing: .06em; text-transform: uppercase; }
+    .assurance-card h3 { margin: 20px 0 9px; font-size: 22px; line-height: 1.12; letter-spacing: -.025em; }
+    .assurance-card p { margin: 0; color: var(--ink-soft); font-size: 14px; }
+    .assurance-card.featured p { color: rgba(255,255,255,.7); }
+    .assurance-card a { display: inline-block; margin-top: 16px; color: var(--olive-dark); font-size: 13px; font-weight: 900; text-decoration: none; }
+    .assurance-card.featured a { color: #dce9c6; }
+    .assurance-note { margin: 18px 0 0; color: var(--ink-soft); font-size: 13px; }
+
     .faq { display: grid; gap: 12px; max-width: 900px; }
     details { border: 1px solid var(--line); border-radius: 10px; background: #fff; }
     summary { padding: 20px 22px; cursor: pointer; font-weight: 850; list-style: none; }
@@ -340,6 +354,7 @@
       .automation-photo { min-height: 285px; }
       .automation-photo img { min-height: 285px; }
       .proof-grid { grid-template-columns: repeat(2,1fr); }
+      .assurance-grid { grid-template-columns: 1fr 1fr; }
       .editor-tour { grid-template-columns: 1fr; }
       .editor-focus { min-height: 460px; }
       .editor-focus img { width: 118%; object-position: 8% 5%; }
@@ -405,6 +420,8 @@
       .section { padding: 68px 0; }
       .section h2 { font-size: 38px; }
       .cards, .offers, .steps { grid-template-columns: 1fr; }
+      .assurance-grid { grid-template-columns: 1fr; }
+      .promo-volume-card strong { font-size: 22px; }
       .automation-photos { grid-template-columns: 1fr; }
       .automation-photo, .automation-photo img { min-height: 260px; }
       .automation-photo figcaption { right: 10px; bottom: 10px; left: 10px; padding: 13px 14px; }
@@ -453,7 +470,11 @@
               <span class="promo-arrow" aria-hidden="true">→</span>
               <span class="promo-now"><small>Agora</small><strong>R$ 197<small>/mês</small></strong></span>
             </div>
-            <div class="promo-volume"><span>✓ Mais de 12 carrosséis/dia</span><span>✓ 12 Stories/dia</span><span>🎁 Implantação gratuita nesta oferta</span></div>
+            <div class="promo-volume" aria-label="Volume diário incluído">
+              <div class="promo-volume-card"><strong>+12</strong><span>carrosséis<br>por dia</span></div>
+              <div class="promo-volume-card"><strong>12</strong><span>Stories<br>por dia</span></div>
+              <div class="promo-gift">🎁 Implantação gratuita nesta oferta</div>
+            </div>
           </div>
         </div>
 
@@ -585,6 +606,18 @@
           </article>
         </div>
         <p class="smaller-plan">Precisa de menos publicações? <a href="https://wa.me/5548996029392?text=Ol%C3%A1%2C%20Marcondes!%20Preciso%20de%20um%20plano%20menor%20da%20Nerion%20Social.%20Quero%20receber%20uma%20proposta%20para%20uma%20frequ%C3%AAncia%20menor%20de%20conte%C3%BAdo." target="_blank" rel="noopener noreferrer">Consulte um plano menor pelo WhatsApp →</a></p>
+      </div>
+    </section>
+
+    <section class="section" id="garantia">
+      <div class="wrap">
+        <div class="section-head"><p class="eyebrow">Credibilidade sem promessa vazia</p><h2>Você confere a operação antes de depender dela.</h2><p class="section-lead">Em vez de depoimentos inventados, mostramos provas que podem ser abertas e verificadas. Quando clientes autorizarem seus relatos, eles poderão ser adicionados aqui com nome, empresa e contexto reais.</p></div>
+        <div class="assurance-grid">
+          <article class="assurance-card"><span class="assurance-label">Prova pública</span><h3>Publicações reais no Instagram</h3><p>Os exemplos exibidos nesta página abrem diretamente no perfil e permitem conferir o conteúdo entregue.</p><a href="https://www.instagram.com/p/DcHMqdWE3bI/" target="_blank" rel="noopener noreferrer">Conferir publicação ↗</a></article>
+          <article class="assurance-card"><span class="assurance-label">Prova técnica</span><h3>Confirmação no painel</h3><p>A plataforma registra agenda, execução e confirmação da publicação para que você acompanhe o que realmente aconteceu.</p><a href="#produto">Ver telas da plataforma ↑</a></article>
+          <article class="assurance-card featured"><span class="assurance-label">Garantia de implantação</span><h3>A configuração só termina depois do teste.</h3><p>A implantação é acompanhada até a marca estar configurada, a agenda definida e uma publicação de teste ser confirmada. Se algo falhar nessa etapa, a configuração continua sem custo adicional até a correção.</p><a href="https://wa.me/5548996029392?text=Ol%C3%A1%2C%20Marcondes!%20Quero%20entender%20a%20garantia%20de%20implanta%C3%A7%C3%A3o%20da%20Nerion%20Social." target="_blank" rel="noopener noreferrer">Entender a garantia →</a></article>
+        </div>
+        <p class="assurance-note">A garantia cobre a implantação técnica acordada. Resultados como alcance, seguidores, engajamento ou vendas dependem também do mercado, da oferta e do público e não são garantidos.</p>
       </div>
     </section>
 
