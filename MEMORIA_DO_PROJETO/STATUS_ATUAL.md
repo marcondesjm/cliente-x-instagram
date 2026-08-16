@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 20:10 BRT
+Atualizado em: 2026-08-16 20:20 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,25 @@ Atualizado em: 2026-08-16 20:10 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `2968ccb` (`Bloqueia chamadas genericas nas pautas do Radar`).
+- Checkpoint funcional atual: aguardando commit final da publicacao real do Radar.
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
-- Versao visivel atual: `v5.14`
+- Versao visivel atual: `v5.15`
+
+## Publicacao real apos as travas editoriais
+
+- Run: `31978583103`, concluido com sucesso.
+- Post: `https://www.instagram.com/p/DcHnyS7Adj5/`.
+- Fonte real: Olhar Digital.
+- Materia: `CEO da Anthropic: rejeicao a IA e crise de confianca no setor`.
+- URL original completa aparece na legenda publicada.
+- Feed com cinco slides e Story foram confirmados diretamente no Instagram.
+- A materia e a analise editorial aparecem separadas, sem chamada empresarial aleatoria atribuida a fonte.
+- O historico tecnico registra a URL para impedir repeticao.
+- A persistencia do historico passa a incluir tambem publicacoes acionadas manualmente por `workflow_dispatch`.
 
 ## Capas genericas de pesquisa bloqueadas
 

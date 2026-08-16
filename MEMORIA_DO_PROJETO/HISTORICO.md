@@ -1,5 +1,23 @@
 # Historico
 
+## 2026-08-16 20:20 BRT
+
+Publicada e verificada uma pauta real pelo Radar apos as novas travas editoriais.
+
+- Workflow real: `31978583103`, concluido com sucesso em 1 minuto e 43 segundos.
+- Fonte: Olhar Digital.
+- Materia: `CEO da Anthropic: rejeicao a IA e crise de confianca no setor`.
+- Link original: `https://olhardigital.com.br/2026/08/16/inteligencia-artificial/ceo-da-anthropic-rejeicao-a-ia-e-crise-de-confianca-no-setor/`.
+- Post confirmado diretamente no Instagram: `https://www.instagram.com/p/DcHnyS7Adj5/`.
+- O carrossel possui cinco slides e mostra fonte, titulo real e indicacao do link na legenda.
+- A legenda apresenta titulo original, data, separacao entre fato da materia e analise editorial, fonte e URL completa.
+- Feed confirmado pelo dashboard e pelo Instagram; identificador interno da midia `3965312977028110585` e identificador da legenda `18029758466845697`.
+- Story confirmado visualmente no perfil com a mesma pauta.
+- As seis imagens do run foram hospedadas no commit automatico `4a1a304`.
+- O workflow manual nao persistia `publication-history.json` porque a etapa excluia `workflow_dispatch`; a condicao foi corrigida para futuras publicacoes manuais.
+- Esta publicacao foi acrescentada manualmente ao historico para bloquear reutilizacao da mesma URL.
+- Versao operacional: `v5.15`.
+
 ## 2026-08-16 20:10 BRT
 
 Bloqueadas explicitamente as chamadas empresariais genericas nas pautas pesquisadas pelo Radar.
