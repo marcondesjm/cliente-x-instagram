@@ -654,11 +654,12 @@ const LEGACY_FREE_PROMPTS_CTA = 'Comente IA para receber 🚀 50 PROMPTS DE IA G
 
 function withFreePromptsCtaAtEnd(caption = '') {
   const withoutLegacyCta = String(caption).replace(LEGACY_FREE_PROMPTS_CTA, '').replace(/\n{3,}/g, '\n\n').trim();
-  const markerIndex = withoutLegacyCta.indexOf(FREE_PROMPTS_CTA_MARKER);
+  const { body, hashtags } = splitCaptionParts(withoutLegacyCta);
+  const markerIndex = body.indexOf(FREE_PROMPTS_CTA_MARKER);
   const withoutExistingCta = markerIndex === -1
-    ? withoutLegacyCta
-    : withoutLegacyCta.slice(0, markerIndex).trim();
-  return [withoutExistingCta, FREE_PROMPTS_CTA].filter(Boolean).join('\n\n');
+    ? body
+    : body.slice(0, markerIndex).trim();
+  return [withoutExistingCta, FREE_PROMPTS_CTA, hashtags].filter(Boolean).join('\n\n');
 }
 
 const CONTENT_GOALS = {
@@ -1011,12 +1012,14 @@ function enhanceSlide(slide, index, dateString, slotIndex, goal = CONTENT_GOALS.
 }
 
 function enhanceCaption(caption, dateString, slotIndex, goal = CONTENT_GOALS.authority) {
-  const { body, hashtags } = splitCaptionParts(withFreePromptsCtaAtEnd(caption));
+  const { body, hashtags } = splitCaptionParts(caption);
+  const markerIndex = body.indexOf(FREE_PROMPTS_CTA_MARKER);
+  const withoutCta = markerIndex === -1 ? body : body.slice(0, markerIndex).trim();
   const angles = [...(goal.captionAngles || []), ...ENGAGEMENT_INTELLIGENCE.captionAngles];
   const angle = angles[pickDailyIndex(angles, dateString, slotIndex)];
   const slotNote = angle;
-  const bodyWithAngle = body.includes(slotNote) ? body : `${body}\n\n${slotNote}`;
-  return [bodyWithAngle.trim(), hashtags, FREE_PROMPTS_CTA].filter(Boolean).join('\n\n');
+  const bodyWithAngle = withoutCta.includes(slotNote) ? withoutCta : `${withoutCta}\n\n${slotNote}`;
+  return [bodyWithAngle.trim(), FREE_PROMPTS_CTA, hashtags].filter(Boolean).join('\n\n');
 }
 
 function enhancePackForEngagement(pack, dateString, slotIndex, account = {}) {
