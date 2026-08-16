@@ -1,5 +1,35 @@
 # Historico
 
+## 2026-08-16 00:21 BRT
+
+Checkpoint editorial e operacional atualizado a pedido do usuario.
+
+Resumo:
+
+- Versao de producao confirmada: `v4.84`.
+- Branch: `feature/modern-editorial-system`.
+- Commit: `1d99471` (`Build trust-led human radar storytelling`), tambem presente em `origin/main`.
+- O Radar passou a aceitar apenas noticias oficiais dos ultimos 7 dias para `Publicar agora`; se nao houver pauta elegivel, bloqueia o envio em vez de usar conteudo manual ou generico.
+- Titulos tecnicos e em ingles das fontes nao devem aparecer na comunicacao ao publico. As noticias sao explicadas em portugues brasileiro simples.
+- O novo padrao de comunicacao e: conexao humana, clareza do problema, confianca no caminho e convite natural para conversar.
+- A linguagem deve falar de pessoas, clientes, rotina, equipe e resultado. IA e automacao entram como meio, nao como assunto principal.
+- A fonte oficial continua sendo registrada, mas de forma curta, sem repetir o titulo original na arte.
+- O CTA fixo dos 50 prompts, hashtags finais, Direct e os 13 horarios BRT foram preservados.
+
+Validado:
+
+- `node --check lib/editorial-research.js`: passou.
+- `npm run validate-copy`: passou.
+- `npm run render-only`: passou; Radar encontrou 13 temas recentes em fontes oficiais.
+- Inspecao visual do render confirmou a abertura humana e a leitura legivel do carrossel.
+- Dashboard publico confirmado em `https://cliente-x-instagram.vercel.app` com versao `v4.84`.
+
+Deploy/publicacao:
+
+- Deploy: sim, Vercel Production confirmado na versao `v4.84`.
+- Instagram real mais recente: `https://www.instagram.com/p/DcFdj-ZjQef/`, GitHub Actions run `31923469806` concluido com `success` em 2026-08-16 00:08 BRT.
+- Observacao: a postagem real foi publicada antes do refinamento final de tom humano; a regra vale para os proximos posts.
+
 ## 2026-08-15 23:15 BRT
 
 Corrigido o fluxo de publicacao imediata para usar somente o Radar de noticias oficiais de IA do dia.

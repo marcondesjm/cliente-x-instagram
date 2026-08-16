@@ -1,84 +1,68 @@
 # Status Atual
 
-Atualizado em: 2026-08-15 22:45 BRT
+Atualizado em: 2026-08-16 00:21 BRT
 
 ## Projeto ativo
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Commit atual: `3074940` (`Keep hashtags at end of radar captions`)
-- Dashboard: `docs/dashboard.html`
-- Versao visivel atual: `v4.77`
+- Commit de codigo em producao: `1d99471` (`Build trust-led human radar storytelling`)
+- Repositorio operacional: `origin/main` = `1d99471`
+- Dashboard: `https://cliente-x-instagram.vercel.app`
+- Versao visivel atual: `v4.84`
 
-## Estado do workspace
+## Estado confirmado
 
-- Workspace de codigo limpo antes deste registro; esta atualizacao altera somente os arquivos de memoria.
-- O projeto moderno esta em uma linha separada do `cliente-x-instagram` original.
-- A versao `v4.77` esta validada e confirmada em producao.
-- A publicacao real foi executada pelo fluxo operacional do repositorio irmao `cliente-x-instagram`, na branch `main`, commit `9449559`.
+- Workspace limpo no momento deste registro.
+- O dashboard de producao esta confirmado na versao `v4.84`.
+- O Radar usa somente fontes oficiais e aceita noticias dos ultimos 7 dias; ele nao usa o pack manual como reserva para `Publicar agora`.
+- Se nao houver noticia oficial elegivel, o publicador bloqueia o envio em vez de publicar conteudo generico.
+- A automacao agendada roda na nuvem por GitHub Actions e Meta/Instagram; o computador do usuario pode ficar desligado. O login do painel e necessario somente para acoes manuais no dashboard e expira em 12 horas.
+
+## Padrao editorial aprovado para os proximos posts
+
+- Escrever em portugues brasileiro simples, sem copiar titulos tecnicos ou em ingles das fontes.
+- A noticia oficial serve de contexto e prova; ela nao deve ser a manchete principal.
+- Abrir com uma situacao humana e reconhecivel da empresa: cliente esperando, equipe sobrecarregada, informacao perdida ou oportunidade sem retorno.
+- Estrutura do carrossel: conexao humana, clareza do problema, o que a noticia mostra, caminho seguro e convite natural para conversar.
+- Priorizar clareza, confianca e convencimento sem promessas exageradas ou pressao comercial.
+- A tecnologia/IA fica como ferramenta de bastidor. O foco da comunicacao e equipe, clientes, rotina e resultados.
+- Creditar a fonte de forma curta (`Fonte oficial: n8n, 14/08/2026`), sem repetir o titulo original em ingles na arte ou na legenda.
+- Preservar o CTA final fixo dos 50 prompts, as hashtags finais e os 13 horarios em BRT.
 
 ## Validacoes executadas
 
-Comandos rodados em `cliente-x-instagram-modern`:
+Ultimas validacoes em `cliente-x-instagram-modern`:
 
 ```powershell
-node --check api\upload-image.js
+node --check lib/editorial-research.js
 npm run validate-copy
+npm run render-only
 ```
 
 Resultado:
 
-- `node --check api\upload-image.js`: passou.
-- `validate-copy`: passou.
-- Conta: `cliente-x`.
+- Verificacao de sintaxe: passou.
+- `validate-copy`: passou (`20` packs, `54` packs automaticos e `74` selecoes automaticas verificadas).
+- `render-only`: passou; Radar encontrou `13` temas recentes em fontes oficiais.
+- Inspecao visual do render confirmou o novo gancho humano e a hierarquia legivel do slide.
 
-Validacao de operacao confirmada:
+## Publicacao real mais recente confirmada
 
-- GitHub Actions run `#713` concluiu com `success` em 2026-08-15 22:16 BRT.
-- O feed do Instagram confirmou o carrossel publicado em `https://www.instagram.com/p/DcFQxaXICT-/`.
 - Conta: `@marcondes.machado.oficial`.
-- Pauta: noticia da OpenAI sobre modo ultrarrapido para fluxos de baixa latencia, com fonte oficial na legenda.
-- Formato enviado: feed + story, carrossel de 5 slides.
-
-## Correcao visual em andamento
-
-- Quando o slide recebe uma foto real de contexto, o icone decorativo do nicho deixa de ser renderizado por cima dela.
-- A mesma regra foi aplicada no gerador que publica e na pre-visualizacao do dashboard.
-- Isso evita duplicar elementos visuais, como a foto de uma balanca acompanhada de outro icone de balanca.
-- A escolha da foto agora prioriza o nicho configurado da conta. Para IA e automacao empresarial, usa visual de operacao; imagens juridicas ficam restritas a contas juridicas.
-- Para pautas do Radar, a foto de contexto foi substituida por um cartao visual da propria fonte oficial (por exemplo, `OpenAI · Fonte oficial`), ligado ao tema da noticia.
-- As hashtags das legendas automaticas sao preservadas e ficam sempre depois do bloco padrao dos 50 prompts.
-
-## Direcionamento editorial do Radar
-
-- Objetivo da conta `cliente-x`: `Captação de leads`.
-- Fontes oficiais continuam sendo usadas para dar contexto e credibilidade, mas nao sao mais a abertura do post.
-- Os proximos carrosseis abrem com uma dor de empresa (atendimento sem contexto, lead sem acompanhamento, processo manual, dados espalhados ou falta de controle).
-- Cada pauta mostra impacto operacional, aplicacao de automacao e convite para diagnostico/contato no Direct.
-
-## Proximos pontos provaveis
-
-- Monitorar a entrega do story e o engajamento do carrossel publicado.
-- Conferir a regra nos proximos renders automaticos.
-- Acompanhar se os proximos posts atraem conversas de empresas interessadas em automacao.
-- Conferir se cada imagem de contexto corresponde ao nicho da conta antes dos proximos disparos automaticos.
-- Conferir os proximos horarios automaticos para evitar repeticao de pauta ja publicada.
-- Para alteracoes de codigo, identificar primeiro se o alvo e `cliente-x-instagram-modern` ou o fluxo operacional `cliente-x-instagram`.
+- GitHub Actions: run `31923469806`, concluido com `success` em 2026-08-16 00:08 BRT.
+- Permalink: `https://www.instagram.com/p/DcFdj-ZjQef/`.
+- Fonte: n8n, noticia oficial publicada em 14/08/2026.
+- Observacao: esse post foi publicado antes do refinamento final de linguagem e conexao humana da versao `v4.84`; os proximos posts usarao o novo padrao.
 
 ## Cuidados importantes
 
-- Preservar os 13 horarios de postagem.
-- Nao tratar dry-run ou apenas um run verde como prova de post real; neste checkpoint ha permalink visivel no Instagram.
-- O upload de imagens do painel tenta ImgBB primeiro; se o ImgBB retornar limite, o endpoint salva em `docs/uploads/dashboard/` via GitHub e devolve uma URL publica `raw.githubusercontent.com` para uso imediato.
-- Para prova de publicacao real, exigir conta, permalink, horario e etapa exata.
-- Bump de versao visivel deve atualizar `api/state.js` e `docs/dashboard.html` juntos quando houver mudanca aprovada para commit/deploy.
+- Nao tratar dry-run, render ou apenas um run verde como prova de post real: exigir permalink do Instagram e etapa `Publish feed and story` concluida.
+- Nao reduzir os 13 horarios para resolver repeticao; variar pauta e abordagem.
+- Bump de versao visivel deve atualizar `api/state.js` e `docs/dashboard.html` juntos.
+- O projeto moderno e separado do checkout antigo `cliente-x-instagram`; confirmar o repositorio-alvo antes de alterar ou publicar.
 
-## Radar estrito de noticias do dia — 2026-08-15
+## Proximo passo recomendado
 
-- Versao de producao: `v4.78`.
-- O botao `Publicar agora` nao usa mais o pack manual do editor quando o Radar esta ativo.
-- Antes de publicar, o servidor busca uma noticia oficial de IA publicada no mesmo dia e adapta a pauta para empresas, com foco em atendimento, vendas, operacao e processos.
-- Se nao existir noticia oficial elegivel no dia, a publicacao e bloqueada. Nunca deve cair em tema antigo ou conteudo generico como reserva.
-- Validacoes executadas: `node --check api/publish-now.js`, `node --check api/state.js` e `npm run validate-copy`.
-- Publicacao anterior confirmada: `https://www.instagram.com/p/DcFVlchE8vj/`. Ela usou o fluxo antigo/manual; nao representa a regra nova.
-- Para disparar novos testes, o painel exige sessao de administrador ativa.
+- Acompanhar os proximos posts automaticos e conferir se o publico responde melhor ao novo tom humano e consultivo.
+- Antes de uma nova publicacao manual, usar o dashboard na `v4.84` e confirmar o permalink final.
