@@ -1,5 +1,25 @@
 # Historico
 
+## 2026-08-16 18:11 BRT
+
+O Checklist operacional ganhou um segundo botao para repetir a checkagem diretamente abaixo do terminal.
+
+Alteracao:
+
+- O botao `Realizar nova checagem` aparece abaixo do resultado quando a execucao termina.
+- Ele chama a mesma funcao completa usada por `Atualizar checagem` no cabecalho.
+- Durante uma nova execucao, o botao inferior fica oculto para evitar cliques duplicados e reaparece no final, inclusive quando ocorre erro.
+- O estilo ocupa toda a largura do terminal, facilitando o uso em telas pequenas depois de `CHECKAGEM CONCLUIDA`.
+
+Validacao e deploy:
+
+- JavaScript inline: sintaxe valida.
+- `npm run validate-copy`: passou com `74` selecoes automaticas e protecao de duplicidade `ok`.
+- Commit funcional: `618420b` (`Adiciona botao para repetir checkagem operacional`).
+- Deploy Vercel: `dpl_tYZu2ZgB1pt4vq3th7sgDGyEV5F5`, alias `https://cliente-x-instagram.vercel.app`.
+- Producao respondeu `HTTP 200` com um unico `repeatHealthCheck`, texto correto, listener para `runOperationalCheck`, ocultacao durante a execucao e exibicao no final.
+- A sessao autenticada do navegador havia expirado durante a prova final; portanto, o clique real dentro do painel logado ainda deve ser conferido na proxima sessao autenticada.
+
 ## 2026-08-16 18:07 BRT
 
 A pagina de configuracao da automacao de comentarios para Direct foi adicionada ao carrossel da landing.
