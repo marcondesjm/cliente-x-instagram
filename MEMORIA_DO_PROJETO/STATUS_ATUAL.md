@@ -29,7 +29,7 @@ Atualizado em: 2026-08-16 18:30 BRT
 - O painel permite copiar o convite inicial e gerar um novo convite para a empresa selecionada.
 - A carteira de clientes informa se o Instagram esta conectado ou aguardando o cliente.
 - Tokens e IDs ficam somente no servidor, nos envs separados por empresa, e nao aparecem no navegador.
-- O fluxo esta implementado e validado localmente. Para uma conexao real ainda e obrigatorio cadastrar `INSTAGRAM_APP_ID` e `INSTAGRAM_APP_SECRET`, registrar o callback na Meta e possuir acesso avancado para contas externas.
+- O fluxo esta implementado e validado localmente. A producao ja possui `INSTAGRAM_APP_SECRET`, mas falta `INSTAGRAM_APP_ID`; tambem e necessario registrar o callback na Meta e possuir acesso avancado para contas externas.
 - Callback esperado: `https://cliente-x-instagram.vercel.app/api/state?instagram=callback`.
 - Producao: deploy `dpl_HJaUzpGEEGH3qfmddaVRnkRFgDz5`, com `/ativar` e controles do painel confirmados por `HTTP 200`; convite invalido recusado com `HTTP 400`.
 

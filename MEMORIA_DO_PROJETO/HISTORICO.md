@@ -28,7 +28,7 @@ Validacoes:
 
 Configuracao externa pendente:
 
-- Para a primeira autorizacao real, cadastrar `INSTAGRAM_APP_ID` e `INSTAGRAM_APP_SECRET` do aplicativo Meta aprovado.
+- A producao ja possui `INSTAGRAM_APP_SECRET`, mas ainda nao lista `INSTAGRAM_APP_ID`; cadastrar o ID do mesmo aplicativo Meta antes da primeira autorizacao real.
 - Registrar na Meta a URL de retorno `https://cliente-x-instagram.vercel.app/api/state?instagram=callback` e concluir o acesso avancado das permissoes usadas para atender empresas externas.
 - Nenhuma senha de Instagram deve ser solicitada ao cliente.
 
