@@ -1,20 +1,20 @@
 # Status Atual
 
-Atualizado em: 2026-08-15 22:35 BRT
+Atualizado em: 2026-08-15 22:40 BRT
 
 ## Projeto ativo
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Commit atual: `161c613` (`Choose post visuals from account niche`)
+- Commit atual: `15fe272` (`Show news source context in radar visuals`)
 - Dashboard: `docs/dashboard.html`
-- Versao visivel atual: `v4.75`
+- Versao visivel atual: `v4.76`
 
 ## Estado do workspace
 
 - Workspace de codigo limpo antes deste registro; esta atualizacao altera somente os arquivos de memoria.
 - O projeto moderno esta em uma linha separada do `cliente-x-instagram` original.
-- A versao `v4.75` esta validada e confirmada em producao.
+- A versao `v4.76` esta validada e confirmada em producao.
 - A publicacao real foi executada pelo fluxo operacional do repositorio irmao `cliente-x-instagram`, na branch `main`, commit `9449559`.
 
 ## Validacoes executadas
@@ -46,6 +46,7 @@ Validacao de operacao confirmada:
 - A mesma regra foi aplicada no gerador que publica e na pre-visualizacao do dashboard.
 - Isso evita duplicar elementos visuais, como a foto de uma balanca acompanhada de outro icone de balanca.
 - A escolha da foto agora prioriza o nicho configurado da conta. Para IA e automacao empresarial, usa visual de operacao; imagens juridicas ficam restritas a contas juridicas.
+- Para pautas do Radar, a foto de contexto foi substituida por um cartao visual da propria fonte oficial (por exemplo, `OpenAI · Fonte oficial`), ligado ao tema da noticia.
 
 ## Direcionamento editorial do Radar
 

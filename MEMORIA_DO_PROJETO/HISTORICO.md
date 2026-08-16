@@ -1,5 +1,27 @@
 # Historico
 
+## 2026-08-15 22:40 BRT
+
+Atualizado o visual das noticias do Radar para representar a propria fonte da pauta.
+
+Resumo:
+
+- Quando a pauta vier de uma fonte oficial, o carrossel mostra um cartao visual com o nome da fonte, em vez de foto generica de setor.
+- Exemplo validado: `OpenAI · Fonte oficial · Atualização que pode virar ganho operacional`.
+- O titulo principal continua focado na dor empresarial; a fonte funciona como prova e contexto visual da noticia.
+- A mesma regra foi aplicada ao feed, story e pre-visualizacao do dashboard.
+
+Validado:
+
+- `npm run validate-copy`: passou.
+- `npm run render-only`: passou.
+- Inspecao visual do render confirmou que o cartao OpenAI substitui a balanca juridica.
+
+Deploy/publicacao:
+
+- Deploy: sim. Producao Vercel confirmada com versao `v4.76`.
+- Instagram real: nao foi enviada nova postagem; o visual vale para os proximos posts automaticos.
+
 ## 2026-08-15 22:35 BRT
 
 Corrigida a selecao de imagens de contexto por nicho da conta.
