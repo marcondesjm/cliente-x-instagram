@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-08-16 14:00 BRT
+
+Checkpoint comercial solicitado pelo usuario:
+
+- O selo principal do card de preco da landing foi alterado de `Oferta especial` para `Oferta relampago`.
+- Permanecem preservados o preco anterior de `R$ 397/mes`, o valor promocional de `R$ 197/mes`, a condicao para novos clientes e os volumes anunciados.
+- Arquivo alterado: `docs/plataforma.html`.
+- Esta mudanca e o novo checkpoint visual da oferta e nao deve ser revertida sem pedido explicito.
+
 ## 2026-08-16 13:48 BRT
 
 Novo checkpoint salvo a pedido do usuario depois das evolucoes do Direct e da oferta comercial.

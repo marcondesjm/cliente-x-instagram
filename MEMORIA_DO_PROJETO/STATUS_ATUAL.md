@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 13:48 BRT
+Atualizado em: 2026-08-16 14:00 BRT
 
 ## Projeto ativo
 
@@ -37,6 +37,7 @@ Atualizado em: 2026-08-16 13:48 BRT
 
 - Nome provisorio: `Nerion Social`; ainda requer validacao formal de marca antes do lancamento definitivo.
 - Oferta promocional: de `R$ 397/mes` por `R$ 197/mes` para novos clientes.
+- O selo de destaque da oferta agora diz `Oferta relampago`; este e o checkpoint comercial visual mais recente.
 - Volume destacado: mais de `12` carrosseis no feed por dia e `12` Stories diarios.
 - Implantacao de `R$ 297` riscada e apresentada como gratuita.
 - Entrega comunicada: criacao automatica de conteudo, criativos, carrossel, Story e legendas; agenda, publicacao na nuvem e Direct.
