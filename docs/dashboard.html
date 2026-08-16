@@ -910,6 +910,14 @@
     .terminal-line.bad { color: #ff8f86; }
     .terminal-line.final { margin-top: 8px; padding: 10px; border: 1px solid currentColor; border-radius: 6px; font-size: 13px; text-transform: uppercase; }
     .terminal-line.final::before { content: "■"; }
+    .health-repeat {
+      width: 100%;
+      margin-top: 10px;
+      border-color: #2d6a4e;
+      color: #e8fff1;
+      background: #173426;
+    }
+    .health-repeat:hover { color: #fff; background: #24523b; }
     @keyframes terminal-cursor { 50% { opacity: 0; } }
 
     .access-actions {
@@ -1869,6 +1877,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           <div class="health-terminal" id="healthTerminal" role="status" aria-live="polite">
             <div class="terminal-line">Aguardando o comando de atualização.</div>
           </div>
+          <button class="health-repeat" id="repeatHealthCheck" type="button" hidden>Realizar nova checagem</button>
         </div>
 
         <div class="panel">
@@ -6152,10 +6161,12 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
 
     async function runOperationalCheck() {
       const button = document.getElementById('runHealthCheck');
+      const repeatButton = document.getElementById('repeatHealthCheck');
       const terminal = document.getElementById('healthTerminal');
       const healthStatus = document.getElementById('healthStatus');
       button.disabled = true;
       button.textContent = 'Atualizando...';
+      repeatButton.hidden = true;
       healthStatus.textContent = 'Verificando';
       healthStatus.className = 'status-pill warn';
       terminal.innerHTML = '';
@@ -6191,6 +6202,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       } finally {
         button.disabled = false;
         button.textContent = 'Atualizar checagem';
+        repeatButton.hidden = false;
       }
     }
 
@@ -6363,6 +6375,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('redeployVercel').addEventListener('click', redeployVercel);
       document.getElementById('forceWatchdog').addEventListener('click', forceWatchdog);
       document.getElementById('runHealthCheck').addEventListener('click', runOperationalCheck);
+      document.getElementById('repeatHealthCheck').addEventListener('click', runOperationalCheck);
       document.getElementById('saveActiveProfile').addEventListener('click', saveActiveProfile);
       document.getElementById('uploadDirectMaterial').addEventListener('click', uploadDirectMaterial);
       document.getElementById('saveDirectAutomation').addEventListener('click', saveDirectAutomation);
