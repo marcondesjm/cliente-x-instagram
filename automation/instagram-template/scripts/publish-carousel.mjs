@@ -5,7 +5,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from
 import { basename, dirname, extname, isAbsolute, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildBrandContext } from '../../../lib/brand-analysis.js';
-import { EDITORIAL_SOURCES, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
+import { buildResearchPack, EDITORIAL_SOURCES, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const TEMPLATE_DIR = resolve(ROOT, 'automation', 'instagram-template');
@@ -1049,6 +1049,24 @@ function enhancePackForEngagement(pack, dateString, slotIndex, account = {}) {
   const enhanced = JSON.parse(JSON.stringify(pack));
   const goal = contentGoalFromAccount(account);
   const totalSlides = (enhanced.slides || []).length;
+  const preserveResearchCopy = Boolean(enhanced.research?.sourceUrl);
+  if (preserveResearchCopy) {
+    enhanced.slides = (enhanced.slides || []).map((slide, index) => ({
+      ...slide,
+      ...(slide.imagePath || slide.imageUrl ? {} : { visualVariant: engagementVariant(dateString, slotIndex, index) })
+    }));
+    enhanced.caption = withFreePromptsCtaAtEnd(`${enhanced.caption || ''}\n\n${DEFAULT_INSTAGRAM_HASHTAGS}`);
+    enhanced.engagementIntelligence = {
+      version: 2,
+      appliedAt: new Date().toISOString(),
+      strategy: 'fonte preservada + CTA + variacao visual',
+      goal: goal.label,
+      sourceCopyPreserved: true,
+      visualVariants: enhanced.slides.map((slide) => slide.visualVariant || 'custom-image'),
+      captionCtaAdded: enhanced.caption !== pack.caption
+    };
+    return { pack: enhanced, intelligence: enhanced.engagementIntelligence };
+  }
   enhanced.slides = (enhanced.slides || []).map((slide, index) => enhanceSlide(slide, index, dateString, slotIndex, goal, totalSlides));
   enhanced.caption = enhanceCaption(enhanced.caption || '', dateString, slotIndex, goal);
   if (account.contentProfile?.visualDirection === 'anatex-editorial') {
@@ -2338,6 +2356,18 @@ function validatePack(pack) {
       throw new Error('Slides sem imagem precisam de banner, titulo e descricao.');
     }
   }
+  if (pack.research) {
+    const sourceUrl = String(pack.research.sourceUrl || '').trim();
+    const sourceTitle = String(pack.research.sourceTitle || '').trim();
+    const combinedText = [pack.caption, ...(pack.slides || []).flatMap((slide) => [slide.title, slide.body])].join('\n');
+    if (!/^https:\/\//i.test(sourceUrl)) throw new Error('Radar bloqueado: link HTTPS da matéria original ausente.');
+    if (sourceTitle.length < 12) throw new Error('Radar bloqueado: título original da matéria ausente ou insuficiente.');
+    if (!combinedText.includes(sourceTitle)) throw new Error('Radar bloqueado: o conteúdo não apresenta o título/contexto real da matéria.');
+    if (!String(pack.caption || '').includes(sourceUrl)) throw new Error('Radar bloqueado: a legenda não contém o link completo da matéria.');
+    if (/apresenta uma novidade sobre/i.test(String(pack.slides?.[0]?.title || ''))) {
+      throw new Error('Radar bloqueado: capa genérica sem contexto real da matéria.');
+    }
+  }
 }
 
 function validatePacks(packs) {
@@ -3301,6 +3331,27 @@ async function main() {
       avatarProbeHistory.push({ coverAvatar });
     }
     if (new Set(avatarProbeCovers).size !== 7) throw new Error('Rodizio anti-repeticao de fotos falhou no teste de historico.');
+    const radarKeywords = ['AI', 'artificial intelligence', 'automation', 'agent', 'workflow', 'machine learning'];
+    if (matchesConfiguredEditorialIntent('Governo pode comprar luvas de choque para agentes de imigração', radarKeywords)) {
+      throw new Error('Filtro semantico do Radar confundiu agentes de imigracao com agentes de IA.');
+    }
+    if (!matchesConfiguredEditorialIntent('Empresas adotam agentes de IA para automatizar tarefas', radarKeywords)) {
+      throw new Error('Filtro semantico do Radar rejeitou uma pauta valida sobre agentes de IA.');
+    }
+    const validationNow = new Date();
+    const researchIntegrityProbe = buildResearchPack({
+      source: 'TecMundo',
+      title: 'Empresas adotam agentes de IA para automatizar tarefas',
+      url: 'https://www.tecmundo.com.br/mercado/exemplo-agentes-ia.htm',
+      publishedAt: validationNow.toISOString(),
+      summary: 'A matéria apresenta o uso de agentes de IA em tarefas empresariais.'
+    }, validationNow, {
+      niche: 'automação com IA para empresas',
+      keywords: radarKeywords,
+      audience: 'gestores',
+      offer: 'consultoria e automações com IA'
+    });
+    validatePack(researchIntegrityProbe);
     console.log(JSON.stringify({
       ok: true,
       account: account.account,
@@ -3310,7 +3361,9 @@ async function main() {
       duplicateHistoryGuard: 'ok',
       sourceBalanceGuard: 'ok',
       avatarRotationGuard: 'ok',
-      checkedAvatarRotation: avatarProbeCovers.length
+      checkedAvatarRotation: avatarProbeCovers.length,
+      radarSemanticGuard: 'ok',
+      radarSourceIntegrityGuard: 'ok'
     }, null, 2));
     return;
   }

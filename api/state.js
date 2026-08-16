@@ -43,11 +43,11 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v5.10',
+  appVersion: 'v5.11',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
-  description: 'A landing mantém o scroll vertical livre enquanto o carrossel movimenta somente sua navegação interna.'
+  description: 'O Radar exige contexto real, título original e link completo da matéria antes de publicar.'
 };
 const MAINTENANCE = {
   githubToken: {
