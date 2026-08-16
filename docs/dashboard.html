@@ -1394,7 +1394,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.77</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.78</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -2004,6 +2004,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               <label>
                 Período máximo das notícias
                 <select id="activeRadarMaxAgeDays">
+                  <option value="1">Somente hoje</option>
                   <option value="7">7 dias</option>
                   <option value="30">30 dias</option>
                   <option value="60">60 dias</option>
@@ -2801,7 +2802,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         .map((source) => `${source.name || ''} | ${source.url || ''}`.trim())
         .filter(Boolean)
         .join('\n');
-      document.getElementById('activeRadarMaxAgeDays').value = String(radar.maxAgeDays || appState.editorialRadar?.maxAgeDays || 60);
+      document.getElementById('activeRadarMaxAgeDays').value = String(radar.maxAgeDays || appState.editorialRadar?.maxAgeDays || (account.account === 'cliente-x' ? 1 : 60));
       document.getElementById('brandBriefingGoal').value = profile.goal || 'authority';
       document.getElementById('activeBrandSummary').value = summary.description || '';
       document.getElementById('activeBrandPositioning').value = summary.positioning || '';
@@ -4431,7 +4432,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         publishNow,
         account: appState.selectedAccount
       };
-      setMessage(publishNow ? 'Enfileirando publicação imediata...' : 'Salvando agendamento...', 'warn');
+      setMessage(publishNow ? 'Buscando notícia oficial de IA publicada hoje...' : 'Salvando agendamento...', 'warn');
       try {
         const payload = await api(publishNow ? '/api/publish-now' : '/api/scheduled-posts', {
           method: 'POST',
@@ -4440,7 +4441,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         appState.scheduledPosts = payload.scheduledPosts || appState.scheduledPosts;
         renderQueue();
         refreshDailyPlanFromLocalState();
-        setMessage(payload.message || (publishNow ? 'Publicação enviada para o GitHub Actions.' : 'Agendamento salvo no GitHub.'), 'good');
+        setMessage(payload.message || (publishNow ? 'Notícia oficial do Radar enviada para o GitHub Actions.' : 'Agendamento salvo no GitHub.'), 'good');
       } catch (error) {
         setMessage(error.message, 'bad');
       }

@@ -1,9 +1,48 @@
 import { canAccessAccount, requireAdmin } from '../lib/auth.js';
-import { accountFromBody } from '../lib/accounts.js';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { accountFromBody, requireConfiguredAccount } from '../lib/accounts.js';
+import { EDITORIAL_SOURCES, normalizeEditorialSources, researchFreshEditorialPacks } from '../lib/editorial-research.js';
 
 const OWNER = 'marcondesjm';
 const REPO = 'cliente-x-instagram';
 const WORKFLOW = 'instagram-feed-cliente-x.yml';
+const ACCOUNTS_PATH = join(process.cwd(), 'automation', 'instagram-template', 'config', 'accounts.json');
+
+function activeRadar(account) {
+  const saved = account.contentProfile?.radar || {};
+  const sources = normalizeEditorialSources(saved.sources);
+  return {
+    enabled: typeof saved.enabled === 'boolean' ? saved.enabled : account.account === 'cliente-x',
+    // Publicação imediata é estrita: notícia de IA do dia, nunca um tema antigo.
+    maxAgeDays: 1,
+    keywords: Array.isArray(saved.keywords) ? saved.keywords : [],
+    excludeKeywords: Array.isArray(saved.excludeKeywords) ? saved.excludeKeywords : [],
+    sources: sources.length ? sources : (account.account === 'cliente-x' ? EDITORIAL_SOURCES : [])
+  };
+}
+
+async function currentRadarPack(account) {
+  const radar = activeRadar(account);
+  if (!radar.enabled) return null;
+  if (!radar.sources.length) throw new Error('O Radar está ativo, mas não há fontes oficiais configuradas para esta conta.');
+
+  const result = await researchFreshEditorialPacks({
+    maxAgeDays: radar.maxAgeDays,
+    limit: 13,
+    timeoutMs: 7000,
+    sources: radar.sources,
+    keywords: radar.keywords,
+    excludeKeywords: radar.excludeKeywords,
+    niche: account.contentProfile?.niche || '',
+    offer: account.contentProfile?.offer || ''
+  });
+  const pack = result.packs.find((item) => item?.research?.sourceUrl && item?.slides?.length >= 2 && item?.caption?.trim());
+  if (!pack) {
+    throw new Error('Não encontrei hoje uma notícia oficial de IA adequada para esta conta. Nenhum post foi enviado. Atualize as fontes do Radar ou tente mais tarde.');
+  }
+  return pack;
+}
 
 function json(res, status, body) {
   res.setHeader('cache-control', 'no-store');
@@ -64,7 +103,12 @@ export default async function handler(req, res) {
       json(res, 403, { error: 'Seu usuario nao tem acesso a esta conta.' });
       return;
     }
-    const packJson = body.pack ? JSON.stringify(body.pack) : '';
+    const accounts = JSON.parse(readFileSync(ACCOUNTS_PATH, 'utf8').replace(/^\uFEFF/, ''));
+    const configuredAccount = requireConfiguredAccount(accounts, account);
+    const radarPack = await currentRadarPack(configuredAccount);
+    // Com Radar ativo, a fonte oficial do dia sempre substitui o pack manual do editor.
+    const pack = radarPack || body.pack;
+    const packJson = pack ? JSON.stringify(pack) : '';
     if (packJson.length > 60000) throw new Error('Pack muito grande para disparar pelo GitHub Actions.');
 
     await dispatchWorkflow({
