@@ -1,5 +1,27 @@
 # Historico
 
+## 2026-08-16 00:40 BRT
+
+Correcao de repeticao visual das capas do Radar concluida.
+
+Resumo:
+
+- A pauta agora influencia paleta, composicao, titulo e escolha de foto da capa.
+- Foram removidas da rotacao tres fotos muito parecidas, todas com notebook e fundo escuro.
+- As proximas capas usam somente cenarios diferentes: escritorio, reuniao, apresentacao e ambiente descontraido.
+- O texto de abertura tambem recebe variacao para evitar capas com a mesma manchete.
+- Versao visivel atualizada para `v4.87`.
+
+Validado:
+
+- `npm run validate-copy`: passou (`20` packs, `54` packs automaticos e `74` selecoes automaticas).
+- Dois renders do Radar com fontes diferentes foram inspecionados visualmente e mostraram foto, composicao, cor e titulo distintos.
+
+Deploy/publicacao:
+
+- Deploy: sim. Producao Vercel confirmada em `https://cliente-x-instagram.vercel.app` na versao `v4.87`.
+- Instagram real: a proxima publicacao manual sera disparada apos este registro, com confirmacao obrigatoria por permalink.
+
 ## 2026-08-16 00:21 BRT
 
 Checkpoint editorial e operacional atualizado a pedido do usuario.
