@@ -81,10 +81,21 @@
     h1 { margin: 0; max-width: 680px; font-size: clamp(44px, 4.45vw, 64px); line-height: 1.02; letter-spacing: -.048em; }
     h1 span { color: var(--olive); }
     .hero-copy { margin: 24px 0 0; max-width: 600px; color: var(--ink-soft); font-size: clamp(17px, 1.8vw, 19px); }
-    .hero-offer { margin: 22px 0 0; padding: 13px 15px; border-left: 3px solid var(--olive); color: var(--ink-soft); background: #f5f7f4; font-size: 15px; }
-    .hero-offer strong { color: var(--ink); }
-    .hero-offer s { margin-right: 7px; color: #8a928d; font-weight: 750; }
-    .hero-offer .promo-value { color: var(--olive-dark); font-size: 20px; font-weight: 950; }
+    .hero-offer { position: relative; margin: 22px 0 0; padding: 17px; overflow: hidden; border: 1px solid #cad8c5; border-radius: 14px; color: var(--ink-soft); background: linear-gradient(135deg, #f8fbf7 0%, #eef5ea 100%); box-shadow: 0 16px 38px rgba(40,66,47,.09); }
+    .hero-offer::after { content: ""; position: absolute; width: 150px; height: 150px; right: -74px; top: -82px; border-radius: 50%; background: rgba(112,139,75,.13); pointer-events: none; }
+    .promo-top, .promo-prices, .promo-volume { position: relative; z-index: 1; }
+    .promo-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+    .promo-badge { display: inline-flex; padding: 6px 9px; border-radius: 999px; color: white; background: var(--olive-dark); font-size: 10px; font-weight: 950; letter-spacing: .08em; }
+    .promo-save { color: var(--olive-dark); font-size: 12px; font-weight: 900; }
+    .promo-prices { display: flex; align-items: end; gap: 12px; margin-top: 12px; }
+    .promo-was, .promo-now { display: grid; gap: 2px; }
+    .promo-was small, .promo-now > small { color: #77827b; font-size: 10px; font-weight: 850; text-transform: uppercase; letter-spacing: .08em; }
+    .promo-was s { color: #818a84; font-size: 16px; font-weight: 800; }
+    .promo-arrow { padding-bottom: 4px; color: var(--olive); font-size: 20px; font-weight: 950; }
+    .promo-now strong { color: var(--olive-dark); font-size: clamp(34px, 3.5vw, 46px); line-height: .9; letter-spacing: -.05em; }
+    .promo-now strong small { font-size: 15px; letter-spacing: 0; }
+    .promo-volume { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+    .promo-volume span { padding: 6px 8px; border: 1px solid rgba(73,101,67,.13); border-radius: 7px; color: #3f5745; background: rgba(255,255,255,.7); font-size: 10px; font-weight: 850; }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
     .trust { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 28px; color: var(--ink-soft); font-size: 13px; font-weight: 750; }
     .trust span::before { content: "✓"; margin-right: 7px; color: var(--olive); font-weight: 950; }
@@ -346,7 +357,15 @@
           <p class="eyebrow">Presença digital sem rotina manual</p>
           <h1>Sua rede social ativa <span>sem você criar ou publicar conteúdo.</span></h1>
           <p class="hero-copy">A plataforma cria artes, carrosséis, Stories e legendas, organiza a agenda e publica automaticamente — mesmo com o computador desligado.</p>
-          <p class="hero-offer"><strong>Oferta promocional:</strong> <s>R$ 397/mês</s> <span class="promo-value">R$ 197/mês</span><br>Mais de 12 carrosséis no feed por dia + 12 Stories diários. Implantação gratuita.</p>
+          <div class="hero-offer" aria-label="Oferta promocional de R$ 197 por mês">
+            <div class="promo-top"><span class="promo-badge">Oferta especial</span><span class="promo-save">Você economiza R$ 200 por mês</span></div>
+            <div class="promo-prices">
+              <span class="promo-was"><small>De</small><s>R$ 397/mês</s></span>
+              <span class="promo-arrow" aria-hidden="true">→</span>
+              <span class="promo-now"><small>Agora</small><strong>R$ 197<small>/mês</small></strong></span>
+            </div>
+            <div class="promo-volume"><span>✓ Mais de 12 carrosséis/dia</span><span>✓ 12 Stories/dia</span><span>✓ Implantação grátis</span></div>
+          </div>
           <div class="hero-actions">
             <a class="button" href="https://wa.me/5548996029392?text=Ol%C3%A1%2C%20Marcondes!%20Quero%20agendar%20uma%20demonstra%C3%A7%C3%A3o%20da%20Nerion%20Social." target="_blank" rel="noopener noreferrer">Quero ver funcionando <span aria-hidden="true">→</span></a>
             <a class="button light" href="#como-funciona">Entender a plataforma</a>
