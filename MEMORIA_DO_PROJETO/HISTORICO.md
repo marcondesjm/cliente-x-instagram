@@ -28,6 +28,12 @@ Validacao:
 - Nenhuma das 11 fontes consultadas retornou erro; as demais nao tinham pauta elegivel no filtro e na janela atuais.
 - Nenhuma publicacao real foi disparada durante esta validacao.
 
+Checkpoint e producao:
+
+- Commit funcional: `763bba1` (`Balanceia fontes do Radar pelo historico`), enviado para `origin/main` e `origin/feature/modern-editorial-system`.
+- Deploy: `dpl_ELgHHpnEPjxatF5wCfGj1k2bZYs5`, associado a `https://cliente-x-instagram.vercel.app`.
+- Producao respondeu `HTTP 200` e confirmou a versao `v4.98`.
+
 ## 2026-08-16 18:30 BRT
 
 Implementado o onboarding seguro de novas empresas sem compartilhamento de login ou senha do Instagram.

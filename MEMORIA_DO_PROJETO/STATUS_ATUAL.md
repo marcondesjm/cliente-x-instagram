@@ -12,7 +12,7 @@ Atualizado em: 2026-08-16 18:35 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `336dd34` (`Adiciona onboarding seguro para novas empresas`).
+- Checkpoint funcional atual: `763bba1` (`Balanceia fontes do Radar pelo historico`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
@@ -28,6 +28,7 @@ Atualizado em: 2026-08-16 18:35 BRT
 - A validacao real atual encontrou 34 noticias elegiveis em 6 origens: G1 Tecnologia, Olhar Digital, TecMundo, n8n, AWS Machine Learning e OpenAI.
 - O watchdog principal e o reserva persistem `publication-history.json`; ambos participam do mesmo grupo de concorrencia.
 - URL ja usada, fonte consecutiva, chamada de capa repetida e conteudo duplicado continuam bloqueados.
+- Producao: deploy `dpl_ELgHHpnEPjxatF5wCfGj1k2bZYs5`, versao `v4.98` confirmada por `HTTP 200`.
 
 ## Onboarding seguro de novas empresas
 
