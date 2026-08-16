@@ -1,5 +1,23 @@
 # Historico
 
+## 2026-08-16 20:10 BRT
+
+Bloqueadas explicitamente as chamadas empresariais genericas nas pautas pesquisadas pelo Radar.
+
+- A auditoria confirmou tres publicacoes antigas com fonte real, mas capa aleatoria e sem relacao editorial clara com o artigo:
+  - AWS Machine Learning: `https://www.instagram.com/p/DcHMqdWE3bI/`, publicado as 16:19 BRT, artigo `How Pixieset achieved 35% AI feature adoption by solving the right problem with Amazon Bedrock`.
+  - n8n: `https://www.instagram.com/p/DcHWmrXlbbd/`, publicado as 17:46 BRT, artigo `n8n Alternatives: Which AI Automation Platform Can You Deploy?`.
+  - Olhar Digital: `https://www.instagram.com/p/DcHgRw_EmOe/`, publicado as 19:10 BRT, artigo `CEO da Anthropic: rejeicao a IA e crise de confianca no setor`.
+- As tres ocorreram antes da primeira trava de contexto real implantada as 19:52 BRT.
+- Frases genericas como `Trabalho repetido ocupa...`, `O cliente espera enquanto...` e `Sua equipe vive ocupada...` agora fazem parte de uma lista de capas proibidas em qualquer pack de pesquisa.
+- O publicador rejeita automaticamente esses padroes, mesmo que uma alteracao futura tente reintroduzi-los.
+- `npm run validate-copy` passou com a nova evidencia `genericResearchCoverGuard: ok`.
+- A pesquisa ao vivo encontrou 26 pautas atuais e o render `2026-08-16-200904-slot-0-render-only` passou sem usar chamadas genericas proibidas.
+- Nenhuma publicacao foi enviada a Meta durante a auditoria e os posts antigos nao foram apagados.
+- Commit funcional: `2968ccb` (`Bloqueia chamadas genericas nas pautas do Radar`).
+- Deploy de producao: `dpl_t3NJgpNcDvjyFGt32rRmDwMCT4uW`.
+- Producao respondeu `HTTP 200` e confirmou a versao `v5.14`.
+
 ## 2026-08-16 20:07 BRT
 
 Reforcada a identificacao visual da materia original em todas as pautas do Radar.

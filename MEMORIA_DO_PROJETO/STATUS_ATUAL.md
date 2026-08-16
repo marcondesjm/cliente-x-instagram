@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 20:07 BRT
+Atualizado em: 2026-08-16 20:10 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,22 @@ Atualizado em: 2026-08-16 20:07 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `052ee8c` (`Exibe a materia real nos cartoes do Radar`).
+- Checkpoint funcional atual: `2968ccb` (`Bloqueia chamadas genericas nas pautas do Radar`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
-- Versao visivel atual: `v5.13`
+- Versao visivel atual: `v5.14`
+
+## Capas genericas de pesquisa bloqueadas
+
+- Packs do Radar nao podem usar chamadas empresariais aleatorias no lugar do assunto factual da materia.
+- Os padroes antigos identificados em posts da AWS, n8n, Olhar Digital, OpenAI e TecMundo sao recusados pelo publicador.
+- A validacao automatica tenta inserir uma chamada antiga e somente passa quando ela e corretamente bloqueada (`genericResearchCoverGuard`).
+- As tres ocorrencias mais recentes apontadas foram publicadas as 16:19, 17:46 e 19:10 BRT, antes da trava editorial das 19:52 BRT.
+- Pesquisa ao vivo com 26 pautas e render `2026-08-16-200904-slot-0-render-only` confirmaram o fluxo novo sem publicar na Meta.
+- Producao: commit `2968ccb`, deploy `dpl_t3NJgpNcDvjyFGt32rRmDwMCT4uW` e versao `v5.14` confirmados.
 
 ## Anexo real visivel nas pautas do Radar
 
