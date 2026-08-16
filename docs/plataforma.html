@@ -72,12 +72,13 @@
     .button.light { color: var(--ink); background: white; border: 1px solid var(--line); box-shadow: none; }
     .button.small { min-height: 44px; padding: 0 19px; font-size: 14px; }
 
-    .hero { padding: 76px 0 72px; overflow: hidden; background: #fff; }
-    .hero-grid { display: grid; grid-template-columns: 1fr; gap: 42px; }
-    .hero-grid > div:first-child { max-width: 780px; }
+    .hero { position: relative; padding: 76px 0 82px; overflow: hidden; background: linear-gradient(135deg, #fff 0%, #fff 58%, #f3f6f2 100%); }
+    .hero::before { content: ""; position: absolute; width: 520px; height: 520px; right: -190px; top: -250px; border-radius: 50%; background: radial-gradient(circle, rgba(118,143,91,.18), rgba(118,143,91,0) 68%); pointer-events: none; }
+    .hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, .9fr) minmax(480px, 1.1fr); align-items: center; gap: clamp(36px, 4vw, 66px); }
+    .hero-grid > div:first-child { max-width: 650px; }
     .eyebrow { display: flex; align-items: center; gap: 10px; margin: 0 0 18px; color: var(--olive-dark); font-size: 14px; font-weight: 750; letter-spacing: .01em; }
     .eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--olive); }
-    h1 { margin: 0; max-width: 680px; font-size: clamp(44px, 5.2vw, 66px); line-height: 1.02; letter-spacing: -.048em; }
+    h1 { margin: 0; max-width: 680px; font-size: clamp(44px, 4.45vw, 64px); line-height: 1.02; letter-spacing: -.048em; }
     h1 span { color: var(--olive); }
     .hero-copy { margin: 24px 0 0; max-width: 600px; color: var(--ink-soft); font-size: clamp(17px, 1.8vw, 19px); }
     .hero-offer { margin: 22px 0 0; padding: 13px 15px; border-left: 3px solid var(--olive); color: var(--ink-soft); background: #f5f7f4; font-size: 15px; }
@@ -86,10 +87,16 @@
     .trust { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 28px; color: var(--ink-soft); font-size: 13px; font-weight: 750; }
     .trust span::before { content: "✓"; margin-right: 7px; color: var(--olive); font-weight: 950; }
 
-    .product-stage { position: relative; width: min(980px, 100%); margin-inline: auto; }
-    .real-product-shot { margin: 0; padding: 8px; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: #fff; box-shadow: var(--shadow); }
-    .real-product-shot img { display: block; width: 100%; aspect-ratio: 1905 / 904; object-fit: cover; object-position: top; border-radius: 8px; transition: transform .55s cubic-bezier(.2,.7,.2,1); }
+    .product-stage { position: relative; display: grid; place-items: center; width: 100%; min-height: 520px; margin-inline: auto; isolation: isolate; perspective: 1100px; }
+    .product-stage::before { content: ""; position: absolute; z-index: -1; inset: 9% -5% -10% 8%; border-radius: 32px; background: linear-gradient(145deg, rgba(99,122,70,.22), rgba(223,232,220,.35)); filter: blur(22px); transform: rotate(3deg); }
+    .real-product-shot { position: relative; margin: 0; padding: 8px; overflow: hidden; border: 1px solid rgba(91,112,78,.22); border-radius: 18px; background: rgba(255,255,255,.9); box-shadow: 0 34px 80px rgba(28,43,34,.17), 0 8px 24px rgba(28,43,34,.08); transform-origin: center; }
+    .real-product-shot::after { content: ""; position: absolute; z-index: 2; top: -40%; bottom: -40%; width: 26%; left: -38%; transform: rotate(14deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent); pointer-events: none; }
+    .real-product-shot img { display: block; width: 100%; aspect-ratio: 1905 / 904; object-fit: cover; object-position: top; border-radius: 11px; transition: transform .65s cubic-bezier(.2,.7,.2,1); }
     .real-product-shot figcaption { display: flex; justify-content: space-between; gap: 16px; padding: 12px 5px 3px; color: var(--ink-soft); font-size: 12px; }
+    .stage-signal { position: absolute; z-index: 4; display: flex; align-items: center; gap: 9px; padding: 12px 15px; border: 1px solid rgba(77,102,73,.17); border-radius: 999px; color: var(--ink); background: rgba(255,255,255,.92); box-shadow: 0 16px 38px rgba(28,43,34,.14); backdrop-filter: blur(10px); font-size: 12px; font-weight: 850; }
+    .stage-signal::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #718f50; box-shadow: 0 0 0 5px rgba(113,143,80,.14); }
+    .stage-signal.radar-live { top: 30px; left: -12px; }
+    .stage-signal.publish-live { right: -8px; bottom: 35px; }
     .image-link { flex: 0 0 auto; color: var(--olive-dark); font-weight: 850; text-decoration: none; }
     .app-window { position: relative; margin-top: 18px; padding: 16px; border: 1px solid rgba(255,255,255,.7); border-radius: 32px; background: rgba(255,255,255,.72); box-shadow: var(--shadow); transform: rotate(1.2deg); }
     .app-top { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px 18px; }
@@ -215,17 +222,26 @@
     .motion-ready .hero-copy,
     .motion-ready .hero-offer,
     .motion-ready .hero-actions,
-    .motion-ready .trust,
-    .motion-ready .product-stage { opacity: 0; transform: translateY(18px); animation: hero-in .72s cubic-bezier(.2,.7,.2,1) forwards; }
+    .motion-ready .trust { opacity: 0; transform: translateY(22px); filter: blur(5px); animation: hero-in .82s cubic-bezier(.16,.8,.24,1) forwards; }
+    .motion-ready .product-stage { opacity: 0; clip-path: inset(0 100% 0 0 round 18px); transform: translate3d(34px, 18px, 0) rotateY(-7deg) rotateX(2deg) scale(.96); animation: stage-reveal 1.15s .18s cubic-bezier(.16,.8,.24,1) forwards; }
     .motion-ready .hero h1 { animation-delay: .08s; }
     .motion-ready .hero-copy { animation-delay: .16s; }
     .motion-ready .hero-offer { animation-delay: .22s; }
     .motion-ready .hero-actions { animation-delay: .29s; }
     .motion-ready .trust { animation-delay: .36s; }
-    .motion-ready .product-stage { animation-delay: .18s; }
-    .motion-ready .reveal { opacity: 0; transform: translateY(22px); transition: opacity .65s ease var(--reveal-delay, 0ms), transform .65s cubic-bezier(.2,.7,.2,1) var(--reveal-delay, 0ms); }
-    .motion-ready .reveal.is-visible { opacity: 1; transform: translateY(0); }
-    @keyframes hero-in { to { opacity: 1; transform: translateY(0); } }
+    .motion-ready .product-stage .real-product-shot::after { animation: screen-sheen 1.25s 1.05s cubic-bezier(.2,.7,.2,1) both; }
+    .motion-ready .product-stage .real-product-shot { animation: screen-float 7s 1.5s ease-in-out infinite; }
+    .motion-ready .stage-signal { opacity: 0; transform: translateY(12px) scale(.9); animation: signal-pop .7s .95s cubic-bezier(.16,.9,.25,1.25) forwards; }
+    .motion-ready .stage-signal.publish-live { animation-delay: 1.15s; }
+    .motion-ready .reveal { opacity: 0; filter: blur(7px); transform: translate3d(var(--reveal-x, 0), 38px, 0) scale(.965) rotateX(3deg); transform-origin: 50% 100%; transition: opacity .78s ease var(--reveal-delay, 0ms), filter .78s ease var(--reveal-delay, 0ms), transform .85s cubic-bezier(.16,.8,.24,1) var(--reveal-delay, 0ms); }
+    .motion-ready .card:nth-child(even).reveal, .motion-ready .output-card:nth-child(even).reveal { --reveal-x: 18px; }
+    .motion-ready .card:nth-child(odd).reveal, .motion-ready .output-card:nth-child(odd).reveal { --reveal-x: -18px; }
+    .motion-ready .reveal.is-visible { opacity: 1; filter: blur(0); transform: translate3d(0,0,0) scale(1) rotateX(0); }
+    @keyframes hero-in { to { opacity: 1; filter: blur(0); transform: translateY(0); } }
+    @keyframes stage-reveal { to { opacity: 1; clip-path: inset(0 0 0 0 round 18px); transform: translate3d(0,0,0) rotateY(0) rotateX(0) scale(1); } }
+    @keyframes screen-sheen { 0% { left: -38%; opacity: 0; } 25% { opacity: 1; } 100% { left: 118%; opacity: 0; } }
+    @keyframes screen-float { 0%, 100% { transform: translateY(0) rotate(.15deg); } 50% { transform: translateY(-8px) rotate(-.15deg); } }
+    @keyframes signal-pop { to { opacity: 1; transform: translateY(0) scale(1); } }
 
     @media (hover: hover) {
       .real-product-shot:hover img, .screen-card:hover img { transform: scale(1.012); }
@@ -238,7 +254,7 @@
       .nav-links a:not(.button) { display: none; }
       .hero { padding-top: 64px; }
       .hero-grid, .fit-grid { grid-template-columns: 1fr; }
-      .product-stage { max-width: 760px; }
+      .product-stage { max-width: 820px; }
       .showcase-grid { grid-template-columns: 1fr; }
       .cards { grid-template-columns: repeat(2,1fr); }
       .steps { grid-template-columns: repeat(2,1fr); }
@@ -255,9 +271,13 @@
       h1 { font-size: 42px; line-height: 1.04; }
       .hero-copy { font-size: 17px; }
       .hero-actions .button { width: 100%; }
-      .product-stage { min-height: auto; }
+      .product-stage { min-height: 430px; }
+      .product-stage::before { inset: 8% 0 -7% 5%; }
       .real-product-shot { padding: 5px; border-radius: 12px; }
       .real-product-shot img { border-radius: 8px; }
+      .stage-signal { padding: 9px 11px; font-size: 10px; }
+      .stage-signal.radar-live { top: 34px; left: -4px; }
+      .stage-signal.publish-live { right: -3px; bottom: 34px; }
       .outputs { grid-template-columns: 1fr; gap: 18px; width: 100%; }
       .output-card img { width: 100%; height: min(145vw, 620px); object-fit: contain; }
       .real-product-shot figcaption, .screen-card figcaption, .output-card figcaption { align-items: flex-start; padding: 12px; }
@@ -291,6 +311,7 @@
       html { scroll-behavior: auto; }
       *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
       .motion-ready .reveal { opacity: 1; transform: none; }
+      .motion-ready .product-stage { opacity: 1; clip-path: none; transform: none; }
     }
   </style>
 </head>
@@ -325,10 +346,12 @@
         </div>
 
         <div class="product-stage">
+          <span class="stage-signal radar-live">Radar editorial ativo</span>
           <figure class="real-product-shot">
             <img src="/docs/uploads/platform-dashboard-overview.png" alt="Painel real da Nerion Social com agenda, vigia automático e publicação confirmada pela Meta">
             <figcaption><span>Tela real da operação: agenda, saúde da automação e publicação confirmada.</span><a class="image-link" href="/docs/uploads/platform-dashboard-overview.png" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
           </figure>
+          <span class="stage-signal publish-live">Publicação confirmada pela Meta</span>
         </div>
       </div>
     </section>
