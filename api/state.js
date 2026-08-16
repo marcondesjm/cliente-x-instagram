@@ -43,7 +43,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.60',
+  appVersion: 'v4.61',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -1561,7 +1561,7 @@ function normalizeBioPage(value = {}) {
 }
 
 async function updateBioPage(body = {}, session = null) {
-  if (!isOwner(session)) throw userError('Apenas o administrador principal pode editar a página Bio.', 403);
+  if (!session) throw userError('Login de admin necessario para editar a página Bio.', 401);
   const bio = normalizeBioPage(body.bioPage || {});
   const file = await readGithubConfig(BIO_PAGE_FILE_PATH);
   await writeGithubConfig(BIO_PAGE_FILE_PATH, bio, file.sha, 'Update public bio page');
