@@ -269,6 +269,105 @@
       min-width: 0;
     }
 
+    main[data-active-view="clients"] {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    main[data-active-view="clients"] > .grid,
+    main[data-active-view="clients"] > aside.grid {
+      width: 100%;
+    }
+
+    .client-workflow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .client-step {
+      min-height: 108px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: linear-gradient(145deg, #fbfdfc, #f2f7f4);
+    }
+
+    .client-step-number {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 10px;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .client-step strong,
+    .client-step span { display: block; }
+    .client-step strong { font-size: 13px; }
+    .client-step span { margin-top: 5px; color: var(--muted); font-size: 12px; font-weight: 700; line-height: 1.35; }
+
+    #newAccountPanel .access-manager {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      padding-top: 18px;
+    }
+
+    #newAccountPanel .access-manager > .form-section-title,
+    #newAccountPanel .access-manager > .brand-palette,
+    #newAccountPanel .access-manager > .document-box,
+    #newAccountPanel .access-manager > button,
+    #newAccountPanel .access-manager > .access-result {
+      grid-column: 1 / -1;
+    }
+
+    .form-section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 4px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      color: var(--text);
+      background: var(--panel-2);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .form-section-title span {
+      width: 25px;
+      height: 25px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--accent);
+      font-size: 11px;
+    }
+
+    #createAccount {
+      min-height: 52px;
+      font-size: 15px;
+    }
+
+    #onboardingInviteBox {
+      border-color: #abd9bf;
+      background: #f3fff8;
+    }
+
+    #usersPanel #userManager {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    #usersPanel #userManager > div,
+    #usersPanel #userManager > button,
+    #usersPanel #userManager > .access-result { grid-column: 1 / -1; }
+
     .grid {
       display: grid;
       gap: 18px;
@@ -1409,6 +1508,11 @@
       .two-fields, .editor-actions, .queue-actions, .queue-row, .image-tools, .briefing-controls, .program-grid { grid-template-columns: 1fr; }
       .bio-add-button-panel { align-items: stretch; flex-direction: column; }
       .bio-add-button-panel button { width: 100%; }
+      .client-workflow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      #newAccountPanel .access-manager,
+      #usersPanel #userManager { grid-template-columns: 1fr; }
+      #newAccountPanel .access-manager > * ,
+      #usersPanel #userManager > * { grid-column: 1; }
     }
 
     @media (max-width: 520px) {
@@ -1417,6 +1521,7 @@
       h1 { font-size: 27px; }
       .subline { font-size: 13px; line-height: 1.35; }
       .metrics { grid-template-columns: 1fr; }
+      .client-workflow { grid-template-columns: 1fr; }
       .panel, .metric { padding: 14px; }
       .metric { min-height: 96px; }
       .metric .value { font-size: 27px; }
@@ -1478,7 +1583,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.98</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.99</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -1564,7 +1669,7 @@
           </div>
         </div>
 
-        <div class="panel">
+        <div class="panel" id="clientPortfolioPanel">
           <div class="panel-head">
             <div>
               <div class="section-label">Instagram Direct</div>
@@ -1622,10 +1727,16 @@
             </div>
             <span class="status-pill good" id="clientPortfolioStatus">Ativos</span>
           </div>
+          <div class="client-workflow" aria-label="Etapas para ativar uma nova empresa">
+            <div class="client-step"><span class="client-step-number">1</span><strong>Cadastre a empresa</strong><span>Informe responsável, plano e dados essenciais da marca.</span></div>
+            <div class="client-step"><span class="client-step-number">2</span><strong>Envie o convite</strong><span>O cliente recebe um link seguro válido por 48 horas.</span></div>
+            <div class="client-step"><span class="client-step-number">3</span><strong>Cliente conecta a Meta</strong><span>Ele autoriza o Instagram sem compartilhar a senha.</span></div>
+            <div class="client-step"><span class="client-step-number">4</span><strong>Confira e ative</strong><span>Valide perfil, conteúdo, agenda e libere a operação.</span></div>
+          </div>
           <div class="checks" id="clientPortfolio"></div>
         </div>
 
-        <div class="panel">
+        <div class="panel" id="newAccountPanel">
           <div class="panel-head">
             <div>
               <div class="section-label">Cobrança recorrente</div>
@@ -2224,7 +2335,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           <div class="panel-head">
             <div>
               <div class="section-label">Multi-conta</div>
-              <h2>Adicionar conta</h2>
+              <h2>Cadastrar nova empresa</h2>
             </div>
             <span class="status-pill warn" id="newAccountStatus">Novo cliente</span>
           </div>
@@ -2232,12 +2343,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <div class="check">
               <span class="dot warn"></span>
               <div>
-                <strong>Cadastro operacional</strong>
-                <span>Cria a conta no GitHub e separa conteúdo, agenda e envs. Depois configure os tokens em Acessos conectados.</span>
+                <strong>Preencha uma etapa de cada vez</strong>
+                <span>Ao concluir, o painel cria a empresa e entrega o convite que será enviado ao cliente.</span>
               </div>
             </div>
           </div>
           <div class="access-manager">
+            <div class="form-section-title"><span>1</span>Responsável e identificação</div>
             <label>
               Chave da conta
               <input id="newAccountKey" placeholder="ex: cliente-advogados">
@@ -2254,6 +2366,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               WhatsApp
               <input id="newClientWhatsapp" placeholder="ex: 48 99999-9999">
             </label>
+            <div class="form-section-title"><span>2</span>Plano e forma de trabalho</div>
             <label>
               Segmento do negócio
               <input id="newClientBusinessType" placeholder="ex: clínica odontológica">
@@ -2277,9 +2390,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               Mensalidade (R$)
               <input id="newClientMonthlyPrice" type="number" min="0" step="0.01" placeholder="ex: 497">
             </label>
+            <div class="form-section-title"><span>3</span>Instagram e direção da marca</div>
             <label>
               Instagram
-              <input id="newAccountUsername" placeholder="ex: novo.instagram.oficial">
+              <input id="newAccountUsername" placeholder="opcional: será identificado na conexão">
             </label>
             <label>
               Nome/marca
@@ -2382,8 +2496,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
                 </div>
               </div>
             </div>
-            <button class="primary" id="createAccount" type="button">Criar conta</button>
-            <div class="access-result" id="newAccountResult">Informe nicho, público e oferta para a inteligência criar posts alinhados à nova conta.</div>
+            <div class="form-section-title"><span>4</span>Criar empresa e preparar o convite</div>
+            <button class="primary" id="createAccount" type="button">Criar empresa e gerar convite</button>
+            <div class="access-result" id="newAccountResult">Campos essenciais: chave da conta, nicho, público ideal e oferta principal.</div>
             <div class="document-box" id="onboardingInviteBox">
               <strong>Convite de ativação</strong>
               <span>O cliente conecta o próprio Instagram na Meta. Você não precisa pedir login nem senha.</span>
@@ -2400,7 +2515,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           </div>
         </div>
 
-        <div class="panel">
+        <div class="panel" id="usersPanel">
           <div class="panel-head">
             <div>
               <div class="section-label">Acesso</div>
@@ -2514,6 +2629,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
 
     function activateDashboardView(view = 'overview') {
       const selected = DASHBOARD_GROUPS[view] ? view : 'overview';
+      document.querySelector('main')?.setAttribute('data-active-view', selected);
       document.querySelectorAll('[data-dashboard-group]').forEach((element) => {
         element.classList.toggle('dashboard-view-hidden', element.dataset.dashboardGroup !== selected);
       });

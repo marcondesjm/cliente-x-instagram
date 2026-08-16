@@ -1,5 +1,32 @@
 # Historico
 
+## 2026-08-16 18:42 BRT
+
+Reorganizada a aba `Clientes` para eliminar o grande espaco vazio e tornar o cadastro de empresas mais guiado.
+
+Alteracoes:
+
+- Quando `Clientes` esta ativa, o conteudo passa a ocupar uma unica coluna com toda a largura disponivel.
+- A abertura da pagina mostra quatro etapas: cadastrar empresa, enviar convite, cliente conectar a Meta e conferir/ativar.
+- `Adicionar conta` foi renomeado para `Cadastrar nova empresa` e recebeu explicacao direta sobre o resultado do processo.
+- O formulario usa duas colunas no desktop e uma coluna no celular.
+- Os campos foram separados visualmente em quatro grupos: responsavel/identificacao, plano, Instagram/direcao da marca e criacao do convite.
+- O campo de Instagram deixa claro que e opcional e pode ser identificado durante a conexao.
+- O botao principal agora diz `Criar empresa e gerar convite`.
+- O convite ganhou destaque verde e permanece logo depois da criacao da empresa.
+- `Usuarios por conta` tambem usa melhor a largura e fica abaixo do onboarding, como administracao secundaria.
+- Em telas menores, etapas, formulario e usuarios retornam automaticamente para uma coluna.
+- Versao visivel atualizada para `v4.99`.
+
+Validacao:
+
+- `node --check api/state.js`: passou.
+- JavaScript inline do dashboard: sintaxe valida.
+- IDs estruturais do novo layout aparecem uma unica vez.
+- `npm run validate-copy`: passou com as protecoes de duplicidade e balanceamento de fontes em `ok`.
+- `git diff --check`: passou.
+- Preview Vercel criado em `dpl_egniMxiHNJGBnY72Rp6tQZkH1AcQ`; a tela publica de login carregou corretamente. A area autenticada foi validada pela estrutura e CSS porque a sessao nao e compartilhada com o dominio de preview.
+
 ## 2026-08-16 18:35 BRT
 
 Corrigido o rodizio do Radar que concentrava publicacoes em `AWS`, `n8n` e `OpenAI`, apesar de existirem mais fontes cadastradas.

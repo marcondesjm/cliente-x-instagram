@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 18:35 BRT
+Atualizado em: 2026-08-16 18:42 BRT
 
 ## Regra permanente de checkpoint
 
@@ -18,7 +18,16 @@ Atualizado em: 2026-08-16 18:35 BRT
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `b11fae5` (`Adiciona pagina da automacao do Direct na landing`).
-- Versao visivel atual: `v4.98`
+- Versao visivel atual: `v4.99`
+
+## Usabilidade da aba Clientes
+
+- A aba ocupa toda a largura e nao deixa mais a area central vazia enquanto os formularios ficam comprimidos na lateral.
+- O fluxo visual possui quatro passos: cadastro, convite, conexao Meta e ativacao.
+- O cadastro da empresa esta dividido em secoes claras e duas colunas no desktop.
+- O CTA principal e `Criar empresa e gerar convite`; o convite seguro aparece em destaque logo abaixo.
+- Usuarios por conta ficam depois do onboarding e usam uma grade mais ampla.
+- No celular, todas as etapas e campos ficam em uma coluna.
 
 ## Rodizio atual das fontes do Radar
 
