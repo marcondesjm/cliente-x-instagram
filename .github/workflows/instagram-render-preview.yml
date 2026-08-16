@@ -18,6 +18,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: instagram-render-preview-publication
+  cancel-in-progress: false
+
 jobs:
   render-preview:
     runs-on: ubuntu-latest

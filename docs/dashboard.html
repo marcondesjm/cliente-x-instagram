@@ -1394,7 +1394,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.66</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.67</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -2338,6 +2338,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       sessionRole: null,
       selectedAccount: 'cliente-x',
       account: null,
+      officialPreviewRequests: {},
       showcaseSlides: [],
       showcaseSlideIndex: 0
     };
@@ -5715,30 +5716,48 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         ? { ...baseItem, previewDate: (appState.tomorrowPreview || {}).date }
         : baseItem;
       const preview = document.getElementById('dailyPlanPreview');
-      document.getElementById('dailyPlanPreviewStatus').textContent = source === 'tomorrow' ? 'Solicitando renderizacao oficial' : 'Carregando avatar';
-      if (source === 'tomorrow') {
-        const payload = await api('/api/render', {
-          method: 'POST',
-          body: JSON.stringify({
-            account: appState.selectedAccount,
-            slotIndex: Number(slotIndex),
-            previewDate: item.previewDate
-          })
-        });
-        const renderedImages = await waitForOfficialPreviewImages(payload.imageUrls || []);
-        if (!renderedImages.length) throw new Error('A renderizacao oficial continua em andamento. Aguarde um minuto e abra esta previa novamente.');
-        setPreviewImages(renderedImages, `previa-oficial-slot-${slotIndex}.jpg`);
-      } else {
-        setPreviewImages(await previewSlidesForItem(item), `previa-slot-${slotIndex}.svg`);
+      const status = document.getElementById('dailyPlanPreviewStatus');
+      status.textContent = source === 'tomorrow' ? 'Solicitando JPG oficial' : 'Carregando avatar';
+      try {
+        if (source === 'tomorrow') {
+          const requestKey = `${appState.selectedAccount}:${item.previewDate}:${slotIndex}`;
+          let imageUrls = appState.officialPreviewRequests[requestKey];
+          if (!imageUrls) {
+            const payload = await api('/api/render', {
+              method: 'POST',
+              body: JSON.stringify({
+                account: appState.selectedAccount,
+                slotIndex: Number(slotIndex),
+                previewDate: item.previewDate
+              })
+            });
+            imageUrls = payload.imageUrls || [];
+            appState.officialPreviewRequests[requestKey] = imageUrls;
+          }
+          const renderedImages = await waitForOfficialPreviewImages(imageUrls);
+          if (!renderedImages.length) {
+            status.textContent = 'JPG oficial ainda em geração';
+            preview.classList.add('active');
+            setMessage('A geração oficial foi solicitada. Ela pode levar até 2 minutos; clique em “Ver prévia” novamente para abrir, sem criar uma nova solicitação.', 'warn');
+            return;
+          }
+          setPreviewImages(renderedImages, `previa-oficial-slot-${slotIndex}.jpg`);
+        } else {
+          setPreviewImages(await previewSlidesForItem(item), `previa-slot-${slotIndex}.svg`);
+        }
+        document.getElementById('dailyPlanPreviewTitle').textContent = `${item.time || '--:--'} · ${item.title || 'Conteúdo programado'}`;
+        document.getElementById('dailyPlanPreviewCaption').textContent = item.caption || 'Legenda será montada pelo gerador automático.';
+        status.textContent = source === 'tomorrow' ? 'JPG oficial do publicador' : 'Prévia antes de postar';
+        preview.classList.add('active');
+        preview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        setMessage(source === 'tomorrow'
+          ? 'Prévia oficial de amanhã aberta com todos os slides.'
+          : 'Prévia simples aberta. A arte final completa aparece no render local.', 'good');
+      } catch (error) {
+        status.textContent = 'Não foi possível abrir a prévia oficial';
+        preview.classList.add('active');
+        setMessage(error.message || 'Falha ao solicitar a prévia oficial.', 'bad');
       }
-      document.getElementById('dailyPlanPreviewTitle').textContent = `${item.time || '--:--'} · ${item.title || 'Conteúdo programado'}`;
-      document.getElementById('dailyPlanPreviewCaption').textContent = item.caption || 'Legenda será montada pelo gerador automático.';
-      document.getElementById('dailyPlanPreviewStatus').textContent = source === 'tomorrow' ? 'JPG oficial do publicador' : 'Prévia antes de postar';
-      preview.classList.add('active');
-      preview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      setMessage(source === 'tomorrow'
-        ? 'Prévia oficial de amanhã aberta com todos os slides.'
-        : 'Prévia simples aberta. A arte final completa aparece no render local.', 'good');
     }
 
     async function waitForOfficialPreviewImages(imageUrls = []) {
