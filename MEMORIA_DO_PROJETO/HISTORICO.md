@@ -1,5 +1,16 @@
 # Historico
 
+## 2026-08-16 19:27 BRT
+
+Checkpoint final da atualizacao das telas da plataforma na landing comercial.
+
+- Commit funcional da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
+- Estado operacional mais recente preservado no merge `b35555d`, incluindo a publicacao automatica das 19:26 BRT.
+- Deploy final de producao: `dpl_DkbgqcivNVrU1hEGgiPaYMoytkxf`.
+- A landing publica as dez capturas atuais com cachebuster `v=506` e textos explicando Radar, Direct por data, Agenda, Feed/Story, Bio, Clientes e Sistema.
+- Producao respondeu `HTTP 200`; as dez imagens PNG foram verificadas individualmente com `HTTP 200` e seus tamanhos corretos.
+- Landing confirmada em `https://cliente-x-instagram.vercel.app/plataforma`.
+
 ## 2026-08-16 19:23 BRT
 
 Atualizada a demonstracao da plataforma na landing comercial.

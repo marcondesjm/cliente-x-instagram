@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 19:23 BRT
+Atualizado em: 2026-08-16 19:27 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,12 +12,12 @@ Atualizado em: 2026-08-16 19:23 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `e061466` (`Adiciona filtro de datas ao historico do Direct`), integrado ao estado operacional em `13e3cdd`.
+- Checkpoint funcional atual da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`), integrado ao estado operacional em `b35555d`.
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
-- Commit mais recente da landing: `b11fae5` (`Adiciona pagina da automacao do Direct na landing`).
+- Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
 - Versao visivel atual: `v5.06`
 
 ## Landing com telas atuais
@@ -25,6 +25,7 @@ Atualizado em: 2026-08-16 19:23 BRT
 - O carrossel comercial possui 10 novas capturas reais do dashboard autenticado.
 - As imagens mostram os layouts atuais da Agenda, Grade semanal, Bio, Direct por datas, Clientes e Sistema/Radar.
 - Textos e alternativas das telas explicam os recursos novos e usam cachebuster `v=506`.
+- Deploy final: `dpl_DkbgqcivNVrU1hEGgiPaYMoytkxf`; pagina e dez PNGs confirmados com `HTTP 200`.
 - A correcao do caminho absoluto do Story esta no commit `d572c48` e deploy `dpl_EmgJdLddPQyCgeNgUTxxHgL1MoK1`.
 - Publicacao posterior confirmou a correcao: Feed `18061986080757054`, Story `18004000334979257` e permalink `https://www.instagram.com/p/DcHhtghkwu8/`.
 
