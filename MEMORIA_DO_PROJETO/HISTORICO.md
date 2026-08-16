@@ -1,5 +1,34 @@
 # Historico
 
+## 2026-08-15 22:30 BRT
+
+Redirecionado o Radar editorial para atrair empresas interessadas em automacao.
+
+Resumo:
+
+- As fontes oficiais permanecem como base de credibilidade, mas o titulo nao abre mais com a novidade de uma plataforma.
+- O carrossel agora abre com dor de negocio, mostra o custo do processo manual, apresenta aplicacao pratica de automacao e termina convidando para diagnostico no Direct.
+- O objetivo editorial da conta `cliente-x` foi alterado de `Autoridade` para `Captação de leads`.
+- Foram criadas abordagens para atendimento, comercial, agentes, dados, fluxos, governanca e produtividade.
+- A legenda relaciona a fonte oficial ao problema empresarial e mantem o CTA padrao dos 50 prompts no final.
+
+Exemplo validado:
+
+- Abertura: `Seu atendimento ainda começa do zero a cada conversa?`
+- Foco: historico, prioridade e proximo passo visiveis para reduzir resposta lenta e repeticao do cliente.
+- Fonte usada somente como contexto, nao como manchete do post.
+
+Validado:
+
+- `npm run validate-copy`: passou.
+- `npm run render-only`: passou.
+- Inspecao visual confirmou o novo gancho empresarial no slide de abertura.
+
+Deploy/publicacao:
+
+- Deploy: sim. Producao Vercel confirmada com versao `v4.74`.
+- Instagram real: nenhuma nova postagem foi enviada nesta alteracao; a regra vale para os proximos posts automaticos.
+
 ## 2026-08-15 22:24 BRT
 
 Corrigida a sobreposicao de elemento decorativo sobre foto real nos carrosseis futuros.

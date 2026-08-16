@@ -1,20 +1,20 @@
 # Status Atual
 
-Atualizado em: 2026-08-15 22:24 BRT
+Atualizado em: 2026-08-15 22:30 BRT
 
 ## Projeto ativo
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Commit atual: `757b02c` (`Avoid sector icon over context photos`)
+- Commit atual: `b855f93` (`Focus radar posts on business automation leads`)
 - Dashboard: `docs/dashboard.html`
-- Versao visivel atual: `v4.73`
+- Versao visivel atual: `v4.74`
 
 ## Estado do workspace
 
 - Workspace de codigo limpo antes deste registro; esta atualizacao altera somente os arquivos de memoria.
 - O projeto moderno esta em uma linha separada do `cliente-x-instagram` original.
-- A correcao `v4.73` esta validada e confirmada em producao.
+- A versao `v4.74` esta validada e confirmada em producao.
 - A publicacao real foi executada pelo fluxo operacional do repositorio irmao `cliente-x-instagram`, na branch `main`, commit `9449559`.
 
 ## Validacoes executadas
@@ -46,10 +46,18 @@ Validacao de operacao confirmada:
 - A mesma regra foi aplicada no gerador que publica e na pre-visualizacao do dashboard.
 - Isso evita duplicar elementos visuais, como a foto de uma balanca acompanhada de outro icone de balanca.
 
+## Direcionamento editorial do Radar
+
+- Objetivo da conta `cliente-x`: `Captação de leads`.
+- Fontes oficiais continuam sendo usadas para dar contexto e credibilidade, mas nao sao mais a abertura do post.
+- Os proximos carrosseis abrem com uma dor de empresa (atendimento sem contexto, lead sem acompanhamento, processo manual, dados espalhados ou falta de controle).
+- Cada pauta mostra impacto operacional, aplicacao de automacao e convite para diagnostico/contato no Direct.
+
 ## Proximos pontos provaveis
 
 - Monitorar a entrega do story e o engajamento do carrossel publicado.
 - Conferir a regra nos proximos renders automaticos.
+- Acompanhar se os proximos posts atraem conversas de empresas interessadas em automacao.
 - Conferir os proximos horarios automaticos para evitar repeticao de pauta ja publicada.
 - Para alteracoes de codigo, identificar primeiro se o alvo e `cliente-x-instagram-modern` ou o fluxo operacional `cliente-x-instagram`.
 
