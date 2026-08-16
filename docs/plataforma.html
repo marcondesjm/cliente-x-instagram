@@ -178,6 +178,13 @@
     .visual-status { position: absolute; z-index: 4; top: 16px; left: 16px; display: inline-flex; align-items: center; gap: 8px; padding: 9px 12px; border: 1px solid rgba(79,101,73,.16); border-radius: 999px; color: var(--ink); background: rgba(255,255,255,.9); box-shadow: 0 12px 28px rgba(28,43,34,.13); backdrop-filter: blur(9px); font-size: 11px; font-weight: 850; }
     .visual-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #718f50; box-shadow: 0 0 0 4px rgba(113,143,80,.13); }
     .output-visual .visual-status { top: 13px; left: 13px; }
+    .instagram-proofs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: min(980px, 100%); margin: 0 auto; }
+    .instagram-proof { margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: #fff; box-shadow: 0 18px 50px rgba(28,43,34,.08); }
+    .instagram-proof iframe { display: block; width: 100%; height: 690px; border: 0; background: #fff; }
+    .instagram-proof figcaption { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 17px 18px; border-top: 1px solid var(--line); }
+    .instagram-proof figcaption div { display: grid; gap: 3px; }
+    .instagram-proof figcaption strong { font-size: 15px; }
+    .instagram-proof figcaption span { color: var(--ink-soft); font-size: 13px; }
 
     .section { padding: 90px 0; }
     .section-head { max-width: 760px; margin-bottom: 44px; }
@@ -323,6 +330,9 @@
       .editor-guide h3 { font-size: 22px; }
       .outputs { grid-template-columns: 1fr; gap: 18px; width: 100%; }
       .output-card img { width: 100%; height: min(145vw, 620px); object-fit: contain; }
+      .instagram-proofs { grid-template-columns: 1fr; gap: 18px; width: 100%; }
+      .instagram-proof iframe { height: 650px; }
+      .instagram-proof figcaption { align-items: flex-start; padding: 14px; }
       .real-product-shot figcaption, .screen-card figcaption, .output-card figcaption { align-items: flex-start; padding: 12px; }
       .app-window { margin-top: 10px; padding: 9px; border-radius: 22px; }
       .app-body { grid-template-columns: 72px 1fr; min-height: 385px; }
@@ -436,20 +446,14 @@
             </div>
             <figcaption><div><strong>Editor de conteúdo guiado</strong><span>Você visualiza, ajusta e aprova sem precisar entender uma tela técnica.</span></div><a class="image-link" href="/docs/uploads/platform-content-editor.png" target="_blank" rel="noopener noreferrer">Ver tela completa ↗</a></figcaption>
           </figure>
-          <div class="outputs" aria-label="Exemplos de peças produzidas">
-            <figure class="output-card">
-              <div class="output-visual">
-                <span class="visual-status">Criativo pronto · Feed 4:5</span>
-                <img src="/docs/generated/previews/cliente-x/2026-08-17/slot-9/slide-01.jpg" alt="Exemplo real de slide de carrossel produzido pela plataforma">
-              </div>
-              <figcaption><strong>Carrossel</strong><span>Formato para feed.</span></figcaption>
+          <div class="instagram-proofs" aria-label="Publicações reais no Instagram">
+            <figure class="instagram-proof">
+              <iframe src="https://www.instagram.com/p/DcHMqdWE3bI/embed/" title="Publicação real da Nerion Social no Instagram" loading="lazy" allowtransparency="true"></iframe>
+              <figcaption><div><strong>Publicado no Instagram</strong><span>Carrossel real no perfil @marcondes.machado.oficial.</span></div><a class="image-link" href="https://www.instagram.com/p/DcHMqdWE3bI/" target="_blank" rel="noopener noreferrer">Abrir post ↗</a></figcaption>
             </figure>
-            <figure class="output-card">
-              <div class="output-visual">
-                <span class="visual-status">Criativo pronto · Story 9:16</span>
-                <img src="/docs/generated/previews/cliente-x/2026-08-17/slot-9/story.jpg" alt="Exemplo real de Story produzido pela plataforma">
-              </div>
-              <figcaption><strong>Story</strong><span>Formato vertical.</span></figcaption>
+            <figure class="instagram-proof">
+              <iframe src="https://www.instagram.com/p/DcHDsOKkzvp/embed/" title="Segunda publicação real da Nerion Social no Instagram" loading="lazy" allowtransparency="true"></iframe>
+              <figcaption><div><strong>Publicação confirmada</strong><span>Conteúdo criado, agendado e entregue pela plataforma.</span></div><a class="image-link" href="https://www.instagram.com/p/DcHDsOKkzvp/" target="_blank" rel="noopener noreferrer">Abrir post ↗</a></figcaption>
             </figure>
           </div>
         </div>
