@@ -147,6 +147,12 @@
     .dark { color: white; background: var(--ink); }
     .dark .eyebrow { color: #cbd7aa; }
     .dark .section-lead { color: rgba(255,255,255,.67); }
+    .automation-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 0 0 30px; }
+    .automation-photo { position: relative; min-height: 330px; margin: 0; overflow: hidden; border: 1px solid rgba(255,255,255,.13); border-radius: 18px; background: #243129; }
+    .automation-photo img { display: block; width: 100%; height: 100%; min-height: 330px; object-fit: cover; }
+    .automation-photo figcaption { position: absolute; right: 16px; bottom: 16px; left: 16px; padding: 16px 18px; border-radius: 12px; color: white; background: rgba(17,29,23,.88); backdrop-filter: blur(8px); }
+    .automation-photo strong { display: block; font-size: 17px; }
+    .automation-photo span { display: block; margin-top: 3px; color: rgba(255,255,255,.72); font-size: 13px; }
     .steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
     .step { padding: 25px; border: 1px solid rgba(255,255,255,.13); border-radius: 24px; background: rgba(255,255,255,.045); }
     .step b { display: block; color: #cbd7aa; font-size: 13px; }
@@ -200,6 +206,8 @@
       .showcase-grid { grid-template-columns: 1fr; }
       .cards { grid-template-columns: repeat(2,1fr); }
       .steps { grid-template-columns: repeat(2,1fr); }
+      .automation-photo { min-height: 285px; }
+      .automation-photo img { min-height: 285px; }
       .proof-grid { grid-template-columns: repeat(2,1fr); }
     }
     @media (max-width: 640px) {
@@ -233,6 +241,9 @@
       .floating.direct { right: -4px; bottom: 20px; }
       .section { padding: 76px 0; }
       .cards, .offers, .steps { grid-template-columns: 1fr; }
+      .automation-photos { grid-template-columns: 1fr; }
+      .automation-photo, .automation-photo img { min-height: 260px; }
+      .automation-photo figcaption { right: 10px; bottom: 10px; left: 10px; padding: 13px 14px; }
       .offer.featured { transform: none; }
       .offer ul, .offer-sub { min-height: auto; }
       .final-card { grid-template-columns: 1fr; padding: 36px 25px; }
@@ -327,12 +338,22 @@
 
     <section class="section dark" id="como-funciona">
       <div class="wrap">
-        <div class="section-head"><p class="eyebrow">Do briefing ao lead</p><h2>Um fluxo simples para uma operação que antes era fragmentada.</h2><p class="section-lead">Você define a estratégia. A plataforma cuida da repetição operacional e mantém os pontos importantes visíveis.</p></div>
+        <div class="section-head"><p class="eyebrow">Automação de ponta a ponta</p><h2>Ela cria as artes, escreve as legendas e publica por você.</h2><p class="section-lead">Depois que a marca, a estratégia e as regras são configuradas, a plataforma prepara carrosséis e Stories, organiza os horários e publica na nuvem. O computador pode ficar desligado e você não precisa executar cada postagem manualmente.</p></div>
+        <div class="automation-photos">
+          <figure class="automation-photo">
+            <img src="/docs/uploads/automation-leave-office.jpg" alt="Empresário fechando o notebook depois de configurar a automação de conteúdo">
+            <figcaption><strong>Você configura a operação.</strong><span>Identidade, pauta, horários e regras ficam definidos no painel.</span></figcaption>
+          </figure>
+          <figure class="automation-photo">
+            <img src="/docs/uploads/automation-cloud-evening.jpg" alt="Notebook fechado enquanto publicações continuam sendo concluídas pelo celular">
+            <figcaption><strong>A plataforma mantém a rotina.</strong><span>Artes, legendas, agenda e publicação seguem na nuvem, mesmo com o computador desligado.</span></figcaption>
+          </figure>
+        </div>
         <div class="steps">
-          <article class="step"><b>PASSO 01</b><strong>Configure a marca</strong><p>Nicho, público, objetivo, oferta, identidade e regras editoriais.</p></article>
-          <article class="step"><b>PASSO 02</b><strong>Aprove o conteúdo</strong><p>Revise pauta, texto, arte, chamada e horários pelo painel.</p></article>
-          <article class="step"><b>PASSO 03</b><strong>Automatize a rotina</strong><p>A agenda publica na nuvem e registra sucesso ou etapa de falha.</p></article>
-          <article class="step"><b>PASSO 04</b><strong>Converta o interesse</strong><p>Comentários acionam o Direct e aproximam o lead do próximo passo.</p></article>
+          <article class="step"><b>PASSO 01</b><strong>Configure a marca</strong><p>Nicho, público, oferta, identidade e regras editoriais.</p></article>
+          <article class="step"><b>PASSO 02</b><strong>Crie automaticamente</strong><p>A plataforma prepara pauta, arte, carrossel, Story e legenda.</p></article>
+          <article class="step"><b>PASSO 03</b><strong>Publique na nuvem</strong><p>A agenda executa os horários sem depender do computador ligado.</p></article>
+          <article class="step"><b>PASSO 04</b><strong>Atenda pelo Direct</strong><p>Comentários podem acionar a entrega automática do próximo passo.</p></article>
         </div>
       </div>
     </section>
