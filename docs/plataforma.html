@@ -83,6 +83,8 @@
     .hero-copy { margin: 24px 0 0; max-width: 600px; color: var(--ink-soft); font-size: clamp(17px, 1.8vw, 19px); }
     .hero-offer { margin: 22px 0 0; padding: 13px 15px; border-left: 3px solid var(--olive); color: var(--ink-soft); background: #f5f7f4; font-size: 15px; }
     .hero-offer strong { color: var(--ink); }
+    .hero-offer s { margin-right: 7px; color: #8a928d; font-weight: 750; }
+    .hero-offer .promo-value { color: var(--olive-dark); font-size: 20px; font-weight: 950; }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
     .trust { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 28px; color: var(--ink-soft); font-size: 13px; font-weight: 750; }
     .trust span::before { content: "✓"; margin-right: 7px; color: var(--olive); font-weight: 950; }
@@ -196,6 +198,9 @@
     .featured .offer-sub { color: rgba(255,255,255,.67); }
     .offer-price { margin: 28px 0; font-size: 16px; font-weight: 850; }
     .offer-price strong { display: block; font-size: 29px; }
+    .monthly-promo { display: flex; align-items: baseline; gap: 10px; margin-top: 9px; }
+    .monthly-promo s { color: rgba(255,255,255,.5); font-size: 18px; }
+    .monthly-promo strong { color: #e1edc5; font-size: 34px; }
     .setup-free { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-bottom: 7px; }
     .setup-free s { color: rgba(255,255,255,.52); font-weight: 750; }
     .setup-free b { padding: 4px 9px; border-radius: 7px; color: #1f331f; background: #d7e5b8; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
@@ -349,7 +354,7 @@
           <p class="eyebrow">Presença digital sem rotina manual</p>
           <h1>Sua rede social ativa <span>sem você criar ou publicar conteúdo.</span></h1>
           <p class="hero-copy">A plataforma cria artes, carrosséis, Stories e legendas, organiza a agenda e publica automaticamente — mesmo com o computador desligado.</p>
-          <p class="hero-offer"><strong>Plataforma + configuração + suporte por R$ 397/mês.</strong> Implantação gratuita nesta oferta.</p>
+          <p class="hero-offer"><strong>Oferta promocional:</strong> <s>R$ 397/mês</s> <span class="promo-value">R$ 197/mês</span><br>Mais de 12 carrosséis no feed por dia + 12 Stories diários. Implantação gratuita.</p>
           <div class="hero-actions">
             <a class="button" href="https://wa.me/5548996029392?text=Ol%C3%A1%2C%20Marcondes!%20Quero%20agendar%20uma%20demonstra%C3%A7%C3%A3o%20da%20Nerion%20Social." target="_blank" rel="noopener noreferrer">Quero ver funcionando <span aria-hidden="true">→</span></a>
             <a class="button light" href="#como-funciona">Entender a plataforma</a>
@@ -373,8 +378,8 @@
     <section class="proof" aria-label="Capacidades comprovadas">
       <div class="wrap proof-grid">
         <div class="proof-item"><strong>24/7</strong><span>Operação na nuvem</span></div>
-        <div class="proof-item"><strong>13 horários</strong><span>Agenda diária configurável</span></div>
-        <div class="proof-item"><strong>Feed + Story</strong><span>Publicação integrada</span></div>
+        <div class="proof-item"><strong>12+ carrosséis</strong><span>No feed todos os dias</span></div>
+        <div class="proof-item"><strong>12 Stories</strong><span>Publicados diariamente</span></div>
         <div class="proof-item"><strong>Direct</strong><span>Resposta automática por palavra-chave</span></div>
       </div>
     </section>
@@ -466,9 +471,9 @@
             <span class="offer-tag">Recomendado para começar</span>
             <h3>Plano Completo</h3>
             <p class="offer-sub">Para manter uma marca em operação todos os dias, com configuração assistida e custo mensal previsível.</p>
-            <p class="offer-price"><span class="setup-free"><s>Implantação R$ 297</s><b>Implantação grátis</b></span><strong>R$ 397/mês</strong></p>
-            <ul><li>Uma marca configurada no painel</li><li>Publicações diárias conforme o calendário contratado</li><li>Carrossel no feed + Story correspondente</li><li>Agenda automática e Direct</li><li>Perfil editorial, identidade visual e suporte</li></ul>
-            <a class="button" href="https://wa.me/5548996029392?text=Ol%C3%A1%2C%20Marcondes!%20Tenho%20interesse%20no%20Plano%20Completo%20da%20Nerion%20Social%20por%20R%24%20397%20ao%20m%C3%AAs.%20Quero%20conhecer%20o%20calend%C3%A1rio%20de%20publica%C3%A7%C3%B5es%20e%20agendar%20uma%20demonstra%C3%A7%C3%A3o." target="_blank" rel="noopener noreferrer">Quero o Plano Completo</a>
+            <p class="offer-price"><span class="setup-free"><s>Implantação R$ 297</s><b>Implantação grátis</b></span><span class="monthly-promo"><s>R$ 397/mês</s><strong>R$ 197/mês</strong></span></p>
+            <ul><li>Uma marca configurada no painel</li><li>Mais de 12 carrosséis publicados no feed por dia</li><li>12 Stories publicados diariamente</li><li>Agenda automática e Direct</li><li>Perfil editorial, identidade visual e suporte</li></ul>
+            <a class="button" href="https://wa.me/5548996029392?text=Ol%C3%A1%2C%20Marcondes!%20Tenho%20interesse%20na%20oferta%20promocional%20da%20Nerion%20Social%20de%20R%24%20397%20por%20R%24%20197%20ao%20m%C3%AAs%2C%20com%20mais%20de%2012%20carross%C3%A9is%20no%20feed%20por%20dia%20e%2012%20Stories%20di%C3%A1rios.%20Quero%20agendar%20uma%20demonstra%C3%A7%C3%A3o." target="_blank" rel="noopener noreferrer">Quero aproveitar por R$ 197</a>
           </article>
           <article class="offer">
             <span class="offer-tag">Para operações estruturadas</span>
@@ -493,7 +498,7 @@
           <details><summary>Posso usar para vários clientes?</summary><p>Sim. A estrutura suporta contas, perfis editoriais, agendas e configurações separadas. O escopo comercial depende da quantidade de marcas e do nível de serviço desejado.</p></details>
           <details><summary>O conteúdo fica igual para todas as empresas?</summary><p>Não. Nicho, objetivo, oferta, linguagem, identidade visual, imagens, fontes e chamadas são configurados por conta.</p></details>
           <details><summary>É possível conhecer antes de contratar?</summary><p>Sim. Primeiro fazemos uma demonstração do fluxo e um diagnóstico breve para confirmar qual plano atende à operação.</p></details>
-          <details><summary>O que está incluído nos R$ 397 mensais?</summary><p>O Plano Completo atende uma marca com publicações diárias conforme o calendário contratado, incluindo carrossel no feed e Story correspondente, criação de legendas, agenda automática, Direct, configuração e suporte. A implantação de R$ 297 está gratuita nesta oferta.</p></details>
+          <details><summary>O que está incluído na promoção de R$ 197 mensais?</summary><p>O Plano Completo atende uma marca com mais de 12 carrosséis publicados no feed por dia e 12 Stories diários, além de criação de legendas, agenda automática, Direct, configuração e suporte. O valor anterior era R$ 397 por mês e a implantação de R$ 297 também está gratuita nesta oferta.</p></details>
           <details><summary>Preciso de menos publicações. Existe um plano menor?</summary><p>Sim. Para uma frequência menor de conteúdo, consulte uma proposta adequada ao volume necessário.</p></details>
         </div>
       </div>
