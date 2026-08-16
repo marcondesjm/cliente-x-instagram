@@ -5750,9 +5750,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           ${useNewsContext ? `
             <rect x="${photo.x - 8}" y="${photo.y - 8}" width="${photo.w + 16}" height="${photo.h + 16}" rx="${photo.r + 8}" fill="#fffaf7" opacity="0.82"/>
             <rect x="${photo.x}" y="${photo.y}" width="${photo.w}" height="${photo.h}" rx="${photo.r}" fill="#132238"/>
-            <text x="${photo.x + 28}" y="${photo.y + 48}" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="900">FONTE OFICIAL</text>
-            <text x="${photo.x + 28}" y="${photo.y + 112}" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="900">${escapeHtml(String(item.source || '').slice(0, 26))}</text>
-            <text x="${photo.x + 28}" y="${photo.y + 152}" fill="#dcebe8" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="800">Atualização que pode virar ganho operacional.</text>
+            <text x="${photo.x + 24}" y="${photo.y + 42}" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="900">FONTE OFICIAL</text>
+            ${svgBoxText(String(item.source || '').slice(0, 26), photo.x + 24, photo.y + 66, photo.w - 48, 34, '#ffffff', 900, 0.94)}
+            <text x="${photo.x + 24}" y="${photo.y + photo.h - 24}" fill="#dcebe8" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="800">Pauta relevante para empresas.</text>
           ` : useSectorPhoto ? `
             <rect x="${photo.x - 8}" y="${photo.y - 8}" width="${photo.w + 16}" height="${photo.h + 16}" rx="${photo.r + 8}" fill="#fffaf7" opacity="0.82"/>
             <image href="${sectorPhotoHref}" x="${photo.x}" y="${photo.y}" width="${photo.w}" height="${photo.h}" preserveAspectRatio="xMidYMid slice" clip-path="url(#sectorPhotoClip)" opacity="0.88"/>

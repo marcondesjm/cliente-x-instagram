@@ -1683,7 +1683,7 @@ function htmlText(value = '') {
 
 function researchSourceCardHtml(source = '') {
   const name = htmlText(source || 'Fonte oficial');
-  return `<div class="context-photo news-context"><span>FONTE OFICIAL</span><strong>${name}</strong><small>Atualização que pode virar ganho operacional.</small><i></i></div>`;
+  return `<div class="context-photo news-context"><span>FONTE OFICIAL</span><strong>${name}</strong><small>Pauta relevante para empresas.</small><i></i></div>`;
 }
 
 function anatexSlideHtml(slide, index, total, account, style, renderContext = {}) {
@@ -1819,13 +1819,13 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
       opacity: 0.88;
     }
     .context-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,250,246,0.10), rgba(19,34,56,0.18)); }
-    .context-photo.news-context { display: flex; flex-direction: column; justify-content: center; gap: 10px; padding: 30px 34px; background: linear-gradient(135deg, #132238, ${accent}); color: #fffaf7; opacity: 1; }
+    .context-photo.news-context { display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 22px 24px; background: linear-gradient(135deg, #132238, ${accent}); color: #fffaf7; opacity: 1; }
     .context-photo.news-context::after { background: radial-gradient(circle at 88% 20%, rgba(255,255,255,.18) 0 54px, transparent 55px); }
     .news-context > * { position: relative; z-index: 1; }
-    .news-context span { font-size: 20px; font-weight: 900; letter-spacing: .12em; }
-    .news-context strong { font-size: 48px; line-height: .94; font-weight: 900; }
-    .news-context small { max-width: 250px; font-size: 18px; line-height: 1.12; font-weight: 800; }
-    .news-context i { width: 76px; height: 8px; border-radius: 99px; background: #fffaf7; opacity: .9; }
+    .news-context span { font-size: 15px; font-weight: 900; letter-spacing: .12em; }
+    .news-context strong { font-size: 36px; line-height: .94; font-weight: 900; }
+    .news-context small { max-width: 100%; font-size: 14px; line-height: 1.08; font-weight: 800; }
+    .news-context i { width: 50px; height: 5px; margin-top: 2px; border-radius: 99px; background: #fffaf7; opacity: .9; }
     .note {
       position: absolute;
       left: 78px;
@@ -2666,7 +2666,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     <div class="badge">${eyebrow}</div>
     <h1>${title.replace(/\s+IA\b/i, ' <strong>IA</strong>')}</h1>
     <p>${storyBody}</p>
-    <div class="visual-card${showNewsContext ? ' news-context-story' : ''}">${showNewsContext ? `<span>FONTE OFICIAL</span><strong>${htmlText(researchSource)}</strong><small>Atualização que pode virar ganho operacional.</small>` : ''}</div>
+    <div class="visual-card${showNewsContext ? ' news-context-story' : ''}">${showNewsContext ? `<span>FONTE OFICIAL</span><strong>${htmlText(researchSource)}</strong><small>Pauta relevante para empresas.</small>` : ''}</div>
     ${avatarBlock}
     <div class="note">${account.footerText}</div>
     <footer>${account.brandName}</footer>
