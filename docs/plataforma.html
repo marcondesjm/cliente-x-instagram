@@ -155,10 +155,20 @@
     .showcase { background: #fff; }
     .showcase-grid { display: grid; gap: 26px; }
     .screen-card, .output-card { margin: 0; border: 1px solid rgba(91,112,78,.2); border-radius: 16px; background: #fff; overflow: hidden; box-shadow: 0 24px 55px rgba(28,43,34,.1); }
-    .screen-card { width: min(980px, 100%); margin-inline: auto; }
+    .screen-card { width: min(1080px, 100%); margin-inline: auto; }
+    .editor-tour { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(260px, .72fr); min-height: 530px; }
+    .editor-focus { position: relative; min-width: 0; overflow: hidden; background: #eef2ed; }
+    .editor-focus img { position: absolute; top: 0; left: 0; width: 132%; max-width: none; height: 100%; object-fit: cover; object-position: 10% 5%; }
+    .editor-guide { display: flex; flex-direction: column; justify-content: center; gap: 11px; padding: 28px; border-left: 1px solid var(--line); background: linear-gradient(155deg, #fff 0%, #f4f7f3 100%); }
+    .editor-guide > small { color: var(--olive-dark); font-size: 11px; font-weight: 900; letter-spacing: .09em; text-transform: uppercase; }
+    .editor-guide h3 { margin: 2px 0 8px; font-size: 25px; line-height: 1.08; letter-spacing: -.035em; }
+    .editor-point { display: grid; grid-template-columns: 29px 1fr; gap: 11px; align-items: start; padding: 13px; border: 1px solid rgba(78,105,87,.13); border-radius: 10px; background: rgba(255,255,255,.82); }
+    .editor-point b { width: 29px; height: 29px; display: grid; place-items: center; border-radius: 8px; color: white; background: var(--olive-dark); font-size: 11px; }
+    .editor-point strong { display: block; font-size: 13px; }
+    .screen-card .editor-point span { display: block; margin-top: 2px; color: var(--ink-soft); font-size: 11px; line-height: 1.4; }
     .screen-visual, .output-visual { position: relative; overflow: hidden; isolation: isolate; background: var(--paper); }
     .screen-visual::after, .output-visual::after { content: ""; position: absolute; z-index: 3; top: -45%; bottom: -45%; left: -42%; width: 24%; transform: rotate(14deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,.58), transparent); pointer-events: none; }
-    .screen-card img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: 50% 5%; image-rendering: auto; }
+    .screen-card img { display: block; image-rendering: auto; }
     .screen-card figcaption, .output-card figcaption { display: flex; justify-content: space-between; gap: 18px; padding: 17px 18px; border-top: 1px solid var(--line); }
     .screen-card strong, .output-card strong { display: block; font-size: 15px; }
     .screen-card span, .output-card span { color: var(--ink-soft); font-size: 13px; }
@@ -284,6 +294,11 @@
       .automation-photo { min-height: 285px; }
       .automation-photo img { min-height: 285px; }
       .proof-grid { grid-template-columns: repeat(2,1fr); }
+      .editor-tour { grid-template-columns: 1fr; }
+      .editor-focus { min-height: 460px; }
+      .editor-focus img { width: 118%; object-position: 8% 5%; }
+      .editor-guide { display: grid; grid-template-columns: repeat(3, 1fr); padding: 22px; border-top: 1px solid var(--line); border-left: 0; }
+      .editor-guide > small, .editor-guide h3 { grid-column: 1 / -1; }
     }
     @media (max-width: 640px) {
       .wrap { width: min(100% - 24px, 1160px); }
@@ -302,6 +317,10 @@
       .stage-signal.radar-live { top: 34px; left: -4px; }
       .stage-signal.publish-live { right: -3px; bottom: 34px; }
       .visual-status { top: 10px; left: 10px; padding: 8px 10px; font-size: 10px; }
+      .editor-focus { min-height: 330px; }
+      .editor-focus img { width: 150%; object-position: 5% 4%; }
+      .editor-guide { display: flex; padding: 20px 16px; }
+      .editor-guide h3 { font-size: 22px; }
       .outputs { grid-template-columns: 1fr; gap: 18px; width: 100%; }
       .output-card img { width: 100%; height: min(145vw, 620px); object-fit: contain; }
       .real-product-shot figcaption, .screen-card figcaption, .output-card figcaption { align-items: flex-start; padding: 12px; }
@@ -402,11 +421,20 @@
         <div class="section-head"><p class="eyebrow">Produto em uso</p><h2>Veja o painel e o conteúdo que saem dele.</h2><p class="section-lead">Estas imagens são da plataforma em funcionamento. O editor reúne texto, prévia visual, fontes, paleta e imagens da marca na mesma tela.</p></div>
         <div class="showcase-grid">
           <figure class="screen-card">
-            <div class="screen-visual">
-              <span class="visual-status">Editor conectado à marca</span>
-              <img src="/docs/uploads/platform-content-editor.png" alt="Editor real da Nerion Social com prévia de carrossel, campos de conteúdo, fontes e paleta da marca">
+            <div class="editor-tour">
+              <div class="editor-focus">
+                <span class="visual-status">Tela real da plataforma</span>
+                <img src="/docs/uploads/platform-content-editor.png" alt="Editor real da Nerion Social mostrando a prévia do post e seus campos de edição">
+              </div>
+              <div class="editor-guide">
+                <small>Entenda esta tela</small>
+                <h3>Tudo que define o conteúdo, no mesmo editor.</h3>
+                <div class="editor-point"><b>01</b><div><strong>Veja antes de publicar</strong><span>A prévia mostra como o post ficará no Instagram.</span></div></div>
+                <div class="editor-point"><b>02</b><div><strong>Ajuste a mensagem</strong><span>Título, texto e sequência do carrossel ficam organizados.</span></div></div>
+                <div class="editor-point"><b>03</b><div><strong>Preserve sua marca</strong><span>Cores, imagens e identidade visual permanecem configuradas.</span></div></div>
+              </div>
             </div>
-            <figcaption><div><strong>Editor de conteúdo</strong><span>Prévia do slide, textos, fontes editoriais, cores e imagens em um só lugar.</span></div><a class="image-link" href="/docs/uploads/platform-content-editor.png" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
+            <figcaption><div><strong>Editor de conteúdo guiado</strong><span>Você visualiza, ajusta e aprova sem precisar entender uma tela técnica.</span></div><a class="image-link" href="/docs/uploads/platform-content-editor.png" target="_blank" rel="noopener noreferrer">Ver tela completa ↗</a></figcaption>
           </figure>
           <div class="outputs" aria-label="Exemplos de peças produzidas">
             <figure class="output-card">
