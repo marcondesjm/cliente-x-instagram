@@ -1,5 +1,23 @@
 # Historico
 
+## 2026-08-16 19:52 BRT
+
+Corrigida a fidelidade editorial das pautas capturadas pelo Radar.
+
+- A publicacao incorreta foi identificada pelo permalink `https://www.instagram.com/p/DcHiH0mmQGl/`, Feed `17908366407463721` e Story `18486146131099438`.
+- A fonte real era uma materia do TecMundo sobre agentes de imigracao, mas o filtro interpretou a palavra `agentes` como agentes de IA e combinou o titulo com textos empresariais genericos.
+- O Radar agora so aceita `agente/agentes` quando o titulo tambem possui qualificadores reais de inteligencia artificial; termos fortes como IA, automacao, workflow e machine learning continuam elegiveis.
+- A capa e os slides preservam o titulo e o contexto real da materia. Analises para empresas passam a ser identificadas explicitamente como analise editorial.
+- A legenda exige fonte, titulo original e URL completa da materia; pautas sem esses elementos sao bloqueadas antes da publicacao.
+- A camada de engajamento nao pode mais substituir o titulo, os fatos ou os rotulos gerados pela pesquisa do Radar.
+- `npm run validate-copy` passou com as novas travas `radarSemanticGuard` e `radarSourceIntegrityGuard`.
+- Um teste especifico rejeitou a materia de agentes de imigracao e aceitou uma materia real sobre IA.
+- Render de verificacao: `2026-08-16-194931-slot-0-render-only`, com materia real do n8n, contexto preservado e link completo; nenhuma nova publicacao foi enviada a Meta neste ajuste.
+- A publicacao antiga nao foi apagada nem republicada, pois isso exige autorizacao explicita do usuario.
+- Commit funcional: `f370527` (`Exige contexto real nas pautas do Radar`).
+- Deploy de producao: `dpl_GnmfBVsTkSxNYatKPdaxZKDwa9cz`.
+- Producao respondeu `HTTP 200` e confirmou a versao `v5.11`.
+
 ## 2026-08-16 19:45 BRT
 
 Corrigido o retorno involuntario do scroll vertical da landing.

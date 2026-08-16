@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 19:45 BRT
+Atualizado em: 2026-08-16 19:52 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,24 @@ Atualizado em: 2026-08-16 19:45 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `23c632e` (`Corrige retorno involuntario do scroll da landing`).
+- Checkpoint funcional atual: `f370527` (`Exige contexto real nas pautas do Radar`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
-- Versao visivel atual: `v5.10`
+- Versao visivel atual: `v5.11`
+
+## Radar fiel a materia original
+
+- O Radar nao considera mais a palavra isolada `agente/agentes` como evidencia de uma pauta sobre agentes de IA.
+- Titulo, fato central, fonte e URL completa da materia precisam permanecer no conteudo e na legenda.
+- A aplicacao empresarial e apresentada separadamente como analise editorial, sem atribuir a fonte afirmacoes que ela nao fez.
+- A camada de engajamento preserva o texto pesquisado e nao transforma noticias em chamadas genericas.
+- A validacao bloqueia pauta sem contexto real, link completo ou titulo original antes da publicacao.
+- O caso incorreto do TecMundo foi identificado no permalink `https://www.instagram.com/p/DcHiH0mmQGl/`; a publicacao existente nao foi removida nem republicada.
+- Verificacao feita por testes semanticos e pelo render-only `2026-08-16-194931-slot-0-render-only`; nenhuma nova publicacao real foi criada durante a correcao.
+- Producao: commit `f370527`, deploy `dpl_GnmfBVsTkSxNYatKPdaxZKDwa9cz` e versao `v5.11` confirmados.
 
 ## Scroll livre na landing
 
