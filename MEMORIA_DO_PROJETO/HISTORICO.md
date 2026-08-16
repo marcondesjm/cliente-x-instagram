@@ -22,6 +22,27 @@ Deploy/publicacao:
 - Deploy: sim. Producao Vercel confirmada em `https://cliente-x-instagram.vercel.app` na versao `v4.87`.
 - Instagram real: a proxima publicacao manual sera disparada apos este registro, com confirmacao obrigatoria por permalink.
 
+## 2026-08-16 00:46 BRT
+
+Publicacao manual pelo Radar concluida apos o registro da memoria.
+
+Resumo:
+
+- O painel autenticado disparou a publicacao imediata usando somente pauta recente do Radar.
+- O workflow usou a configuracao visual `v4.87`, com fotos de cenarios distintos na rotacao de capas.
+- A pauta publicada foi adaptada para empresas, com fonte oficial n8n.
+
+Comprovacao:
+
+- GitHub Actions: `31924984201` finalizado com `success`.
+- Carrossel confirmado visivel no perfil `@marcondes.machado.oficial`.
+- Permalink: `https://www.instagram.com/p/DcFh6FWG8f0/`.
+
+Deploy/publicacao:
+
+- Deploy: ja estava ativo em `v4.87`.
+- Instagram real: sim, feed confirmado por permalink.
+
 ## 2026-08-16 00:21 BRT
 
 Checkpoint editorial e operacional atualizado a pedido do usuario.

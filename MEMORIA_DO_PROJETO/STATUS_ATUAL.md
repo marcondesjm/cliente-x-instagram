@@ -52,7 +52,12 @@ Resultado:
 ## Publicacao real mais recente confirmada
 
 - Conta: `@marcondes.machado.oficial`.
-- GitHub Actions: run `31923469806`, concluido com `success` em 2026-08-16 00:08 BRT.
+- GitHub Actions: run `31924984201`, concluido com `success` em 2026-08-16 00:46 BRT.
+- Permalink confirmado no perfil: `https://www.instagram.com/p/DcFh6FWG8f0/`.
+- Pauta: n8n; abordagem para empresas sobre rastreabilidade e clareza nas decisoes.
+- A capa publicada usa a nova rotacao de cenarios distintos da versao `v4.87`.
+- A fonte foi conferida no carrossel visivel do perfil apos a conclusao do workflow.
+- Registro anterior: run `31923469806`, concluido com `success` em 2026-08-16 00:08 BRT.
 - Permalink: `https://www.instagram.com/p/DcFdj-ZjQef/`.
 - Fonte: n8n, noticia oficial publicada em 14/08/2026.
 - Observacao: esse post foi publicado antes do refinamento final de linguagem e conexao humana da versao `v4.84`; os proximos posts usarao o novo padrao.
@@ -67,4 +72,4 @@ Resultado:
 ## Proximo passo recomendado
 
 - Acompanhar os proximos posts automaticos e conferir se o publico responde melhor ao novo tom humano e consultivo.
-- Antes de uma nova publicacao manual, usar o dashboard na `v4.87` e confirmar o permalink final.
+- Acompanhar a resposta ao post `DcFh6FWG8f0` e manter a confirmacao por permalink em cada nova publicacao manual.
