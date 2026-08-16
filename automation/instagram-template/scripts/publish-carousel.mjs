@@ -18,6 +18,14 @@ const STORY_HEIGHT = 1920;
 const STORY_SAFE_TOP = 250;
 const STORY_SAFE_BOTTOM = 500;
 const STORY_SAFE_HEIGHT = STORY_HEIGHT - STORY_SAFE_TOP - STORY_SAFE_BOTTOM;
+const FORBIDDEN_GENERIC_RESEARCH_COVERS = [
+  /sua equipe vive ocupada.*tarefas importantes não andam/i,
+  /trabalho repetido ocupa o tempo que deveria ir para o cliente/i,
+  /o cliente espera enquanto sua equipe procura informação/i,
+  /sua equipe trabalha muito.*processo acompanha esse esforço/i,
+  /uma pequena demora pode virar uma oportunidade perdida/i,
+  /apresenta uma novidade sobre/i
+];
 const IG_BASE = 'https://graph.facebook.com/v21.0';
 const RETRY_ATTEMPTS = Number.parseInt(process.env.INSTAGRAM_TEMPLATE_RETRY_ATTEMPTS || '3', 10);
 const RETRY_BASE_DELAY_MS = Number.parseInt(process.env.INSTAGRAM_TEMPLATE_RETRY_BASE_DELAY_MS || '2500', 10);
@@ -2374,7 +2382,8 @@ function validatePack(pack) {
     if (sourceTitle.length < 12) throw new Error('Radar bloqueado: título original da matéria ausente ou insuficiente.');
     if (!combinedText.includes(sourceTitle)) throw new Error('Radar bloqueado: o conteúdo não apresenta o título/contexto real da matéria.');
     if (!String(pack.caption || '').includes(sourceUrl)) throw new Error('Radar bloqueado: a legenda não contém o link completo da matéria.');
-    if (/apresenta uma novidade sobre/i.test(String(pack.slides?.[0]?.title || ''))) {
+    const coverTitle = String(pack.slides?.[0]?.title || '');
+    if (FORBIDDEN_GENERIC_RESEARCH_COVERS.some((pattern) => pattern.test(coverTitle))) {
       throw new Error('Radar bloqueado: capa genérica sem contexto real da matéria.');
     }
     if (pack.slides.some((slide) => slide.researchSource !== pack.research.source || slide.researchTitle !== sourceTitle || slide.researchUrl !== sourceUrl)) {
@@ -3368,6 +3377,19 @@ async function main() {
       offer: 'consultoria e automações com IA'
     });
     validatePack(researchIntegrityProbe);
+    const genericResearchProbe = {
+      ...researchIntegrityProbe,
+      slides: researchIntegrityProbe.slides.map((slide, index) => index === 0
+        ? { ...slide, title: 'Trabalho repetido ocupa o tempo que deveria ir para o cliente.' }
+        : slide)
+    };
+    let genericResearchBlocked = false;
+    try {
+      validatePack(genericResearchProbe);
+    } catch (error) {
+      genericResearchBlocked = /capa genérica/i.test(String(error.message || ''));
+    }
+    if (!genericResearchBlocked) throw new Error('Trava de chamadas genéricas do Radar falhou.');
     if (FEED_WIDTH !== 1080 || FEED_HEIGHT !== 1350 || FEED_WIDTH / FEED_HEIGHT !== 4 / 5) {
       throw new Error('Arquitetura do Feed deve permanecer em 1080 x 1350 (4:5).');
     }
@@ -3386,6 +3408,7 @@ async function main() {
       checkedAvatarRotation: avatarProbeCovers.length,
       radarSemanticGuard: 'ok',
       radarSourceIntegrityGuard: 'ok'
+      ,genericResearchCoverGuard: 'ok'
       ,feedArchitectureGuard: '1080x1350-4:5'
       ,storySafeZoneGuard: '250-1170-500'
     }, null, 2));
