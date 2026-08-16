@@ -12,7 +12,7 @@ Atualizado em: 2026-08-16 18:46 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `f35b211` (`Reorganiza cadastro de empresas no painel`).
+- Checkpoint funcional atual: `f5ec93f` (`Amplia visao operacional da plataforma`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
@@ -27,6 +27,7 @@ Atualizado em: 2026-08-16 18:46 BRT
 - O Checklist operacional, terminal, workflows, vigia, versao e manutencao ficam reunidos na mesma area.
 - A checkagem inclui Radar/fontes, quantidade de conteudos, duplicidade, nuvem, Direct, Bio, onboarding, vigia e Meta/metricas.
 - A grade usa tres colunas no desktop, duas em tablet e uma no celular.
+- Producao: deploy `dpl_654XqDMJD5r6jWTYFb5AEgQEcFwF`, versao `v5.00` e nova visao confirmadas por `HTTP 200`.
 
 ## Usabilidade da aba Clientes
 

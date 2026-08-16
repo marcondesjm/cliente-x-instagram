@@ -26,6 +26,12 @@ Validacao:
 - `npm run validate-copy`: passou com `duplicateHistoryGuard` e `sourceBalanceGuard` em `ok`.
 - `git diff --check`: passou.
 
+Checkpoint e producao:
+
+- Commit funcional: `f5ec93f` (`Amplia visao operacional da plataforma`), enviado para `origin/main` e `origin/feature/modern-editorial-system`.
+- Deploy: `dpl_654XqDMJD5r6jWTYFb5AEgQEcFwF`, associado a `https://cliente-x-instagram.vercel.app`.
+- Producao respondeu `HTTP 200` e confirmou `v5.00`, largura integral do Sistema, cartoes de Radar, Direct, Bio e onboarding e Checklist associado a essa aba.
+
 ## 2026-08-16 18:42 BRT
 
 Reorganizada a aba `Clientes` para eliminar o grande espaco vazio e tornar o cadastro de empresas mais guiado.
