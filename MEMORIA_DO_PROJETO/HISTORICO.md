@@ -1,5 +1,23 @@
 # Historico
 
+## 2026-08-16 19:57 BRT
+
+Padronizada a arquitetura obrigatoria das artes de Feed e Story.
+
+- O Feed permanece fixo em `1080 x 1350 px`, proporcao vertical `4:5`.
+- O Story permanece fixo em `1080 x 1920 px`, proporcao `9:16`.
+- O Story agora reserva 250 px no topo e 500 px na base para a interface do Instagram; textos, marca, imagem e informacoes importantes ficam na area central segura de 1170 px.
+- O publicador automatico usa essas medidas em todos os modelos e possui validacao permanente `feedArchitectureGuard` e `storySafeZoneGuard`.
+- O gerador da Grade semanal tambem posiciona todo o conteudo do Story dentro da area segura.
+- Uploads manuais fora de `1080 x 1350` para Feed ou `1080 x 1920` para Story sao rejeitados antes do envio.
+- O painel informa dimensoes obrigatorias e a area segura do Story ao lado dos campos de upload.
+- `npm run validate-copy` passou com `feedArchitectureGuard: 1080x1350-4:5` e `storySafeZoneGuard: 250-1170-500`.
+- Render de verificacao: `2026-08-16-195611-slot-0-render-only`; a imagem foi inspecionada e todo o conteudo ficou dentro da area segura, sem sobreposicao.
+- Nenhuma publicacao real foi enviada a Meta durante esta alteracao.
+- Commit funcional: `bdf8f7e` (`Padroniza zonas seguras de Feed e Story`).
+- Deploy de producao: `dpl_6ySxPMN4Jw16BgBwkNdqGwgyKLKQ`.
+- Producao respondeu `HTTP 200` e confirmou a versao `v5.12` e a orientacao de zona segura.
+
 ## 2026-08-16 19:52 BRT
 
 Corrigida a fidelidade editorial das pautas capturadas pelo Radar.

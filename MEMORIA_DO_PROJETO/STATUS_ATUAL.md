@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 19:52 BRT
+Atualizado em: 2026-08-16 19:57 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,25 @@ Atualizado em: 2026-08-16 19:52 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `f370527` (`Exige contexto real nas pautas do Radar`).
+- Checkpoint funcional atual: `bdf8f7e` (`Padroniza zonas seguras de Feed e Story`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
-- Versao visivel atual: `v5.11`
+- Versao visivel atual: `v5.12`
+
+## Arquitetura obrigatoria das artes
+
+- Feed: `1080 x 1350 px`, proporcao `4:5`.
+- Story: `1080 x 1920 px`, proporcao `9:16`.
+- Zona segura do Story: 250 px reservados no topo, 1170 px centrais para o conteudo principal e 500 px reservados na base.
+- Marca, titulo, texto, foto e CTA devem permanecer na area central para nao serem cobertos pela interface do Instagram.
+- Os modelos automaticos e o gerador da Grade semanal obedecem a mesma arquitetura.
+- Upload manual com dimensoes diferentes e bloqueado no painel antes do envio.
+- Testes permanentes: `feedArchitectureGuard` e `storySafeZoneGuard`.
+- Render verificado: `2026-08-16-195611-slot-0-render-only`, sem sobreposicao e sem publicacao real na Meta.
+- Producao: commit `bdf8f7e`, deploy `dpl_6ySxPMN4Jw16BgBwkNdqGwgyKLKQ` e versao `v5.12` confirmados.
 
 ## Radar fiel a materia original
 
