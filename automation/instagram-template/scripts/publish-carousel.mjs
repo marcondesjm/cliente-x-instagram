@@ -1528,6 +1528,27 @@ function visualCueFromText(text = '') {
   return 'business';
 }
 
+function visualCueForAccount(account = {}, fallbackText = '') {
+  const profile = account.contentProfile || {};
+  const identity = normalizeSearchText([
+    profile.niche,
+    account.clientProfile?.businessType,
+    account.brandName
+  ].filter(Boolean).join(' '));
+  if (/\b(juridico|advocacia|advogado|escritorio juridico)\b/.test(identity)) return 'legal';
+  if (/\b(turismo|viagem|pousada|hotel|destino)\b/.test(identity)) return 'tourism';
+  if (/\b(imobiliaria|imobiliario|corretor|imovel|imoveis)\b/.test(identity)) return 'real-estate';
+  if (/\b(clinica|medico|odontologia|saude|dentista)\b/.test(identity)) return 'clinic';
+  if (/\b(restaurante|delivery|cardapio|cozinha)\b/.test(identity)) return 'restaurant';
+  if (/\b(estetica|beleza|salao)\b/.test(identity)) return 'beauty';
+  if (/\b(educacao|curso|aluno|aula|escola)\b/.test(identity)) return 'education';
+  if (/\b(ecommerce|loja|varejo)\b/.test(identity)) return 'ecommerce';
+  // Contas de IA, automação, consultoria e serviços usam visual empresarial,
+  // mesmo quando o texto menciona palavras como "processo" ou "contrato".
+  if (/\b(ia|inteligencia artificial|automacao|consultoria|empresa|negocio|servico)\b/.test(identity)) return 'business';
+  return visualCueFromText(fallbackText);
+}
+
 function sectorPhotoCssImage(cue = 'business', slideIndex = 1, renderContext = {}) {
   const photos = {
     legal: ['docs/uploads/sector-photos/legal.jpg', 'docs/uploads/sector-photos/operations-review.png'],
@@ -1539,7 +1560,7 @@ function sectorPhotoCssImage(cue = 'business', slideIndex = 1, renderContext = {
     ecommerce: ['docs/uploads/sector-photos/ecommerce.jpg', 'docs/uploads/sector-photos/operations-review.png'],
     finance: ['docs/uploads/sector-photos/finance.jpg', 'docs/uploads/sector-photos/operations-review.png'],
     services: ['docs/uploads/sector-photos/ecommerce.jpg', 'docs/uploads/sector-photos/operations-review.png'],
-    business: ['docs/uploads/sector-photos/finance.jpg', 'docs/uploads/sector-photos/operations-review.png']
+    business: ['docs/uploads/sector-photos/operations-review.png']
   };
   const options = photos[cue] || photos.business;
   const dateSeed = daysSinceEpoch(renderContext.dateString || todaySaoPaulo());
@@ -1632,7 +1653,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const soft = slideStyle.accentSoft || 'rgba(167,86,61,0.16)';
   const headline = title.replace(/\s+IA\b/i, ' <strong>IA</strong>');
   const mode = slideStyle.templateMode || 'paper';
-  const visualCue = slide.visualCue || visualCueFromText(`${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
+  const visualCue = slide.visualCue || visualCueForAccount(account, `${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
   const avatarImage = accountAvatarCssImage(account, index, visualCue, renderContext);
   const avatarClass = avatarImage ? ' has-avatar' : '';
   const usernameDisplay = accountUsernameDisplay(account);
@@ -2473,7 +2494,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
   const accent = slideStyle.accent || '#a7563d';
   const mode = slideStyle.templateMode || 'native';
   const soft = slideStyle.accentSoft || 'rgba(167,86,61,0.16)';
-  const visualCue = slide.visualCue || visualCueFromText(`${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
+  const visualCue = slide.visualCue || visualCueForAccount(account, `${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
   const avatarImage = accountAvatarCssImage(account, 0, visualCue, { ...renderContext, story: true });
   const sectorPhotoImage = sectorPhotoCssImage(visualCue);
   const avatarBlock = avatarImage
@@ -3140,7 +3161,7 @@ async function main() {
   const historyPack = JSON.parse(JSON.stringify(pack));
   const enhancement = enhancePackForEngagement(pack, today, generationSlotIndex, account);
   pack = enhancement.pack;
-  const packVisualCue = visualCueFromText([
+  const packVisualCue = visualCueForAccount(account, [
     pack.caption,
     ...(pack.slides || []).flatMap((slide) => [slide.eyebrow, slide.title, slide.body])
   ].filter(Boolean).join(' '));

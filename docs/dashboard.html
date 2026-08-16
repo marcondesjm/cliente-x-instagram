@@ -1394,7 +1394,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.74</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.75</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -5430,6 +5430,23 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       return 'business';
     }
 
+    function previewVisualCueForAccount(text = '') {
+      const account = appState.account || {};
+      const profile = account.contentProfile || {};
+      const identity = String([profile.niche, account.clientProfile?.businessType, account.brandName].filter(Boolean).join(' '))
+        .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      if (/\b(juridico|advocacia|advogado|escritorio juridico)\b/.test(identity)) return 'legal';
+      if (/\b(turismo|viagem|pousada|hotel|destino)\b/.test(identity)) return 'tourism';
+      if (/\b(imobiliaria|imobiliario|corretor|imovel|imoveis)\b/.test(identity)) return 'real-estate';
+      if (/\b(clinica|medico|odontologia|saude|dentista)\b/.test(identity)) return 'clinic';
+      if (/\b(restaurante|delivery|cardapio|cozinha)\b/.test(identity)) return 'restaurant';
+      if (/\b(estetica|beleza|salao)\b/.test(identity)) return 'beauty';
+      if (/\b(educacao|curso|aluno|aula|escola)\b/.test(identity)) return 'education';
+      if (/\b(ecommerce|loja|varejo)\b/.test(identity)) return 'ecommerce';
+      if (/\b(ia|inteligencia artificial|automacao|consultoria|empresa|negocio|servico)\b/.test(identity)) return 'business';
+      return previewVisualCueFromText(text);
+    }
+
     function previewSectorCueSvg(cue = 'business', x = 730, y = 248, size = 250, color = '#2f7d73') {
       const common = `fill="none" stroke="${color}" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"`;
       const shapes = {
@@ -5531,7 +5548,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       }[mode];
       const titleSize = layout.titleSize;
       const panelRadius = mode === 'poster' || mode === 'minimal' ? Math.round(layout.panelW / 2) : 26;
-      const cue = item.visualCue || previewVisualCueFromText(`${title} ${body} ${item.caption || ''}`);
+      const cue = previewVisualCueForAccount(`${title} ${body} ${item.caption || ''}`);
       const cueX = mode === 'split' ? 746 : mode === 'magazine' ? 756 : 726;
       const cueY = mode === 'minimal' ? 390 : mode === 'poster' ? 280 : 250;
       const bodyFontSize = isCta
