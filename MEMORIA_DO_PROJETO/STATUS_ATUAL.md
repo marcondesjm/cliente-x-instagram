@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 17:40 BRT
+Atualizado em: 2026-08-16 17:47 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,12 +12,12 @@ Atualizado em: 2026-08-16 17:40 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `97d331f`; novo checkpoint de memoria sera o commit que registrar esta atualizacao.
+- Checkpoint funcional atual: `5b12678`, integrado ao remoto em `7170303`; novo checkpoint de memoria sera o commit que registrar esta atualizacao.
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
-- Commit mais recente da landing: `97d331f` (`Destaca funcionamento do Radar na landing`).
+- Commit mais recente da landing: `5b12678` (`Reforca volume diario e garantia da oferta`).
 - Versao visivel atual: `v4.96`
 
 ## Checkagem operacional do painel
@@ -61,8 +61,10 @@ Atualizado em: 2026-08-16 17:40 BRT
 - Nome provisorio: `Nerion Social`; ainda requer validacao formal de marca antes do lancamento definitivo.
 - Oferta promocional: de `R$ 397/mes` por `R$ 197/mes` para novos clientes.
 - O selo de destaque da oferta agora diz `Oferta relampago`; este e o checkpoint comercial visual mais recente.
-- Volume destacado: mais de `12` carrosseis no feed por dia e `12` Stories diarios.
+- Volume destacado: mais de `12` carrosseis no feed por dia e `12` Stories diarios aparecem em blocos numericos proprios no cartao principal da oferta.
 - Implantacao de `R$ 297` riscada e apresentada como gratuita.
+- A secao de credibilidade usa provas verificaveis: publicacoes reais do Instagram, confirmacao tecnica no painel e links publicos; nao ha depoimentos ficticios.
+- Garantia de implantacao: a configuracao continua sem custo adicional ate marca, agenda e uma publicacao de teste estarem confirmadas. A garantia nao promete alcance, seguidores, engajamento ou vendas.
 - Entrega comunicada: criacao automatica de conteudo, criativos, carrossel, Story e legendas; agenda, publicacao na nuvem e Direct.
 - Para um volume menor, a pagina oferece consulta de plano menor; licenca personalizada permanece sob medida.
 - Promessa central: manter a rede social ativa, cuidada e atualizada sem o cliente criar ou publicar cada conteudo manualmente e sem depender do computador ligado.

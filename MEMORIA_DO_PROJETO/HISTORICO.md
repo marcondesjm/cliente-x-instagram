@@ -1,5 +1,26 @@
 # Historico
 
+## 2026-08-16 17:47 BRT
+
+A oferta da landing ganhou destaque visual para o volume diario e uma nova secao de credibilidade com provas verificaveis e garantia de implantacao.
+
+Alteracao:
+
+- `Mais de 12 carrosseis por dia` e `12 Stories por dia` agora aparecem em dois blocos numericos maiores no cartao da oferta.
+- A implantacao gratuita permanece destacada logo abaixo dos volumes.
+- Como nao ha depoimentos reais autorizados no projeto, nenhum nome, empresa ou avaliacao ficticia foi criado.
+- A nova secao de credibilidade utiliza publicacoes reais do Instagram, confirmacao tecnica no painel e links que o visitante pode conferir.
+- Foi adicionada uma garantia de implantacao: a configuracao continua sem custo adicional ate marca, agenda e publicacao de teste estarem confirmadas.
+- O texto delimita que a garantia cobre a implantacao tecnica e nao promete alcance, seguidores, engajamento ou vendas.
+
+Validacao e deploy:
+
+- JavaScript inline: `1` bloco com sintaxe valida.
+- `npm run validate-copy`: passou com `74` selecoes automaticas e protecao de duplicidade `ok`.
+- Commit funcional: `5b12678` (`Reforca volume diario e garantia da oferta`), integrado ao remoto em `7170303`.
+- Deploy Vercel: `dpl_9LSizZaufbmruwMvhKYerNQphXzf`, alias `https://cliente-x-instagram.vercel.app`.
+- Producao respondeu `HTTP 200` com `2` blocos de volume, `3` cartoes de credibilidade, garantia e ressalva de resultados presentes.
+
 ## 2026-08-16 17:40 BRT
 
 A captura geral do painel no topo da landing foi substituida por uma demonstracao visual do funcionamento real do Radar editorial.
