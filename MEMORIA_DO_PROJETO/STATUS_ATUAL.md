@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 17:15 BRT
+Atualizado em: 2026-08-16 17:24 BRT
 
 ## Regra permanente de checkpoint
 
@@ -37,6 +37,7 @@ Atualizado em: 2026-08-16 17:15 BRT
 - Cada conta permite ate `10` automacoes de Direct, cada uma com nome, tags, material e mensagens proprias. A campanha antiga permanece compativel e o historico identifica qual automacao respondeu.
 - A conta atual possui `Material 1` e `Instagram automatico`; as duas automacoes estao ativas. A segunda responde a `Quero` e entrega o link da plataforma. Variacoes de caixa da mesma palavra nao geram falso conflito, mas a mesma tag permanece proibida entre materiais diferentes.
 - O painel preserva `Meta conectada` depois de salvar as automacoes; webhook, segredo do app e token de mensagens existem na producao.
+- A automacao `Instagram automatico` foi comprovada com o comentario real `QUERO`: Direct com status `sent` e resposta publica registrada em 2026-08-16 17:17 BRT.
 - O Radar usa somente fontes oficiais e aceita noticias dos ultimos 7 dias; ele nao usa pack manual nem pack automatico generico como reserva.
 - Quando nao encontra pauta oficial valida e nao repetida em 7 dias, o Radar amplia automaticamente para 15 dias e depois para 30 dias. Somente bloqueia depois de esgotar as tres janelas.
 - Uma pauta com link de fonte diferente e aceita mesmo quando usa a mesma estrutura editorial; o mesmo link continua bloqueado. A regra publicou com sucesso `https://www.instagram.com/p/DcHCaxjG4Ew/` no run `31962694454`.
@@ -65,7 +66,9 @@ Atualizado em: 2026-08-16 17:15 BRT
 - Entrega comunicada: criacao automatica de conteudo, criativos, carrossel, Story e legendas; agenda, publicacao na nuvem e Direct.
 - Para um volume menor, a pagina oferece consulta de plano menor; licenca personalizada permanece sob medida.
 - Promessa central: manter a rede social ativa, cuidada e atualizada sem o cliente criar ou publicar cada conteudo manualmente e sem depender do computador ligado.
-- Headline atual: `Sua rede social ativa, com conteudo que tem cara de gente.` A comunicacao apresenta IA como ferramenta com estrategia e direcionamento pensados para pessoas, evitando aparencia fria ou generica.
+- Headline atual: `Conteudo criado, agendado e publicado para a sua empresa.` A abertura explica diretamente que a Nerion Social pesquisa pautas, cria carrosseis, Stories e legendas e publica automaticamente no Instagram seguindo a identidade da marca.
+- O CTA `Quero ver uma demonstracao` aparece antes do preco e na primeira tela do celular. A faixa seguinte resume publico, criacao, publicacao e Direct sem exigir conhecimento tecnico.
+- A contratacao foi esclarecida: o Plano Completo combina plataforma, configuracao assistida e suporte para uma marca; operacoes com varias contas ou integracoes usam projeto personalizado.
 - Mensagem de infraestrutura aprovada: `A plataforma e acessada na nuvem.` A landing nao deve mencionar computador nem celular, salvo novo pedido explicito.
 - Beneficio comercial: aumentar oportunidades de engajamento e atrair seguidores reais e alinhados, com potencial para comprar produtos ou contratar servicos.
 - Limite de comunicacao: nao garantir seguidores, curtidas ou vendas; consistencia e conteudo atual aumentam oportunidades, nao resultados certos.
@@ -136,5 +139,5 @@ Resultado:
 - Em uma retomada futura, iniciar deste checkpoint e preservar a versao `v4.96`, o CTA dos 50 prompts, as hashtags finais, a rotacao completa de quatro fotos, a foto de capa proporcional e o Story sem sobreposicao.
 - Na Pagina Bio, criar um botao real pelo novo campo, salvar e conferir o resultado na pagina publica.
 - Para a landing, preservar a promocao de `R$ 397/mes` por `R$ 197/mes`, implantacao gratuita, mais de 12 carrosseis no feed por dia, 12 Stories diarios, planos menores sob consulta e a mensagem de seguidores reais com potencial comercial sem garantia de resultado.
-- Para o Direct, comentar `Quero` em uma publicacao real e comprovar o envio da automacao `Instagram automatico` pelo historico, sem alterar a campanha atual dos 50 prompts.
+- Para o Direct, acompanhar as proximas entregas das duas automacoes pelo historico; `Quero` e a campanha dos 50 prompts ja possuem envios reais comprovados.
 - Antes de vender em escala, validar o nome `Nerion Social`, preparar termos/politica de privacidade e definir contrato e onboarding.

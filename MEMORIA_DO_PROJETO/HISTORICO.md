@@ -1,5 +1,37 @@
 # Historico
 
+## 2026-08-16 17:24 BRT
+
+Landing comercial simplificada a partir da perspectiva de um usuario novo, com publicacao e validacao em producao.
+
+Clareza comercial:
+
+- A abertura agora explica imediatamente que a Nerion Social automatiza conteudo para Instagram.
+- Nova headline: `Conteudo criado, agendado e publicado para a sua empresa.`
+- O primeiro paragrafo informa, sem jargao, que a plataforma pesquisa pautas, cria carrosseis, Stories e legendas e publica automaticamente seguindo a marca.
+- O botao `Quero ver uma demonstracao` foi movido para antes do preco e aparece na primeira tela do celular.
+- A faixa inicial passou a responder para quem e o produto, o que ele cria, como publica e como funciona o Direct.
+- Recursos tecnicos foram reescritos como resultados compreensiveis; a responsabilidade ficou clara: configuracao assistida na implantacao, execucao automatica pela plataforma e acompanhamento pelo cliente.
+- Uma secao redundante e a pergunta isolada sobre AIDA foram removidas. O texto visivel caiu de aproximadamente `6275` para `5477` caracteres e a pagina ficou cerca de `800 px` menor no desktop.
+- A oferta aprovada de `R$ 397/mes` por `R$ 197/mes`, implantacao gratuita, volumes, plano menor e licenca personalizada foram preservados.
+
+Validacao e deploy:
+
+- `npm run validate-copy`: passou com `74` selecoes automaticas e protecao de duplicidade `ok`.
+- JavaScript inline: sintaxe valida.
+- Desktop e celular: sem overflow horizontal no teste local, CTA antes da oferta e nenhum erro de console.
+- Commit funcional: `625472a` (`Simplifica landing para novos usuarios`).
+- Integracao com atualizacao automatica remota: `6f69153`.
+- Deploy Vercel: `dpl_5bpMzYJdWkBe4xPMkk9G7csZEjtS`, com alias `https://cliente-x-instagram.vercel.app`.
+- Producao confirmou HTTP `200`, nova headline, novo CTA e ausencia da headline anterior.
+
+Confirmacao adicional do Direct:
+
+- O comentario real `QUERO` acionou a automacao `Instagram automatico` em 2026-08-16 17:17 BRT.
+- Entrega privada: `sent`, com `messageId` e `recipientId` registrados.
+- Resposta publica: confirmada pelo ID `18089055641387771`.
+- O teste operacional que estava pendente para a palavra-chave `Quero` foi concluido com sucesso.
+
 ## 2026-08-16 17:15 BRT
 
 Regra permanente de checkpoint definida pelo usuario.
