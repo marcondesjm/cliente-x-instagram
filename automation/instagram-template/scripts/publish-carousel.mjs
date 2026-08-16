@@ -2909,6 +2909,16 @@ function findDuplicateResearchSource(history, pack) {
   return history.find((entry) => String(entry?.research?.sourceUrl || '').trim().replace(/\/$/, '') === sourceUrl);
 }
 
+function findConsecutiveResearchSource(history, pack) {
+  const source = String(pack?.research?.source || '').trim().toLocaleLowerCase('pt-BR');
+  if (!source) return null;
+  const lastResearchPublication = [...history].reverse().find((entry) => entry?.research?.source);
+  if (!lastResearchPublication) return null;
+  return String(lastResearchPublication.research.source || '').trim().toLocaleLowerCase('pt-BR') === source
+    ? lastResearchPublication
+    : null;
+}
+
 function normalizedCoverTitle(pack = {}) {
   return normalizeContentFingerprint(String(pack?.slides?.[0]?.title || '').trim());
 }
@@ -2929,6 +2939,7 @@ function findDuplicateSelection(pack, recentMedia = [], publicationHistory = [])
     // A pauta e a chamada de capa precisam ser novas. Fontes diferentes nao
     // justificam repetir a mesma promessa visual em posts proximos.
     return findDuplicateResearchSource(publicationHistory, pack)
+      || findConsecutiveResearchSource(publicationHistory, pack)
       || findDuplicateCoverTitle(recentMedia, publicationHistory, pack)
       || findDuplicatePack(publicationHistory, pack);
   }
@@ -3189,6 +3200,14 @@ async function main() {
       coverTitle: duplicateProbePack?.slides?.[0]?.title || ''
     }], duplicateProbePack);
     if (!coverProbe) throw new Error('Protecao anti-repeticao de capa falhou no teste de historico.');
+    const sourceProbePack = {
+      ...duplicateProbePack,
+      research: { source: 'Fonte de teste', sourceUrl: 'https://example.com/noticia-nova' }
+    };
+    const sourceProbe = findConsecutiveResearchSource([{
+      research: { source: 'Fonte de teste', sourceUrl: 'https://example.com/noticia-anterior' }
+    }], sourceProbePack);
+    if (!sourceProbe) throw new Error('Rodizio de fontes falhou no teste de historico.');
     console.log(JSON.stringify({
       ok: true,
       account: account.account,
