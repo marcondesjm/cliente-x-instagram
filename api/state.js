@@ -43,7 +43,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.78',
+  appVersion: 'v4.79',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -582,7 +582,7 @@ function radarConfigForAccount(account = {}) {
     : [];
   return {
     enabled: typeof saved.enabled === 'boolean' ? saved.enabled : account.account === 'cliente-x',
-    maxAgeDays: Math.max(1, Math.min(90, Number(saved.maxAgeDays) || (account.account === 'cliente-x' ? 1 : 60))),
+    maxAgeDays: Math.max(1, Math.min(90, Number(saved.maxAgeDays) || (account.account === 'cliente-x' ? 7 : 60))),
     keywords,
     excludeKeywords,
     sources: sources.length ? sources : (account.account === 'cliente-x' ? EDITORIAL_SOURCES : [])

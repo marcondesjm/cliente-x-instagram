@@ -14,8 +14,9 @@ function activeRadar(account) {
   const sources = normalizeEditorialSources(saved.sources);
   return {
     enabled: typeof saved.enabled === 'boolean' ? saved.enabled : account.account === 'cliente-x',
-    // Publicação imediata é estrita: notícia de IA do dia, nunca um tema antigo.
-    maxAgeDays: 1,
+    // Publicação imediata usa somente fonte oficial recente: últimos 7 dias,
+    // sem cair em pack manual ou em tema antigo.
+    maxAgeDays: 7,
     keywords: Array.isArray(saved.keywords) ? saved.keywords : [],
     excludeKeywords: Array.isArray(saved.excludeKeywords) ? saved.excludeKeywords : [],
     sources: sources.length ? sources : (account.account === 'cliente-x' ? EDITORIAL_SOURCES : [])
@@ -39,7 +40,7 @@ async function currentRadarPack(account) {
   });
   const pack = result.packs.find((item) => item?.research?.sourceUrl && item?.slides?.length >= 2 && item?.caption?.trim());
   if (!pack) {
-    throw new Error('Não encontrei hoje uma notícia oficial de IA adequada para esta conta. Nenhum post foi enviado. Atualize as fontes do Radar ou tente mais tarde.');
+    throw new Error('Não encontrei nos últimos 7 dias uma notícia oficial de IA adequada para esta conta. Nenhum post foi enviado. Atualize as fontes do Radar ou tente mais tarde.');
   }
   return pack;
 }
