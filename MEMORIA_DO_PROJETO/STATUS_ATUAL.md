@@ -1,13 +1,13 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 15:13 BRT
+Atualizado em: 2026-08-16 16:07 BRT
 
 ## Projeto ativo
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Commit mais recente da correcao visual: `a5b4466`; integracao e checkpoint atual: `83d491f`.
-- Radar progressivo e selecao de pauta oficial nova comprovados em producao; landing humana e cartao de fonte corrigido fazem parte deste checkpoint.
+- Checkpoint operacional anterior: `ec47b1d`; novo checkpoint de memoria sera o commit que registrar esta atualizacao.
+- Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
@@ -27,6 +27,8 @@ Atualizado em: 2026-08-16 15:13 BRT
 - Quando nao encontra pauta oficial valida e nao repetida em 7 dias, o Radar amplia automaticamente para 15 dias e depois para 30 dias. Somente bloqueia depois de esgotar as tres janelas.
 - Uma pauta com link de fonte diferente e aceita mesmo quando usa a mesma estrutura editorial; o mesmo link continua bloqueado. A regra publicou com sucesso `https://www.instagram.com/p/DcHCaxjG4Ew/` no run `31962694454`.
 - Fontes atuais incluem os provedores oficiais de IA e, como cobertura jornalistica complementar, G1 Tecnologia, Olhar Digital e TecMundo.
+- As pautas sao intercaladas por fonte, e duas publicacoes pesquisadas consecutivas nao podem usar a mesma origem. Teste real encontrou G1 Tecnologia, TecMundo, n8n, AWS, OpenAI, Microsoft Cloud e Anthropic na mesma fila elegivel.
+- O Radar compara tambem a frase da capa com as ultimas `50` publicacoes da Meta e com `coverTitle` salvo no historico; uma noticia diferente nao pode reutilizar uma chamada visual recente.
 - A trava agora vale para `Publicar agora`, horarios automaticos, packs manuais e posts agendados: toda publicacao real com Radar ativo exige `research.sourceUrl`.
 - Se nao houver noticia oficial elegivel e nao repetida, o publicador bloqueia o envio em vez de publicar conteudo solto.
 - A automacao agendada roda na nuvem por GitHub Actions e Meta/Instagram; o computador do usuario pode ficar desligado. O login do painel e necessario somente para acoes manuais no dashboard e expira em 12 horas.
@@ -107,6 +109,7 @@ Resultado:
 
 - Nao tratar dry-run, render ou apenas um run verde como prova de post real: exigir permalink do Instagram e etapa `Publish feed and story` concluida.
 - Nao reduzir os 13 horarios para resolver repeticao; variar pauta e abordagem.
+- Nao remover o rodizio de fontes nem a trava de `coverTitle`; elas evitam concentracao em n8n/OpenAI e duplicidade visual entre pautas diferentes.
 - Bump de versao visivel deve atualizar `api/state.js` e `docs/dashboard.html` juntos.
 - O projeto moderno e separado do checkout antigo `cliente-x-instagram`; confirmar o repositorio-alvo antes de alterar ou publicar.
 

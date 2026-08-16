@@ -1,5 +1,34 @@
 # Historico
 
+## 2026-08-16 16:07 BRT
+
+Checkpoint do Radar salvo a pedido do usuario depois da correcao de duplicidade visual e da implantacao do rodizio de fontes.
+
+Protecao contra capas repetidas:
+
+- Foi confirmado que pautas e links diferentes podiam receber a mesma frase de capa, fazendo duas publicacoes parecerem duplicadas no perfil.
+- O Radar agora compara a chamada de capa com as ultimas `50` publicacoes retornadas pela Meta e com o historico local.
+- Cada publicacao nova registra `coverTitle` em `publication-history.json`.
+- Fonte diferente nao autoriza mais repetir a mesma chamada visual; o seletor procura outra pauta antes de publicar.
+- O conjunto de chamadas foi ampliado, mantendo linguagem humana e foco em dores reais da empresa.
+- Commit da correcao: `be1ab0d` (`Impede repeticao de capas no Radar`).
+
+Rodizio de fontes:
+
+- As pautas elegiveis agora sao agrupadas e intercaladas por fonte, em vez de serem ordenadas apenas pela data global.
+- O Radar impede duas publicacoes pesquisadas consecutivas da mesma fonte.
+- Continuam ativos os filtros de nicho, atualidade, link ja utilizado, titulo de capa e conteudo repetido.
+- Teste real em janela de `30 dias` encontrou rotacao entre `G1 Tecnologia`, `TecMundo`, `n8n`, `AWS Machine Learning`, `OpenAI`, `Microsoft Cloud` e `Anthropic Claude`, sem falhas de consulta.
+- `Olhar Digital`, Google Cloud, Google DeepMind e NVIDIA permanecem cadastrados e entram no rodizio quando houver pauta recente que passe pelos filtros.
+- Commit do rodizio: `ec47b1d` (`Adiciona rodizio de fontes ao Radar`).
+
+Validacao:
+
+- `npm run validate-copy`: passou com `20` packs, `54` packs automaticos e `74` selecoes automaticas.
+- Protecao de historico, capa e fonte consecutiva: aprovada.
+- Branch `feature/modern-editorial-system`, `origin/feature/modern-editorial-system` e `origin/main` ficaram sincronizadas em `ec47b1d` antes deste registro de memoria.
+- A regra vale para as proximas publicacoes; posts duplicados que ja estavam no Instagram nao foram removidos.
+
 ## 2026-08-16 15:13 BRT
 
 Checkpoint de comunicacao da landing solicitado pelo usuario:
