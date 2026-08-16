@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 19:00 BRT
+Atualizado em: 2026-08-16 19:02 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,7 +12,7 @@ Atualizado em: 2026-08-16 19:00 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `069ab71` (`Adiciona previa lateral ao editor da Bio`).
+- Checkpoint funcional atual: `eaecef0` (`Corrige largura da aba Agenda`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
@@ -25,6 +25,7 @@ Atualizado em: 2026-08-16 19:00 BRT
 - A aba Agenda nao herda mais a coluna lateral vazia do layout geral.
 - Os 13 horarios, a programacao de hoje e amanha, o Radar, a previa e o editor usam toda a largura disponivel.
 - Em telas menores, a grade geral continua em uma coluna.
+- Producao: deploy `dpl_F2cr6sqjsfKpQsNXeraxAFwfenyG`, versao `v5.02` e estrutura confirmadas por `HTTP 200`.
 
 ## Editor da Pagina Bio
 

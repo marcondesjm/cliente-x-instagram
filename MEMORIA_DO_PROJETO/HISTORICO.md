@@ -1,5 +1,16 @@
 # Historico
 
+## 2026-08-16 19:02 BRT
+
+Checkpoint de producao da Agenda em largura integral.
+
+- Commit funcional: `eaecef0` (`Corrige largura da aba Agenda`).
+- Branch `feature/modern-editorial-system` e `origin/main` sincronizadas.
+- Deploy de producao: `dpl_F2cr6sqjsfKpQsNXeraxAFwfenyG`.
+- Alias confirmado: `https://cliente-x-instagram.vercel.app`.
+- Producao respondeu `HTTP 200` e confirmou `v5.02`, a regra de largura integral da Agenda, a grade principal em 100%, os 13 slots e as regras responsivas.
+- A verificacao visual automatizada chegou corretamente ao login protegido; a confirmacao final da estrutura foi feita no HTML entregue pela producao, sem contornar a autenticacao.
+
 ## 2026-08-16 19:00 BRT
 
 Corrigida a largura da aba `Agenda`, que ainda herdava a grade antiga de duas colunas e deixava uma grande area vazia a direita.
