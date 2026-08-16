@@ -1,0 +1,56 @@
+name: Render Instagram Preview
+
+on:
+  workflow_dispatch:
+    inputs:
+      account:
+        description: Account key
+        required: true
+        default: cliente-x
+      preview_date:
+        description: Date in BRT (YYYY-MM-DD)
+        required: true
+      slot_index:
+        description: Slot index to render
+        required: true
+        default: "0"
+
+permissions:
+  contents: write
+
+jobs:
+  render-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Render official carousel images
+        env:
+          ACCOUNT: ${{ inputs.account }}
+          PREVIEW_DATE: ${{ inputs.preview_date }}
+          SLOT_INDEX: ${{ inputs.slot_index }}
+        run: |
+          INSTAGRAM_TEMPLATE_SLOT_INDEX="$SLOT_INDEX" npm run instagram -- --account "$ACCOUNT" --render-only --plan-date "$PREVIEW_DATE"
+          RUN_DIR="$(find automation/instagram-template/runs/$ACCOUNT -maxdepth 1 -type d -name "*-slot-$SLOT_INDEX-render-only" -printf '%T@ %p\n' | sort -n | tail -1 | cut -d' ' -f2-)"
+          test -n "$RUN_DIR"
+          TARGET="docs/generated/previews/$ACCOUNT/$PREVIEW_DATE/slot-$SLOT_INDEX"
+          mkdir -p "$TARGET"
+          cp "$RUN_DIR"/slide-*.jpg "$TARGET"/
+          cp "$RUN_DIR"/story.jpg "$TARGET"/story.jpg
+      - name: Publish preview images
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/generated/previews/
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Render Instagram preview ${{ inputs.account }} ${{ inputs.preview_date }} slot ${{ inputs.slot_index }}"
+          git pull --rebase origin main
+          git push origin HEAD:main

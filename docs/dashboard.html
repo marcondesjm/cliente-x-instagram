@@ -1394,7 +1394,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.63</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.64</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -5699,16 +5699,46 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         ? { ...baseItem, previewDate: (appState.tomorrowPreview || {}).date }
         : baseItem;
       const preview = document.getElementById('dailyPlanPreview');
-      document.getElementById('dailyPlanPreviewStatus').textContent = 'Carregando avatar';
-      setPreviewImages(await previewSlidesForItem(item), `previa-slot-${slotIndex}.svg`);
+      document.getElementById('dailyPlanPreviewStatus').textContent = source === 'tomorrow' ? 'Solicitando renderizacao oficial' : 'Carregando avatar';
+      if (source === 'tomorrow') {
+        const payload = await api('/api/render', {
+          method: 'POST',
+          body: JSON.stringify({
+            account: appState.selectedAccount,
+            slotIndex: Number(slotIndex),
+            previewDate: item.previewDate
+          })
+        });
+        const renderedImages = await waitForOfficialPreviewImages(payload.imageUrls || []);
+        if (!renderedImages.length) throw new Error('A renderizacao oficial continua em andamento. Aguarde um minuto e abra esta previa novamente.');
+        setPreviewImages(renderedImages, `previa-oficial-slot-${slotIndex}.jpg`);
+      } else {
+        setPreviewImages(await previewSlidesForItem(item), `previa-slot-${slotIndex}.svg`);
+      }
       document.getElementById('dailyPlanPreviewTitle').textContent = `${item.time || '--:--'} · ${item.title || 'Conteúdo programado'}`;
       document.getElementById('dailyPlanPreviewCaption').textContent = item.caption || 'Legenda será montada pelo gerador automático.';
-      document.getElementById('dailyPlanPreviewStatus').textContent = source === 'tomorrow' ? 'Prévia de amanhã' : 'Prévia antes de postar';
+      document.getElementById('dailyPlanPreviewStatus').textContent = source === 'tomorrow' ? 'JPG oficial do publicador' : 'Prévia antes de postar';
       preview.classList.add('active');
       preview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       setMessage(source === 'tomorrow'
-        ? 'Prévia de amanhã aberta com todos os slides.'
+        ? 'Prévia oficial de amanhã aberta com todos os slides.'
         : 'Prévia simples aberta. A arte final completa aparece no render local.', 'good');
+    }
+
+    async function waitForOfficialPreviewImages(imageUrls = []) {
+      if (!Array.isArray(imageUrls) || imageUrls.length !== 5) return [];
+      for (let attempt = 0; attempt < 18; attempt += 1) {
+        const cacheBuster = `v=${Date.now()}`;
+        try {
+          const response = await fetch(`${imageUrls[0]}?${cacheBuster}`, { cache: 'no-store' });
+          if (response.ok && (response.headers.get('content-type') || '').startsWith('image/')) {
+            return imageUrls.map((url) => `${url}?${cacheBuster}`);
+          }
+        } catch {}
+        document.getElementById('dailyPlanPreviewStatus').textContent = `Renderizando JPG oficial (${attempt + 1}/18)`;
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+      }
+      return [];
     }
 
     async function renderPlanSlot(slotIndex, button) {
