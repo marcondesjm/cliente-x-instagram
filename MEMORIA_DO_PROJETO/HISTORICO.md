@@ -1,5 +1,44 @@
 # Historico
 
+## 2026-08-16 15:03 BRT
+
+Checkpoint geral solicitado pelo usuario depois das correcoes operacionais, editoriais e comerciais.
+
+Radar e publicacao comprovada:
+
+- A busca progressiva continua em `7`, `15` e `30 dias`, preservando fonte registrada e bloqueio de links ja publicados.
+- A selecao deixou de rejeitar uma noticia nova somente porque sua estrutura editorial e seu CTA se parecem com publicacoes anteriores; para pautas pesquisadas, o link da fonte passa a identificar a novidade.
+- Correcao: `f709b52`; integracao operacional: `29ae81c`.
+- O run `31962694454` terminou com sucesso usando o codigo corrigido e publicou feed e Story.
+- Prova real: `https://www.instagram.com/p/DcHCaxjG4Ew/`, media ID `18111090923046588`, Story ID `18623619439052055`.
+- Fonte da pauta publicada: AWS Machine Learning, noticia de `2026-08-12` sobre pagamentos verificaveis com agentes no Amazon Bedrock.
+- G1 Tecnologia, Olhar Digital e TecMundo foram adicionados como fontes jornalisticas complementares em `afcbe92`; as fontes primarias oficiais foram preservadas.
+- Feeds validados: G1 Tecnologia via RSS, Olhar Digital via RSS e TecMundo via sitemap de noticias. O filtro passou a exigir o termo editorial no titulo para reduzir falsos positivos.
+
+Direct:
+
+- Variacoes repetidas dentro da mesma automacao, como `prompts`, `PROMPTS` e `Prompts`, agora sao normalizadas uma unica vez e nao geram falso conflito (`1f7f7e0`).
+- A repeticao entre automacoes diferentes continua bloqueada.
+- O status `Meta conectada` agora e preservado depois de salvar; a API devolve o campo `connected` e o navegador combina a resposta sem apagar o estado (`3112e84`, integracao `913677b`).
+- Credenciais necessarias foram confirmadas na producao e existem duas automacoes salvas: `Material 1` e `Instagram automatico`, com uma ativa.
+
+Landing comercial:
+
+- A mensagem principal passou a ser `Sua rede social ativa, com conteudo que tem cara de gente.` em `a0158de`, integrada em `b7617a6`.
+- O texto posiciona a IA como ferramenta e destaca estrategia, comunicacao humana, Radar de oportunidades, identidade da empresa e conteudo natural/profissional.
+- Objetivos destacados: conversar com o publico, fortalecer a marca, gerar oportunidades de engajamento e apresentar o negocio a potenciais clientes.
+- A oferta relampago de `R$ 397/mes` por `R$ 197/mes`, implantacao gratuita, volumes e WhatsApp foram preservados.
+- Validacao visual em desktop e celular: sem overflow horizontal, sem sobreposicoes e sem erros de console.
+- Deploy da landing: `dpl_2MwAKCbm8pfqtn94q271ib3uLTCJ`.
+
+Cartao da fonte nas artes:
+
+- O cartao `FONTE OFICIAL` foi compactado para evitar texto cortado: tipografia menor, espacamento interno reduzido, quebra para nomes longos e apoio `Pauta relevante para empresas.`.
+- A correcao vale para o renderizador real, Story quando o cartao aparece e previa SVG do dashboard.
+- Nova previa renderizada e inspecionada com todo o texto dentro da moldura; `npm run validate-copy` continuou aprovado.
+- Commit: `a5b4466`; integracao: `83d491f`; deploy: `dpl_7q6CXhM1C5bmXgdWrpVi4uXc9hrm`.
+- Este e o novo checkpoint funcional e visual do projeto e nao deve ser revertido sem pedido explicito.
+
 ## 2026-08-16 14:10 BRT
 
 Checkpoint funcional do Radar progressivo solicitado pelo usuario:

@@ -1,17 +1,17 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 14:10 BRT
+Atualizado em: 2026-08-16 15:03 BRT
 
 ## Projeto ativo
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Commit da regra do Radar em producao: `b57aeda` (`Amplia janela do Radar ate 30 dias`); integracao final: `e8c254c`.
-- Novo checkpoint funcional atual: Radar progressivo de `7`, `15` e `30 dias` em `e8c254c`.
+- Commit mais recente da correcao visual: `a5b4466`; integracao e checkpoint atual: `83d491f`.
+- Radar progressivo e selecao de pauta oficial nova comprovados em producao; landing humana e cartao de fonte corrigido fazem parte deste checkpoint.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
-- Commit mais recente da landing em producao: `8b57824` (`Refina mensagem da oferta promocional`).
+- Commit mais recente da landing: `a0158de` (`Reposiciona landing com comunicacao humana`), integrado em `b7617a6`.
 - Versao visivel atual: `v4.96`
 
 ## Estado confirmado
@@ -21,8 +21,12 @@ Atualizado em: 2026-08-16 14:10 BRT
 - O dashboard de producao esta confirmado na versao `v4.96`.
 - A Pagina Bio permite criar ate `10` botoes. Ha um controle no cabecalho e outro campo destacado abaixo do ultimo cartao; o novo botao recebe icone, titulo, descricao e link, com rolagem e foco automaticos.
 - Cada conta permite ate `10` automacoes de Direct, cada uma com nome, tags, material e mensagens proprias. A campanha antiga permanece compativel e o historico identifica qual automacao respondeu.
+- A conta atual possui `Material 1` e `Instagram automatico`; uma automacao esta ativa. Variacoes de caixa da mesma palavra nao geram falso conflito, mas a mesma tag permanece proibida entre materiais diferentes.
+- O painel preserva `Meta conectada` depois de salvar as automacoes; webhook, segredo do app e token de mensagens existem na producao.
 - O Radar usa somente fontes oficiais e aceita noticias dos ultimos 7 dias; ele nao usa pack manual nem pack automatico generico como reserva.
 - Quando nao encontra pauta oficial valida e nao repetida em 7 dias, o Radar amplia automaticamente para 15 dias e depois para 30 dias. Somente bloqueia depois de esgotar as tres janelas.
+- Uma pauta com link de fonte diferente e aceita mesmo quando usa a mesma estrutura editorial; o mesmo link continua bloqueado. A regra publicou com sucesso `https://www.instagram.com/p/DcHCaxjG4Ew/` no run `31962694454`.
+- Fontes atuais incluem os provedores oficiais de IA e, como cobertura jornalistica complementar, G1 Tecnologia, Olhar Digital e TecMundo.
 - A trava agora vale para `Publicar agora`, horarios automaticos, packs manuais e posts agendados: toda publicacao real com Radar ativo exige `research.sourceUrl`.
 - Se nao houver noticia oficial elegivel e nao repetida, o publicador bloqueia o envio em vez de publicar conteudo solto.
 - A automacao agendada roda na nuvem por GitHub Actions e Meta/Instagram; o computador do usuario pode ficar desligado. O login do painel e necessario somente para acoes manuais no dashboard e expira em 12 horas.
@@ -33,6 +37,7 @@ Atualizado em: 2026-08-16 14:10 BRT
 - A rotacao percorre as quatro fotos de Marcondes antes de repetir, sem a semente da pauta anular a sequencia dos horarios.
 - A foto da capa usa moldura padrao de `410 x 280`, recorte proporcional e altura minima protegida contra achatamento.
 - O Story mostra a primeira ideia completa do slide e possui validacao que rejeita qualquer sobreposicao entre texto e foto.
+- O cartao `FONTE OFICIAL` usa tipografia e espacamento compactos, quebra nomes longos e mostra `Pauta relevante para empresas.` sem cortar texto.
 
 ## Landing comercial em producao
 
@@ -44,10 +49,12 @@ Atualizado em: 2026-08-16 14:10 BRT
 - Entrega comunicada: criacao automatica de conteudo, criativos, carrossel, Story e legendas; agenda, publicacao na nuvem e Direct.
 - Para um volume menor, a pagina oferece consulta de plano menor; licenca personalizada permanece sob medida.
 - Promessa central: manter a rede social ativa, cuidada e atualizada sem o cliente criar ou publicar cada conteudo manualmente e sem depender do computador ligado.
+- Headline atual: `Sua rede social ativa, com conteudo que tem cara de gente.` A comunicacao apresenta IA como ferramenta com estrategia e direcionamento pensados para pessoas, evitando aparencia fria ou generica.
 - Beneficio comercial: aumentar oportunidades de engajamento e atrair seguidores reais e alinhados, com potencial para comprar produtos ou contratar servicos.
 - Limite de comunicacao: nao garantir seguidores, curtidas ou vendas; consistencia e conteudo atual aumentam oportunidades, nao resultados certos.
 - Visual: moderno, neutro e responsivo. O hero usa texto e plataforma lado a lado; capturas reenquadradas em 4:3 e 16:9 priorizam nitidez; beneficios ocupam toda a largura em quatro colunas no desktop e duas em telas menores.
 - Animacoes: hero em camadas, brilho nas molduras e cartoes com revelacao/desfoque. Zoom e flutuacao continua foram removidos das capturas para preservar foco. Todo o conjunto respeita `prefers-reduced-motion`.
+- Ultima validacao responsiva da landing: desktop e celular sem overflow horizontal, sem sobreposicao e sem erros de console.
 - Validacao: imagens HTTP `200`, sem overflow horizontal, sem erros de console e `40` elementos animados testados ate o estado visivel.
 
 ## Padrao editorial aprovado para os proximos posts
