@@ -1,5 +1,18 @@
 # Historico
 
+## 2026-08-16 19:00 BRT
+
+Corrigida a largura da aba `Agenda`, que ainda herdava a grade antiga de duas colunas e deixava uma grande area vazia a direita.
+
+- A visualizacao Agenda agora ocupa toda a largura disponivel do painel.
+- A linha dos 13 horarios ganhou o espaco horizontal necessario para evitar o corte do ultimo slot em telas desktop.
+- Os cards de hoje, amanha, Radar, previa e edicao de horarios continuam no mesmo fluxo, agora usando a area central completa.
+- O comportamento responsivo de uma coluna permanece preservado para telas menores.
+- Versao visivel atualizada para `v5.02`.
+- Sintaxe da API e do JavaScript inline validada.
+- `npm run validate-copy` passou com 20 packs, 54 packs automaticos, 74 selecoes, protecao de duplicidade e balanceamento de fontes em `ok`.
+- `git diff --check` passou.
+
 ## 2026-08-16 18:52 BRT
 
 Checkpoint de producao da previa lateral da Pagina Bio.

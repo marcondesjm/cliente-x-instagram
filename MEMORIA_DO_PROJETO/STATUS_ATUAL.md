@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 18:52 BRT
+Atualizado em: 2026-08-16 19:00 BRT
 
 ## Regra permanente de checkpoint
 
@@ -18,7 +18,13 @@ Atualizado em: 2026-08-16 18:52 BRT
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `b11fae5` (`Adiciona pagina da automacao do Direct na landing`).
-- Versao visivel atual: `v5.01`
+- Versao visivel atual: `v5.02`
+
+## Agenda em largura integral
+
+- A aba Agenda nao herda mais a coluna lateral vazia do layout geral.
+- Os 13 horarios, a programacao de hoje e amanha, o Radar, a previa e o editor usam toda a largura disponivel.
+- Em telas menores, a grade geral continua em uma coluna.
 
 ## Editor da Pagina Bio
 
