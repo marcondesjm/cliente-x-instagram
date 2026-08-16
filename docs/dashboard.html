@@ -1394,7 +1394,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.72</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.73</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -5609,7 +5609,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <image href="${sectorPhotoHref}" x="${photo.x}" y="${photo.y}" width="${photo.w}" height="${photo.h}" preserveAspectRatio="xMidYMid slice" clip-path="url(#sectorPhotoClip)" opacity="0.88"/>
             <rect x="${photo.x}" y="${photo.y}" width="${photo.w}" height="${photo.h}" rx="${photo.r}" fill="#17211c" opacity="0.10"/>
           ` : ''}
-          ${previewSectorCueSvg(cue, cueX, cueY, 250, theme.cue)}
+          ${useSectorPhoto ? '' : previewSectorCueSvg(cue, cueX, cueY, 250, theme.cue)}
           ${isProof ? `<text x="${layout.titleX}" y="${layout.titleY - 24}" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="900">ANTES / DEPOIS</text>` : ''}
           ${svgBoxText(title, layout.titleX, layout.titleY, layout.titleW, isHook ? Math.min(titleSize + 6, 86) : titleSize, theme.text, 900, 0.98)}
           <g transform="translate(${layout.panelX} ${layout.panelY}) rotate(${layout.panelR})">

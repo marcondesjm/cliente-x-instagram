@@ -1,25 +1,21 @@
 # Status Atual
 
-Atualizado em: 2026-08-15 21:05 BRT
+Atualizado em: 2026-08-15 22:24 BRT
 
 ## Projeto ativo
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Commit atual: `39d2d13` (`Add official news radar status to dashboard`)
+- Commit atual: a confirmar apos o deploy da correcao visual `v4.73`
 - Dashboard: `docs/dashboard.html`
-- Versao visivel atual: `v4.60`
+- Versao visivel atual: `v4.73`
 
 ## Estado do workspace
 
-- Alteracoes locais pendentes no momento da checagem:
-  - `api/upload-image.js`
-  - `api/state.js`
-  - `docs/dashboard.html`
-  - `MEMORIA_DO_PROJETO/`
+- Workspace de codigo limpo antes deste registro; esta atualizacao altera somente os arquivos de memoria.
 - O projeto moderno esta em uma linha separada do `cliente-x-instagram` original.
-- Nao foi feito deploy nesta retomada.
-- Nao foi feita publicacao real no Instagram nesta retomada.
+- A correcao `v4.73` esta validada localmente e aguardando o deploy deste checkpoint.
+- A publicacao real foi executada pelo fluxo operacional do repositorio irmao `cliente-x-instagram`, na branch `main`, commit `9449559`.
 
 ## Validacoes executadas
 
@@ -36,23 +32,31 @@ Resultado:
 - `validate-copy`: passou.
 - Conta: `cliente-x`.
 
-Validacao anterior preservada:
+Validacao de operacao confirmada:
 
-- `dry-run` passou em 2026-08-15 21:02 BRT.
-- O radar editorial encontrou 13 temas recentes e priorizou todos os horarios do Cliente X.
+- GitHub Actions run `#713` concluiu com `success` em 2026-08-15 22:16 BRT.
+- O feed do Instagram confirmou o carrossel publicado em `https://www.instagram.com/p/DcFQxaXICT-/`.
+- Conta: `@marcondes.machado.oficial`.
+- Pauta: noticia da OpenAI sobre modo ultrarrapido para fluxos de baixa latencia, com fonte oficial na legenda.
+- Formato enviado: feed + story, carrossel de 5 slides.
+
+## Correcao visual em andamento
+
+- Quando o slide recebe uma foto real de contexto, o icone decorativo do nicho deixa de ser renderizado por cima dela.
+- A mesma regra foi aplicada no gerador que publica e na pre-visualizacao do dashboard.
+- Isso evita duplicar elementos visuais, como a foto de uma balanca acompanhada de outro icone de balanca.
 
 ## Proximos pontos provaveis
 
-- Verificar visualmente o dashboard moderno.
-- Testar upload de icone no painel publicado depois do deploy.
-- Conferir se o radar editorial/Supabase esta alimentando os posts como esperado.
-- Ajustar o SQL aberto em `cliente-x-instagram/supabase/instagram-posts.sql`, se esse for o proximo foco.
-- Antes de qualquer deploy, confirmar explicitamente com o usuario.
+- Monitorar a entrega do story e o engajamento do carrossel publicado.
+- Confirmar o deploy da versao `v4.73` e a regra nos proximos renders automaticos.
+- Conferir os proximos horarios automaticos para evitar repeticao de pauta ja publicada.
+- Para alteracoes de codigo, identificar primeiro se o alvo e `cliente-x-instagram-modern` ou o fluxo operacional `cliente-x-instagram`.
 
 ## Cuidados importantes
 
 - Preservar os 13 horarios de postagem.
-- Nao tratar dry-run como prova de post real.
+- Nao tratar dry-run ou apenas um run verde como prova de post real; neste checkpoint ha permalink visivel no Instagram.
 - O upload de imagens do painel tenta ImgBB primeiro; se o ImgBB retornar limite, o endpoint salva em `docs/uploads/dashboard/` via GitHub e devolve uma URL publica `raw.githubusercontent.com` para uso imediato.
 - Para prova de publicacao real, exigir conta, permalink, horario e etapa exata.
 - Bump de versao visivel deve atualizar `api/state.js` e `docs/dashboard.html` juntos quando houver mudanca aprovada para commit/deploy.

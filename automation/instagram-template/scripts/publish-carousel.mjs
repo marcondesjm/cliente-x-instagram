@@ -2036,7 +2036,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     ${swipeCue}
     ${saveCue}
     ${sectorPhotoImage ? '<div class="context-photo"></div>' : ''}
-    ${sectorVisualHtml(visualCue)}
+    ${sectorPhotoImage ? '' : sectorVisualHtml(visualCue)}
     <div class="panel${avatarClass}"></div>
     <div class="spark s1">*</div>
     <div class="spark s2">*</div>
