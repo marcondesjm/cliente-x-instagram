@@ -43,11 +43,11 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v5.05',
+  appVersion: 'v5.06',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
-  description: 'Grade semanal aceita banners prontos ou gera Feed 4:5 e Story 9:16, com métricas recentes claras.'
+  description: 'Histórico do Direct possui navegação por datas, além dos banners prontos ou gerados da Grade semanal.'
 };
 const MAINTENANCE = {
   githubToken: {

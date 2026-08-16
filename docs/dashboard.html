@@ -273,7 +273,8 @@
     main[data-active-view="system"],
     main[data-active-view="bio"],
     main[data-active-view="schedule"],
-    main[data-active-view="weekly"] {
+    main[data-active-view="weekly"],
+    main[data-active-view="direct-history"] {
       grid-template-columns: minmax(0, 1fr);
     }
 
@@ -287,6 +288,7 @@
     main[data-active-view="bio"] > .grid { width: 100%; }
     main[data-active-view="schedule"] > .grid { width: 100%; }
     main[data-active-view="weekly"] > .grid { width: 100%; }
+    main[data-active-view="direct-history"] > .grid { width: 100%; }
 
     .bio-workspace {
       display: grid;
@@ -1083,6 +1085,18 @@
       font-weight: 900;
     }
 
+    .direct-history-workspace { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 320px); gap: 18px; align-items: start; }
+    .direct-history-main { min-width: 0; }
+    .direct-date-sidebar { position: sticky; top: 82px; display: grid; gap: 8px; padding: 14px; border: 1px solid var(--line); border-radius: 10px; background: #f7faf8; }
+    .direct-date-list { display: grid; gap: 7px; }
+    .direct-date-button { width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: center; min-height: 52px; padding: 9px 11px; text-align: left; }
+    .direct-date-button strong, .direct-date-button span { display: block; }
+    .direct-date-button span { margin-top: 2px; color: var(--muted); font-size: 11px; }
+    .direct-date-button b { min-width: 30px; padding: 5px 7px; border-radius: 999px; background: #edf3ef; color: var(--good); font-size: 11px; text-align: center; }
+    .direct-date-button.active { border-color: var(--text); background: var(--text); color: #fff; }
+    .direct-date-button.active span { color: rgba(255,255,255,.72); }
+    .direct-date-button.active b { background: #eafff2; color: #08734c; }
+
     .check {
       display: grid;
       grid-template-columns: 24px minmax(0, 1fr);
@@ -1586,6 +1600,9 @@
       .weekly-workspace { grid-template-columns: 1fr; }
       .weekly-preview-column { position: static; }
       .weekly-post-preview { width: min(430px, 100%); margin-inline: auto; }
+      .direct-history-workspace { grid-template-columns: 1fr; }
+      .direct-date-sidebar { position: static; grid-row: 1; }
+      .direct-date-list { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
     }
 
     @media (max-width: 760px) {
@@ -1700,7 +1717,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v5.05</div>
+        <div class="header-version" id="headerVersion">Versão atual: v5.06</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -1831,9 +1848,17 @@
             </div>
             <span class="status-pill good" id="directHistoryStatus">30 dias</span>
           </div>
-          <div class="access-result">Registros organizados por dia e horário de Brasília. Os dados ficam salvos por 30 dias.</div>
-          <div class="checks" id="directDeliveries"><div class="empty">Nenhum envio registrado. A integração com a Meta ainda está desligada.</div></div>
-          <nav class="direct-pagination" id="directPagination" aria-label="Páginas do histórico do Direct" hidden></nav>
+          <div class="direct-history-workspace">
+            <div class="direct-history-main">
+              <div class="access-result">Registros organizados por dia e horário de Brasília. Os dados ficam salvos por 30 dias.</div>
+              <div class="checks" id="directDeliveries"><div class="empty">Nenhum envio registrado. A integração com a Meta ainda está desligada.</div></div>
+              <nav class="direct-pagination" id="directPagination" aria-label="Páginas do histórico do Direct" hidden></nav>
+            </div>
+            <aside class="direct-date-sidebar" aria-label="Filtrar histórico por data">
+              <div><div class="section-label">Navegar por data</div><h2>Escolha um dia</h2></div>
+              <div class="direct-date-list" id="directDateFilters"></div>
+            </aside>
+          </div>
         </div>
 
         <div class="panel" id="clientPortfolioPanel">
@@ -2774,6 +2799,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       showcaseSlideIndex: 0
     };
     let directHistoryPage = 1;
+    let directHistoryDate = '';
     let directAutomationIndex = 0;
     const DIRECT_HISTORY_PAGE_SIZE = 10;
 
@@ -3403,6 +3429,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       appState.selectedAccount = event.target.value || '';
       appState.openAccessIndex = null;
       appState.privateMetrics = null;
+      directHistoryDate = '';
+      directHistoryPage = 1;
       setMessage(`Carregando conta ${appState.selectedAccount}...`, 'warn');
       await loadState();
       await refreshRuns();
@@ -4046,10 +4074,27 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         : '<span class="dot warn"></span><div><strong>Configuração preparada</strong><span>O envio real ficará desligado até conectarmos o webhook e as permissões da Meta.</span></div>';
       document.getElementById('directMaterialResult').textContent = automation.materialName ? `Material salvo: ${automation.materialName}` : 'PDF, TXT ou imagem de até 8 MB.';
       const deliveries = Array.isArray(group.deliveries) ? group.deliveries : [];
-      const totalPages = Math.max(1, Math.ceil(deliveries.length / DIRECT_HISTORY_PAGE_SIZE));
-      directHistoryPage = Math.min(Math.max(1, directHistoryPage), totalPages);
+      const dateKeyFormatter = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit' });
+      const deliveryDateKey = (item) => {
+        const date = new Date(item.receivedAt);
+        return Number.isNaN(date.getTime()) ? 'sem-data' : dateKeyFormatter.format(date);
+      };
       const orderedDeliveries = deliveries.slice().reverse();
-      const pageDeliveries = orderedDeliveries.slice((directHistoryPage - 1) * DIRECT_HISTORY_PAGE_SIZE, directHistoryPage * DIRECT_HISTORY_PAGE_SIZE);
+      const dateSummaries = orderedDeliveries.reduce((summaries, item) => {
+        const key = deliveryDateKey(item);
+        if (!summaries[key]) summaries[key] = { key, date: new Date(item.receivedAt), total: 0, sent: 0, failed: 0 };
+        summaries[key].total += 1;
+        if (item.status === 'sent') summaries[key].sent += 1;
+        if (item.status === 'failed') summaries[key].failed += 1;
+        return summaries;
+      }, {});
+      if (directHistoryDate && !dateSummaries[directHistoryDate]) directHistoryDate = '';
+      const filteredDeliveries = directHistoryDate
+        ? orderedDeliveries.filter((item) => deliveryDateKey(item) === directHistoryDate)
+        : orderedDeliveries;
+      const totalPages = Math.max(1, Math.ceil(filteredDeliveries.length / DIRECT_HISTORY_PAGE_SIZE));
+      directHistoryPage = Math.min(Math.max(1, directHistoryPage), totalPages);
+      const pageDeliveries = filteredDeliveries.slice((directHistoryPage - 1) * DIRECT_HISTORY_PAGE_SIZE, directHistoryPage * DIRECT_HISTORY_PAGE_SIZE);
       const statusLabels = { sent: 'Enviado', failed: 'Falhou', pending: 'Pendente' };
       const dateFormatter = new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: 'long', year: 'numeric' });
       const timeFormatter = new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit' });
@@ -4065,7 +4110,15 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const historyStatus = document.getElementById('directHistoryStatus');
       historyStatus.textContent = deliveries.length ? `${sentCount} enviados · ${failedCount} falhas` : '30 dias';
       historyStatus.className = `status-pill ${failedCount ? 'warn' : 'good'}`;
-      document.getElementById('directDeliveries').innerHTML = deliveries.length
+      const dateFilters = document.getElementById('directDateFilters');
+      const allDateSummaries = Object.values(dateSummaries);
+      dateFilters.innerHTML = deliveries.length
+        ? `<button type="button" class="direct-date-button ${directHistoryDate ? '' : 'active'}" data-direct-date=""><span><strong>Todas as datas</strong><span>${sentCount} enviados · ${failedCount} falhas</span></span><b>${deliveries.length}</b></button>${allDateSummaries.map((summary) => {
+          const label = summary.key === 'sem-data' || Number.isNaN(summary.date.getTime()) ? 'Data não informada' : dateFormatter.format(summary.date);
+          return `<button type="button" class="direct-date-button ${directHistoryDate === summary.key ? 'active' : ''}" data-direct-date="${escapeHtml(summary.key)}"><span><strong>${escapeHtml(label)}</strong><span>${summary.sent} enviados · ${summary.failed} falhas</span></span><b>${summary.total}</b></button>`;
+        }).join('')}`
+        : '<div class="empty">As datas aparecerão aqui após o primeiro envio.</div>';
+      document.getElementById('directDeliveries').innerHTML = filteredDeliveries.length
         ? Object.entries(groupedDeliveries).map(([dateLabel, items]) => `<section class="delivery-day"><div class="delivery-day-title">${escapeHtml(dateLabel)}<span>${items.length} ${items.length === 1 ? 'registro' : 'registros'}</span></div>${items.map((item) => {
           const date = new Date(item.receivedAt);
           const time = Number.isNaN(date.getTime()) ? '--:--' : timeFormatter.format(date);
@@ -4074,7 +4127,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           const campaign = item.automationName ? ` · automação: ${item.automationName}` : '';
           return `<div class="check"><span class="dot ${item.status === 'sent' ? 'good' : 'warn'}"></span><div><strong>@${escapeHtml(item.username || 'contato')}</strong><span>${escapeHtml(time)} · comentário: “${escapeHtml(comment)}”${escapeHtml(campaign)} · ${escapeHtml(statusLabels[item.status] || item.status || 'Pendente')}${escapeHtml(error)}</span></div></div>`;
         }).join('')}</section>`).join('')
-        : `<div class="empty">Nenhum envio registrado. ${connected ? 'A conexão está pronta; ative e salve uma campanha para começar.' : 'A integração com a Meta ainda está desligada.'}</div>`;
+        : `<div class="empty">${directHistoryDate ? 'Nenhum registro encontrado nesta data.' : `Nenhum envio registrado. ${connected ? 'A conexão está pronta; ative e salve uma campanha para começar.' : 'A integração com a Meta ainda está desligada.'}`}</div>`;
       const pagination = document.getElementById('directPagination');
       pagination.hidden = totalPages <= 1;
       if (totalPages > 1) {
@@ -7002,8 +7055,16 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('loginForm').addEventListener('submit', login);
       document.addEventListener('click', (event) => {
         const directPageButton = event.target.closest('[data-direct-page]');
+        const directDateButton = event.target.closest('[data-direct-date]');
         const toggle = event.target.closest('[data-toggle-password]');
         const accessToggle = event.target.closest('[data-toggle-access-password]');
+        if (directDateButton) {
+          directHistoryDate = directDateButton.dataset.directDate || '';
+          directHistoryPage = 1;
+          renderDirectAutomation();
+          document.getElementById('directHistoryPanel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return;
+        }
         if (directPageButton) {
           directHistoryPage = Number(directPageButton.dataset.directPage) || 1;
           renderDirectAutomation();

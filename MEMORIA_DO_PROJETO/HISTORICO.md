@@ -1,5 +1,19 @@
 # Historico
 
+## 2026-08-16 19:40 BRT
+
+O Historico do Direct passou a usar o espaco lateral como navegacao por datas.
+
+- A aba ocupa toda a largura disponivel.
+- A coluna lateral lista `Todas as datas` e cada dia que possui registros.
+- Cada botao mostra quantidade total, envios concluidos e falhas daquele dia.
+- Ao clicar em uma data, a lista exibe somente os registros selecionados e reinicia a paginacao na pagina 1.
+- A paginacao e recalculada com base no filtro ativo.
+- Ao trocar de conta, o filtro volta automaticamente para todas as datas.
+- Em telas de ate 920 px, o seletor de datas aparece acima do historico em uma grade compacta.
+- Versao visivel atualizada para `v5.06`.
+- Sintaxe da API e do JavaScript inline, estrutura do filtro, `npm run validate-copy` e `git diff --check` passaram.
+
 ## 2026-08-16 19:31 BRT
 
 - O vigia concluiu a atualizacao do historico e dos slots no commit `093506d` (`Update Instagram schedule state`).

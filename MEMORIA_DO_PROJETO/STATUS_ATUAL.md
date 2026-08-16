@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 19:31 BRT
+Atualizado em: 2026-08-16 19:40 BRT
 
 ## Regra permanente de checkpoint
 
@@ -18,7 +18,14 @@ Atualizado em: 2026-08-16 19:31 BRT
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `b11fae5` (`Adiciona pagina da automacao do Direct na landing`).
-- Versao visivel atual: `v5.05`
+- Versao visivel atual: `v5.06`
+
+## Historico do Direct por data
+
+- A aba ocupa toda a largura e usa a lateral para listar as datas com registros.
+- Cada data informa total, enviados e falhas e pode ser clicada para filtrar o historico.
+- `Todas as datas` remove o filtro e a paginacao acompanha a selecao atual.
+- No celular, as datas aparecem antes da lista em formato compacto.
 
 ## Banners da Grade semanal
 
