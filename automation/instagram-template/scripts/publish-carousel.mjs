@@ -2886,6 +2886,7 @@ function recordPublicationHistory(configDir, accountKey, pack, result) {
       feedFingerprint: result.storyOnly ? null : fingerprint,
       storyFingerprint: fingerprint,
       captionFingerprint: createHash('sha256').update(normalizeCaption(pack.caption || '')).digest('hex'),
+      coverTitle: String(pack?.slides?.[0]?.title || '').trim() || null,
       publishedAt: new Date().toISOString(),
       mediaId: result.mediaId || null,
       storyMediaId: result.storyMediaId || null,
@@ -2908,11 +2909,28 @@ function findDuplicateResearchSource(history, pack) {
   return history.find((entry) => String(entry?.research?.sourceUrl || '').trim().replace(/\/$/, '') === sourceUrl);
 }
 
+function normalizedCoverTitle(pack = {}) {
+  return normalizeContentFingerprint(String(pack?.slides?.[0]?.title || '').trim());
+}
+
+function findDuplicateCoverTitle(recentMedia = [], history = [], pack = {}) {
+  const expected = normalizedCoverTitle(pack);
+  if (!expected) return null;
+  const historyMatch = history.find((entry) => normalizeContentFingerprint(entry?.coverTitle || '') === expected);
+  if (historyMatch) return historyMatch;
+  return recentMedia.find((item) => {
+    const firstParagraph = String(item?.caption || '').split(/\n\s*\n|\r?\n/)[0];
+    return normalizeContentFingerprint(firstParagraph) === expected;
+  }) || null;
+}
+
 function findDuplicateSelection(pack, recentMedia = [], publicationHistory = []) {
   if (pack?.research?.sourceUrl) {
-    // Uma fonte oficial diferente representa uma pauta nova, mesmo quando a
-    // estrutura editorial e o CTA se parecem com publicacoes anteriores.
-    return findDuplicateResearchSource(publicationHistory, pack) || findDuplicatePack(publicationHistory, pack);
+    // A pauta e a chamada de capa precisam ser novas. Fontes diferentes nao
+    // justificam repetir a mesma promessa visual em posts proximos.
+    return findDuplicateResearchSource(publicationHistory, pack)
+      || findDuplicateCoverTitle(recentMedia, publicationHistory, pack)
+      || findDuplicatePack(publicationHistory, pack);
   }
   return findDuplicateCaption(recentMedia, pack.caption) || findDuplicatePack(publicationHistory, pack);
 }
@@ -3167,6 +3185,10 @@ async function main() {
       storyFingerprint: packContentFingerprint(duplicateProbePack)
     }]);
     if (duplicateProbe.pack) throw new Error('Protecao anti-repeticao falhou no teste de historico.');
+    const coverProbe = findDuplicateCoverTitle([], [{
+      coverTitle: duplicateProbePack?.slides?.[0]?.title || ''
+    }], duplicateProbePack);
+    if (!coverProbe) throw new Error('Protecao anti-repeticao de capa falhou no teste de historico.');
     console.log(JSON.stringify({
       ok: true,
       account: account.account,
