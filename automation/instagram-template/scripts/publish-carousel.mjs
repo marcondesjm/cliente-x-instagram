@@ -2387,8 +2387,10 @@ function validatePack(pack) {
     if (/^a matéria informa:?/i.test(sourceFact)) {
       throw new Error('Radar bloqueado: o fato da matéria não pode ser um rótulo repetindo o título.');
     }
-    if (!String(pack.caption || '').includes(sourceTitle)) throw new Error('Radar bloqueado: a legenda não apresenta o título original da matéria.');
-    if (!String(pack.caption || '').includes(sourceUrl)) throw new Error('Radar bloqueado: a legenda não contém o link completo da matéria.');
+    const firstComment = String(pack.firstComment || '').trim();
+    if (!firstComment.includes(sourceTitle)) throw new Error('Radar bloqueado: o primeiro comentário não apresenta o título original da matéria.');
+    if (!firstComment.includes(sourceUrl)) throw new Error('Radar bloqueado: o primeiro comentário não contém o link completo da matéria.');
+    if (!/primeiro comentário/i.test(String(pack.caption || ''))) throw new Error('Radar bloqueado: a legenda não orienta onde encontrar o link da matéria.');
     const coverTitle = String(pack.slides?.[0]?.title || '');
     if (FORBIDDEN_GENERIC_RESEARCH_COVERS.some((pattern) => pattern.test(coverTitle))) {
       throw new Error('Radar bloqueado: capa genérica sem contexto real da matéria.');
@@ -2982,6 +2984,8 @@ function recordPublicationHistory(configDir, accountKey, pack, result) {
       publishedAt: new Date().toISOString(),
       mediaId: result.mediaId || null,
       storyMediaId: result.storyMediaId || null,
+      firstCommentId: result.firstCommentId || null,
+      firstCommentError: result.firstCommentError || null,
       permalink: result.permalink || null,
       research: pack.research || null
     });
@@ -3732,7 +3736,28 @@ async function main() {
     storyMedia = await graphPost(`/${userId}/media_publish`, { creation_id: story.id, access_token: token });
     storyDetails = await graphGet(`/${storyMedia.id}`, { fields: 'id,timestamp', access_token: token });
   }
-  const result = { ...baseResult, mediaId: media?.id, ...(details || {}), storyMediaId: storyMedia?.id || null, story: storyDetails };
+  let firstComment = null;
+  let firstCommentError = null;
+  if (media?.id && String(pack.firstComment || '').trim()) {
+    try {
+      firstComment = await graphPost(`/${media.id}/comments`, {
+        message: String(pack.firstComment).trim(),
+        access_token: token
+      });
+    } catch (error) {
+      firstCommentError = error instanceof Error ? error.message : String(error);
+      console.error(`Primeiro comentário não publicado: ${firstCommentError}`);
+    }
+  }
+  const result = {
+    ...baseResult,
+    mediaId: media?.id,
+    ...(details || {}),
+    storyMediaId: storyMedia?.id || null,
+    story: storyDetails,
+    firstCommentId: firstComment?.id || null,
+    firstCommentError
+  };
   recordPublicationHistory(args.configDir, account.account, historyPack, result);
   if (scheduledPost) {
     const scheduledPatch = {
