@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 19:34 BRT
+Atualizado em: 2026-08-16 19:38 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,21 @@ Atualizado em: 2026-08-16 19:34 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `5c86c98` (`Adiciona recuperacao automatica ao vigia`).
+- Checkpoint funcional atual: `0f56d34` (`Evita repeticao de fotos nas capas`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
-- Versao visivel atual: `v5.07`
+- Versao visivel atual: `v5.08`
+
+## Rotacao de fotos sem repeticao proxima
+
+- A conta principal usa sete fotos diferentes na rotacao visual.
+- A foto da capa fica bloqueada nas seis publicacoes seguintes e so volta depois que as demais circularem.
+- O historico de publicacao registra `coverAvatar` e `avatarRotationStart` para manter a regra entre execucoes do GitHub Actions.
+- A validacao de copia tambem testa o rodizio completo das sete imagens.
+- Producao: commit `0f56d34`, deploy `dpl_GuYANuJz6XfNMpCV8j4TJmMREx61` e versao `v5.08` confirmados.
 
 ## Recuperacao automatica do vigia
 

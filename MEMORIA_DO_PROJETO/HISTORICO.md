@@ -1,5 +1,20 @@
 # Historico
 
+## 2026-08-16 19:38 BRT
+
+Corrigida a repeticao frequente das fotos pessoais nos carrosseis.
+
+- A rotacao da conta `cliente-x` foi ampliada de quatro para sete fotos reais ja existentes no projeto.
+- Cada publicacao passa a registrar `coverAvatar` e `avatarRotationStart` no historico tecnico.
+- A foto usada na capa nao pode reaparecer nas seis publicacoes seguintes; primeiro as sete opcoes precisam circular.
+- Os slides internos e o Story continuam variando a partir da foto de capa escolhida.
+- A validacao automatica simula sete publicacoes e exige sete capas distintas (`avatarRotationGuard: ok`).
+- `npm run validate-copy` passou com 20 packs, 54 packs automaticos e 74 selecoes.
+- Um render real de teste escolheu `avatar-marcondes-rotation-02.png` e gerou cinco slides mais Story sem publicar na Meta.
+- Commit funcional: `0f56d34` (`Evita repeticao de fotos nas capas`).
+- Deploy de producao: `dpl_GuYANuJz6XfNMpCV8j4TJmMREx61`.
+- Producao respondeu `HTTP 200`, confirmou `v5.08`, sete fotos no remoto e a trava de historico.
+
 ## 2026-08-16 19:34 BRT
 
 Adicionada recuperacao guiada e automatica para erros do vigia.
