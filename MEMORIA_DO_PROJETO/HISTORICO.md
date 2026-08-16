@@ -1,5 +1,23 @@
 # Historico
 
+## 2026-08-16 00:51 BRT
+
+Checkpoint completo aprovado pelo usuario.
+
+Resumo:
+
+- Usuario confirmou que o estado atual esta bom e pediu para salvar tudo ate este ponto.
+- Produção preservada em `v4.87`; codigo de capas distintas em `55fe44b`.
+- Registro operacional, prova da publicacao e imagens hospedadas consolidados no commit `d13b723`.
+- Workspace limpo e `origin/main` sincronizado no momento do checkpoint.
+
+Itens que devem ser preservados na retomada:
+
+- Radar com fontes oficiais recentes e linguagem simples para empresas brasileiras.
+- Estrutura humana/AIDA, CTA fixo dos 50 prompts e hashtags finais.
+- Capas com paleta, composicao, titulo e cenarios de foto variados.
+- Publicacao comprovada apenas por workflow concluido e permalink do Instagram.
+
 ## 2026-08-16 00:40 BRT
 
 Correcao de repeticao visual das capas do Radar concluida.

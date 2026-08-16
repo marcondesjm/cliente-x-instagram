@@ -1,19 +1,20 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 00:40 BRT
+Atualizado em: 2026-08-16 00:51 BRT
 
 ## Projeto ativo
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
 - Commit de codigo em producao: `55fe44b` (`Use distinct avatar scenes on radar covers`)
-- Repositorio operacional: `origin/main` = `55fe44b`
+- Checkpoint completo confirmado pelo usuario: `d13b723` (`Record confirmed radar publication`)
+- Repositorio operacional: `origin/main` = `d13b723`
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Versao visivel atual: `v4.87`
 
 ## Estado confirmado
 
-- Workspace limpo no momento deste registro.
+- Workspace limpo no momento deste registro e checkpoint aprovado pelo usuario ("tá tudo bom").
 - O dashboard de producao esta confirmado na versao `v4.87`.
 - O Radar usa somente fontes oficiais e aceita noticias dos ultimos 7 dias; ele nao usa o pack manual como reserva para `Publicar agora`.
 - Se nao houver noticia oficial elegivel, o publicador bloqueia o envio em vez de publicar conteudo generico.
@@ -73,3 +74,4 @@ Resultado:
 
 - Acompanhar os proximos posts automaticos e conferir se o publico responde melhor ao novo tom humano e consultivo.
 - Acompanhar a resposta ao post `DcFh6FWG8f0` e manter a confirmacao por permalink em cada nova publicacao manual.
+- Em uma retomada futura, iniciar deste checkpoint e preservar a versao `v4.87`, o CTA dos 50 prompts, a variacao de capas e o padrao editorial humano/AIDA.
