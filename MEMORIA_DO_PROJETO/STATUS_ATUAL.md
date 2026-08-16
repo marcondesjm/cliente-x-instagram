@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 19:27 BRT
+Atualizado em: 2026-08-16 19:34 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,22 @@ Atualizado em: 2026-08-16 19:27 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`), integrado ao estado operacional em `b35555d`.
+- Checkpoint funcional atual: `5c86c98` (`Adiciona recuperacao automatica ao vigia`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
-- Versao visivel atual: `v5.06`
+- Versao visivel atual: `v5.07`
+
+## Recuperacao automatica do vigia
+
+- A checagem operacional tenta recuperar automaticamente cada novo erro aberto uma vez por sessao.
+- Enquanto o GitHub Actions processa a nova tentativa, o painel mostra `Correcao automatica em andamento`.
+- O usuario tambem pode usar `Corrigir automaticamente` ou abrir o run original em `Abrir detalhes do erro`.
+- O indicador do cabecalho direciona ao painel do vigia quando existe erro.
+- O antigo erro de caminho do Story esta resolvido pelo run `31976129574`; estado atual com zero erros abertos.
+- Producao: commit `5c86c98`, deploy `dpl_EawWBYhxf9cv6tR3i3xj5XzMdVzA`, versao `v5.07` e controles confirmados por `HTTP 200`.
 
 ## Landing com telas atuais
 

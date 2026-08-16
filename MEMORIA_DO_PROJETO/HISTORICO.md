@@ -1,5 +1,20 @@
 # Historico
 
+## 2026-08-16 19:34 BRT
+
+Adicionada recuperacao guiada e automatica para erros do vigia.
+
+- O erro exibido no print era o antigo `ENOENT` do Story; ele ja estava resolvido desde 19:23 BRT pelo run `31976129574` e nao existe erro aberto no estado atual.
+- Quando uma nova checagem encontrar erro aberto, o painel aciona automaticamente uma nova tentativa do vigia para o administrador.
+- Cada erro e acionado automaticamente apenas uma vez por sessao, evitando disparos repetidos ao atualizar a tela.
+- Durante a tentativa, o cabecalho e o terminal mostram `Correcao automatica em andamento`.
+- O Checklist e o painel do Vigia exibem `Corrigir automaticamente` e `Abrir detalhes do erro`.
+- Ao clicar no indicador do cabecalho, a tela leva o usuario diretamente ao painel do erro.
+- Versao publicada: `v5.07`.
+- Commit funcional: `5c86c98` (`Adiciona recuperacao automatica ao vigia`).
+- Deploy de producao: `dpl_EawWBYhxf9cv6tR3i3xj5XzMdVzA`.
+- Producao respondeu `HTTP 200` e confirmou a versao e todos os novos controles.
+
 ## 2026-08-16 19:27 BRT
 
 Checkpoint final da atualizacao das telas da plataforma na landing comercial.
