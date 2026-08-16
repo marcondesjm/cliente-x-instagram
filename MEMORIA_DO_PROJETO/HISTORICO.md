@@ -1,5 +1,26 @@
 # Historico
 
+## 2026-08-16 17:32 BRT
+
+As duas artes isoladas da landing foram substituidas por publicacoes reais incorporadas do Instagram.
+
+Alteracao:
+
+- A secao de provas agora exibe dois carrosseis publicados no perfil `@marcondes.machado.oficial`, com cabecalho, perfil, navegacao do carrossel e link oficial do Instagram.
+- Publicacoes utilizadas: `https://www.instagram.com/p/DcHMqdWE3bI/` e `https://www.instagram.com/p/DcHDsOKkzvp/`.
+- Cada prova possui legenda clara e um link independente `Abrir post` como alternativa.
+- Os antigos arquivos de previa de feed e Story deixaram de ser usados nessa secao.
+- Um permalink indisponivel foi detectado durante a validacao e substituido antes do deploy.
+
+Validacao e deploy:
+
+- Os dois embeds foram abertos e inspecionados com conteudo real do perfil.
+- Landing local: dois cards, sem mensagem de post removido e sem erros de console.
+- `npm run validate-copy`: passou com `74` selecoes automaticas e protecao de duplicidade `ok`.
+- Commit funcional: `a52b378` (`Exibe publicacoes reais do Instagram na landing`).
+- Deploy Vercel: `dpl_HZ8gkZgV9aBXyMryrsnGbf3KUsod`, alias `https://cliente-x-instagram.vercel.app`.
+- Producao: dois embeds confirmados, nenhuma imagem antiga da secao, nenhuma mensagem de link quebrado e nenhum erro de console.
+
 ## 2026-08-16 17:24 BRT
 
 Landing comercial simplificada a partir da perspectiva de um usuario novo, com publicacao e validacao em producao.
