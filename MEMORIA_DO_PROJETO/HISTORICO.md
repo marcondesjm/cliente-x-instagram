@@ -1,5 +1,18 @@
 # Historico
 
+## 2026-08-16 19:45 BRT
+
+Corrigido o retorno involuntario do scroll vertical da landing.
+
+- A causa era o `scrollIntoView` executado a cada troca automatica do carrossel de telas.
+- O comando centralizava o botao da pagina atual, mas tambem fazia o navegador voltar verticalmente para o carrossel a cada 6,5 segundos.
+- A navegacao agora usa `carouselNav.scrollTo` e movimenta apenas a faixa horizontal dos botoes do carrossel.
+- O scroll vertical do visitante nao e mais alterado pela rotacao automatica ou pela abertura inicial da landing.
+- Teste real em producao: a pagina permaneceu em `scrollY = 3000` durante a troca automatica de `Conteudo` para `Automacao do Direct`, com variacao vertical igual a zero.
+- Commit funcional: `23c632e` (`Corrige retorno involuntario do scroll da landing`).
+- Deploy de producao: `dpl_6UEgfMDkVaF1Wb3Tdmy1t9kC5Q7y`.
+- Producao respondeu `HTTP 200`, sem `scrollIntoView` e com a rolagem interna confirmada.
+
 ## 2026-08-16 19:42 BRT
 
 Removida da interface a lista tecnica `GitHub Actions - Ultimas execucoes`.

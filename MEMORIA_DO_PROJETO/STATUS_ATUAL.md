@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 19:42 BRT
+Atualizado em: 2026-08-16 19:45 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,20 @@ Atualizado em: 2026-08-16 19:42 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `0abd4ac` (`Remove lista duplicada de execucoes`).
+- Checkpoint funcional atual: `23c632e` (`Corrige retorno involuntario do scroll da landing`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
-- Versao visivel atual: `v5.09`
+- Versao visivel atual: `v5.10`
+
+## Scroll livre na landing
+
+- O carrossel movimenta somente a navegacao horizontal interna.
+- A troca automatica de telas nao reposiciona mais o scroll vertical do visitante.
+- Teste de producao manteve `scrollY = 3000` antes e depois da troca de slide, com variacao zero.
+- Producao: commit `23c632e`, deploy `dpl_6UEgfMDkVaF1Wb3Tdmy1t9kC5Q7y` e versao `v5.10` confirmados.
 
 ## Sistema simplificado
 
