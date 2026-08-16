@@ -43,7 +43,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.95',
+  appVersion: 'v4.96',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -1676,7 +1676,11 @@ async function updateWeeklyPrograms(body = {}, session = null) {
 
 async function readDirectAutomationGroups() {
   const groups = await readConfigGroups(DIRECT_AUTOMATIONS_FILE_PATH, DIRECT_AUTOMATIONS_PATH);
-  return groups.map((group) => ({ ...group, deliveries: retainedDirectDeliveries(group.deliveries) }));
+  return groups.map((group) => ({
+    ...group,
+    automations: directAutomationList(group),
+    deliveries: retainedDirectDeliveries(group.deliveries)
+  }));
 }
 
 function retainedDirectDeliveries(deliveries = [], now = Date.now()) {
@@ -1690,7 +1694,12 @@ function retainedDirectDeliveries(deliveries = [], now = Date.now()) {
     .slice(-1000);
 }
 
-function normalizeDirectAutomation(value = {}) {
+function directAutomationList(group = {}) {
+  if (Array.isArray(group.automations) && group.automations.length) return group.automations;
+  return group.automation ? [group.automation] : [];
+}
+
+function normalizeDirectAutomation(value = {}, index = 0) {
   const keyword = String(value.keyword || '').trim().replace(/^#/, '').slice(0, 200);
   const materialUrl = String(value.materialUrl || '').trim().slice(0, 2000);
   const message = String(value.message || '').trim().slice(0, 850);
@@ -1698,6 +1707,8 @@ function normalizeDirectAutomation(value = {}) {
   if (!materialUrl) throw userError('Anexe um material ou informe o link para envio.');
   if (!message) throw userError('Escreva a mensagem que sera enviada no Direct.');
   return {
+    id: String(value.id || `direct-${Date.now()}-${index + 1}`).trim().replace(/[^a-z0-9_-]/gi, '-').slice(0, 80),
+    name: String(value.name || `Material ${index + 1}`).trim().slice(0, 80),
     enabled: Boolean(value.enabled), keyword,
     matchMode: ['exact', 'similar'].includes(value.matchMode) ? value.matchMode : 'contains',
     mediaId: String(value.mediaId || '').trim().slice(0, 100),
@@ -1705,6 +1716,21 @@ function normalizeDirectAutomation(value = {}) {
     publicReply: String(value.publicReply || 'Enviei o material no seu Direct.').trim().slice(0, 300),
     updatedAt: new Date().toISOString()
   };
+}
+
+function normalizeDirectAutomations(values = []) {
+  const automations = (Array.isArray(values) ? values : []).slice(0, 10).map(normalizeDirectAutomation);
+  if (!automations.length) throw userError('Cadastre pelo menos uma automacao de Direct.');
+  const claimedTerms = new Map();
+  for (const automation of automations.filter((item) => item.enabled)) {
+    for (const term of directKeywordTerms(automation.keyword)) {
+      if (claimedTerms.has(term)) {
+        throw userError(`A palavra-chave "${term}" esta repetida nas automacoes "${claimedTerms.get(term)}" e "${automation.name}".`);
+      }
+      claimedTerms.set(term, automation.name);
+    }
+  }
+  return automations;
 }
 
 async function updateDirectAutomation(body = {}, session = null) {
@@ -1715,11 +1741,12 @@ async function updateDirectAutomation(body = {}, session = null) {
   if (!canAccessAccount(session, account)) throw userError('Seu usuario nao pode alterar esta conta.', 403);
   const file = await readGithubConfig(DIRECT_AUTOMATIONS_FILE_PATH);
   let group = file.data.find((item) => item.account === accountKey);
-  if (!group) { group = { account: accountKey, automation: null, deliveries: [] }; file.data.push(group); }
-  group.automation = normalizeDirectAutomation(body.automation || {});
+  if (!group) { group = { account: accountKey, automation: null, automations: [], deliveries: [] }; file.data.push(group); }
+  group.automations = normalizeDirectAutomations(body.automations || (body.automation ? [body.automation] : directAutomationList(group)));
+  group.automation = group.automations[0] || null;
   group.deliveries = retainedDirectDeliveries(group.deliveries);
   await writeGithubConfig(DIRECT_AUTOMATIONS_FILE_PATH, file.data, file.sha, `Update Direct automation for ${accountKey}`);
-  return { ok: true, directAutomation: group, message: 'Automacao de Direct salva no painel.' };
+  return { ok: true, directAutomation: group, message: `${group.automations.length} automacao(oes) de Direct salva(s) no painel.` };
 }
 
 async function uploadDirectMaterial(body = {}, session = null) {
@@ -1850,10 +1877,10 @@ async function handleInstagramWebhook(body, raw, signature, req) {
     const account = accounts.find((item) => String(process.env[item.userIdEnv] || '') === String(entry.id || ''));
     if (!account) continue;
     const group = automationsFile.data.find((item) => item.account === account.account);
-    const automation = group?.automation;
+    const automations = directAutomationList(group).filter((item) => item?.enabled);
     const messagingTokenEnv = account.accessTokenEnv.replace(/_INSTAGRAM_ACCESS_TOKEN$/, '_INSTAGRAM_MESSAGING_ACCESS_TOKEN');
     const token = String(process.env[messagingTokenEnv] || process.env[account.accessTokenEnv] || '').trim();
-    if (!group || !automation?.enabled || !token) continue;
+    if (!group || !automations.length || !token) continue;
     group.deliveries = retainedDirectDeliveries(group.deliveries);
 
     for (const change of Array.isArray(entry.changes) ? entry.changes : []) {
@@ -1862,14 +1889,16 @@ async function handleInstagramWebhook(body, raw, signature, req) {
       const commentId = String(value.id || value.comment_id || '');
       const mediaId = String(value.media?.id || value.media_id || '');
       if (!commentId || group.deliveries.some((item) => String(item.commentId) === commentId)) continue;
-      if (automation.mediaId && automation.mediaId !== mediaId) continue;
-      if (!keywordMatches(value.text, automation)) continue;
+      const automation = automations.find((item) => (!item.mediaId || item.mediaId === mediaId) && keywordMatches(value.text, item));
+      if (!automation) continue;
 
       const delivery = {
         commentId,
         mediaId,
         username: String(value.from?.username || ''),
         commentText: String(value.text || '').trim().slice(0, 120),
+        automationId: automation.id || null,
+        automationName: automation.name || automation.keyword,
         receivedAt: new Date().toISOString(),
         status: 'failed'
       };
@@ -2389,7 +2418,7 @@ export default async function handler(req, res) {
     weeklyPrograms,
     bioPage,
     directAutomation: {
-      ...(directAutomationGroup || { account: accountKey, automation: null, deliveries: [] }),
+      ...(directAutomationGroup || { account: accountKey, automation: null, automations: [], deliveries: [] }),
       connected: Boolean(
         process.env.INSTAGRAM_WEBHOOK_VERIFY_TOKEN &&
         process.env.INSTAGRAM_APP_SECRET &&

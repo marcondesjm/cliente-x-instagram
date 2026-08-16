@@ -1413,7 +1413,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.95</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.96</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1506,6 +1506,14 @@
             <div class="check" id="directConnectionCheck"><span class="dot warn"></span><div><strong>Configuração preparada</strong><span>O envio real ficará desligado até conectarmos o webhook e as permissões da Meta.</span></div></div>
           </div>
           <div class="access-manager">
+            <div class="two-fields">
+              <label>Automação cadastrada<select id="directAutomationSelect"></select></label>
+              <label>Nome desta automação<input id="directAutomationName" maxlength="80" placeholder="Ex.: 50 Prompts ou Planilha de Vendas"></label>
+            </div>
+            <div class="editor-actions">
+              <button type="button" id="addDirectAutomation">+ Nova automação/material</button>
+              <button type="button" id="removeDirectAutomation">Remover esta automação</button>
+            </div>
             <label>Palavra-chave do comentário<input id="directKeyword" maxlength="200" placeholder="ex: GUIA, IA, PROMPTS"></label>
             <label>Correspondência<select id="directMatchMode"><option value="contains">Contém uma das palavras</option><option value="similar">Aceita palavras semelhantes e erros</option><option value="exact">Comentário exato</option></select></label>
             <label>ID da publicação (opcional)<input id="directMediaId" placeholder="Vazio = qualquer publicação"></label>
@@ -1517,7 +1525,7 @@
             <label class="check"><input id="directEnabled" type="checkbox"><span>Deixar pronta para ativação quando a Meta for conectada</span></label>
             <div class="editor-actions">
               <button type="button" id="uploadDirectMaterial">Anexar material</button>
-              <button class="primary" type="button" id="saveDirectAutomation">Salvar automação</button>
+              <button class="primary" type="button" id="saveDirectAutomation">Salvar automações</button>
             </div>
             <div class="access-result" id="directAutomationResult">Preencha a campanha e salve no projeto.</div>
           </div>
@@ -2377,7 +2385,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       scheduledPosts: [],
       weeklyPrograms: [],
       bioPage: null,
-      directAutomation: { automation: null, deliveries: [] },
+      directAutomation: { automation: null, automations: [], deliveries: [] },
       selectedPack: 0,
       selectedSlide: 0,
       serverMode: location.protocol.startsWith('http'),
@@ -2399,6 +2407,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       showcaseSlideIndex: 0
     };
     let directHistoryPage = 1;
+    let directAutomationIndex = 0;
     const DIRECT_HISTORY_PAGE_SIZE = 10;
 
     const DASHBOARD_GROUPS = {
@@ -2593,7 +2602,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         appState.scheduledPosts = state.scheduledPosts || [];
         appState.weeklyPrograms = state.weeklyPrograms || [];
         appState.bioPage = state.bioPage || null;
-        appState.directAutomation = state.directAutomation || { automation: null, deliveries: [] };
+        appState.directAutomation = state.directAutomation || { automation: null, automations: [], deliveries: [] };
         appState.secrets = state.secrets || [];
         appState.accessConfig = state.accessConfig || [];
         appState.watchdogErrors = state.watchdogErrors || [];
@@ -3520,25 +3529,80 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       }
     }
 
+    function directAutomations() {
+      const group = appState.directAutomation || {};
+      if (Array.isArray(group.automations) && group.automations.length) return group.automations;
+      return group.automation ? [group.automation] : [];
+    }
+
+    function emptyDirectAutomation(index = 0) {
+      return {
+        id: `direct-${Date.now()}-${index + 1}`,
+        name: `Novo material ${index + 1}`,
+        enabled: false,
+        keyword: '',
+        matchMode: 'contains',
+        mediaId: '',
+        materialUrl: '',
+        materialName: '',
+        message: 'Olá! Aqui está o material que você pediu: {link}',
+        publicReply: 'Enviei o material no seu Direct.'
+      };
+    }
+
+    function collectDirectAutomationForm() {
+      const materialUrl = document.getElementById('directMaterialUrl');
+      const current = directAutomations()[directAutomationIndex] || emptyDirectAutomation(directAutomationIndex);
+      return {
+        ...current,
+        name: document.getElementById('directAutomationName').value.trim(),
+        enabled: document.getElementById('directEnabled').checked,
+        keyword: document.getElementById('directKeyword').value,
+        matchMode: document.getElementById('directMatchMode').value,
+        mediaId: document.getElementById('directMediaId').value,
+        materialUrl: materialUrl.value,
+        materialName: materialUrl.dataset.materialName || current.materialName || '',
+        message: document.getElementById('directMessage').value,
+        publicReply: document.getElementById('directPublicReply').value
+      };
+    }
+
+    function storeCurrentDirectAutomation() {
+      const automations = directAutomations().slice();
+      if (!automations.length || directAutomationIndex >= automations.length) return automations;
+      automations[directAutomationIndex] = collectDirectAutomationForm();
+      appState.directAutomation = { ...(appState.directAutomation || {}), automation: automations[0] || null, automations };
+      return automations;
+    }
+
     function renderDirectAutomation() {
       const group = appState.directAutomation || {};
-      const automation = group.automation || {};
+      const automations = directAutomations();
+      directAutomationIndex = Math.min(Math.max(0, directAutomationIndex), Math.max(0, automations.length - 1));
+      const automation = automations[directAutomationIndex] || emptyDirectAutomation(0);
+      const selector = document.getElementById('directAutomationSelect');
+      selector.innerHTML = automations.length
+        ? automations.map((item, index) => `<option value="${index}" ${index === directAutomationIndex ? 'selected' : ''}>${escapeHtml(item.name || `Material ${index + 1}`)} · ${escapeHtml(item.keyword || 'sem palavra-chave')}</option>`).join('')
+        : '<option value="0">Nenhuma automação cadastrada</option>';
+      document.getElementById('directAutomationName').value = automation.name || 'Material 1';
       document.getElementById('directKeyword').value = automation.keyword || '';
       document.getElementById('directMatchMode').value = automation.matchMode || 'contains';
       document.getElementById('directMediaId').value = automation.mediaId || '';
       document.getElementById('directMaterialUrl').value = automation.materialUrl || '';
+      document.getElementById('directMaterialUrl').dataset.materialName = automation.materialName || '';
       document.getElementById('directMessage').value = automation.message || 'Olá! Aqui está o material que você pediu: {link}';
       document.getElementById('directPublicReply').value = automation.publicReply || 'Enviei o material no seu Direct.';
       document.getElementById('directEnabled').checked = Boolean(automation.enabled);
       const status = document.getElementById('directAutomationStatus');
       const connected = Boolean(group.connected);
-      status.textContent = connected ? (automation.enabled ? 'Ativa' : 'Meta conectada') : (automation.enabled ? 'Pronta para conectar' : 'Rascunho');
+      const activeCount = automations.filter((item) => item.enabled).length;
+      status.textContent = connected ? (activeCount ? `${activeCount} ativa(s)` : 'Meta conectada') : (activeCount ? `${activeCount} pronta(s)` : 'Rascunho');
       status.className = `status-pill ${connected ? 'good' : 'warn'}`;
       const connection = document.getElementById('directConnectionCheck');
       connection.innerHTML = connected
         ? '<span class="dot good"></span><div><strong>Meta conectada</strong><span>Webhook, permissões e token de mensagens estão configurados.</span></div>'
         : '<span class="dot warn"></span><div><strong>Configuração preparada</strong><span>O envio real ficará desligado até conectarmos o webhook e as permissões da Meta.</span></div>';
-      if (automation.materialName) document.getElementById('directMaterialResult').textContent = `Material salvo: ${automation.materialName}`;
+      document.getElementById('directMaterialResult').textContent = automation.materialName ? `Material salvo: ${automation.materialName}` : 'PDF, TXT ou imagem de até 8 MB.';
       const deliveries = Array.isArray(group.deliveries) ? group.deliveries : [];
       const totalPages = Math.max(1, Math.ceil(deliveries.length / DIRECT_HISTORY_PAGE_SIZE));
       directHistoryPage = Math.min(Math.max(1, directHistoryPage), totalPages);
@@ -3565,7 +3629,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           const time = Number.isNaN(date.getTime()) ? '--:--' : timeFormatter.format(date);
           const comment = item.commentText || item.keyword || 'Comentário não registrado';
           const error = item.error ? ` · ${item.error}` : '';
-          return `<div class="check"><span class="dot ${item.status === 'sent' ? 'good' : 'warn'}"></span><div><strong>@${escapeHtml(item.username || 'contato')}</strong><span>${escapeHtml(time)} · comentário: “${escapeHtml(comment)}” · ${escapeHtml(statusLabels[item.status] || item.status || 'Pendente')}${escapeHtml(error)}</span></div></div>`;
+          const campaign = item.automationName ? ` · automação: ${item.automationName}` : '';
+          return `<div class="check"><span class="dot ${item.status === 'sent' ? 'good' : 'warn'}"></span><div><strong>@${escapeHtml(item.username || 'contato')}</strong><span>${escapeHtml(time)} · comentário: “${escapeHtml(comment)}”${escapeHtml(campaign)} · ${escapeHtml(statusLabels[item.status] || item.status || 'Pendente')}${escapeHtml(error)}</span></div></div>`;
         }).join('')}</section>`).join('')
         : `<div class="empty">Nenhum envio registrado. ${connected ? 'A conexão está pronta; ative e salve uma campanha para começar.' : 'A integração com a Meta ainda está desligada.'}</div>`;
       const pagination = document.getElementById('directPagination');
@@ -3604,25 +3669,45 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       } catch (error) { result.textContent = error.message; }
     }
 
+    function addDirectAutomation() {
+      const automations = storeCurrentDirectAutomation();
+      const result = document.getElementById('directAutomationResult');
+      if (automations.length >= 10) {
+        result.className = 'access-result warn';
+        result.textContent = 'Cada conta permite no máximo 10 automações de Direct.';
+        return;
+      }
+      automations.push(emptyDirectAutomation(automations.length));
+      appState.directAutomation = { ...(appState.directAutomation || {}), automation: automations[0], automations };
+      directAutomationIndex = automations.length - 1;
+      renderDirectAutomation();
+      result.className = 'access-result good';
+      result.textContent = `Nova automação ${automations.length} criada. Defina o nome, as palavras-chave e o material, depois salve.`;
+      document.getElementById('directAutomationName').focus();
+    }
+
+    function removeDirectAutomation() {
+      const automations = storeCurrentDirectAutomation();
+      const removed = automations.splice(directAutomationIndex, 1)[0];
+      if (!automations.length) automations.push(emptyDirectAutomation(0));
+      directAutomationIndex = Math.min(directAutomationIndex, automations.length - 1);
+      appState.directAutomation = { ...(appState.directAutomation || {}), automation: automations[0], automations };
+      renderDirectAutomation();
+      const result = document.getElementById('directAutomationResult');
+      result.className = 'access-result warn';
+      result.textContent = `Automação "${removed?.name || 'sem nome'}" removida desta edição. Clique em Salvar automações para confirmar.`;
+    }
+
     async function saveDirectAutomation() {
       const button = document.getElementById('saveDirectAutomation');
       const result = document.getElementById('directAutomationResult');
       const original = button.textContent;
       button.disabled = true; button.textContent = 'Salvando...'; result.textContent = 'Salvando configuração...';
       try {
-        const materialUrl = document.getElementById('directMaterialUrl');
+        const automations = storeCurrentDirectAutomation();
         const payload = await api('/api/state', { method: 'POST', body: JSON.stringify({
           action: 'update-direct-automation', account: appState.selectedAccount,
-          automation: {
-            enabled: document.getElementById('directEnabled').checked,
-            keyword: document.getElementById('directKeyword').value,
-            matchMode: document.getElementById('directMatchMode').value,
-            mediaId: document.getElementById('directMediaId').value,
-            materialUrl: materialUrl.value,
-            materialName: materialUrl.dataset.materialName || '',
-            message: document.getElementById('directMessage').value,
-            publicReply: document.getElementById('directPublicReply').value
-          }
+          automations
         }) });
         appState.directAutomation = payload.directAutomation;
         renderDirectAutomation();
@@ -6154,6 +6239,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         const button = event.target.closest('[data-remove-bio-link]');
         if (button) removeBioLink(Number(button.dataset.removeBioLink));
       });
+      document.getElementById('directAutomationSelect').addEventListener('change', (event) => {
+        storeCurrentDirectAutomation();
+        directAutomationIndex = Number(event.target.value) || 0;
+        renderDirectAutomation();
+      });
+      document.getElementById('addDirectAutomation').addEventListener('click', addDirectAutomation);
+      document.getElementById('removeDirectAutomation').addEventListener('click', removeDirectAutomation);
       document.querySelector('.dashboard-nav').addEventListener('click', (event) => {
         const button = event.target.closest('[data-dashboard-view]');
         if (button) activateDashboardView(button.dataset.dashboardView);
