@@ -1353,7 +1353,8 @@ function planForNewsSlots(account, newsPacks, dateString) {
       mode: 'feed + story',
       packIndex: `news-${packIndexNumber}`,
       sourceUrl: rawPack.research?.sourceUrl || '',
-      source: rawPack.research?.source || ''
+      source: rawPack.research?.source || '',
+      sourceTitle: rawPack.research?.sourceTitle || ''
     };
   });
 }
@@ -1642,6 +1643,15 @@ function sectorVisualHtml(cue = 'business') {
   return `<svg class="sector-cue" viewBox="0 0 300 280" aria-hidden="true">${shapes[cue] || shapes.business}</svg>`;
 }
 
+function htmlText(value = '') {
+  return String(value || '').replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
+}
+
+function researchSourceCardHtml(source = '') {
+  const name = htmlText(source || 'Fonte oficial');
+  return `<div class="context-photo news-context"><span>FONTE OFICIAL</span><strong>${name}</strong><small>Atualização que pode virar ganho operacional.</small><i></i></div>`;
+}
+
 function anatexSlideHtml(slide, index, total, account, style, renderContext = {}) {
   const slideStyle = styleForSlide(style, index);
   const title = anatexTitle(slide.title || '');
@@ -1659,6 +1669,8 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const usernameDisplay = accountUsernameDisplay(account);
   const engagementRole = index === 1 ? 'hook' : index === total ? 'cta' : index === total - 1 ? 'proof' : 'value';
   const useSectorPhoto = engagementRole === 'hook' || engagementRole === 'proof';
+  const researchSource = String(slide.researchSource || '').trim();
+  const showNewsContext = Boolean(useSectorPhoto && researchSource);
   const sectorPhotoImage = useSectorPhoto ? sectorPhotoCssImage(visualCue, index, renderContext) : '';
   const sectorPhotoClass = sectorPhotoImage ? ' has-sector-photo' : '';
   const swipeCue = index === 1 ? '<div class="swipe-cue">arraste para ver</div>' : '';
@@ -1754,6 +1766,13 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
       opacity: 0.88;
     }
     .context-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,250,246,0.10), rgba(19,34,56,0.18)); }
+    .context-photo.news-context { display: flex; flex-direction: column; justify-content: center; gap: 10px; padding: 30px 34px; background: linear-gradient(135deg, #132238, ${accent}); color: #fffaf7; opacity: 1; }
+    .context-photo.news-context::after { background: radial-gradient(circle at 88% 20%, rgba(255,255,255,.18) 0 54px, transparent 55px); }
+    .news-context > * { position: relative; z-index: 1; }
+    .news-context span { font-size: 20px; font-weight: 900; letter-spacing: .12em; }
+    .news-context strong { font-size: 48px; line-height: .94; font-weight: 900; }
+    .news-context small { max-width: 250px; font-size: 18px; line-height: 1.12; font-weight: 800; }
+    .news-context i { width: 76px; height: 8px; border-radius: 99px; background: #fffaf7; opacity: .9; }
     .note {
       position: absolute;
       left: 78px;
@@ -2056,8 +2075,8 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     <div class="badge"><span></span>${eyebrow}</div>
     ${swipeCue}
     ${saveCue}
-    ${sectorPhotoImage ? '<div class="context-photo"></div>' : ''}
-    ${sectorPhotoImage ? '' : sectorVisualHtml(visualCue)}
+    ${showNewsContext ? researchSourceCardHtml(researchSource) : (sectorPhotoImage ? '<div class="context-photo"></div>' : '')}
+    ${sectorPhotoImage || showNewsContext ? '' : sectorVisualHtml(visualCue)}
     <div class="panel${avatarClass}"></div>
     <div class="spark s1">*</div>
     <div class="spark s2">*</div>
@@ -2495,8 +2514,10 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
   const mode = slideStyle.templateMode || 'native';
   const soft = slideStyle.accentSoft || 'rgba(167,86,61,0.16)';
   const visualCue = slide.visualCue || visualCueForAccount(account, `${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
+  const researchSource = String(slide.researchSource || '').trim();
+  const showNewsContext = Boolean(researchSource);
   const avatarImage = accountAvatarCssImage(account, 0, visualCue, { ...renderContext, story: true });
-  const sectorPhotoImage = sectorPhotoCssImage(visualCue);
+  const sectorPhotoImage = showNewsContext ? '' : sectorPhotoCssImage(visualCue);
   const avatarBlock = avatarImage
     ? `<div class="avatar"></div>`
     : `<div class="panel"><span>IA</span></div>`;
@@ -2544,6 +2565,11 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     .note { position: absolute; left: 72px; bottom: 120px; z-index: 2; width: 640px; padding: 34px 42px; border-radius: 28px; background: rgba(255,250,246,0.78); border: 2px solid rgba(167,86,61,0.18); color: #211915; font-size: 34px; line-height: 1.18; font-weight: 900; }
     footer { position: absolute; left: 72px; bottom: 54px; color: ${accent}; font-size: 30px; font-weight: 900; z-index: 2; }
     .visual-card { display: none; position: absolute; left: 72px; right: 72px; top: 820px; height: 610px; border-radius: 24px; background: ${sectorPhotoImage || slideStyle.bgBottom} center / cover no-repeat; }
+    .visual-card.news-context-story { display: none; padding: 56px; background: linear-gradient(135deg, #132238, ${accent}); color: #fffaf7; }
+    .news-context-story span, .news-context-story strong, .news-context-story small { display: block; position: relative; z-index: 1; }
+    .news-context-story span { font-size: 26px; font-weight: 900; letter-spacing: .12em; }
+    .news-context-story strong { margin-top: 26px; font-size: 78px; line-height: .95; }
+    .news-context-story small { margin-top: 28px; max-width: 470px; font-size: 28px; line-height: 1.12; font-weight: 800; }
     .mode-native main, .mode-visual main, .mode-statement main, .mode-profile main, .mode-editorial main { background: linear-gradient(180deg, #fff 0%, ${slideStyle.bgTop} 100%); }
     .mode-native main::before, .mode-visual main::before, .mode-statement main::before, .mode-profile main::before, .mode-editorial main::before { background: rgba(19,34,56,.12); }
     .mode-native .brand, .mode-visual .brand, .mode-statement .brand, .mode-profile .brand, .mode-editorial .brand { color: ${slideStyle.text}; }
@@ -2575,7 +2601,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     <div class="badge">${eyebrow}</div>
     <h1>${title.replace(/\s+IA\b/i, ' <strong>IA</strong>')}</h1>
     <p>${body}</p>
-    <div class="visual-card"></div>
+    <div class="visual-card${showNewsContext ? ' news-context-story' : ''}">${showNewsContext ? `<span>FONTE OFICIAL</span><strong>${htmlText(researchSource)}</strong><small>Atualização que pode virar ganho operacional.</small>` : ''}</div>
     ${avatarBlock}
     <div class="note">${account.footerText}</div>
     <footer>${account.brandName}</footer>
@@ -3167,7 +3193,8 @@ async function main() {
   ].filter(Boolean).join(' '));
   pack.slides = pack.slides.map((slide) => ({
     ...slide,
-    visualCue: slide.visualCue || packVisualCue
+    visualCue: slide.visualCue || packVisualCue,
+    researchSource: slide.researchSource || pack.research?.source || ''
   }));
   validatePack(pack);
   if (!args.renderOnly && !args.dryRun && (scheduledPost || dashboardPack || args.storyOnly)) {

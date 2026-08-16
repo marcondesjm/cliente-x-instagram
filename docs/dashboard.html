@@ -1394,7 +1394,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.75</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.76</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -5528,6 +5528,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const isCta = index === totalSlides;
       const isProof = index === totalSlides - 1;
       const useSectorPhoto = Boolean(sectorPhotoHref && (isHook || index === 4));
+      const useNewsContext = Boolean(item.source && useSectorPhoto);
       const modeSeed = previewDaysSinceEpoch(item.previewDate || item.planDate || item.date || '');
       const mode = 'paper';
       let theme = [
@@ -5621,7 +5622,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <rect x="72" y="1192" width="250" height="56" rx="28" fill="${theme.text}"/>
             <text x="102" y="1229" fill="#fff6ef" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900">SALVE ESTE PASSO</text>
           ` : ''}
-          ${useSectorPhoto ? `
+          ${useNewsContext ? `
+            <rect x="${photo.x - 8}" y="${photo.y - 8}" width="${photo.w + 16}" height="${photo.h + 16}" rx="${photo.r + 8}" fill="#fffaf7" opacity="0.82"/>
+            <rect x="${photo.x}" y="${photo.y}" width="${photo.w}" height="${photo.h}" rx="${photo.r}" fill="#132238"/>
+            <text x="${photo.x + 28}" y="${photo.y + 48}" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="900">FONTE OFICIAL</text>
+            <text x="${photo.x + 28}" y="${photo.y + 112}" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="900">${escapeHtml(String(item.source || '').slice(0, 26))}</text>
+            <text x="${photo.x + 28}" y="${photo.y + 152}" fill="#dcebe8" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="800">Atualização que pode virar ganho operacional.</text>
+          ` : useSectorPhoto ? `
             <rect x="${photo.x - 8}" y="${photo.y - 8}" width="${photo.w + 16}" height="${photo.h + 16}" rx="${photo.r + 8}" fill="#fffaf7" opacity="0.82"/>
             <image href="${sectorPhotoHref}" x="${photo.x}" y="${photo.y}" width="${photo.w}" height="${photo.h}" preserveAspectRatio="xMidYMid slice" clip-path="url(#sectorPhotoClip)" opacity="0.88"/>
             <rect x="${photo.x}" y="${photo.y}" width="${photo.w}" height="${photo.h}" rx="${photo.r}" fill="#17211c" opacity="0.10"/>
@@ -5659,7 +5666,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     async function previewSlidesForItem(item = {}) {
       const title = item.title || 'Conteúdo programado';
       const caption = item.caption || 'Legenda será montada pelo gerador automático.';
-      const cue = item.visualCue || previewVisualCueFromText(`${title} ${caption}`);
+      const cue = previewVisualCueForAccount(`${title} ${caption}`);
       const fallbackSlides = [
         { index: 1, kicker: item.type === 'program' ? 'PROGRAMA' : 'POSTAGEM', title, body: caption, footer: 'Acompanhe pelo Instagram' },
         { index: 2, kicker: 'CONTEXTO', title: 'O que esta por trás disso?', body: caption, footer: 'Entenda antes de agir' },
