@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 18:30 BRT
+Atualizado em: 2026-08-16 18:35 BRT
 
 ## Regra permanente de checkpoint
 
@@ -18,7 +18,16 @@ Atualizado em: 2026-08-16 18:30 BRT
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `b11fae5` (`Adiciona pagina da automacao do Direct na landing`).
-- Versao visivel atual: `v4.97`
+- Versao visivel atual: `v4.98`
+
+## Rodizio atual das fontes do Radar
+
+- O Radar possui 11 fontes padrao cadastradas; a disponibilidade real depende de cada feed possuir noticia recente e aderente ao perfil.
+- A escolha de publicacao nao depende mais apenas da ordem/recencia do RSS: prioriza a fonte menos publicada no historico e a que esta ha mais tempo sem aparecer.
+- Termos em ingles reconhecem equivalentes em portugues, liberando pautas validas de G1 Tecnologia, Olhar Digital e TecMundo.
+- A validacao real atual encontrou 34 noticias elegiveis em 6 origens: G1 Tecnologia, Olhar Digital, TecMundo, n8n, AWS Machine Learning e OpenAI.
+- O watchdog principal e o reserva persistem `publication-history.json`; ambos participam do mesmo grupo de concorrencia.
+- URL ja usada, fonte consecutiva, chamada de capa repetida e conteudo duplicado continuam bloqueados.
 
 ## Onboarding seguro de novas empresas
 

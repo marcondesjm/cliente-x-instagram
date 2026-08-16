@@ -2946,11 +2946,51 @@ function findDuplicateSelection(pack, recentMedia = [], publicationHistory = [])
   return findDuplicateCaption(recentMedia, pack.caption) || findDuplicatePack(publicationHistory, pack);
 }
 
+function balanceResearchPacksByHistory(packs = [], publicationHistory = [], dateString = '', slotIndex = 0) {
+  if (!packs.some((pack) => pack?.research?.source)) return packs.map((pack, index) => ({ pack, originalIndex: index }));
+  const stats = new Map();
+  for (const entry of publicationHistory) {
+    const source = String(entry?.research?.source || '').trim().toLocaleLowerCase('pt-BR');
+    if (!source) continue;
+    const current = stats.get(source) || { count: 0, lastPublishedAt: 0 };
+    current.count += 1;
+    current.lastPublishedAt = Math.max(current.lastPublishedAt, Date.parse(entry.publishedAt) || 0);
+    stats.set(source, current);
+  }
+  const buckets = new Map();
+  packs.forEach((pack, originalIndex) => {
+    const source = String(pack?.research?.source || 'sem fonte').trim();
+    if (!buckets.has(source)) buckets.set(source, []);
+    buckets.get(source).push({ pack, originalIndex });
+  });
+  const sourceQueues = [...buckets.entries()].map(([source, queue]) => {
+    const normalized = source.toLocaleLowerCase('pt-BR');
+    const sourceStats = stats.get(normalized) || { count: 0, lastPublishedAt: 0 };
+    const start = queue.length ? pickDailyIndex(queue, dateString, slotIndex) : 0;
+    return {
+      source,
+      count: sourceStats.count,
+      lastPublishedAt: sourceStats.lastPublishedAt,
+      queue: [...queue.slice(start), ...queue.slice(0, start)]
+    };
+  }).sort((left, right) => (
+    left.count - right.count
+    || left.lastPublishedAt - right.lastPublishedAt
+    || left.source.localeCompare(right.source, 'pt-BR')
+  ));
+  const balanced = [];
+  while (sourceQueues.some((item) => item.queue.length)) {
+    for (const item of sourceQueues) {
+      if (item.queue.length) balanced.push(item.queue.shift());
+    }
+  }
+  return balanced;
+}
+
 function pickFreshPack(packs, dateString, slotIndex, recentMedia = [], publicationHistory = []) {
-  const startIndex = pickDailyIndex(packs, dateString, slotIndex);
-  for (let offset = 0; offset < packs.length; offset += 1) {
-    const packIndex = (startIndex + offset) % packs.length;
-    const pack = packs[packIndex];
+  const candidates = balanceResearchPacksByHistory(packs, publicationHistory, dateString, slotIndex);
+  for (let offset = 0; offset < candidates.length; offset += 1) {
+    const { pack, originalIndex: packIndex } = candidates[offset];
     const duplicate = findDuplicateSelection(pack, recentMedia, publicationHistory);
     if (!duplicate) return { pack, packIndex, skippedDuplicates: offset };
   }
@@ -2958,7 +2998,7 @@ function pickFreshPack(packs, dateString, slotIndex, recentMedia = [], publicati
     pack: null,
     packIndex: null,
     skippedDuplicates: packs.length,
-    duplicate: findDuplicateSelection(packs[startIndex], recentMedia, publicationHistory)
+    duplicate: candidates.length ? findDuplicateSelection(candidates[0].pack, recentMedia, publicationHistory) : null
   };
 }
 
@@ -3208,13 +3248,25 @@ async function main() {
       research: { source: 'Fonte de teste', sourceUrl: 'https://example.com/noticia-anterior' }
     }], sourceProbePack);
     if (!sourceProbe) throw new Error('Rodizio de fontes falhou no teste de historico.');
+    const balancedProbePacks = ['Fonte A', 'Fonte B', 'Fonte C'].map((source, index) => ({
+      research: { source, sourceUrl: `https://example.com/${index}` },
+      slides: [{ eyebrow: source, title: `Titulo ${source}`, body: `Corpo ${source}` }],
+      caption: `Legenda ${source}`
+    }));
+    const balancedProbe = pickFreshPack(balancedProbePacks, today, slotIndex, [], [
+      { publishedAt: '2026-08-14T10:00:00.000Z', research: { source: 'Fonte A', sourceUrl: 'https://example.com/a1' } },
+      { publishedAt: '2026-08-15T10:00:00.000Z', research: { source: 'Fonte A', sourceUrl: 'https://example.com/a2' } },
+      { publishedAt: '2026-08-16T10:00:00.000Z', research: { source: 'Fonte B', sourceUrl: 'https://example.com/b1' } }
+    ]);
+    if (balancedProbe.pack?.research?.source !== 'Fonte C') throw new Error('Balanceamento por fonte falhou no teste de historico.');
     console.log(JSON.stringify({
       ok: true,
       account: account.account,
       checkedPacks: packs.length,
       checkedAutoPacks: autoPacks.length,
       checkedAutomaticSelectionPacks: automaticSelectionPacks.length,
-      duplicateHistoryGuard: 'ok'
+      duplicateHistoryGuard: 'ok',
+      sourceBalanceGuard: 'ok'
     }, null, 2));
     return;
   }

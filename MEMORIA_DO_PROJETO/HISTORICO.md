@@ -1,5 +1,33 @@
 # Historico
 
+## 2026-08-16 18:35 BRT
+
+Corrigido o rodizio do Radar que concentrava publicacoes em `AWS`, `n8n` e `OpenAI`, apesar de existirem mais fontes cadastradas.
+
+Diagnostico:
+
+- Existem `11` fontes padrao cadastradas, mas a selecao nao era aleatoria nem equilibrada: as noticias eram ordenadas por recencia e intercaladas antes do filtro final.
+- As palavras-chave configuradas em ingles eliminavam muitos titulos em portugues de G1 Tecnologia, Olhar Digital e TecMundo.
+- O historico local confirmou concentracao nas ultimas 11 pautas: 5 AWS, 3 n8n, 2 OpenAI e apenas uma outra origem.
+- O watchdog reserva nao persistia `publication-history.json`; por isso uma publicacao feita por ele podia ser ignorada na escolha seguinte.
+
+Correcao:
+
+- O filtro reconhece equivalentes em portugues para IA, inteligencia artificial, automacao, agentes, fluxos, empresas, clientes, vendas, operacao, dados e produtividade.
+- A selecao real agora ordena as fontes pela menor quantidade de publicacoes no historico e pela origem usada ha mais tempo.
+- Dentro da fonte escolhida, a pauta continua variando por data e horario, preservando bloqueio de URL, capa e conteudo repetidos.
+- O watchdog reserva agora grava `publication-history.json`, usando o mesmo grupo de concorrencia do workflow principal.
+- O teste de copia ganhou a verificacao `sourceBalanceGuard` para impedir regressao do balanceamento.
+- Versao visivel atualizada para `v4.98` no backend e no dashboard.
+
+Validacao:
+
+- `node --check` passou em `lib/editorial-research.js` e `publish-carousel.mjs`.
+- `npm run validate-copy` passou com `duplicateHistoryGuard: ok` e `sourceBalanceGuard: ok`.
+- Pesquisa real de 7 dias encontrou `34` noticias elegiveis em `6` fontes: G1 Tecnologia, Olhar Digital, TecMundo, n8n, AWS Machine Learning e OpenAI.
+- Nenhuma das 11 fontes consultadas retornou erro; as demais nao tinham pauta elegivel no filtro e na janela atuais.
+- Nenhuma publicacao real foi disparada durante esta validacao.
+
 ## 2026-08-16 18:30 BRT
 
 Implementado o onboarding seguro de novas empresas sem compartilhamento de login ou senha do Instagram.
