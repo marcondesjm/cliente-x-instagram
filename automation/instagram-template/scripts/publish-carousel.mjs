@@ -13,6 +13,11 @@ const DEFAULT_CONFIG_DIR = join(TEMPLATE_DIR, 'config');
 const RUNS_DIR = join(TEMPLATE_DIR, 'runs');
 const FEED_WIDTH = 1080;
 const FEED_HEIGHT = 1350;
+const STORY_WIDTH = 1080;
+const STORY_HEIGHT = 1920;
+const STORY_SAFE_TOP = 250;
+const STORY_SAFE_BOTTOM = 500;
+const STORY_SAFE_HEIGHT = STORY_HEIGHT - STORY_SAFE_TOP - STORY_SAFE_BOTTOM;
 const IG_BASE = 'https://graph.facebook.com/v21.0';
 const RETRY_ATTEMPTS = Number.parseInt(process.env.INSTAGRAM_TEMPLATE_RETRY_ATTEMPTS || '3', 10);
 const RETRY_BASE_DELAY_MS = Number.parseInt(process.env.INSTAGRAM_TEMPLATE_RETRY_BASE_DELAY_MS || '2500', 10);
@@ -2651,27 +2656,27 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
   <meta charset="UTF-8">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { width: 1080px; height: 1920px; overflow: hidden; font-family: Arial, Helvetica, sans-serif; background: ${slideStyle.bgTop}; color: ${slideStyle.text}; }
+    body { width: ${STORY_WIDTH}px; height: ${STORY_HEIGHT}px; overflow: hidden; font-family: Arial, Helvetica, sans-serif; background: ${slideStyle.bgTop}; color: ${slideStyle.text}; }
     main {
-      width: 1080px;
-      height: 1920px;
-      padding: 84px 72px 92px;
+      width: ${STORY_WIDTH}px;
+      height: ${STORY_HEIGHT}px;
+      padding: ${STORY_SAFE_TOP}px 72px ${STORY_SAFE_BOTTOM}px;
       position: relative;
       background:
         radial-gradient(circle at 84% 8%, ${soft} 0 210px, transparent 211px),
         radial-gradient(circle at 14% 92%, rgba(167,86,61,0.10) 0 260px, transparent 261px),
         linear-gradient(180deg, ${slideStyle.bgTop} 0%, ${slideStyle.bgBottom} 100%);
     }
-    main::before { content: ""; position: absolute; left: 72px; right: 72px; top: 92px; height: 2px; background: rgba(167,86,61,0.42); }
+    main::before { content: ""; position: absolute; left: 72px; right: 72px; top: ${STORY_SAFE_TOP}px; height: 2px; background: rgba(167,86,61,0.42); }
     .brand { position: relative; z-index: 2; margin-left: 52px; color: ${accent}; font-size: 42px; font-weight: 900; }
-    .badge { position: relative; z-index: 2; margin-top: 96px; display: inline-flex; padding: 18px 32px; border-radius: 18px; background: ${accent}; color: #fff6ef; font-size: 34px; line-height: 1; font-weight: 900; text-transform: uppercase; }
+    .badge { position: relative; z-index: 2; margin-top: 54px; display: inline-flex; padding: 18px 32px; border-radius: 18px; background: ${accent}; color: #fff6ef; font-size: 34px; line-height: 1; font-weight: 900; text-transform: uppercase; }
     h1 { position: relative; z-index: 2; margin-top: 54px; max-width: 850px; font-size: 92px; line-height: 0.98; letter-spacing: 0; font-weight: 900; color: #111; }
     h1 strong { color: ${accent}; font: inherit; }
-    p { position: relative; z-index: 2; margin-top: 34px; max-width: 820px; font-size: 46px; line-height: 1.16; font-weight: 800; color: #3f332d; }
+    p { position: relative; z-index: 2; margin-top: 34px; max-width: 500px; font-size: 40px; line-height: 1.16; font-weight: 800; color: #3f332d; }
     .avatar, .panel {
       position: absolute;
       right: 82px;
-      bottom: 250px;
+      bottom: ${STORY_SAFE_BOTTOM}px;
       width: 390px;
       height: 520px;
       border-radius: 36px;
@@ -2685,8 +2690,8 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     .avatar::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,246,239,0.03), rgba(17,17,17,0.18)); }
     .panel { background: rgba(255,255,255,0.50); display: grid; place-items: center; }
     .panel span { color: rgba(167,86,61,0.18); font-size: 124px; font-weight: 900; }
-    .note { position: absolute; left: 72px; bottom: 120px; z-index: 2; width: 640px; padding: 34px 42px; border-radius: 28px; background: rgba(255,250,246,0.78); border: 2px solid rgba(167,86,61,0.18); color: #211915; font-size: 34px; line-height: 1.18; font-weight: 900; }
-    footer { position: absolute; left: 72px; bottom: 54px; color: ${accent}; font-size: 30px; font-weight: 900; z-index: 2; }
+    .note { position: absolute; left: 72px; bottom: ${STORY_SAFE_BOTTOM + 20}px; z-index: 2; width: 600px; padding: 28px 36px; border-radius: 28px; background: rgba(255,250,246,0.78); border: 2px solid rgba(167,86,61,0.18); color: #211915; font-size: 31px; line-height: 1.18; font-weight: 900; }
+    footer { position: absolute; left: 72px; bottom: ${STORY_SAFE_BOTTOM + 4}px; color: ${accent}; font-size: 30px; font-weight: 900; z-index: 2; }
     .visual-card { display: none; position: absolute; left: 72px; right: 72px; top: 820px; height: 610px; border-radius: 24px; background: ${sectorPhotoImage || slideStyle.bgBottom} center / cover no-repeat; }
     .visual-card.news-context-story { display: none; padding: 56px; background: linear-gradient(135deg, #132238, ${accent}); color: #fffaf7; }
     .news-context-story span, .news-context-story strong, .news-context-story small { display: block; position: relative; z-index: 1; }
@@ -2698,24 +2703,25 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     .mode-native .brand, .mode-visual .brand, .mode-statement .brand, .mode-profile .brand, .mode-editorial .brand { color: ${slideStyle.text}; }
     .mode-native .badge, .mode-visual .badge, .mode-statement .badge, .mode-profile .badge, .mode-editorial .badge { background: transparent; color: ${accent}; padding: 0; letter-spacing: .08em; }
     .mode-native h1 { font-size: 86px; max-width: 900px; }
-    .mode-native .avatar { right: 72px; bottom: 220px; width: 420px; height: 560px; border-radius: 22px; transform: none; }
+    .mode-native p { max-width: 500px; font-size: 39px; }
+    .mode-native .avatar { right: 72px; bottom: ${STORY_SAFE_BOTTOM}px; width: 360px; height: 400px; border-radius: 22px; transform: none; }
     .mode-visual h1 { margin-top: 46px; font-size: 80px; }
     .mode-visual p { font-size: 40px; }
     .mode-visual .visual-card { display: block; }
-    .mode-visual .avatar { width: 220px; height: 220px; right: 100px; bottom: 330px; border-radius: 50%; transform: none; }
+    .mode-visual .avatar { width: 220px; height: 220px; right: 100px; bottom: ${STORY_SAFE_BOTTOM + 70}px; border-radius: 50%; transform: none; }
     .mode-statement .badge { display: block; margin-top: 170px; text-align: center; }
     .mode-statement h1 { margin: 160px auto 0; max-width: 920px; font-size: 104px; text-align: center; }
     .mode-statement h1::before { content: ""; display: block; width: 100px; height: 10px; margin: 0 auto 56px; background: ${accent}; }
     .mode-statement p { margin: 52px auto 0; max-width: 850px; text-align: center; }
     .mode-statement .avatar, .mode-statement .panel, .mode-statement .note { display: none; }
     .mode-profile h1 { font-size: 86px; }
-    .mode-profile .avatar { left: 72px; right: 72px; bottom: 210px; width: auto; height: 760px; border-radius: 26px; transform: none; background-position: center 18%; }
-    .mode-profile .note { left: 520px; bottom: 250px; width: 488px; background: rgba(255,255,255,.92); }
+    .mode-profile .avatar { left: 72px; right: 72px; bottom: ${STORY_SAFE_BOTTOM}px; width: auto; height: 760px; border-radius: 26px; transform: none; background-position: center 18%; }
+    .mode-profile .note { left: 520px; bottom: ${STORY_SAFE_BOTTOM + 40}px; width: 488px; background: rgba(255,255,255,.92); }
     .mode-editorial main { background: linear-gradient(90deg, #fff 0 60%, ${slideStyle.bgBottom} 60%); }
     .mode-editorial h1 { max-width: 610px; font-size: 82px; }
     .mode-editorial p { max-width: 560px; font-size: 39px; }
     .mode-editorial .visual-card { display: block; left: 650px; right: 56px; top: 520px; height: 720px; }
-    .mode-editorial .avatar { right: 92px; bottom: 250px; width: 300px; height: 390px; transform: none; }
+    .mode-editorial .avatar { right: 92px; bottom: ${STORY_SAFE_BOTTOM + 20}px; width: 300px; height: 390px; transform: none; }
   </style>
 </head>
 <body>
@@ -2748,11 +2754,11 @@ function storyHtml(slide, account, style, renderContext = {}) {
   <meta charset="UTF-8">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { width: 1080px; height: 1920px; overflow: hidden; font-family: Arial, Helvetica, sans-serif; background: ${slideStyle.bgTop}; color: ${slideStyle.text}; }
+    body { width: ${STORY_WIDTH}px; height: ${STORY_HEIGHT}px; overflow: hidden; font-family: Arial, Helvetica, sans-serif; background: ${slideStyle.bgTop}; color: ${slideStyle.text}; }
     main {
-      width: 1080px;
-      height: 1920px;
-      padding: 116px 76px 104px;
+      width: ${STORY_WIDTH}px;
+      height: ${STORY_HEIGHT}px;
+      padding: ${STORY_SAFE_TOP}px 76px ${STORY_SAFE_BOTTOM}px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -2761,7 +2767,7 @@ function storyHtml(slide, account, style, renderContext = {}) {
         linear-gradient(180deg, ${slideStyle.bgTop} 0%, ${slideStyle.bgBottom} 100%);
       position: relative;
     }
-    main::before { content: ""; position: absolute; inset: 48px; border: 2px solid rgba(244,247,245,0.1); }
+    main::before { content: ""; position: absolute; left: 48px; right: 48px; top: ${STORY_SAFE_TOP}px; bottom: ${STORY_SAFE_BOTTOM}px; border: 2px solid rgba(244,247,245,0.1); }
     main::after {
       content: "";
       position: absolute;
@@ -3352,6 +3358,12 @@ async function main() {
       offer: 'consultoria e automações com IA'
     });
     validatePack(researchIntegrityProbe);
+    if (FEED_WIDTH !== 1080 || FEED_HEIGHT !== 1350 || FEED_WIDTH / FEED_HEIGHT !== 4 / 5) {
+      throw new Error('Arquitetura do Feed deve permanecer em 1080 x 1350 (4:5).');
+    }
+    if (STORY_WIDTH !== 1080 || STORY_HEIGHT !== 1920 || STORY_SAFE_TOP !== 250 || STORY_SAFE_BOTTOM !== 500 || STORY_SAFE_HEIGHT !== 1170) {
+      throw new Error('Arquitetura segura do Story foi alterada fora do padrao 250/1170/500.');
+    }
     console.log(JSON.stringify({
       ok: true,
       account: account.account,
@@ -3364,6 +3376,8 @@ async function main() {
       checkedAvatarRotation: avatarProbeCovers.length,
       radarSemanticGuard: 'ok',
       radarSourceIntegrityGuard: 'ok'
+      ,feedArchitectureGuard: '1080x1350-4:5'
+      ,storySafeZoneGuard: '250-1170-500'
     }, null, 2));
     return;
   }
