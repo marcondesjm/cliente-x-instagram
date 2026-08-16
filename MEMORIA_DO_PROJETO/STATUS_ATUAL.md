@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 20:51 BRT
+Atualizado em: 2026-08-16 20:56 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,23 @@ Atualizado em: 2026-08-16 20:51 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `13a0fe1` (`Corrige chamada final do carrossel`).
+- Checkpoint funcional atual: `33db605` (`Publica fonte do Radar no primeiro comentario`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
-- Versao visivel atual: `v5.19`
+- Versao visivel atual: `v5.20`
+
+## Fonte no primeiro comentario
+
+- A legenda identifica a fonte e avisa que o link esta no primeiro comentario.
+- O comentario automatico leva fonte, titulo original e URL completa da materia.
+- A publicacao e bloqueada antes de chegar a Meta se titulo ou URL estiverem ausentes do comentario preparado.
+- Se somente o comentario falhar depois de o feed existir, a falha e registrada sem provocar outro post duplicado.
+- Previa validada: `2026-08-16-205452-slot-0-render-only`.
+- Nenhuma postagem foi enviada nesta alteracao.
+- Producao: commit funcional `33db605`, deploy `dpl_GQfHwR6QsByhH4hbvQ94ynn9AwRb` e versao `v5.20` confirmados.
 
 ## Chamada final completa
 

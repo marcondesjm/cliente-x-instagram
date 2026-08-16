@@ -45,8 +45,8 @@ const ACTIVE_VERSION = {
   label: 'Última versão funcionando',
   appVersion: 'v5.20',
   status: 'funcionando',
-  stableCommit: '3314cfb',
-  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
+  stableCommit: '33db605',
+  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/33db605',
   description: 'O Radar deixa a legenda mais limpa e publica título e link da matéria no primeiro comentário.'
 };
 const MAINTENANCE = {

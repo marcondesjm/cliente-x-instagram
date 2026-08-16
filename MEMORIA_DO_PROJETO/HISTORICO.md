@@ -1,5 +1,19 @@
 # Historico
 
+## 2026-08-16 20:56 BRT
+
+Implementado o primeiro comentario automatico com a fonte completa das pautas reais do Radar.
+
+- A legenda agora informa apenas `Fonte: nome da fonte · link da materia no primeiro comentario`, deixando a leitura mais limpa.
+- O primeiro comentario preparado contem fonte, titulo original e URL completa da materia consultada.
+- Slides 2 e 5 passaram a orientar corretamente que o link esta no primeiro comentario.
+- A trava editorial bloqueia o Radar se o comentario nao contiver o titulo ou o link HTTPS da materia real.
+- Depois de o feed ser publicado, uma eventual falha ao comentar nao dispara republicacao duplicada: o erro fica salvo em `firstCommentError` e o ID confirmado fica em `firstCommentId`.
+- `npm run validate-copy` passou e a previa `2026-08-16-205452-slot-0-render-only` confirmou legenda, comentario e slides corretos.
+- Nenhuma nova publicacao foi enviada a Meta nesta atualizacao.
+- Commit funcional: `33db605` (`Publica fonte do Radar no primeiro comentario`).
+- Deploy: `dpl_GQfHwR6QsByhH4hbvQ94ynn9AwRb`; producao confirmou `v5.20`.
+
 ## 2026-08-16 20:51 BRT
 
 Corrigida a frase incompleta do ultimo slide das pautas do Radar.
