@@ -1,5 +1,32 @@
 # Historico
 
+## 2026-08-16 13:03 BRT
+
+Checkpoint geral aprovado pelo usuario com a confirmacao: `ate tudo funcionando grave na memoria tudo que foi feito`.
+
+Este registro consolida como estado funcional que deve ser preservado:
+
+- Projeto correto: `cliente-x-instagram-modern`, branch `feature/modern-editorial-system` sincronizada com `origin/main`.
+- Dashboard em producao: `https://cliente-x-instagram.vercel.app/`, versao visivel `v4.95`.
+- Landing comercial em producao: `https://cliente-x-instagram.vercel.app/plataforma`.
+- Radar estrito: publicacao imediata, automatica, manual ou agendada com Radar ativo exige fonte oficial registrada em `research.sourceUrl`; sem pauta recente e nao repetida, bloquear sem publicar conteudo generico.
+- Correcao do Radar: `7a68a40`, integrada ao fluxo operacional em `f989790`.
+- Landing com oferta clara de `R$ 397/mes`, implantacao gratuita e publicacoes conforme o calendario contratado; a promessa antiga de `12 conteudos por dia` foi removida.
+- Imagens da landing padronizadas em `f128503`, sem deformacao e sem overflow horizontal.
+- Hero refinado em `62bca4e`: duas colunas, captura ao lado do texto, perspectiva, brilho, flutuacao e sinais de Radar/publicacao.
+- Galeria animada em `6496736`: editor, Carrossel e Story com profundidade, brilho e movimentos internos, preservando `prefers-reduced-motion`.
+- Pagina Bio atualizada em `6ca72ab`: dois controles `+ Adicionar novo botao`, campo inferior destacado, criacao de ate 10 botoes, rolagem e foco automaticos, upload de icone, previa, remocao, destaque principal e salvamento preservados.
+- Deploy atual do dashboard/Pagina Bio: `dpl_DtMP5Ck78euCZ7ibCYkww1bwaGDY`.
+- Deploy atual registrado da landing animada: `dpl_8z3sE3dBibautQnFJSTkidTSJwf8`; o alias publico permaneceu o mesmo nos deploys seguintes.
+- Validacoes acumuladas: sintaxe, `npm run validate-copy`, `npm run render-only`, HTTP `200`, imagens carregadas e ausencia de overflow horizontal.
+- Automacao continua executando na nuvem por GitHub Actions, Vercel e Meta; o computador pode permanecer desligado.
+
+Regra de preservacao:
+
+- Este e um checkpoint funcional aprovado. Nao reverter Radar, CTA dos 50 prompts, hashtags, rotacao de fotos, protecoes de contraste/sobreposicao, landing, animacoes ou Pagina Bio sem pedido explicito do usuario.
+- Nao conectar Vercel ao Git nem alterar dominios sem autorizacao explicita.
+- Em futuras publicacoes, continuar exigindo permalink e registro tecnico como prova; um run verde isolado nao comprova postagem real.
+
 ## 2026-08-16 13:01 BRT
 
 Checkpoint da criacao de novos botoes na Pagina Bio salvo a pedido do usuario.

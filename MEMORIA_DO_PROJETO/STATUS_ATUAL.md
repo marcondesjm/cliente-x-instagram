@@ -1,13 +1,13 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 13:01 BRT
+Atualizado em: 2026-08-16 13:03 BRT
 
 ## Projeto ativo
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
 - Commit de codigo em producao: `6ca72ab` (`Adiciona novo botao na pagina Bio`).
-- Checkpoint completo aprovado pelo usuario: `6ca72ab`.
+- Checkpoint funcional completo aprovado pelo usuario: `6ca72ab` (`Adiciona novo botao na pagina Bio`).
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
@@ -16,7 +16,8 @@ Atualizado em: 2026-08-16 13:01 BRT
 
 ## Estado confirmado
 
-- Workspace limpo no momento deste registro e checkpoint aprovado pelo usuario ("muito bom").
+- O usuario confirmou explicitamente: `ate tudo funcionando grave na memoria tudo que foi feito`.
+- Workspace limpo no momento da confirmacao; branch local, `origin/main` e `origin/feature/modern-editorial-system` estavam no checkpoint de memoria `dbe6ce9` antes deste novo registro.
 - O dashboard de producao esta confirmado na versao `v4.95`.
 - A Pagina Bio permite criar ate `10` botoes. Ha um controle no cabecalho e outro campo destacado abaixo do ultimo cartao; o novo botao recebe icone, titulo, descricao e link, com rolagem e foco automaticos.
 - O Radar usa somente fontes oficiais e aceita noticias dos ultimos 7 dias; ele nao usa pack manual nem pack automatico generico como reserva.
