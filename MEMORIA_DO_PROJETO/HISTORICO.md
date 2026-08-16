@@ -1,5 +1,26 @@
 # Historico
 
+## 2026-08-16 17:40 BRT
+
+A captura geral do painel no topo da landing foi substituida por uma demonstracao visual do funcionamento real do Radar editorial.
+
+Alteracao:
+
+- O hero agora explica que o Radar encontra pautas atuais antes de criar o conteudo.
+- O fluxo apresenta quatro etapas: pesquisa de fontes recentes, validacao da origem e atualidade, prevencao de assuntos e capas repetidas e adaptacao da pauta para o negocio.
+- A busca progressiva de `7`, `15` e `30` dias e a exigencia de link rastreavel foram comunicadas sem promessas alem do comportamento atual da automacao.
+- O resultado visual informa que a pauta aprovada segue para carrossel, Story, legenda e agenda.
+- A composicao anterior com a captura geral do dashboard foi removida apenas do hero; o carrossel de paginas reais da plataforma continua na secao de demonstracao.
+
+Validacao e deploy:
+
+- JavaScript inline: `1` bloco com sintaxe valida.
+- `npm run validate-copy`: passou com `74` selecoes automaticas e protecao de duplicidade `ok`.
+- Teste local: quatro etapas visiveis, sem overflow horizontal e com a composicao completa na primeira tela do desktop.
+- Commit funcional: `97d331f` (`Destaca funcionamento do Radar na landing`).
+- Deploy Vercel: `dpl_2QaeXkRvQv1UkiAZJeX8de8CVS4D`, alias `https://cliente-x-instagram.vercel.app`.
+- Producao: Radar visivel, quatro etapas confirmadas, captura antiga ausente do hero e nenhum overflow horizontal.
+
 ## 2026-08-16 17:36 BRT
 
 A captura unica do editor na landing foi transformada em um carrossel de paginas reais da plataforma.

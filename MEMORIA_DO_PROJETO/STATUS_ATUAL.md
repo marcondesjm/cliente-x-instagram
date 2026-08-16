@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 17:36 BRT
+Atualizado em: 2026-08-16 17:40 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,12 +12,12 @@ Atualizado em: 2026-08-16 17:36 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `b584a48`; novo checkpoint de memoria sera o commit que registrar esta atualizacao.
+- Checkpoint funcional atual: `97d331f`; novo checkpoint de memoria sera o commit que registrar esta atualizacao.
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
-- Commit mais recente da landing: `63664a1` (`Simplifica mensagem de acesso na nuvem`).
+- Commit mais recente da landing: `97d331f` (`Destaca funcionamento do Radar na landing`).
 - Versao visivel atual: `v4.96`
 
 ## Checkagem operacional do painel
@@ -67,6 +67,8 @@ Atualizado em: 2026-08-16 17:36 BRT
 - Para um volume menor, a pagina oferece consulta de plano menor; licenca personalizada permanece sob medida.
 - Promessa central: manter a rede social ativa, cuidada e atualizada sem o cliente criar ou publicar cada conteudo manualmente e sem depender do computador ligado.
 - Headline atual: `Conteudo criado, agendado e publicado para a sua empresa.` A abertura explica diretamente que a Nerion Social pesquisa pautas, cria carrosseis, Stories e legendas e publica automaticamente no Instagram seguindo a identidade da marca.
+- O hero nao repete mais uma captura geral do painel: apresenta o Radar editorial em quatro etapas, explicando pesquisa recente, validacao de fonte, prevencao de repeticao e adaptacao ao negocio.
+- A demonstracao do Radar comunica a busca progressiva de `7`, `15` e `30` dias, a exigencia de link rastreavel e o encaminhamento da pauta aprovada para carrossel, Story, legenda e agenda.
 - O CTA `Quero ver uma demonstracao` aparece antes do preco e na primeira tela do celular. A faixa seguinte resume publico, criacao, publicacao e Direct sem exigir conhecimento tecnico.
 - A contratacao foi esclarecida: o Plano Completo combina plataforma, configuracao assistida e suporte para uma marca; operacoes com varias contas ou integracoes usam projeto personalizado.
 - A secao de provas nao usa mais artes isoladas de feed/Story: ela incorpora duas publicacoes reais do perfil `@marcondes.machado.oficial`, com navegacao e links oficiais para `DcHMqdWE3bI` e `DcHDsOKkzvp`.
