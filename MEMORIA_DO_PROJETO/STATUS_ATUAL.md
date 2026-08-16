@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 20:47 BRT
+Atualizado em: 2026-08-16 20:51 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,21 @@ Atualizado em: 2026-08-16 20:47 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `68e3c0c` (`Continua a materia no carrossel do Radar`).
+- Checkpoint funcional atual: `13a0fe1` (`Corrige chamada final do carrossel`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
-- Versao visivel atual: `v5.18`
+- Versao visivel atual: `v5.19`
+
+## Chamada final completa
+
+- O slide 5 nao usa mais a frase quebrada `podemos olhar para`.
+- Nova frase: `Se isso acontece na sua empresa, vamos olhar juntos para a rotina que mais pesa.`
+- Previa validada: `2026-08-16-205029-slot-0-render-only`.
+- Nenhuma postagem foi enviada nesta alteracao.
+- Producao: commit `13a0fe1`, deploy `dpl_5jigGsWG5oiMwnFzsPKGUkonNnGY`, versao `v5.19` e `HTTP 200` confirmados.
 
 ## Materia desenvolvida entre slides e legenda
 

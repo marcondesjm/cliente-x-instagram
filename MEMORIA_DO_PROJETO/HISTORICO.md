@@ -1,5 +1,17 @@
 # Historico
 
+## 2026-08-16 20:51 BRT
+
+Corrigida a frase incompleta do ultimo slide das pautas do Radar.
+
+- Causa: o texto `Se isso acontece na sua empresa, podemos olhar para a rotina juntos` era dividido pelo componente visual e o trecho `a rotina juntos` desaparecia quando o restante do paragrafo ocupava o bloco de fechamento.
+- Nova chamada completa: `Se isso acontece na sua empresa, vamos olhar juntos para a rotina que mais pesa.`
+- A previa `2026-08-16-205029-slot-0-render-only` foi inspecionada e confirmou a frase inteira no cartao do slide 5.
+- `npm run validate-copy` passou com todas as travas editoriais.
+- Nenhuma nova publicacao foi enviada a Meta durante esta correcao.
+- Commit funcional: `13a0fe1` (`Corrige chamada final do carrossel`).
+- Deploy: `dpl_5jigGsWG5oiMwnFzsPKGUkonNnGY`; producao respondeu `HTTP 200` e confirmou `v5.19`.
+
 ## 2026-08-16 20:47 BRT
 
 Republicada e confirmada no Instagram a materia com legenda ampliada e continuidade factual no slide 3.
