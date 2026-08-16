@@ -1,5 +1,42 @@
 # Historico
 
+## 2026-08-16 11:20 BRT
+
+Checkpoint completo da versao `v4.94` salvo a pedido do usuario.
+
+Resumo:
+
+- A rotacao das fotos de Marcondes agora percorre as quatro imagens cadastradas antes de repetir; a pauta nao interfere mais na sequencia dos horarios.
+- A foto do primeiro slide ganhou moldura padrao de `410 x 280`, recorte proporcional `cover` e protecao contra achatamento pelo corretor de sobreposicao.
+- As capas deixaram de usar a composicao de canto que transformava a foto em um elemento pequeno; permanecem composicoes equilibradas em duas colunas.
+- O Story usa somente a primeira ideia completa do texto do slide, mantendo a explicacao integral no carrossel e na legenda.
+- Foi adicionada uma trava que rejeita o render do Story se texto e foto se sobrepuserem.
+- CTA dos 50 prompts, hashtags finais, Radar com fontes oficiais, Direct e 13 horarios BRT foram preservados.
+
+Commits preservados:
+
+- `eaad1b1` - evita repeticao de fotos na rotacao.
+- `0594843` - padroniza a foto da capa.
+- `8ad4557` - evita texto sobre foto nos Stories.
+
+Validado:
+
+- `node --check automation/instagram-template/scripts/publish-carousel.mjs`: passou.
+- `npm run validate-copy`: passou (`20` packs, `54` packs automaticos e `74` selecoes automaticas).
+- `npm run render-only`: passou; Radar encontrou `13` temas recentes em fontes oficiais.
+- Capa inspecionada: foto maior, proporcional e sem choque com titulo ou cartao de apoio.
+- Story inspecionado: frase completa termina acima da foto, sem corte nem sobreposicao.
+- Producao consultada em `/api/state`: versao `v4.94` confirmada.
+
+Deploy/publicacao:
+
+- Deploy: sim, Vercel Production `https://cliente-x-instagram.vercel.app` confirmado em `v4.94`.
+- Instagram real: nenhuma publicacao foi disparada durante estas correcoes; elas valem para os proximos posts automaticos.
+
+Proximo passo:
+
+- Conferir o primeiro post automatico gerado em `v4.94`, exigindo permalink para confirmar o feed e verificando visualmente o Story publicado.
+
 ## 2026-08-16 01:25 BRT
 
 Checkpoint da versao `v4.91` salvo antes de nova publicacao manual.
