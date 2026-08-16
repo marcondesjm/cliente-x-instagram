@@ -1,5 +1,27 @@
 # Historico
 
+## 2026-08-15 22:35 BRT
+
+Corrigida a selecao de imagens de contexto por nicho da conta.
+
+Resumo:
+
+- A conta de IA e automacao empresarial nao pode mais receber imagem juridica apenas porque o texto cita `processo` ou `contrato`.
+- A imagem agora e escolhida primeiro pelo nicho configurado; o Cliente X usa visual de operacao e analise de processo.
+- Contas juridicas, de turismo, imobiliarias, clinicas, restaurantes, estetica, educacao e e-commerce continuam recebendo visuais especificos de seus nichos.
+- A pre-visualizacao do dashboard recebeu a mesma regra do publicador.
+
+Validado:
+
+- `npm run validate-copy`: passou.
+- `npm run render-only`: passou.
+- Render do Cliente X confirmado sem a foto da balanca juridica.
+
+Deploy/publicacao:
+
+- Deploy: sim. Producao Vercel confirmada com versao `v4.75`.
+- Instagram real: nao foi enviada nova postagem; a correcao vale para os proximos posts automaticos.
+
 ## 2026-08-15 22:30 BRT
 
 Redirecionado o Radar editorial para atrair empresas interessadas em automacao.
