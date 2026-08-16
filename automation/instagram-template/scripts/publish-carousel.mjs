@@ -175,8 +175,8 @@ function isWeeklyProgramDue(program, now = new Date()) {
 }
 
 function programImageSlide(program) {
-  const rawImagePath = String(program.imagePath || '').trim();
-  const imageUrl = String(program.imageUrl || (/^https?:\/\//i.test(rawImagePath) ? rawImagePath : '')).trim();
+  const rawImagePath = String(program.feedImagePath || program.imagePath || '').trim();
+  const imageUrl = String(program.feedImageUrl || program.imageUrl || (/^https?:\/\//i.test(rawImagePath) ? rawImagePath : '')).trim();
   const imagePath = /^https?:\/\//i.test(rawImagePath) ? '' : rawImagePath;
   if (!imagePath && !imageUrl) return null;
   return {
@@ -213,7 +213,9 @@ function packFromWeeklyProgram(program, account = {}) {
   ].filter(Boolean);
   return {
     slides,
-    caption: `${title}\n\n${program.description || hostLine}\n\n${cta}`
+    caption: `${title}\n\n${program.description || hostLine}\n\n${cta}`,
+    storyImagePath: String(program.storyImagePath || '').trim(),
+    storyImageUrl: String(program.storyImageUrl || '').trim()
   };
 }
 
@@ -3450,7 +3452,8 @@ async function main() {
     scheduledFor: scheduledPost?.scheduledFor || ''
   };
   const imagePaths = storyOnly ? [] : await renderSlides(runDir, pack.slides, account, style, renderContext);
-  const storyImagePath = feedOnly ? null : await renderStory(runDir, pack, account, style, renderContext);
+  const customStoryImage = String(pack.storyImageUrl || pack.storyImagePath || '').trim();
+  const storyImagePath = feedOnly ? null : (customStoryImage || await renderStory(runDir, pack, account, style, renderContext));
 
   if (args.renderOnly) {
     console.log(JSON.stringify({ ok: true, renderOnly: true, account: account.account, runDir, visualStyle: style.name, slotIndex, packIndex, imagePaths, storyImagePath }, null, 2));
@@ -3481,9 +3484,18 @@ async function main() {
   let imageUrls = [];
   let childIds = [];
   let carousel = null;
-  const githubHostedUrls = await hostRenderedImagesOnGitHub(storyImagePath ? [...imagePaths, storyImagePath] : imagePaths, account.account, runId);
+  const remoteStoryImage = /^https?:\/\//i.test(String(storyImagePath || ''));
+  const localStoryImagePath = storyImagePath && !remoteStoryImage
+    ? resolve(ROOT, String(storyImagePath).replace(/^\/+/, ''))
+    : null;
+  const feedImagesAreLocal = imagePaths.every((imagePath) => !/^https?:\/\//i.test(String(imagePath || '')));
+  const githubHostedUrls = feedImagesAreLocal
+    ? await hostRenderedImagesOnGitHub(localStoryImagePath ? [...imagePaths, localStoryImagePath] : imagePaths, account.account, runId)
+    : null;
   const publishImagePaths = githubHostedUrls ? githubHostedUrls.slice(0, imagePaths.length) : imagePaths;
-  const publishStoryImagePath = storyImagePath ? (githubHostedUrls ? githubHostedUrls.at(-1) : storyImagePath) : null;
+  const publishStoryImagePath = storyImagePath
+    ? (remoteStoryImage ? storyImagePath : (githubHostedUrls ? githubHostedUrls.at(-1) : localStoryImagePath))
+    : null;
   if (!storyOnly) {
     const children = [];
     for (const imagePath of publishImagePaths) {

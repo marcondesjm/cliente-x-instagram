@@ -43,11 +43,11 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v5.04',
+  appVersion: 'v5.05',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
-  description: 'Métricas separam o último post da atividade recente, com Grade semanal e Bio em prévia ao vivo.'
+  description: 'Grade semanal aceita banners prontos ou gera Feed 4:5 e Story 9:16, com métricas recentes claras.'
 };
 const MAINTENANCE = {
   githubToken: {
@@ -351,6 +351,10 @@ function weeklyProgramPlanItems(programs = [], dateString = todaySaoPaulo()) {
     host: program.host || '',
     imagePath: program.imagePath || '',
     imageUrl: program.imageUrl || '',
+    feedImagePath: program.feedImagePath || program.imagePath || '',
+    feedImageUrl: program.feedImageUrl || program.imageUrl || '',
+    storyImagePath: program.storyImagePath || '',
+    storyImageUrl: program.storyImageUrl || '',
     weekdays: program.weekdays || []
   }));
 }
@@ -1654,6 +1658,10 @@ function normalizeWeeklyProgram(program = {}) {
     callToAction: String(program.callToAction || '').trim(),
     imagePath: String(program.imagePath || '').trim(),
     imageUrl: String(program.imageUrl || '').trim(),
+    feedImagePath: String(program.feedImagePath || program.imagePath || '').trim(),
+    feedImageUrl: String(program.feedImageUrl || program.imageUrl || '').trim(),
+    storyImagePath: String(program.storyImagePath || '').trim(),
+    storyImageUrl: String(program.storyImageUrl || '').trim(),
     lastPublishedDate: String(program.lastPublishedDate || '').trim(),
     lastPublishedAt: String(program.lastPublishedAt || '').trim(),
     updatedAt: new Date().toISOString()

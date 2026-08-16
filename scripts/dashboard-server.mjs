@@ -156,6 +156,10 @@ function weeklyProgramPlanItems(programs = [], dateString = todaySaoPaulo()) {
     host: program.host || '',
     imagePath: program.imagePath || '',
     imageUrl: program.imageUrl || '',
+    feedImagePath: program.feedImagePath || program.imagePath || '',
+    feedImageUrl: program.feedImageUrl || program.imageUrl || '',
+    storyImagePath: program.storyImagePath || '',
+    storyImageUrl: program.storyImageUrl || '',
     weekdays: program.weekdays || []
   }));
 }
@@ -319,6 +323,10 @@ function normalizeWeeklyProgram(program = {}) {
     callToAction: String(program.callToAction || '').trim(),
     imagePath: String(program.imagePath || '').trim(),
     imageUrl: String(program.imageUrl || '').trim(),
+    feedImagePath: String(program.feedImagePath || program.imagePath || '').trim(),
+    feedImageUrl: String(program.feedImageUrl || program.imageUrl || '').trim(),
+    storyImagePath: String(program.storyImagePath || '').trim(),
+    storyImageUrl: String(program.storyImageUrl || '').trim(),
     lastPublishedDate: String(program.lastPublishedDate || '').trim(),
     lastPublishedAt: String(program.lastPublishedAt || '').trim(),
     updatedAt: new Date().toISOString()

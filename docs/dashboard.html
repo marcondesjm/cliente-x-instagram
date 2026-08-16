@@ -766,6 +766,13 @@
     .weekly-preview-description { color: rgba(255,255,255,.86); font-size: 14px; line-height: 1.35; font-weight: 750; }
     .weekly-preview-host { font-size: 12px; font-weight: 900; }
     .weekly-preview-caption { padding: 12px; border: 1px solid var(--line); border-radius: 9px; background: #fff; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .weekly-banner-tools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .weekly-banner-box { display: grid; gap: 8px; padding: 12px; border: 1px solid var(--line); border-radius: 9px; background: #fff; }
+    .weekly-banner-box strong, .weekly-banner-box span { display: block; }
+    .weekly-banner-box span { color: var(--muted); font-size: 11px; }
+    .weekly-banner-box .image-preview { width: 100%; max-height: 190px; margin: 0; object-fit: contain; background: #eef3ef; }
+    .weekly-generate-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px; border: 1px dashed #8fb29d; border-radius: 9px; background: #f0faf4; }
+    .weekly-generate-actions span { color: var(--muted); font-size: 11px; }
 
     .bio-add-button-panel {
       display: flex;
@@ -1610,7 +1617,7 @@
       .preview img { width: min(260px, 100%); }
       .plan-preview { grid-template-columns: 1fr; }
       .plan-preview img { width: min(420px, 100%); }
-      .two-fields, .editor-actions, .queue-actions, .queue-row, .image-tools, .briefing-controls, .program-grid { grid-template-columns: 1fr; }
+      .two-fields, .editor-actions, .queue-actions, .queue-row, .image-tools, .briefing-controls, .program-grid, .weekly-banner-tools { grid-template-columns: 1fr; }
       .bio-add-button-panel { align-items: stretch; flex-direction: column; }
       .bio-add-button-panel button { width: 100%; }
       .bio-workspace { grid-template-columns: 1fr; }
@@ -1693,7 +1700,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v5.04</div>
+        <div class="header-version" id="headerVersion">Versão atual: v5.05</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -4573,7 +4580,11 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         description: 'Acompanhe a programação ao vivo no horário certo.',
         callToAction: 'Sintonize, participe e compartilhe com quem gosta da nossa rádio.',
         imagePath: '',
-        imageUrl: ''
+        imageUrl: '',
+        feedImagePath: '',
+        feedImageUrl: '',
+        storyImagePath: '',
+        storyImageUrl: ''
       };
     }
 
@@ -4829,19 +4840,35 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
                 <option value="paused" ${program.status === 'paused' ? 'selected' : ''}>Pausado</option>
               </select>
             </label>
-            <label>
-              Imagem do programa
-              <input data-program-field="imagePath" value="${escapeHtml(program.imagePath || program.imageUrl || '')}" placeholder="/docs/uploads/programa.jpg ou URL">
-            </label>
           </div>
-          <div class="image-tools">
-            <label>
-              Puxar do computador
-              <input type="file" data-program-image-upload="${index}" accept="image/png,image/jpeg,image/webp">
-            </label>
-            <button type="button" data-clear-program-image="${index}">Remover imagem</button>
+          <div class="weekly-banner-tools">
+            <div class="weekly-banner-box">
+              <div><strong>Banner do Feed · 4:5</strong><span>Recomendado: 1080 × 1350 px</span></div>
+              <label>URL ou caminho da arte
+                <input data-program-field="feedImagePath" value="${escapeHtml(program.feedImagePath || program.feedImageUrl || program.imagePath || program.imageUrl || '')}" placeholder="/docs/uploads/feed.jpg ou URL">
+              </label>
+              <label>Enviar banner pronto
+                <input type="file" data-program-image-upload="${index}" data-program-image-kind="feed" accept="image/png,image/jpeg,image/webp">
+              </label>
+              <button type="button" data-clear-program-image="${index}" data-program-image-kind="feed">Remover Feed</button>
+              ${program.feedImagePath || program.feedImageUrl || program.imagePath || program.imageUrl ? `<img class="image-preview" src="${escapeHtml(program.feedImagePath || program.feedImageUrl || program.imagePath || program.imageUrl)}" alt="Banner Feed de ${escapeHtml(program.name || '')}">` : ''}
+            </div>
+            <div class="weekly-banner-box">
+              <div><strong>Banner do Story · 9:16</strong><span>Recomendado: 1080 × 1920 px</span></div>
+              <label>URL ou caminho da arte
+                <input data-program-field="storyImagePath" value="${escapeHtml(program.storyImagePath || program.storyImageUrl || '')}" placeholder="/docs/uploads/story.jpg ou URL">
+              </label>
+              <label>Enviar banner pronto
+                <input type="file" data-program-image-upload="${index}" data-program-image-kind="story" accept="image/png,image/jpeg,image/webp">
+              </label>
+              <button type="button" data-clear-program-image="${index}" data-program-image-kind="story">Remover Story</button>
+              ${program.storyImagePath || program.storyImageUrl ? `<img class="image-preview" src="${escapeHtml(program.storyImagePath || program.storyImageUrl)}" alt="Banner Story de ${escapeHtml(program.name || '')}">` : ''}
+            </div>
           </div>
-          ${program.imagePath || program.imageUrl ? `<img class="image-preview" src="${escapeHtml(program.imagePath || program.imageUrl)}" alt="Imagem do programa ${escapeHtml(program.name || '')}">` : ''}
+          <div class="weekly-generate-actions">
+            <div><strong>Não tem as artes prontas?</strong><span>Gere automaticamente Feed e Story usando os textos deste programa.</span></div>
+            <button class="primary" type="button" data-generate-weekly-banners="${index}">Gerar os 2 banners</button>
+          </div>
           <div class="plan-actions">
             <div class="run-meta">${escapeHtml((program.weekdays || []).map((day) => WEEKDAY_LABELS[day]).join(', ') || 'sem dias')} · ${escapeHtml(program.time || '--:--')}</div>
             <button type="button" data-remove-weekly-program="${index}">Remover</button>
@@ -4866,7 +4893,12 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           status: fieldValue('status') === 'paused' ? 'paused' : 'active',
           description: fieldValue('description').trim(),
           callToAction: current.callToAction || '',
-          imagePath: fieldValue('imagePath').trim(),
+          imagePath: fieldValue('feedImagePath').trim(),
+          imageUrl: current.feedImageUrl || current.imageUrl || '',
+          feedImagePath: fieldValue('feedImagePath').trim(),
+          feedImageUrl: current.feedImageUrl || '',
+          storyImagePath: fieldValue('storyImagePath').trim(),
+          storyImageUrl: current.storyImageUrl || '',
           weekdays: Array.from(card.querySelectorAll(`[data-program-weekday="${index}"]:checked`)).map((input) => Number(input.value))
         };
       });
@@ -4884,7 +4916,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const host = program.host ? `Com ${program.host}` : 'Apresentador ou equipe';
       const time = program.time || '08:00';
       const weekdays = (program.weekdays || []).map((day) => WEEKDAY_LABELS[day]).filter(Boolean).join(', ') || 'Escolha os dias';
-      const image = program.imagePath || program.imageUrl || '';
+      const image = mode === 'story'
+        ? (program.storyImagePath || program.storyImageUrl || program.feedImagePath || program.feedImageUrl || program.imagePath || program.imageUrl || '')
+        : (program.feedImagePath || program.feedImageUrl || program.imagePath || program.imageUrl || '');
       const account = appState.account || {};
       const brand = account.contentProfile?.footer || account.brandName || 'IA aplicada a empresas';
       document.getElementById('weeklyPreviewBrand').textContent = brand;
@@ -4944,10 +4978,11 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const file = input.files?.[0];
       if (!file) return;
       const programIndex = Number(input.dataset.programImageUpload);
+      const kind = input.dataset.programImageKind === 'story' ? 'story' : 'feed';
       syncWeeklyProgramsFromInputs();
       const program = appState.weeklyPrograms[programIndex];
       if (!program) return;
-      setMessage('Enviando imagem do programa...', 'warn');
+      setMessage(`Enviando banner do ${kind === 'story' ? 'Story' : 'Feed'}...`, 'warn');
       try {
         const payload = await api('/api/upload-image', {
           method: 'POST',
@@ -4956,12 +4991,19 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             dataUrl: await readFileAsDataUrl(file)
           })
         });
-        program.imagePath = payload.imagePath || '';
-        program.imageUrl = payload.imageUrl || '';
-        if (!program.imagePath && program.imageUrl) program.imagePath = program.imageUrl;
+        const path = payload.imagePath || payload.imageUrl || '';
+        if (kind === 'story') {
+          program.storyImagePath = path;
+          program.storyImageUrl = payload.imageUrl || '';
+        } else {
+          program.feedImagePath = path;
+          program.feedImageUrl = payload.imageUrl || '';
+          program.imagePath = path;
+          program.imageUrl = payload.imageUrl || '';
+        }
         renderWeeklyPrograms();
         refreshDailyPlanFromLocalState();
-        setMessage('Imagem anexada ao programa. Clique em Salvar grade semanal para gravar.', 'good');
+        setMessage(`Banner do ${kind === 'story' ? 'Story' : 'Feed'} anexado. Clique em Salvar grade semanal para gravar.`, 'good');
       } catch (error) {
         setMessage(error.message, 'bad');
       } finally {
@@ -4969,14 +5011,106 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       }
     }
 
-    function clearWeeklyProgramImage(index) {
+    function clearWeeklyProgramImage(index, kind = 'feed') {
       syncWeeklyProgramsFromInputs();
       const program = appState.weeklyPrograms[index];
       if (!program) return;
-      program.imagePath = '';
-      program.imageUrl = '';
+      if (kind === 'story') {
+        program.storyImagePath = '';
+        program.storyImageUrl = '';
+      } else {
+        program.feedImagePath = '';
+        program.feedImageUrl = '';
+        program.imagePath = '';
+        program.imageUrl = '';
+      }
       renderWeeklyPrograms();
-      setMessage('Imagem removida do programa. Clique em Salvar grade semanal para gravar.', 'warn');
+      setMessage(`Banner do ${kind === 'story' ? 'Story' : 'Feed'} removido. Clique em Salvar grade semanal para gravar.`, 'warn');
+    }
+
+    function weeklyBannerSvg(program, kind = 'feed') {
+      const story = kind === 'story';
+      const width = 1080;
+      const height = story ? 1920 : 1350;
+      const title = program.title || `Hoje tem ${program.name || 'programa especial'}`;
+      const description = program.description || 'Acompanhe a programação ao vivo no horário certo.';
+      const host = program.host ? `Com ${program.host}` : 'Apresentador ou equipe';
+      const brand = appState.account?.brandName || 'Marcondes Machado';
+      const escapeSvg = (value) => String(value || '').replace(/[&<>]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[char]);
+      const lines = (value, max = 24) => {
+        const words = String(value || '').split(/\s+/).filter(Boolean);
+        const output = [];
+        let line = '';
+        for (const word of words) {
+          if (`${line} ${word}`.trim().length > max && line) { output.push(line); line = word; } else line = `${line} ${word}`.trim();
+        }
+        if (line) output.push(line);
+        return output;
+      };
+      const titleLines = lines(title, story ? 22 : 25).slice(0, 4);
+      const descriptionLines = lines(description, story ? 42 : 48).slice(0, 4);
+      const titleY = story ? 860 : 570;
+      const titleSize = story ? 86 : 72;
+      const titleSvg = titleLines.map((line, index) => `<tspan x="76" dy="${index ? titleSize * 1.02 : 0}">${escapeSvg(line)}</tspan>`).join('');
+      const descriptionY = titleY + (titleLines.length * titleSize * 1.02) + 72;
+      const descriptionSvg = descriptionLines.map((line, index) => `<tspan x="78" dy="${index ? 48 : 0}">${escapeSvg(line)}</tspan>`).join('');
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0d2c22"/><stop offset="1" stop-color="#315f50"/></linearGradient></defs><rect width="100%" height="100%" fill="url(#bg)"/><circle cx="940" cy="150" r="210" fill="#6fd09c" opacity=".12"/><circle cx="100" cy="${height - 80}" r="250" fill="#ffffff" opacity=".05"/><text x="76" y="110" fill="#ffffff" font-family="Arial,sans-serif" font-size="28" font-weight="800" letter-spacing="4">${escapeSvg(brand.toUpperCase())}</text><rect x="76" y="${titleY - 105}" width="390" height="58" rx="29" fill="#eafff2"/><text x="105" y="${titleY - 66}" fill="#08734c" font-family="Arial,sans-serif" font-size="26" font-weight="800">${escapeSvg((program.time || '08:00') + ' · PROGRAMAÇÃO')}</text><text y="${titleY}" fill="#ffffff" font-family="Arial,sans-serif" font-size="${titleSize}" font-weight="900">${titleSvg}</text><text y="${descriptionY}" fill="#dce9e2" font-family="Arial,sans-serif" font-size="36" font-weight="600">${descriptionSvg}</text><text x="78" y="${height - 100}" fill="#ffffff" font-family="Arial,sans-serif" font-size="30" font-weight="800">${escapeSvg(host)}</text></svg>`;
+    }
+
+    async function svgToJpegDataUrl(svg, width, height) {
+      const source = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = await new Promise((resolve, reject) => {
+        const element = new Image();
+        element.onload = () => resolve(element);
+        element.onerror = () => reject(new Error('Não foi possível montar a arte gerada.'));
+        element.src = source;
+      });
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      canvas.getContext('2d').drawImage(image, 0, 0, width, height);
+      return canvas.toDataURL('image/jpeg', .94);
+    }
+
+    async function generateWeeklyBanners(index, button) {
+      syncWeeklyProgramsFromInputs();
+      const program = appState.weeklyPrograms[index];
+      if (!program) return;
+      const original = button.textContent;
+      button.disabled = true;
+      button.textContent = 'Gerando...';
+      setMessage('Gerando e enviando os banners de Feed e Story...', 'warn');
+      try {
+        for (const kind of ['feed', 'story']) {
+          const width = 1080;
+          const height = kind === 'story' ? 1920 : 1350;
+          const payload = await api('/api/upload-image', {
+            method: 'POST',
+            body: JSON.stringify({
+              name: `${program.name || 'programa'}-${kind}.jpg`,
+              dataUrl: await svgToJpegDataUrl(weeklyBannerSvg(program, kind), width, height)
+            })
+          });
+          const path = payload.imagePath || payload.imageUrl || '';
+          if (kind === 'story') {
+            program.storyImagePath = path;
+            program.storyImageUrl = payload.imageUrl || '';
+          } else {
+            program.feedImagePath = path;
+            program.feedImageUrl = payload.imageUrl || '';
+            program.imagePath = path;
+            program.imageUrl = payload.imageUrl || '';
+          }
+        }
+        renderWeeklyPrograms();
+        refreshDailyPlanFromLocalState();
+        setMessage('Feed 4:5 e Story 9:16 gerados. Clique em Salvar grade semanal para gravar.', 'good');
+      } catch (error) {
+        setMessage(`Erro ao gerar banners: ${error.message}`, 'bad');
+      } finally {
+        button.disabled = false;
+        button.textContent = original;
+      }
     }
 
     function renderQueue() {
@@ -7014,7 +7148,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         const removeProgram = event.target.closest('[data-remove-weekly-program]');
         if (removeProgram) removeWeeklyProgram(Number(removeProgram.dataset.removeWeeklyProgram));
         const clearImage = event.target.closest('[data-clear-program-image]');
-        if (clearImage) clearWeeklyProgramImage(Number(clearImage.dataset.clearProgramImage));
+        if (clearImage) clearWeeklyProgramImage(Number(clearImage.dataset.clearProgramImage), clearImage.dataset.programImageKind);
+        const generateBanners = event.target.closest('[data-generate-weekly-banners]');
+        if (generateBanners) generateWeeklyBanners(Number(generateBanners.dataset.generateWeeklyBanners), generateBanners);
       });
       document.getElementById('weeklyPrograms').addEventListener('change', (event) => {
         const input = event.target.closest('[data-program-image-upload]');

@@ -1,5 +1,21 @@
 # Historico
 
+## 2026-08-16 19:25 BRT
+
+A Grade semanal passou a aceitar banners prontos separados e tambem gerar automaticamente as duas artes do programa.
+
+- Cada programa possui upload e URL independentes para `Feed 4:5` e `Story 9:16`.
+- As dimensoes recomendadas ficam visiveis: 1080 x 1350 px para Feed e 1080 x 1920 px para Story.
+- A previa ao vivo usa o banner correspondente ao formato selecionado.
+- O botao `Gerar os 2 banners` cria JPEGs nas dimensoes oficiais usando marca, horario, titulo, chamada e apresentador preenchidos.
+- As artes geradas sao enviadas pelo fluxo de upload existente, incluindo o fallback do GitHub quando necessario.
+- Os campos `feedImagePath`, `feedImageUrl`, `storyImagePath` e `storyImageUrl` sao preservados pela API de producao e pelo servidor local.
+- O publicador usa a arte pronta de Feed no carrossel e a arte pronta de Story na publicacao vertical; se nao houver Story pronto, o gerador tradicional continua funcionando.
+- URLs remotas de Feed nao sao enviadas incorretamente ao hospedador de arquivos locais do GitHub.
+- Compatibilidade mantida com os campos antigos `imagePath` e `imageUrl`.
+- Versao visivel atualizada para `v5.05`.
+- Sintaxe das APIs, servidor, publicador e JavaScript inline, estrutura dos controles, `npm run validate-copy` e `git diff --check` passaram.
+
 ## 2026-08-16 19:15 BRT
 
 Checkpoint de producao da correcao das metricas de interacao.

@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 19:15 BRT
+Atualizado em: 2026-08-16 19:25 BRT
 
 ## Regra permanente de checkpoint
 
@@ -18,7 +18,15 @@ Atualizado em: 2026-08-16 19:15 BRT
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `b11fae5` (`Adiciona pagina da automacao do Direct na landing`).
-- Versao visivel atual: `v5.04`
+- Versao visivel atual: `v5.05`
+
+## Banners da Grade semanal
+
+- Cada programa aceita uma arte pronta para Feed 4:5 e outra para Story 9:16.
+- O painel mostra upload, URL, remocao e miniatura separadamente para cada formato.
+- O gerador interno cria e envia os dois JPEGs nas dimensoes 1080 x 1350 e 1080 x 1920.
+- A previa e o publicador escolhem automaticamente a imagem correspondente ao formato.
+- Programas antigos continuam compativeis pelo campo de imagem legado.
 
 ## Metricas de interacao
 
