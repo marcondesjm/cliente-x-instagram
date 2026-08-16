@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 19:40 BRT
+Atualizado em: 2026-08-16 19:43 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,7 +12,7 @@ Atualizado em: 2026-08-16 19:40 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `96a7058` (`Adiciona banners prontos e gerados na grade semanal`), com execucao do vigia e estado operacional integrados em `0243de0`.
+- Checkpoint funcional atual: `e061466` (`Adiciona filtro de datas ao historico do Direct`), integrado ao estado operacional em `13e3cdd`.
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
@@ -26,6 +26,7 @@ Atualizado em: 2026-08-16 19:40 BRT
 - Cada data informa total, enviados e falhas e pode ser clicada para filtrar o historico.
 - `Todas as datas` remove o filtro e a paginacao acompanha a selecao atual.
 - No celular, as datas aparecem antes da lista em formato compacto.
+- Producao: deploy `dpl_9Ferz1KTrP9s4hMedXe1Pmr69FVb`, versao `v5.06` e componentes confirmados por `HTTP 200`.
 
 ## Banners da Grade semanal
 

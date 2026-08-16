@@ -1,5 +1,16 @@
 # Historico
 
+## 2026-08-16 19:43 BRT
+
+Checkpoint de producao da navegacao por datas do Direct.
+
+- Commit funcional: `e061466` (`Adiciona filtro de datas ao historico do Direct`).
+- O commit operacional `c1d7721` (`Update Instagram schedule state`) foi preservado e integrado no merge `13e3cdd`.
+- Branch `feature/modern-editorial-system` e `origin/main` sincronizadas em `13e3cdd`.
+- A primeira tentativa de deploy recebeu `Not authorized`; a sessao Vercel foi confirmada e a nova tentativa concluiu normalmente.
+- Deploy de producao: `dpl_9Ferz1KTrP9s4hMedXe1Pmr69FVb`.
+- Producao respondeu `HTTP 200` e confirmou `v5.06`, largura integral, coluna de datas, opcao Todas as datas, filtro, paginacao filtrada e adaptacao mobile.
+
 ## 2026-08-16 19:40 BRT
 
 O Historico do Direct passou a usar o espaco lateral como navegacao por datas.
