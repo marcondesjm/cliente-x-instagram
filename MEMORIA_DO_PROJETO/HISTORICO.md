@@ -34,7 +34,10 @@ Configuracao externa pendente:
 
 Deploy/publicacao:
 
-- Deploy: sera feito pelo checkpoint desta atualizacao.
+- Commit funcional: `336dd34` (`Adiciona onboarding seguro para novas empresas`), enviado para `origin/main` e `origin/feature/modern-editorial-system`.
+- Deploy Vercel: `dpl_HJaUzpGEEGH3qfmddaVRnkRFgDz5`, pronto e associado a `https://cliente-x-instagram.vercel.app`.
+- Producao confirmou `HTTP 200` no dashboard e em `/ativar`, versao `v4.97`, controles de convite e botao `Conectar meu Instagram`.
+- A API de producao recusou convite invalido com `HTTP 400`.
 - Instagram real: nenhuma publicacao foi criada; esta alteracao trata apenas do cadastro e da autorizacao de empresas.
 
 ## 2026-08-16 18:15 BRT

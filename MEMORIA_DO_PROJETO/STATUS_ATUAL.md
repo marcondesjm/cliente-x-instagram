@@ -12,7 +12,7 @@ Atualizado em: 2026-08-16 18:30 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional anterior: `94fa661`; novo checkpoint inclui o onboarding seguro de empresas.
+- Checkpoint funcional atual: `336dd34` (`Adiciona onboarding seguro para novas empresas`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
@@ -31,6 +31,7 @@ Atualizado em: 2026-08-16 18:30 BRT
 - Tokens e IDs ficam somente no servidor, nos envs separados por empresa, e nao aparecem no navegador.
 - O fluxo esta implementado e validado localmente. Para uma conexao real ainda e obrigatorio cadastrar `INSTAGRAM_APP_ID` e `INSTAGRAM_APP_SECRET`, registrar o callback na Meta e possuir acesso avancado para contas externas.
 - Callback esperado: `https://cliente-x-instagram.vercel.app/api/state?instagram=callback`.
+- Producao: deploy `dpl_HJaUzpGEEGH3qfmddaVRnkRFgDz5`, com `/ativar` e controles do painel confirmados por `HTTP 200`; convite invalido recusado com `HTTP 400`.
 
 ## Checkagem operacional do painel
 
