@@ -905,10 +905,12 @@
     .terminal-line { display: flex; gap: 9px; align-items: flex-start; padding: 3px 0; }
     .terminal-line::before { content: ">"; flex: 0 0 auto; color: #7b9587; }
     .terminal-line.running { color: #f5c451; }
+    .terminal-line.running::after { content: "_"; margin-left: 2px; animation: terminal-cursor .75s steps(1) infinite; }
     .terminal-line.good { color: #73e2a7; }
     .terminal-line.bad { color: #ff8f86; }
     .terminal-line.final { margin-top: 8px; padding: 10px; border: 1px solid currentColor; border-radius: 6px; font-size: 13px; text-transform: uppercase; }
     .terminal-line.final::before { content: "■"; }
+    @keyframes terminal-cursor { 50% { opacity: 0; } }
 
     .access-actions {
       display: flex;
@@ -2589,7 +2591,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         });
         document.getElementById('adminPassword').value = '';
         showApp(session);
-        await loadState();
+        await runOperationalCheck();
         await refreshRuns();
       } catch (loginError) {
         error.textContent = loginError.message;
@@ -6276,7 +6278,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       renderQueue();
       bindEvents();
       if (await checkSession()) {
-        await loadState();
+        await runOperationalCheck();
         await refreshRuns();
       }
       const threadsParams = new URLSearchParams(window.location.search);
