@@ -1,25 +1,26 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 13:03 BRT
+Atualizado em: 2026-08-16 13:48 BRT
 
 ## Projeto ativo
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Commit de codigo em producao: `6ca72ab` (`Adiciona novo botao na pagina Bio`).
-- Checkpoint funcional completo aprovado pelo usuario: `6ca72ab` (`Adiciona novo botao na pagina Bio`).
+- Commit de codigo em producao: `8b57824` (`Refina mensagem da oferta promocional`).
+- Checkpoint funcional completo aprovado pelo usuario antes destas evolucoes: `6ca72ab`; novo checkpoint atual: `8b57824`.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
-- Commit mais recente da landing em producao: `6496736` (`Anima galeria de produto da landing`).
-- Versao visivel atual: `v4.95`
+- Commit mais recente da landing em producao: `8b57824` (`Refina mensagem da oferta promocional`).
+- Versao visivel atual: `v4.96`
 
 ## Estado confirmado
 
 - O usuario confirmou explicitamente: `ate tudo funcionando grave na memoria tudo que foi feito`.
 - Workspace limpo no momento da confirmacao; branch local, `origin/main` e `origin/feature/modern-editorial-system` estavam no checkpoint de memoria `dbe6ce9` antes deste novo registro.
-- O dashboard de producao esta confirmado na versao `v4.95`.
+- O dashboard de producao esta confirmado na versao `v4.96`.
 - A Pagina Bio permite criar ate `10` botoes. Ha um controle no cabecalho e outro campo destacado abaixo do ultimo cartao; o novo botao recebe icone, titulo, descricao e link, com rolagem e foco automaticos.
+- Cada conta permite ate `10` automacoes de Direct, cada uma com nome, tags, material e mensagens proprias. A campanha antiga permanece compativel e o historico identifica qual automacao respondeu.
 - O Radar usa somente fontes oficiais e aceita noticias dos ultimos 7 dias; ele nao usa pack manual nem pack automatico generico como reserva.
 - A trava agora vale para `Publicar agora`, horarios automaticos, packs manuais e posts agendados: toda publicacao real com Radar ativo exige `research.sourceUrl`.
 - Se nao houver noticia oficial elegivel e nao repetida, o publicador bloqueia o envio em vez de publicar conteudo solto.
@@ -35,15 +36,16 @@ Atualizado em: 2026-08-16 13:03 BRT
 ## Landing comercial em producao
 
 - Nome provisorio: `Nerion Social`; ainda requer validacao formal de marca antes do lancamento definitivo.
-- Oferta principal: `R$ 397/mes` para uma marca, com publicacoes diarias conforme o calendario contratado.
+- Oferta promocional: de `R$ 397/mes` por `R$ 197/mes` para novos clientes.
+- Volume destacado: mais de `12` carrosseis no feed por dia e `12` Stories diarios.
 - Implantacao de `R$ 297` riscada e apresentada como gratuita.
 - Entrega comunicada: criacao automatica de conteudo, criativos, carrossel, Story e legendas; agenda, publicacao na nuvem e Direct.
 - Para um volume menor, a pagina oferece consulta de plano menor; licenca personalizada permanece sob medida.
 - Promessa central: manter a rede social ativa, cuidada e atualizada sem o cliente criar ou publicar cada conteudo manualmente e sem depender do computador ligado.
 - Beneficio comercial: aumentar oportunidades de engajamento e atrair seguidores reais e alinhados, com potencial para comprar produtos ou contratar servicos.
 - Limite de comunicacao: nao garantir seguidores, curtidas ou vendas; consistencia e conteudo atual aumentam oportunidades, nao resultados certos.
-- Visual: moderno, neutro e responsivo. O hero usa texto e plataforma lado a lado em desktop; as capturas do dashboard/editor e os criativos mantem molduras proporcionais e sem distorcao.
-- Animacoes: hero em camadas com perspectiva, brilho, flutuacao e sinais operacionais; editor com `editor-breathe`; Carrossel e Story com `creative-float` alternado; cartoes com revelacao, desfoque e profundidade. Todo o conjunto respeita `prefers-reduced-motion`.
+- Visual: moderno, neutro e responsivo. O hero usa texto e plataforma lado a lado; capturas reenquadradas em 4:3 e 16:9 priorizam nitidez; beneficios ocupam toda a largura em quatro colunas no desktop e duas em telas menores.
+- Animacoes: hero em camadas, brilho nas molduras e cartoes com revelacao/desfoque. Zoom e flutuacao continua foram removidos das capturas para preservar foco. Todo o conjunto respeita `prefers-reduced-motion`.
 - Validacao: imagens HTTP `200`, sem overflow horizontal, sem erros de console e `40` elementos animados testados ate o estado visivel.
 
 ## Padrao editorial aprovado para os proximos posts
@@ -103,7 +105,8 @@ Resultado:
 - Acompanhar os proximos posts automaticos e conferir se o publico responde melhor ao novo tom humano e consultivo.
 - Acompanhar a resposta ao post `DcFh6FWG8f0` e manter a confirmacao por permalink em cada nova publicacao manual.
 - Conferir o primeiro post automatico posterior a trava estrita do Radar por permalink e inspecionar visualmente o Story publicado.
-- Em uma retomada futura, iniciar deste checkpoint e preservar a versao `v4.95`, o CTA dos 50 prompts, as hashtags finais, a rotacao completa de quatro fotos, a foto de capa proporcional e o Story sem sobreposicao.
+- Em uma retomada futura, iniciar deste checkpoint e preservar a versao `v4.96`, o CTA dos 50 prompts, as hashtags finais, a rotacao completa de quatro fotos, a foto de capa proporcional e o Story sem sobreposicao.
 - Na Pagina Bio, criar um botao real pelo novo campo, salvar e conferir o resultado na pagina publica.
-- Para a landing, preservar a oferta de `R$ 397/mes`, implantacao gratuita, publicacoes diarias conforme o calendario contratado, planos menores sob consulta e a mensagem de seguidores reais com potencial comercial sem garantia de resultado.
+- Para a landing, preservar a promocao de `R$ 397/mes` por `R$ 197/mes`, implantacao gratuita, mais de 12 carrosseis no feed por dia, 12 Stories diarios, planos menores sob consulta e a mensagem de seguidores reais com potencial comercial sem garantia de resultado.
+- Para o Direct, cadastrar uma segunda automacao real com nova tag/material e comprovar o envio correto pelo historico, sem alterar a campanha atual dos 50 prompts.
 - Antes de vender em escala, validar o nome `Nerion Social`, preparar termos/politica de privacidade e definir contrato e onboarding.

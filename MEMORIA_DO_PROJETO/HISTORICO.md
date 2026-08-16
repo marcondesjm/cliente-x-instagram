@@ -1,5 +1,39 @@
 # Historico
 
+## 2026-08-16 13:48 BRT
+
+Novo checkpoint salvo a pedido do usuario depois das evolucoes do Direct e da oferta comercial.
+
+Multiplas automacoes de Direct:
+
+- O modelo deixou de aceitar somente um objeto `automation` e passou a aceitar ate `10` itens em `automations`, mantendo compatibilidade com a campanha antiga.
+- A campanha existente dos 50 prompts foi preservada como primeira automacao; a API de producao confirmou `1` automacao carregada e conexao Meta ativa.
+- Cada automacao pode ter nome, palavras-chave/tags, modo de correspondencia, publicacao opcional, material, mensagem privada, resposta publica e estado ativo independentes.
+- O painel possui seletor de automacao, `+ Nova automacao/material`, remocao da selecionada e salvamento plural.
+- O webhook procura a primeira automacao ativa cuja palavra-chave e publicacao correspondam ao comentario e envia somente o material associado.
+- O historico registra `automationId` e `automationName`, permitindo saber qual campanha respondeu.
+- Palavras-chave repetidas entre campanhas ativas sao bloqueadas para impedir respostas ambiguas.
+- Versao visivel: `v4.96`.
+- Commit: `8068264` (`Permite multiplas automacoes de Direct`).
+- Deploy: `dpl_8ZuoN5iViqD61hU8yc6Xpo1jHoCR`.
+- Validacoes: sintaxe de `api/state.js`, script inline do dashboard, `npm run validate-copy`, HTTP `200`, seletor/botoes entregues e migracao antiga preservada.
+- Proximo teste operacional: cadastrar uma segunda automacao real com tag e material diferentes, salvar, comentar a tag em uma publicacao e confirmar o Direct e o registro no historico.
+
+Landing e oferta comercial:
+
+- Oferta alterada de `R$ 397/mes` para o valor promocional de `R$ 197/mes`, mantendo o valor anterior riscado e a implantacao gratuita.
+- Volume comercial exibido: mais de `12` carrosseis no feed por dia e `12` Stories diarios.
+- Hero, card do plano, FAQ e mensagem do WhatsApp foram sincronizados com a nova oferta.
+- Commit da oferta: `d13e07a`; integracao com estado automatico do repositorio em `87e9188`.
+- As capturas da plataforma foram reenquadradas para maior nitidez: hero em `4:3` com aproximadamente `657 x 493 px` e editor em `16:9` com aproximadamente `944 x 530 px`.
+- Zoom e flutuacao continua foram removidos das imagens para evitar desfoque; brilho e revelacao permanecem nas molduras.
+- Commit de nitidez: `7c3362f`.
+- O card promocional recebeu selo, preco antigo, `R$ 197/mes` em destaque e etiquetas de volume/implantacao no commit `60ecf24`.
+- Os beneficios foram encurtados e transformados em cartoes; depois passaram a ocupar toda a largura do hero, com quatro colunas no desktop e duas em telas menores (`6c22e96` e `3a3f30e`).
+- A frase redundante `Voce economiza R$ 200 por mes` foi substituida por `Condicao especial para novos clientes` no commit `8b57824`.
+- Deploy atual: `dpl_kbGZFCgmtv5CG12Z7aYpnsgk1zbq`, alias `https://cliente-x-instagram.vercel.app/plataforma`.
+- Validacoes em producao: HTTP `200`, oferta e beneficios presentes, imagens sem transformacao continua, nenhum overflow horizontal e workspace limpo.
+
 ## 2026-08-16 13:03 BRT
 
 Checkpoint geral aprovado pelo usuario com a confirmacao: `ate tudo funcionando grave na memoria tudo que foi feito`.
