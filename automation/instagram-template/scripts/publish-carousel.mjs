@@ -1702,7 +1702,9 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const swipeCue = index === 1 ? '<div class="swipe-cue">arraste para ver</div>' : '';
   const finalCue = /\bcomente\b/i.test(`${title} ${body}`) ? 'comente IA' : 'link na bio';
   const saveCue = index === total ? `<div class="save-cue">${finalCue}</div>` : index === 3 ? '<div class="save-cue">salve este passo</div>' : '';
-  const coverLayouts = ['layout-right', 'layout-left', 'layout-corner'];
+  // A capa usa duas colunas previsiveis. O antigo layout de canto reduzia a
+  // foto para um selo e quebrava a proporcao em relacao aos demais cartoes.
+  const coverLayouts = ['layout-right', 'layout-left'];
   const coverLayout = coverLayouts[stableAvatarOffset(renderContext.variationSeed || slide.title || '') % coverLayouts.length];
   const placement = [
     mode === 'split' ? 'layout-left' : index === 1 ? coverLayout : index % 3 === 2 ? 'layout-left' : index % 3 === 0 ? 'layout-corner' : 'layout-right',
@@ -1845,7 +1847,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     }
     .panel::before { content: "IA"; position: absolute; left: 42px; top: 38px; color: rgba(167,86,61,0.18); font-size: 110px; line-height: 1; font-weight: 900; }
     .panel::after { content: ""; position: absolute; left: 42px; right: 42px; bottom: 68px; height: 230px; background: repeating-linear-gradient(180deg, rgba(167,86,61,0.24) 0 10px, transparent 10px 34px); }
-    .panel.has-avatar { background: ${avatarImage || 'rgba(255,255,255,0.48)'} center center / contain no-repeat; border: 7px solid rgba(255,250,246,0.9); box-shadow: 0 28px 70px rgba(94,50,34,0.24); }
+    .panel.has-avatar { background: ${avatarImage || 'rgba(255,255,255,0.48)'} center 28% / cover no-repeat; border: 7px solid rgba(255,250,246,0.9); box-shadow: 0 28px 70px rgba(94,50,34,0.24); }
     .panel.has-avatar::before,
     .panel.has-avatar::after { display: none; }
     .sector-cue {
@@ -1952,6 +1954,10 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .layout-left.mode-magazine .note { left: 430px; top: 790px; width: 560px; }
     .layout-left.mode-magazine .sector-cue { left: 122px; right: auto; top: 190px; width: 190px; opacity: 0.22; }
     .role-hook .headline { max-width: 560px; font-size: 68px; }
+    .role-hook .panel { top: 520px; width: 410px; height: 280px; border-radius: 30px; transform: none; }
+    .layout-left.role-hook .panel { left: 58px; right: auto; }
+    .layout-right.role-hook .panel { left: auto; right: 58px; }
+    .layout-right.role-hook .headline { max-width: 520px; }
     .role-hook .note { min-height: ${Math.max(234, noteMinHeight)}px; font-size: ${Math.min(noteFontSize, 28)}px; }
     .mode-split.role-hook .note { top: 720px; }
     .role-value .note::after {
@@ -2523,9 +2529,11 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
         const safeTop = Math.ceil(headlineRect.bottom + 34);
         const safeBottom = Math.floor(Math.min(noteRect?.top ? noteRect.top - 28 : 1120, 1120));
         const safeHeight = safeBottom - safeTop;
-        if (safeHeight >= 150) {
+        const preserveCoverPhoto = visual.classList.contains('panel') && document.querySelector('main')?.classList.contains('role-hook');
+        const minimumHeight = preserveCoverPhoto ? 280 : 150;
+        if (safeHeight >= minimumHeight) {
           visual.style.top = `${safeTop}px`;
-          visual.style.height = `${Math.min(Math.round(rect.height), safeHeight)}px`;
+          visual.style.height = `${Math.max(minimumHeight, Math.min(Math.round(rect.height), safeHeight))}px`;
           corrected += 1;
         }
       }
