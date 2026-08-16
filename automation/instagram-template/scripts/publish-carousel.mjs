@@ -1493,8 +1493,10 @@ function pickAccountAvatar(account = {}, index = 1, visualCue = '', context = {}
     const slideOffset = Math.max(0, Number(index || 1) - 1);
     const storyOffset = context.story ? Math.max(1, Math.ceil(urls.length / 2)) : 0;
     const generationOffset = Math.max(0, Number(context.creativeGeneration || 1) - 1);
-    const variationOffset = stableAvatarOffset(context.variationSeed || '') % urls.length;
-    const offset = dateOffset + slotOffset + slideOffset + storyOffset + generationOffset + variationOffset;
+    // Percorre a rotacao na ordem dos horarios. A pauta ja varia capa, paleta e
+    // composicao; usa-la novamente aqui podia anular o slotOffset e repetir as
+    // mesmas duas fotos em posts consecutivos.
+    const offset = dateOffset + slotOffset + slideOffset + storyOffset + generationOffset;
     return urls[offset % urls.length];
   }
   return String(account.avatarUrl || account.avatarPath || '').trim();
