@@ -1,5 +1,22 @@
 # Historico
 
+## 2026-08-16 20:07 BRT
+
+Reforcada a identificacao visual da materia original em todas as pautas do Radar.
+
+- Foi identificado o post antigo `https://www.instagram.com/p/DcHh7QPEzVY/`, Feed `18091689095415142` e Story `18067881548720888`, publicado as 19:25 BRT antes da trava editorial da versao `v5.11`.
+- A fonte era real: OpenAI, artigo `What building an AI-native finance function taught me`, em `https://openai.com/index/building-an-ai-native-finance-function`.
+- O erro foi visual/editorial: o artigo real ficou escondido por uma chamada empresarial generica e o cartao mostrava apenas `OpenAI - Pauta relevante para empresas`.
+- Cada slide de uma pauta pesquisada agora precisa carregar fonte, titulo original e URL HTTPS; a publicacao e bloqueada se qualquer um desses anexos estiver ausente.
+- O cartao de fonte na arte mostra nome da fonte, titulo real da materia e `Materia identificada - link na legenda`.
+- A chamada pode ser traduzida para portugues, mas nao pode mais esconder qual artigo a originou.
+- `npm run validate-copy` passou com todas as protecoes editoriais e visuais.
+- Render verificado: `2026-08-16-200621-slot-0-render-only`; o cartao exibiu fonte n8n, titulo real e informacao do link sem publicar na Meta.
+- O post antigo da OpenAI nao foi apagado nem republicado sem autorizacao explicita.
+- Commit funcional: `052ee8c` (`Exibe a materia real nos cartoes do Radar`).
+- Deploy de producao: `dpl_Huqfv9ccSZowLoevus3YjvcZED1p`.
+- Producao respondeu `HTTP 200` e confirmou a versao `v5.13`.
+
 ## 2026-08-16 19:57 BRT
 
 Padronizada a arquitetura obrigatoria das artes de Feed e Story.

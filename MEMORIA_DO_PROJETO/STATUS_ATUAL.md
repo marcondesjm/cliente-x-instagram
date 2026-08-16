@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 19:57 BRT
+Atualizado em: 2026-08-16 20:07 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,23 @@ Atualizado em: 2026-08-16 19:57 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `bdf8f7e` (`Padroniza zonas seguras de Feed e Story`).
+- Checkpoint funcional atual: `052ee8c` (`Exibe a materia real nos cartoes do Radar`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
-- Versao visivel atual: `v5.12`
+- Versao visivel atual: `v5.13`
+
+## Anexo real visivel nas pautas do Radar
+
+- Toda pauta pesquisada carrega fonte, titulo original e URL HTTPS em cada slide.
+- O cartao visual nao mostra mais apenas o nome da fonte: apresenta tambem o titulo real e informa que o link esta na legenda.
+- O publicador bloqueia qualquer pauta pesquisada cujo anexo visual esteja incompleto.
+- O post antigo da OpenAI em `https://www.instagram.com/p/DcHh7QPEzVY/` foi publicado antes desta correcao; a fonte real era o artigo `What building an AI-native finance function taught me`, mas a arte substituiu o contexto por uma chamada generica.
+- A publicacao antiga foi preservada e nao houve exclusao ou republicacao automatica.
+- Render verificado: `2026-08-16-200621-slot-0-render-only`, sem envio real a Meta.
+- Producao: commit `052ee8c`, deploy `dpl_Huqfv9ccSZowLoevus3YjvcZED1p` e versao `v5.13` confirmados.
 
 ## Arquitetura obrigatoria das artes
 
