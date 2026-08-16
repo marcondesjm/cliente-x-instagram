@@ -145,6 +145,7 @@
       background: #f7f9f7;
       font-size: 11px;
       font-weight: 900;
+      cursor: pointer;
     }
 
     .header-health-dot {
@@ -1717,7 +1718,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v5.06</div>
+        <div class="header-version" id="headerVersion">Versão atual: v5.07</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -3532,6 +3533,11 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const openError = errors.find((error) => error.status === 'open');
       const latestError = openError || errors[0] || null;
 
+      const forceButton = document.getElementById('forceWatchdog');
+      if (forceButton && !forceButton.disabled) {
+        forceButton.textContent = openError ? 'Tentar corrigir' : 'Forçar vigia';
+      }
+
       status.textContent = openError ? 'Erro' : 'Ativo';
       status.className = `status-pill ${openError ? 'bad' : 'good'}`;
       if (metricValue) metricValue.textContent = openError ? 'Erro' : 'Ativo';
@@ -3548,7 +3554,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           title: openError ? `Erro aberto no slot ${openError.slotIndex ?? '--'}` : 'Sem erro aberto',
           body: openError
             ? `${openError.stage || 'etapa desconhecida'}: ${openError.error || 'erro sem detalhe'}`
-            : 'Principal e backup estão ativos e qualquer slot atrasado entra na fila automática.'
+            : 'Principal e backup estão ativos e qualquer slot atrasado entra na fila automática.',
+          errorActions: Boolean(openError)
         },
         {
           level: 'good',
@@ -3583,6 +3590,12 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             ${latestError?.runUrl && row.title.startsWith('Último registro') ? `
               <div class="access-actions">
                 <a href="${escapeHtml(latestError.runUrl)}" target="_blank" rel="noreferrer">Abrir run</a>
+              </div>
+            ` : ''}
+            ${row.errorActions ? `
+              <div class="access-actions">
+                <button type="button" data-watchdog-repair>Corrigir automaticamente</button>
+                ${openError?.runUrl ? `<a href="${escapeHtml(openError.runUrl)}" target="_blank" rel="noreferrer">Abrir detalhes do erro</a>` : ''}
               </div>
             ` : ''}
           </div>
@@ -4383,22 +4396,26 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       }
     }
 
-    async function forceWatchdog() {
-      const button = document.getElementById('forceWatchdog');
+    async function forceWatchdog(sourceButton = null, { automatic = false } = {}) {
+      const button = sourceButton?.currentTarget || sourceButton || document.getElementById('forceWatchdog');
       if (!button) return;
       const original = button.textContent;
       button.disabled = true;
       button.textContent = 'Acionando...';
-      setMessage('Acionando o vigia pelo GitHub...', 'warn');
+      setMessage(automatic ? 'Erro encontrado. Tentando corrigir automaticamente...' : 'Acionando o vigia pelo GitHub...', 'warn');
       try {
         const payload = await api('/api/state', {
           method: 'POST',
           body: JSON.stringify({ action: 'force-watchdog' })
         });
         button.textContent = 'Vigia acionado';
+        appState.watchdogRecovery = { startedAt: new Date().toISOString(), automatic };
+        updateHeaderHealth('checking', automatic ? 'Correção automática em andamento' : 'Vigia acionado', true);
         setMessage(payload.message || 'Vigia acionado. Aguarde o GitHub Actions iniciar.', 'good');
+        return payload;
       } catch (error) {
         setMessage(`Falha ao acionar vigia: ${error.message}`, 'bad');
+        throw error;
       } finally {
         button.disabled = false;
         setTimeout(() => {
@@ -6718,7 +6735,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         ? {
           level: 'bad',
           title: `Vigia com erro no slot ${openWatchdogError.slotIndex ?? '--'}`,
-          body: `${openWatchdogError.stage || 'etapa desconhecida'}: ${openWatchdogError.error || 'erro sem detalhe'}. Solução: ${openWatchdogError.solution || 'abrir o run do GitHub Actions e corrigir a etapa indicada.'}${openWatchdogError.runUrl ? ` Run: ${openWatchdogError.runUrl}` : ''}`
+          body: `${openWatchdogError.stage || 'etapa desconhecida'}: ${openWatchdogError.error || 'erro sem detalhe'}. Solução: ${openWatchdogError.solution || 'abrir o run do GitHub Actions e corrigir a etapa indicada.'}`,
+          errorActions: true,
+          runUrl: openWatchdogError.runUrl || ''
         }
         : {
           level: 'good',
@@ -6796,6 +6815,12 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           <div>
             <strong>${check.title}</strong>
             <span>${check.body}</span>
+            ${check.errorActions ? `
+              <div class="access-actions">
+                <button type="button" data-watchdog-repair>Corrigir automaticamente</button>
+                ${check.runUrl ? `<a href="${escapeHtml(check.runUrl)}" target="_blank" rel="noreferrer">Abrir detalhes do erro</a>` : ''}
+              </div>
+            ` : ''}
           </div>
         </div>
       `).join('');
@@ -6876,6 +6901,26 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         const loaded = await loadState();
         if (!loaded) throw new Error('Não foi possível carregar o estado atual da plataforma.');
 
+        const openError = (appState.watchdogErrors || []).find((error) => error.status === 'open');
+        let recoveryStarted = false;
+        if (openError && appState.sessionRole === 'owner') {
+          const recoveryKey = `watchdog-recovery:${openError.key || `${openError.date}:${openError.slotIndex}:${openError.failedAt}`}`;
+          if (!sessionStorage.getItem(recoveryKey)) {
+            appendHealthTerminal('[REPARO] Erro confirmado. Acionando nova tentativa automaticamente...', 'running');
+            try {
+              await forceWatchdog(document.getElementById('forceWatchdog'), { automatic: true });
+              sessionStorage.setItem(recoveryKey, new Date().toISOString());
+              recoveryStarted = true;
+              appendHealthTerminal('[OK] Correção automática enviada ao vigia.', 'good');
+            } catch (error) {
+              appendHealthTerminal(`[ERRO] A tentativa automática não iniciou: ${error.message}`, 'bad');
+            }
+          } else {
+            appendHealthTerminal('[REPARO] A correção deste erro já foi acionada nesta sessão.', 'running');
+            recoveryStarted = true;
+          }
+        }
+
         const checkCards = [...document.querySelectorAll('#checks .check')];
         for (const [index, card] of checkCards.entries()) {
           await new Promise((resolve) => setTimeout(resolve, 260));
@@ -6888,13 +6933,19 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         }
 
         const hasError = checkCards.some((card) => card.querySelector('.dot.bad'));
-        healthStatus.textContent = hasError ? 'Erro' : 'OK';
-        healthStatus.className = `status-pill ${hasError ? 'bad' : 'good'}`;
+        healthStatus.textContent = hasError ? (recoveryStarted ? 'Corrigindo' : 'Erro') : 'OK';
+        healthStatus.className = `status-pill ${hasError ? (recoveryStarted ? 'warn' : 'bad') : 'good'}`;
         appendHealthTerminal(
-          hasError ? 'CHECKAGEM CONCLUÍDA: ERRO ENCONTRADO' : 'CHECKAGEM CONCLUÍDA: TUDO OK',
-          `${hasError ? 'bad' : 'good'} final`
+          hasError
+            ? (recoveryStarted ? 'CORREÇÃO AUTOMÁTICA EM ANDAMENTO' : 'CHECKAGEM CONCLUÍDA: ERRO ENCONTRADO')
+            : 'CHECKAGEM CONCLUÍDA: TUDO OK',
+          `${hasError ? (recoveryStarted ? 'running' : 'bad') : 'good'} final`
         );
-        updateHeaderHealth(hasError ? 'bad' : 'good', hasError ? 'Atenção necessária' : 'Checkagem: tudo OK', true);
+        updateHeaderHealth(
+          hasError ? (recoveryStarted ? 'checking' : 'bad') : 'good',
+          hasError ? (recoveryStarted ? 'Correção automática em andamento' : 'Atenção necessária') : 'Checkagem: tudo OK',
+          true
+        );
       } catch (error) {
         healthStatus.textContent = 'Erro';
         healthStatus.className = 'status-pill bad';
@@ -7084,6 +7135,19 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('accountSelect').addEventListener('change', switchAccount);
       document.getElementById('redeployVercel').addEventListener('click', redeployVercel);
       document.getElementById('forceWatchdog').addEventListener('click', forceWatchdog);
+      document.getElementById('watchdogPanel').addEventListener('click', (event) => {
+        const repairButton = event.target.closest('[data-watchdog-repair]');
+        if (repairButton) forceWatchdog(repairButton);
+      });
+      document.getElementById('checks').addEventListener('click', (event) => {
+        const repairButton = event.target.closest('[data-watchdog-repair]');
+        if (repairButton) forceWatchdog(repairButton);
+      });
+      document.getElementById('headerHealth').addEventListener('click', () => {
+        const openError = (appState.watchdogErrors || []).find((error) => error.status === 'open');
+        const target = openError ? document.getElementById('watchdogPanel') : document.getElementById('checks');
+        target?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
       document.getElementById('runHealthCheck').addEventListener('click', runOperationalCheck);
       document.getElementById('repeatHealthCheck').addEventListener('click', runOperationalCheck);
       document.getElementById('saveActiveProfile').addEventListener('click', saveActiveProfile);

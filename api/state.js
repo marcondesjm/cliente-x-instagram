@@ -43,11 +43,11 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v5.06',
+  appVersion: 'v5.07',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
-  description: 'Histórico do Direct possui navegação por datas, além dos banners prontos ou gerados da Grade semanal.'
+  description: 'A checagem operacional tenta recuperar falhas do vigia automaticamente e mantém acesso aos detalhes do erro.'
 };
 const MAINTENANCE = {
   githubToken: {
