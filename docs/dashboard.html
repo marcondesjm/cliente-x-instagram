@@ -888,6 +888,28 @@
       overflow-wrap: anywhere;
     }
 
+    .health-terminal {
+      margin-top: 12px;
+      min-height: 156px;
+      max-height: 270px;
+      overflow: auto;
+      padding: 15px;
+      border: 1px solid #263c31;
+      border-radius: 9px;
+      color: #d7e7dc;
+      background: #101914;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.025);
+      font: 700 12px/1.55 Consolas, "Courier New", monospace;
+    }
+
+    .terminal-line { display: flex; gap: 9px; align-items: flex-start; padding: 3px 0; }
+    .terminal-line::before { content: ">"; flex: 0 0 auto; color: #7b9587; }
+    .terminal-line.running { color: #f5c451; }
+    .terminal-line.good { color: #73e2a7; }
+    .terminal-line.bad { color: #ff8f86; }
+    .terminal-line.final { margin-top: 8px; padding: 10px; border: 1px solid currentColor; border-radius: 6px; font-size: 13px; text-transform: uppercase; }
+    .terminal-line.final::before { content: "■"; }
+
     .access-actions {
       display: flex;
       flex-wrap: wrap;
@@ -1836,9 +1858,15 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               <div class="section-label">Saúde</div>
               <h2>Checklist operacional</h2>
             </div>
-            <span class="status-pill good" id="healthStatus">Pronto</span>
+            <div class="actions">
+              <button id="runHealthCheck" type="button">Atualizar checagem</button>
+              <span class="status-pill good" id="healthStatus">Pronto</span>
+            </div>
           </div>
           <div class="checks" id="checks"></div>
+          <div class="health-terminal" id="healthTerminal" role="status" aria-live="polite">
+            <div class="terminal-line">Aguardando o comando de atualização.</div>
+          </div>
         </div>
 
         <div class="panel">
@@ -2584,7 +2612,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     async function loadState({ refreshRadar = false } = {}) {
       if (!appState.serverMode) {
         setMessage('Abra pelo servidor local para salvar: npm run dashboard', 'warn');
-        return;
+        return false;
       }
 
       try {
@@ -2630,11 +2658,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         renderChecks();
         renderEditor();
         setMessage('Conteúdos carregados do projeto. Escolha um slot, edite e salve.', 'good');
-        loadPrivateMetrics();
+        await loadPrivateMetrics();
         renderSecretStatus();
         renderAccessConfig();
+        return true;
       } catch (error) {
         setMessage(`Não consegui carregar pelo servidor: ${error.message}`, 'bad');
+        return false;
       }
     }
 
@@ -6109,6 +6139,59 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       `).join('');
     }
 
+    function appendHealthTerminal(message, level = '') {
+      const terminal = document.getElementById('healthTerminal');
+      const line = document.createElement('div');
+      line.className = `terminal-line ${level}`.trim();
+      line.textContent = message;
+      terminal.appendChild(line);
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    async function runOperationalCheck() {
+      const button = document.getElementById('runHealthCheck');
+      const terminal = document.getElementById('healthTerminal');
+      const healthStatus = document.getElementById('healthStatus');
+      button.disabled = true;
+      button.textContent = 'Atualizando...';
+      healthStatus.textContent = 'Verificando';
+      healthStatus.className = 'status-pill warn';
+      terminal.innerHTML = '';
+      appendHealthTerminal('Iniciando diagnóstico da plataforma...', 'running');
+
+      try {
+        appendHealthTerminal('Atualizando agenda, conteúdos e estado do vigia...', 'running');
+        const loaded = await loadState();
+        if (!loaded) throw new Error('Não foi possível carregar o estado atual da plataforma.');
+
+        const checkCards = [...document.querySelectorAll('#checks .check')];
+        for (const [index, card] of checkCards.entries()) {
+          await new Promise((resolve) => setTimeout(resolve, 260));
+          const title = card.querySelector('strong')?.textContent?.trim() || `Etapa ${index + 1}`;
+          const dot = card.querySelector('.dot');
+          const level = dot?.classList.contains('bad') ? 'bad' : (dot?.classList.contains('warn') ? 'running' : 'good');
+          const label = level === 'bad' ? 'ERRO' : (level === 'running' ? 'ATENÇÃO' : 'OK');
+          appendHealthTerminal(`[${label}] ${title}`, level);
+        }
+
+        const hasError = checkCards.some((card) => card.querySelector('.dot.bad'));
+        healthStatus.textContent = hasError ? 'Erro' : 'OK';
+        healthStatus.className = `status-pill ${hasError ? 'bad' : 'good'}`;
+        appendHealthTerminal(
+          hasError ? 'CHECKAGEM CONCLUÍDA: ERRO ENCONTRADO' : 'CHECKAGEM CONCLUÍDA: TUDO OK',
+          `${hasError ? 'bad' : 'good'} final`
+        );
+      } catch (error) {
+        healthStatus.textContent = 'Erro';
+        healthStatus.className = 'status-pill bad';
+        appendHealthTerminal(`[ERRO] ${error.message}`, 'bad');
+        appendHealthTerminal('CHECKAGEM CONCLUÍDA: NÃO FOI POSSÍVEL FINALIZAR', 'bad final');
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Atualizar checagem';
+      }
+    }
+
     function formatNumber(value) {
       return value === null || value === undefined
         ? '--'
@@ -6277,6 +6360,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('accountSelect').addEventListener('change', switchAccount);
       document.getElementById('redeployVercel').addEventListener('click', redeployVercel);
       document.getElementById('forceWatchdog').addEventListener('click', forceWatchdog);
+      document.getElementById('runHealthCheck').addEventListener('click', runOperationalCheck);
       document.getElementById('saveActiveProfile').addEventListener('click', saveActiveProfile);
       document.getElementById('uploadDirectMaterial').addEventListener('click', uploadDirectMaterial);
       document.getElementById('saveDirectAutomation').addEventListener('click', saveDirectAutomation);
