@@ -1,5 +1,17 @@
 # Historico
 
+## 2026-08-16 19:15 BRT
+
+Checkpoint de producao da correcao das metricas de interacao.
+
+- Commit funcional: `73b679d` (`Corrige leitura das interacoes recentes`).
+- Durante a publicacao, `origin/main` recebeu o commit operacional `653d65b` (`Update weekly programs for cliente-x`).
+- O commit operacional foi preservado e integrado pelo merge `26b1278`, sem sobrescrever a Grade semanal salva.
+- Branch `feature/modern-editorial-system` e `origin/main` sincronizadas em `26b1278`.
+- Deploy de producao: `dpl_4FPsFUL4xpA4XxFw6M9D1Cc8UV8y`.
+- Producao respondeu `HTTP 200` e confirmou `v5.04`, resumo recente, separacao do ultimo post e interacoes confirmadas.
+- O endpoint de metricas permanece corretamente protegido por autenticacao (`HTTP 401` sem sessao); os numeros reais sao consultados quando o usuario autenticado abre ou atualiza o painel.
+
 ## 2026-08-16 19:12 BRT
 
 Corrigida a leitura do cartao de interacoes do Instagram.

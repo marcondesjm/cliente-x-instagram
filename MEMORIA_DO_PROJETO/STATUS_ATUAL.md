@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 19:12 BRT
+Atualizado em: 2026-08-16 19:15 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,7 +12,7 @@ Atualizado em: 2026-08-16 19:12 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `23c96ca` (`Adiciona previa da postagem na grade semanal`).
+- Checkpoint funcional atual: `73b679d` (`Corrige leitura das interacoes recentes`), integrado ao estado operacional pelo merge `26b1278`.
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
@@ -26,6 +26,7 @@ Atualizado em: 2026-08-16 19:12 BRT
 - O ultimo post mostra data/hora, curtidas, comentarios, alcance, salvos e interacoes confirmadas.
 - O resumo recente informa curtidas, comentarios e quantos posts tiveram interacao.
 - O total confirmado nao fica abaixo das curtidas, comentarios e salvos ja retornados pela Meta.
+- Producao: deploy `dpl_4FPsFUL4xpA4XxFw6M9D1Cc8UV8y`, versao `v5.04` e interface confirmadas por `HTTP 200`.
 
 ## Grade semanal com postagem pronta
 
