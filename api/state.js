@@ -43,11 +43,11 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v5.09',
+  appVersion: 'v5.10',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
-  description: 'O Checklist operacional concentra a saúde da plataforma sem duplicar a lista técnica de execuções.'
+  description: 'A landing mantém o scroll vertical livre enquanto o carrossel movimenta somente sua navegação interna.'
 };
 const MAINTENANCE = {
   githubToken: {

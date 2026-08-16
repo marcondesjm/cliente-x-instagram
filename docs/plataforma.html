@@ -694,6 +694,7 @@
       const track = carousel.querySelector('.platform-carousel-track');
       const slides = [...carousel.querySelectorAll('.platform-slide')];
       const dots = [...carousel.querySelectorAll('.platform-carousel-dot')];
+      const carouselNav = carousel.querySelector('.platform-carousel-nav');
       let current = 0;
       let timer = null;
 
@@ -702,7 +703,11 @@
         track.style.transform = `translateX(-${current * 100}%)`;
         slides.forEach((slide, slideIndex) => slide.setAttribute('aria-hidden', String(slideIndex !== current)));
         dots.forEach((dot, dotIndex) => dot.setAttribute('aria-current', String(dotIndex === current)));
-        dots[current].scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+        const activeDot = dots[current];
+        if (carouselNav && activeDot) {
+          const targetLeft = activeDot.offsetLeft - ((carouselNav.clientWidth - activeDot.offsetWidth) / 2);
+          carouselNav.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
+        }
         if (restart) startRotation();
       };
       const stopRotation = () => {
