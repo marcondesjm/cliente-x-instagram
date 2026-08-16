@@ -17,6 +17,9 @@ Publicada e verificada uma pauta real pelo Radar apos as novas travas editoriais
 - O workflow manual nao persistia `publication-history.json` porque a etapa excluia `workflow_dispatch`; a condicao foi corrigida para futuras publicacoes manuais.
 - Esta publicacao foi acrescentada manualmente ao historico para bloquear reutilizacao da mesma URL.
 - Versao operacional: `v5.15`.
+- Commit funcional: `7379feb` (`Registra publicacao real do Radar`).
+- Deploy de producao: `dpl_53Um3xaRRg9hzkJLcVNj43dMJ3wf`.
+- Producao respondeu `HTTP 200` e confirmou a versao `v5.15`.
 
 ## 2026-08-16 20:10 BRT
 

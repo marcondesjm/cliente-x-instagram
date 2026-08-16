@@ -12,7 +12,7 @@ Atualizado em: 2026-08-16 20:20 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: aguardando commit final da publicacao real do Radar.
+- Checkpoint funcional atual: `7379feb` (`Registra publicacao real do Radar`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
@@ -31,6 +31,7 @@ Atualizado em: 2026-08-16 20:20 BRT
 - A materia e a analise editorial aparecem separadas, sem chamada empresarial aleatoria atribuida a fonte.
 - O historico tecnico registra a URL para impedir repeticao.
 - A persistencia do historico passa a incluir tambem publicacoes acionadas manualmente por `workflow_dispatch`.
+- Producao: commit `7379feb`, deploy `dpl_53Um3xaRRg9hzkJLcVNj43dMJ3wf` e versao `v5.15` confirmados.
 
 ## Capas genericas de pesquisa bloqueadas
 
