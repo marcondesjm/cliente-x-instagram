@@ -12,11 +12,9 @@ Use estes arquivos para salvar o ponto atual, recuperar decisoes importantes e c
 
 ## Regra de uso
 
-Quando quiser congelar um ponto do trabalho, diga:
+Toda atualizacao concluida deve congelar automaticamente um novo ponto do trabalho, sem depender de um pedido adicional do usuario.
 
-`atualiza a memoria do projeto`
-
-Eu devo registrar:
+Eu devo sempre registrar:
 
 - data e hora;
 - branch e commit atual;
@@ -25,3 +23,4 @@ Eu devo registrar:
 - o que ainda falta;
 - se houve ou nao deploy/publicacao.
 
+Uma tarefa nao deve ser considerada completamente encerrada enquanto o checkpoint correspondente nao estiver gravado em `HISTORICO.md` e refletido em `STATUS_ATUAL.md`.

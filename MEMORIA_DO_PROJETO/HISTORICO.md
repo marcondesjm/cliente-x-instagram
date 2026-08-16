@@ -1,5 +1,15 @@
 # Historico
 
+## 2026-08-16 17:15 BRT
+
+Regra permanente de checkpoint definida pelo usuario.
+
+- Toda atualizacao concluida deve ser gravada automaticamente na memoria do projeto.
+- `HISTORICO.md` deve receber uma nova entrada e `STATUS_ATUAL.md` deve refletir o estado final, sem exigir que o usuario repita o pedido para salvar.
+- O checkpoint deve incluir data BRT, branch, commits, alteracoes, validacoes, deploy/publicacao, pendencias e proximo passo.
+- Quando a alteracao for enviada ao remoto, o checkpoint correspondente tambem deve ser sincronizado.
+- `README.md` e `COMO_ATUALIZAR.md` foram atualizados para tornar esta regra parte do procedimento oficial do projeto.
+
 ## 2026-08-16 17:14 BRT
 
 Ativada a segunda automacao de comentario para Direct depois que o usuario informou que a palavra-chave `Quero` nao havia funcionado.

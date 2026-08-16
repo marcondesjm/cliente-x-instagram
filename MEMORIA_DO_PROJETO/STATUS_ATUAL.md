@@ -1,6 +1,12 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 17:14 BRT
+Atualizado em: 2026-08-16 17:15 BRT
+
+## Regra permanente de checkpoint
+
+- Toda atualizacao concluida deve ser registrada automaticamente em `HISTORICO.md` e refletida em `STATUS_ATUAL.md`.
+- O usuario nao precisa pedir novamente para gravar a memoria do projeto.
+- O checkpoint deve acompanhar a alteracao no Git e no remoto, quando aplicavel, antes do encerramento da tarefa.
 
 ## Projeto ativo
 
