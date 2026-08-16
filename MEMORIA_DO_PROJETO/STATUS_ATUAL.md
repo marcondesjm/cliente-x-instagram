@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 19:02 BRT
+Atualizado em: 2026-08-16 19:05 BRT
 
 ## Regra permanente de checkpoint
 
@@ -18,7 +18,14 @@ Atualizado em: 2026-08-16 19:02 BRT
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `b11fae5` (`Adiciona pagina da automacao do Direct na landing`).
-- Versao visivel atual: `v5.02`
+- Versao visivel atual: `v5.03`
+
+## Grade semanal com postagem pronta
+
+- A aba ocupa toda a largura e organiza editor e previa ao vivo lado a lado.
+- A arte acompanha os campos do programa e aceita a imagem cadastrada como fundo.
+- O usuario alterna entre Feed 4:5 e Story 9:16 antes de salvar.
+- A previa acompanha o programa que estiver sendo editado e, no celular, aparece abaixo do formulario.
 
 ## Agenda em largura integral
 

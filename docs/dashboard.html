@@ -272,7 +272,8 @@
     main[data-active-view="clients"],
     main[data-active-view="system"],
     main[data-active-view="bio"],
-    main[data-active-view="schedule"] {
+    main[data-active-view="schedule"],
+    main[data-active-view="weekly"] {
       grid-template-columns: minmax(0, 1fr);
     }
 
@@ -285,6 +286,7 @@
     main[data-active-view="system"] > aside.grid { width: 100%; }
     main[data-active-view="bio"] > .grid { width: 100%; }
     main[data-active-view="schedule"] > .grid { width: 100%; }
+    main[data-active-view="weekly"] > .grid { width: 100%; }
 
     .bio-workspace {
       display: grid;
@@ -745,6 +747,25 @@
       display: grid;
       gap: 10px;
     }
+
+    .weekly-workspace { display: grid; grid-template-columns: minmax(0, 1fr) minmax(350px, 420px); gap: 22px; align-items: start; }
+    .weekly-editor-column { min-width: 0; }
+    .weekly-preview-column { position: sticky; top: 82px; display: grid; gap: 12px; padding: 16px; border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(145deg, #f8fbf9, #eef4f0); }
+    .weekly-preview-head, .weekly-preview-switch { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .weekly-preview-switch { justify-content: flex-start; }
+    .weekly-preview-switch button { min-height: 34px; padding: 7px 14px; }
+    .weekly-preview-switch button.active { color: #fff; border-color: var(--text); background: var(--text); }
+    .weekly-post-preview { position: relative; aspect-ratio: 4 / 5; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; padding: 24px; border-radius: 16px; color: #fff; background: linear-gradient(145deg, #10271f, #315f50); box-shadow: 0 18px 38px rgba(19,40,31,.18); isolation: isolate; }
+    .weekly-post-preview.story { aspect-ratio: 9 / 16; max-height: 650px; margin-inline: auto; }
+    .weekly-post-preview::before { content: ''; position: absolute; inset: 0; z-index: -2; background: var(--weekly-preview-image, none) center / cover no-repeat; }
+    .weekly-post-preview::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(8,23,17,.2), rgba(8,23,17,.92)); }
+    .weekly-preview-brand { font-size: 12px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+    .weekly-preview-copy { display: grid; gap: 10px; }
+    .weekly-preview-time { width: fit-content; padding: 7px 10px; border-radius: 999px; background: #eafff2; color: #08734c; font-size: 12px; font-weight: 900; }
+    .weekly-preview-title { font-size: clamp(28px, 3vw, 42px); line-height: 1.02; font-weight: 950; overflow-wrap: anywhere; }
+    .weekly-preview-description { color: rgba(255,255,255,.86); font-size: 14px; line-height: 1.35; font-weight: 750; }
+    .weekly-preview-host { font-size: 12px; font-weight: 900; }
+    .weekly-preview-caption { padding: 12px; border: 1px solid var(--line); border-radius: 9px; background: #fff; color: var(--muted); font-size: 12px; line-height: 1.45; }
 
     .bio-add-button-panel {
       display: flex;
@@ -1555,6 +1576,9 @@
       .bio-workspace { grid-template-columns: 1fr; }
       .bio-preview-column { position: static; }
       #bioPagePreview { height: 760px; min-height: 600px; }
+      .weekly-workspace { grid-template-columns: 1fr; }
+      .weekly-preview-column { position: static; }
+      .weekly-post-preview { width: min(430px, 100%); margin-inline: auto; }
     }
 
     @media (max-width: 760px) {
@@ -1669,7 +1693,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v5.02</div>
+        <div class="header-version" id="headerVersion">Versão atual: v5.03</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -1935,10 +1959,34 @@
             </div>
             <button id="addWeeklyProgram" type="button">Adicionar programa</button>
           </div>
-          <p class="caption">Organize os programas fixos por dia e horário. Eles entram automaticamente na programação da data correspondente.</p>
-          <div class="weekly-programs" id="weeklyPrograms"></div>
-          <div class="editor-actions">
-            <button class="primary" id="saveWeeklyPrograms" type="button">Salvar grade semanal</button>
+          <div class="weekly-workspace">
+            <div class="weekly-editor-column">
+              <p class="caption">Organize os programas fixos por dia e horário. Eles entram automaticamente na programação da data correspondente.</p>
+              <div class="weekly-programs" id="weeklyPrograms"></div>
+              <div class="editor-actions">
+                <button class="primary" id="saveWeeklyPrograms" type="button">Salvar grade semanal</button>
+              </div>
+            </div>
+            <aside class="weekly-preview-column" aria-label="Prévia da postagem do programa">
+              <div class="weekly-preview-head">
+                <div><div class="section-label">Postagem pronta</div><h2>Prévia ao vivo</h2></div>
+                <span class="status-pill good" id="weeklyPreviewStatus">Feed + Story</span>
+              </div>
+              <div class="weekly-preview-switch" aria-label="Formato da prévia">
+                <button class="active" type="button" data-weekly-preview-mode="feed">Feed 4:5</button>
+                <button type="button" data-weekly-preview-mode="story">Story 9:16</button>
+              </div>
+              <div class="weekly-post-preview" id="weeklyPostPreview">
+                <div class="weekly-preview-brand" id="weeklyPreviewBrand">IA aplicada a empresas</div>
+                <div class="weekly-preview-copy">
+                  <div class="weekly-preview-time" id="weeklyPreviewTime">Hoje · 08:00</div>
+                  <div class="weekly-preview-title" id="weeklyPreviewTitle">Hoje tem Programa da rádio</div>
+                  <div class="weekly-preview-description" id="weeklyPreviewDescription">Acompanhe a programação ao vivo no horário certo.</div>
+                  <div class="weekly-preview-host" id="weeklyPreviewHost">Com Locutor ou equipe</div>
+                </div>
+              </div>
+              <div class="weekly-preview-caption" id="weeklyPreviewCaption">A legenda pronta aparecerá aqui conforme você preencher o programa.</div>
+            </aside>
           </div>
         </div>
 
@@ -2694,6 +2742,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       editorialRadar: { status: 'checking', label: 'Verificando Radar de Notícias', sources: [], safeguards: [] },
       scheduledPosts: [],
       weeklyPrograms: [],
+      selectedWeeklyProgram: 0,
+      weeklyPreviewMode: 'feed',
       bioPage: null,
       directAutomation: { automation: null, automations: [], deliveries: [] },
       selectedPack: 0,
@@ -4733,6 +4783,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const programs = appState.weeklyPrograms || [];
       if (!programs.length) {
         list.innerHTML = '<div class="empty">Nenhum programa recorrente cadastrado. Adicione a grade da rádio por dia e horário.</div>';
+        renderWeeklyProgramPreview();
         return;
       }
       list.innerHTML = programs.map((program, index) => `
@@ -4797,6 +4848,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           </div>
         </article>
       `).join('');
+      renderWeeklyProgramPreview();
     }
 
     function syncWeeklyProgramsFromInputs() {
@@ -4818,6 +4870,33 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           weekdays: Array.from(card.querySelectorAll(`[data-program-weekday="${index}"]:checked`)).map((input) => Number(input.value))
         };
       });
+    }
+
+    function renderWeeklyProgramPreview() {
+      const programs = appState.weeklyPrograms || [];
+      const index = Math.min(Math.max(Number(appState.selectedWeeklyProgram) || 0, 0), Math.max(programs.length - 1, 0));
+      const program = programs[index] || {};
+      const preview = document.getElementById('weeklyPostPreview');
+      if (!preview) return;
+      const mode = appState.weeklyPreviewMode === 'story' ? 'story' : 'feed';
+      const title = program.title || (program.name ? `Hoje tem ${program.name}` : 'Sua postagem aparecerá aqui');
+      const description = program.description || 'Preencha a chamada para visualizar o texto final da publicação.';
+      const host = program.host ? `Com ${program.host}` : 'Apresentador ou equipe';
+      const time = program.time || '08:00';
+      const weekdays = (program.weekdays || []).map((day) => WEEKDAY_LABELS[day]).filter(Boolean).join(', ') || 'Escolha os dias';
+      const image = program.imagePath || program.imageUrl || '';
+      const account = appState.account || {};
+      const brand = account.contentProfile?.footer || account.brandName || 'IA aplicada a empresas';
+      document.getElementById('weeklyPreviewBrand').textContent = brand;
+      document.getElementById('weeklyPreviewTime').textContent = `${weekdays} · ${time}`;
+      document.getElementById('weeklyPreviewTitle').textContent = title;
+      document.getElementById('weeklyPreviewDescription').textContent = description;
+      document.getElementById('weeklyPreviewHost').textContent = host;
+      document.getElementById('weeklyPreviewStatus').textContent = program.mode === 'story-only' ? 'Somente Story' : 'Feed + Story';
+      document.getElementById('weeklyPreviewCaption').textContent = `${title}\n\n${description}\n\n${host} · ${time}`;
+      preview.classList.toggle('story', mode === 'story');
+      preview.style.setProperty('--weekly-preview-image', image ? `url("${String(image).replace(/["\\]/g, '\\$&')}")` : 'none');
+      document.querySelectorAll('[data-weekly-preview-mode]').forEach((button) => button.classList.toggle('active', button.dataset.weeklyPreviewMode === mode));
     }
 
     function addWeeklyProgram() {
@@ -6904,11 +6983,26 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('saveWeeklyPrograms').addEventListener('click', saveWeeklyPrograms);
       document.getElementById('weeklyPrograms').addEventListener('input', () => {
         syncWeeklyProgramsFromInputs();
+        renderWeeklyProgramPreview();
         refreshDailyPlanFromLocalState();
       });
       document.getElementById('weeklyPrograms').addEventListener('change', () => {
         syncWeeklyProgramsFromInputs();
+        renderWeeklyProgramPreview();
         refreshDailyPlanFromLocalState();
+      });
+      document.getElementById('weeklyPrograms').addEventListener('focusin', (event) => {
+        const card = event.target.closest('[data-program-card]');
+        if (!card) return;
+        appState.selectedWeeklyProgram = Number(card.dataset.programCard) || 0;
+        syncWeeklyProgramsFromInputs();
+        renderWeeklyProgramPreview();
+      });
+      document.querySelectorAll('[data-weekly-preview-mode]').forEach((button) => {
+        button.addEventListener('click', () => {
+          appState.weeklyPreviewMode = button.dataset.weeklyPreviewMode === 'story' ? 'story' : 'feed';
+          renderWeeklyProgramPreview();
+        });
       });
       document.getElementById('weeklyPrograms').addEventListener('click', (event) => {
         const removeProgram = event.target.closest('[data-remove-weekly-program]');

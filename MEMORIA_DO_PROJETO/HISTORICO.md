@@ -1,5 +1,19 @@
 # Historico
 
+## 2026-08-16 19:05 BRT
+
+A aba `Grade semanal` passou a mostrar a postagem pronta ao lado do formulario.
+
+- A visualizacao agora usa toda a largura, eliminando a area vazia a direita.
+- O editor fica a esquerda e a previa ao vivo permanece visivel a direita durante a rolagem.
+- A previa atualiza titulo, chamada, apresentador, dias, horario, marca e imagem do programa conforme os campos sao editados.
+- A imagem anexada ou informada por URL passa a compor o fundo da arte, com tratamento visual para manter os textos legiveis.
+- Foram adicionados os formatos `Feed 4:5` e `Story 9:16` com alternancia imediata.
+- Ao focar outro programa cadastrado, a previa passa a representar esse programa.
+- Em telas de ate 920 px, a postagem pronta vai para baixo do editor.
+- Versao visivel atualizada para `v5.03`.
+- Sintaxe da API e do JavaScript inline, IDs da previa, regras de layout, `npm run validate-copy` e `git diff --check` validados com sucesso.
+
 ## 2026-08-16 19:02 BRT
 
 Checkpoint de producao da Agenda em largura integral.
