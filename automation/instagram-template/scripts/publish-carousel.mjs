@@ -1500,21 +1500,47 @@ function stableAvatarOffset(value = '') {
   return hash >>> 0;
 }
 
-function pickAccountAvatar(account = {}, index = 1, visualCue = '', context = {}) {
+function accountAvatarRotationUrls(account = {}) {
   const rotation = account.avatarRotation || {};
-  const urls = Array.isArray(rotation.urls)
+  return Array.isArray(rotation.urls)
     ? rotation.urls.map((item) => String(item || '').trim()).filter(Boolean)
     : [];
+}
+
+function pickAvatarRotationStart(account = {}, publicationHistory = [], seed = '') {
+  const urls = accountAvatarRotationUrls(account);
+  if (!account.avatarRotation?.enabled || !urls.length) return null;
+
+  const recentCoverAvatars = [...publicationHistory]
+    .reverse()
+    .map((entry) => String(entry?.coverAvatar || '').trim())
+    .filter(Boolean)
+    .slice(0, Math.max(0, urls.length - 1));
+  const preferred = stableAvatarOffset(seed) % urls.length;
+  for (let step = 0; step < urls.length; step += 1) {
+    const candidate = (preferred + step) % urls.length;
+    if (!recentCoverAvatars.includes(urls[candidate])) return candidate;
+  }
+  return preferred;
+}
+
+function pickAccountAvatar(account = {}, index = 1, visualCue = '', context = {}) {
+  const rotation = account.avatarRotation || {};
+  const urls = accountAvatarRotationUrls(account);
   if (rotation.enabled && urls.length) {
-    const dateOffset = stableAvatarOffset(context.dateString || todaySaoPaulo()) % urls.length;
+    const recordedOffset = Number(context.avatarRotationStart);
+    const hasRecordedOffset = Number.isInteger(recordedOffset) && recordedOffset >= 0;
+    const dateOffset = hasRecordedOffset
+      ? recordedOffset
+      : stableAvatarOffset(context.dateString || todaySaoPaulo()) % urls.length;
     const slotOffset = Number.isInteger(Number(context.slotIndex)) ? Number(context.slotIndex) : 0;
     const slideOffset = Math.max(0, Number(index || 1) - 1);
     const storyOffset = context.story ? Math.max(1, Math.ceil(urls.length / 2)) : 0;
-    const generationOffset = Math.max(0, Number(context.creativeGeneration || 1) - 1);
+    const generationOffset = hasRecordedOffset ? 0 : Math.max(0, Number(context.creativeGeneration || 1) - 1);
     // Percorre a rotacao na ordem dos horarios. A pauta ja varia capa, paleta e
     // composicao; usa-la novamente aqui podia anular o slotOffset e repetir as
     // mesmas duas fotos em posts consecutivos.
-    const offset = dateOffset + slotOffset + slideOffset + storyOffset + generationOffset;
+    const offset = dateOffset + (hasRecordedOffset ? 0 : slotOffset) + slideOffset + storyOffset + generationOffset;
     return urls[offset % urls.length];
   }
   return String(account.avatarUrl || account.avatarPath || '').trim();
@@ -2889,6 +2915,8 @@ function recordPublicationHistory(configDir, accountKey, pack, result) {
       storyFingerprint: fingerprint,
       captionFingerprint: createHash('sha256').update(normalizeCaption(pack.caption || '')).digest('hex'),
       coverTitle: String(pack?.slides?.[0]?.title || '').trim() || null,
+      coverAvatar: result.coverAvatar || null,
+      avatarRotationStart: Number.isInteger(result.avatarRotationStart) ? result.avatarRotationStart : null,
       publishedAt: new Date().toISOString(),
       mediaId: result.mediaId || null,
       storyMediaId: result.storyMediaId || null,
@@ -3261,6 +3289,18 @@ async function main() {
       { publishedAt: '2026-08-16T10:00:00.000Z', research: { source: 'Fonte B', sourceUrl: 'https://example.com/b1' } }
     ]);
     if (balancedProbe.pack?.research?.source !== 'Fonte C') throw new Error('Balanceamento por fonte falhou no teste de historico.');
+    const avatarProbeAccount = {
+      avatarRotation: { enabled: true, urls: Array.from({ length: 7 }, (_, index) => `foto-${index + 1}`) }
+    };
+    const avatarProbeHistory = [];
+    const avatarProbeCovers = [];
+    for (let index = 0; index < 7; index += 1) {
+      const avatarStart = pickAvatarRotationStart(avatarProbeAccount, avatarProbeHistory, `pauta-${index}`);
+      const coverAvatar = avatarProbeAccount.avatarRotation.urls[avatarStart];
+      avatarProbeCovers.push(coverAvatar);
+      avatarProbeHistory.push({ coverAvatar });
+    }
+    if (new Set(avatarProbeCovers).size !== 7) throw new Error('Rodizio anti-repeticao de fotos falhou no teste de historico.');
     console.log(JSON.stringify({
       ok: true,
       account: account.account,
@@ -3268,7 +3308,9 @@ async function main() {
       checkedAutoPacks: autoPacks.length,
       checkedAutomaticSelectionPacks: automaticSelectionPacks.length,
       duplicateHistoryGuard: 'ok',
-      sourceBalanceGuard: 'ok'
+      sourceBalanceGuard: 'ok',
+      avatarRotationGuard: 'ok',
+      checkedAvatarRotation: avatarProbeCovers.length
     }, null, 2));
     return;
   }
@@ -3414,6 +3456,7 @@ async function main() {
     packIndex
   ].filter(Boolean).join('|') || String(packIndex);
   const visualVariationSeed = stableAvatarOffset(visualSeedInput);
+  const avatarRotationStart = pickAvatarRotationStart(account, publicationHistory, visualSeedInput);
   style = styleWithBrandPalette(
     pickVisualStyle(styles, account, today, generationSlotIndex),
     account,
@@ -3437,7 +3480,7 @@ async function main() {
   }
   writeFileSync(join(runDir, 'engagement-intelligence.json'), JSON.stringify(enhancement.intelligence, null, 2), 'utf8');
   writeFileSync(join(runDir, 'editorial-research.json'), JSON.stringify(editorialResearch, null, 2), 'utf8');
-  writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, creativeGeneration, creativeBatchRemaining, account: account.account, visualStyle: style.name, visualVariationSeed, visualSeedInput, intelligence: enhancement.intelligence, ...pack }, null, 2), 'utf8');
+  writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, creativeGeneration, creativeBatchRemaining, account: account.account, visualStyle: style.name, visualVariationSeed, visualSeedInput, avatarRotationStart, coverAvatar: Number.isInteger(avatarRotationStart) ? accountAvatarRotationUrls(account)[avatarRotationStart] || null : null, intelligence: enhancement.intelligence, ...pack }, null, 2), 'utf8');
   writeFileSync(join(runDir, 'caption.txt'), pack.caption, 'utf8');
   const storyOnly = publishMode === 'story-only';
   const feedOnly = publishMode === 'feed-only';
@@ -3449,6 +3492,7 @@ async function main() {
     slotTime: scheduledPost?.scheduledFor || (slotCron ? cronToBrtTime(slotCron) : ''),
     packIndex,
     variationSeed: visualSeedInput,
+    avatarRotationStart,
     scheduledFor: scheduledPost?.scheduledFor || ''
   };
   const imagePaths = storyOnly ? [] : await renderSlides(runDir, pack.slides, account, style, renderContext);
@@ -3456,7 +3500,7 @@ async function main() {
   const storyImagePath = feedOnly ? null : (customStoryImage || await renderStory(runDir, pack, account, style, renderContext));
 
   if (args.renderOnly) {
-    console.log(JSON.stringify({ ok: true, renderOnly: true, account: account.account, runDir, visualStyle: style.name, slotIndex, packIndex, imagePaths, storyImagePath }, null, 2));
+    console.log(JSON.stringify({ ok: true, renderOnly: true, account: account.account, runDir, visualStyle: style.name, slotIndex, packIndex, avatarRotationStart, coverAvatar: Number.isInteger(avatarRotationStart) ? accountAvatarRotationUrls(account)[avatarRotationStart] || null : null, imagePaths, storyImagePath }, null, 2));
     return;
   }
 
@@ -3531,6 +3575,10 @@ async function main() {
     storyImagePath,
     imageUrls,
     storyImageUrl,
+    avatarRotationStart,
+    coverAvatar: Number.isInteger(avatarRotationStart)
+      ? accountAvatarRotationUrls(account)[avatarRotationStart] || null
+      : null,
     childIds,
     carouselId: carousel?.id,
     storyContainerId: story?.id || null
