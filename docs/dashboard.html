@@ -540,6 +540,23 @@
       gap: 10px;
     }
 
+    .bio-add-button-panel {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: 14px;
+      padding: 18px;
+      border: 1px dashed #9eb2a4;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #f7faf8, #eef5f0);
+    }
+
+    .bio-add-button-panel strong,
+    .bio-add-button-panel span { display: block; }
+    .bio-add-button-panel span { margin-top: 4px; color: var(--muted); font-size: 12px; }
+    .bio-add-button-panel button { flex: 0 0 auto; }
+
     .program-card {
       display: grid;
       gap: 10px;
@@ -1325,6 +1342,8 @@
       .plan-preview { grid-template-columns: 1fr; }
       .plan-preview img { width: min(420px, 100%); }
       .two-fields, .editor-actions, .queue-actions, .queue-row, .image-tools, .briefing-controls, .program-grid { grid-template-columns: 1fr; }
+      .bio-add-button-panel { align-items: stretch; flex-direction: column; }
+      .bio-add-button-panel button { width: 100%; }
     }
 
     @media (max-width: 520px) {
@@ -1394,7 +1413,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.94</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.95</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -1670,9 +1689,13 @@
           <div style="height: 18px;"></div>
           <div class="panel-head" style="margin-bottom: 10px;">
             <div><div class="section-label">Botões</div><h2>Links principais</h2></div>
-            <button id="addBioLink" type="button">Adicionar link</button>
+            <button id="addBioLink" type="button">+ Adicionar novo botão</button>
           </div>
           <div class="weekly-programs" id="bioLinksEditor"></div>
+          <div class="bio-add-button-panel">
+            <div><strong>Criar mais um botão</strong><span>Adicione outro destino com ícone, título, descrição e link.</span></div>
+            <button class="primary" id="addBioLinkBottom" type="button">+ Adicionar novo botão</button>
+          </div>
           <div class="editor-actions">
             <button class="primary" id="saveBioPage" type="button">Salvar página Bio</button>
           </div>
@@ -4097,8 +4120,21 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
 
     function addBioLink() {
       appState.bioPage = collectBioPageEditor();
+      const result = document.getElementById('bioPageResult');
+      if (appState.bioPage.links.length >= 10) {
+        result.textContent = 'A página Bio permite no máximo 10 botões.';
+        result.className = 'access-result warn';
+        return;
+      }
       appState.bioPage.links.push({ icon: '🔗', iconUrl: '', title: '', description: '', url: 'https://', primary: !appState.bioPage.links.length });
       renderBioPageEditor();
+      result.textContent = `Botão ${appState.bioPage.links.length} criado. Preencha os campos e clique em Salvar página Bio.`;
+      result.className = 'access-result good';
+      requestAnimationFrame(() => {
+        const card = document.querySelector(`[data-bio-link="${appState.bioPage.links.length - 1}"]`);
+        card?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        card?.querySelector('[data-bio-field="title"]')?.focus({ preventScroll: true });
+      });
     }
 
     function removeBioLink(index) {
@@ -6093,6 +6129,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         renderShowcaseSlide();
       });
       document.getElementById('addBioLink').addEventListener('click', addBioLink);
+      document.getElementById('addBioLinkBottom').addEventListener('click', addBioLink);
       document.getElementById('saveBioPage').addEventListener('click', saveBioPage);
       document.getElementById('uploadBioAvatar').addEventListener('click', uploadBioAvatar);
       document.getElementById('refreshBioPreview').addEventListener('click', renderBioPreview);
