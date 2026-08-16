@@ -131,6 +131,39 @@
       font-weight: 800;
     }
 
+    .header-health {
+      width: max-content;
+      max-width: 100%;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+      padding: 7px 10px;
+      border: 1px solid #d8e0db;
+      border-radius: 999px;
+      color: var(--muted);
+      background: #f7f9f7;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .header-health-dot {
+      width: 8px;
+      height: 8px;
+      flex: 0 0 8px;
+      border-radius: 50%;
+      background: #7b8780;
+    }
+
+    .header-health small { color: inherit; font-size: 10px; font-weight: 750; opacity: .76; }
+    .header-health.checking { color: #7a5700; border-color: #ead8a5; background: #fff9e8; }
+    .header-health.checking .header-health-dot { background: #d09200; animation: health-header-pulse 1s ease-in-out infinite; }
+    .header-health.good { color: #046c42; border-color: #a9dfc2; background: #edfff5; }
+    .header-health.good .header-health-dot { background: #079455; box-shadow: 0 0 0 4px rgba(7,148,85,.12); }
+    .header-health.bad { color: #a02920; border-color: #f0b7b2; background: #fff2f1; }
+    .header-health.bad .header-health-dot { background: #d92d20; box-shadow: 0 0 0 4px rgba(217,45,32,.11); }
+    @keyframes health-header-pulse { 50% { opacity: .38; transform: scale(.78); } }
+
     .actions {
       display: flex;
       align-items: center;
@@ -1446,6 +1479,11 @@
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
         <div class="header-version" id="headerVersion">Versão atual: v4.96</div>
+        <div class="header-health" id="headerHealth" role="status" aria-live="polite">
+          <span class="header-health-dot" aria-hidden="true"></span>
+          <span id="headerHealthText">Checkagem aguardando</span>
+          <small id="headerHealthTime">Ainda não executada</small>
+        </div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -6159,6 +6197,25 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       terminal.scrollTop = terminal.scrollHeight;
     }
 
+    function updateHeaderHealth(level, message, includeTime = false) {
+      const indicator = document.getElementById('headerHealth');
+      const text = document.getElementById('headerHealthText');
+      const time = document.getElementById('headerHealthTime');
+      indicator.className = `header-health ${level}`.trim();
+      text.textContent = message;
+      if (includeTime) {
+        const checkedAt = new Intl.DateTimeFormat('pt-BR', {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          timeZone: 'America/Sao_Paulo'
+        }).format(new Date());
+        time.textContent = `Atualizado às ${checkedAt} BRT`;
+      } else {
+        time.textContent = 'Em tempo real';
+      }
+    }
+
     async function runOperationalCheck() {
       const button = document.getElementById('runHealthCheck');
       const repeatButton = document.getElementById('repeatHealthCheck');
@@ -6169,6 +6226,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       repeatButton.hidden = true;
       healthStatus.textContent = 'Verificando';
       healthStatus.className = 'status-pill warn';
+      updateHeaderHealth('checking', 'Verificando plataforma...');
       terminal.innerHTML = '';
       appendHealthTerminal('Iniciando diagnóstico da plataforma...', 'running');
 
@@ -6185,6 +6243,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           const level = dot?.classList.contains('bad') ? 'bad' : (dot?.classList.contains('warn') ? 'running' : 'good');
           const label = level === 'bad' ? 'ERRO' : (level === 'running' ? 'ATENÇÃO' : 'OK');
           appendHealthTerminal(`[${label}] ${title}`, level);
+          updateHeaderHealth('checking', `Etapa ${index + 1} de ${checkCards.length}: ${title}`);
         }
 
         const hasError = checkCards.some((card) => card.querySelector('.dot.bad'));
@@ -6194,11 +6253,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           hasError ? 'CHECKAGEM CONCLUÍDA: ERRO ENCONTRADO' : 'CHECKAGEM CONCLUÍDA: TUDO OK',
           `${hasError ? 'bad' : 'good'} final`
         );
+        updateHeaderHealth(hasError ? 'bad' : 'good', hasError ? 'Atenção necessária' : 'Checkagem: tudo OK', true);
       } catch (error) {
         healthStatus.textContent = 'Erro';
         healthStatus.className = 'status-pill bad';
         appendHealthTerminal(`[ERRO] ${error.message}`, 'bad');
         appendHealthTerminal('CHECKAGEM CONCLUÍDA: NÃO FOI POSSÍVEL FINALIZAR', 'bad final');
+        updateHeaderHealth('bad', 'Não foi possível verificar', true);
       } finally {
         button.disabled = false;
         button.textContent = 'Atualizar checagem';
