@@ -2902,19 +2902,34 @@ function findDuplicatePack(history, pack) {
   return history.find((entry) => entry.feedFingerprint === fingerprint || entry.storyFingerprint === fingerprint);
 }
 
+function findDuplicateResearchSource(history, pack) {
+  const sourceUrl = String(pack?.research?.sourceUrl || '').trim().replace(/\/$/, '');
+  if (!sourceUrl) return null;
+  return history.find((entry) => String(entry?.research?.sourceUrl || '').trim().replace(/\/$/, '') === sourceUrl);
+}
+
+function findDuplicateSelection(pack, recentMedia = [], publicationHistory = []) {
+  if (pack?.research?.sourceUrl) {
+    // Uma fonte oficial diferente representa uma pauta nova, mesmo quando a
+    // estrutura editorial e o CTA se parecem com publicacoes anteriores.
+    return findDuplicateResearchSource(publicationHistory, pack) || findDuplicatePack(publicationHistory, pack);
+  }
+  return findDuplicateCaption(recentMedia, pack.caption) || findDuplicatePack(publicationHistory, pack);
+}
+
 function pickFreshPack(packs, dateString, slotIndex, recentMedia = [], publicationHistory = []) {
   const startIndex = pickDailyIndex(packs, dateString, slotIndex);
   for (let offset = 0; offset < packs.length; offset += 1) {
     const packIndex = (startIndex + offset) % packs.length;
     const pack = packs[packIndex];
-    const duplicate = findDuplicateCaption(recentMedia, pack.caption) || findDuplicatePack(publicationHistory, pack);
+    const duplicate = findDuplicateSelection(pack, recentMedia, publicationHistory);
     if (!duplicate) return { pack, packIndex, skippedDuplicates: offset };
   }
   return {
     pack: null,
     packIndex: null,
     skippedDuplicates: packs.length,
-    duplicate: findDuplicateCaption(recentMedia, packs[startIndex].caption) || findDuplicatePack(publicationHistory, packs[startIndex])
+    duplicate: findDuplicateSelection(packs[startIndex], recentMedia, publicationHistory)
   };
 }
 
