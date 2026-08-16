@@ -1,23 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-08-14:0:31844442827",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-08-14",
-    "slotIndex": 0,
-    "scheduledAt": "2026-08-14T09:30:00.000Z",
-    "failedAt": "2026-08-14T21:55:21.813Z",
-    "workflowRun": "31844442827",
-    "workflowName": "Instagram Feed Cliente X",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/31844442827",
-    "stage": "ImgBB upload",
-    "error": "ImgBB upload failed [400]: {\"status_code\":400,\"error\":{\"message\":\"Rate limit reached.\",\"code\":100},\"status_txt\":\"Bad Request\"}",
-    "solution": "Validar ou trocar IMGBB_API_KEY no painel, salvar no Vercel/GitHub Secrets e redeployar se necessário.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-08-14-185521.json",
-    "resolvedAt": "2026-08-15T21:46:50.798Z",
-    "resolvedRun": "31910314937"
-  },
-  {
     "key": "cliente-x:2026-08-14:0:31845369806",
     "status": "resolved",
     "account": "cliente-x",
@@ -882,5 +864,21 @@
     "error": "Radar ativo: nenhuma pauta oficial dos ultimos 30 dias e nao repetida esta disponivel para este horario. Nenhum post foi publicado.",
     "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o token, conteúdo ou dependência indicada antes da próxima tentativa.",
     "failurePath": "automation/instagram-template/runs/failure-2026-08-16-143200.json"
+  },
+  {
+    "key": "cliente-x:2026-08-16:5:31962415194",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-08-16",
+    "slotIndex": 5,
+    "scheduledAt": "2026-08-16T16:00:00.000Z",
+    "failedAt": "2026-08-16T17:43:21.650Z",
+    "workflowRun": "31962415194",
+    "workflowName": "Instagram Watchdog Backup",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/31962415194",
+    "stage": "unknown",
+    "error": "Radar ativo: nenhuma pauta oficial dos ultimos 30 dias e nao repetida esta disponivel para este horario. Nenhum post foi publicado.",
+    "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o token, conteúdo ou dependência indicada antes da próxima tentativa.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-08-16-144321.json"
   }
 ]
