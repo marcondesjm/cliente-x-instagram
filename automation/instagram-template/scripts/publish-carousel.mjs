@@ -5,7 +5,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from
 import { basename, dirname, extname, isAbsolute, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildBrandContext } from '../../../lib/brand-analysis.js';
-import { buildResearchPack, EDITORIAL_SOURCES, factualSummary, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
+import { buildResearchPack, EDITORIAL_SOURCES, extractArticleFacts, factualSummary, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const TEMPLATE_DIR = resolve(ROOT, 'automation', 'instagram-template');
@@ -665,6 +665,7 @@ O melhor de tudo?
 📤 Compartilhe nos seus stories.`;
 
 const FREE_PROMPTS_CTA_MARKER = 'Preparei uma seleção com 50 prompts prontos para ajudar você a:';
+const RADAR_MATERIAL_CTA = 'Quer receber 50 prompts prontos para aplicar IA no trabalho?\n\nComente IA e eu envio o material no seu Direct.';
 const LEGACY_FREE_PROMPTS_CTA = 'Comente IA para receber 🚀 50 PROMPTS DE IA GRÁTIS!';
 const DEFAULT_INSTAGRAM_HASHTAGS = '#automacao #inteligenciaartificial #iaaplicada #gestao #processos #produtividade #transformacaodigital #negocios';
 
@@ -1068,7 +1069,7 @@ function enhancePackForEngagement(pack, dateString, slotIndex, account = {}) {
       ...slide,
       ...(slide.imagePath || slide.imageUrl ? {} : { visualVariant: engagementVariant(dateString, slotIndex, index) })
     }));
-    enhanced.caption = withFreePromptsCtaAtEnd(`${enhanced.caption || ''}\n\n${DEFAULT_INSTAGRAM_HASHTAGS}`);
+    enhanced.caption = `${enhanced.caption || ''}\n\n${RADAR_MATERIAL_CTA}\n\n${DEFAULT_INSTAGRAM_HASHTAGS}`.trim();
     enhanced.engagementIntelligence = {
       version: 2,
       appliedAt: new Date().toISOString(),
@@ -3390,6 +3391,22 @@ async function main() {
     if (!/Dario Amodei/i.test(realSummaryProbe) || /O post apareceu/i.test(realSummaryProbe)) {
       throw new Error('Extração do contexto factual da matéria falhou.');
     }
+    const articleFactsProbe = extractArticleFacts(`
+      <p>A percepção do público sobre inteligência artificial virou o centro de um debate no setor de tecnologia.</p>
+      <p>Amodei afirmou que busca equilibrar os riscos reais e as oportunidades criadas pela tecnologia.</p>
+      <p>A rejeição, segundo o executivo, decorre de uma crise de confiança acumulada ao longo de décadas.</p>
+    `, { title: 'CEO da Anthropic: rejeição à IA é crise de confiança no setor' });
+    const continuedResearchProbe = buildResearchPack({
+      source: 'Olhar Digital',
+      title: 'CEO da Anthropic: rejeição à IA é crise de confiança no setor',
+      url: 'https://olhardigital.com.br/exemplo-anthropic',
+      publishedAt: validationNow.toISOString(),
+      summary: realSummaryProbe,
+      articleFacts: articleFactsProbe
+    }, validationNow, { niche: 'automação com IA para empresas', keywords: radarKeywords });
+    if (articleFactsProbe.length < 3 || continuedResearchProbe.slides[2]?.eyebrow !== 'A MATÉRIA CONTINUA' || !continuedResearchProbe.caption.includes(articleFactsProbe[2])) {
+      throw new Error('Continuidade factual entre matéria, slide 3 e legenda falhou.');
+    }
     const genericResearchProbe = {
       ...researchIntegrityProbe,
       slides: researchIntegrityProbe.slides.map((slide, index) => index === 0
@@ -3423,6 +3440,7 @@ async function main() {
       radarSourceIntegrityGuard: 'ok'
       ,genericResearchCoverGuard: 'ok'
       ,factualArticleContextGuard: 'ok'
+      ,articleContinuationGuard: 'ok'
       ,feedArchitectureGuard: '1080x1350-4:5'
       ,storySafeZoneGuard: '250-1170-500'
     }, null, 2));

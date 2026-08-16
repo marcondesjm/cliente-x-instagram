@@ -43,11 +43,11 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v5.17',
+  appVersion: 'v5.18',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
-  description: 'O Radar exige contexto factual e limita o texto do slide para preservar a leitura da arte.'
+  description: 'O Radar lê a matéria, continua o contexto no slide 3 e amplia a explicação da legenda.'
 };
 const MAINTENANCE = {
   githubToken: {
