@@ -73,7 +73,8 @@
     .button.small { min-height: 44px; padding: 0 19px; font-size: 14px; }
 
     .hero { padding: 76px 0 72px; overflow: hidden; background: #fff; }
-    .hero-grid { display: grid; grid-template-columns: .9fr 1.1fr; align-items: center; gap: 64px; }
+    .hero-grid { display: grid; grid-template-columns: 1fr; gap: 42px; }
+    .hero-grid > div:first-child { max-width: 780px; }
     .eyebrow { display: flex; align-items: center; gap: 10px; margin: 0 0 18px; color: var(--olive-dark); font-size: 14px; font-weight: 750; letter-spacing: .01em; }
     .eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--olive); }
     h1 { margin: 0; max-width: 680px; font-size: clamp(44px, 5.2vw, 66px); line-height: 1.02; letter-spacing: -.048em; }
@@ -85,9 +86,9 @@
     .trust { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 28px; color: var(--ink-soft); font-size: 13px; font-weight: 750; }
     .trust span::before { content: "✓"; margin-right: 7px; color: var(--olive); font-weight: 950; }
 
-    .product-stage { position: relative; }
+    .product-stage { position: relative; width: min(980px, 100%); margin-inline: auto; }
     .real-product-shot { margin: 0; padding: 8px; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: #fff; box-shadow: var(--shadow); }
-    .real-product-shot img { display: block; width: 100%; height: auto; border-radius: 8px; transition: transform .55s cubic-bezier(.2,.7,.2,1); }
+    .real-product-shot img { display: block; width: 100%; aspect-ratio: 1905 / 904; object-fit: cover; object-position: top; border-radius: 8px; transition: transform .55s cubic-bezier(.2,.7,.2,1); }
     .real-product-shot figcaption { display: flex; justify-content: space-between; gap: 16px; padding: 12px 5px 3px; color: var(--ink-soft); font-size: 12px; }
     .image-link { flex: 0 0 auto; color: var(--olive-dark); font-weight: 850; text-decoration: none; }
     .app-window { position: relative; margin-top: 18px; padding: 16px; border: 1px solid rgba(255,255,255,.7); border-radius: 32px; background: rgba(255,255,255,.72); box-shadow: var(--shadow); transform: rotate(1.2deg); }
@@ -133,12 +134,14 @@
     .showcase { background: #fff; }
     .showcase-grid { display: grid; gap: 26px; }
     .screen-card, .output-card { margin: 0; border: 1px solid var(--line); border-radius: 12px; background: #fff; overflow: hidden; }
-    .screen-card img { display: block; width: 100%; height: auto; transition: transform .55s cubic-bezier(.2,.7,.2,1); }
+    .screen-card { width: min(980px, 100%); margin-inline: auto; }
+    .screen-card img { display: block; width: 100%; aspect-ratio: 1905 / 904; object-fit: cover; object-position: top; transition: transform .55s cubic-bezier(.2,.7,.2,1); }
     .screen-card figcaption, .output-card figcaption { display: flex; justify-content: space-between; gap: 18px; padding: 17px 18px; border-top: 1px solid var(--line); }
     .screen-card strong, .output-card strong { display: block; font-size: 15px; }
     .screen-card span, .output-card span { color: var(--ink-soft); font-size: 13px; }
-    .outputs { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 3fr); gap: 20px; align-items: start; width: min(900px, 100%); margin: 0 auto; }
-    .output-card img { display: block; width: 100%; height: auto; background: var(--paper); transition: transform .55s cubic-bezier(.2,.7,.2,1); }
+    .outputs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; width: min(980px, 100%); margin: 0 auto; }
+    .output-card { display: grid; grid-template-rows: minmax(0, 1fr) auto; }
+    .output-card img { display: block; width: 100%; height: clamp(460px, 50vw, 610px); object-fit: contain; object-position: center; background: var(--paper); transition: transform .55s cubic-bezier(.2,.7,.2,1); }
 
     .section { padding: 90px 0; }
     .section-head { max-width: 760px; margin-bottom: 44px; }
@@ -256,7 +259,7 @@
       .real-product-shot { padding: 5px; border-radius: 12px; }
       .real-product-shot img { border-radius: 8px; }
       .outputs { grid-template-columns: 1fr; gap: 18px; width: 100%; }
-      .output-card img { width: 100%; height: auto; object-fit: contain; }
+      .output-card img { width: 100%; height: min(145vw, 620px); object-fit: contain; }
       .real-product-shot figcaption, .screen-card figcaption, .output-card figcaption { align-items: flex-start; padding: 12px; }
       .app-window { margin-top: 10px; padding: 9px; border-radius: 22px; }
       .app-body { grid-template-columns: 72px 1fr; min-height: 385px; }
