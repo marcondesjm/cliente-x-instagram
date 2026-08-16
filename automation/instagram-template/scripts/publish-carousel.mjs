@@ -5,7 +5,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from
 import { basename, dirname, extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildBrandContext } from '../../../lib/brand-analysis.js';
-import { researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
+import { EDITORIAL_SOURCES, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const TEMPLATE_DIR = resolve(ROOT, 'automation', 'instagram-template');
@@ -1309,6 +1309,34 @@ function planForAutomaticSlots(account, localPacks, dateString) {
   });
 }
 
+function radarConfigForAccount(account = {}) {
+  const saved = account.contentProfile?.radar || {};
+  const sources = normalizeEditorialSources(saved.sources);
+  return {
+    enabled: typeof saved.enabled === 'boolean' ? saved.enabled : account.account === 'cliente-x',
+    maxAgeDays: Math.max(1, Math.min(90, Number(saved.maxAgeDays) || 60)),
+    keywords: Array.isArray(saved.keywords) ? saved.keywords.map((item) => String(item || '').trim()).filter(Boolean).slice(0, 30) : [],
+    excludeKeywords: Array.isArray(saved.excludeKeywords) ? saved.excludeKeywords.map((item) => String(item || '').trim()).filter(Boolean).slice(0, 30) : [],
+    sources: sources.length ? sources : (account.account === 'cliente-x' ? EDITORIAL_SOURCES : [])
+  };
+}
+
+function radarResearchOptions(account = {}) {
+  const radar = radarConfigForAccount(account);
+  return {
+    radar,
+    options: {
+      maxAgeDays: radar.maxAgeDays,
+      limit: 13,
+      sources: radar.sources,
+      keywords: radar.keywords,
+      excludeKeywords: radar.excludeKeywords,
+      niche: account.contentProfile?.niche || '',
+      offer: account.contentProfile?.offer || ''
+    }
+  };
+}
+
 function planForNewsSlots(account, newsPacks, dateString) {
   return (account.scheduleUtc || []).map((cron, slotIndex) => {
     const packIndexNumber = pickDailyIndex(newsPacks, dateString, slotIndex);
@@ -1320,7 +1348,7 @@ function planForNewsSlots(account, newsPacks, dateString) {
       slotIndex,
       type: 'automatic',
       status: 'planned',
-      title: pack.slides?.[0]?.title || 'Notícia recente de IA para empresas',
+      title: pack.slides?.[0]?.title || `Notícia recente para ${account.contentProfile?.niche || 'sua área'}`,
       caption: compactPlanText(pack.caption || ''),
       mode: 'feed + story',
       packIndex: `news-${packIndexNumber}`,
@@ -2935,6 +2963,7 @@ async function main() {
   const args = parseArgs(process.argv);
   const env = loadEnv();
   const { account, packs: localPacks, styles } = loadConfig(args.configDir, args.account);
+  const { radar, options: radarOptions } = radarResearchOptions(account);
   if (!args.renderOnly && !args.dryRun && !args.validateCopy && account.clientProfile && account.clientProfile.status !== 'active') {
     const billingStatus = account.clientProfile.billing?.status || account.clientProfile.status || 'onboarding';
     throw new Error(`Publicacao bloqueada para ${account.account}: cliente ${billingStatus}. Regularize ou ative o contrato antes de publicar.`);
@@ -2946,9 +2975,9 @@ async function main() {
   const today = args.planDate || todaySaoPaulo();
   if (args.planDay) {
     let plannedNews = [];
-    if (account.account === 'cliente-x') {
+    if (radar.enabled && radar.sources.length) {
       try {
-        plannedNews = (await researchFreshEditorialPacks({ maxAgeDays: 60, limit: 13 })).packs;
+        plannedNews = (await researchFreshEditorialPacks(radarOptions)).packs;
       } catch {}
     }
     console.log(JSON.stringify({
@@ -2973,9 +3002,9 @@ async function main() {
   const profilePacks = buildProfileContentPacks(account, today, generationSlotIndex);
   const autoPacks = profilePacks.length ? profilePacks : buildAutoContentPacks(today, generationSlotIndex);
   let editorialResearch = { packs: [], items: [], failures: [], researchedAt: new Date().toISOString() };
-  if (!args.validateCopy) {
+  if (!args.validateCopy && radar.enabled && radar.sources.length) {
     try {
-      editorialResearch = await researchFreshEditorialPacks({ maxAgeDays: 60, limit: 13 });
+      editorialResearch = await researchFreshEditorialPacks(radarOptions);
       console.log(`Radar editorial: ${editorialResearch.packs.length} temas recentes encontrados em fontes oficiais.`);
       if (editorialResearch.failures.length) console.log(`Radar editorial: ${editorialResearch.failures.length} fonte(s) indisponivel(is); fluxo continuara com as demais.`);
     } catch (error) {
@@ -2983,14 +3012,11 @@ async function main() {
     }
   }
   const baseSelectionPacks = profilePacks.length ? mergePacks(profilePacks, packs) : packs;
-  const useResearchThisSlot = editorialResearch.packs.length > 0
-    && (account.account === 'cliente-x' || generationSlotIndex % 3 === 0);
+  const useResearchThisSlot = radar.enabled && editorialResearch.packs.length > 0;
   const automaticSelectionPacks = useResearchThisSlot
     ? editorialResearch.packs
     : baseSelectionPacks;
-  if (useResearchThisSlot) console.log(account.account === 'cliente-x'
-    ? 'Radar editorial recente priorizado em todos os horarios do Cliente X.'
-    : 'Radar editorial priorizado neste horario; os demais horarios continuam alternando conteudos evergreen.');
+  if (useResearchThisSlot) console.log('Radar editorial configurado priorizado para este horário automático.');
   validatePacks(autoPacks);
   validatePacks(automaticSelectionPacks);
   if (args.validateCopy) {
