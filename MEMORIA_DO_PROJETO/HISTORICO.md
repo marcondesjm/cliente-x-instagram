@@ -1,5 +1,26 @@
 # Historico
 
+## 2026-08-16 18:07 BRT
+
+A pagina de configuracao da automacao de comentarios para Direct foi adicionada ao carrossel da landing.
+
+Alteracao:
+
+- A nova captura real mostra `Meta conectada`, automacao ativa, palavras-chave, regra de correspondencia, material e perfil editorial da conta.
+- A imagem foi enquadrada em `1460 x 680` para preencher o slide e manter os campos principais legiveis.
+- O novo slide aparece depois de `Conteudo` com o selo `Pagina 3 de 10 · Automacao do Direct`.
+- O antigo `Historico do Direct` foi preservado como pagina separada e passou para a posicao 4.
+- Todos os contadores, indices e seletores foram atualizados de 9 para 10 paginas.
+
+Validacao e deploy:
+
+- JavaScript inline: sintaxe valida.
+- `npm run validate-copy`: passou com `74` selecoes automaticas e protecao de duplicidade `ok`.
+- Teste local: `10` slides, `10` seletores, `10` imagens presentes e nenhum overflow horizontal.
+- Commit funcional: `b11fae5` (`Adiciona pagina da automacao do Direct na landing`).
+- Deploy Vercel: `dpl_CDnXwmFuNkMwFyL19wz3sXu9fgoH`, alias `https://cliente-x-instagram.vercel.app`.
+- Producao: pagina 3 carregada em `1460 x 680`, seletor ativo e trilho confirmado em `translateX(-200%)`.
+
 ## 2026-08-16 18:03 BRT
 
 O slide da Pagina Bio passou a usar a captura e o endereco publico real informados pelo usuario.

@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 18:03 BRT
+Atualizado em: 2026-08-16 18:07 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,12 +12,12 @@ Atualizado em: 2026-08-16 18:03 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `891908b`; novo checkpoint de memoria sera o commit que registrar esta atualizacao.
+- Checkpoint funcional atual: `b11fae5`; novo checkpoint de memoria sera o commit que registrar esta atualizacao.
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
-- Commit mais recente da landing: `891908b` (`Usa pagina Bio publica real na landing`).
+- Commit mais recente da landing: `b11fae5` (`Adiciona pagina da automacao do Direct na landing`).
 - Versao visivel atual: `v4.96`
 
 ## Checkagem operacional do painel
@@ -75,8 +75,9 @@ Atualizado em: 2026-08-16 18:03 BRT
 - A contratacao foi esclarecida: o Plano Completo combina plataforma, configuracao assistida e suporte para uma marca; operacoes com varias contas ou integracoes usam projeto personalizado.
 - A secao de provas nao usa mais artes isoladas de feed/Story: ela incorpora duas publicacoes reais do perfil `@marcondes.machado.oficial`, com navegacao e links oficiais para `DcHMqdWE3bI` e `DcHDsOKkzvp`.
 - Os embeds reais foram confirmados em producao sem mensagem de post removido e sem erros de console; cada card tambem possui o link `Abrir post` como alternativa.
-- A demonstracao do painel agora e um carrossel com capturas reais das nove abas: `Visao geral`, `Conteudo`, `Historico do Direct`, `Agenda`, `Grade semanal`, `Pagina Bio`, `Clientes`, `Cobranca` e `Sistema`.
+- A demonstracao do painel agora e um carrossel com 10 capturas reais: `Visao geral`, `Conteudo`, `Automacao do Direct`, `Historico do Direct`, `Agenda`, `Grade semanal`, `Pagina Bio`, `Clientes`, `Cobranca` e `Sistema`.
 - Cada pagina possui contador, explicacao, link para ampliar, seletor direto e navegacao por setas. A troca automatica continua a cada `6,5 segundos`, pausa durante interacao e respeita movimento reduzido.
+- O slide `Automacao do Direct` mostra Meta conectada, campanha ativa, palavras-chave, correspondencia, material e perfil editorial da conta.
 - A captura de Cobranca exclui o painel lateral de configuracoes; nenhum token, senha ou chave completa aparece na landing.
 - O slide `Historico do Direct` foi reenquadrado para preencher a area e agora mostra exemplos reais de envios confirmados com palavra-chave, horario e status.
 - O slide `Pagina Bio` usa uma captura desktop real de `https://cliente-x-instagram.vercel.app/bio`, com selo `Bio real` e botao `Abrir Bio real` apontando para o mesmo endereco publico.
