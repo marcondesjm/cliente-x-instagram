@@ -627,7 +627,39 @@ const FINAL_SLIDE_CALL_CTA = {
   body: '🚀 50 PROMPTS DE IA GRÁTIS! Escreva IA nos comentários e confira o material no seu Direct.'
 };
 
-const FREE_PROMPTS_CTA = 'Comente IA para receber 🚀 50 PROMPTS DE IA GRÁTIS!';
+const FREE_PROMPTS_CTA = `Preparei uma seleção com 50 prompts prontos para ajudar você a:
+
+✨ Criar conteúdos para Instagram
+📈 Fazer marketing digital
+💰 Aumentar suas vendas
+📝 Escrever textos persuasivos
+🤖 Usar ChatGPT, Claude e outras IAs como um profissional
+⚡ Economizar horas de trabalho
+
+O melhor de tudo?
+
+🎁 É totalmente GRATUITO!
+
+👇 Como receber:
+1️⃣ Comente IA
+2️⃣ Siga o perfil
+3️⃣ Acesse o link da bio para baixar.
+
+💬 Marque um amigo que precisa aprender IA.
+💾 Salve este post para não perder.
+📤 Compartilhe nos seus stories.`;
+
+const FREE_PROMPTS_CTA_MARKER = 'Preparei uma seleção com 50 prompts prontos para ajudar você a:';
+const LEGACY_FREE_PROMPTS_CTA = 'Comente IA para receber 🚀 50 PROMPTS DE IA GRÁTIS!';
+
+function withFreePromptsCtaAtEnd(caption = '') {
+  const withoutLegacyCta = String(caption).replace(LEGACY_FREE_PROMPTS_CTA, '').replace(/\n{3,}/g, '\n\n').trim();
+  const markerIndex = withoutLegacyCta.indexOf(FREE_PROMPTS_CTA_MARKER);
+  const withoutExistingCta = markerIndex === -1
+    ? withoutLegacyCta
+    : withoutLegacyCta.slice(0, markerIndex).trim();
+  return [withoutExistingCta, FREE_PROMPTS_CTA].filter(Boolean).join('\n\n');
+}
 
 const CONTENT_GOALS = {
   authority: {
@@ -979,15 +1011,12 @@ function enhanceSlide(slide, index, dateString, slotIndex, goal = CONTENT_GOALS.
 }
 
 function enhanceCaption(caption, dateString, slotIndex, goal = CONTENT_GOALS.authority) {
-  const { body, hashtags } = splitCaptionParts(caption);
+  const { body, hashtags } = splitCaptionParts(withFreePromptsCtaAtEnd(caption));
   const angles = [...(goal.captionAngles || []), ...ENGAGEMENT_INTELLIGENCE.captionAngles];
   const angle = angles[pickDailyIndex(angles, dateString, slotIndex)];
   const slotNote = angle;
   const bodyWithAngle = body.includes(slotNote) ? body : `${body}\n\n${slotNote}`;
-  const enhancedBody = bodyWithAngle.includes(FREE_PROMPTS_CTA)
-    ? bodyWithAngle
-    : `${bodyWithAngle}\n\n${FREE_PROMPTS_CTA}`;
-  return [enhancedBody.trim(), hashtags].filter(Boolean).join('\n\n');
+  return [bodyWithAngle.trim(), hashtags, FREE_PROMPTS_CTA].filter(Boolean).join('\n\n');
 }
 
 function enhancePackForEngagement(pack, dateString, slotIndex, account = {}) {
@@ -1009,6 +1038,7 @@ function enhancePackForEngagement(pack, dateString, slotIndex, account = {}) {
   if (account.contentProfile?.visualDirection === 'anatex-editorial') {
     Object.assign(enhanced, sanitizePackForAnatexStyle(enhanced));
   }
+  enhanced.caption = withFreePromptsCtaAtEnd(enhanced.caption);
   enhanced.engagementIntelligence = {
     version: 1,
     appliedAt: new Date().toISOString(),
