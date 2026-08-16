@@ -1,5 +1,25 @@
 # Historico
 
+## 2026-08-16 18:03 BRT
+
+O slide da Pagina Bio passou a usar a captura e o endereco publico real informados pelo usuario.
+
+Alteracao:
+
+- A captura foi refeita diretamente em `https://cliente-x-instagram.vercel.app/bio`.
+- A imagem real em desktop possui `1905 x 904` e preenche o carrossel sem as faixas laterais da captura estreita anterior.
+- O selo do slide agora informa `Pagina 6 de 9 · Bio real`.
+- O titulo foi atualizado para `Pagina Bio real e pronta para o publico`.
+- O botao `Abrir Bio real` aponta para `https://cliente-x-instagram.vercel.app/bio`; o endereco antigo `/docs/bio.html` foi removido da landing.
+
+Validacao e deploy:
+
+- `npm run validate-copy`: passou com `74` selecoes automaticas e protecao de duplicidade `ok`.
+- JavaScript inline: sintaxe valida.
+- Commit funcional: `891908b` (`Usa pagina Bio publica real na landing`).
+- Deploy Vercel: `dpl_3HSF4GJ58FnqoPqPnZ9PpoADF6ff`, alias `https://cliente-x-instagram.vercel.app`.
+- Producao: imagem `1905 x 904` carregada, link `/bio` confirmado, endereco antigo ausente e nenhum overflow horizontal.
+
 ## 2026-08-16 17:59 BRT
 
 As capturas do Historico do Direct e da Pagina Bio foram refeitas para evitar areas vazias e mostrar exemplos mais claros na landing.

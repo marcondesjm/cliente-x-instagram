@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 17:59 BRT
+Atualizado em: 2026-08-16 18:03 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,12 +12,12 @@ Atualizado em: 2026-08-16 17:59 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `44e37ab`; novo checkpoint de memoria sera o commit que registrar esta atualizacao.
+- Checkpoint funcional atual: `891908b`; novo checkpoint de memoria sera o commit que registrar esta atualizacao.
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
-- Commit mais recente da landing: `44e37ab` (`Melhora exemplos do Direct e mostra Bio pronta`).
+- Commit mais recente da landing: `891908b` (`Usa pagina Bio publica real na landing`).
 - Versao visivel atual: `v4.96`
 
 ## Checkagem operacional do painel
@@ -79,7 +79,7 @@ Atualizado em: 2026-08-16 17:59 BRT
 - Cada pagina possui contador, explicacao, link para ampliar, seletor direto e navegacao por setas. A troca automatica continua a cada `6,5 segundos`, pausa durante interacao e respeita movimento reduzido.
 - A captura de Cobranca exclui o painel lateral de configuracoes; nenhum token, senha ou chave completa aparece na landing.
 - O slide `Historico do Direct` foi reenquadrado para preencher a area e agora mostra exemplos reais de envios confirmados com palavra-chave, horario e status.
-- O slide `Pagina Bio` mostra a pagina publica pronta, nao o editor, e possui link direto `Abrir Bio pronta` para `/docs/bio.html`.
+- O slide `Pagina Bio` usa uma captura desktop real de `https://cliente-x-instagram.vercel.app/bio`, com selo `Bio real` e botao `Abrir Bio real` apontando para o mesmo endereco publico.
 - Mensagem de infraestrutura aprovada: `A plataforma e acessada na nuvem.` A landing nao deve mencionar computador nem celular, salvo novo pedido explicito.
 - Beneficio comercial: aumentar oportunidades de engajamento e atrair seguidores reais e alinhados, com potencial para comprar produtos ou contratar servicos.
 - Limite de comunicacao: nao garantir seguidores, curtidas ou vendas; consistencia e conteudo atual aumentam oportunidades, nao resultados certos.
