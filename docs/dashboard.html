@@ -1394,7 +1394,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.70</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.71</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -5384,35 +5384,36 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       return previewAvatarDataUrls[source] || '';
     }
 
-    async function getPreviewSectorPhotoDataUrl(cue = 'business') {
+    async function getPreviewSectorPhotoDataUrl(cue = 'business', slideIndex = 1, slotIndex = 0) {
       const paths = {
-        legal: '/docs/uploads/sector-photos/legal.jpg',
-        tourism: '/docs/uploads/sector-photos/tourism.jpg',
-        'real-estate': '/docs/uploads/sector-photos/real-estate.jpg',
-        restaurant: '/docs/uploads/sector-photos/restaurant.jpg',
-        clinic: '/docs/uploads/sector-photos/clinic.jpg',
-        beauty: '/docs/uploads/sector-photos/beauty.jpg',
-        ecommerce: '/docs/uploads/sector-photos/ecommerce.jpg',
-        finance: '/docs/uploads/sector-photos/finance.jpg',
-        services: '/docs/uploads/sector-photos/ecommerce.jpg',
-        business: '/docs/uploads/sector-photos/finance.jpg'
+        legal: ['/docs/uploads/sector-photos/legal.jpg', '/docs/uploads/sector-photos/operations-review.png'],
+        tourism: ['/docs/uploads/sector-photos/tourism.jpg', '/docs/uploads/sector-photos/operations-review.png'],
+        'real-estate': ['/docs/uploads/sector-photos/real-estate.jpg', '/docs/uploads/sector-photos/operations-review.png'],
+        restaurant: ['/docs/uploads/sector-photos/restaurant.jpg', '/docs/uploads/sector-photos/operations-review.png'],
+        clinic: ['/docs/uploads/sector-photos/clinic.jpg', '/docs/uploads/sector-photos/operations-review.png'],
+        beauty: ['/docs/uploads/sector-photos/beauty.jpg', '/docs/uploads/sector-photos/operations-review.png'],
+        ecommerce: ['/docs/uploads/sector-photos/ecommerce.jpg', '/docs/uploads/sector-photos/operations-review.png'],
+        finance: ['/docs/uploads/sector-photos/finance.jpg', '/docs/uploads/sector-photos/operations-review.png'],
+        services: ['/docs/uploads/sector-photos/ecommerce.jpg', '/docs/uploads/sector-photos/operations-review.png'],
+        business: ['/docs/uploads/sector-photos/finance.jpg', '/docs/uploads/sector-photos/operations-review.png']
       };
       const key = paths[cue] ? cue : 'business';
-      if (previewSectorPhotoDataUrls[key]) return previewSectorPhotoDataUrls[key];
+      const path = paths[key][(Number(slotIndex) + Number(slideIndex)) % paths[key].length];
+      if (previewSectorPhotoDataUrls[path]) return previewSectorPhotoDataUrls[path];
       try {
-        const response = await fetch(paths[key], { cache: 'force-cache' });
+        const response = await fetch(path, { cache: 'force-cache' });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const blob = await response.blob();
-        previewSectorPhotoDataUrls[key] = await new Promise((resolve, reject) => {
+        previewSectorPhotoDataUrls[path] = await new Promise((resolve, reject) => {
           const reader = new FileReader();
           reader.onload = () => resolve(String(reader.result || ''));
           reader.onerror = reject;
           reader.readAsDataURL(blob);
         });
       } catch {
-        previewSectorPhotoDataUrls[key] = '';
+        previewSectorPhotoDataUrls[path] = '';
       }
-      return previewSectorPhotoDataUrls[key];
+      return previewSectorPhotoDataUrls[path];
     }
 
     function previewVisualCueFromText(text = '') {
@@ -5509,7 +5510,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const isHook = index === 1;
       const isCta = index === totalSlides;
       const isProof = index === totalSlides - 1;
-      const useSectorPhoto = Boolean(sectorPhotoHref && (isHook || isCta));
+      const useSectorPhoto = Boolean(sectorPhotoHref && (isHook || index === 4));
       const modeSeed = previewDaysSinceEpoch(item.previewDate || item.planDate || item.date || '');
       const mode = 'paper';
       let theme = [
@@ -5642,7 +5643,6 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const title = item.title || 'Conteúdo programado';
       const caption = item.caption || 'Legenda será montada pelo gerador automático.';
       const cue = item.visualCue || previewVisualCueFromText(`${title} ${caption}`);
-      const sectorPhotoHref = await getPreviewSectorPhotoDataUrl(cue);
       const fallbackSlides = [
         { index: 1, kicker: item.type === 'program' ? 'PROGRAMA' : 'POSTAGEM', title, body: caption, footer: 'Acompanhe pelo Instagram' },
         { index: 2, kicker: 'CONTEXTO', title: 'O que esta por trás disso?', body: caption, footer: 'Entenda antes de agir' },
@@ -5661,7 +5661,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         : fallbackSlides;
       const account = appState.account || {};
       const avatarHrefs = await Promise.all(slides.map((slide) => getPreviewImageDataUrl(previewPickAvatarSource(account, slide.index, cue, item))));
-      return slides.map((slide, index) => previewSlideSvg({ ...item, visualCue: cue }, slide, avatarHrefs[index], sectorPhotoHref));
+      const sectorPhotoHrefs = await Promise.all(slides.map((slide) => getPreviewSectorPhotoDataUrl(cue, slide.index, item.slotIndex || 0)));
+      return slides.map((slide, index) => previewSlideSvg({ ...item, visualCue: cue }, slide, avatarHrefs[index], sectorPhotoHrefs[index]));
     }
 
     let activePreviewImageSrc = '';

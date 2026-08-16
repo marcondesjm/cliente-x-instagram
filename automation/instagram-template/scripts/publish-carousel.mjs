@@ -1528,20 +1528,23 @@ function visualCueFromText(text = '') {
   return 'business';
 }
 
-function sectorPhotoCssImage(cue = 'business') {
+function sectorPhotoCssImage(cue = 'business', slideIndex = 1, renderContext = {}) {
   const photos = {
-    legal: 'docs/uploads/sector-photos/legal.jpg',
-    tourism: 'docs/uploads/sector-photos/tourism.jpg',
-    'real-estate': 'docs/uploads/sector-photos/real-estate.jpg',
-    restaurant: 'docs/uploads/sector-photos/restaurant.jpg',
-    clinic: 'docs/uploads/sector-photos/clinic.jpg',
-    beauty: 'docs/uploads/sector-photos/beauty.jpg',
-    ecommerce: 'docs/uploads/sector-photos/ecommerce.jpg',
-    finance: 'docs/uploads/sector-photos/finance.jpg',
-    services: 'docs/uploads/sector-photos/ecommerce.jpg',
-    business: 'docs/uploads/sector-photos/finance.jpg'
+    legal: ['docs/uploads/sector-photos/legal.jpg', 'docs/uploads/sector-photos/operations-review.png'],
+    tourism: ['docs/uploads/sector-photos/tourism.jpg', 'docs/uploads/sector-photos/operations-review.png'],
+    'real-estate': ['docs/uploads/sector-photos/real-estate.jpg', 'docs/uploads/sector-photos/operations-review.png'],
+    restaurant: ['docs/uploads/sector-photos/restaurant.jpg', 'docs/uploads/sector-photos/operations-review.png'],
+    clinic: ['docs/uploads/sector-photos/clinic.jpg', 'docs/uploads/sector-photos/operations-review.png'],
+    beauty: ['docs/uploads/sector-photos/beauty.jpg', 'docs/uploads/sector-photos/operations-review.png'],
+    ecommerce: ['docs/uploads/sector-photos/ecommerce.jpg', 'docs/uploads/sector-photos/operations-review.png'],
+    finance: ['docs/uploads/sector-photos/finance.jpg', 'docs/uploads/sector-photos/operations-review.png'],
+    services: ['docs/uploads/sector-photos/ecommerce.jpg', 'docs/uploads/sector-photos/operations-review.png'],
+    business: ['docs/uploads/sector-photos/finance.jpg', 'docs/uploads/sector-photos/operations-review.png']
   };
-  return localAssetCssImage(photos[cue] || photos.business);
+  const options = photos[cue] || photos.business;
+  const dateSeed = daysSinceEpoch(renderContext.dateString || todaySaoPaulo());
+  const slotSeed = Number(renderContext.slotIndex || 0) + Number(renderContext.creativeGeneration || 0);
+  return localAssetCssImage(options[(dateSeed + slotSeed + slideIndex) % options.length]);
 }
 
 function sectorVisualHtml(cue = 'business') {
@@ -1634,12 +1637,8 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const avatarClass = avatarImage ? ' has-avatar' : '';
   const usernameDisplay = accountUsernameDisplay(account);
   const engagementRole = index === 1 ? 'hook' : index === total ? 'cta' : index === total - 1 ? 'proof' : 'value';
-  const useSectorPhoto = engagementRole === 'hook'
-    || engagementRole === 'proof'
-    || engagementRole === 'cta'
-    || mode === 'visual'
-    || mode === 'editorial';
-  const sectorPhotoImage = useSectorPhoto ? sectorPhotoCssImage(visualCue) : '';
+  const useSectorPhoto = engagementRole === 'hook' || engagementRole === 'proof';
+  const sectorPhotoImage = useSectorPhoto ? sectorPhotoCssImage(visualCue, index, renderContext) : '';
   const sectorPhotoClass = sectorPhotoImage ? ' has-sector-photo' : '';
   const swipeCue = index === 1 ? '<div class="swipe-cue">arraste para ver</div>' : '';
   const finalCue = /\bcomente\b/i.test(`${title} ${body}`) ? 'comente IA' : 'link na bio';
