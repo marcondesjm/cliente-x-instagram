@@ -1,5 +1,15 @@
 # Historico
 
+## 2026-08-16 19:07 BRT
+
+Checkpoint de producao da postagem pronta na Grade semanal.
+
+- Commit funcional: `23c96ca` (`Adiciona previa da postagem na grade semanal`).
+- Branch `feature/modern-editorial-system` e `origin/main` sincronizadas.
+- Deploy de producao: `dpl_3kZ9hfT17Naq7MasdqiPS9RM5zAh`.
+- Alias confirmado: `https://cliente-x-instagram.vercel.app`.
+- Producao respondeu `HTTP 200` e confirmou `v5.03`, largura integral da Grade semanal, workspace, previa ao vivo, formatos Feed 4:5 e Story 9:16 e funcao de atualizacao em tempo real.
+
 ## 2026-08-16 19:05 BRT
 
 A aba `Grade semanal` passou a mostrar a postagem pronta ao lado do formulario.

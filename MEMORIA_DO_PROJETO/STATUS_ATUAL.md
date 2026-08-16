@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 19:05 BRT
+Atualizado em: 2026-08-16 19:07 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,7 +12,7 @@ Atualizado em: 2026-08-16 19:05 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `eaecef0` (`Corrige largura da aba Agenda`).
+- Checkpoint funcional atual: `23c96ca` (`Adiciona previa da postagem na grade semanal`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
@@ -26,6 +26,7 @@ Atualizado em: 2026-08-16 19:05 BRT
 - A arte acompanha os campos do programa e aceita a imagem cadastrada como fundo.
 - O usuario alterna entre Feed 4:5 e Story 9:16 antes de salvar.
 - A previa acompanha o programa que estiver sendo editado e, no celular, aparece abaixo do formulario.
+- Producao: deploy `dpl_3kZ9hfT17Naq7MasdqiPS9RM5zAh`, versao `v5.03` e componentes confirmados por `HTTP 200`.
 
 ## Agenda em largura integral
 
