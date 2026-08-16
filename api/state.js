@@ -1816,7 +1816,9 @@ function normalizeDirectMatchText(value = '') {
 }
 
 function directKeywordTerms(value = '') {
-  return String(value || '').split(/[,;\n]+/).map(normalizeDirectMatchText).filter(Boolean);
+  return [...new Set(
+    String(value || '').split(/[,;\n]+/).map(normalizeDirectMatchText).filter(Boolean)
+  )];
 }
 
 function editDistance(left = '', right = '') {
