@@ -1,20 +1,20 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 01:02 BRT
+Atualizado em: 2026-08-16 01:04 BRT
 
 ## Projeto ativo
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
 - Commit de codigo em producao: `d7f8122` (`Improve supporting text scale in carousel cards`)
-- Checkpoint completo anterior confirmado pelo usuario: `4eccfe0` (`Save approved v4.87 project checkpoint`)
-- Repositorio operacional: `origin/main` = `d7f8122`
+- Checkpoint completo aprovado pelo usuario: `344e134` (`Record v4.89 radar publication`)
+- Repositorio operacional: `origin/main` = `344e134`
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Versao visivel atual: `v4.89`
 
 ## Estado confirmado
 
-- Workspace limpo no momento deste registro e checkpoint aprovado pelo usuario ("tá tudo bom").
+- Workspace limpo no momento deste registro e checkpoint aprovado pelo usuario ("muito bom").
 - O dashboard de producao esta confirmado na versao `v4.89`.
 - O Radar usa somente fontes oficiais e aceita noticias dos ultimos 7 dias; ele nao usa o pack manual como reserva para `Publicar agora`.
 - Se nao houver noticia oficial elegivel, o publicador bloqueia o envio em vez de publicar conteudo generico.
