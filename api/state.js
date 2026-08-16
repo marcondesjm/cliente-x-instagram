@@ -43,11 +43,11 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.96',
+  appVersion: 'v4.97',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
-  description: 'Vercel, multi-conta, perfil editorial, usuários e automação validados.'
+  description: 'Multi-conta com convite seguro e conexão do Instagram pela própria empresa.'
 };
 const MAINTENANCE = {
   githubToken: {
@@ -125,7 +125,7 @@ function accessConfigForAccount(account) {
     account: username,
     project: 'Instagram Graph API',
     purpose: 'Autorizar publicação, métricas e automação de comentários para o Direct.',
-    envKeys: [accessTokenEnv, messagingTokenEnv, userIdEnv, 'INSTAGRAM_WEBHOOK_VERIFY_TOKEN', 'INSTAGRAM_APP_SECRET'],
+    envKeys: [accessTokenEnv, messagingTokenEnv, userIdEnv, 'INSTAGRAM_APP_ID', 'INSTAGRAM_APP_SECRET', 'INSTAGRAM_WEBHOOK_VERIFY_TOKEN'],
     managementUrl: 'https://developers.facebook.com/tools/explorer/',
     secondaryUrl: 'https://developers.facebook.com/apps/',
     status: 'Usado pelas rotas de publicação e métricas privadas.',
@@ -171,6 +171,7 @@ const SECRET_KEYS = [
   'STRIPE_PRICE_AGENCY'
   ,'THREADS_APP_ID'
   ,'THREADS_APP_SECRET'
+  ,'INSTAGRAM_APP_ID'
   ,'INSTAGRAM_WEBHOOK_VERIFY_TOKEN'
   ,'INSTAGRAM_APP_SECRET'
 ];
@@ -192,6 +193,7 @@ const EDITABLE_SECRET_KEYS = new Set([
   'STRIPE_PRICE_AGENCY'
   ,'THREADS_APP_ID'
   ,'THREADS_APP_SECRET'
+  ,'INSTAGRAM_APP_ID'
   ,'INSTAGRAM_WEBHOOK_VERIFY_TOKEN'
   ,'INSTAGRAM_APP_SECRET'
 ]);
@@ -1337,7 +1339,7 @@ async function addAccountToPanelUser(email, accountKey) {
   return users.map((item) => ({ email: item.email, role: item.role || 'user', accounts: item.accounts || [] }));
 }
 
-async function createAccountConfig(body = {}, session = null) {
+async function createAccountConfig(body = {}, session = null, req = null) {
   const accountKey = normalizeAccountKey(body.account);
   const expectedUsername = String(body.expectedUsername || '').replace(/^@/, '').trim();
   const brandName = String(body.brandName || accountKey).trim();
@@ -1355,7 +1357,6 @@ async function createAccountConfig(body = {}, session = null) {
     enabled: Boolean(body.brandPaletteEnabled)
   };
   const sourceAccount = normalizeAccountKey(body.sourceAccount || 'cliente-x');
-  if (!expectedUsername) throw userError('Informe o @ do Instagram sem espaco.');
   if (!contentProfile.niche || !contentProfile.audience || !contentProfile.offer) {
     throw userError('Informe nicho, publico ideal e oferta principal para criar a conta.');
   }
@@ -1395,6 +1396,11 @@ async function createAccountConfig(body = {}, session = null) {
       monthlyPrice: Math.max(0, Number(body.monthlyPrice) || 0),
       startedAt: new Date().toISOString()
     },
+    onboarding: {
+      status: 'awaiting_connection',
+      inviteCreatedAt: new Date().toISOString(),
+      inviteExpiresInHours: 48
+    },
     scheduleUtc: Array.isArray(source.scheduleUtc) ? source.scheduleUtc : [],
     ...(session && !isOwner(session) ? { ownerEmail: session.email } : {})
   };
@@ -1415,11 +1421,15 @@ async function createAccountConfig(body = {}, session = null) {
     ? await addAccountToPanelUser(session.email, accountKey)
     : null;
 
+  const inviteToken = createSignedOnboardingToken({ account: accountKey, email: newAccount.clientProfile.email });
+  const inviteUrl = `${req ? publicBaseUrl(req) : 'https://cliente-x-instagram.vercel.app'}/ativar?token=${encodeURIComponent(inviteToken)}`;
+
   return {
     ok: true,
     account: newAccount,
     users,
-    message: `Conta ${accountKey} criada no GitHub. Configure os envs ${newAccount.accessTokenEnv}, ${newAccount.userIdEnv} e ${newAccount.imgbbKeyEnv} no painel.`
+    inviteUrl,
+    message: `Conta ${accountKey} criada. Envie o convite para o cliente conectar o Instagram sem compartilhar senha.`
   };
 }
 
@@ -1975,6 +1985,111 @@ function threadsRedirectUri(req) {
   return `${protocol}://${forwardedHost}/api/state?threads=callback`;
 }
 
+function publicBaseUrl(req) {
+  const forwardedHost = String(req.headers['x-forwarded-host'] || req.headers.host || 'cliente-x-instagram.vercel.app').split(',')[0].trim();
+  const protocol = String(req.headers['x-forwarded-proto'] || 'https').split(',')[0].trim();
+  return `${protocol}://${forwardedHost}`;
+}
+
+function instagramRedirectUri(req) {
+  return `${publicBaseUrl(req)}/api/state?instagram=callback`;
+}
+
+function onboardingSecret() {
+  return String(process.env.ADMIN_SESSION_SECRET || '').trim();
+}
+
+function createSignedOnboardingToken(payload, ttlMs = 48 * 60 * 60 * 1000) {
+  if (!onboardingSecret()) throw userError('Configure ADMIN_SESSION_SECRET para gerar convites seguros.', 503);
+  const encoded = Buffer.from(JSON.stringify({ ...payload, expiresAt: Date.now() + ttlMs })).toString('base64url');
+  const signature = createHmac('sha256', onboardingSecret()).update(encoded).digest('base64url');
+  return `${encoded}.${signature}`;
+}
+
+function verifySignedOnboardingToken(value) {
+  const [payload, signature] = String(value || '').split('.');
+  if (!payload || !signature || !onboardingSecret()) throw userError('Convite inválido.', 400);
+  const expected = createHmac('sha256', onboardingSecret()).update(payload).digest('base64url');
+  const left = Buffer.from(signature);
+  const right = Buffer.from(expected);
+  if (left.length !== right.length || !timingSafeEqual(left, right)) throw userError('Assinatura do convite inválida.', 400);
+  const decoded = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
+  if (!decoded.account || Number(decoded.expiresAt) < Date.now()) throw userError('Este convite expirou. Solicite um novo link.', 410);
+  return decoded;
+}
+
+async function onboardingAccount(accountKey) {
+  const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
+  return requireConfiguredAccount(accounts, accountKey);
+}
+
+function publicOnboardingAccount(account) {
+  const connected = Boolean(process.env[account.accessTokenEnv] && process.env[account.userIdEnv]);
+  return {
+    account: account.account,
+    brandName: account.brandName,
+    expectedUsername: account.expectedUsername || '',
+    contactName: account.clientProfile?.contactName || '',
+    status: connected ? 'connected' : (account.onboarding?.status || 'awaiting_connection'),
+    connected,
+    checklist: {
+      companyCreated: true,
+      professionalAccount: connected,
+      instagramConnected: connected,
+      permissionsGranted: connected,
+      ready: connected
+    }
+  };
+}
+
+async function markInstagramOnboardingConnected(accountKey, profile) {
+  const accountsFile = await readGithubConfig(ACCOUNTS_FILE_PATH);
+  const index = accountsFile.data.findIndex((item) => item.account === accountKey);
+  if (index === -1) throw userError(`Conta ${accountKey} não encontrada.`, 404);
+  accountsFile.data[index] = {
+    ...accountsFile.data[index],
+    expectedUsername: String(profile.username || accountsFile.data[index].expectedUsername || '').replace(/^@/, ''),
+    onboarding: {
+      ...(accountsFile.data[index].onboarding || {}),
+      status: 'connected',
+      connectedAt: new Date().toISOString(),
+      instagramUserId: String(profile.user_id || profile.id || '')
+    }
+  };
+  await writeGithubConfig(ACCOUNTS_FILE_PATH, accountsFile.data, accountsFile.sha, `Connect Instagram onboarding for ${accountKey}`);
+}
+
+async function completeInstagramOAuth(req, account, code) {
+  const appId = String(process.env.INSTAGRAM_APP_ID || '').trim();
+  const appSecret = String(process.env.INSTAGRAM_APP_SECRET || '').trim();
+  if (!appId || !appSecret) throw userError('Configure INSTAGRAM_APP_ID e INSTAGRAM_APP_SECRET antes de receber clientes.', 503);
+  const tokenResponse = await fetch('https://api.instagram.com/oauth/access_token', {
+    method: 'POST',
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ client_id: appId, client_secret: appSecret, grant_type: 'authorization_code', redirect_uri: instagramRedirectUri(req), code })
+  });
+  const tokenPayload = await tokenResponse.json().catch(() => ({}));
+  if (!tokenResponse.ok || !tokenPayload.access_token) throw userError(tokenPayload.error_message || tokenPayload.error?.message || 'A Meta recusou a autorização do Instagram.', tokenResponse.status);
+  const longUrl = new URL('https://graph.instagram.com/access_token');
+  longUrl.searchParams.set('grant_type', 'ig_exchange_token');
+  longUrl.searchParams.set('client_secret', appSecret);
+  longUrl.searchParams.set('access_token', tokenPayload.access_token);
+  const longResponse = await fetch(longUrl);
+  const longPayload = await longResponse.json().catch(() => ({}));
+  const accessToken = longResponse.ok && longPayload.access_token ? longPayload.access_token : tokenPayload.access_token;
+  const profileResponse = await fetch(`https://graph.instagram.com/me?fields=id,user_id,username,name,account_type&access_token=${encodeURIComponent(accessToken)}`);
+  const profile = await profileResponse.json().catch(() => ({}));
+  if (!profileResponse.ok || !(profile.user_id || profile.id)) throw userError(profile.error?.message || 'Não foi possível validar a conta profissional do Instagram.', profileResponse.status);
+  if (account.expectedUsername && profile.username && account.expectedUsername.toLowerCase() !== String(profile.username).toLowerCase()) {
+    throw userError(`Você autorizou @${profile.username}, mas o convite é para @${account.expectedUsername}.`, 409);
+  }
+  await saveVercelEnv(account.accessTokenEnv, accessToken);
+  await saveVercelEnv(account.userIdEnv, String(profile.user_id || profile.id));
+  await markInstagramOnboardingConnected(account.account, profile);
+  await redeployVercelProduction();
+  return profile;
+}
+
 function threadsStateSecret() {
   return process.env.ADMIN_SESSION_SECRET || process.env.ADMIN_PASSWORD || '';
 }
@@ -2135,9 +2250,23 @@ export default async function handler(req, res) {
         return;
       }
       if (body.action === 'create-account') {
-        const result = await createAccountConfig(body, session);
+        const result = await createAccountConfig(body, session, req);
         res.setHeader('cache-control', 'no-store');
         res.status(200).json(result);
+        return;
+      }
+      if (body.action === 'create-onboarding-invite') {
+        const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
+        const account = requireConfiguredAccount(accounts, String(body.account || ''));
+        if (!canAccessAccount(session, account)) throw userError('Seu usuário não pode gerar convite para esta conta.', 403);
+        const token = createSignedOnboardingToken({ account: account.account, email: account.clientProfile?.email || '' });
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json({
+          ok: true,
+          inviteUrl: `${publicBaseUrl(req)}/ativar?token=${encodeURIComponent(token)}`,
+          expiresInHours: 48,
+          message: 'Convite seguro criado. Ele expira em 48 horas.'
+        });
         return;
       }
       if (body.action === 'create-stripe-checkout') {
@@ -2255,6 +2384,63 @@ export default async function handler(req, res) {
     return;
   }
 
+  if (String(req.query?.instagram || '') === 'invite') {
+    try {
+      const invite = verifySignedOnboardingToken(req.query?.token);
+      const account = await onboardingAccount(invite.account);
+      if (invite.email && account.clientProfile?.email && invite.email !== account.clientProfile.email) {
+        throw userError('Este convite não pertence mais ao cadastro atual.', 403);
+      }
+      res.setHeader('cache-control', 'no-store');
+      res.status(200).json({ ok: true, invitation: publicOnboardingAccount(account), expiresAt: invite.expiresAt });
+    } catch (error) {
+      res.setHeader('cache-control', 'no-store');
+      res.status(error.statusCode || 400).json({ error: error.message });
+    }
+    return;
+  }
+
+  if (String(req.query?.instagram || '') === 'connect') {
+    try {
+      const token = String(req.query?.token || '');
+      const invite = verifySignedOnboardingToken(token);
+      const account = await onboardingAccount(invite.account);
+      const appId = String(process.env.INSTAGRAM_APP_ID || '').trim();
+      if (!appId || !process.env.INSTAGRAM_APP_SECRET) throw userError('A conexão com a Meta ainda não foi configurada pelo administrador.', 503);
+      if (publicOnboardingAccount(account).connected) {
+        res.redirect(302, `/ativar?token=${encodeURIComponent(token)}&instagram=connected`);
+        return;
+      }
+      const authorize = new URL('https://www.instagram.com/oauth/authorize');
+      authorize.searchParams.set('client_id', appId);
+      authorize.searchParams.set('redirect_uri', instagramRedirectUri(req));
+      authorize.searchParams.set('scope', 'instagram_business_basic,instagram_business_content_publish,instagram_business_manage_comments,instagram_business_manage_messages');
+      authorize.searchParams.set('response_type', 'code');
+      authorize.searchParams.set('state', token);
+      authorize.searchParams.set('enable_fb_login', '0');
+      authorize.searchParams.set('force_authentication', '1');
+      res.redirect(302, authorize.toString());
+    } catch (error) {
+      res.redirect(302, `/ativar?instagram=error&message=${encodeURIComponent(error.message)}`);
+    }
+    return;
+  }
+
+  if (String(req.query?.instagram || '') === 'callback') {
+    const token = String(req.query?.state || '');
+    try {
+      if (req.query?.error) throw userError(String(req.query.error_description || req.query.error));
+      const invite = verifySignedOnboardingToken(token);
+      const account = await onboardingAccount(invite.account);
+      await completeInstagramOAuth(req, account, String(req.query?.code || ''));
+      res.redirect(302, `/ativar?token=${encodeURIComponent(token)}&instagram=connected`);
+    } catch (error) {
+      const tokenParam = token ? `&token=${encodeURIComponent(token)}` : '';
+      res.redirect(302, `/ativar?instagram=error&message=${encodeURIComponent(error.message)}${tokenParam}`);
+    }
+    return;
+  }
+
   if (String(req.query?.threads || '') === 'connect') {
     try {
       const session = getSession(req);
@@ -2351,7 +2537,8 @@ export default async function handler(req, res) {
     expectedUsername: item.expectedUsername,
     brandName: item.brandName,
     footerText: item.footerText,
-    clientProfile: item.clientProfile || null
+    clientProfile: item.clientProfile || null,
+    onboarding: item.onboarding || null
   }));
   const group = content.find((item) => item.account === accountKey);
   const scheduledGroups = await readScheduledGroups();

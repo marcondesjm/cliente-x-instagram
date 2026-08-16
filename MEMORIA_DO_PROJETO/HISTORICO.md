@@ -1,5 +1,42 @@
 # Historico
 
+## 2026-08-16 18:30 BRT
+
+Implementado o onboarding seguro de novas empresas sem compartilhamento de login ou senha do Instagram.
+
+Alteracoes:
+
+- O cadastro de uma empresa passa a criar o estado `awaiting_connection` e retorna um convite assinado, valido por 48 horas.
+- O @ do Instagram deixou de ser obrigatorio no cadastro; a conta pode ser identificada durante a autorizacao oficial.
+- Nova pagina publica `/ativar` apresenta a empresa, explica que a senha nao e compartilhada e mostra um checklist de ativacao.
+- O cliente usa `Conectar meu Instagram` e autoriza diretamente pelo Instagram Login da Meta.
+- O OAuth solicita apenas as permissoes usadas pela plataforma: perfil basico profissional, publicacao, comentarios e mensagens.
+- O callback valida assinatura, validade, empresa e, quando informado, o @ esperado antes de aceitar a conta.
+- O token de longa duracao e o ID profissional sao gravados nos envs exclusivos da empresa; nenhum token e devolvido ao navegador.
+- O painel ganhou campo para copiar o convite e botao para gerar outro convite para a conta selecionada.
+- A carteira de clientes diferencia `Instagram conectado pela Meta` de `aguardando autorizacao do cliente`.
+- `INSTAGRAM_APP_ID` e `INSTAGRAM_APP_SECRET` passaram a aparecer nos acessos administraveis e no `.env.example`.
+- Versao visivel atualizada em conjunto para `v4.97`.
+
+Validacoes:
+
+- `node --check api/state.js`: passou.
+- JavaScript inline de `docs/dashboard.html` e `docs/ativar.html`: sintaxe valida.
+- `npm run validate-copy`: passou com `20` packs, `54` packs automaticos, `74` selecoes e protecao de duplicidade `ok`.
+- Teste direto da API: convite valido retornou `HTTP 200` e a empresa correta; convite adulterado retornou `HTTP 400`; tentativa de conexao sem App Meta configurado foi redirecionada com erro seguro.
+- `git diff --check`: passou.
+
+Configuracao externa pendente:
+
+- Para a primeira autorizacao real, cadastrar `INSTAGRAM_APP_ID` e `INSTAGRAM_APP_SECRET` do aplicativo Meta aprovado.
+- Registrar na Meta a URL de retorno `https://cliente-x-instagram.vercel.app/api/state?instagram=callback` e concluir o acesso avancado das permissoes usadas para atender empresas externas.
+- Nenhuma senha de Instagram deve ser solicitada ao cliente.
+
+Deploy/publicacao:
+
+- Deploy: sera feito pelo checkpoint desta atualizacao.
+- Instagram real: nenhuma publicacao foi criada; esta alteracao trata apenas do cadastro e da autorizacao de empresas.
+
 ## 2026-08-16 18:15 BRT
 
 O resultado da checkagem operacional passou a aparecer em tempo real no cabecalho da plataforma.

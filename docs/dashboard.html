@@ -1478,7 +1478,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.96</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.97</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -2384,6 +2384,19 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             </div>
             <button class="primary" id="createAccount" type="button">Criar conta</button>
             <div class="access-result" id="newAccountResult">Informe nicho, público e oferta para a inteligência criar posts alinhados à nova conta.</div>
+            <div class="document-box" id="onboardingInviteBox">
+              <strong>Convite de ativação</strong>
+              <span>O cliente conecta o próprio Instagram na Meta. Você não precisa pedir login nem senha.</span>
+              <label>
+                Link seguro (válido por 48 horas)
+                <input id="onboardingInviteUrl" readonly placeholder="Crie uma conta ou gere um convite para a conta selecionada">
+              </label>
+              <div class="briefing-actions">
+                <button type="button" id="copyOnboardingInvite">Copiar convite</button>
+                <button type="button" id="renewOnboardingInvite">Gerar para conta selecionada</button>
+              </div>
+              <div class="access-result" id="onboardingInviteResult">Status: aguardando geração do convite.</div>
+            </div>
           </div>
         </div>
 
@@ -2778,13 +2791,15 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         const planLabels = { starter: 'Essencial', professional: 'Profissional', agency: 'Agência' };
         const statusLabels = { onboarding: 'Em implantação', active: 'Ativo', paused: 'Pausado' };
         const automatic = client.approvalMode !== 'approval';
+        const instagramConnected = account.onboarding?.status === 'connected';
         return `<div class="check">
-          <span class="dot ${client.status === 'paused' ? 'warn' : 'good'}"></span>
+          <span class="dot ${client.status === 'paused' || !instagramConnected ? 'warn' : 'good'}"></span>
           <div>
             <strong>${escapeHtml(account.brandName || account.account)}</strong>
             <span>${escapeHtml(planLabels[client.plan] || client.plan || 'Operação própria')} · ${escapeHtml(statusLabels[client.status] || client.status || 'Ativo')} · ${automatic ? 'publicação automática' : 'com aprovação'}</span>
             <span>${escapeHtml(client.contactName || 'Responsável não informado')}${client.monthlyPrice ? ` · R$ ${Number(client.monthlyPrice).toFixed(2).replace('.', ',')}/mês` : ''}</span>
             <span>Cobrança: ${escapeHtml(billing.status || (client.stripeCustomerId ? 'configurando' : 'não vinculada'))}</span>
+            <span>Instagram: ${instagramConnected ? 'conectado pela Meta' : 'aguardando autorização do cliente'}</span>
             ${appState.sessionRole === 'owner' ? `<div class="access-actions">
               ${client.email ? `<button type="button" data-billing-checkout data-client-account="${escapeHtml(account.account)}" data-client-plan="${escapeHtml(client.plan || 'starter')}">Gerar pagamento</button>` : ''}
               ${client.status === 'paused'
@@ -3529,6 +3544,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         document.getElementById('newBrandBackground').value = '#f4f7f5';
         document.getElementById('newAccountBriefingTemplate').value = '';
         result.textContent = payload.message || 'Conta criada.';
+        document.getElementById('onboardingInviteUrl').value = payload.inviteUrl || '';
+        document.getElementById('onboardingInviteResult').textContent = payload.inviteUrl
+          ? 'Convite pronto para copiar e enviar ao cliente.'
+          : 'Conta criada, mas o convite não foi retornado.';
         await loadState();
       } catch (error) {
         result.textContent = error.message;
@@ -6216,6 +6235,34 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       }
     }
 
+    async function copyOnboardingInvite() {
+      const field = document.getElementById('onboardingInviteUrl');
+      const result = document.getElementById('onboardingInviteResult');
+      if (!field.value) { result.textContent = 'Gere o convite antes de copiar.'; return; }
+      await navigator.clipboard.writeText(field.value);
+      result.textContent = 'Convite copiado. Ele pode ser enviado por WhatsApp ou email.';
+    }
+
+    async function renewOnboardingInvite() {
+      const button = document.getElementById('renewOnboardingInvite');
+      const result = document.getElementById('onboardingInviteResult');
+      if (!appState.selectedAccount) { result.textContent = 'Selecione uma conta primeiro.'; return; }
+      button.disabled = true;
+      result.textContent = 'Gerando convite seguro...';
+      try {
+        const payload = await api('/api/state', {
+          method: 'POST',
+          body: JSON.stringify({ action: 'create-onboarding-invite', account: appState.selectedAccount })
+        });
+        document.getElementById('onboardingInviteUrl').value = payload.inviteUrl || '';
+        result.textContent = payload.message || 'Convite criado.';
+      } catch (error) {
+        result.textContent = error.message;
+      } finally {
+        button.disabled = false;
+      }
+    }
+
     async function runOperationalCheck() {
       const button = document.getElementById('runHealthCheck');
       const repeatButton = document.getElementById('repeatHealthCheck');
@@ -6441,6 +6488,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('uploadDirectMaterial').addEventListener('click', uploadDirectMaterial);
       document.getElementById('saveDirectAutomation').addEventListener('click', saveDirectAutomation);
       document.getElementById('createAccount').addEventListener('click', createAccount);
+      document.getElementById('copyOnboardingInvite').addEventListener('click', copyOnboardingInvite);
+      document.getElementById('renewOnboardingInvite').addEventListener('click', renewOnboardingInvite);
       document.getElementById('uploadBrandDocument').addEventListener('click', uploadBrandDocument);
       document.getElementById('uploadActiveAvatars').addEventListener('click', uploadActiveAvatars);
       document.getElementById('fillBrandBriefing').addEventListener('click', () => fillBrandBriefingTemplate({ force: true }));

@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 18:15 BRT
+Atualizado em: 2026-08-16 18:30 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,25 @@ Atualizado em: 2026-08-16 18:15 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `94fa661`; novo checkpoint de memoria sera o commit que registrar esta atualizacao.
+- Checkpoint funcional anterior: `94fa661`; novo checkpoint inclui o onboarding seguro de empresas.
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `b11fae5` (`Adiciona pagina da automacao do Direct na landing`).
-- Versao visivel atual: `v4.96`
+- Versao visivel atual: `v4.97`
+
+## Onboarding seguro de novas empresas
+
+- O administrador cria a empresa e recebe um link de ativacao com assinatura e validade de 48 horas.
+- O @ do Instagram e opcional no cadastro; se informado, ele e conferido contra a conta autorizada.
+- O cliente acessa `/ativar` e conecta a propria conta pelo Instagram Login da Meta, sem entregar login ou senha.
+- O checklist publico mostra empresa criada, conta profissional, conexao, permissoes e liberacao final.
+- O painel permite copiar o convite inicial e gerar um novo convite para a empresa selecionada.
+- A carteira de clientes informa se o Instagram esta conectado ou aguardando o cliente.
+- Tokens e IDs ficam somente no servidor, nos envs separados por empresa, e nao aparecem no navegador.
+- O fluxo esta implementado e validado localmente. Para uma conexao real ainda e obrigatorio cadastrar `INSTAGRAM_APP_ID` e `INSTAGRAM_APP_SECRET`, registrar o callback na Meta e possuir acesso avancado para contas externas.
+- Callback esperado: `https://cliente-x-instagram.vercel.app/api/state?instagram=callback`.
 
 ## Checkagem operacional do painel
 
