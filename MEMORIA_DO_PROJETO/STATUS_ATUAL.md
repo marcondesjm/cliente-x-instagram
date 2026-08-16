@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 20:20 BRT
+Atualizado em: 2026-08-16 20:30 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,22 @@ Atualizado em: 2026-08-16 20:20 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `7379feb` (`Registra publicacao real do Radar`).
+- Checkpoint funcional atual: `45d2515` (`Exige contexto factual nas pautas do Radar`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
-- Versao visivel atual: `v5.15`
+- Versao visivel atual: `v5.16`
+
+## Contexto factual obrigatorio no Radar
+
+- O Radar nao pode substituir o conteudo da materia por uma repeticao do titulo.
+- O resumo factual vindo do RSS e limpo e usado no slide 2 e na legenda; rodapes automaticos do feed sao removidos.
+- O publicador bloqueia pauta sem fato real, fato equivalente ao titulo ou o antigo fallback `A materia informa`.
+- Para a materia da Olhar Digital sobre o CEO da Anthropic, o contexto recuperado informa que Dario Amodei negou pessimismo sobre IA e reconheceu que o publico questiona os ganhos do avanco da tecnologia.
+- A previa final verificada foi `2026-08-16-202614-slot-0-render-only`; nao houve nova publicacao na Meta.
+- Producao: commit `45d2515`, deploy `dpl_3pcr1d2WmKxq48RBXDbWhyAVukpi` e versao `v5.16` confirmados.
 
 ## Publicacao real apos as travas editoriais
 

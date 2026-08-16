@@ -1,5 +1,21 @@
 # Historico
 
+## 2026-08-16 20:30 BRT
+
+Corrigida a pauta do Radar que repetia o titulo da materia no lugar de apresentar seu contexto real.
+
+- Causa encontrada: quando nao havia traducao editorial manual, `localizedNews()` ignorava o resumo factual recebido pelo RSS e fabricava `A materia informa: [titulo]`.
+- O Radar agora extrai e limpa o resumo real do RSS, removendo o rodape automatico `O post ... apareceu primeiro em ...`.
+- Na materia da Olhar Digital, o fato recuperado e: Dario Amodei nega pessimismo em relacao as inteligencias artificiais e reconhece que o publico geral questiona os ganhos com o avanco da tecnologia.
+- O slide 2 usa uma frase factual compacta; a legenda preserva o contexto factual mais completo, o titulo original, a fonte e a URL.
+- O publicador bloqueia pauta sem fato real, fato igual ao titulo ou texto iniciado por `A materia informa`.
+- Uma primeira previa com o resumo longo foi rejeitada internamente por estourar o layout. A previa final `2026-08-16-202614-slot-0-render-only` foi inspecionada e ficou dentro da arte.
+- `npm run validate-copy` passou com `factualArticleContextGuard: ok`, arquitetura Feed `1080x1350` e Story com zonas seguras `250-1170-500`.
+- Nenhuma nova publicacao foi enviada a Meta durante esta correcao. O post antigo nao foi apagado nem republicado.
+- Commit funcional: `45d2515` (`Exige contexto factual nas pautas do Radar`).
+- Deploy de producao: `dpl_3pcr1d2WmKxq48RBXDbWhyAVukpi`.
+- Producao respondeu `HTTP 200` e confirmou a versao `v5.16`.
+
 ## 2026-08-16 20:20 BRT
 
 Publicada e verificada uma pauta real pelo Radar apos as novas travas editoriais.
