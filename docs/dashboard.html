@@ -3709,7 +3709,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           action: 'update-direct-automation', account: appState.selectedAccount,
           automations
         }) });
-        appState.directAutomation = payload.directAutomation;
+        appState.directAutomation = {
+          ...(appState.directAutomation || {}),
+          ...(payload.directAutomation || {})
+        };
         renderDirectAutomation();
         result.textContent = `${payload.message} Confirmado às ${new Date().toLocaleTimeString('pt-BR')}.`;
       } catch (error) { result.textContent = error.message; }

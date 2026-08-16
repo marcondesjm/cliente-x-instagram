@@ -1733,6 +1733,15 @@ function normalizeDirectAutomations(values = []) {
   return automations;
 }
 
+function directAutomationConnected(account = {}) {
+  return Boolean(
+    process.env.INSTAGRAM_WEBHOOK_VERIFY_TOKEN &&
+    process.env.INSTAGRAM_APP_SECRET &&
+    (process.env[String(account.accessTokenEnv || '').replace(/_INSTAGRAM_ACCESS_TOKEN$/, '_INSTAGRAM_MESSAGING_ACCESS_TOKEN')]
+      || process.env[account.accessTokenEnv])
+  );
+}
+
 async function updateDirectAutomation(body = {}, session = null) {
   const accountKey = normalizeAccountKey(body.account);
   const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
@@ -1746,7 +1755,11 @@ async function updateDirectAutomation(body = {}, session = null) {
   group.automation = group.automations[0] || null;
   group.deliveries = retainedDirectDeliveries(group.deliveries);
   await writeGithubConfig(DIRECT_AUTOMATIONS_FILE_PATH, file.data, file.sha, `Update Direct automation for ${accountKey}`);
-  return { ok: true, directAutomation: group, message: `${group.automations.length} automacao(oes) de Direct salva(s) no painel.` };
+  return {
+    ok: true,
+    directAutomation: { ...group, connected: directAutomationConnected(account) },
+    message: `${group.automations.length} automacao(oes) de Direct salva(s) no painel.`
+  };
 }
 
 async function uploadDirectMaterial(body = {}, session = null) {
@@ -2421,11 +2434,7 @@ export default async function handler(req, res) {
     bioPage,
     directAutomation: {
       ...(directAutomationGroup || { account: accountKey, automation: null, automations: [], deliveries: [] }),
-      connected: Boolean(
-        process.env.INSTAGRAM_WEBHOOK_VERIFY_TOKEN &&
-        process.env.INSTAGRAM_APP_SECRET &&
-        (process.env[account.accessTokenEnv.replace(/_INSTAGRAM_ACCESS_TOKEN$/, '_INSTAGRAM_MESSAGING_ACCESS_TOKEN')] || process.env[account.accessTokenEnv])
-      )
+      connected: directAutomationConnected(account)
     },
     packs,
     packCount: packs.length,
