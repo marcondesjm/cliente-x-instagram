@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 18:11 BRT
+Atualizado em: 2026-08-16 18:15 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,7 +12,7 @@ Atualizado em: 2026-08-16 18:11 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `618420b`; novo checkpoint de memoria sera o commit que registrar esta atualizacao.
+- Checkpoint funcional atual: `94fa661`; novo checkpoint de memoria sera o commit que registrar esta atualizacao.
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
@@ -23,9 +23,11 @@ Atualizado em: 2026-08-16 18:11 BRT
 ## Checkagem operacional do painel
 
 - O bloco `Checklist operacional` possui o botao `Atualizar checagem` e um terminal que detalha as verificacoes como `OK`, `ATENCAO` ou `ERRO`.
+- O cabecalho exibe a checkagem em tempo real: estado aguardando, progresso `Etapa N de total`, resultado verde `Checkagem: tudo OK`, resultado vermelho para atencao e horario final em BRT.
+- O indicador do cabecalho e uma regiao `aria-live=polite` e usa ponto animado enquanto a verificacao esta em andamento.
 - Depois da conclusao, o terminal exibe abaixo dele o botao de largura completa `Realizar nova checagem`, que repete o mesmo diagnostico. Ele fica oculto durante a execucao e reaparece no final.
 - A checkagem roda automaticamente ao restaurar uma sessao valida e logo depois de um novo login; tambem pode ser repetida manualmente pelo botao.
-- Os commits funcionais sao `205a860` (`Adiciona terminal de checkagem operacional`), `b584a48` (`Executa checkagem automaticamente no painel`) e `618420b` (`Adiciona botao para repetir checkagem operacional`).
+- Os commits funcionais sao `205a860` (`Adiciona terminal de checkagem operacional`), `b584a48` (`Executa checkagem automaticamente no painel`), `618420b` (`Adiciona botao para repetir checkagem operacional`) e `94fa661` (`Exibe checkagem em tempo real no cabecalho`).
 - A producao foi inspecionada sem autenticacao e confirmou a entrega do botao, do terminal e das duas chamadas automaticas no HTML servido.
 - A producao confirmou o novo botao, seu listener e a alternancia de visibilidade no HTML servido. Como a sessao do navegador expirou, falta somente confirmar o clique real dentro de uma sessao autenticada.
 

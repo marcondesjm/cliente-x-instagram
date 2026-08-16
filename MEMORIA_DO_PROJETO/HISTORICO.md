@@ -1,5 +1,28 @@
 # Historico
 
+## 2026-08-16 18:15 BRT
+
+O resultado da checkagem operacional passou a aparecer em tempo real no cabecalho da plataforma.
+
+Alteracao:
+
+- Um indicador acessivel foi adicionado abaixo da versao e da identidade da conta no cabecalho.
+- Ao iniciar, ele mostra `Verificando plataforma...` com ponto amarelo animado.
+- Durante a execucao, informa `Etapa N de total` e o nome da verificacao atual.
+- Quando termina sem erro, fica verde e mostra `Checkagem: tudo OK`.
+- Quando encontra problema, fica vermelho e mostra `Atencao necessaria`; uma falha de carregamento mostra `Nao foi possivel verificar`.
+- O resultado final registra o horario de Brasilia com horas, minutos e segundos.
+- O indicador usa `role=status` e `aria-live=polite` para comunicar mudancas sem interromper a navegacao.
+
+Validacao e deploy:
+
+- JavaScript inline: sintaxe valida.
+- `npm run validate-copy`: passou com `74` selecoes automaticas e protecao de duplicidade `ok`.
+- Commit funcional: `94fa661` (`Exibe checkagem em tempo real no cabecalho`).
+- Deploy Vercel: `dpl_CLRu7JraFD5fe9AamWM3x3rbDunE`, alias `https://cliente-x-instagram.vercel.app`.
+- Producao respondeu `HTTP 200` e confirmou um indicador, regiao acessivel, progresso por etapa, estados finais, fuso `America/Sao_Paulo` e animacao de verificacao.
+- A sessao autenticada continuava expirada; o comportamento foi validado no codigo servido, mas a aparencia final dentro do painel logado ainda pode ser conferida na proxima sessao.
+
 ## 2026-08-16 18:11 BRT
 
 O Checklist operacional ganhou um segundo botao para repetir a checkagem diretamente abaixo do terminal.
