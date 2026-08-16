@@ -79,7 +79,9 @@
     h1 { margin: 0; max-width: 680px; font-size: clamp(44px, 5.2vw, 66px); line-height: 1.02; letter-spacing: -.048em; }
     h1 span { color: var(--olive); }
     .hero-copy { margin: 24px 0 0; max-width: 600px; color: var(--ink-soft); font-size: clamp(17px, 1.8vw, 19px); }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+    .hero-offer { margin: 22px 0 0; padding: 13px 15px; border-left: 3px solid var(--olive); color: var(--ink-soft); background: #f5f7f4; font-size: 15px; }
+    .hero-offer strong { color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
     .trust { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 28px; color: var(--ink-soft); font-size: 13px; font-weight: 750; }
     .trust span::before { content: "✓"; margin-right: 7px; color: var(--olive); font-weight: 950; }
 
@@ -208,13 +210,15 @@
     .motion-ready .hero .eyebrow,
     .motion-ready .hero h1,
     .motion-ready .hero-copy,
+    .motion-ready .hero-offer,
     .motion-ready .hero-actions,
     .motion-ready .trust,
     .motion-ready .product-stage { opacity: 0; transform: translateY(18px); animation: hero-in .72s cubic-bezier(.2,.7,.2,1) forwards; }
     .motion-ready .hero h1 { animation-delay: .08s; }
     .motion-ready .hero-copy { animation-delay: .16s; }
-    .motion-ready .hero-actions { animation-delay: .24s; }
-    .motion-ready .trust { animation-delay: .31s; }
+    .motion-ready .hero-offer { animation-delay: .22s; }
+    .motion-ready .hero-actions { animation-delay: .29s; }
+    .motion-ready .trust { animation-delay: .36s; }
     .motion-ready .product-stage { animation-delay: .18s; }
     .motion-ready .reveal { opacity: 0; transform: translateY(22px); transition: opacity .65s ease var(--reveal-delay, 0ms), transform .65s cubic-bezier(.2,.7,.2,1) var(--reveal-delay, 0ms); }
     .motion-ready .reveal.is-visible { opacity: 1; transform: translateY(0); }
@@ -305,8 +309,9 @@
       <div class="wrap hero-grid">
         <div>
           <p class="eyebrow">Presença digital sem rotina manual</p>
-          <h1>Sua rede social <span>ativa, cuidada e sempre atualizada.</span></h1>
-          <p class="hero-copy">A plataforma cria e publica conteúdos para manter sua marca presente todos os dias. Uma rede bem cuidada transmite confiança, aumenta as oportunidades de engajamento e ajuda a atrair seguidores reais, com potencial para interagir, comprar seus produtos ou contratar seus serviços.</p>
+          <h1>Sua rede social ativa <span>sem você criar ou publicar conteúdo.</span></h1>
+          <p class="hero-copy">A plataforma cria artes, carrosséis, Stories e legendas, organiza a agenda e publica automaticamente — mesmo com o computador desligado.</p>
+          <p class="hero-offer"><strong>Plataforma + configuração + suporte por R$ 397/mês.</strong> Implantação gratuita nesta oferta.</p>
           <div class="hero-actions">
             <a class="button" href="https://wa.me/5548996029392?text=Ol%C3%A1%2C%20Marcondes!%20Quero%20agendar%20uma%20demonstra%C3%A7%C3%A3o%20da%20Nerion%20Social." target="_blank" rel="noopener noreferrer">Quero ver funcionando <span aria-hidden="true">→</span></a>
             <a class="button light" href="#como-funciona">Entender a plataforma</a>
@@ -413,8 +418,8 @@
             <h3>Plano Completo</h3>
             <p class="offer-sub">Para manter uma marca em operação todos os dias, com configuração assistida e custo mensal previsível.</p>
             <p class="offer-price"><span class="setup-free"><s>Implantação R$ 297</s><b>Implantação grátis</b></span><strong>R$ 397/mês</strong></p>
-            <ul><li>Uma marca configurada no painel</li><li>Até 12 conteúdos por dia</li><li>Carrossel no feed + Story correspondente</li><li>Agenda automática e Direct</li><li>Perfil editorial, identidade visual e suporte</li></ul>
-            <a class="button" href="https://wa.me/5548996029392?text=Ol%C3%A1%2C%20Marcondes!%20Tenho%20interesse%20no%20Plano%20Completo%20da%20Nerion%20Social%2C%20com%20at%C3%A9%2012%20conte%C3%BAdos%20por%20dia%2C%20por%20R%24%20397%20ao%20m%C3%AAs.%20Quero%20agendar%20uma%20demonstra%C3%A7%C3%A3o." target="_blank" rel="noopener noreferrer">Quero o Plano Completo</a>
+            <ul><li>Uma marca configurada no painel</li><li>Publicações diárias conforme o calendário contratado</li><li>Carrossel no feed + Story correspondente</li><li>Agenda automática e Direct</li><li>Perfil editorial, identidade visual e suporte</li></ul>
+            <a class="button" href="https://wa.me/5548996029392?text=Ol%C3%A1%2C%20Marcondes!%20Tenho%20interesse%20no%20Plano%20Completo%20da%20Nerion%20Social%20por%20R%24%20397%20ao%20m%C3%AAs.%20Quero%20conhecer%20o%20calend%C3%A1rio%20de%20publica%C3%A7%C3%B5es%20e%20agendar%20uma%20demonstra%C3%A7%C3%A3o." target="_blank" rel="noopener noreferrer">Quero o Plano Completo</a>
           </article>
           <article class="offer">
             <span class="offer-tag">Para operações estruturadas</span>
@@ -439,7 +444,7 @@
           <details><summary>Posso usar para vários clientes?</summary><p>Sim. A estrutura suporta contas, perfis editoriais, agendas e configurações separadas. O escopo comercial depende da quantidade de marcas e do nível de serviço desejado.</p></details>
           <details><summary>O conteúdo fica igual para todas as empresas?</summary><p>Não. Nicho, objetivo, oferta, linguagem, identidade visual, imagens, fontes e chamadas são configurados por conta.</p></details>
           <details><summary>É possível conhecer antes de contratar?</summary><p>Sim. Primeiro fazemos uma demonstração do fluxo e um diagnóstico breve para confirmar qual plano atende à operação.</p></details>
-          <details><summary>O que está incluído nos R$ 397 mensais?</summary><p>O Plano Completo atende uma marca com até 12 conteúdos por dia, publicados em carrossel no feed e também nos Stories. A implantação de R$ 297 está gratuita nesta oferta.</p></details>
+          <details><summary>O que está incluído nos R$ 397 mensais?</summary><p>O Plano Completo atende uma marca com publicações diárias conforme o calendário contratado, incluindo carrossel no feed e Story correspondente, criação de legendas, agenda automática, Direct, configuração e suporte. A implantação de R$ 297 está gratuita nesta oferta.</p></details>
           <details><summary>Preciso de menos publicações. Existe um plano menor?</summary><p>Sim. Para uma frequência menor de conteúdo, consulte uma proposta adequada ao volume necessário.</p></details>
         </div>
       </div>
