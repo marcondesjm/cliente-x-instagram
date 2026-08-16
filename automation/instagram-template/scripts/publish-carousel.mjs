@@ -866,7 +866,13 @@ function splitCreativeDescription(text = '') {
     closeWords.unshift(emphasisWords.pop());
   }
   const emphasis = emphasisWords.length ? emphasisWords.join(' ') : first;
-  const close = [closeWords.join(' '), rest].filter(Boolean).join(' ');
+  // A arte precisa de uma ideia completa, não de um parágrafo comprimido.
+  // A explicação inteira continua na legenda; no cartão fica somente o
+  // fechamento da primeira frase, que é legível em fonte grande no celular.
+  let close = closeWords.join(' ').trim();
+  if (close.split(' ').filter(Boolean).length < 4 && rest) {
+    close = rest.split(/(?<=[.!])\s+/)[0].trim();
+  }
   return { lead, emphasis, close };
 }
 
@@ -1709,10 +1715,13 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const noteLines = estimateTextLines(body, noteWidth, noteFontSize);
   // O texto de fechamento ocupa a área colorida do cartão. Escalas muito
   // baixas deixavam letras pequenas e um grande vazio no bloco de apoio.
-  const closeFontSize = engagementRole === 'cta' ? 22 : 24;
+  // O bloco verde é lido no celular; 24px ainda ficava pequeno nos cartões
+  // compactos. Mantemos um tamanho editorial confortável e deixamos a caixa
+  // ocupar a altura necessária.
+  const closeFontSize = engagementRole === 'cta' ? 26 : 30;
   const closeLines = creativeBody.close ? estimateTextLines(creativeBody.close, noteWidth - 32, closeFontSize) : 0;
   const closeMinHeight = creativeBody.close
-    ? Math.max(132, Math.min(320, 54 + (closeLines * closeFontSize * 1.34)))
+    ? Math.max(156, Math.min(390, 58 + (closeLines * closeFontSize * 1.30)))
     : 0;
   const noteMinHeight = engagementRole === 'cta'
     ? Math.min(500, Math.max(300, 150 + closeMinHeight + (noteLines * noteFontSize * 0.72)))
