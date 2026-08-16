@@ -678,6 +678,7 @@ async function readPrivateMetrics() {
     missing,
     account: null,
     latestMedia: null,
+    recentMediaSummary: null,
     insights: null,
     checkedAt: new Date().toISOString()
   };
@@ -695,13 +696,21 @@ async function readPrivateMetrics() {
     matchesExpected: igAccount.username === account.expectedUsername
   };
 
-  const latestMediaId = state.latestResult?.mediaId || state.latestResult?.id;
-  if (!latestMediaId) return result;
-
-  result.latestMedia = await graphGet(`/${latestMediaId}`, {
+  const media = await graphGet(`/${userId}/media`, {
     fields: 'id,permalink,timestamp,media_type,like_count,comments_count',
+    limit: '10',
     access_token: token
   });
+  const recentMedia = Array.isArray(media.data) ? media.data : [];
+  result.latestMedia = recentMedia[0] || null;
+  result.recentMediaSummary = {
+    count: recentMedia.length,
+    likes: recentMedia.reduce((total, item) => total + (Number(item.like_count) || 0), 0),
+    comments: recentMedia.reduce((total, item) => total + (Number(item.comments_count) || 0), 0),
+    postsWithInteractions: recentMedia.filter((item) => (Number(item.like_count) || 0) + (Number(item.comments_count) || 0) > 0).length
+  };
+  const latestMediaId = result.latestMedia?.id;
+  if (!latestMediaId) return result;
 
   try {
     const insights = await graphGet(`/${latestMediaId}/insights`, {
@@ -714,6 +723,10 @@ async function readPrivateMetrics() {
       saved: insightValue(insights, 'saved'),
       totalInteractions: insightValue(insights, 'total_interactions')
     };
+    const publicInteractions = (Number(result.latestMedia.like_count) || 0)
+      + (Number(result.latestMedia.comments_count) || 0)
+      + (Number(result.insights.saved) || 0);
+    result.insights.knownInteractions = Math.max(Number(result.insights.totalInteractions) || 0, publicInteractions);
   } catch (error) {
     result.insights = {
       available: false,

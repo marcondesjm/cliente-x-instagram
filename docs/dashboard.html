@@ -1693,7 +1693,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v5.03</div>
+        <div class="header-version" id="headerVersion">Versão atual: v5.04</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -6502,15 +6502,21 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       } else if (privateMetrics?.latestMedia) {
         const media = privateMetrics.latestMedia;
         const insights = privateMetrics.insights;
+        const recent = privateMetrics.recentMediaSummary;
         const reach = insights?.reach ?? insights?.impressions;
+        const latestInteractions = insights?.knownInteractions ?? insights?.totalInteractions;
+        const latestDate = media.timestamp ? formatDateTime(media.timestamp) : 'data não informada';
+        const recentSummary = recent?.count
+          ? ` Últimos ${formatNumber(recent.count)} posts: ${formatNumber(recent.likes)} curtidas, ${formatNumber(recent.comments)} comentários e ${formatNumber(recent.postsWithInteractions)} posts com interação.`
+          : '';
         privateCheck = {
           level: insights?.available ? 'good' : 'warn',
           title: insights?.available
-            ? `Último post: ${formatNumber(media.like_count)} curtidas · ${formatNumber(media.comments_count)} comentários`
+            ? `Último post (${latestDate}): ${formatNumber(media.like_count)} curtidas · ${formatNumber(media.comments_count)} comentários`
             : `Conta confirmada: @${privateMetrics.account.username}`,
           body: insights?.available
-            ? `Alcance ${formatNumber(reach)} · salvos ${formatNumber(insights.saved)} · interações ${formatNumber(insights.totalInteractions)}.`
-            : `Curtidas ${formatNumber(media.like_count)} e comentários ${formatNumber(media.comments_count)}. ${insightsHelpText(insights?.error)}`
+            ? `Somente o último post: alcance ${formatNumber(reach)} · salvos ${formatNumber(insights.saved)} · interações confirmadas ${formatNumber(latestInteractions)}.${recentSummary}`
+            : `Último post: ${formatNumber(media.like_count)} curtidas e ${formatNumber(media.comments_count)} comentários.${recentSummary} ${insightsHelpText(insights?.error)}`
         };
       } else if (privateMetrics?.account) {
         privateCheck = {

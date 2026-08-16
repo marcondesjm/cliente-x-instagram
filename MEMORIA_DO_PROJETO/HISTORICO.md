@@ -1,5 +1,18 @@
 # Historico
 
+## 2026-08-16 19:12 BRT
+
+Corrigida a leitura do cartao de interacoes do Instagram.
+
+- O cartao anterior consultava somente o post mais recente, mas o texto podia ser interpretado como o total da conta.
+- A API agora busca os 10 posts mais recentes diretamente na Meta e cria um resumo de curtidas, comentarios e quantidade de posts com interacao.
+- O titulo mostra a data e hora exatas da publicacao considerada como ultimo post.
+- Alcance, salvos e interacoes sao identificados explicitamente como metricas somente do ultimo post.
+- O total confirmado do ultimo post usa o maior valor entre `total_interactions` da Meta e a soma publica ja confirmada de curtidas, comentarios e salvos, evitando exibir zero quando a metrica agregada estiver atrasada.
+- O painel local e a API de producao usam a mesma regra.
+- Versao visivel atualizada para `v5.04`.
+- Sintaxe das APIs, servidor local e JavaScript inline, validacao editorial e `git diff --check` passaram.
+
 ## 2026-08-16 19:07 BRT
 
 Checkpoint de producao da postagem pronta na Grade semanal.

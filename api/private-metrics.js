@@ -68,6 +68,7 @@ export default async function handler(req, res) {
     missing,
     account: null,
     latestMedia: null,
+    recentMediaSummary: null,
     insights: null,
     checkedAt: new Date().toISOString()
   };
@@ -91,10 +92,17 @@ export default async function handler(req, res) {
 
   const media = await graphGet(`/${userId}/media`, {
     fields: 'id,permalink,timestamp,media_type,like_count,comments_count,caption,media_url,thumbnail_url',
-    limit: '1',
+    limit: '10',
     access_token: token
   });
   result.latestMedia = media.data?.[0] || null;
+  const recentMedia = Array.isArray(media.data) ? media.data : [];
+  result.recentMediaSummary = {
+    count: recentMedia.length,
+    likes: recentMedia.reduce((total, item) => total + (Number(item.like_count) || 0), 0),
+    comments: recentMedia.reduce((total, item) => total + (Number(item.comments_count) || 0), 0),
+    postsWithInteractions: recentMedia.filter((item) => (Number(item.like_count) || 0) + (Number(item.comments_count) || 0) > 0).length
+  };
 
   if (result.latestMedia?.id) {
     if (result.latestMedia.media_type === 'CAROUSEL_ALBUM') {
@@ -120,6 +128,10 @@ export default async function handler(req, res) {
         saved: insightValue(insights, 'saved'),
         totalInteractions: insightValue(insights, 'total_interactions')
       };
+      const publicInteractions = (Number(result.latestMedia.like_count) || 0)
+        + (Number(result.latestMedia.comments_count) || 0)
+        + (Number(result.insights.saved) || 0);
+      result.insights.knownInteractions = Math.max(Number(result.insights.totalInteractions) || 0, publicInteractions);
     } catch (error) {
       result.insights = {
         available: false,

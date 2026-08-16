@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 19:07 BRT
+Atualizado em: 2026-08-16 19:12 BRT
 
 ## Regra permanente de checkpoint
 
@@ -18,7 +18,14 @@ Atualizado em: 2026-08-16 19:07 BRT
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `b11fae5` (`Adiciona pagina da automacao do Direct na landing`).
-- Versao visivel atual: `v5.03`
+- Versao visivel atual: `v5.04`
+
+## Metricas de interacao
+
+- O painel separa as metricas do ultimo post do resumo dos 10 posts mais recentes.
+- O ultimo post mostra data/hora, curtidas, comentarios, alcance, salvos e interacoes confirmadas.
+- O resumo recente informa curtidas, comentarios e quantos posts tiveram interacao.
+- O total confirmado nao fica abaixo das curtidas, comentarios e salvos ja retornados pela Meta.
 
 ## Grade semanal com postagem pronta
 
