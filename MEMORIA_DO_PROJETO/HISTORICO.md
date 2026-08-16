@@ -12,7 +12,7 @@ Implementado o primeiro comentario automatico com a fonte completa das pautas re
 - `npm run validate-copy` passou e a previa `2026-08-16-205452-slot-0-render-only` confirmou legenda, comentario e slides corretos.
 - Nenhuma nova publicacao foi enviada a Meta nesta atualizacao.
 - Commit funcional: `33db605` (`Publica fonte do Radar no primeiro comentario`).
-- Deploy: `dpl_GQfHwR6QsByhH4hbvQ94ynn9AwRb`; producao confirmou `v5.20`.
+- Deploy final: `dpl_ACCg5hDHp36ZgaFa2pkQZsMFu3p6`; producao confirmou `v5.20`.
 
 ## 2026-08-16 20:51 BRT
 

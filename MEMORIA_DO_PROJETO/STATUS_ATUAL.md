@@ -28,7 +28,7 @@ Atualizado em: 2026-08-16 20:56 BRT
 - Se somente o comentario falhar depois de o feed existir, a falha e registrada sem provocar outro post duplicado.
 - Previa validada: `2026-08-16-205452-slot-0-render-only`.
 - Nenhuma postagem foi enviada nesta alteracao.
-- Producao: commit funcional `33db605`, deploy `dpl_GQfHwR6QsByhH4hbvQ94ynn9AwRb` e versao `v5.20` confirmados.
+- Producao: commit funcional `33db605`, deploy final `dpl_ACCg5hDHp36ZgaFa2pkQZsMFu3p6` e versao `v5.20` confirmados.
 
 ## Chamada final completa
 
