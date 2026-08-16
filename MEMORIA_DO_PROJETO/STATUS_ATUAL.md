@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 20:36 BRT
+Atualizado em: 2026-08-16 20:42 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,24 @@ Atualizado em: 2026-08-16 20:36 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `804d222` (`Limita contexto factual ao espaco do slide`).
+- Checkpoint funcional atual: `68e3c0c` (`Continua a materia no carrossel do Radar`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
-- Versao visivel atual: `v5.17`
+- Versao visivel atual: `v5.18`
+
+## Materia desenvolvida entre slides e legenda
+
+- O Radar consulta a pagina original e extrai fatos do corpo da noticia.
+- O slide 2 inicia a explicacao e o slide 3 continua a mesma materia; a analise empresarial entra somente no slide 4.
+- A legenda inclui ate tres paragrafos factuais, evitando o antigo resumo de apenas quatro linhas.
+- Creditos de imagem, publicidade, assinatura e biografia nao entram no conteudo.
+- O CTA do material foi encurtado para preservar espaco editorial e continua usando `Comente IA`.
+- Validacoes: `factualArticleContextGuard` e `articleContinuationGuard` aprovadas; previa `2026-08-16-204020-slot-2-render-only` inspecionada.
+- Nenhuma postagem foi enviada nesta alteracao.
+- Producao: commit `68e3c0c`, deploy `dpl_CDgNSXa2Yy6Q1tXE83f2Bhw34mPj`, versao `v5.18` e `HTTP 200` confirmados.
 
 ## Publicacao factual confirmada em 20:33 BRT
 

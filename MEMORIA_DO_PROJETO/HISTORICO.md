@@ -1,5 +1,22 @@
 # Historico
 
+## 2026-08-16 20:42 BRT
+
+Corrigidas a legenda curta e a falta de continuidade da materia no slide 3 das pautas do Radar.
+
+- O Radar agora abre a pagina original da noticia e extrai paragrafos factuais, em vez de depender apenas do resumo curto do RSS.
+- Slide 2 apresenta o primeiro fato; slide 3 usa `A MATERIA CONTINUA` e apresenta o segundo fato da mesma fonte.
+- A analise para empresas foi deslocada para o slide 4 e permanece identificada como analise editorial.
+- A legenda passou a usar ate tres paragrafos factuais da materia antes da analise, titulo original, data, fonte e URL.
+- Paragrafos de credito de imagem, publicidade, assinatura e biografia do autor sao descartados.
+- O bloco promocional longo de 50 prompts foi substituido nas pautas do Radar por um CTA curto: `Comente IA`.
+- A materia da Olhar Digital foi acessada diretamente e confirmou o contexto adicional sobre Gavin Baker, equilibrio entre riscos e oportunidades, crise de confianca e falta de entregas proporcionais as promessas.
+- `npm run validate-copy` passou com `articleContinuationGuard: ok`.
+- A previa `2026-08-16-204020-slot-2-render-only` confirmou visualmente a sequencia entre os slides 2 e 3 sem sobreposicao.
+- Nenhuma nova publicacao foi enviada a Meta durante esta correcao.
+- Commit funcional: `68e3c0c` (`Continua a materia no carrossel do Radar`).
+- Deploy: `dpl_CDgNSXa2Yy6Q1tXE83f2Bhw34mPj`; producao respondeu `HTTP 200` e confirmou `v5.18`.
+
 ## 2026-08-16 20:36 BRT
 
 Publicada e verificada no Instagram a versao factual corrigida da materia da Olhar Digital.
