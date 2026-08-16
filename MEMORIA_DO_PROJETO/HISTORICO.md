@@ -1,5 +1,18 @@
 # Historico
 
+## 2026-08-16 15:13 BRT
+
+Checkpoint de comunicacao da landing solicitado pelo usuario:
+
+- A frase aprovada passou a ser `A plataforma e acessada na nuvem.`.
+- Todas as referencias a computador e celular foram retiradas da landing comercial.
+- A mensagem foi sincronizada no bloco de prova, recurso de rede ativa, secao de automacao, imagem, passo de publicacao e FAQ.
+- A FAQ agora explica que o acesso ocorre pela internet e que os fluxos programados executam a agenda automaticamente.
+- Commit: `63664a1` (`Simplifica mensagem de acesso na nuvem`).
+- Deploy: `dpl_BaTxQWHD1tyiYYizab2u4B9ZWM6f`, alias `https://cliente-x-instagram.vercel.app/plataforma`.
+- Validacao em producao: HTTP `200`, frase nova presente e nenhuma ocorrencia de `computador` ou `celular` no HTML.
+- Este e o texto comercial aprovado e deve ser preservado ate novo pedido explicito.
+
 ## 2026-08-16 15:03 BRT
 
 Checkpoint geral solicitado pelo usuario depois das correcoes operacionais, editoriais e comerciais.

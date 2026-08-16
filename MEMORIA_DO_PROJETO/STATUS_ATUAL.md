@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 15:03 BRT
+Atualizado em: 2026-08-16 15:13 BRT
 
 ## Projeto ativo
 
@@ -11,7 +11,7 @@ Atualizado em: 2026-08-16 15:03 BRT
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
-- Commit mais recente da landing: `a0158de` (`Reposiciona landing com comunicacao humana`), integrado em `b7617a6`.
+- Commit mais recente da landing: `63664a1` (`Simplifica mensagem de acesso na nuvem`).
 - Versao visivel atual: `v4.96`
 
 ## Estado confirmado
@@ -50,6 +50,7 @@ Atualizado em: 2026-08-16 15:03 BRT
 - Para um volume menor, a pagina oferece consulta de plano menor; licenca personalizada permanece sob medida.
 - Promessa central: manter a rede social ativa, cuidada e atualizada sem o cliente criar ou publicar cada conteudo manualmente e sem depender do computador ligado.
 - Headline atual: `Sua rede social ativa, com conteudo que tem cara de gente.` A comunicacao apresenta IA como ferramenta com estrategia e direcionamento pensados para pessoas, evitando aparencia fria ou generica.
+- Mensagem de infraestrutura aprovada: `A plataforma e acessada na nuvem.` A landing nao deve mencionar computador nem celular, salvo novo pedido explicito.
 - Beneficio comercial: aumentar oportunidades de engajamento e atrair seguidores reais e alinhados, com potencial para comprar produtos ou contratar servicos.
 - Limite de comunicacao: nao garantir seguidores, curtidas ou vendas; consistencia e conteudo atual aumentam oportunidades, nao resultados certos.
 - Visual: moderno, neutro e responsivo. O hero usa texto e plataforma lado a lado; capturas reenquadradas em 4:3 e 16:9 priorizam nitidez; beneficios ocupam toda a largura em quatro colunas no desktop e duas em telas menores.
