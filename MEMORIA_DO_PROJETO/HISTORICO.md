@@ -1,5 +1,27 @@
 # Historico
 
+## 2026-08-16 17:53 BRT
+
+O carrossel de demonstracao da landing passou a mostrar capturas reais de todas as nove abas da plataforma autenticada.
+
+Alteracao:
+
+- Foram capturadas as abas `Visao geral`, `Conteudo`, `Historico do Direct`, `Agenda`, `Grade semanal`, `Pagina Bio`, `Clientes`, `Cobranca` e `Sistema`.
+- Cada slide possui contador `Pagina N de 9`, titulo, explicacao do que a area faz e link para ampliar a captura.
+- Os seletores das nove abas possuem rolagem horizontal e acompanham automaticamente a pagina ativa.
+- As imagens usam enquadramento integral para facilitar a leitura sem cortar partes importantes do painel.
+- O Historico do Direct foi enquadrado sem nomes de destinatarios, e a captura de Cobranca exclui o painel lateral com fragmentos mascarados de configuracao.
+- Nenhum token, senha ou chave completa foi publicado na landing.
+
+Validacao e deploy:
+
+- JavaScript inline: `1` bloco com sintaxe valida.
+- `npm run validate-copy`: passou com `74` selecoes automaticas e protecao de duplicidade `ok`.
+- Teste local: `9` slides, `9` seletores, nenhum arquivo ausente e nenhum overflow horizontal.
+- Commit funcional: `a9a8bd6` (`Exibe todas as abas reais da plataforma`).
+- Deploy Vercel: `dpl_7QBXZr9rJnSFY3RVB84w3y5urSx7`, alias `https://cliente-x-instagram.vercel.app`.
+- Producao: nove imagens carregadas; navegacao confirmada ate `Pagina 9 de 9 · Sistema` com `translateX(-800%)`.
+
 ## 2026-08-16 17:47 BRT
 
 A oferta da landing ganhou destaque visual para o volume diario e uma nova secao de credibilidade com provas verificaveis e garantia de implantacao.

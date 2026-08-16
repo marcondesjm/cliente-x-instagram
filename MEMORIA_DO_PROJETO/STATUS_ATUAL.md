@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 17:47 BRT
+Atualizado em: 2026-08-16 17:53 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,12 +12,12 @@ Atualizado em: 2026-08-16 17:47 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `5b12678`, integrado ao remoto em `7170303`; novo checkpoint de memoria sera o commit que registrar esta atualizacao.
+- Checkpoint funcional atual: `a9a8bd6`; novo checkpoint de memoria sera o commit que registrar esta atualizacao.
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
-- Commit mais recente da landing: `5b12678` (`Reforca volume diario e garantia da oferta`).
+- Commit mais recente da landing: `a9a8bd6` (`Exibe todas as abas reais da plataforma`).
 - Versao visivel atual: `v4.96`
 
 ## Checkagem operacional do painel
@@ -75,7 +75,9 @@ Atualizado em: 2026-08-16 17:47 BRT
 - A contratacao foi esclarecida: o Plano Completo combina plataforma, configuracao assistida e suporte para uma marca; operacoes com varias contas ou integracoes usam projeto personalizado.
 - A secao de provas nao usa mais artes isoladas de feed/Story: ela incorpora duas publicacoes reais do perfil `@marcondes.machado.oficial`, com navegacao e links oficiais para `DcHMqdWE3bI` e `DcHDsOKkzvp`.
 - Os embeds reais foram confirmados em producao sem mensagem de post removido e sem erros de console; cada card tambem possui o link `Abrir post` como alternativa.
-- A demonstracao do painel agora e um carrossel com as paginas reais `Visao geral` e `Editor de conteudo`, setas, seletores, troca automatica a cada `6,5 segundos`, pausa durante interacao e suporte a movimento reduzido.
+- A demonstracao do painel agora e um carrossel com capturas reais das nove abas: `Visao geral`, `Conteudo`, `Historico do Direct`, `Agenda`, `Grade semanal`, `Pagina Bio`, `Clientes`, `Cobranca` e `Sistema`.
+- Cada pagina possui contador, explicacao, link para ampliar, seletor direto e navegacao por setas. A troca automatica continua a cada `6,5 segundos`, pausa durante interacao e respeita movimento reduzido.
+- As capturas publicas foram enquadradas para nao expor destinatarios do Direct nem o painel lateral de configuracoes da cobranca; nenhum token, senha ou chave completa aparece na landing.
 - Mensagem de infraestrutura aprovada: `A plataforma e acessada na nuvem.` A landing nao deve mencionar computador nem celular, salvo novo pedido explicito.
 - Beneficio comercial: aumentar oportunidades de engajamento e atrair seguidores reais e alinhados, com potencial para comprar produtos ou contratar servicos.
 - Limite de comunicacao: nao garantir seguidores, curtidas ou vendas; consistencia e conteudo atual aumentam oportunidades, nao resultados certos.
