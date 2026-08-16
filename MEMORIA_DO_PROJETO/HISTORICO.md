@@ -1,5 +1,26 @@
 # Historico
 
+## 2026-08-16 17:59 BRT
+
+As capturas do Historico do Direct e da Pagina Bio foram refeitas para evitar areas vazias e mostrar exemplos mais claros na landing.
+
+Alteracao:
+
+- O Historico do Direct agora mostra exemplos reais de envios confirmados, incluindo palavra-chave, horario e status `Enviado`.
+- A captura foi reenquadrada em `1080 x 380` para preencher o slide sem a grande area vazia anterior.
+- A Pagina Bio deixou de mostrar o formulario de edicao e agora apresenta o resultado final visto pelo publico.
+- A Bio pronta exibe foto, titulo, apresentacao, oferta principal e botoes de acesso.
+- O link do slide mudou para `Abrir Bio pronta` e aponta diretamente para `/docs/bio.html`.
+
+Validacao e deploy:
+
+- JavaScript inline: `1` bloco com sintaxe valida.
+- `npm run validate-copy`: passou com `74` selecoes automaticas e protecao de duplicidade `ok`.
+- Teste local: Historico e Bio carregados, textos atualizados e nenhum overflow horizontal.
+- Commit funcional: `44e37ab` (`Melhora exemplos do Direct e mostra Bio pronta`).
+- Deploy Vercel: `dpl_3FKTmKBdwnwu1BALr1irnPc1kiJ8`, alias `https://cliente-x-instagram.vercel.app`.
+- Producao: Historico confirmado em `1080 x 380`; Bio confirmada em `339 x 735`, com status `Pagina 6 de 9 · Bio pronta` e link publico correto.
+
 ## 2026-08-16 17:53 BRT
 
 O carrossel de demonstracao da landing passou a mostrar capturas reais de todas as nove abas da plataforma autenticada.
