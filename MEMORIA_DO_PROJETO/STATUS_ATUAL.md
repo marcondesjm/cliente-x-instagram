@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 11:20 BRT
+Atualizado em: 2026-08-16 12:32 BRT
 
 ## Projeto ativo
 
@@ -10,6 +10,8 @@ Atualizado em: 2026-08-16 11:20 BRT
 - Checkpoint completo aprovado pelo usuario: `8ad4557` (`Evita texto sobre foto nos Stories`)
 - Repositorio operacional: `origin/main` contem o codigo `8ad4557`; o commit seguinte registra somente este checkpoint de memoria.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
+- Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
+- Commit mais recente da landing em producao: `ecb94ec` (`Destaca seguidores reais e potenciais clientes`)
 - Versao visivel atual: `v4.94`
 
 ## Estado confirmado
@@ -26,6 +28,20 @@ Atualizado em: 2026-08-16 11:20 BRT
 - A rotacao percorre as quatro fotos de Marcondes antes de repetir, sem a semente da pauta anular a sequencia dos horarios.
 - A foto da capa usa moldura padrao de `410 x 280`, recorte proporcional e altura minima protegida contra achatamento.
 - O Story mostra a primeira ideia completa do slide e possui validacao que rejeita qualquer sobreposicao entre texto e foto.
+
+## Landing comercial em producao
+
+- Nome provisorio: `Nerion Social`; ainda requer validacao formal de marca antes do lancamento definitivo.
+- Oferta principal: `R$ 397/mes`, uma marca e ate `12 conteudos por dia`.
+- Implantacao de `R$ 297` riscada e apresentada como gratuita.
+- Entrega comunicada: criacao automatica de conteudo, criativos, carrossel, Story e legendas; agenda, publicacao na nuvem e Direct.
+- Para um volume menor, a pagina oferece consulta de plano menor; licenca personalizada permanece sob medida.
+- Promessa central: manter a rede social ativa, cuidada e atualizada sem o cliente criar ou publicar cada conteudo manualmente e sem depender do computador ligado.
+- Beneficio comercial: aumentar oportunidades de engajamento e atrair seguidores reais e alinhados, com potencial para comprar produtos ou contratar servicos.
+- Limite de comunicacao: nao garantir seguidores, curtidas ou vendas; consistencia e conteudo atual aumentam oportunidades, nao resultados certos.
+- Visual: moderno, neutro, responsivo, com capturas reais do dashboard/editor, exemplos de feed/Story e fotos comerciais da automacao.
+- Animacoes: hero, revelacao por rolagem, cartoes escalonados, zoom discreto e navegacao reativa; respeita `prefers-reduced-motion`.
+- Validacao: imagens HTTP `200`, sem overflow horizontal, sem erros de console e `40` elementos animados testados ate o estado visivel.
 
 ## Padrao editorial aprovado para os proximos posts
 
@@ -85,3 +101,5 @@ Resultado:
 - Acompanhar a resposta ao post `DcFh6FWG8f0` e manter a confirmacao por permalink em cada nova publicacao manual.
 - Conferir o primeiro post automatico da `v4.94` por permalink e inspecionar visualmente o Story publicado.
 - Em uma retomada futura, iniciar deste checkpoint e preservar a versao `v4.94`, o CTA dos 50 prompts, as hashtags finais, a rotacao completa de quatro fotos, a foto de capa proporcional e o Story sem sobreposicao.
+- Para a landing, preservar a oferta de `R$ 397/mes`, implantacao gratuita, ate 12 conteudos diarios, planos menores sob consulta e a mensagem de seguidores reais com potencial comercial sem garantia de resultado.
+- Antes de vender em escala, validar o nome `Nerion Social`, preparar termos/politica de privacidade e definir contrato e onboarding.

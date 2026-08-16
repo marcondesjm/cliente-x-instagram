@@ -1,5 +1,76 @@
 # Historico
 
+## 2026-08-16 12:32 BRT
+
+Checkpoint da landing comercial da plataforma salvo a pedido do usuario.
+
+Endereco publicado:
+
+- `https://cliente-x-instagram.vercel.app/plataforma`
+- A raiz `https://cliente-x-instagram.vercel.app/` continua sendo o dashboard; dominio e conexao Git/Vercel nao foram alterados.
+
+Posicionamento comercial aprovado:
+
+- Nome provisorio usado na pagina: `Nerion Social`; fazer consulta formal de marca antes do lancamento definitivo.
+- Mensagem principal: rede social ativa, cuidada e sempre atualizada.
+- A plataforma pesquisa pautas, cria o conteudo, produz criativos para carrossel e Story, escreve legendas, organiza a agenda e publica automaticamente na nuvem.
+- O computador pode ficar desligado e o cliente nao precisa executar cada postagem manualmente depois da configuracao da marca, estrategia e regras.
+- A comunicacao destaca que presenca constante aumenta oportunidades de engajamento e ajuda a atrair seguidores reais e alinhados, com potencial para interagir, pedir informacoes, comprar produtos ou contratar servicos.
+- Nao prometer crescimento, curtidas, seguidores ou vendas garantidas; apresentar consistencia como aumento de oportunidades.
+
+Oferta registrada:
+
+- `Plano Completo`: `R$ 397/mes` para uma marca.
+- Volume apresentado: ate `12 conteudos por dia`.
+- Entrega descrita: carrossel no feed + Story correspondente, agenda automatica, Direct, perfil editorial, identidade visual e suporte.
+- Implantacao de `R$ 297` aparece riscada com o selo `Implantacao gratis`.
+- Para frequencia menor, a pagina direciona para consulta de um plano menor pelo WhatsApp.
+- Licenca personalizada para agencias e operacoes estruturadas permanece sob medida.
+
+Visual e experiencia:
+
+- Landing responsiva em desktop e celular, sem rolagem horizontal.
+- Direcao visual moderna e mais humana: tipografia contida, paleta neutra, cartoes retos, sombras discretas e menos elementos tipicos de template de IA.
+- Capturas reais do dashboard e do editor foram adicionadas, com links para ampliar.
+- Exemplos reais de carrossel e Story foram adicionados sem recorte; no celular aparecem empilhados em largura integral.
+- Fotos comerciais da automacao foram geradas e salvas em `docs/uploads/automation-leave-office.jpg` e `docs/uploads/automation-cloud-evening.jpg`.
+- Animacoes sutis: entrada do hero, revelacao por rolagem, atraso entre cartoes, zoom leve nas fotos e navegacao com profundidade apos scroll.
+- `prefers-reduced-motion` desativa os movimentos para acessibilidade.
+
+Validacoes:
+
+- Todas as imagens da landing carregaram em producao com HTTP `200`.
+- Layout validado sem overflow horizontal.
+- Animacao validada com `40` elementos chegando ao estado visivel e sem erros no console.
+- CTAs do WhatsApp, ancoras internas, oferta, FAQ e dashboard na raiz foram preservados.
+
+Commits da landing:
+
+- `e84e86d` - cria landing comercial da plataforma.
+- `b8fb8fa` - define oferta piloto da landing.
+- `f9e4004` - torna landing mais humana com telas reais.
+- `207bda1` - corrige galeria responsiva.
+- `a9851dc` - reduz preco do plano inicial.
+- `0374aa7` - define plano completo com conteudo diario.
+- `f534dd2` - ilustra automacao completa.
+- `eebedfe` - oferece implantacao gratuita.
+- `43c07c2` - refina o visual moderno.
+- `68d94f9` - adiciona animacoes sutis.
+- `c387903` - destaca criacao e publicacao automaticas.
+- `897eb0a` - destaca presenca ativa e engajamento.
+- `ecb94ec` - destaca seguidores reais e potenciais clientes.
+
+Deploy/publicacao:
+
+- Landing: publicada e confirmada em producao.
+- Dashboard: preservado na raiz, ainda com checkpoint funcional `v4.94`.
+- Instagram real: nenhuma nova postagem foi disparada durante a criacao da landing.
+
+Proximo passo:
+
+- Validar o nome comercial antes do lancamento definitivo e acompanhar conversas geradas pelos CTAs do WhatsApp.
+- Se houver interesse comercial, preparar termos, politica de privacidade, contrato do plano e processo de onboarding.
+
 ## 2026-08-16 11:20 BRT
 
 Checkpoint completo da versao `v4.94` salvo a pedido do usuario.
