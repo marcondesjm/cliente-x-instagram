@@ -1,5 +1,21 @@
 # Historico
 
+## 2026-08-16 00:58 BRT
+
+Memoria atualizada antes de nova publicacao manual do Radar.
+
+Resumo:
+
+- Producao confirmada em `v4.89`, commit `d7f8122`.
+- As legendas automaticas do Radar agora sempre terminam com hashtags.
+- Os cartoes de texto ganharam fonte maior e altura proporcional, reduzindo o espaco vazio.
+- Validacoes executadas: `node --check`, `npm run validate-copy` e `npm run render-only`, todas aprovadas.
+
+Deploy/publicacao:
+
+- Deploy: sim. Vercel confirmou a versao `v4.89` em producao.
+- Instagram real: uma nova publicacao sera disparada apos este registro, com comprovacao por permalink.
+
 ## 2026-08-16 00:51 BRT
 
 Checkpoint completo aprovado pelo usuario.

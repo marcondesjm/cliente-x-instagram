@@ -1,26 +1,28 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 00:51 BRT
+Atualizado em: 2026-08-16 00:58 BRT
 
 ## Projeto ativo
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Commit de codigo em producao: `55fe44b` (`Use distinct avatar scenes on radar covers`)
-- Checkpoint completo confirmado pelo usuario: `d13b723` (`Record confirmed radar publication`)
-- Repositorio operacional: `origin/main` = `d13b723`
+- Commit de codigo em producao: `d7f8122` (`Improve supporting text scale in carousel cards`)
+- Checkpoint completo anterior confirmado pelo usuario: `4eccfe0` (`Save approved v4.87 project checkpoint`)
+- Repositorio operacional: `origin/main` = `d7f8122`
 - Dashboard: `https://cliente-x-instagram.vercel.app`
-- Versao visivel atual: `v4.87`
+- Versao visivel atual: `v4.89`
 
 ## Estado confirmado
 
 - Workspace limpo no momento deste registro e checkpoint aprovado pelo usuario ("tá tudo bom").
-- O dashboard de producao esta confirmado na versao `v4.87`.
+- O dashboard de producao esta confirmado na versao `v4.89`.
 - O Radar usa somente fontes oficiais e aceita noticias dos ultimos 7 dias; ele nao usa o pack manual como reserva para `Publicar agora`.
 - Se nao houver noticia oficial elegivel, o publicador bloqueia o envio em vez de publicar conteudo generico.
 - A automacao agendada roda na nuvem por GitHub Actions e Meta/Instagram; o computador do usuario pode ficar desligado. O login do painel e necessario somente para acoes manuais no dashboard e expira em 12 horas.
 - As capas do Radar variam pela pauta: cor, composicao, titulo e foto agora usam a fonte/tema como semente visual.
 - As tres fotos com notebook e fundo escuro, muito semelhantes entre si, foram retiradas da rotacao. Permanecem apenas cenarios distintos: escritorio, reuniao, apresentacao e ambiente descontraido.
+- Legendas do Radar agora sempre recebem hashtags no final, inclusive quando a fonte oficial nao as fornece.
+- Cartoes de texto de apoio usam fonte maior e altura proporcional ao conteudo para reduzir espaco vazio.
 
 ## Padrao editorial aprovado para os proximos posts
 
@@ -48,7 +50,7 @@ Resultado:
 - Verificacao de sintaxe: passou.
 - `validate-copy`: passou (`20` packs, `54` packs automaticos e `74` selecoes automaticas verificadas).
 - `render-only`: passou; Radar encontrou `13` temas recentes em fontes oficiais.
-- Inspecao visual do render confirmou o novo gancho humano, a hierarquia legivel e capas com cenarios visivelmente diferentes.
+- Inspecao visual do render confirmou o novo gancho humano, a hierarquia legivel, capas com cenarios visivelmente diferentes e cartoes de apoio maiores.
 
 ## Publicacao real mais recente confirmada
 
@@ -74,4 +76,4 @@ Resultado:
 
 - Acompanhar os proximos posts automaticos e conferir se o publico responde melhor ao novo tom humano e consultivo.
 - Acompanhar a resposta ao post `DcFh6FWG8f0` e manter a confirmacao por permalink em cada nova publicacao manual.
-- Em uma retomada futura, iniciar deste checkpoint e preservar a versao `v4.87`, o CTA dos 50 prompts, a variacao de capas e o padrao editorial humano/AIDA.
+- Em uma retomada futura, iniciar deste checkpoint e preservar a versao `v4.89`, o CTA dos 50 prompts, as hashtags finais, a variacao de capas e o padrao editorial humano/AIDA.
