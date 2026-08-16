@@ -43,11 +43,11 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v5.12',
+  appVersion: 'v5.13',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
-  description: 'Feed e Story seguem dimensões fixas e zonas seguras para proteger textos da interface do Instagram.'
+  description: 'O Radar identifica visualmente a fonte, o título real e o link de cada matéria pesquisada.'
 };
 const MAINTENANCE = {
   githubToken: {

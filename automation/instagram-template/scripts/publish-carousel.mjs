@@ -1732,9 +1732,11 @@ function htmlText(value = '') {
   return String(value || '').replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
 }
 
-function researchSourceCardHtml(source = '') {
+function researchSourceCardHtml(source = '', sourceTitle = '', sourceUrl = '') {
   const name = htmlText(source || 'Fonte oficial');
-  return `<div class="context-photo news-context"><span>FONTE OFICIAL</span><strong>${name}</strong><small>Pauta relevante para empresas.</small><i></i></div>`;
+  const title = htmlText(sourceTitle || 'Título da matéria não informado');
+  const linkStatus = /^https:\/\//i.test(sourceUrl) ? 'MATÉRIA IDENTIFICADA · LINK NA LEGENDA' : 'LINK DA MATÉRIA AUSENTE';
+  return `<div class="context-photo news-context"><span>FONTE OFICIAL</span><strong>${name}</strong><small>${title}</small><em>${linkStatus}</em><i></i></div>`;
 }
 
 function anatexSlideHtml(slide, index, total, account, style, renderContext = {}) {
@@ -1763,6 +1765,8 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const engagementRole = index === 1 ? 'hook' : index === total ? 'cta' : index === total - 1 ? 'proof' : 'value';
   const useSectorPhoto = engagementRole === 'hook' || engagementRole === 'proof';
   const researchSource = String(slide.researchSource || '').trim();
+  const researchTitle = String(slide.researchTitle || '').trim();
+  const researchUrl = String(slide.researchUrl || '').trim();
   const showNewsContext = Boolean(useSectorPhoto && researchSource);
   const sectorPhotoImage = useSectorPhoto ? sectorPhotoCssImage(visualCue, index, renderContext) : '';
   const sectorPhotoClass = sectorPhotoImage ? ' has-sector-photo' : '';
@@ -1875,7 +1879,8 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .news-context > * { position: relative; z-index: 1; }
     .news-context span { font-size: 15px; font-weight: 900; letter-spacing: .12em; }
     .news-context strong { font-size: 36px; line-height: .94; font-weight: 900; }
-    .news-context small { max-width: 100%; font-size: 14px; line-height: 1.08; font-weight: 800; }
+    .news-context small { display: -webkit-box; max-width: 100%; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3; font-size: 16px; line-height: 1.1; font-weight: 800; }
+    .news-context em { position: relative; z-index: 1; font-size: 11px; line-height: 1.1; font-style: normal; font-weight: 900; letter-spacing: .06em; opacity: .88; }
     .news-context i { width: 50px; height: 5px; margin-top: 2px; border-radius: 99px; background: #fffaf7; opacity: .9; }
     .note {
       position: absolute;
@@ -2184,7 +2189,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     <div class="badge"><span></span>${eyebrow}</div>
     ${swipeCue}
     ${saveCue}
-    ${showNewsContext ? researchSourceCardHtml(researchSource) : (sectorPhotoImage ? '<div class="context-photo"></div>' : '')}
+    ${showNewsContext ? researchSourceCardHtml(researchSource, researchTitle, researchUrl) : (sectorPhotoImage ? '<div class="context-photo"></div>' : '')}
     ${sectorPhotoImage || showNewsContext ? '' : sectorVisualHtml(visualCue)}
     <div class="panel${avatarClass}"></div>
     <div class="spark s1">*</div>
@@ -2371,6 +2376,9 @@ function validatePack(pack) {
     if (!String(pack.caption || '').includes(sourceUrl)) throw new Error('Radar bloqueado: a legenda não contém o link completo da matéria.');
     if (/apresenta uma novidade sobre/i.test(String(pack.slides?.[0]?.title || ''))) {
       throw new Error('Radar bloqueado: capa genérica sem contexto real da matéria.');
+    }
+    if (pack.slides.some((slide) => slide.researchSource !== pack.research.source || slide.researchTitle !== sourceTitle || slide.researchUrl !== sourceUrl)) {
+      throw new Error('Radar bloqueado: o anexo visual não identifica fonte, título e link da matéria real.');
     }
   }
 }
@@ -2643,6 +2651,8 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
   const soft = slideStyle.accentSoft || 'rgba(167,86,61,0.16)';
   const visualCue = slide.visualCue || visualCueForAccount(account, `${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
   const researchSource = String(slide.researchSource || '').trim();
+  const researchTitle = String(slide.researchTitle || '').trim();
+  const researchUrl = String(slide.researchUrl || '').trim();
   const showNewsContext = Boolean(researchSource);
   const avatarImage = accountAvatarCssImage(account, 0, visualCue, { ...renderContext, story: true });
   const sectorPhotoImage = showNewsContext ? '' : sectorPhotoCssImage(visualCue);
@@ -2730,7 +2740,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     <div class="badge">${eyebrow}</div>
     <h1>${title.replace(/\s+IA\b/i, ' <strong>IA</strong>')}</h1>
     <p>${storyBody}</p>
-    <div class="visual-card${showNewsContext ? ' news-context-story' : ''}">${showNewsContext ? `<span>FONTE OFICIAL</span><strong>${htmlText(researchSource)}</strong><small>Pauta relevante para empresas.</small>` : ''}</div>
+    <div class="visual-card${showNewsContext ? ' news-context-story' : ''}">${showNewsContext ? `<span>FONTE OFICIAL</span><strong>${htmlText(researchSource)}</strong><small>${htmlText(researchTitle)}</small><small>Matéria identificada · link na legenda</small>` : ''}</div>
     ${avatarBlock}
     <div class="note">${account.footerText}</div>
     <footer>${account.brandName}</footer>
@@ -3536,8 +3546,13 @@ async function main() {
   pack.slides = pack.slides.map((slide) => ({
     ...slide,
     visualCue: slide.visualCue || packVisualCue,
-    researchSource: slide.researchSource || pack.research?.source || ''
+    researchSource: slide.researchSource || pack.research?.source || '',
+    researchTitle: slide.researchTitle || pack.research?.sourceTitle || '',
+    researchUrl: slide.researchUrl || pack.research?.sourceUrl || ''
   }));
+  if (pack.research && pack.slides.some((slide) => !slide.researchSource || !slide.researchTitle || !/^https:\/\//i.test(slide.researchUrl))) {
+    throw new Error('Radar bloqueado: o anexo visual precisa conter fonte, título real e link da matéria.');
+  }
   validatePack(pack);
   if (!args.renderOnly && !args.dryRun && (scheduledPost || dashboardPack || args.storyOnly)) {
     const duplicate = findDuplicatePack(publicationHistory, historyPack);
