@@ -1,17 +1,17 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 12:46 BRT
+Atualizado em: 2026-08-16 12:53 BRT
 
 ## Projeto ativo
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Commit de codigo em producao: `f128503` (`Padroniza imagens da landing page`).
-- Checkpoint completo aprovado pelo usuario: `f128503`.
+- Commit de codigo em producao: `6496736` (`Anima galeria de produto da landing`).
+- Checkpoint completo aprovado pelo usuario: `6496736`.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
-- Commit mais recente da landing em producao: `f128503` (`Padroniza imagens da landing page`).
+- Commit mais recente da landing em producao: `6496736` (`Anima galeria de produto da landing`).
 - Versao visivel atual: `v4.94`
 
 ## Estado confirmado
@@ -40,8 +40,8 @@ Atualizado em: 2026-08-16 12:46 BRT
 - Promessa central: manter a rede social ativa, cuidada e atualizada sem o cliente criar ou publicar cada conteudo manualmente e sem depender do computador ligado.
 - Beneficio comercial: aumentar oportunidades de engajamento e atrair seguidores reais e alinhados, com potencial para comprar produtos ou contratar servicos.
 - Limite de comunicacao: nao garantir seguidores, curtidas ou vendas; consistencia e conteudo atual aumentam oportunidades, nao resultados certos.
-- Visual: moderno, neutro e responsivo. As capturas do dashboard/editor seguem largura padrao de aproximadamente `980 px`; Carrossel e Story usam molduras de mesma altura sem deformar seus formatos.
-- Animacoes: hero, revelacao por rolagem, cartoes escalonados, zoom discreto e navegacao reativa; respeita `prefers-reduced-motion`.
+- Visual: moderno, neutro e responsivo. O hero usa texto e plataforma lado a lado em desktop; as capturas do dashboard/editor e os criativos mantem molduras proporcionais e sem distorcao.
+- Animacoes: hero em camadas com perspectiva, brilho, flutuacao e sinais operacionais; editor com `editor-breathe`; Carrossel e Story com `creative-float` alternado; cartoes com revelacao, desfoque e profundidade. Todo o conjunto respeita `prefers-reduced-motion`.
 - Validacao: imagens HTTP `200`, sem overflow horizontal, sem erros de console e `40` elementos animados testados ate o estado visivel.
 
 ## Padrao editorial aprovado para os proximos posts

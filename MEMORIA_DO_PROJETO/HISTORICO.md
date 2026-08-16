@@ -1,5 +1,29 @@
 # Historico
 
+## 2026-08-16 12:53 BRT
+
+Checkpoint das animacoes refinadas da landing salvo a pedido do usuario.
+
+Hero:
+
+- O topo voltou a usar duas colunas em desktop, com texto a esquerda e a captura real da plataforma a direita, eliminando o grande espaco vazio lateral e a imagem solta abaixo.
+- A captura recebeu moldura com profundidade, perspectiva, sombra, brilho atravessando a tela e movimento flutuante suave.
+- Foram adicionados os indicadores animados `Radar editorial ativo` e `Publicacao confirmada pela Meta` para equilibrar a composicao vertical sem deformar a imagem.
+- O bloco visual do hero foi validado com aproximadamente `624 x 520 px` em viewport desktop de `1920 px`.
+- Commit: `62bca4e` (`Refina hero e animacoes da landing`).
+- Deploy: `dpl_CdiNXNni2iFwRsrFVKXcRscP8y7r`.
+
+Galeria do produto:
+
+- O editor, o Carrossel e o Story receberam o mesmo acabamento visual do hero: molduras com profundidade, brilho de entrada, movimento interno suave e revelacao escalonada durante a rolagem.
+- O editor usa animacao `editor-breathe` e o selo `Editor conectado a marca`.
+- Carrossel e Story usam `creative-float` em ritmos alternados e os selos `Criativo pronto - Feed 4:5` e `Criativo pronto - Story 9:16`.
+- Os formatos originais foram preservados; os dois criativos continuam dentro de molduras de mesma altura, sem distorcao.
+- A pagina respeita `prefers-reduced-motion`, desativando os movimentos para usuarios que solicitam animacao reduzida.
+- Validacao visual local e em producao: animacoes ativadas ao rolar, imagens carregadas, nenhum overflow horizontal.
+- Commit publicado: `6496736` (`Anima galeria de produto da landing`).
+- Deploy atual: `dpl_8z3sE3dBibautQnFJSTkidTSJwf8`, em `https://cliente-x-instagram.vercel.app/plataforma`.
+
 ## 2026-08-16 12:46 BRT
 
 Checkpoint salvo a pedido do usuario depois da correcao do Radar e da padronizacao visual da landing.
