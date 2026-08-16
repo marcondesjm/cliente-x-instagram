@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 19:28 BRT
+Atualizado em: 2026-08-16 19:30 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,7 +12,7 @@ Atualizado em: 2026-08-16 19:28 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `96a7058` (`Adiciona banners prontos e gerados na grade semanal`), integrado ao estado operacional pelo merge `90f1d3e`.
+- Checkpoint funcional atual: `96a7058` (`Adiciona banners prontos e gerados na grade semanal`), checkpoint documental `9ec4ece` e estado operacional integrado pelo merge `3321d79`.
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
