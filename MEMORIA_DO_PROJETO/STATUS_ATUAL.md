@@ -1,25 +1,26 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 12:32 BRT
+Atualizado em: 2026-08-16 12:46 BRT
 
 ## Projeto ativo
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Commit de codigo em producao: `8ad4557` (`Evita texto sobre foto nos Stories`)
-- Checkpoint completo aprovado pelo usuario: `8ad4557` (`Evita texto sobre foto nos Stories`)
-- Repositorio operacional: `origin/main` contem o codigo `8ad4557`; o commit seguinte registra somente este checkpoint de memoria.
+- Commit de codigo em producao: `f128503` (`Padroniza imagens da landing page`).
+- Checkpoint completo aprovado pelo usuario: `f128503`.
+- Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
-- Commit mais recente da landing em producao: `ecb94ec` (`Destaca seguidores reais e potenciais clientes`)
+- Commit mais recente da landing em producao: `f128503` (`Padroniza imagens da landing page`).
 - Versao visivel atual: `v4.94`
 
 ## Estado confirmado
 
 - Workspace limpo no momento deste registro e checkpoint aprovado pelo usuario ("muito bom").
 - O dashboard de producao esta confirmado na versao `v4.94`.
-- O Radar usa somente fontes oficiais e aceita noticias dos ultimos 7 dias; ele nao usa o pack manual como reserva para `Publicar agora`.
-- Se nao houver noticia oficial elegivel, o publicador bloqueia o envio em vez de publicar conteudo generico.
+- O Radar usa somente fontes oficiais e aceita noticias dos ultimos 7 dias; ele nao usa pack manual nem pack automatico generico como reserva.
+- A trava agora vale para `Publicar agora`, horarios automaticos, packs manuais e posts agendados: toda publicacao real com Radar ativo exige `research.sourceUrl`.
+- Se nao houver noticia oficial elegivel e nao repetida, o publicador bloqueia o envio em vez de publicar conteudo solto.
 - A automacao agendada roda na nuvem por GitHub Actions e Meta/Instagram; o computador do usuario pode ficar desligado. O login do painel e necessario somente para acoes manuais no dashboard e expira em 12 horas.
 - As capas do Radar variam pela pauta: cor, composicao, titulo e foto agora usam a fonte/tema como semente visual.
 - As tres fotos com notebook e fundo escuro, muito semelhantes entre si, foram retiradas da rotacao. Permanecem apenas cenarios distintos: escritorio, reuniao, apresentacao e ambiente descontraido.
@@ -32,14 +33,14 @@ Atualizado em: 2026-08-16 12:32 BRT
 ## Landing comercial em producao
 
 - Nome provisorio: `Nerion Social`; ainda requer validacao formal de marca antes do lancamento definitivo.
-- Oferta principal: `R$ 397/mes`, uma marca e ate `12 conteudos por dia`.
+- Oferta principal: `R$ 397/mes` para uma marca, com publicacoes diarias conforme o calendario contratado.
 - Implantacao de `R$ 297` riscada e apresentada como gratuita.
 - Entrega comunicada: criacao automatica de conteudo, criativos, carrossel, Story e legendas; agenda, publicacao na nuvem e Direct.
 - Para um volume menor, a pagina oferece consulta de plano menor; licenca personalizada permanece sob medida.
 - Promessa central: manter a rede social ativa, cuidada e atualizada sem o cliente criar ou publicar cada conteudo manualmente e sem depender do computador ligado.
 - Beneficio comercial: aumentar oportunidades de engajamento e atrair seguidores reais e alinhados, com potencial para comprar produtos ou contratar servicos.
 - Limite de comunicacao: nao garantir seguidores, curtidas ou vendas; consistencia e conteudo atual aumentam oportunidades, nao resultados certos.
-- Visual: moderno, neutro, responsivo, com capturas reais do dashboard/editor, exemplos de feed/Story e fotos comerciais da automacao.
+- Visual: moderno, neutro e responsivo. As capturas do dashboard/editor seguem largura padrao de aproximadamente `980 px`; Carrossel e Story usam molduras de mesma altura sem deformar seus formatos.
 - Animacoes: hero, revelacao por rolagem, cartoes escalonados, zoom discreto e navegacao reativa; respeita `prefers-reduced-motion`.
 - Validacao: imagens HTTP `200`, sem overflow horizontal, sem erros de console e `40` elementos animados testados ate o estado visivel.
 
@@ -101,5 +102,5 @@ Resultado:
 - Acompanhar a resposta ao post `DcFh6FWG8f0` e manter a confirmacao por permalink em cada nova publicacao manual.
 - Conferir o primeiro post automatico da `v4.94` por permalink e inspecionar visualmente o Story publicado.
 - Em uma retomada futura, iniciar deste checkpoint e preservar a versao `v4.94`, o CTA dos 50 prompts, as hashtags finais, a rotacao completa de quatro fotos, a foto de capa proporcional e o Story sem sobreposicao.
-- Para a landing, preservar a oferta de `R$ 397/mes`, implantacao gratuita, ate 12 conteudos diarios, planos menores sob consulta e a mensagem de seguidores reais com potencial comercial sem garantia de resultado.
+- Para a landing, preservar a oferta de `R$ 397/mes`, implantacao gratuita, publicacoes diarias conforme o calendario contratado, planos menores sob consulta e a mensagem de seguidores reais com potencial comercial sem garantia de resultado.
 - Antes de vender em escala, validar o nome `Nerion Social`, preparar termos/politica de privacidade e definir contrato e onboarding.

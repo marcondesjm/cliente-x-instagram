@@ -1,5 +1,32 @@
 # Historico
 
+## 2026-08-16 12:46 BRT
+
+Checkpoint salvo a pedido do usuario depois da correcao do Radar e da padronizacao visual da landing.
+
+Radar automatico:
+
+- O post `https://www.instagram.com/p/DcGzElaoLRl/` foi rastreado ate o slot automatico 4, GitHub Actions run `31956024126`, publicado em 2026-08-16 12:35 BRT.
+- O registro tecnico desse post continha `research: null`: ele nao veio de uma pauta oficial do Radar.
+- Causa encontrada: quando todas as pautas recentes do Radar eram consideradas repetidas, o publicador trocava silenciosamente para um pack automatico generico ou de emergencia.
+- Correcao: com o Radar ativo, o fluxo nao usa mais fallback generico. Toda publicacao real precisa conter `pack.research.sourceUrl`; sem fonte oficial recente e nao repetida, o horario e bloqueado e nenhum post e enviado.
+- A trava tambem impede que um pack manual ou agendado sem fonte oficial contorne o Radar.
+- Commit da correcao: `7a68a40` (`Bloqueia fallback generico com Radar ativo`).
+- Integracao que colocou a correcao no `origin/main`: `f989790`.
+- Validacoes: `node --check`, `npm run validate-copy` e `npm run render-only` passaram; o Radar encontrou `13` pautas oficiais e o render usou `packIndex: news-11`.
+- Nao foi disparada nova publicacao real como teste, para nao criar outro post indesejado. A proxima execucao automatica deve ser confirmada por permalink e por `research.sourceUrl` no historico.
+
+Landing comercial:
+
+- A primeira tela agora informa diretamente que a plataforma cria artes, carrosseis, Stories e legendas, agenda e publica com o computador desligado.
+- Oferta exibida no hero: plataforma, configuracao e suporte por `R$ 397/mes`, com implantacao gratuita nesta oferta.
+- A afirmacao de `12 conteudos por dia` foi removida. O texto correto e `Publicacoes diarias conforme o calendario contratado`.
+- As duas capturas da plataforma foram padronizadas com largura visual de aproximadamente `980 px` e altura de aproximadamente `460 px` em desktop.
+- Os exemplos de Carrossel e Story mantem suas proporcoes originais dentro de molduras com a mesma altura visual de `610 px`, sem esticar, recortar ou quebrar a responsividade.
+- Validacao visual em producao: nenhuma imagem quebrada e nenhum overflow horizontal em viewport desktop de `1920 px`.
+- Commit publicado: `f128503` (`Padroniza imagens da landing page`).
+- Deploy Vercel de producao: `dpl_2FYeQrvb4Ccbx8qsrAsz15YCE8fu`, alias preservado em `https://cliente-x-instagram.vercel.app/plataforma`.
+
 ## 2026-08-16 12:32 BRT
 
 Checkpoint da landing comercial da plataforma salvo a pedido do usuario.
