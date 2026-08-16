@@ -1,28 +1,28 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 01:11 BRT
+Atualizado em: 2026-08-16 01:25 BRT
 
 ## Projeto ativo
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Commit de codigo em producao: `aa4b8d0` (`Padroniza fonte legivel dos cartoes`)
-- Checkpoint completo aprovado pelo usuario: `aa4b8d0` (`Padroniza fonte legivel dos cartoes`)
-- Repositorio operacional: `origin/main` = `aa4b8d0`
+- Commit de codigo em producao: `8a17e72` (`Amplia leitura dos cartoes de apoio`)
+- Checkpoint completo aprovado pelo usuario: `8a17e72` (`Amplia leitura dos cartoes de apoio`)
+- Repositorio operacional: `origin/main` = `8a17e72`
 - Dashboard: `https://cliente-x-instagram.vercel.app`
-- Versao visivel atual: `v4.90`
+- Versao visivel atual: `v4.91`
 
 ## Estado confirmado
 
 - Workspace limpo no momento deste registro e checkpoint aprovado pelo usuario ("muito bom").
-- O dashboard de producao esta confirmado na versao `v4.90`.
+- O dashboard de producao esta confirmado na versao `v4.91`.
 - O Radar usa somente fontes oficiais e aceita noticias dos ultimos 7 dias; ele nao usa o pack manual como reserva para `Publicar agora`.
 - Se nao houver noticia oficial elegivel, o publicador bloqueia o envio em vez de publicar conteudo generico.
 - A automacao agendada roda na nuvem por GitHub Actions e Meta/Instagram; o computador do usuario pode ficar desligado. O login do painel e necessario somente para acoes manuais no dashboard e expira em 12 horas.
 - As capas do Radar variam pela pauta: cor, composicao, titulo e foto agora usam a fonte/tema como semente visual.
 - As tres fotos com notebook e fundo escuro, muito semelhantes entre si, foram retiradas da rotacao. Permanecem apenas cenarios distintos: escritorio, reuniao, apresentacao e ambiente descontraido.
 - Legendas do Radar agora sempre recebem hashtags no final, inclusive quando a fonte oficial nao as fornece.
-- Cartoes de texto de apoio usam fonte padrao legivel e altura proporcional ao conteudo: textos longos aumentam o cartao, sem reduzir a fonte. No layout dividido, o cartao de abertura sobe de forma segura para nao cobrir o indicador “Arraste para ver”.
+- Cartoes de texto de apoio usam fonte grande para leitura no celular: o bloco verde usa 30 px e a frase de apoio e curta e completa. A legenda preserva a explicacao completa; a arte evita paragrafo comprimido e nao cobre o indicador “Arraste para ver”.
 
 ## Padrao editorial aprovado para os proximos posts
 
@@ -50,7 +50,7 @@ Resultado:
 - Verificacao de sintaxe: passou.
 - `validate-copy`: passou (`20` packs, `54` packs automaticos e `74` selecoes automaticas verificadas).
 - `render-only`: passou; Radar encontrou `13` temas recentes em fontes oficiais.
-- Inspecao visual do render confirmou o novo gancho humano, a hierarquia legivel, capas com cenarios visivelmente diferentes e cartoes de apoio maiores.
+- Inspecao visual do render confirmou fonte grande, frase curta completa, hierarquia legivel, capas com cenarios visivelmente diferentes e indicador de deslize livre.
 
 ## Publicacao real mais recente confirmada
 
@@ -80,4 +80,4 @@ Resultado:
 
 - Acompanhar os proximos posts automaticos e conferir se o publico responde melhor ao novo tom humano e consultivo.
 - Acompanhar a resposta ao post `DcFh6FWG8f0` e manter a confirmacao por permalink em cada nova publicacao manual.
-- Em uma retomada futura, iniciar deste checkpoint e preservar a versao `v4.90`, o CTA dos 50 prompts, as hashtags finais, a variacao de capas e o padrao editorial humano/AIDA.
+- Em uma retomada futura, iniciar deste checkpoint e preservar a versao `v4.91`, o CTA dos 50 prompts, as hashtags finais, a variacao de capas e o padrao editorial humano/AIDA.

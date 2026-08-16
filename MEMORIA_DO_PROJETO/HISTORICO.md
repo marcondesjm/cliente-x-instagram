@@ -1,5 +1,23 @@
 # Historico
 
+## 2026-08-16 01:25 BRT
+
+Checkpoint da versao `v4.91` salvo antes de nova publicacao manual.
+
+Resumo:
+
+- O texto do bloco verde foi ampliado para leitura confortavel no celular.
+- A arte agora usa uma frase de apoio curta e completa; o paragrafo continua na legenda, sem ser comprimido na imagem.
+- O cartao conserva espaco, contraste e o indicador “Arraste para ver” livre.
+- Validacoes aprovadas: `node --check`, `npm run validate-copy` e `npm run render-only`.
+- Render inspecionado visualmente: fonte grande, sem corte e sem sobreposicao.
+- Producao Vercel confirmada em `v4.91`; commit `8a17e72` no `origin/main`.
+
+Deploy/publicacao:
+
+- Deploy: sim, `https://cliente-x-instagram.vercel.app` confirmou a versao `v4.91`.
+- Instagram real: uma nova publicacao sera disparada apos este registro, com comprovacao obrigatoria por permalink.
+
 ## 2026-08-16 01:11 BRT
 
 Checkpoint da versao `v4.90` salvo antes de nova publicacao manual.
