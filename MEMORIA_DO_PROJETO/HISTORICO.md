@@ -1,5 +1,27 @@
 # Historico
 
+## 2026-08-16 17:36 BRT
+
+A captura unica do editor na landing foi transformada em um carrossel de paginas reais da plataforma.
+
+Alteracao:
+
+- O visitante pode alternar entre `Visao geral` e `Editor de conteudo`.
+- A primeira pagina apresenta agenda, vigia automatico, conta ativa e publicacao confirmada.
+- A segunda mostra a previa do post e os campos usados para ajustar o conteudo e preservar a identidade da marca.
+- O carrossel possui setas, botoes nomeados, indicadores `Pagina 1 de 2` e `Pagina 2 de 2`, textos explicativos e links para ampliar cada captura.
+- A troca ocorre automaticamente a cada `6,5 segundos`, pausa ao passar o mouse ou focar os controles e respeita `prefers-reduced-motion`.
+- O estado acessivel usa `aria-hidden` nos slides e `aria-current` nos seletores.
+
+Validacao e deploy:
+
+- JavaScript inline: sintaxe valida.
+- `npm run validate-copy`: passou com `74` selecoes automaticas e protecao de duplicidade `ok`.
+- Teste local: selecao manual mudou de `Visao geral` para `Editor de conteudo`, com `translateX(-100%)` e sem erros de console.
+- Commit funcional: `e3a6956` (`Adiciona carrossel de paginas da plataforma`).
+- Deploy Vercel: `dpl_HSxN7MUai11bwMCxwhMR89JVrW8o`, alias `https://cliente-x-instagram.vercel.app`.
+- Producao: dois slides confirmados, troca manual aprovada, componente antigo removido e nenhum erro de console.
+
 ## 2026-08-16 17:32 BRT
 
 As duas artes isoladas da landing foram substituidas por publicacoes reais incorporadas do Instagram.
