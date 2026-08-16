@@ -1698,7 +1698,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .badge { position: absolute; left: 84px; top: 122px; z-index: 2; display: inline-flex; align-items: center; gap: 14px; max-width: 560px; padding: 14px 28px; border-radius: 14px; background: ${accent}; color: #fff6ef; font-size: 27px; line-height: 1; font-weight: 900; text-transform: uppercase; }
     .badge span { width: 32px; height: 32px; flex: 0 0 32px; border-radius: 50%; border: 3px solid #fff6ef; display: inline-block; position: relative; }
     .badge span::after { content: ""; position: absolute; left: 8px; top: 7px; width: 9px; height: 14px; border-right: 4px solid #fff6ef; border-bottom: 4px solid #fff6ef; transform: rotate(40deg); }
-    .headline { position: relative; z-index: 2; margin-top: 98px; max-width: 570px; font-size: 68px; line-height: 0.98; letter-spacing: 0; font-weight: 900; color: ${slideStyle.text}; overflow-wrap: break-word; }
+    .headline { position: relative; z-index: 2; margin-top: 142px; max-width: 570px; font-size: 68px; line-height: 0.98; letter-spacing: 0; font-weight: 900; color: ${slideStyle.text}; overflow-wrap: break-word; }
     .headline strong { display: inline; color: ${accent}; font: inherit; }
     .swipe-cue, .save-cue {
       position: absolute;
@@ -1824,7 +1824,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     }
     .mode-split .panel { top: 350px; width: 410px; height: 540px; border-radius: 34px; }
     .mode-split .context-photo { top: 150px; right: 76px; width: 330px; height: 210px; }
-    .mode-split .headline { margin-top: 126px; font-size: 60px; }
+    .mode-split .headline { margin-top: 154px; font-size: 60px; }
     .mode-split .note { top: 812px; min-height: 210px; }
     .mode-split .sector-cue { right: 82px; top: 118px; width: 250px; opacity: 0.28; }
     .mode-poster main {
@@ -1890,6 +1890,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
       border: 4px solid ${accent};
       opacity: 0.18;
     }
+    .role-proof .headline { margin-top: 166px; }
     .role-proof .headline::before {
       content: "ANTES / DEPOIS";
       display: block;
