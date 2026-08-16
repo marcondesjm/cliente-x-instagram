@@ -140,8 +140,10 @@
 
     .showcase { background: #fff; }
     .showcase-grid { display: grid; gap: 26px; }
-    .screen-card, .output-card { margin: 0; border: 1px solid var(--line); border-radius: 12px; background: #fff; overflow: hidden; }
+    .screen-card, .output-card { margin: 0; border: 1px solid rgba(91,112,78,.2); border-radius: 16px; background: #fff; overflow: hidden; box-shadow: 0 24px 55px rgba(28,43,34,.1); }
     .screen-card { width: min(980px, 100%); margin-inline: auto; }
+    .screen-visual, .output-visual { position: relative; overflow: hidden; isolation: isolate; background: var(--paper); }
+    .screen-visual::after, .output-visual::after { content: ""; position: absolute; z-index: 3; top: -45%; bottom: -45%; left: -42%; width: 24%; transform: rotate(14deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,.58), transparent); pointer-events: none; }
     .screen-card img { display: block; width: 100%; aspect-ratio: 1905 / 904; object-fit: cover; object-position: top; transition: transform .55s cubic-bezier(.2,.7,.2,1); }
     .screen-card figcaption, .output-card figcaption { display: flex; justify-content: space-between; gap: 18px; padding: 17px 18px; border-top: 1px solid var(--line); }
     .screen-card strong, .output-card strong { display: block; font-size: 15px; }
@@ -149,6 +151,9 @@
     .outputs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; width: min(980px, 100%); margin: 0 auto; }
     .output-card { display: grid; grid-template-rows: minmax(0, 1fr) auto; }
     .output-card img { display: block; width: 100%; height: clamp(460px, 50vw, 610px); object-fit: contain; object-position: center; background: var(--paper); transition: transform .55s cubic-bezier(.2,.7,.2,1); }
+    .visual-status { position: absolute; z-index: 4; top: 16px; left: 16px; display: inline-flex; align-items: center; gap: 8px; padding: 9px 12px; border: 1px solid rgba(79,101,73,.16); border-radius: 999px; color: var(--ink); background: rgba(255,255,255,.9); box-shadow: 0 12px 28px rgba(28,43,34,.13); backdrop-filter: blur(9px); font-size: 11px; font-weight: 850; }
+    .visual-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #718f50; box-shadow: 0 0 0 4px rgba(113,143,80,.13); }
+    .output-visual .visual-status { top: 13px; left: 13px; }
 
     .section { padding: 90px 0; }
     .section-head { max-width: 760px; margin-bottom: 44px; }
@@ -233,6 +238,12 @@
     .motion-ready .product-stage .real-product-shot { animation: screen-float 7s 1.5s ease-in-out infinite; }
     .motion-ready .stage-signal { opacity: 0; transform: translateY(12px) scale(.9); animation: signal-pop .7s .95s cubic-bezier(.16,.9,.25,1.25) forwards; }
     .motion-ready .stage-signal.publish-live { animation-delay: 1.15s; }
+    .motion-ready .reveal.is-visible .screen-visual::after, .motion-ready .reveal.is-visible .output-visual::after { animation: screen-sheen 1.2s .35s cubic-bezier(.2,.7,.2,1) both; }
+    .motion-ready .screen-card.reveal.is-visible img { animation: editor-breathe 8s 1s ease-in-out infinite; }
+    .motion-ready .output-card.reveal.is-visible:nth-child(odd) img { animation: creative-float 7s .7s ease-in-out infinite; }
+    .motion-ready .output-card.reveal.is-visible:nth-child(even) img { animation: creative-float 7s 1.1s ease-in-out infinite reverse; }
+    .motion-ready .reveal .visual-status { opacity: 0; transform: translateY(10px) scale(.92); transition: opacity .55s ease calc(var(--reveal-delay, 0ms) + 520ms), transform .65s cubic-bezier(.16,.9,.25,1.2) calc(var(--reveal-delay, 0ms) + 520ms); }
+    .motion-ready .reveal.is-visible .visual-status { opacity: 1; transform: translateY(0) scale(1); }
     .motion-ready .reveal { opacity: 0; filter: blur(7px); transform: translate3d(var(--reveal-x, 0), 38px, 0) scale(.965) rotateX(3deg); transform-origin: 50% 100%; transition: opacity .78s ease var(--reveal-delay, 0ms), filter .78s ease var(--reveal-delay, 0ms), transform .85s cubic-bezier(.16,.8,.24,1) var(--reveal-delay, 0ms); }
     .motion-ready .card:nth-child(even).reveal, .motion-ready .output-card:nth-child(even).reveal { --reveal-x: 18px; }
     .motion-ready .card:nth-child(odd).reveal, .motion-ready .output-card:nth-child(odd).reveal { --reveal-x: -18px; }
@@ -242,6 +253,8 @@
     @keyframes screen-sheen { 0% { left: -38%; opacity: 0; } 25% { opacity: 1; } 100% { left: 118%; opacity: 0; } }
     @keyframes screen-float { 0%, 100% { transform: translateY(0) rotate(.15deg); } 50% { transform: translateY(-8px) rotate(-.15deg); } }
     @keyframes signal-pop { to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes editor-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.018); } }
+    @keyframes creative-float { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-7px) scale(1.012); } }
 
     @media (hover: hover) {
       .real-product-shot:hover img, .screen-card:hover img { transform: scale(1.012); }
@@ -278,6 +291,7 @@
       .stage-signal { padding: 9px 11px; font-size: 10px; }
       .stage-signal.radar-live { top: 34px; left: -4px; }
       .stage-signal.publish-live { right: -3px; bottom: 34px; }
+      .visual-status { top: 10px; left: 10px; padding: 8px 10px; font-size: 10px; }
       .outputs { grid-template-columns: 1fr; gap: 18px; width: 100%; }
       .output-card img { width: 100%; height: min(145vw, 620px); object-fit: contain; }
       .real-product-shot figcaption, .screen-card figcaption, .output-card figcaption { align-items: flex-start; padding: 12px; }
@@ -370,16 +384,25 @@
         <div class="section-head"><p class="eyebrow">Produto em uso</p><h2>Veja o painel e o conteúdo que saem dele.</h2><p class="section-lead">Estas imagens são da plataforma em funcionamento. O editor reúne texto, prévia visual, fontes, paleta e imagens da marca na mesma tela.</p></div>
         <div class="showcase-grid">
           <figure class="screen-card">
-            <img src="/docs/uploads/platform-content-editor.png" alt="Editor real da Nerion Social com prévia de carrossel, campos de conteúdo, fontes e paleta da marca">
+            <div class="screen-visual">
+              <span class="visual-status">Editor conectado à marca</span>
+              <img src="/docs/uploads/platform-content-editor.png" alt="Editor real da Nerion Social com prévia de carrossel, campos de conteúdo, fontes e paleta da marca">
+            </div>
             <figcaption><div><strong>Editor de conteúdo</strong><span>Prévia do slide, textos, fontes editoriais, cores e imagens em um só lugar.</span></div><a class="image-link" href="/docs/uploads/platform-content-editor.png" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
           </figure>
           <div class="outputs" aria-label="Exemplos de peças produzidas">
             <figure class="output-card">
-              <img src="/docs/generated/previews/cliente-x/2026-08-17/slot-9/slide-01.jpg" alt="Exemplo real de slide de carrossel produzido pela plataforma">
+              <div class="output-visual">
+                <span class="visual-status">Criativo pronto · Feed 4:5</span>
+                <img src="/docs/generated/previews/cliente-x/2026-08-17/slot-9/slide-01.jpg" alt="Exemplo real de slide de carrossel produzido pela plataforma">
+              </div>
               <figcaption><strong>Carrossel</strong><span>Formato para feed.</span></figcaption>
             </figure>
             <figure class="output-card">
-              <img src="/docs/generated/previews/cliente-x/2026-08-17/slot-9/story.jpg" alt="Exemplo real de Story produzido pela plataforma">
+              <div class="output-visual">
+                <span class="visual-status">Criativo pronto · Story 9:16</span>
+                <img src="/docs/generated/previews/cliente-x/2026-08-17/slot-9/story.jpg" alt="Exemplo real de Story produzido pela plataforma">
+              </div>
               <figcaption><strong>Story</strong><span>Formato vertical.</span></figcaption>
             </figure>
           </div>
