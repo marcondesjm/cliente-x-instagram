@@ -2554,6 +2554,10 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
   const slideStyle = styleForSlide(style, 1);
   const title = anatexTitle(slide.title || '');
   const body = applyAnatexCopyRules(slide.body || '');
+  // O Story tem menos area util que o carrossel. Mostra a primeira ideia
+  // completa e deixa a explicacao integral para a legenda/carrossel, evitando
+  // que um segundo periodo avance sobre a fotografia.
+  const storyBody = body.split(/(?<=[.!])\s+/).filter(Boolean)[0] || body;
   const eyebrow = applyAnatexCopyRules(slide.eyebrow || 'Pra saber');
   const accent = slideStyle.accent || '#a7563d';
   const mode = slideStyle.templateMode || 'native';
@@ -2645,7 +2649,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     <div class="brand">${usernameDisplay}</div>
     <div class="badge">${eyebrow}</div>
     <h1>${title.replace(/\s+IA\b/i, ' <strong>IA</strong>')}</h1>
-    <p>${body}</p>
+    <p>${storyBody}</p>
     <div class="visual-card${showNewsContext ? ' news-context-story' : ''}">${showNewsContext ? `<span>FONTE OFICIAL</span><strong>${htmlText(researchSource)}</strong><small>Atualização que pode virar ganho operacional.</small>` : ''}</div>
     ${avatarBlock}
     <div class="note">${account.footerText}</div>
@@ -2737,6 +2741,20 @@ async function renderStory(runDir, pack, account, style, renderContext = {}) {
   const imagePath = join(runDir, 'story.jpg');
   writeFileSync(htmlPath, html, 'utf8');
   await page.goto(`file://${htmlPath.replace(/\\/g, '/')}`);
+  const storyOverlap = await page.evaluate(() => {
+    const copy = document.querySelector('p');
+    const image = document.querySelector('.avatar');
+    if (!copy || !image || getComputedStyle(image).display === 'none') return false;
+    const copyRect = copy.getBoundingClientRect();
+    const imageRect = image.getBoundingClientRect();
+    return !(
+      copyRect.right <= imageRect.left
+      || copyRect.left >= imageRect.right
+      || copyRect.bottom <= imageRect.top
+      || copyRect.top >= imageRect.bottom
+    );
+  });
+  if (storyOverlap) throw new Error('Story rejeitado: texto sobrepoe a foto.');
   await page.screenshot({ path: imagePath, type: 'jpeg', quality: 94, fullPage: false });
   await browser.close();
   return imagePath;
