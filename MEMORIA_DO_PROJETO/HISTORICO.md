@@ -1,5 +1,23 @@
 # Historico
 
+## 2026-08-16 01:11 BRT
+
+Checkpoint da versao `v4.90` salvo antes de nova publicacao manual.
+
+Resumo:
+
+- O cartao de apoio `01` deixou de reduzir a fonte quando o texto e maior.
+- A fonte do texto de fechamento agora segue escala fixa e legivel, equivalente ao cartao `02`.
+- Quando necessario, o cartao cresce em altura; no layout dividido, ele e reposicionado para nao cobrir o indicador “Arraste para ver”.
+- Validacoes aprovadas: `node --check`, `npm run validate-copy` e `npm run render-only`.
+- Render inspecionado: texto legivel, foto fora do titulo e indicador de deslize livre.
+- Producao Vercel confirmada em `v4.90`; commit `aa4b8d0` no `origin/main`.
+
+Deploy/publicacao:
+
+- Deploy: sim, `https://cliente-x-instagram.vercel.app` confirmou a versao `v4.90`.
+- Instagram real: uma nova publicacao sera disparada apos este registro, com comprovacao obrigatoria por permalink.
+
 ## 2026-08-16 01:04 BRT
 
 Checkpoint da versao `v4.89` aprovado pelo usuario.
