@@ -2,7 +2,7 @@
 import { chromium } from 'playwright';
 import { createHash } from 'node:crypto';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { basename, dirname, extname, join, resolve } from 'node:path';
+import { basename, dirname, extname, isAbsolute, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildBrandContext } from '../../../lib/brand-analysis.js';
 import { EDITORIAL_SOURCES, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
@@ -3486,7 +3486,9 @@ async function main() {
   let carousel = null;
   const remoteStoryImage = /^https?:\/\//i.test(String(storyImagePath || ''));
   const localStoryImagePath = storyImagePath && !remoteStoryImage
-    ? resolve(ROOT, String(storyImagePath).replace(/^\/+/, ''))
+    ? (isAbsolute(String(storyImagePath))
+      ? String(storyImagePath)
+      : resolve(ROOT, String(storyImagePath).replace(/^\/+/, '')))
     : null;
   const feedImagesAreLocal = imagePaths.every((imagePath) => !/^https?:\/\//i.test(String(imagePath || '')));
   const githubHostedUrls = feedImagesAreLocal
