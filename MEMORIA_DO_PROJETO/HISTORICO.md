@@ -1,5 +1,26 @@
 # Historico
 
+## 2026-08-16 01:02 BRT
+
+Publicacao manual do Radar concluida depois do registro da versao `v4.89`.
+
+Comprovacao:
+
+- GitHub Actions: `31925600428` finalizado com `success`.
+- Carrossel confirmado visivel no perfil `@marcondes.machado.oficial`.
+- Permalink: `https://www.instagram.com/p/DcFjsXZHIil/`.
+
+Padrao aplicado:
+
+- Pauta atual de fonte oficial, adaptada para empresas brasileiras.
+- Legenda com CTA dos 50 prompts e hashtags ao final.
+- Cartoes de texto com fonte maior e espaco proporcional ao conteudo.
+
+Deploy/publicacao:
+
+- Deploy: ja estava ativo em `v4.89`.
+- Instagram real: sim, feed confirmado por permalink.
+
 ## 2026-08-16 00:58 BRT
 
 Memoria atualizada antes de nova publicacao manual do Radar.

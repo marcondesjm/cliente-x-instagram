@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 00:58 BRT
+Atualizado em: 2026-08-16 01:02 BRT
 
 ## Projeto ativo
 
@@ -55,7 +55,11 @@ Resultado:
 ## Publicacao real mais recente confirmada
 
 - Conta: `@marcondes.machado.oficial`.
-- GitHub Actions: run `31924984201`, concluido com `success` em 2026-08-16 00:46 BRT.
+- GitHub Actions: run `31925600428`, concluido com `success` em 2026-08-16 01:02 BRT.
+- Permalink confirmado no perfil: `https://www.instagram.com/p/DcFjsXZHIil/`.
+- Pauta: Radar editorial com fonte oficial recente, adaptada para a realidade de empresas brasileiras.
+- Legenda gerada com hashtags finais e arte usando o cartao de texto ampliado da versao `v4.89`.
+- Registro anterior: run `31924984201`, concluido com `success` em 2026-08-16 00:46 BRT.
 - Permalink confirmado no perfil: `https://www.instagram.com/p/DcFh6FWG8f0/`.
 - Pauta: n8n; abordagem para empresas sobre rastreabilidade e clareza nas decisoes.
 - A capa publicada usa a nova rotacao de cenarios distintos da versao `v4.87`.
