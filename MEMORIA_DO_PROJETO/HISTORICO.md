@@ -1,5 +1,15 @@
 # Historico
 
+## 2026-08-16 18:52 BRT
+
+Checkpoint de producao da previa lateral da Pagina Bio.
+
+- Commit funcional: `069ab71` (`Adiciona previa lateral ao editor da Bio`).
+- Branch `feature/modern-editorial-system` e `origin/main` atualizadas no mesmo commit.
+- Deploy de producao: `dpl_9PhjEMu3exUFZmNGJ5JfHY8jxRKg`.
+- Alias confirmado: `https://cliente-x-instagram.vercel.app`.
+- Producao respondeu `HTTP 200` e confirmou `v5.01`, largura integral da aba Bio, editor/previa lado a lado, rotulo `Previa ao vivo` e quebra responsiva em 920 px.
+
 ## 2026-08-16 18:50 BRT
 
 A aba `Pagina Bio` passou a usar o espaco lateral como previa ao vivo da pagina publica.

@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 18:50 BRT
+Atualizado em: 2026-08-16 18:52 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,7 +12,7 @@ Atualizado em: 2026-08-16 18:50 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `f5ec93f` (`Amplia visao operacional da plataforma`).
+- Checkpoint funcional atual: `069ab71` (`Adiciona previa lateral ao editor da Bio`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
@@ -26,6 +26,7 @@ Atualizado em: 2026-08-16 18:50 BRT
 - A previa acompanha a rolagem em uma moldura de celular e atualiza durante a edicao.
 - Abaixo de 920 px, a previa vai para baixo do formulario para preservar leitura e toque.
 - Salvar continua sendo a acao que atualiza a pagina publica.
+- Producao: deploy `dpl_9PhjEMu3exUFZmNGJ5JfHY8jxRKg`, versao `v5.01` e componentes confirmados por `HTTP 200`.
 
 ## Visao operacional completa
 
