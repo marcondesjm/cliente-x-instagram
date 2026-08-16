@@ -651,6 +651,7 @@ O melhor de tudo?
 
 const FREE_PROMPTS_CTA_MARKER = 'Preparei uma seleção com 50 prompts prontos para ajudar você a:';
 const LEGACY_FREE_PROMPTS_CTA = 'Comente IA para receber 🚀 50 PROMPTS DE IA GRÁTIS!';
+const DEFAULT_INSTAGRAM_HASHTAGS = '#automacao #inteligenciaartificial #iaaplicada #gestao #processos #produtividade #transformacaodigital #negocios';
 
 function withFreePromptsCtaAtEnd(caption = '') {
   const withoutLegacyCta = String(caption).replace(LEGACY_FREE_PROMPTS_CTA, '').replace(/\n{3,}/g, '\n\n').trim();
@@ -1019,7 +1020,11 @@ function enhanceCaption(caption, dateString, slotIndex, goal = CONTENT_GOALS.aut
   const angle = angles[pickDailyIndex(angles, dateString, slotIndex)];
   const slotNote = angle;
   const bodyWithAngle = withoutCta.includes(slotNote) ? withoutCta : `${withoutCta}\n\n${slotNote}`;
-  return [bodyWithAngle.trim(), FREE_PROMPTS_CTA, hashtags].filter(Boolean).join('\n\n');
+  // O Radar pode partir de uma notícia sem hashtags. A legenda precisa sempre
+  // terminar com elas, depois do CTA, para preservar descoberta sem misturar
+  // tags ao texto principal.
+  const finalHashtags = hashtags || DEFAULT_INSTAGRAM_HASHTAGS;
+  return [bodyWithAngle.trim(), FREE_PROMPTS_CTA, finalHashtags].filter(Boolean).join('\n\n');
 }
 
 function enhancePackForEngagement(pack, dateString, slotIndex, account = {}) {
