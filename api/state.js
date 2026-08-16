@@ -43,7 +43,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v4.62',
+  appVersion: 'v4.63',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
@@ -506,7 +506,8 @@ function editorialDailyPlan(scheduleBrt = [], account = {}, packs = [], schedule
         title: manual.title || manualPack.slides?.[0]?.title || `Pack ${manual.packIndex}`,
         caption: compactText(manualPack.caption || ''),
         mode: manual.mode === 'story-only' ? 'story' : 'feed + story',
-        postId: manual.id
+        postId: manual.id,
+        slides: manualPack.slides || []
       };
     }
 
@@ -549,7 +550,8 @@ function dailyPlan(scheduleBrt = [], packs = [], scheduledPosts = [], dateString
         title: manual.title || manualPack.slides?.[0]?.title || `Pack ${manual.packIndex}`,
         caption: compactText(manualPack.caption || ''),
         mode: manual.mode === 'story-only' ? 'story' : 'feed + story',
-        postId: manual.id
+        postId: manual.id,
+        slides: manualPack.slides || []
       };
     }
 
@@ -563,7 +565,8 @@ function dailyPlan(scheduleBrt = [], packs = [], scheduledPosts = [], dateString
       title: pack.slides?.[0]?.title || 'Conteúdo automático pelo perfil da conta',
       caption: compactText(pack.caption || ''),
       mode: 'feed + story',
-      packIndex
+      packIndex,
+      slides: pack.slides || []
     };
   });
 }
@@ -584,6 +587,7 @@ async function publisherDailyPlan(accountKey = 'cliente-x', dateString = todaySa
           caption: compactText(pack.caption || ''),
           mode: 'feed + story',
           packIndex: `news-${packIndex}`,
+          slides: pack.slides || [],
           sourceUrl: pack.research?.sourceUrl || '',
           source: pack.research?.source || ''
         };

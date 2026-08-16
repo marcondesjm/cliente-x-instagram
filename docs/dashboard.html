@@ -1394,7 +1394,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v4.62</div>
+        <div class="header-version" id="headerVersion">Versão atual: v4.63</div>
       </div>
       <div class="actions">
         <div class="account-switcher">
@@ -5575,13 +5575,22 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const caption = item.caption || 'Legenda será montada pelo gerador automático.';
       const cue = item.visualCue || previewVisualCueFromText(`${title} ${caption}`);
       const sectorPhotoHref = await getPreviewSectorPhotoDataUrl(cue);
-      const slides = [
+      const fallbackSlides = [
         { index: 1, kicker: item.type === 'program' ? 'PROGRAMA' : 'POSTAGEM', title, body: caption, footer: 'Acompanhe pelo Instagram' },
         { index: 2, kicker: 'CONTEXTO', title: 'O que esta por trás disso?', body: caption, footer: 'Entenda antes de agir' },
         { index: 3, kicker: 'PROCESSO', title: 'O caminho começa simples.', body: 'Organize o atendimento, a rotina e os pontos de decisão antes de automatizar qualquer etapa.', footer: 'Processo antes da ferramenta' },
         { index: 4, kicker: 'AÇÃO', title: 'A IA entra para acelerar.', body: 'Depois que o processo está claro, a automação ajuda a responder, registrar, lembrar e acompanhar com mais consistência.', footer: 'Mais clareza na operação' },
         { index: 5, kicker: 'CONVITE', title: 'Quer aplicar isso na prática?', body: 'Acesse o link da bio e marque gratuitamente uma call de 30 minutos.', footer: 'Call gratuita de 30 minutos' }
       ];
+      const slides = Array.isArray(item.slides) && item.slides.length >= 2
+        ? item.slides.slice(0, 5).map((slide, index) => ({
+          index: index + 1,
+          kicker: slide.eyebrow || (index === 0 ? (item.type === 'program' ? 'PROGRAMA' : 'POSTAGEM') : 'CONTEÚDO'),
+          title: slide.title || title,
+          body: slide.body || caption,
+          footer: ''
+        }))
+        : fallbackSlides;
       const account = appState.account || {};
       const avatarHrefs = await Promise.all(slides.map((slide) => getPreviewImageDataUrl(previewPickAvatarSource(account, slide.index, cue, item))));
       return slides.map((slide, index) => previewSlideSvg({ ...item, visualCue: cue }, slide, avatarHrefs[index], sectorPhotoHref));
