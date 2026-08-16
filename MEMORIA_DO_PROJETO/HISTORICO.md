@@ -1,5 +1,25 @@
 # Historico
 
+## 2026-08-16 17:14 BRT
+
+Ativada a segunda automacao de comentario para Direct depois que o usuario informou que a palavra-chave `Quero` nao havia funcionado.
+
+Diagnostico e correcao:
+
+- A automacao `Instagram automatico` estava cadastrada com `enabled: false`; por isso o webhook a ignorava antes da comparacao da palavra-chave e nenhum erro era registrado no historico.
+- A campanha foi ativada mantendo `matchMode: similar`, sem restricao de publicacao e com destino `https://cliente-x-instagram.vercel.app/plataforma#inicio`.
+- As formas `Quero`, `QUERO` e `quero.` continuam normalizadas para a mesma palavra.
+- Commit: `a2ed859` (`Ativa automacao de Direct para Quero`).
+- `origin/main` e `origin/feature/modern-editorial-system` foram sincronizados nesse commit.
+
+Validacao:
+
+- JSON carregado com sucesso e campanha confirmada como ativa.
+- `node --check api/state.js`: passou.
+- `npm run validate-copy`: passou com `74` selecoes automaticas e protecao de duplicidade `ok`.
+- O arquivo publico do `main` no GitHub confirmou `enabled: true` para `Instagram automatico`.
+- Ainda falta o teste humano final: comentar `Quero` em uma publicacao e confirmar o Direct e o registro no historico.
+
 ## 2026-08-16 17:08 BRT
 
 Retomada concluida a partir do checkpoint do painel e confirmacao da nova checkagem operacional automatica.

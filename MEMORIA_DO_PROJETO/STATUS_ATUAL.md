@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 17:08 BRT
+Atualizado em: 2026-08-16 17:14 BRT
 
 ## Projeto ativo
 
@@ -29,7 +29,7 @@ Atualizado em: 2026-08-16 17:08 BRT
 - O dashboard de producao esta confirmado na versao `v4.96`.
 - A Pagina Bio permite criar ate `10` botoes. Ha um controle no cabecalho e outro campo destacado abaixo do ultimo cartao; o novo botao recebe icone, titulo, descricao e link, com rolagem e foco automaticos.
 - Cada conta permite ate `10` automacoes de Direct, cada uma com nome, tags, material e mensagens proprias. A campanha antiga permanece compativel e o historico identifica qual automacao respondeu.
-- A conta atual possui `Material 1` e `Instagram automatico`; uma automacao esta ativa. Variacoes de caixa da mesma palavra nao geram falso conflito, mas a mesma tag permanece proibida entre materiais diferentes.
+- A conta atual possui `Material 1` e `Instagram automatico`; as duas automacoes estao ativas. A segunda responde a `Quero` e entrega o link da plataforma. Variacoes de caixa da mesma palavra nao geram falso conflito, mas a mesma tag permanece proibida entre materiais diferentes.
 - O painel preserva `Meta conectada` depois de salvar as automacoes; webhook, segredo do app e token de mensagens existem na producao.
 - O Radar usa somente fontes oficiais e aceita noticias dos ultimos 7 dias; ele nao usa pack manual nem pack automatico generico como reserva.
 - Quando nao encontra pauta oficial valida e nao repetida em 7 dias, o Radar amplia automaticamente para 15 dias e depois para 30 dias. Somente bloqueia depois de esgotar as tres janelas.
@@ -130,5 +130,5 @@ Resultado:
 - Em uma retomada futura, iniciar deste checkpoint e preservar a versao `v4.96`, o CTA dos 50 prompts, as hashtags finais, a rotacao completa de quatro fotos, a foto de capa proporcional e o Story sem sobreposicao.
 - Na Pagina Bio, criar um botao real pelo novo campo, salvar e conferir o resultado na pagina publica.
 - Para a landing, preservar a promocao de `R$ 397/mes` por `R$ 197/mes`, implantacao gratuita, mais de 12 carrosseis no feed por dia, 12 Stories diarios, planos menores sob consulta e a mensagem de seguidores reais com potencial comercial sem garantia de resultado.
-- Para o Direct, cadastrar uma segunda automacao real com nova tag/material e comprovar o envio correto pelo historico, sem alterar a campanha atual dos 50 prompts.
+- Para o Direct, comentar `Quero` em uma publicacao real e comprovar o envio da automacao `Instagram automatico` pelo historico, sem alterar a campanha atual dos 50 prompts.
 - Antes de vender em escala, validar o nome `Nerion Social`, preparar termos/politica de privacidade e definir contrato e onboarding.
