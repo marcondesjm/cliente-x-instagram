@@ -74,7 +74,7 @@
 
     .hero { position: relative; padding: 76px 0 82px; overflow: hidden; background: linear-gradient(135deg, #fff 0%, #fff 58%, #f3f6f2 100%); }
     .hero::before { content: ""; position: absolute; width: 520px; height: 520px; right: -190px; top: -250px; border-radius: 50%; background: radial-gradient(circle, rgba(118,143,91,.18), rgba(118,143,91,0) 68%); pointer-events: none; }
-    .hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, .9fr) minmax(480px, 1.1fr); align-items: center; gap: clamp(36px, 4vw, 66px); }
+    .hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, .82fr) minmax(540px, 1.18fr); align-items: center; gap: clamp(32px, 3.5vw, 56px); }
     .hero-grid > div:first-child { max-width: 650px; }
     .eyebrow { display: flex; align-items: center; gap: 10px; margin: 0 0 18px; color: var(--olive-dark); font-size: 14px; font-weight: 750; letter-spacing: .01em; }
     .eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--olive); }
@@ -93,7 +93,7 @@
     .product-stage::before { content: ""; position: absolute; z-index: -1; inset: 9% -5% -10% 8%; border-radius: 32px; background: linear-gradient(145deg, rgba(99,122,70,.22), rgba(223,232,220,.35)); filter: blur(22px); transform: rotate(3deg); }
     .real-product-shot { position: relative; margin: 0; padding: 8px; overflow: hidden; border: 1px solid rgba(91,112,78,.22); border-radius: 18px; background: rgba(255,255,255,.9); box-shadow: 0 34px 80px rgba(28,43,34,.17), 0 8px 24px rgba(28,43,34,.08); transform-origin: center; }
     .real-product-shot::after { content: ""; position: absolute; z-index: 2; top: -40%; bottom: -40%; width: 26%; left: -38%; transform: rotate(14deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent); pointer-events: none; }
-    .real-product-shot img { display: block; width: 100%; aspect-ratio: 1905 / 904; object-fit: cover; object-position: top; border-radius: 11px; transition: transform .65s cubic-bezier(.2,.7,.2,1); }
+    .real-product-shot img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: 50% 8%; border-radius: 11px; image-rendering: auto; }
     .real-product-shot figcaption { display: flex; justify-content: space-between; gap: 16px; padding: 12px 5px 3px; color: var(--ink-soft); font-size: 12px; }
     .stage-signal { position: absolute; z-index: 4; display: flex; align-items: center; gap: 9px; padding: 12px 15px; border: 1px solid rgba(77,102,73,.17); border-radius: 999px; color: var(--ink); background: rgba(255,255,255,.92); box-shadow: 0 16px 38px rgba(28,43,34,.14); backdrop-filter: blur(10px); font-size: 12px; font-weight: 850; }
     .stage-signal::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #718f50; box-shadow: 0 0 0 5px rgba(113,143,80,.14); }
@@ -146,13 +146,13 @@
     .screen-card { width: min(980px, 100%); margin-inline: auto; }
     .screen-visual, .output-visual { position: relative; overflow: hidden; isolation: isolate; background: var(--paper); }
     .screen-visual::after, .output-visual::after { content: ""; position: absolute; z-index: 3; top: -45%; bottom: -45%; left: -42%; width: 24%; transform: rotate(14deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,.58), transparent); pointer-events: none; }
-    .screen-card img { display: block; width: 100%; aspect-ratio: 1905 / 904; object-fit: cover; object-position: top; transition: transform .55s cubic-bezier(.2,.7,.2,1); }
+    .screen-card img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: 50% 5%; image-rendering: auto; }
     .screen-card figcaption, .output-card figcaption { display: flex; justify-content: space-between; gap: 18px; padding: 17px 18px; border-top: 1px solid var(--line); }
     .screen-card strong, .output-card strong { display: block; font-size: 15px; }
     .screen-card span, .output-card span { color: var(--ink-soft); font-size: 13px; }
     .outputs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; width: min(980px, 100%); margin: 0 auto; }
     .output-card { display: grid; grid-template-rows: minmax(0, 1fr) auto; }
-    .output-card img { display: block; width: 100%; height: clamp(460px, 50vw, 610px); object-fit: contain; object-position: center; background: var(--paper); transition: transform .55s cubic-bezier(.2,.7,.2,1); }
+    .output-card img { display: block; width: 100%; height: clamp(460px, 50vw, 610px); object-fit: contain; object-position: center; background: var(--paper); image-rendering: auto; }
     .visual-status { position: absolute; z-index: 4; top: 16px; left: 16px; display: inline-flex; align-items: center; gap: 8px; padding: 9px 12px; border: 1px solid rgba(79,101,73,.16); border-radius: 999px; color: var(--ink); background: rgba(255,255,255,.9); box-shadow: 0 12px 28px rgba(28,43,34,.13); backdrop-filter: blur(9px); font-size: 11px; font-weight: 850; }
     .visual-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #718f50; box-shadow: 0 0 0 4px rgba(113,143,80,.13); }
     .output-visual .visual-status { top: 13px; left: 13px; }
@@ -240,13 +240,9 @@
     .motion-ready .hero-actions { animation-delay: .29s; }
     .motion-ready .trust { animation-delay: .36s; }
     .motion-ready .product-stage .real-product-shot::after { animation: screen-sheen 1.25s 1.05s cubic-bezier(.2,.7,.2,1) both; }
-    .motion-ready .product-stage .real-product-shot { animation: screen-float 7s 1.5s ease-in-out infinite; }
     .motion-ready .stage-signal { opacity: 0; transform: translateY(12px) scale(.9); animation: signal-pop .7s .95s cubic-bezier(.16,.9,.25,1.25) forwards; }
     .motion-ready .stage-signal.publish-live { animation-delay: 1.15s; }
     .motion-ready .reveal.is-visible .screen-visual::after, .motion-ready .reveal.is-visible .output-visual::after { animation: screen-sheen 1.2s .35s cubic-bezier(.2,.7,.2,1) both; }
-    .motion-ready .screen-card.reveal.is-visible img { animation: editor-breathe 8s 1s ease-in-out infinite; }
-    .motion-ready .output-card.reveal.is-visible:nth-child(odd) img { animation: creative-float 7s .7s ease-in-out infinite; }
-    .motion-ready .output-card.reveal.is-visible:nth-child(even) img { animation: creative-float 7s 1.1s ease-in-out infinite reverse; }
     .motion-ready .reveal .visual-status { opacity: 0; transform: translateY(10px) scale(.92); transition: opacity .55s ease calc(var(--reveal-delay, 0ms) + 520ms), transform .65s cubic-bezier(.16,.9,.25,1.2) calc(var(--reveal-delay, 0ms) + 520ms); }
     .motion-ready .reveal.is-visible .visual-status { opacity: 1; transform: translateY(0) scale(1); }
     .motion-ready .reveal { opacity: 0; filter: blur(7px); transform: translate3d(var(--reveal-x, 0), 38px, 0) scale(.965) rotateX(3deg); transform-origin: 50% 100%; transition: opacity .78s ease var(--reveal-delay, 0ms), filter .78s ease var(--reveal-delay, 0ms), transform .85s cubic-bezier(.16,.8,.24,1) var(--reveal-delay, 0ms); }
@@ -256,14 +252,10 @@
     @keyframes hero-in { to { opacity: 1; filter: blur(0); transform: translateY(0); } }
     @keyframes stage-reveal { to { opacity: 1; clip-path: inset(0 0 0 0 round 18px); transform: translate3d(0,0,0) rotateY(0) rotateX(0) scale(1); } }
     @keyframes screen-sheen { 0% { left: -38%; opacity: 0; } 25% { opacity: 1; } 100% { left: 118%; opacity: 0; } }
-    @keyframes screen-float { 0%, 100% { transform: translateY(0) rotate(.15deg); } 50% { transform: translateY(-8px) rotate(-.15deg); } }
     @keyframes signal-pop { to { opacity: 1; transform: translateY(0) scale(1); } }
-    @keyframes editor-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.018); } }
-    @keyframes creative-float { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-7px) scale(1.012); } }
 
     @media (hover: hover) {
-      .real-product-shot:hover img, .screen-card:hover img { transform: scale(1.012); }
-      .output-card:hover img, .automation-photo:hover img { transform: scale(1.025); }
+      .automation-photo:hover img { transform: scale(1.025); }
       .card, .check-item, .offer, details { transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease; }
       .card:hover, .check-item:hover, details:hover { transform: translateY(-3px); border-color: rgba(54,81,64,.28); box-shadow: 0 12px 30px rgba(18,24,21,.06); }
     }
