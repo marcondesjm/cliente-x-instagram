@@ -535,7 +535,7 @@
       gap: 10px;
     }
 
-    .panel, .metric, .timeline-item, .run-row {
+    .panel, .metric, .timeline-item {
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: var(--radius);
@@ -959,44 +959,6 @@
       font-size: 16px;
       font-weight: 900;
       line-height: 1.2;
-    }
-
-    .runs {
-      display: grid;
-      gap: 8px;
-    }
-
-    .run-row {
-      display: grid;
-      grid-template-columns: minmax(82px, 96px) minmax(0, 1fr) minmax(78px, auto);
-      gap: 12px;
-      align-items: center;
-      padding: 11px 12px;
-      box-shadow: none;
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .run-time {
-      font-size: 13px;
-      font-weight: 900;
-      color: var(--muted);
-    }
-
-    .run-name {
-      min-width: 0;
-      font-size: 14px;
-      font-weight: 900;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .run-meta {
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 700;
-      margin-top: 2px;
     }
 
     .preview {
@@ -1621,16 +1583,6 @@
       .panel-head button {
         width: fit-content;
       }
-      .run-row {
-        grid-template-columns: minmax(0, 1fr) auto;
-        align-items: start;
-      }
-      .run-time {
-        grid-column: 1 / -1;
-      }
-      .run-name {
-        white-space: normal;
-      }
       .preview { grid-template-columns: 1fr; }
       .preview img { width: min(260px, 100%); }
       .plan-preview { grid-template-columns: 1fr; }
@@ -1718,7 +1670,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v5.08</div>
+        <div class="header-version" id="headerVersion">Versão atual: v5.09</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -1734,9 +1686,7 @@
             </select>
           </label>
         </div>
-        <a class="button advanced-action" href="https://github.com/marcondesjm/cliente-x-instagram/actions/workflows/instagram-feed-cliente-x.yml" target="_blank" rel="noreferrer">GitHub Actions</a>
         <button class="advanced-action" id="redeployVercel" type="button">Redeploy Vercel</button>
-        <button class="primary advanced-action" id="refreshRuns" type="button">Atualizar runs</button>
         <button id="logoutButton" type="button">Sair</button>
       </div>
     </header>
@@ -2161,18 +2111,6 @@
           </div>
         </div>
 
-        <div class="panel">
-          <div class="panel-head">
-            <div>
-              <div class="section-label">GitHub Actions</div>
-              <h2>Últimas execuções</h2>
-            </div>
-            <span class="status-pill" id="runsStatus">Aguardando</span>
-          </div>
-          <div class="runs" id="runsList">
-            <div class="empty">Clique em atualizar para buscar os runs públicos do GitHub.</div>
-          </div>
-        </div>
       </section>
 
       <aside class="grid">
@@ -2736,7 +2674,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     </main>
 
     <footer>
-      Dashboard local gerado para o projeto cliente-x-instagram. Os runs do GitHub dependem da API pública e podem levar alguns segundos para atualizar.
+      Operação na nuvem para conteúdo, agenda, automações e acompanhamento da conta.
     </footer>
   </div>
 
@@ -2813,7 +2751,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       bio: ['bioPagePanel'],
       clients: ['clientPortfolio', 'newAccountStatus', 'usersStatus'],
       billing: ['stripeSetupStatus', 'accessStatus'],
-      system: ['systemCapabilitiesGrid', 'runsList', 'healthStatus', 'watchdogPanel', 'versionStatus', 'maintenanceStatus']
+      system: ['systemCapabilitiesGrid', 'healthStatus', 'watchdogPanel', 'versionStatus', 'maintenanceStatus']
     };
 
     function activateDashboardView(view = 'overview') {
@@ -2957,7 +2895,6 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         document.getElementById('adminPassword').value = '';
         showApp(session);
         await runOperationalCheck();
-        await refreshRuns();
       } catch (loginError) {
         error.textContent = loginError.message;
       } finally {
@@ -3434,7 +3371,6 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       directHistoryPage = 1;
       setMessage(`Carregando conta ${appState.selectedAccount}...`, 'warn');
       await loadState();
-      await refreshRuns();
     }
 
     function renderMaintenance(maintenance) {
@@ -6972,68 +6908,6 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       return `Alcance/insights não liberado: ${error || 'sem retorno da Graph API'}.`;
     }
 
-    function runStatusClass(run) {
-      if (run.status !== 'completed') return 'warn';
-      if (run.conclusion === 'success') return 'good';
-      return 'bad';
-    }
-
-    function renderRuns(runs) {
-      const runsList = document.getElementById('runsList');
-      const runsStatus = document.getElementById('runsStatus');
-      if (!runs.length) {
-        runsList.innerHTML = '<div class="empty">Nenhum run retornado pela API.</div>';
-        runsStatus.textContent = 'Vazio';
-        runsStatus.className = 'status-pill warn';
-        return;
-      }
-
-      const latest = runs[0];
-      const statusClass = runStatusClass(latest);
-      runsStatus.textContent = latest.status === 'completed' ? latest.conclusion : latest.status;
-      runsStatus.className = `status-pill ${statusClass}`;
-
-      runsList.innerHTML = runs.map((run) => {
-        const cls = runStatusClass(run);
-        const when = dateFormatter.format(new Date(run.created_at));
-        const label = run.event === 'schedule' ? 'Agendado' : 'Manual';
-        return `
-          <a class="run-row" href="${run.html_url}" target="_blank" rel="noreferrer">
-            <div class="run-time">${when}</div>
-            <div>
-              <div class="run-name">${run.name || 'Instagram Feed Cliente X'}</div>
-              <div class="run-meta">${label} · ${run.status}</div>
-            </div>
-            <span class="status-pill ${cls}">${run.conclusion || run.status}</span>
-          </a>
-        `;
-      }).join('');
-    }
-
-    async function refreshRuns() {
-      const button = document.getElementById('refreshRuns');
-      const runsStatus = document.getElementById('runsStatus');
-      button.disabled = true;
-      button.textContent = 'Atualizando';
-      runsStatus.textContent = 'Buscando';
-      runsStatus.className = 'status-pill warn';
-
-      try {
-        const url = `https://api.github.com/repos/${DATA.repo}/actions/workflows/${DATA.workflow}/runs?per_page=8`;
-        const response = await fetch(url, { headers: { Accept: 'application/vnd.github+json' } });
-        if (!response.ok) throw new Error(`GitHub API ${response.status}`);
-        const payload = await response.json();
-        renderRuns(payload.workflow_runs || []);
-      } catch (error) {
-        document.getElementById('runsList').innerHTML = `<div class="empty">${error.message}</div>`;
-        runsStatus.textContent = 'Falhou';
-        runsStatus.className = 'status-pill bad';
-      } finally {
-        button.disabled = false;
-        button.textContent = 'Atualizar runs';
-      }
-    }
-
     async function boot() {
       setupDashboardNavigation();
       renderSchedule();
@@ -7044,7 +6918,6 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       bindEvents();
       if (await checkSession()) {
         await runOperationalCheck();
-        await refreshRuns();
       }
       const threadsParams = new URLSearchParams(window.location.search);
       if (threadsParams.get('threads') === 'connected') {
@@ -7131,7 +7004,6 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         }
       });
       document.getElementById('logoutButton').addEventListener('click', logout);
-      document.getElementById('refreshRuns').addEventListener('click', refreshRuns);
       document.getElementById('accountSelect').addEventListener('change', switchAccount);
       document.getElementById('redeployVercel').addEventListener('click', redeployVercel);
       document.getElementById('forceWatchdog').addEventListener('click', forceWatchdog);

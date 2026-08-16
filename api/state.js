@@ -43,11 +43,11 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v5.08',
+  appVersion: 'v5.09',
   status: 'funcionando',
   stableCommit: '3314cfb',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/3314cfb',
-  description: 'A rotação visual usa sete fotos e evita repetir a imagem de capa nas seis publicações seguintes.'
+  description: 'O Checklist operacional concentra a saúde da plataforma sem duplicar a lista técnica de execuções.'
 };
 const MAINTENANCE = {
   githubToken: {
