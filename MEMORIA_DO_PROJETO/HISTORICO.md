@@ -27,6 +27,12 @@ Validacao:
 - `git diff --check`: passou.
 - Preview Vercel criado em `dpl_egniMxiHNJGBnY72Rp6tQZkH1AcQ`; a tela publica de login carregou corretamente. A area autenticada foi validada pela estrutura e CSS porque a sessao nao e compartilhada com o dominio de preview.
 
+Checkpoint e producao:
+
+- Commit funcional: `f35b211` (`Reorganiza cadastro de empresas no painel`), enviado para `origin/main` e `origin/feature/modern-editorial-system`.
+- Deploy de producao: `dpl_783HGZmg6Zy311LxLDvXC6YeNz9R`, associado a `https://cliente-x-instagram.vercel.app`.
+- Producao respondeu `HTTP 200` e confirmou `v4.99`, largura integral em Clientes, quatro passos guiados, CTA novo e regras responsivas.
+
 ## 2026-08-16 18:35 BRT
 
 Corrigido o rodizio do Radar que concentrava publicacoes em `AWS`, `n8n` e `OpenAI`, apesar de existirem mais fontes cadastradas.

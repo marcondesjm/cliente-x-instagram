@@ -12,7 +12,7 @@ Atualizado em: 2026-08-16 18:42 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `763bba1` (`Balanceia fontes do Radar pelo historico`).
+- Checkpoint funcional atual: `f35b211` (`Reorganiza cadastro de empresas no painel`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
@@ -28,6 +28,7 @@ Atualizado em: 2026-08-16 18:42 BRT
 - O CTA principal e `Criar empresa e gerar convite`; o convite seguro aparece em destaque logo abaixo.
 - Usuarios por conta ficam depois do onboarding e usam uma grade mais ampla.
 - No celular, todas as etapas e campos ficam em uma coluna.
+- Producao: deploy `dpl_783HGZmg6Zy311LxLDvXC6YeNz9R`, versao `v4.99` e novo layout confirmados por `HTTP 200`.
 
 ## Rodizio atual das fontes do Radar
 
