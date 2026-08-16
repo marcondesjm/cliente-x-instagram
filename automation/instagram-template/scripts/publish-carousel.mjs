@@ -1705,14 +1705,16 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const noteWidth = mode === 'minimal' ? 650 : mode === 'poster' || mode === 'magazine' ? 430 : mode === 'split' || placement?.includes?.('layout-left') ? 380 : 390;
   const noteFontSize = engagementRole === 'cta' ? 24 : body.length > 170 ? 21 : body.length > 125 ? 23 : body.length > 95 ? 25 : 27;
   const noteLines = estimateTextLines(body, noteWidth, noteFontSize);
-  const closeFontScale = creativeBody.close.length > 110 ? 0.68 : creativeBody.close.length > 82 ? 0.72 : creativeBody.close.length > 58 ? 0.78 : 0.84;
+  // O texto de fechamento ocupa a área colorida do cartão. Escalas muito
+  // baixas deixavam letras pequenas e um grande vazio no bloco de apoio.
+  const closeFontScale = creativeBody.close.length > 110 ? 0.82 : creativeBody.close.length > 82 ? 0.88 : creativeBody.close.length > 58 ? 0.96 : 1.04;
   const closeLines = creativeBody.close ? estimateTextLines(creativeBody.close, noteWidth - 32, noteFontSize * closeFontScale) : 0;
   const closeMinHeight = creativeBody.close
-    ? Math.max(92, Math.min(184, 40 + (closeLines * noteFontSize * closeFontScale * 1.34)))
+    ? Math.max(122, Math.min(230, 52 + (closeLines * noteFontSize * closeFontScale * 1.36)))
     : 0;
   const noteMinHeight = engagementRole === 'cta'
-    ? Math.min(440, Math.max(340, 178 + closeMinHeight + (noteLines * noteFontSize * 0.72)))
-    : Math.min(520, Math.max(330, 160 + closeMinHeight + (noteLines * noteFontSize * 0.98)));
+    ? Math.min(440, Math.max(300, 150 + closeMinHeight + (noteLines * noteFontSize * 0.72)))
+    : Math.min(460, Math.max(250, 122 + closeMinHeight + (noteLines * noteFontSize * 0.98)));
   const progressItems = Array.from({ length: total }, (_, itemIndex) => (
     `<span class="${itemIndex + 1 <= index ? 'active' : ''}"></span>`
   )).join('');
@@ -1812,7 +1814,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .note::before { content: "${String(index).padStart(2, '0')}"; position: absolute; left: 28px; top: 30px; width: 56px; height: 56px; border-radius: 50%; background: ${accent}; color: #fff6ef; display: grid; place-items: center; font-size: 25px; font-weight: 900; }
     .note .lead { display: block; margin-bottom: 5px; color: ${accent}; font-size: 0.78em; line-height: 1.05; font-weight: 900; }
     .note .emphasis { display: block; max-width: 100%; color: ${slideStyle.text}; font-size: 1.12em; line-height: 1; font-weight: 900; }
-    .note .close { display: block; max-width: 100%; min-height: ${closeMinHeight}px; margin-top: 14px; padding: 14px 16px 15px; border-radius: 10px; background: ${accent}; color: #fff6ef; font-size: ${closeFontScale}em; line-height: 1.16; font-weight: 900; overflow-wrap: anywhere; }
+    .note .close { display: block; max-width: 100%; min-height: ${closeMinHeight}px; margin-top: 14px; padding: 18px 18px 19px; border-radius: 12px; background: ${accent}; color: #fff6ef; font-size: ${closeFontScale}em; line-height: 1.16; font-weight: 900; overflow-wrap: anywhere; }
     .note .close:empty { display: none; }
     .panel {
       position: absolute;
