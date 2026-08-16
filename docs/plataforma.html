@@ -97,8 +97,9 @@
     .promo-volume { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
     .promo-volume span { padding: 6px 8px; border: 1px solid rgba(73,101,67,.13); border-radius: 7px; color: #3f5745; background: rgba(255,255,255,.7); font-size: 10px; font-weight: 850; }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
-    .trust { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 28px; color: var(--ink-soft); font-size: 13px; font-weight: 750; }
-    .trust span::before { content: "✓"; margin-right: 7px; color: var(--olive); font-weight: 950; }
+    .trust { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin-top: 26px; color: #435149; font-size: 12px; font-weight: 850; }
+    .trust span { display: flex; align-items: center; gap: 9px; min-height: 44px; padding: 9px 11px; border: 1px solid rgba(78,105,75,.13); border-radius: 10px; background: rgba(247,250,247,.86); }
+    .trust span::before { content: "✓"; width: 22px; height: 22px; flex: 0 0 22px; display: grid; place-items: center; border-radius: 50%; color: white; background: var(--olive); box-shadow: 0 5px 12px rgba(75,101,68,.2); font-size: 11px; font-weight: 950; }
 
     .product-stage { position: relative; display: grid; place-items: center; width: 100%; min-height: 520px; margin-inline: auto; isolation: isolate; perspective: 1100px; }
     .product-stage::before { content: ""; position: absolute; z-index: -1; inset: 9% -5% -10% 8%; border-radius: 32px; background: linear-gradient(145deg, rgba(99,122,70,.22), rgba(223,232,220,.35)); filter: blur(22px); transform: rotate(3deg); }
@@ -371,7 +372,7 @@
             <a class="button light" href="#como-funciona">Entender a plataforma</a>
           </div>
           <div class="trust" aria-label="Diferenciais rápidos">
-            <span>Presença constante</span><span>Conteúdo atual</span><span>Mais oportunidades de engajamento</span><span>Público com potencial de compra</span>
+            <span>Presença constante</span><span>Conteúdo sempre atual</span><span>Mais engajamento</span><span>Potencial de compra</span>
           </div>
         </div>
 
