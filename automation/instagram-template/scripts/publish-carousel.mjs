@@ -5,7 +5,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from
 import { basename, dirname, extname, isAbsolute, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildBrandContext } from '../../../lib/brand-analysis.js';
-import { buildResearchPack, EDITORIAL_SOURCES, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
+import { buildResearchPack, EDITORIAL_SOURCES, factualSummary, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const TEMPLATE_DIR = resolve(ROOT, 'automation', 'instagram-template');
@@ -2377,10 +2377,16 @@ function validatePack(pack) {
   if (pack.research) {
     const sourceUrl = String(pack.research.sourceUrl || '').trim();
     const sourceTitle = String(pack.research.sourceTitle || '').trim();
-    const combinedText = [pack.caption, ...(pack.slides || []).flatMap((slide) => [slide.title, slide.body])].join('\n');
+    const sourceFact = String(pack.research.sourceFact || '').trim();
     if (!/^https:\/\//i.test(sourceUrl)) throw new Error('Radar bloqueado: link HTTPS da matéria original ausente.');
     if (sourceTitle.length < 12) throw new Error('Radar bloqueado: título original da matéria ausente ou insuficiente.');
-    if (!combinedText.includes(sourceTitle)) throw new Error('Radar bloqueado: o conteúdo não apresenta o título/contexto real da matéria.');
+    if (sourceFact.length < 45 || normalizeContentFingerprint(sourceFact) === normalizeContentFingerprint(sourceTitle)) {
+      throw new Error('Radar bloqueado: o contexto factual apenas repete o título da matéria.');
+    }
+    if (/^a matéria informa:?/i.test(sourceFact)) {
+      throw new Error('Radar bloqueado: o fato da matéria não pode ser um rótulo repetindo o título.');
+    }
+    if (!String(pack.caption || '').includes(sourceTitle)) throw new Error('Radar bloqueado: a legenda não apresenta o título original da matéria.');
     if (!String(pack.caption || '').includes(sourceUrl)) throw new Error('Radar bloqueado: a legenda não contém o link completo da matéria.');
     const coverTitle = String(pack.slides?.[0]?.title || '');
     if (FORBIDDEN_GENERIC_RESEARCH_COVERS.some((pattern) => pattern.test(coverTitle))) {
@@ -3377,6 +3383,13 @@ async function main() {
       offer: 'consultoria e automações com IA'
     });
     validatePack(researchIntegrityProbe);
+    const realSummaryProbe = factualSummary({
+      title: 'CEO da Anthropic: rejeição à IA é crise de confiança no setor',
+      summary: 'Dario Amodei nega pessimismo em relação às inteligências artificiais e reconhece que o público geral questiona os ganhos com o avanço da tecnologia. O post CEO da Anthropic: rejeição à IA é crise de confiança no setor apareceu primeiro em Olhar Digital.'
+    });
+    if (!/Dario Amodei/i.test(realSummaryProbe) || /O post apareceu/i.test(realSummaryProbe)) {
+      throw new Error('Extração do contexto factual da matéria falhou.');
+    }
     const genericResearchProbe = {
       ...researchIntegrityProbe,
       slides: researchIntegrityProbe.slides.map((slide, index) => index === 0
@@ -3409,6 +3422,7 @@ async function main() {
       radarSemanticGuard: 'ok',
       radarSourceIntegrityGuard: 'ok'
       ,genericResearchCoverGuard: 'ok'
+      ,factualArticleContextGuard: 'ok'
       ,feedArchitectureGuard: '1080x1350-4:5'
       ,storySafeZoneGuard: '250-1170-500'
     }, null, 2));
