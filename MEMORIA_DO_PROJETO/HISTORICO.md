@@ -19,7 +19,7 @@ Validado:
 
 Deploy/publicacao:
 
-- Deploy: aguardando envio deste checkpoint.
+- Deploy: sim. Producao Vercel confirmada em `https://cliente-x-instagram.vercel.app/` com versao `v4.73`.
 - Instagram real: nao foi feita nova publicacao para esta correcao; ela vale para os proximos posts gerados.
 
 ## 2026-08-15 22:18 BRT

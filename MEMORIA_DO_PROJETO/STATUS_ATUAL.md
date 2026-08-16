@@ -6,7 +6,7 @@ Atualizado em: 2026-08-15 22:24 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Commit atual: a confirmar apos o deploy da correcao visual `v4.73`
+- Commit atual: `757b02c` (`Avoid sector icon over context photos`)
 - Dashboard: `docs/dashboard.html`
 - Versao visivel atual: `v4.73`
 
@@ -14,7 +14,7 @@ Atualizado em: 2026-08-15 22:24 BRT
 
 - Workspace de codigo limpo antes deste registro; esta atualizacao altera somente os arquivos de memoria.
 - O projeto moderno esta em uma linha separada do `cliente-x-instagram` original.
-- A correcao `v4.73` esta validada localmente e aguardando o deploy deste checkpoint.
+- A correcao `v4.73` esta validada e confirmada em producao.
 - A publicacao real foi executada pelo fluxo operacional do repositorio irmao `cliente-x-instagram`, na branch `main`, commit `9449559`.
 
 ## Validacoes executadas
@@ -49,7 +49,7 @@ Validacao de operacao confirmada:
 ## Proximos pontos provaveis
 
 - Monitorar a entrega do story e o engajamento do carrossel publicado.
-- Confirmar o deploy da versao `v4.73` e a regra nos proximos renders automaticos.
+- Conferir a regra nos proximos renders automaticos.
 - Conferir os proximos horarios automaticos para evitar repeticao de pauta ja publicada.
 - Para alteracoes de codigo, identificar primeiro se o alvo e `cliente-x-instagram-modern` ou o fluxo operacional `cliente-x-instagram`.
 
