@@ -3118,7 +3118,7 @@ async function main() {
       console.log(`Radar editorial: ${editorialResearch.packs.length} temas recentes encontrados em fontes oficiais.`);
       if (editorialResearch.failures.length) console.log(`Radar editorial: ${editorialResearch.failures.length} fonte(s) indisponivel(is); fluxo continuara com as demais.`);
     } catch (error) {
-      console.log(`Radar editorial indisponivel (${error.message}). Acervo local mantido para a postagem nao parar.`);
+      console.log(`Radar editorial indisponivel (${error.message}). A publicacao real sera bloqueada para nao usar conteudo generico.`);
     }
   }
   const baseSelectionPacks = profilePacks.length ? mergePacks(profilePacks, packs) : packs;
@@ -3222,6 +3222,9 @@ async function main() {
       const recentMedia = await fetchRecentMedia(userId, token);
       const fresh = pickFreshPack(automaticSelectionPacks, today, generationSlotIndex, recentMedia, publicationHistory);
       if (!fresh.pack) {
+        if (radar.enabled) {
+          throw new Error('Radar ativo: nenhuma pauta oficial recente e nao repetida esta disponivel para este horario. Nenhum post foi publicado.');
+        }
         const autoFresh = pickFreshPack(autoPacks, today, generationSlotIndex, recentMedia, publicationHistory);
         if (!autoFresh.pack) {
           const fallbackPack = buildLastResortPack(today, generationSlotIndex);
@@ -3242,6 +3245,10 @@ async function main() {
         skippedDuplicates = fresh.skippedDuplicates;
       }
     }
+  }
+
+  if (!args.renderOnly && !args.dryRun && radar.enabled && !pack?.research?.sourceUrl) {
+    throw new Error('Radar ativo: a pauta selecionada nao possui uma fonte oficial registrada. Nenhum post foi publicado.');
   }
 
   const runId = `${timestampSaoPaulo()}-slot-${slotIndex}${args.renderOnly ? '-render-only' : ''}`;
