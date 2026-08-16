@@ -1,5 +1,17 @@
 # Historico
 
+## 2026-08-15 23:15 BRT
+
+Corrigido o fluxo de publicacao imediata para usar somente o Radar de noticias oficiais de IA do dia.
+
+- Problema encontrado: `Publicar agora` enviava o pack manual aberto no editor, mesmo quando o dashboard mostrava pautas do Radar.
+- Correcao: `api/publish-now.js` agora busca uma pauta oficial atual, adapta o conteudo para empresas e a envia como `pack_json` ao publicador.
+- Regra de seguranca: sem noticia oficial elegivel no mesmo dia, a publicacao falha de forma explicita e nada e enviado ao Instagram.
+- A conta `cliente-x` passou a ter Radar ativo com periodo `Somente hoje`.
+- Painel e producao atualizados para `v4.78`.
+- Commit publicado: `4e0b3f2`.
+
+
 ## 2026-08-15 22:45 BRT
 
 Corrigida a ordem das hashtags nas legendas automaticas.

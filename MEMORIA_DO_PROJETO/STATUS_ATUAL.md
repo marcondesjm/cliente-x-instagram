@@ -72,3 +72,13 @@ Validacao de operacao confirmada:
 - O upload de imagens do painel tenta ImgBB primeiro; se o ImgBB retornar limite, o endpoint salva em `docs/uploads/dashboard/` via GitHub e devolve uma URL publica `raw.githubusercontent.com` para uso imediato.
 - Para prova de publicacao real, exigir conta, permalink, horario e etapa exata.
 - Bump de versao visivel deve atualizar `api/state.js` e `docs/dashboard.html` juntos quando houver mudanca aprovada para commit/deploy.
+
+## Radar estrito de noticias do dia — 2026-08-15
+
+- Versao de producao: `v4.78`.
+- O botao `Publicar agora` nao usa mais o pack manual do editor quando o Radar esta ativo.
+- Antes de publicar, o servidor busca uma noticia oficial de IA publicada no mesmo dia e adapta a pauta para empresas, com foco em atendimento, vendas, operacao e processos.
+- Se nao existir noticia oficial elegivel no dia, a publicacao e bloqueada. Nunca deve cair em tema antigo ou conteudo generico como reserva.
+- Validacoes executadas: `node --check api/publish-now.js`, `node --check api/state.js` e `npm run validate-copy`.
+- Publicacao anterior confirmada: `https://www.instagram.com/p/DcFVlchE8vj/`. Ela usou o fluxo antigo/manual; nao representa a regra nova.
+- Para disparar novos testes, o painel exige sessao de administrador ativa.
