@@ -1,5 +1,26 @@
 # Historico
 
+## 2026-08-15 22:45 BRT
+
+Corrigida a ordem das hashtags nas legendas automaticas.
+
+Resumo:
+
+- O bloco padrao dos 50 prompts estava removendo hashtags ao ser reposicionado no fim da legenda.
+- As hashtags agora sao preservadas e aparecem depois do CTA, no final real do texto.
+- A regra vale para pautas do Radar e demais posts que passam pelo aprimoramento automatico de legenda.
+
+Validado:
+
+- `npm run validate-copy`: passou.
+- `npm run render-only`: passou.
+- Legenda renderizada confirmou as hashtags `#automacao #inteligenciaartificial #gestao #processos #negocios #produtividade` apos o bloco dos 50 prompts.
+
+Deploy/publicacao:
+
+- Deploy: sim. Producao Vercel confirmada com versao `v4.77`.
+- Instagram real: nao foi enviada nova postagem; a correcao vale para os proximos posts automaticos.
+
 ## 2026-08-15 22:40 BRT
 
 Atualizado o visual das noticias do Radar para representar a propria fonte da pauta.
