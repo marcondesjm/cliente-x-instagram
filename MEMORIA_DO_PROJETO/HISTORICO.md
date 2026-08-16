@@ -1,5 +1,28 @@
 # Historico
 
+## 2026-08-16 13:01 BRT
+
+Checkpoint da criacao de novos botoes na Pagina Bio salvo a pedido do usuario.
+
+Alteracao:
+
+- O controle pequeno do cabecalho foi renomeado para `+ Adicionar novo botao`.
+- Foi criado um segundo campo destacado logo abaixo do ultimo botao cadastrado, evitando que o usuario precise voltar ao topo depois de editar o Botao 4 ou seguintes.
+- O campo explica que o novo destino pode ter icone, titulo, descricao e link.
+- Ao adicionar, o painel cria o proximo cartao, rola suavemente ate ele, posiciona o cursor no campo Titulo e mostra confirmacao visivel antes de salvar.
+- A interface impede adicionar mais de `10` botoes e informa o limite; o limite corresponde ao normalizador da API.
+- No celular, o campo e o botao passam para uma coluna e o botao ocupa toda a largura.
+- Os dois controles usam a mesma funcao `addBioLink()`, preservando remover, escolher botao principal, upload de icone, previa e salvamento existentes.
+
+Versao e validacao:
+
+- Versao visivel atualizada de `v4.94` para `v4.95` em `api/state.js` e `docs/dashboard.html`.
+- `npm run validate-copy`: passou.
+- `node --check api/state.js`: passou.
+- Producao respondeu HTTP `200` e continha `v4.95`, `Criar mais um botao`, `addBioLinkBottom` e a mensagem de limite.
+- Commit publicado: `6ca72ab` (`Adiciona novo botao na pagina Bio`).
+- Deploy Vercel: `dpl_DtMP5Ck78euCZ7ibCYkww1bwaGDY`, alias preservado em `https://cliente-x-instagram.vercel.app/`.
+
 ## 2026-08-16 12:53 BRT
 
 Checkpoint das animacoes refinadas da landing salvo a pedido do usuario.

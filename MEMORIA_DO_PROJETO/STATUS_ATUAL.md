@@ -1,23 +1,24 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 12:53 BRT
+Atualizado em: 2026-08-16 13:01 BRT
 
 ## Projeto ativo
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Commit de codigo em producao: `6496736` (`Anima galeria de produto da landing`).
-- Checkpoint completo aprovado pelo usuario: `6496736`.
+- Commit de codigo em producao: `6ca72ab` (`Adiciona novo botao na pagina Bio`).
+- Checkpoint completo aprovado pelo usuario: `6ca72ab`.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing em producao: `6496736` (`Anima galeria de produto da landing`).
-- Versao visivel atual: `v4.94`
+- Versao visivel atual: `v4.95`
 
 ## Estado confirmado
 
 - Workspace limpo no momento deste registro e checkpoint aprovado pelo usuario ("muito bom").
-- O dashboard de producao esta confirmado na versao `v4.94`.
+- O dashboard de producao esta confirmado na versao `v4.95`.
+- A Pagina Bio permite criar ate `10` botoes. Ha um controle no cabecalho e outro campo destacado abaixo do ultimo cartao; o novo botao recebe icone, titulo, descricao e link, com rolagem e foco automaticos.
 - O Radar usa somente fontes oficiais e aceita noticias dos ultimos 7 dias; ele nao usa pack manual nem pack automatico generico como reserva.
 - A trava agora vale para `Publicar agora`, horarios automaticos, packs manuais e posts agendados: toda publicacao real com Radar ativo exige `research.sourceUrl`.
 - Se nao houver noticia oficial elegivel e nao repetida, o publicador bloqueia o envio em vez de publicar conteudo solto.
@@ -100,7 +101,8 @@ Resultado:
 
 - Acompanhar os proximos posts automaticos e conferir se o publico responde melhor ao novo tom humano e consultivo.
 - Acompanhar a resposta ao post `DcFh6FWG8f0` e manter a confirmacao por permalink em cada nova publicacao manual.
-- Conferir o primeiro post automatico da `v4.94` por permalink e inspecionar visualmente o Story publicado.
-- Em uma retomada futura, iniciar deste checkpoint e preservar a versao `v4.94`, o CTA dos 50 prompts, as hashtags finais, a rotacao completa de quatro fotos, a foto de capa proporcional e o Story sem sobreposicao.
+- Conferir o primeiro post automatico posterior a trava estrita do Radar por permalink e inspecionar visualmente o Story publicado.
+- Em uma retomada futura, iniciar deste checkpoint e preservar a versao `v4.95`, o CTA dos 50 prompts, as hashtags finais, a rotacao completa de quatro fotos, a foto de capa proporcional e o Story sem sobreposicao.
+- Na Pagina Bio, criar um botao real pelo novo campo, salvar e conferir o resultado na pagina publica.
 - Para a landing, preservar a oferta de `R$ 397/mes`, implantacao gratuita, publicacoes diarias conforme o calendario contratado, planos menores sob consulta e a mensagem de seguidores reais com potencial comercial sem garantia de resultado.
 - Antes de vender em escala, validar o nome `Nerion Social`, preparar termos/politica de privacidade e definir contrato e onboarding.
