@@ -2758,14 +2758,20 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     .mode-editorial p { max-width: 560px; font-size: 39px; }
     .mode-editorial .visual-card { display: block; left: 650px; right: 56px; top: 520px; height: 720px; }
     .mode-editorial .avatar { right: 92px; bottom: ${STORY_SAFE_BOTTOM + 20}px; width: 300px; height: 390px; transform: none; }
-    .title-long h1 { margin-top: 38px; max-width: 900px; font-size: 68px; line-height: .96; }
-    .title-long p { margin-top: 22px; max-width: 520px; font-size: 34px; }
-    .title-long .feed-cta { margin-top: 18px; max-width: 560px; padding: 17px 24px; font-size: 27px; }
-    .title-long .avatar { right: 72px; bottom: ${STORY_SAFE_BOTTOM}px; width: 290px; height: 330px; }
-    .title-very-long h1 { margin-top: 34px; font-size: 58px; line-height: .94; }
-    .title-very-long p { margin-top: 18px; font-size: 31px; }
-    .title-very-long .feed-cta { margin-top: 16px; max-width: 540px; font-size: 25px; }
-    .title-very-long .avatar { width: 270px; height: 310px; }
+    .title-long { padding-left: 88px; padding-right: 88px; }
+    .title-long::before { left: 88px; right: 88px; }
+    .title-long .brand { margin-left: 0; font-size: 38px; }
+    .title-long .badge { margin-top: 46px; font-size: 31px; }
+    .title-long h1 { margin-top: 42px; max-width: 860px; font-size: 64px; line-height: .98; }
+    .title-long p { margin-top: 24px; max-width: 580px; font-size: 33px; }
+    .title-long .feed-cta { margin-top: 20px; max-width: 580px; padding: 18px 25px; font-size: 27px; }
+    .title-long .avatar { right: 88px; bottom: ${STORY_SAFE_BOTTOM}px; width: 340px; height: 430px; transform: none; }
+    .title-long .note { left: 88px; bottom: ${STORY_SAFE_BOTTOM + 120}px; width: 560px; padding: 24px 30px; }
+    .title-long footer { left: 88px; bottom: ${STORY_SAFE_BOTTOM + 40}px; }
+    .title-very-long h1 { margin-top: 36px; font-size: 54px; line-height: .98; }
+    .title-very-long p { margin-top: 20px; font-size: 30px; }
+    .title-very-long .feed-cta { margin-top: 17px; max-width: 560px; font-size: 25px; }
+    .title-very-long .avatar { width: 320px; height: 400px; }
   </style>
 </head>
 <body>
@@ -2866,12 +2872,12 @@ async function renderStory(runDir, pack, account, style, renderContext = {}) {
   const imagePath = join(runDir, 'story.jpg');
   writeFileSync(htmlPath, html, 'utf8');
   await page.goto(`file://${htmlPath.replace(/\\/g, '/')}`);
-  const storyOverlap = await page.evaluate(() => {
+  const storyLayout = await page.evaluate(({ safeTop, safeBottom, storyHeight, storyWidth }) => {
     const copyBlocks = [...document.querySelectorAll('h1, p, .feed-cta')].filter((element) => getComputedStyle(element).display !== 'none');
     const image = document.querySelector('.avatar');
-    if (!copyBlocks.length || !image || getComputedStyle(image).display === 'none') return false;
-    const imageRect = image.getBoundingClientRect();
-    return copyBlocks.some((copy) => {
+    const imageVisible = image && getComputedStyle(image).display !== 'none';
+    const imageRect = imageVisible ? image.getBoundingClientRect() : null;
+    const overlap = Boolean(imageRect && copyBlocks.some((copy) => {
       const copyRect = copy.getBoundingClientRect();
       return !(
         copyRect.right <= imageRect.left
@@ -2879,9 +2885,27 @@ async function renderStory(runDir, pack, account, style, renderContext = {}) {
         || copyRect.bottom <= imageRect.top
         || copyRect.top >= imageRect.bottom
       );
-    });
-  });
-  if (storyOverlap) throw new Error('Story rejeitado: texto sobrepoe a foto.');
+    }));
+    const safeBottomEdge = storyHeight - safeBottom;
+    const safeElements = [...document.querySelectorAll('.brand, .badge, h1, p, .feed-cta, .avatar, .note, footer')]
+      .filter((element) => getComputedStyle(element).display !== 'none');
+    const outsideSafeArea = safeElements
+      .map((element) => {
+        const rect = element.getBoundingClientRect();
+        const tolerance = 2;
+        const outside = rect.left < 48 - tolerance
+          || rect.right > storyWidth - 48 + tolerance
+          || rect.top < safeTop - tolerance
+          || rect.bottom > safeBottomEdge + tolerance;
+        return outside ? `${element.className || element.tagName.toLowerCase()}@${Math.round(rect.left)},${Math.round(rect.top)},${Math.round(rect.right)},${Math.round(rect.bottom)}` : '';
+      })
+      .filter(Boolean);
+    return { overlap, outsideSafeArea };
+  }, { safeTop: STORY_SAFE_TOP, safeBottom: STORY_SAFE_BOTTOM, storyHeight: STORY_HEIGHT, storyWidth: STORY_WIDTH });
+  if (storyLayout.overlap) throw new Error('Story rejeitado: texto sobrepoe a foto.');
+  if (storyLayout.outsideSafeArea.length) {
+    throw new Error(`Story rejeitado: elemento fora da area segura (${storyLayout.outsideSafeArea.join(', ')}).`);
+  }
   await page.screenshot({ path: imagePath, type: 'jpeg', quality: 94, fullPage: false });
   await browser.close();
   return imagePath;

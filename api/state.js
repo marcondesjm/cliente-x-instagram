@@ -43,11 +43,11 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v5.24',
+  appVersion: 'v5.25',
   status: 'funcionando',
   stableCommit: '21dcf7d',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/21dcf7d',
-  description: 'Stories ajustam títulos longos sem sobreposição e o acervo ganhou novas fotos exclusivas para reduzir repetições.'
+  description: 'Stories distribuem título, CTA, foto e assinatura dentro das três zonas seguras do formato 9:16.'
 };
 const MAINTENANCE = {
   githubToken: {
