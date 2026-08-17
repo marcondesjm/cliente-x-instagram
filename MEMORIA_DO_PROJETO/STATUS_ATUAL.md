@@ -28,7 +28,7 @@ Atualizado em: 2026-08-16 21:31 BRT
 - O acervo da conta possui 10 fotos; as tres novas sao `avatar-marcondes-rotation-04.png`, `avatar-marcondes-rotation-05.png` e `avatar-marcondes-rotation-06.png`.
 - O seletor evita repetir as 9 fotos utilizadas mais recentemente.
 - Nenhuma publicacao foi enviada nesta alteracao.
-- Producao preparada: commit funcional `21dcf7d`, versao `v5.24`.
+- Producao confirmada: commit funcional `21dcf7d`, deploy `dpl_6kGQBhJrYp1uB5n43m2q6BcgB7MA`, versao `v5.24` e API publica `HTTP 200`.
 
 ## Idioma obrigatorio do Radar
 

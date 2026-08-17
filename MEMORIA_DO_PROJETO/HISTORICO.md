@@ -12,7 +12,7 @@ Corrigida a composicao do Story para titulos longos e ampliado o rodizio de foto
 - O rodizio da conta passou de 7 para 10 fotos e evita reutilizar qualquer uma das 9 fotos usadas mais recentemente.
 - As imagens foram geradas como um novo lote local; gerar uma foto por publicacao em tempo de execucao ainda exigira uma API de geracao de imagens configurada no GitHub Actions.
 - `npm run validate-copy` passou; nenhuma publicacao foi enviada a Meta nesta alteracao.
-- Commit funcional: `21dcf7d` (`Corrige Story e amplia rodizio de imagens`); versao `v5.24`.
+- Commit funcional: `21dcf7d` (`Corrige Story e amplia rodizio de imagens`); deploy de producao `dpl_6kGQBhJrYp1uB5n43m2q6BcgB7MA`; versao `v5.24` confirmada pela API publica.
 
 ## 2026-08-16 21:21 BRT
 
