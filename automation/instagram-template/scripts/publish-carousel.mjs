@@ -2390,7 +2390,8 @@ function validatePack(pack) {
     const firstComment = String(pack.firstComment || '').trim();
     if (!firstComment.includes(sourceTitle)) throw new Error('Radar bloqueado: o primeiro comentário não apresenta o título original da matéria.');
     if (!firstComment.includes(sourceUrl)) throw new Error('Radar bloqueado: o primeiro comentário não contém o link completo da matéria.');
-    if (!/primeiro comentário/i.test(String(pack.caption || ''))) throw new Error('Radar bloqueado: a legenda não orienta onde encontrar o link da matéria.');
+    if (!String(pack.caption || '').includes(sourceTitle)) throw new Error('Radar bloqueado: a legenda não apresenta o título original da matéria.');
+    if (!String(pack.caption || '').includes(sourceUrl)) throw new Error('Radar bloqueado: a legenda não contém o link completo da matéria como garantia.');
     const coverTitle = String(pack.slides?.[0]?.title || '');
     if (FORBIDDEN_GENERIC_RESEARCH_COVERS.some((pattern) => pattern.test(coverTitle))) {
       throw new Error('Radar bloqueado: capa genérica sem contexto real da matéria.');
@@ -2760,7 +2761,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     <h1>${title.replace(/\s+IA\b/i, ' <strong>IA</strong>')}</h1>
     <p>${storyBody}</p>
     ${showNewsContext ? '<div class="feed-cta">Acompanhe a matéria na íntegra no feed.</div>' : ''}
-    <div class="visual-card${showNewsContext ? ' news-context-story' : ''}">${showNewsContext ? `<span>FONTE OFICIAL</span><strong>${htmlText(researchSource)}</strong><small>${htmlText(researchTitle)}</small><small>Matéria identificada · link no primeiro comentário</small>` : ''}</div>
+    <div class="visual-card${showNewsContext ? ' news-context-story' : ''}">${showNewsContext ? `<span>FONTE OFICIAL</span><strong>${htmlText(researchSource)}</strong><small>${htmlText(researchTitle)}</small><small>Matéria identificada · link na legenda</small>` : ''}</div>
     ${avatarBlock}
     <div class="note">${account.footerText}</div>
     <footer>${account.brandName}</footer>

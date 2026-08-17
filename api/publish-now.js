@@ -8,6 +8,21 @@ const OWNER = 'marcondesjm';
 const REPO = 'cliente-x-instagram';
 const WORKFLOW = 'instagram-feed-cliente-x.yml';
 const ACCOUNTS_PATH = join(process.cwd(), 'automation', 'instagram-template', 'config', 'accounts.json');
+const PUBLICATION_HISTORY_PATH = join(process.cwd(), 'automation', 'instagram-template', 'config', 'publication-history.json');
+
+function publishedResearch(accountKey) {
+  try {
+    const history = JSON.parse(readFileSync(PUBLICATION_HISTORY_PATH, 'utf8').replace(/^\uFEFF/, ''));
+    const entries = Array.isArray(history?.[accountKey]) ? history[accountKey] : [];
+    return {
+      urls: new Set(entries.map((entry) => String(entry?.research?.sourceUrl || '').trim().replace(/\/$/, '')).filter(Boolean)),
+      titles: new Set(entries.map((entry) => String(entry?.research?.sourceTitle || entry?.coverTitle || '').trim().toLocaleLowerCase('pt-BR')).filter(Boolean)),
+      lastSource: String([...entries].reverse().find((entry) => entry?.research?.source)?.research?.source || '').trim()
+    };
+  } catch {
+    return { urls: new Set(), titles: new Set(), lastSource: '' };
+  }
+}
 
 function activeRadar(account) {
   const saved = account.contentProfile?.radar || {};
@@ -28,6 +43,7 @@ async function currentRadarPack(account) {
   if (!radar.enabled) return null;
   if (!radar.sources.length) throw new Error('O Radar está ativo, mas não há fontes oficiais configuradas para esta conta.');
 
+  const published = publishedResearch(account.account);
   for (const maxAgeDays of [7, 15, 30]) {
     const result = await researchFreshEditorialPacks({
       maxAgeDays,
@@ -39,7 +55,12 @@ async function currentRadarPack(account) {
       niche: account.contentProfile?.niche || '',
       offer: account.contentProfile?.offer || ''
     });
-    const pack = result.packs.find((item) => item?.research?.sourceUrl && item?.slides?.length >= 2 && item?.caption?.trim());
+    const eligible = result.packs.filter((item) => {
+      const url = String(item?.research?.sourceUrl || '').trim().replace(/\/$/, '');
+      const title = String(item?.research?.sourceTitle || item?.slides?.[0]?.title || '').trim().toLocaleLowerCase('pt-BR');
+      return url && item?.slides?.length >= 2 && item?.caption?.trim() && !published.urls.has(url) && !published.titles.has(title);
+    });
+    const pack = eligible.find((item) => item?.research?.source !== published.lastSource) || eligible[0];
     if (pack) return pack;
   }
   throw new Error('Não encontrei nos últimos 30 dias uma notícia oficial de IA adequada para esta conta. Nenhum post foi enviado. Atualize as fontes do Radar ou tente mais tarde.');
