@@ -1,5 +1,20 @@
 # Historico
 
+## 2026-08-16 21:46 BRT
+
+Reorganizada a distribuicao do Story para respeitar visualmente os campos seguros do formato 9:16.
+
+- Problema: o titulo e o CTA ficavam concentrados no alto, enquanto fotografia e assinatura ocupavam um bloco pequeno, deixando um vazio excessivo no centro.
+- Titulos longos agora usam margens laterais de 88 px, largura controlada e hierarquia mais equilibrada.
+- Fotografia ampliada para `340 x 430 px` e posicionada junto ao bloco inferior da area util.
+- Assinatura e nome foram reposicionados ao lado da fotografia, sem invadir o titulo ou a chamada.
+- Permanecem preservados os campos definidos: 250 px de seguranca no topo, 1170 px centrais para o conteudo e 500 px livres na base.
+- A renderizacao agora tambem bloqueia qualquer elemento que ultrapasse horizontalmente a arte ou saia da area segura vertical.
+- Previa validada: `2026-08-16-214551-slot-0-render-only`, usando o mesmo titulo da materia do G1 e uma foto nova do rodizio.
+- `npm run validate-copy` passou com `storySafeZoneGuard: 250-1170-500`.
+- Nenhuma nova postagem foi enviada a Meta nesta correcao.
+- Commit funcional: `9029a62` (`Reorganiza Story nas zonas seguras`); versao `v5.25`.
+
 ## 2026-08-16 21:40 BRT
 
 Nova materia verdadeira publicada pelo Radar e confirmada pela Meta.

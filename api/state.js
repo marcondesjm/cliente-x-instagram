@@ -45,8 +45,8 @@ const ACTIVE_VERSION = {
   label: 'Última versão funcionando',
   appVersion: 'v5.25',
   status: 'funcionando',
-  stableCommit: '21dcf7d',
-  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/21dcf7d',
+  stableCommit: '9029a62',
+  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/9029a62',
   description: 'Stories distribuem título, CTA, foto e assinatura dentro das três zonas seguras do formato 9:16.'
 };
 const MAINTENANCE = {

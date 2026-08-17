@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 21:40 BRT
+Atualizado em: 2026-08-16 21:46 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,23 @@ Atualizado em: 2026-08-16 21:40 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `21dcf7d` (`Corrige Story e amplia rodizio de imagens`).
+- Checkpoint funcional atual: `9029a62` (`Reorganiza Story nas zonas seguras`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
-- Versao visivel atual: `v5.24`
+- Versao visivel atual: `v5.25`
+
+## Distribuicao segura do Story
+
+- A composicao usa 250 px livres no topo, 1170 px para o conteudo principal e 500 px livres na base.
+- Titulo, resumo e CTA ocupam o bloco superior da area util; fotografia, assinatura e nome formam um bloco inferior equilibrado.
+- Titulos longos usam 88 px de margem lateral e fotografia de `340 x 430 px`.
+- O renderizador bloqueia sobreposicao e tambem rejeita qualquer elemento fora dos limites seguros.
+- Previa confirmada: `2026-08-16-214551-slot-0-render-only`.
+- `npm run validate-copy` passou; nenhuma postagem foi enviada nesta alteracao.
+- Producao preparada: commit `9029a62`, versao `v5.25`.
 
 ## Story adaptativo e rodizio de fotos
 
