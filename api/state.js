@@ -45,8 +45,8 @@ const ACTIVE_VERSION = {
   label: 'Última versão funcionando',
   appVersion: 'v5.28',
   status: 'funcionando',
-  stableCommit: 'a9b4b7f',
-  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/a9b4b7f',
+  stableCommit: '9156514',
+  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/9156514',
   description: 'A landing exibe capturas atuais das dez áreas da plataforma e mantém todos os seletores visíveis, além dos posts fixados no Instagram.'
 };
 const MAINTENANCE = {

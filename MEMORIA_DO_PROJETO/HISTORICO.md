@@ -1,5 +1,18 @@
 # Historico
 
+## 2026-08-16 22:07 BRT
+
+As dez telas da plataforma exibidas na landing foram recapturadas na versao atual.
+
+- Foram abertas e conferidas as nove abas reais do painel v5.27: Visao geral, Conteudo, Historico do Direct, Agenda, Grade semanal, Pagina Bio, Clientes, Cobranca e Sistema.
+- A aba Conteudo foi registrada em dois pontos para mostrar separadamente a Automacao do Direct e o editor com Radar, totalizando dez demonstracoes.
+- Todas as imagens antigas da versao v5.06 foram substituidas por capturas atuais da plataforma em producao.
+- O seletor do carrossel deixou de usar uma faixa horizontal escondida e passou a mostrar as dez opcoes em grade: cinco por linha no desktop e duas por linha no celular.
+- Os links de ampliacao e o cache das imagens foram atualizados para `v=527`.
+- `npm run validate-copy` passou com todas as protecoes editoriais, de fonte, Feed e Story.
+- Nenhuma postagem foi enviada a Meta nesta alteracao.
+- Commit funcional: `9156514` (`Atualiza todas as telas da landing`); versao `v5.28`.
+
 ## 2026-08-16 21:58 BRT
 
 A landing passou a apresentar os dois posts realmente fixados no Instagram.

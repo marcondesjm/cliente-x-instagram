@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 21:58 BRT
+Atualizado em: 2026-08-16 22:07 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,22 @@ Atualizado em: 2026-08-16 21:58 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `a9b4b7f` (`Exibe posts fixados na landing`).
+- Checkpoint funcional atual: `9156514` (`Atualiza todas as telas da landing`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
-- Commit mais recente da landing: `a9b4b7f` (`Exibe posts fixados na landing`).
-- Versao visivel atual: `v5.27`
+- Commit mais recente da landing: `9156514` (`Atualiza todas as telas da landing`).
+- Versao visivel atual: `v5.28`
+
+## Telas atuais da plataforma na landing
+
+- A landing possui dez demonstracoes atualizadas: nove abas reais e uma captura adicional do editor/Radar dentro de Conteudo.
+- As capturas foram refeitas diretamente no painel de producao v5.27.
+- As dez opcoes agora ficam visiveis simultaneamente em uma grade, sem seletores escondidos por rolagem horizontal.
+- No desktop aparecem cinco opcoes por linha; no celular, duas por linha.
+- Automacao do Direct e editor/Radar aparecem em capturas separadas para deixar as duas funcoes compreensiveis.
+- Nenhuma postagem foi enviada a Meta nesta alteracao.
 
 ## Posts fixados na landing
 
