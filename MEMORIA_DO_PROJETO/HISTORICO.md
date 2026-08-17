@@ -13,7 +13,7 @@ O ultimo slide dos carrosseis passou a variar o fechamento entre as materias.
 - Previa visual confirmada em `2026-08-16-215226-slot-0-render-only`, com o fechamento `Que processo voce gostaria de organizar?`.
 - O limite adaptativo do Story foi antecipado para titulos a partir de 55 caracteres, evitando colisao em chamadas medias.
 - Nenhuma postagem foi enviada a Meta nesta alteracao.
-- Commit funcional: `f5b3e16` (`Varia chamadas do ultimo slide`); versao `v5.26`.
+- Commit funcional: `f5b3e16` (`Varia chamadas do ultimo slide`); deploy `dpl_BzH3C9gZXaRQ3YqWn2PFvE8oFiH8`; versao `v5.26` confirmada pela API publica.
 
 ## 2026-08-16 21:46 BRT
 

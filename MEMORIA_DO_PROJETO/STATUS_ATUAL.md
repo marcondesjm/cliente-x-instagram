@@ -29,7 +29,7 @@ Atualizado em: 2026-08-16 21:52 BRT
 - A validacao automatica confirmou ao menos seis variacoes distintas (`finalSlideVariationGuard: ok`).
 - Previa: `2026-08-16-215226-slot-0-render-only`.
 - Nenhuma postagem foi enviada nesta alteracao.
-- Producao preparada: commit `f5b3e16`, versao `v5.26`.
+- Producao confirmada: commit `f5b3e16`, deploy `dpl_BzH3C9gZXaRQ3YqWn2PFvE8oFiH8`, versao `v5.26` e API publica `HTTP 200`.
 
 ## Distribuicao segura do Story
 
