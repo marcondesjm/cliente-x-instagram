@@ -204,8 +204,8 @@
     .platform-carousel-control:hover { color: #fff; background: var(--olive-dark); }
     .platform-carousel-control.prev { left: 16px; }
     .platform-carousel-control.next { right: 16px; }
-    .platform-carousel-nav { display: flex; justify-content: flex-start; gap: 8px; padding: 0 20px 18px; overflow-x: auto; scrollbar-width: thin; background: #fff; }
-    .platform-carousel-dot { width: auto; min-height: 34px; padding: 0 13px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-soft); background: #fff; font-size: 12px; font-weight: 850; cursor: pointer; }
+    .platform-carousel-nav { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; padding: 0 20px 18px; background: #fff; }
+    .platform-carousel-dot { width: 100%; min-height: 42px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 10px; color: var(--ink-soft); background: #fff; font-size: 12px; font-weight: 850; line-height: 1.2; cursor: pointer; }
     .platform-carousel-dot[aria-current="true"] { color: #fff; border-color: var(--olive-dark); background: var(--olive-dark); }
     .screen-visual, .output-visual { position: relative; overflow: hidden; isolation: isolate; background: var(--paper); }
     .screen-visual::after, .output-visual::after { content: ""; position: absolute; z-index: 3; top: -45%; bottom: -45%; left: -42%; width: 24%; transform: rotate(14deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,.58), transparent); pointer-events: none; }
@@ -398,8 +398,7 @@
       .platform-carousel-control { top: 36%; width: 40px; height: 40px; }
       .platform-carousel-control.prev { left: 9px; }
       .platform-carousel-control.next { right: 9px; }
-      .platform-carousel-nav { overflow-x: auto; justify-content: flex-start; padding-inline: 14px; }
-      .platform-carousel-dot { flex: 0 0 auto; }
+      .platform-carousel-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-inline: 14px; }
       .outputs { grid-template-columns: 1fr; gap: 18px; width: 100%; }
       .output-card img { width: 100%; height: min(145vw, 620px); object-fit: contain; }
       .instagram-proofs { grid-template-columns: 1fr; gap: 18px; width: 100%; }
@@ -515,50 +514,50 @@
 
     <section class="section showcase" id="produto">
       <div class="wrap">
-        <div class="section-head"><p class="eyebrow">Produto em uso</p><h2>Veja todas as áreas da plataforma em funcionamento.</h2><p class="section-lead">As dez telas abaixo foram atualizadas diretamente da versão atual da plataforma. Navegue pelas abas para conhecer o Radar, a criação de conteúdo, o Direct por datas, a agenda, os banners de Feed e Story, a Bio ao vivo, o onboarding e a operação automática.</p></div>
+        <div class="section-head"><p class="eyebrow">Produto em uso</p><h2>Veja todas as áreas da plataforma em funcionamento.</h2><p class="section-lead">As dez telas abaixo foram capturadas novamente na versão v5.27. Todos os atalhos ficam visíveis: escolha uma página para conhecer o Radar, a criação de conteúdo, o Direct, a agenda, os banners de Feed e Story, a Bio, o onboarding e a operação automática.</p></div>
         <div class="showcase-grid">
           <div class="platform-carousel" id="platformCarousel" aria-roledescription="carrossel" aria-label="Páginas reais da plataforma">
             <div class="platform-carousel-viewport">
               <div class="platform-carousel-track">
                 <figure class="platform-slide" data-slide="overview" aria-hidden="false">
-                  <div class="platform-slide-image"><span class="visual-status">Página 1 de 10 · Visão geral</span><img src="/docs/uploads/platform-tabs/visao-geral.png?v=506" alt="Visão geral atual da plataforma com próxima postagem, vigia automático e publicação confirmada"></div>
-                  <figcaption><div class="platform-slide-copy"><strong>Visão geral da operação</strong><span>Mostra a próxima postagem, o vigia automático e o último conteúdo confirmado pela Meta.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/visao-geral.png?v=506" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
+                  <div class="platform-slide-image"><span class="visual-status">Página 1 de 10 · Visão geral</span><img src="/docs/uploads/platform-tabs/visao-geral.png?v=527" alt="Visão geral atual da plataforma com próxima postagem, vigia automático e publicação confirmada"></div>
+                  <figcaption><div class="platform-slide-copy"><strong>Visão geral da operação</strong><span>Mostra a próxima postagem, o vigia automático e o último conteúdo confirmado pela Meta.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/visao-geral.png?v=527" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
                 </figure>
                 <figure class="platform-slide" data-slide="editor" aria-hidden="true">
-                  <div class="platform-slide-image"><span class="visual-status">Página 2 de 10 · Conteúdo</span><img src="/docs/uploads/platform-tabs/conteudo.png?v=506" alt="Editor atual de conteúdo com slides, imagens, textos e Radar da marca"></div>
-                  <figcaption><div class="platform-slide-copy"><strong>Conteúdo, identidade e Radar</strong><span>Permite revisar criativos, editar cada slide e orientar as pautas com fontes oficiais do nicho.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/conteudo.png?v=506" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
+                  <div class="platform-slide-image"><span class="visual-status">Página 2 de 10 · Conteúdo</span><img src="/docs/uploads/platform-tabs/conteudo.png?v=527" alt="Editor atual de conteúdo com slides, imagens, textos e Radar da marca"></div>
+                  <figcaption><div class="platform-slide-copy"><strong>Conteúdo, identidade e Radar</strong><span>Permite revisar criativos, editar cada slide e orientar as pautas com fontes oficiais do nicho.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/conteudo.png?v=527" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
                 </figure>
                 <figure class="platform-slide" data-slide="direct-automation" aria-hidden="true">
-                  <div class="platform-slide-image"><span class="visual-status">Página 3 de 10 · Automação do Direct</span><img src="/docs/uploads/platform-tabs/automacao-direct.png?v=506" alt="Configuração atual da automação do Direct com Meta conectada, palavras-chave e material"></div>
-                  <figcaption><div class="platform-slide-copy"><strong>Automação de comentário para Direct</strong><span>Configura a palavra-chave, o material entregue e a resposta automática vinculada à conta.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/automacao-direct.png?v=506" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
+                  <div class="platform-slide-image"><span class="visual-status">Página 3 de 10 · Automação do Direct</span><img src="/docs/uploads/platform-tabs/automacao-direct.png?v=527" alt="Configuração atual da automação do Direct com Meta conectada, palavras-chave e material"></div>
+                  <figcaption><div class="platform-slide-copy"><strong>Automação de comentário para Direct</strong><span>Configura a palavra-chave, o material entregue e a resposta automática vinculada à conta.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/automacao-direct.png?v=527" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
                 </figure>
                 <figure class="platform-slide" data-slide="direct" aria-hidden="true">
-                  <div class="platform-slide-image"><span class="visual-status">Página 4 de 10 · Histórico do Direct</span><img src="/docs/uploads/platform-tabs/historico-direct.png?v=506" alt="Histórico atual do Direct com registros e navegação lateral por datas"></div>
-                  <figcaption><div class="platform-slide-copy"><strong>Histórico do Direct por data</strong><span>Mostra palavras-chave, horários, envios e falhas e permite abrir rapidamente cada dia registrado.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/historico-direct.png?v=506" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
+                  <div class="platform-slide-image"><span class="visual-status">Página 4 de 10 · Histórico do Direct</span><img src="/docs/uploads/platform-tabs/historico-direct.png?v=527" alt="Histórico atual do Direct com registros e navegação lateral por datas"></div>
+                  <figcaption><div class="platform-slide-copy"><strong>Histórico do Direct por data</strong><span>Mostra palavras-chave, horários, envios e falhas e permite abrir rapidamente cada dia registrado.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/historico-direct.png?v=527" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
                 </figure>
                 <figure class="platform-slide" data-slide="agenda" aria-hidden="true">
-                  <div class="platform-slide-image"><span class="visual-status">Página 5 de 10 · Agenda</span><img src="/docs/uploads/platform-tabs/agenda.png?v=506" alt="Agenda atual em largura integral com 13 horários e conteúdos automáticos programados"></div>
-                  <figcaption><div class="platform-slide-copy"><strong>Agenda completa de publicações</strong><span>Exibe os 13 horários em BRT e todos os conteúdos que entrarão automaticamente na programação.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/agenda.png?v=506" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
+                  <div class="platform-slide-image"><span class="visual-status">Página 5 de 10 · Agenda</span><img src="/docs/uploads/platform-tabs/agenda.png?v=527" alt="Agenda atual em largura integral com 13 horários e conteúdos automáticos programados"></div>
+                  <figcaption><div class="platform-slide-copy"><strong>Agenda completa de publicações</strong><span>Exibe os 13 horários em BRT e todos os conteúdos que entrarão automaticamente na programação.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/agenda.png?v=527" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
                 </figure>
                 <figure class="platform-slide" data-slide="weekly" aria-hidden="true">
-                  <div class="platform-slide-image"><span class="visual-status">Página 6 de 10 · Grade semanal</span><img src="/docs/uploads/platform-tabs/grade-semanal.png?v=506" alt="Grade semanal atual com prévia ao vivo para Feed e Story"></div>
-                  <figcaption><div class="platform-slide-copy"><strong>Grade semanal com postagem pronta</strong><span>Cadastra programas recorrentes, aceita banners prontos e gera artes de Feed 4:5 e Story 9:16.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/grade-semanal.png?v=506" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
+                  <div class="platform-slide-image"><span class="visual-status">Página 6 de 10 · Grade semanal</span><img src="/docs/uploads/platform-tabs/grade-semanal.png?v=527" alt="Grade semanal atual com prévia ao vivo para Feed e Story"></div>
+                  <figcaption><div class="platform-slide-copy"><strong>Grade semanal com postagem pronta</strong><span>Cadastra programas recorrentes, aceita banners prontos e gera artes de Feed 4:5 e Story 9:16.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/grade-semanal.png?v=527" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
                 </figure>
                 <figure class="platform-slide" data-slide="bio" aria-hidden="true">
-                  <div class="platform-slide-image"><span class="visual-status">Página 7 de 10 · Página Bio</span><img src="/docs/uploads/platform-tabs/pagina-bio.png?v=506" alt="Editor atual da Página Bio com visualização pública ao vivo na lateral"></div>
+                  <div class="platform-slide-image"><span class="visual-status">Página 7 de 10 · Página Bio</span><img src="/docs/uploads/platform-tabs/pagina-bio.png?v=527" alt="Editor atual da Página Bio com visualização pública ao vivo na lateral"></div>
                   <figcaption><div class="platform-slide-copy"><strong>Página Bio com prévia ao vivo</strong><span>Edite foto, apresentação, oferta e links enquanto acompanha ao lado como a página pública ficará.</span></div><a class="image-link" href="https://cliente-x-instagram.vercel.app/bio" target="_blank" rel="noopener noreferrer">Abrir Bio real ↗</a></figcaption>
                 </figure>
                 <figure class="platform-slide" data-slide="clients" aria-hidden="true">
-                  <div class="platform-slide-image"><span class="visual-status">Página 8 de 10 · Clientes</span><img src="/docs/uploads/platform-tabs/clientes.png?v=506" alt="Carteira atual de clientes com fluxo de ativação segura pela Meta"></div>
-                  <figcaption><div class="platform-slide-copy"><strong>Clientes e ativação segura</strong><span>Centraliza as empresas e orienta cadastro, convite, conexão da Meta e liberação da operação.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/clientes.png?v=506" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
+                  <div class="platform-slide-image"><span class="visual-status">Página 8 de 10 · Clientes</span><img src="/docs/uploads/platform-tabs/clientes.png?v=527" alt="Carteira atual de clientes com fluxo de ativação segura pela Meta"></div>
+                  <figcaption><div class="platform-slide-copy"><strong>Clientes e ativação segura</strong><span>Centraliza as empresas e orienta cadastro, convite, conexão da Meta e liberação da operação.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/clientes.png?v=527" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
                 </figure>
                 <figure class="platform-slide" data-slide="billing" aria-hidden="true">
-                  <div class="platform-slide-image"><span class="visual-status">Página 9 de 10 · Cobrança</span><img src="/docs/uploads/platform-tabs/cobranca.png?v=506" alt="Configuração atual de cobrança recorrente com campos protegidos e acessos conectados"></div>
-                  <figcaption><div class="platform-slide-copy"><strong>Cobrança recorrente</strong><span>Configura planos e checkout sem expor as chaves completas no navegador.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/cobranca.png?v=506" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
+                  <div class="platform-slide-image"><span class="visual-status">Página 9 de 10 · Cobrança</span><img src="/docs/uploads/platform-tabs/cobranca.png?v=527" alt="Configuração atual de cobrança recorrente com campos protegidos e acessos conectados"></div>
+                  <figcaption><div class="platform-slide-copy"><strong>Cobrança recorrente</strong><span>Configura planos e checkout sem expor as chaves completas no navegador.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/cobranca.png?v=527" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
                 </figure>
                 <figure class="platform-slide" data-slide="system" aria-hidden="true">
-                  <div class="platform-slide-image"><span class="visual-status">Página 10 de 10 · Sistema</span><img src="/docs/uploads/platform-tabs/sistema.png?v=506" alt="Área Sistema atual com Radar, recursos da conta, execuções e estado do vigia"></div>
-                  <figcaption><div class="platform-slide-copy"><strong>Sistema, Radar e automação</strong><span>Resume o que está funcionando, acompanha execuções e verifica a saúde dos fluxos automáticos.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/sistema.png?v=506" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
+                  <div class="platform-slide-image"><span class="visual-status">Página 10 de 10 · Sistema</span><img src="/docs/uploads/platform-tabs/sistema.png?v=527" alt="Área Sistema atual com Radar, recursos da conta, execuções e estado do vigia"></div>
+                  <figcaption><div class="platform-slide-copy"><strong>Sistema, Radar e automação</strong><span>Resume o que está funcionando, acompanha execuções e verifica a saúde dos fluxos automáticos.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/sistema.png?v=527" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
                 </figure>
               </div>
             </div>

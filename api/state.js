@@ -43,11 +43,11 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v5.27',
+  appVersion: 'v5.28',
   status: 'funcionando',
   stableCommit: 'a9b4b7f',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/a9b4b7f',
-  description: 'A landing exibe os posts realmente fixados no Instagram com capas locais e links oficiais, sem depender de embeds frágeis.'
+  description: 'A landing exibe capturas atuais das dez áreas da plataforma e mantém todos os seletores visíveis, além dos posts fixados no Instagram.'
 };
 const MAINTENANCE = {
   githubToken: {
