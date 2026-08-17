@@ -1,5 +1,17 @@
 # Historico
 
+## 2026-08-16 21:16 BRT
+
+Publicacoes novas confirmadas pela Meta depois da correcao da trava contra repeticao.
+
+- Workflow `31981283031`: materia do G1 Tecnologia sobre deepfakes nas eleicoes; feed `18025226459893393`, Story `18133189693547611`, permalink `https://www.instagram.com/p/DcHuU08EiyD/`.
+- Workflow `31981284877`: materia do n8n sobre observabilidade de agentes de IA; feed `18111392795080213`, Story `18016864748879873`, permalink `https://www.instagram.com/p/DcHuh6Vn4_Q/`.
+- As duas pautas possuem URLs e titulos diferentes do Olhar Digital anteriormente repetido, confirmando que a nova trava funcionou.
+- Dois posts foram enviados porque o mesmo commit de acionamento chegou a `feature/modern-editorial-system` e `main`, criando dois workflows serializados; futuros acionamentos manuais devem alterar o arquivo do vigia somente em `main`.
+- A Meta voltou a recusar o primeiro comentario com erro `(#10) Application does not have permission for this action` em ambos os posts.
+- Como protecao, as legendas publicadas mantiveram fonte, titulo original e URL completa da materia.
+- Producao final da correcao: `v5.22`, commit funcional `c519d57`, deploy `dpl_C2ZzqJQ6CkTBUUrSpV6ax9qY7CSn`.
+
 ## 2026-08-16 21:11 BRT
 
 Diagnosticada e corrigida uma repeticao de materia no comando `Publicar agora` do Radar.
@@ -11,7 +23,7 @@ Diagnosticada e corrigida uma repeticao de materia no comando `Publicar agora` d
 - Enquanto a permissao de comentarios nao estiver disponivel, titulo e URL completos permanecem na legenda para a fonte nunca desaparecer.
 - `npm run validate-copy` passou; a previa `2026-08-16-211019-slot-1-render-only` confirmou uma pauta diferente da OpenAI e o link real na legenda.
 - Commit funcional: `c519d57` (`Bloqueia repeticao e garante fonte na legenda`).
-- Deploy: `dpl_CRBDRrGMFnHWZ2YXqsHoA5t1wxtW`; versao `v5.22`.
+- Deploy inicial: `dpl_CRBDRrGMFnHWZ2YXqsHoA5t1wxtW`; deploy final `dpl_C2ZzqJQ6CkTBUUrSpV6ax9qY7CSn`; versao `v5.22`.
 - O vigia foi acionado novamente para cumprir o pedido com uma materia realmente nova.
 
 ## 2026-08-16 21:01 BRT

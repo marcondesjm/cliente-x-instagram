@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 21:11 BRT
+Atualizado em: 2026-08-16 21:16 BRT
 
 ## Regra permanente de checkpoint
 
@@ -26,7 +26,11 @@ Atualizado em: 2026-08-16 21:11 BRT
 - A mesma materia nao pode ser reutilizada pelo comando imediato.
 - O link completo voltou a permanecer na legenda porque a Meta recusou o comentario automatico por falta de permissao.
 - Publicacao que revelou o problema: workflow `31981001000`, feed `18113708173986576`, Story `17899737327349544`, permalink `https://www.instagram.com/p/DcHttB4FEDc/`.
-- Correcao: commit `c519d57`, deploy `dpl_CRBDRrGMFnHWZ2YXqsHoA5t1wxtW`, versao `v5.22`.
+- Correcao: commit `c519d57`, deploy final `dpl_C2ZzqJQ6CkTBUUrSpV6ax9qY7CSn`, versao `v5.22`.
+- G1 confirmado: workflow `31981283031`, feed `18025226459893393`, Story `18133189693547611`, post `https://www.instagram.com/p/DcHuU08EiyD/`.
+- n8n confirmado: workflow `31981284877`, feed `18111392795080213`, Story `18016864748879873`, post `https://www.instagram.com/p/DcHuh6Vn4_Q/`.
+- O duplo acionamento ocorreu porque o arquivo do vigia foi enviado nas duas branches; proximos disparos desse arquivo devem ocorrer apenas em `main`.
+- A permissao de comentarios continua ausente na Meta; por seguranca, o link real permanece na legenda.
 
 ## Chamada do Story para o feed
 
