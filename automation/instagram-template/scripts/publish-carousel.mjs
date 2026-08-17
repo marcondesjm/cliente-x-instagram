@@ -1786,10 +1786,12 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   // foto para um selo e quebrava a proporcao em relacao aos demais cartoes.
   const coverLayouts = ['layout-right', 'layout-left'];
   const coverLayout = coverLayouts[stableAvatarOffset(renderContext.variationSeed || slide.title || '') % coverLayouts.length];
+  const headlineLengthClass = title.length >= 120 ? 'headline-very-long' : (title.length >= 78 ? 'headline-long' : '');
   const placement = [
     mode === 'split' ? 'layout-left' : index === 1 ? coverLayout : index % 3 === 2 ? 'layout-left' : index % 3 === 0 ? 'layout-corner' : 'layout-right',
     `mode-${mode}`,
     `role-${engagementRole}`,
+    headlineLengthClass,
     index % 2 === 0 ? 'slide-even' : 'slide-odd'
   ].join(' ');
   const noteWidth = mode === 'minimal' ? 650 : mode === 'poster' || mode === 'magazine' ? 430 : mode === 'split' || placement?.includes?.('layout-left') ? 380 : 390;
@@ -2035,6 +2037,18 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .layout-left.mode-magazine .note { left: 430px; top: 790px; width: 560px; }
     .layout-left.mode-magazine .sector-cue { left: 122px; right: auto; top: 190px; width: 190px; opacity: 0.22; }
     .role-hook .headline { max-width: 560px; font-size: 68px; }
+    .role-hook.headline-long .headline {
+      margin-left: 0;
+      max-width: 900px;
+      font-size: 54px;
+      line-height: 1.03;
+    }
+    .role-hook.headline-very-long .headline {
+      margin-left: 0;
+      max-width: 920px;
+      font-size: 46px;
+      line-height: 1.04;
+    }
     .role-hook .panel { top: 520px; width: 410px; height: 280px; border-radius: 30px; transform: none; }
     .layout-left.role-hook .panel { left: 58px; right: auto; }
     .layout-right.role-hook .panel { left: auto; right: 58px; }
@@ -2768,9 +2782,10 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     .title-long .avatar { right: 88px; bottom: ${STORY_SAFE_BOTTOM}px; width: 340px; height: 430px; transform: none; }
     .title-long .note { left: 88px; bottom: ${STORY_SAFE_BOTTOM + 120}px; width: 560px; padding: 24px 30px; }
     .title-long footer { left: 88px; bottom: ${STORY_SAFE_BOTTOM + 40}px; }
-    .title-very-long h1 { margin-top: 36px; font-size: 54px; line-height: .98; }
-    .title-very-long p { margin-top: 20px; font-size: 30px; }
-    .title-very-long .feed-cta { margin-top: 17px; max-width: 560px; font-size: 25px; }
+    .title-very-long .badge { margin-top: 62px; }
+    .title-very-long h1 { margin-top: 58px; max-width: 900px; font-size: 50px; line-height: 1.04; }
+    .title-very-long p { margin-top: 34px; font-size: 30px; line-height: 1.22; }
+    .title-very-long .feed-cta { margin-top: 30px; max-width: 590px; font-size: 25px; }
     .title-very-long .avatar { width: 320px; height: 400px; }
   </style>
 </head>
