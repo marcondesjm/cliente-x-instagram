@@ -1,5 +1,19 @@
 # Historico
 
+## 2026-08-16 21:31 BRT
+
+Corrigida a composicao do Story para titulos longos e ampliado o rodizio de fotos.
+
+- Causa visual: o Story aplicava o mesmo tamanho de titulo a chamadas curtas e longas, enquanto a verificacao de colisao conferia somente o paragrafo contra a foto.
+- Titulos com 70 ou mais caracteres agora recebem composicao compacta; a partir de 110 caracteres recebem uma segunda reducao de tipografia e fotografia.
+- A protecao de renderizacao agora bloqueia sobreposicao da foto com titulo, texto ou chamada para o feed.
+- O mesmo titulo longo do G1 mostrado pelo usuario foi renderizado em `2026-08-16-213050-slot-0-render-only` e inspecionado sem sobreposicao.
+- Foram criadas tres novas fotos profissionais exclusivas e adicionadas ao acervo: `avatar-marcondes-rotation-04.png`, `avatar-marcondes-rotation-05.png` e `avatar-marcondes-rotation-06.png`.
+- O rodizio da conta passou de 7 para 10 fotos e evita reutilizar qualquer uma das 9 fotos usadas mais recentemente.
+- As imagens foram geradas como um novo lote local; gerar uma foto por publicacao em tempo de execucao ainda exigira uma API de geracao de imagens configurada no GitHub Actions.
+- `npm run validate-copy` passou; nenhuma publicacao foi enviada a Meta nesta alteracao.
+- Commit funcional: `21dcf7d` (`Corrige Story e amplia rodizio de imagens`); versao `v5.24`.
+
 ## 2026-08-16 21:21 BRT
 
 Corrigida a publicacao de conteudo principal em ingles para o publico brasileiro.

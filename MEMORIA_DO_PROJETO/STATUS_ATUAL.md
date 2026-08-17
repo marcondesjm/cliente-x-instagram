@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 21:21 BRT
+Atualizado em: 2026-08-16 21:31 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,23 @@ Atualizado em: 2026-08-16 21:21 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `b7691ab` (`Bloqueia conteudo principal em ingles no Radar`).
+- Checkpoint funcional atual: `21dcf7d` (`Corrige Story e amplia rodizio de imagens`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
-- Versao visivel atual: `v5.23`
+- Versao visivel atual: `v5.24`
+
+## Story adaptativo e rodizio de fotos
+
+- Titulos longos e muito longos usam tamanhos e espacamentos adaptativos no formato 9:16.
+- A renderizacao bloqueia colisao da foto com titulo, texto e chamada para o feed.
+- Previa com o titulo longo do G1 validada em `2026-08-16-213050-slot-0-render-only`.
+- O acervo da conta possui 10 fotos; as tres novas sao `avatar-marcondes-rotation-04.png`, `avatar-marcondes-rotation-05.png` e `avatar-marcondes-rotation-06.png`.
+- O seletor evita repetir as 9 fotos utilizadas mais recentemente.
+- Nenhuma publicacao foi enviada nesta alteracao.
+- Producao preparada: commit funcional `21dcf7d`, versao `v5.24`.
 
 ## Idioma obrigatorio do Radar
 

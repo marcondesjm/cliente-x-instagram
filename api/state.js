@@ -45,8 +45,8 @@ const ACTIVE_VERSION = {
   label: 'Última versão funcionando',
   appVersion: 'v5.24',
   status: 'funcionando',
-  stableCommit: 'b7691ab',
-  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/b7691ab',
+  stableCommit: '21dcf7d',
+  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/21dcf7d',
   description: 'Stories ajustam títulos longos sem sobreposição e o acervo ganhou novas fotos exclusivas para reduzir repetições.'
 };
 const MAINTENANCE = {
