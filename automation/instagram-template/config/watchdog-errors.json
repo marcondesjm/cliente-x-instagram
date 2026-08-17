@@ -1,23 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-08-15:0:31877282403",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-08-15",
-    "slotIndex": 0,
-    "scheduledAt": "2026-08-15T09:30:00.000Z",
-    "failedAt": "2026-08-15T09:33:51.800Z",
-    "workflowRun": "31877282403",
-    "workflowName": "Instagram Feed Cliente X",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/31877282403",
-    "stage": "ImgBB upload",
-    "error": "ImgBB upload failed [400]: {\"status_code\":400,\"error\":{\"message\":\"Rate limit reached.\",\"code\":100},\"status_txt\":\"Bad Request\"}",
-    "solution": "Validar ou trocar IMGBB_API_KEY no painel, salvar no Vercel/GitHub Secrets e redeployar se necessário.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-08-15-063351.json",
-    "resolvedAt": "2026-08-15T13:39:12.084Z",
-    "resolvedRun": "31887712484"
-  },
-  {
     "key": "cliente-x:2026-08-15:0:31877282906",
     "status": "resolved",
     "account": "cliente-x",
@@ -898,5 +880,21 @@
     "failurePath": "automation/instagram-template/runs/failure-2026-08-17-123141.json",
     "resolvedAt": "2026-08-17T15:48:14.838Z",
     "resolvedRun": "32043264715"
+  },
+  {
+    "key": "cliente-x:2026-08-17:8:32052662241",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-08-17",
+    "slotIndex": 8,
+    "scheduledAt": "2026-08-17T17:50:00.000Z",
+    "failedAt": "2026-08-17T17:59:16.574Z",
+    "workflowRun": "32052662241",
+    "workflowName": "Instagram Feed Cliente X",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/32052662241",
+    "stage": "unknown",
+    "error": "Story rejeitado: texto sobrepoe a foto.",
+    "solution": "Corrigir o texto do pack indicado no painel, rodar validar textos e salvar antes da próxima publicação.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-08-17-145916.json"
   }
 ]
