@@ -1,23 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-08-14:0:31857242643",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-08-14",
-    "slotIndex": 0,
-    "scheduledAt": "2026-08-14T09:30:00.000Z",
-    "failedAt": "2026-08-15T01:43:23.180Z",
-    "workflowRun": "31857242643",
-    "workflowName": "Instagram Watchdog Backup",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/31857242643",
-    "stage": "ImgBB upload",
-    "error": "ImgBB upload failed [400]: {\"status_code\":400,\"error\":{\"message\":\"Rate limit reached.\",\"code\":100},\"status_txt\":\"Bad Request\"}",
-    "solution": "Validar ou trocar IMGBB_API_KEY no painel, salvar no Vercel/GitHub Secrets e redeployar se necessário.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-08-14-224323.json",
-    "resolvedAt": "2026-08-15T21:46:50.798Z",
-    "resolvedRun": "31910314937"
-  },
-  {
     "key": "cliente-x:2026-08-14:0:31858187233",
     "status": "resolved",
     "account": "cliente-x",
@@ -872,5 +854,21 @@
     "error": "Story rejeitado: elemento fora da area segura (avatar@668,1012,1008,1428).",
     "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o token, conteúdo ou dependência indicada antes da próxima tentativa.",
     "failurePath": "automation/instagram-template/runs/failure-2026-08-17-091500.json"
+  },
+  {
+    "key": "cliente-x:2026-08-17:0:32033051587",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-08-17",
+    "slotIndex": 0,
+    "scheduledAt": "2026-08-17T09:30:00.000Z",
+    "failedAt": "2026-08-17T13:04:54.974Z",
+    "workflowRun": "32033051587",
+    "workflowName": "Instagram Watchdog Backup",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/32033051587",
+    "stage": "unknown",
+    "error": "Story rejeitado: elemento fora da area segura (avatar@668,1012,1008,1428).",
+    "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o token, conteúdo ou dependência indicada antes da próxima tentativa.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-08-17-100454.json"
   }
 ]
