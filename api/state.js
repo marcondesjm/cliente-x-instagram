@@ -45,8 +45,8 @@ const ACTIVE_VERSION = {
   label: 'Última versão funcionando',
   appVersion: 'v5.27',
   status: 'funcionando',
-  stableCommit: 'f5b3e16',
-  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/f5b3e16',
+  stableCommit: 'a9b4b7f',
+  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/a9b4b7f',
   description: 'A landing exibe os posts realmente fixados no Instagram com capas locais e links oficiais, sem depender de embeds frágeis.'
 };
 const MAINTENANCE = {

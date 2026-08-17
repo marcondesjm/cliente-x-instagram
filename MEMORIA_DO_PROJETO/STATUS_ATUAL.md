@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 21:52 BRT
+Atualizado em: 2026-08-16 21:58 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,21 @@ Atualizado em: 2026-08-16 21:52 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `f5b3e16` (`Varia chamadas do ultimo slide`).
+- Checkpoint funcional atual: `a9b4b7f` (`Exibe posts fixados na landing`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
-- Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
-- Versao visivel atual: `v5.26`
+- Commit mais recente da landing: `a9b4b7f` (`Exibe posts fixados na landing`).
+- Versao visivel atual: `v5.27`
+
+## Posts fixados na landing
+
+- A secao de prova social mostra os dois posts que possuem o icone de fixado no perfil: `DcHuU08EiyD` e `DcHxTYymGS0`.
+- Os cards usam as capas locais das publicacoes, selo `Fixado no Instagram` e link direto para o post oficial.
+- A landing nao depende mais dos embeds que estavam indisponiveis e exibiam caixas vazias.
+- O layout das capas e responsivo em desktop e celular.
+- Nenhuma postagem foi enviada a Meta nesta alteracao.
 
 ## Variacao do ultimo slide
 

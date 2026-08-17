@@ -1,5 +1,18 @@
 # Historico
 
+## 2026-08-16 21:58 BRT
+
+A landing passou a apresentar os dois posts realmente fixados no Instagram.
+
+- O perfil `@marcondes.machado.oficial` foi conferido visualmente e os dois posts com icone de fixacao foram identificados: `DcHuU08EiyD` e `DcHxTYymGS0`.
+- Os embeds quebrados, que deixavam caixas vazias, foram substituidos pelas capas locais dos posts e por links para as publicacoes oficiais.
+- Cada card recebeu o selo `Fixado no Instagram`, titulo legivel e chamada para abrir o post no perfil.
+- A prova da landing tambem passou a apontar para uma publicacao fixada atual, removendo o link antigo indisponivel.
+- O layout permanece responsivo para desktop e celular e nao depende mais do carregamento externo do embed.
+- `npm run validate-copy` passou com todas as protecoes editoriais, de fonte, feed e Story.
+- Nenhuma postagem foi enviada a Meta nesta alteracao.
+- Commit funcional: `a9b4b7f` (`Exibe posts fixados na landing`); versao `v5.27`.
+
 ## 2026-08-16 21:52 BRT
 
 O ultimo slide dos carrosseis passou a variar o fechamento entre as materias.
