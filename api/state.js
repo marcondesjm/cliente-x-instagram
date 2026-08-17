@@ -43,11 +43,11 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v5.23',
+  appVersion: 'v5.24',
   status: 'funcionando',
   stableCommit: 'b7691ab',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/b7691ab',
-  description: 'O Radar bloqueia texto principal em inglês e usa somente explicações em português para o público brasileiro.'
+  description: 'Stories ajustam títulos longos sem sobreposição e o acervo ganhou novas fotos exclusivas para reduzir repetições.'
 };
 const MAINTENANCE = {
   githubToken: {

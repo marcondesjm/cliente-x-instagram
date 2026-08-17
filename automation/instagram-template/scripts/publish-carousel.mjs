@@ -2671,6 +2671,8 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
   const eyebrow = applyAnatexCopyRules(slide.eyebrow || 'Pra saber');
   const accent = slideStyle.accent || '#a7563d';
   const mode = slideStyle.templateMode || 'native';
+  const storyTitleLength = String(slide.title || '').trim().length;
+  const titleClass = storyTitleLength >= 110 ? ' title-very-long' : (storyTitleLength >= 70 ? ' title-long' : '');
   const soft = slideStyle.accentSoft || 'rgba(167,86,61,0.16)';
   const visualCue = slide.visualCue || visualCueForAccount(account, `${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
   const researchSource = String(slide.researchSource || '').trim();
@@ -2756,10 +2758,18 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     .mode-editorial p { max-width: 560px; font-size: 39px; }
     .mode-editorial .visual-card { display: block; left: 650px; right: 56px; top: 520px; height: 720px; }
     .mode-editorial .avatar { right: 92px; bottom: ${STORY_SAFE_BOTTOM + 20}px; width: 300px; height: 390px; transform: none; }
+    .title-long h1 { margin-top: 38px; max-width: 900px; font-size: 68px; line-height: .96; }
+    .title-long p { margin-top: 22px; max-width: 520px; font-size: 34px; }
+    .title-long .feed-cta { margin-top: 18px; max-width: 560px; padding: 17px 24px; font-size: 27px; }
+    .title-long .avatar { right: 72px; bottom: ${STORY_SAFE_BOTTOM}px; width: 290px; height: 330px; }
+    .title-very-long h1 { margin-top: 34px; font-size: 58px; line-height: .94; }
+    .title-very-long p { margin-top: 18px; font-size: 31px; }
+    .title-very-long .feed-cta { margin-top: 16px; max-width: 540px; font-size: 25px; }
+    .title-very-long .avatar { width: 270px; height: 310px; }
   </style>
 </head>
 <body>
-  <main class="mode-${mode}">
+  <main class="mode-${mode}${titleClass}">
     <div class="brand">${usernameDisplay}</div>
     <div class="badge">${eyebrow}</div>
     <h1>${title.replace(/\s+IA\b/i, ' <strong>IA</strong>')}</h1>
@@ -2857,17 +2867,19 @@ async function renderStory(runDir, pack, account, style, renderContext = {}) {
   writeFileSync(htmlPath, html, 'utf8');
   await page.goto(`file://${htmlPath.replace(/\\/g, '/')}`);
   const storyOverlap = await page.evaluate(() => {
-    const copy = document.querySelector('p');
+    const copyBlocks = [...document.querySelectorAll('h1, p, .feed-cta')].filter((element) => getComputedStyle(element).display !== 'none');
     const image = document.querySelector('.avatar');
-    if (!copy || !image || getComputedStyle(image).display === 'none') return false;
-    const copyRect = copy.getBoundingClientRect();
+    if (!copyBlocks.length || !image || getComputedStyle(image).display === 'none') return false;
     const imageRect = image.getBoundingClientRect();
-    return !(
-      copyRect.right <= imageRect.left
-      || copyRect.left >= imageRect.right
-      || copyRect.bottom <= imageRect.top
-      || copyRect.top >= imageRect.bottom
-    );
+    return copyBlocks.some((copy) => {
+      const copyRect = copy.getBoundingClientRect();
+      return !(
+        copyRect.right <= imageRect.left
+        || copyRect.left >= imageRect.right
+        || copyRect.bottom <= imageRect.top
+        || copyRect.top >= imageRect.bottom
+      );
+    });
   });
   if (storyOverlap) throw new Error('Story rejeitado: texto sobrepoe a foto.');
   await page.screenshot({ path: imagePath, type: 'jpeg', quality: 94, fullPage: false });
