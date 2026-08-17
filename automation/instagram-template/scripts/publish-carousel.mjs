@@ -2396,6 +2396,13 @@ function validatePack(pack) {
     if (!hasImage && (!slide.eyebrow || !slide.title || !slide.body)) {
       throw new Error('Slides sem imagem precisam de banner, titulo e descricao.');
     }
+    if (isPredominantlyEnglish(text)) {
+      throw new Error('Publicacao bloqueada: um slide ainda contém texto predominantemente em inglês.');
+    }
+  }
+  const captionWithoutUrls = String(pack.caption || '').replace(/https?:\/\/\S+/gi, '');
+  if (isPredominantlyEnglish(captionWithoutUrls)) {
+    throw new Error('Publicacao bloqueada: a legenda ainda contém texto predominantemente em inglês.');
   }
   if (pack.research) {
     const sourceUrl = String(pack.research.sourceUrl || '').trim();
@@ -2414,9 +2421,9 @@ function validatePack(pack) {
       throw new Error('Radar bloqueado: o conteúdo principal da matéria ainda está em inglês.');
     }
     const firstComment = String(pack.firstComment || '').trim();
-    if (!firstComment.includes(sourceTitle)) throw new Error('Radar bloqueado: o primeiro comentário não apresenta o título original da matéria.');
+    if (!isPredominantlyEnglish(sourceTitle) && !firstComment.includes(sourceTitle)) throw new Error('Radar bloqueado: o primeiro comentário não apresenta o título original da matéria.');
     if (!firstComment.includes(sourceUrl)) throw new Error('Radar bloqueado: o primeiro comentário não contém o link completo da matéria.');
-    if (!String(pack.caption || '').includes(sourceTitle)) throw new Error('Radar bloqueado: a legenda não apresenta o título original da matéria.');
+    if (!isPredominantlyEnglish(sourceTitle) && !String(pack.caption || '').includes(sourceTitle)) throw new Error('Radar bloqueado: a legenda não apresenta o título original da matéria.');
     if (!String(pack.caption || '').includes(sourceUrl)) throw new Error('Radar bloqueado: a legenda não contém o link completo da matéria como garantia.');
     const coverTitle = String(pack.slides?.[0]?.title || '');
     if (FORBIDDEN_GENERIC_RESEARCH_COVERS.some((pattern) => pattern.test(coverTitle))) {
