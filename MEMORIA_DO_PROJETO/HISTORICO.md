@@ -1,5 +1,19 @@
 # Historico
 
+## 2026-08-16 21:11 BRT
+
+Diagnosticada e corrigida uma repeticao de materia no comando `Publicar agora` do Radar.
+
+- O workflow `31981001000` publicou feed `18113708173986576` e Story `17899737327349544`, permalink `https://www.instagram.com/p/DcHttB4FEDc/`.
+- A publicacao repetiu a materia anterior do Olhar Digital porque `api/publish-now.js` selecionava o primeiro resultado da pesquisa sem consultar `publication-history.json`.
+- O primeiro comentario automatico foi recusado pela Meta com erro `(#10) Application does not have permission for this action`; nenhum comentario foi confirmado.
+- O comando imediato agora elimina URLs e titulos ja existentes no historico e prefere uma fonte diferente da ultima publicacao.
+- Enquanto a permissao de comentarios nao estiver disponivel, titulo e URL completos permanecem na legenda para a fonte nunca desaparecer.
+- `npm run validate-copy` passou; a previa `2026-08-16-211019-slot-1-render-only` confirmou uma pauta diferente da OpenAI e o link real na legenda.
+- Commit funcional: `c519d57` (`Bloqueia repeticao e garante fonte na legenda`).
+- Deploy: `dpl_CRBDRrGMFnHWZ2YXqsHoA5t1wxtW`; versao `v5.22`.
+- O vigia foi acionado novamente para cumprir o pedido com uma materia realmente nova.
+
 ## 2026-08-16 21:01 BRT
 
 Adicionada ao Story do Radar a orientacao para acompanhar a materia completa no feed.

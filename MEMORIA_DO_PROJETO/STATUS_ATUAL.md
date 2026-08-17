@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 21:01 BRT
+Atualizado em: 2026-08-16 21:11 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,21 @@ Atualizado em: 2026-08-16 21:01 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `22d3b1f` (`Adiciona chamada do feed ao Story`).
+- Checkpoint funcional atual: `c519d57` (`Bloqueia repeticao e garante fonte na legenda`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
-- Versao visivel atual: `v5.21`
+- Versao visivel atual: `v5.22`
+
+## Publicacao imediata sem repetir materia
+
+- `Publicar agora` consulta URLs e titulos do historico antes de selecionar a pauta.
+- A mesma materia nao pode ser reutilizada pelo comando imediato.
+- O link completo voltou a permanecer na legenda porque a Meta recusou o comentario automatico por falta de permissao.
+- Publicacao que revelou o problema: workflow `31981001000`, feed `18113708173986576`, Story `17899737327349544`, permalink `https://www.instagram.com/p/DcHttB4FEDc/`.
+- Correcao: commit `c519d57`, deploy `dpl_CRBDRrGMFnHWZ2YXqsHoA5t1wxtW`, versao `v5.22`.
 
 ## Chamada do Story para o feed
 

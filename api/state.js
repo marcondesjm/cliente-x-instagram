@@ -45,8 +45,8 @@ const ACTIVE_VERSION = {
   label: 'Última versão funcionando',
   appVersion: 'v5.22',
   status: 'funcionando',
-  stableCommit: '22d3b1f',
-  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/22d3b1f',
+  stableCommit: 'c519d57',
+  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/c519d57',
   description: 'O Radar bloqueia matérias já publicadas e mantém o link real na legenda quando a Meta recusa comentários.'
 };
 const MAINTENANCE = {
