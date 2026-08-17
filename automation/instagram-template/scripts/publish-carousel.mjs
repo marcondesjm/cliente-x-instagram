@@ -2674,9 +2674,17 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
           visual.style.top = `${safeTop}px`;
           visual.style.height = `${Math.max(minimumHeight, Math.min(Math.round(rect.height), safeHeight))}px`;
           corrected += 1;
+        } else if (!preserveCoverPhoto) {
+          // Em slides internos a foto e apoio visual. Se um titulo factual
+          // longo ocupar a area disponivel, preservar a leitura e ocultar o
+          // apoio e melhor do que bloquear toda a publicacao.
+          visual.style.display = 'none';
+          corrected += 1;
         }
       }
-      const collisions = visuals.filter((visual) => intersectsHeadline(visual.getBoundingClientRect())).map((visual) => visual.className);
+      const collisions = visuals
+        .filter((visual) => getComputedStyle(visual).display !== 'none' && intersectsHeadline(visual.getBoundingClientRect()))
+        .map((visual) => visual.className);
       return { corrected, collisions };
     });
     if (overlapCheck.collisions.length) {
@@ -3127,7 +3135,13 @@ function findDuplicateSelection(pack, recentMedia = [], publicationHistory = [])
 function balanceResearchPacksByHistory(packs = [], publicationHistory = [], dateString = '', slotIndex = 0) {
   if (!packs.some((pack) => pack?.research?.source)) return packs.map((pack, index) => ({ pack, originalIndex: index }));
   const stats = new Map();
-  for (const entry of publicationHistory) {
+  // O perfil visivel deve variar agora. Contagens de meses/dias anteriores nao
+  // podem fazer uma fonte dominar a grade recente por parecer pouco usada no
+  // total acumulado.
+  const recentResearchHistory = publicationHistory
+    .filter((entry) => entry?.research?.source)
+    .slice(-12);
+  for (const entry of recentResearchHistory) {
     const source = String(entry?.research?.source || '').trim().toLocaleLowerCase('pt-BR');
     if (!source) continue;
     const current = stats.get(source) || { count: 0, lastPublishedAt: 0 };
@@ -3437,6 +3451,16 @@ async function main() {
       { publishedAt: '2026-08-16T10:00:00.000Z', research: { source: 'Fonte B', sourceUrl: 'https://example.com/b1' } }
     ]);
     if (balancedProbe.pack?.research?.source !== 'Fonte C') throw new Error('Balanceamento por fonte falhou no teste de historico.');
+    const historicalNoise = Array.from({ length: 20 }, (_, index) => ({
+      publishedAt: `2026-07-${String(index + 1).padStart(2, '0')}T10:00:00.000Z`,
+      research: { source: 'Fonte C', sourceUrl: `https://example.com/c-old-${index}` }
+    }));
+    const recentWindow = [
+      ...Array.from({ length: 6 }, (_, index) => ({ publishedAt: `2026-08-16T${String(index).padStart(2, '0')}:00:00.000Z`, research: { source: 'Fonte A', sourceUrl: `https://example.com/a-recent-${index}` } })),
+      ...Array.from({ length: 6 }, (_, index) => ({ publishedAt: `2026-08-17T${String(index).padStart(2, '0')}:00:00.000Z`, research: { source: 'Fonte B', sourceUrl: `https://example.com/b-recent-${index}` } }))
+    ];
+    const recentBalancedProbe = pickFreshPack(balancedProbePacks, today, slotIndex, [], [...historicalNoise, ...recentWindow]);
+    if (recentBalancedProbe.pack?.research?.source !== 'Fonte C') throw new Error('Janela recente de balanceamento por fonte falhou.');
     const avatarProbeAccount = {
       avatarRotation: { enabled: true, urls: Array.from({ length: 7 }, (_, index) => `foto-${index + 1}`) }
     };
