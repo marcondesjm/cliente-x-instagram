@@ -221,7 +221,11 @@
     .output-visual .visual-status { top: 13px; left: 13px; }
     .instagram-proofs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: min(980px, 100%); margin: 0 auto; }
     .instagram-proof { margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: #fff; box-shadow: 0 18px 50px rgba(28,43,34,.08); }
-    .instagram-proof iframe { display: block; width: 100%; height: 690px; border: 0; background: #fff; }
+    .instagram-proof-media { position: relative; display: block; height: 610px; overflow: hidden; background: var(--paper); }
+    .instagram-proof-media img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top; transition: transform .45s ease; }
+    .instagram-proof-media:hover img { transform: scale(1.018); }
+    .instagram-pinned-label { position: absolute; z-index: 2; top: 14px; left: 14px; display: inline-flex; align-items: center; gap: 7px; padding: 9px 12px; border-radius: 999px; color: #fff; background: rgba(19,34,56,.9); box-shadow: 0 10px 28px rgba(19,34,56,.2); font-size: 11px; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; }
+    .instagram-pinned-label::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #a8d77b; box-shadow: 0 0 0 4px rgba(168,215,123,.18); }
     .instagram-proof figcaption { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 17px 18px; border-top: 1px solid var(--line); }
     .instagram-proof figcaption div { display: grid; gap: 3px; }
     .instagram-proof figcaption strong { font-size: 15px; }
@@ -399,7 +403,7 @@
       .outputs { grid-template-columns: 1fr; gap: 18px; width: 100%; }
       .output-card img { width: 100%; height: min(145vw, 620px); object-fit: contain; }
       .instagram-proofs { grid-template-columns: 1fr; gap: 18px; width: 100%; }
-      .instagram-proof iframe { height: 650px; }
+      .instagram-proof-media { height: min(122vw, 650px); }
       .instagram-proof figcaption { align-items: flex-start; padding: 14px; }
       .real-product-shot figcaption, .screen-card figcaption, .output-card figcaption { align-items: flex-start; padding: 12px; }
       .app-window { margin-top: 10px; padding: 9px; border-radius: 22px; }
@@ -575,12 +579,18 @@
           </div>
           <div class="instagram-proofs" aria-label="Publicações reais no Instagram">
             <figure class="instagram-proof">
-              <iframe src="https://www.instagram.com/p/DcHMqdWE3bI/embed/" title="Publicação real da Nerion Social no Instagram" loading="lazy" allowtransparency="true"></iframe>
-              <figcaption><div><strong>Publicado no Instagram</strong><span>Carrossel real no perfil @marcondes.machado.oficial.</span></div><a class="image-link" href="https://www.instagram.com/p/DcHMqdWE3bI/" target="_blank" rel="noopener noreferrer">Abrir post ↗</a></figcaption>
+              <a class="instagram-proof-media" href="https://www.instagram.com/p/DcHuU08EiyD/" target="_blank" rel="noopener noreferrer" aria-label="Abrir post fixado sobre inteligência artificial nas eleições">
+                <span class="instagram-pinned-label">Fixado no Instagram</span>
+                <img src="/docs/generated/cliente-x/2026-08-16-211242-slot-0/slide-01.jpg?v=526" alt="Post fixado no Instagram sobre seis casos reais de inteligência artificial nas eleições" loading="lazy">
+              </a>
+              <figcaption><div><strong>IA nas eleições: casos reais</strong><span>Post fixado no perfil @marcondes.machado.oficial.</span></div><a class="image-link" href="https://www.instagram.com/p/DcHuU08EiyD/" target="_blank" rel="noopener noreferrer">Abrir post ↗</a></figcaption>
             </figure>
             <figure class="instagram-proof">
-              <iframe src="https://www.instagram.com/p/DcHDsOKkzvp/embed/" title="Segunda publicação real da Nerion Social no Instagram" loading="lazy" allowtransparency="true"></iframe>
-              <figcaption><div><strong>Publicação confirmada</strong><span>Conteúdo criado, agendado e entregue pela plataforma.</span></div><a class="image-link" href="https://www.instagram.com/p/DcHDsOKkzvp/" target="_blank" rel="noopener noreferrer">Abrir post ↗</a></figcaption>
+              <a class="instagram-proof-media" href="https://www.instagram.com/p/DcHxTYymGS0/" target="_blank" rel="noopener noreferrer" aria-label="Abrir post fixado sobre profissionais que produzem vídeos com inteligência artificial">
+                <span class="instagram-pinned-label">Fixado no Instagram</span>
+                <img src="/docs/generated/cliente-x/2026-08-16-213846-slot-0/slide-01.jpg?v=526" alt="Post fixado no Instagram sobre profissionais que deixaram a CLT para produzir vídeos com inteligência artificial" loading="lazy">
+              </a>
+              <figcaption><div><strong>Vídeos com IA como profissão</strong><span>Post fixado, criado e publicado pela plataforma.</span></div><a class="image-link" href="https://www.instagram.com/p/DcHxTYymGS0/" target="_blank" rel="noopener noreferrer">Abrir post ↗</a></figcaption>
             </figure>
           </div>
         </div>
@@ -652,7 +662,7 @@
       <div class="wrap">
         <div class="section-head"><p class="eyebrow">Credibilidade sem promessa vazia</p><h2>Você confere a operação antes de depender dela.</h2><p class="section-lead">Em vez de depoimentos inventados, mostramos provas que podem ser abertas e verificadas. Quando clientes autorizarem seus relatos, eles poderão ser adicionados aqui com nome, empresa e contexto reais.</p></div>
         <div class="assurance-grid">
-          <article class="assurance-card"><span class="assurance-label">Prova pública</span><h3>Publicações reais no Instagram</h3><p>Os exemplos exibidos nesta página abrem diretamente no perfil e permitem conferir o conteúdo entregue.</p><a href="https://www.instagram.com/p/DcHMqdWE3bI/" target="_blank" rel="noopener noreferrer">Conferir publicação ↗</a></article>
+          <article class="assurance-card"><span class="assurance-label">Prova pública</span><h3>Publicações reais no Instagram</h3><p>Os exemplos exibidos nesta página são posts fixados no perfil e permitem conferir o conteúdo entregue.</p><a href="https://www.instagram.com/p/DcHuU08EiyD/" target="_blank" rel="noopener noreferrer">Conferir publicação fixada ↗</a></article>
           <article class="assurance-card"><span class="assurance-label">Prova técnica</span><h3>Confirmação no painel</h3><p>A plataforma registra agenda, execução e confirmação da publicação para que você acompanhe o que realmente aconteceu.</p><a href="#produto">Ver telas da plataforma ↑</a></article>
           <article class="assurance-card featured"><span class="assurance-label">Garantia de implantação</span><h3>A configuração só termina depois do teste.</h3><p>A implantação é acompanhada até a marca estar configurada, a agenda definida e uma publicação de teste ser confirmada. Se algo falhar nessa etapa, a configuração continua sem custo adicional até a correção.</p><a href="https://wa.me/5548996029392?text=Ol%C3%A1%2C%20Marcondes!%20Quero%20entender%20a%20garantia%20de%20implanta%C3%A7%C3%A3o%20da%20Nerion%20Social." target="_blank" rel="noopener noreferrer">Entender a garantia →</a></article>
         </div>
