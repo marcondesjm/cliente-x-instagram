@@ -2892,7 +2892,10 @@ async function renderStory(runDir, pack, account, style, renderContext = {}) {
     const outsideSafeArea = safeElements
       .map((element) => {
         const rect = element.getBoundingClientRect();
-        const tolerance = 2;
+        // A borda/arredondamento da foto pode ultrapassar alguns pixels por
+        // causa do recorte e da rasterizacao do Chromium. Isso nao compromete
+        // a area segura; textos continuam com a tolerancia estrita.
+        const tolerance = element.classList.contains('avatar') ? 12 : 2;
         const outside = rect.left < 48 - tolerance
           || rect.right > storyWidth - 48 + tolerance
           || rect.top < safeTop - tolerance
