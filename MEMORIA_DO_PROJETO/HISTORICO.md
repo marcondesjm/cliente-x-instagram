@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-08-17 10:34 BRT
+
+- Corrigida a pauta n8n que publicou `Comparing RPA versus workflow automation` em ingles em um slide e repetiu texto estrangeiro na legenda.
+- O detector de idioma passou a reconhecer vocabulário adicional de artigos tecnicos em ingles.
+- Slides e legenda agora sao validados no pacote final imediatamente antes da renderizacao/publicacao.
+- Titulos originais em ingles nao sao mais copiados para a legenda ou primeiro comentario; fonte e link oficial permanecem obrigatorios.
+- A pauta exata `RPA vs. Workflow Automation` foi testada e gerou cinco slides e legenda em portugues, sem nenhum sinalizador de ingles.
+- `node --check`, `npm run validate-copy` e `npm run render-only` passaram; commit funcional `f465019`.
+
 ## 2026-08-17 10:23 BRT
 
 - Teste automatico real solicitado pelo usuario e acionado no commit `8347d26`.

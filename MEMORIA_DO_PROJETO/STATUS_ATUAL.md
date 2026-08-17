@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-17 10:23 BRT
+Atualizado em: 2026-08-17 10:34 BRT
 
 ## Regra permanente de checkpoint
 
@@ -22,6 +22,8 @@ Atualizado em: 2026-08-17 10:23 BRT
 
 ## Disparo automatico e composicao visual
 
+- O commit `f465019` bloqueia ingles no pacote final: todos os slides e a legenda sao validados depois da montagem; pautas sem adaptacao confiavel em portugues nao podem ser publicadas.
+- A pauta n8n `RPA vs. Workflow Automation` ganhou traducao editorial explicita para portugues. O titulo original em ingles nao e mais repetido na legenda; a fonte e o link continuam preservados.
 - Primeiro teste real posterior aos ajustes visuais confirmado pelo run `32034646438`: `https://www.instagram.com/p/DcJIpuCIF_F/`, media ID `17939869695302140`, Story ID `18006552392956384`.
 - A publicacao usou o titulo `n8n explica a diferenca entre robo de clique e automacao de verdade.` e a foto `avatar-marcondes-meeting-tablet.png` com o novo encaixe proporcional sem corte.
 - A falha do primeiro slot de 2026-08-17 foi causada pela validacao do Story, que rejeitava uma variacao de poucos pixels na borda da foto.
