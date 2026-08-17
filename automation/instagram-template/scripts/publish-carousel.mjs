@@ -5,7 +5,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from
 import { basename, dirname, extname, isAbsolute, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildBrandContext } from '../../../lib/brand-analysis.js';
-import { buildResearchPack, EDITORIAL_SOURCES, extractArticleFacts, factualSummary, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
+import { buildResearchPack, EDITORIAL_SOURCES, extractArticleFacts, factualSummary, isPredominantlyEnglish, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const TEMPLATE_DIR = resolve(ROOT, 'automation', 'instagram-template');
@@ -2387,6 +2387,10 @@ function validatePack(pack) {
     if (/^a matéria informa:?/i.test(sourceFact)) {
       throw new Error('Radar bloqueado: o fato da matéria não pode ser um rótulo repetindo o título.');
     }
+    const sourceFacts = Array.isArray(pack.research.sourceFacts) ? pack.research.sourceFacts : [sourceFact];
+    if (sourceFacts.some((fact) => isPredominantlyEnglish(fact))) {
+      throw new Error('Radar bloqueado: o conteúdo principal da matéria ainda está em inglês.');
+    }
     const firstComment = String(pack.firstComment || '').trim();
     if (!firstComment.includes(sourceTitle)) throw new Error('Radar bloqueado: o primeiro comentário não apresenta o título original da matéria.');
     if (!firstComment.includes(sourceUrl)) throw new Error('Radar bloqueado: o primeiro comentário não contém o link completo da matéria.');
@@ -3413,6 +3417,21 @@ async function main() {
     }, validationNow, { niche: 'automação com IA para empresas', keywords: radarKeywords });
     if (articleFactsProbe.length < 3 || continuedResearchProbe.slides[2]?.eyebrow !== 'A MATÉRIA CONTINUA' || !continuedResearchProbe.caption.includes(articleFactsProbe[2])) {
       throw new Error('Continuidade factual entre matéria, slide 3 e legenda falhou.');
+    }
+    const englishResearchProbe = buildResearchPack({
+      source: 'n8n',
+      title: 'Building AI Agent Observability for Production Workflows',
+      url: 'https://blog.n8n.io/ai-agent-observability/',
+      publishedAt: validationNow.toISOString(),
+      summary: 'Learn how AI agent observability provides the visibility needed to understand failures and build reliable workflows.',
+      articleFacts: [
+        'AI agents are getting better at handling complex multi-step tasks, but they are also getting harder to debug.',
+        'AI agent observability captures model calls, tool invocations, and interactions with external systems.'
+      ]
+    }, validationNow, { niche: 'automação com IA para empresas', keywords: radarKeywords });
+    validatePack(englishResearchProbe);
+    if (englishResearchProbe.research.sourceFacts.some((fact) => isPredominantlyEnglish(fact)) || /\bLearn how\b/i.test(englishResearchProbe.caption)) {
+      throw new Error('Localização obrigatória para português falhou.');
     }
     const genericResearchProbe = {
       ...researchIntegrityProbe,
