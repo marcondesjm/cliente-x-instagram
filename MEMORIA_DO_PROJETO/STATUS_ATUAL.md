@@ -28,6 +28,7 @@ Atualizado em: 2026-08-16 22:07 BRT
 - No desktop aparecem cinco opcoes por linha; no celular, duas por linha.
 - Automacao do Direct e editor/Radar aparecem em capturas separadas para deixar as duas funcoes compreensiveis.
 - Nenhuma postagem foi enviada a Meta nesta alteracao.
+- Producao confirmada: commit funcional `9156514`, deploy `dpl_4JTm9UNd7Gckzqt94j2CXjVyBWay`, versao `v5.28`, dez seletores encontrados e landing publica `HTTP 200`.
 
 ## Posts fixados na landing
 

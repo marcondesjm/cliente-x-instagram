@@ -11,7 +11,7 @@ As dez telas da plataforma exibidas na landing foram recapturadas na versao atua
 - Os links de ampliacao e o cache das imagens foram atualizados para `v=527`.
 - `npm run validate-copy` passou com todas as protecoes editoriais, de fonte, Feed e Story.
 - Nenhuma postagem foi enviada a Meta nesta alteracao.
-- Commit funcional: `9156514` (`Atualiza todas as telas da landing`); versao `v5.28`.
+- Commit funcional: `9156514` (`Atualiza todas as telas da landing`); deploy `dpl_4JTm9UNd7Gckzqt94j2CXjVyBWay`; versao `v5.28` confirmada pela API publica.
 
 ## 2026-08-16 21:58 BRT
 
