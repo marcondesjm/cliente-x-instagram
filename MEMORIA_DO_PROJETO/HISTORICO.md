@@ -1,5 +1,32 @@
 # Historico
 
+## 2026-08-17 10:19 BRT
+
+Resumo:
+
+- Diagnosticado o disparo automatico: feed e vigia falhavam em `Publish feed and story` porque a foto do Story ultrapassava em poucos pixels a validacao central.
+- Ajustada a tolerancia exclusiva da foto no commit `b8924dc`, preservando a trava rigida para textos.
+- Recuperacao acionada pelo commit `98c2f7c`; run `32033523845` publicou feed e Story e resolveu os registros do vigia.
+- Publicacao real confirmada: `https://www.instagram.com/p/DcJHScOoCQl/`, media ID `18219025894339463`, Story ID `17868329220638472`.
+- Títulos longos receberam fonte progressivamente menor e mais largura no feed; o Story recebeu mais espaco entre seus blocos (`3ed5efe`).
+- Fotos pessoais passaram de preenchimento com corte para encaixe proporcional completo no feed e Story (`14822ea`).
+
+Validado:
+
+- `node --check automation/instagram-template/scripts/publish-carousel.mjs` passou.
+- `npm run validate-copy` passou com 20 packs fixos, 54 automaticos e 74 selecoes automaticas.
+- `npm run render-only` passou; previas de feed e Story foram inspecionadas sem cortes ou sobreposicoes.
+
+Pendente:
+
+- Conferir visualmente a primeira publicacao automatica criada depois de `14822ea`.
+- O primeiro comentario automatico ainda retorna `OAuthException #10`; isso nao impediu feed nem Story.
+
+Deploy/publicacao:
+
+- Deploy: alteracoes sincronizadas com `origin/main`; nenhum deploy Vercel necessario.
+- Instagram real: sim, run `32033523845` e permalink `DcJHScOoCQl`.
+
 ## 2026-08-16 22:07 BRT
 
 As dez telas da plataforma exibidas na landing foram recapturadas na versao atual.

@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 22:07 BRT
+Atualizado em: 2026-08-17 10:19 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,24 @@ Atualizado em: 2026-08-16 22:07 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `9156514` (`Atualiza todas as telas da landing`).
+- Checkpoint funcional atual: `14822ea` (`Preserva fotos inteiras no feed e Story`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `9156514` (`Atualiza todas as telas da landing`).
 - Versao visivel atual: `v5.28`
+
+## Disparo automatico e composicao visual
+
+- A falha do primeiro slot de 2026-08-17 foi causada pela validacao do Story, que rejeitava uma variacao de poucos pixels na borda da foto.
+- A tolerancia tecnica da foto foi corrigida em `b8924dc`; textos continuam usando a validacao estrita da area segura.
+- O mecanismo de recuperacao publicou realmente o slot pelo run `32033523845`.
+- Prova real: `https://www.instagram.com/p/DcJHScOoCQl/`, media ID `18219025894339463`, Story ID `17868329220638472`.
+- Titulos longos agora usam escala progressiva e largura maior no feed; no Story, selo, titulo, data e CTA possuem mais espacamento (`3ed5efe`).
+- Fotos pessoais no feed e no Story usam encaixe proporcional completo, sem zoom ou recorte; as sobras recebem fundo claro (`14822ea`).
+- `node --check`, `npm run validate-copy` e `npm run render-only` passaram; as ultimas previas foram inspecionadas sem corte ou sobreposicao.
+- O erro de permissao Meta `OAuthException #10` permanece restrito ao primeiro comentario automatico; feed e Story foram publicados normalmente.
 
 ## Telas atuais da plataforma na landing
 
