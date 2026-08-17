@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-17 10:40 BRT
+Atualizado em: 2026-08-17 11:29 BRT
 
 ## Regra permanente de checkpoint
 
@@ -22,6 +22,9 @@ Atualizado em: 2026-08-17 10:40 BRT
 
 ## Disparo automatico e composicao visual
 
+- O commit `8e1d4a5` reforca o rodizio do Radar usando as ultimas 12 publicacoes pesquisadas, em vez do total acumulado. Isso evita o padrao recente `G1 -> outra fonte -> G1`.
+- Pautas comerciais de compra, oferta, promocao e smartwatch foram excluidas do Radar. A primeira previa apos a mudanca escolheu `AWS Machine Learning`, com capa em portugues, e renderizou os cinco slides e Story.
+- Em slides internos, uma foto decorativa sem area segura suficiente agora recua para preservar a leitura, sem bloquear todo o slot; a foto da capa continua obrigatoria.
 - Primeira publicacao real apos a trava de portugues: run `32036009272`, `https://www.instagram.com/p/DcJKe7pFvhP/`, media ID `17904573321496712`, Story ID `17963038641168267`.
 - Os cinco slides e o Story foram inspecionados visualmente e estao em portugues. A legenda publica foi extraida do proprio permalink (HTTP 200) e tambem esta integralmente em portugues, sem o vazamento `Comparing RPA`/`workflow automation`.
 - O commit `f465019` bloqueia ingles no pacote final: todos os slides e a legenda sao validados depois da montagem; pautas sem adaptacao confiavel em portugues nao podem ser publicadas.

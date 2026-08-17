@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-08-17 11:29 BRT
+
+- Confirmado que o rodizio anterior impedia apenas repeticao consecutiva e usava todo o historico; nos cinco posts observados, o padrao foi `G1 -> n8n -> G1 -> AWS -> G1`.
+- O balanceamento passou a considerar a janela movel das ultimas 12 publicacoes pesquisadas, priorizando a fonte menos presente na grade recente.
+- Pautas comerciais de produto, oferta, promocao, desconto e smartwatch foram excluidas do Radar.
+- A protecao visual agora pode ocultar foto apenas decorativa de slide interno quando nao existe area segura, preservando titulo e texto; a foto de capa permanece protegida.
+- `node --check`, `npm run validate-copy` e `npm run render-only` passaram. A previa escolheu `AWS Machine Learning`, nao G1, com conteudo em portugues.
+- Commit funcional: `8e1d4a5`.
+
 ## 2026-08-17 10:40 BRT
 
 - Publicacao automatica real acionada no commit `beaeab7` para validar a trava de portugues.
