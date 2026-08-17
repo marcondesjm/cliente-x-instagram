@@ -28,7 +28,7 @@ Atualizado em: 2026-08-16 21:21 BRT
 - O titulo estrangeiro permanece somente como credito, marcado `Titulo original (em ingles)`.
 - A validacao bloqueia o post se algum fato principal ainda estiver predominantemente em ingles.
 - Nenhuma postagem foi enviada nesta alteracao.
-- Producao: commit `b7691ab`, deploy `dpl_A1ShquVa5NQA8FcDETw3q7yXniN6`, versao `v5.23`.
+- Producao: commit `b7691ab`, deploy final `dpl_6fAXjYvXtbRB8VNDbfDo7h8CMbdq`, versao `v5.23`.
 
 ## Publicacao imediata sem repetir materia
 
