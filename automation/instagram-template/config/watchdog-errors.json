@@ -1,23 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-08-15:0:31878073885",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-08-15",
-    "slotIndex": 0,
-    "scheduledAt": "2026-08-15T09:30:00.000Z",
-    "failedAt": "2026-08-15T09:52:43.932Z",
-    "workflowRun": "31878073885",
-    "workflowName": "Instagram Feed Cliente X",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/31878073885",
-    "stage": "ImgBB upload",
-    "error": "ImgBB upload failed [400]: {\"status_code\":400,\"error\":{\"message\":\"Rate limit reached.\",\"code\":100},\"status_txt\":\"Bad Request\"}",
-    "solution": "Validar ou trocar IMGBB_API_KEY no painel, salvar no Vercel/GitHub Secrets e redeployar se necessário.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-08-15-065243.json",
-    "resolvedAt": "2026-08-15T13:39:12.084Z",
-    "resolvedRun": "31887712484"
-  },
-  {
     "key": "cliente-x:2026-08-15:0:31878075490",
     "status": "resolved",
     "account": "cliente-x",
@@ -894,5 +876,21 @@
     "error": "Story rejeitado: texto sobrepoe a foto.",
     "solution": "Corrigir o texto do pack indicado no painel, rodar validar textos e salvar antes da próxima publicação.",
     "failurePath": "automation/instagram-template/runs/failure-2026-08-17-150317.json"
+  },
+  {
+    "key": "cliente-x:2026-08-17:0:32054906559",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-08-17",
+    "slotIndex": 0,
+    "scheduledAt": "2026-08-17T17:50:00.000Z",
+    "failedAt": "2026-08-17T18:27:37.825Z",
+    "workflowRun": "32054906559",
+    "workflowName": "Instagram Feed Cliente X",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/32054906559",
+    "stage": "unknown",
+    "error": "Story rejeitado: texto sobrepoe a foto.",
+    "solution": "Corrigir o texto do pack indicado no painel, rodar validar textos e salvar antes da próxima publicação.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-08-17-152737.json"
   }
 ]
