@@ -45,8 +45,8 @@ const ACTIVE_VERSION = {
   label: 'Última versão funcionando',
   appVersion: 'v5.26',
   status: 'funcionando',
-  stableCommit: '9029a62',
-  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/9029a62',
+  stableCommit: 'f5b3e16',
+  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/f5b3e16',
   description: 'O último slide alterna chamadas naturais e contextuais para evitar fechamentos repetidos entre as publicações.'
 };
 const MAINTENANCE = {

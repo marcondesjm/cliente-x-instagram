@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 21:46 BRT
+Atualizado em: 2026-08-16 21:52 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,24 @@ Atualizado em: 2026-08-16 21:46 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `9029a62` (`Reorganiza Story nas zonas seguras`).
+- Checkpoint funcional atual: `f5b3e16` (`Varia chamadas do ultimo slide`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
-- Versao visivel atual: `v5.25`
+- Versao visivel atual: `v5.26`
+
+## Variacao do ultimo slide
+
+- O fechamento do carrossel alterna entre oito combinacoes de selo, titulo e CTA.
+- A escolha usa o link da materia: a mesma pauta permanece consistente e pautas diferentes recebem fechamentos diferentes.
+- As frases variam entre diagnostico, processo prioritario, teste pequeno, gargalo e resultado esperado.
+- Todas as opcoes terminam com convite claro para o Direct e evitam frases incompletas.
+- A validacao automatica confirmou ao menos seis variacoes distintas (`finalSlideVariationGuard: ok`).
+- Previa: `2026-08-16-215226-slot-0-render-only`.
+- Nenhuma postagem foi enviada nesta alteracao.
+- Producao preparada: commit `f5b3e16`, versao `v5.26`.
 
 ## Distribuicao segura do Story
 

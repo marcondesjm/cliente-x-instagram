@@ -1,5 +1,20 @@
 # Historico
 
+## 2026-08-16 21:52 BRT
+
+O ultimo slide dos carrosseis passou a variar o fechamento entre as materias.
+
+- Antes, as pautas do Radar repetiam a mesma frase `Se isso acontece na sua empresa, vamos olhar juntos...`.
+- Foram criadas oito combinacoes de selo, titulo e chamada final, escolhidas de forma deterministica pelo link da materia.
+- Exemplos de selos: `COMECE POR AQUI`, `DIAGNOSTICO RAPIDO`, `PROXIMO PASSO`, `TESTE PEQUENO` e `RESULTADO PRATICO`.
+- Os fechamentos convidam para diagnostico, primeiro teste, organizacao de processo ou definicao do ganho esperado, sempre com frase completa e chamada para o Direct.
+- A mesma materia sempre mantem o mesmo fechamento ao ser renderizada novamente; materias diferentes alternam a chamada.
+- A validacao exige pelo menos seis fechamentos distintos em doze pautas de teste (`finalSlideVariationGuard: ok`).
+- Previa visual confirmada em `2026-08-16-215226-slot-0-render-only`, com o fechamento `Que processo voce gostaria de organizar?`.
+- O limite adaptativo do Story foi antecipado para titulos a partir de 55 caracteres, evitando colisao em chamadas medias.
+- Nenhuma postagem foi enviada a Meta nesta alteracao.
+- Commit funcional: `f5b3e16` (`Varia chamadas do ultimo slide`); versao `v5.26`.
+
 ## 2026-08-16 21:46 BRT
 
 Reorganizada a distribuicao do Story para respeitar visualmente os campos seguros do formato 9:16.
