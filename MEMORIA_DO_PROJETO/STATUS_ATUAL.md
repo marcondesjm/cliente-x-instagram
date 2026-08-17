@@ -26,7 +26,7 @@ Atualizado em: 2026-08-16 21:01 BRT
 - O cartao usa alto contraste e permanece dentro da area segura 9:16.
 - Previa inspecionada: `2026-08-16-210036-slot-0-render-only`.
 - Nenhuma publicacao foi enviada nesta alteracao.
-- Producao: commit `22d3b1f`, deploy `dpl_9nabBzn1W8fv6BWQxCC54oT7NCaE` e versao `v5.21`.
+- Producao: commit `22d3b1f`, deploy final `dpl_J4qAjBZ6f6wGgzXMM3CwnDfAviGU` e versao `v5.21`.
 
 ## Fonte no primeiro comentario
 

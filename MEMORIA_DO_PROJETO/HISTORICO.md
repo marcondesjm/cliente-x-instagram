@@ -11,7 +11,7 @@ Adicionada ao Story do Radar a orientacao para acompanhar a materia completa no 
 - `npm run validate-copy` passou com todas as travas editoriais e de arquitetura visual.
 - Nenhum novo Story ou post foi enviado a Meta durante esta atualizacao.
 - Commit funcional: `22d3b1f` (`Adiciona chamada do feed ao Story`).
-- Deploy: `dpl_9nabBzn1W8fv6BWQxCC54oT7NCaE`; versao de producao `v5.21`.
+- Deploy final: `dpl_J4qAjBZ6f6wGgzXMM3CwnDfAviGU`; versao de producao `v5.21`.
 
 ## 2026-08-16 20:56 BRT
 
