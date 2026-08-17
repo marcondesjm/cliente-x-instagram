@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-08-17 10:23 BRT
+
+- Teste automatico real solicitado pelo usuario e acionado no commit `8347d26`.
+- Workflow `32034646438` concluiu `Publish feed and story`, marcou o slot e resolveu o vigia com sucesso.
+- Feed: `https://www.instagram.com/p/DcJIpuCIF_F/`, media ID `17939869695302140`.
+- Story ID: `18006552392956384`.
+- O teste usou os ajustes `3ed5efe` e `14822ea` para titulo longo, espacamento do Story e foto proporcional sem corte.
+- O primeiro comentario automatico continua sem permissao Meta (`OAuthException #10`), sem afetar feed ou Story.
+
 ## 2026-08-17 10:19 BRT
 
 Resumo:

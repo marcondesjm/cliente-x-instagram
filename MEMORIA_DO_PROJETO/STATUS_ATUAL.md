@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-17 10:19 BRT
+Atualizado em: 2026-08-17 10:23 BRT
 
 ## Regra permanente de checkpoint
 
@@ -22,6 +22,8 @@ Atualizado em: 2026-08-17 10:19 BRT
 
 ## Disparo automatico e composicao visual
 
+- Primeiro teste real posterior aos ajustes visuais confirmado pelo run `32034646438`: `https://www.instagram.com/p/DcJIpuCIF_F/`, media ID `17939869695302140`, Story ID `18006552392956384`.
+- A publicacao usou o titulo `n8n explica a diferenca entre robo de clique e automacao de verdade.` e a foto `avatar-marcondes-meeting-tablet.png` com o novo encaixe proporcional sem corte.
 - A falha do primeiro slot de 2026-08-17 foi causada pela validacao do Story, que rejeitava uma variacao de poucos pixels na borda da foto.
 - A tolerancia tecnica da foto foi corrigida em `b8924dc`; textos continuam usando a validacao estrita da area segura.
 - O mecanismo de recuperacao publicou realmente o slot pelo run `32033523845`.
