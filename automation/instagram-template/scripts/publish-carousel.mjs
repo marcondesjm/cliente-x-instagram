@@ -2672,7 +2672,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
   const accent = slideStyle.accent || '#a7563d';
   const mode = slideStyle.templateMode || 'native';
   const storyTitleLength = String(slide.title || '').trim().length;
-  const titleClass = storyTitleLength >= 110 ? ' title-very-long' : (storyTitleLength >= 70 ? ' title-long' : '');
+  const titleClass = storyTitleLength >= 95 ? ' title-very-long' : (storyTitleLength >= 55 ? ' title-long' : '');
   const soft = slideStyle.accentSoft || 'rgba(167,86,61,0.16)';
   const visualCue = slide.visualCue || visualCueForAccount(account, `${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
   const researchSource = String(slide.researchSource || '').trim();
@@ -3454,6 +3454,17 @@ async function main() {
     if (articleFactsProbe.length < 3 || continuedResearchProbe.slides[2]?.eyebrow !== 'A MATÉRIA CONTINUA' || !continuedResearchProbe.caption.includes(articleFactsProbe[2])) {
       throw new Error('Continuidade factual entre matéria, slide 3 e legenda falhou.');
     }
+    const closingVariationProbe = Array.from({ length: 12 }, (_, index) => buildResearchPack({
+      source: 'Fonte de teste',
+      title: `Matéria empresarial ${index + 1}`,
+      url: `https://example.com/materia-cta-${index + 1}`,
+      publishedAt: validationNow.toISOString(),
+      summary: 'A matéria apresenta automação e inteligência artificial aplicadas a processos empresariais.'
+    }, validationNow, { niche: 'automação com IA para empresas', keywords: radarKeywords }))
+      .map((probe) => `${probe.slides.at(-1)?.title}|${probe.slides.at(-1)?.body}`);
+    if (new Set(closingVariationProbe).size < 6) {
+      throw new Error('Rodizio de chamadas do ultimo slide gerou pouca variacao.');
+    }
     const englishResearchProbe = buildResearchPack({
       source: 'n8n',
       title: 'Building AI Agent Observability for Production Workflows',
@@ -3503,6 +3514,7 @@ async function main() {
       ,genericResearchCoverGuard: 'ok'
       ,factualArticleContextGuard: 'ok'
       ,articleContinuationGuard: 'ok'
+      ,finalSlideVariationGuard: 'ok'
       ,feedArchitectureGuard: '1080x1350-4:5'
       ,storySafeZoneGuard: '250-1170-500'
     }, null, 2));

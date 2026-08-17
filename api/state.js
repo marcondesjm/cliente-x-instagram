@@ -43,11 +43,11 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v5.25',
+  appVersion: 'v5.26',
   status: 'funcionando',
   stableCommit: '9029a62',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/9029a62',
-  description: 'Stories distribuem título, CTA, foto e assinatura dentro das três zonas seguras do formato 9:16.'
+  description: 'O último slide alterna chamadas naturais e contextuais para evitar fechamentos repetidos entre as publicações.'
 };
 const MAINTENANCE = {
   githubToken: {
