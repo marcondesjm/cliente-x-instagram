@@ -1,5 +1,21 @@
 # Historico
 
+## 2026-08-16 21:40 BRT
+
+Nova materia verdadeira publicada pelo Radar e confirmada pela Meta.
+
+- Fonte: G1 Tecnologia.
+- Materia: `Os trabalhadores que 'dao adeus a CLT' atras do sonho de viver fazendo videos de IA`.
+- Link da fonte: `https://g1.globo.com/empreendedorismo/noticia/2026/08/12/os-trabalhadores-que-dao-adeus-a-clt-atras-do-sonho-de-viver-fazendo-videos-de-ia.ghtml`.
+- Workflow: `31982592122`, concluido com sucesso.
+- Feed confirmado: `18112792313046183`.
+- Story confirmado: `18108295541022431`.
+- Permalink: `https://www.instagram.com/p/DcHxTYymGS0/`.
+- O Story `2026-08-16-213846-slot-0` foi inspecionado: titulo longo, CTA e fotografia ficaram sem sobreposicao.
+- O rodizio selecionou `avatar-marcondes-rotation-04.png`, confirmando o uso do acervo ampliado.
+- O primeiro comentario foi recusado novamente pela Meta com `(#10) Application does not have permission for this action`; o titulo e o link verdadeiro permanecem na legenda.
+- Nenhuma materia anterior foi repetida.
+
 ## 2026-08-16 21:31 BRT
 
 Corrigida a composicao do Story para titulos longos e ampliado o rodizio de fotos.

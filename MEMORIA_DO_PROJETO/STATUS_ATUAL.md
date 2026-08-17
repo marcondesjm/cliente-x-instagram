@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 21:31 BRT
+Atualizado em: 2026-08-16 21:40 BRT
 
 ## Regra permanente de checkpoint
 
@@ -29,6 +29,16 @@ Atualizado em: 2026-08-16 21:31 BRT
 - O seletor evita repetir as 9 fotos utilizadas mais recentemente.
 - Nenhuma publicacao foi enviada nesta alteracao.
 - Producao confirmada: commit funcional `21dcf7d`, deploy `dpl_6kGQBhJrYp1uB5n43m2q6BcgB7MA`, versao `v5.24` e API publica `HTTP 200`.
+
+## Ultima publicacao confirmada
+
+- Radar publicou uma materia nova do G1 Tecnologia sobre trabalhadores que deixaram a CLT para produzir videos com IA.
+- Workflow `31982592122` concluido com sucesso.
+- Feed `18112792313046183`; Story `18108295541022431`.
+- Post: `https://www.instagram.com/p/DcHxTYymGS0/`.
+- Fonte real registrada na legenda: `https://g1.globo.com/empreendedorismo/noticia/2026/08/12/os-trabalhadores-que-dao-adeus-a-clt-atras-do-sonho-de-viver-fazendo-videos-de-ia.ghtml`.
+- Story validado sem sobreposicao e com `avatar-marcondes-rotation-04.png`.
+- O primeiro comentario continua sem permissao na Meta; o link completo permanece preservado na legenda.
 
 ## Idioma obrigatorio do Radar
 
