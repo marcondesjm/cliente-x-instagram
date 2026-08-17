@@ -28,7 +28,7 @@ Atualizado em: 2026-08-16 21:46 BRT
 - O renderizador bloqueia sobreposicao e tambem rejeita qualquer elemento fora dos limites seguros.
 - Previa confirmada: `2026-08-16-214551-slot-0-render-only`.
 - `npm run validate-copy` passou; nenhuma postagem foi enviada nesta alteracao.
-- Producao preparada: commit `9029a62`, versao `v5.25`.
+- Producao confirmada: commit `9029a62`, deploy `dpl_9Vxr5PwJqBNfWGdSndtpik4fbgZZ`, versao `v5.25` e API publica `HTTP 200`.
 
 ## Story adaptativo e rodizio de fotos
 

@@ -13,7 +13,7 @@ Reorganizada a distribuicao do Story para respeitar visualmente os campos seguro
 - Previa validada: `2026-08-16-214551-slot-0-render-only`, usando o mesmo titulo da materia do G1 e uma foto nova do rodizio.
 - `npm run validate-copy` passou com `storySafeZoneGuard: 250-1170-500`.
 - Nenhuma nova postagem foi enviada a Meta nesta correcao.
-- Commit funcional: `9029a62` (`Reorganiza Story nas zonas seguras`); versao `v5.25`.
+- Commit funcional: `9029a62` (`Reorganiza Story nas zonas seguras`); deploy `dpl_9Vxr5PwJqBNfWGdSndtpik4fbgZZ`; versao `v5.25` confirmada pela API publica.
 
 ## 2026-08-16 21:40 BRT
 
