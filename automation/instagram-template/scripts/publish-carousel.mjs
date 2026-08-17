@@ -1930,7 +1930,15 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     }
     .panel::before { content: "IA"; position: absolute; left: 42px; top: 38px; color: rgba(167,86,61,0.18); font-size: 110px; line-height: 1; font-weight: 900; }
     .panel::after { content: ""; position: absolute; left: 42px; right: 42px; bottom: 68px; height: 230px; background: repeating-linear-gradient(180deg, rgba(167,86,61,0.24) 0 10px, transparent 10px 34px); }
-    .panel.has-avatar { background: ${avatarImage || 'rgba(255,255,255,0.48)'} center 28% / cover no-repeat; border: 7px solid rgba(255,250,246,0.9); box-shadow: 0 28px 70px rgba(94,50,34,0.24); }
+    .panel.has-avatar {
+      background-color: rgba(255,250,246,0.82);
+      background-image: ${avatarImage || 'none'};
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      border: 7px solid rgba(255,250,246,0.9);
+      box-shadow: 0 28px 70px rgba(94,50,34,0.24);
+    }
     .panel.has-avatar::before,
     .panel.has-avatar::after { display: none; }
     .sector-cue {
@@ -2736,7 +2744,13 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
       overflow: hidden;
       z-index: 1;
     }
-    .avatar { background: ${avatarImage || 'rgba(255,255,255,0.50)'} center center / cover no-repeat; }
+    .avatar {
+      background-color: rgba(255,250,246,0.82);
+      background-image: ${avatarImage || 'none'};
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
     .avatar::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,246,239,0.03), rgba(17,17,17,0.18)); }
     .panel { background: rgba(255,255,255,0.50); display: grid; place-items: center; }
     .panel span { color: rgba(167,86,61,0.18); font-size: 124px; font-weight: 900; }
