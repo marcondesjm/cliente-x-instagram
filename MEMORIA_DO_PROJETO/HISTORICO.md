@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-08-17 10:40 BRT
+
+- Publicacao automatica real acionada no commit `beaeab7` para validar a trava de portugues.
+- Run `32036009272` concluiu feed e Story com sucesso.
+- Permalink: `https://www.instagram.com/p/DcJKe7pFvhP/`; media ID `17904573321496712`; Story ID `17963038641168267`.
+- Os cinco slides publicados e o Story foram inspecionados visualmente: todo o texto esta em portugues e as fotos estao inteiras.
+- A legenda publica foi extraida diretamente do HTML do Instagram com HTTP 200; esta em portugues e nao contem `Comparing RPA`, `workflow automation` nem `Building Automation That Lasts`.
+- O primeiro comentario segue com `OAuthException #10`, sem afetar feed, Story ou legenda.
+
 ## 2026-08-17 10:34 BRT
 
 - Corrigida a pauta n8n que publicou `Comparing RPA versus workflow automation` em ingles em um slide e repetiu texto estrangeiro na legenda.

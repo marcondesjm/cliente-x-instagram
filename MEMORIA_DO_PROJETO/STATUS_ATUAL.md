@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-17 10:34 BRT
+Atualizado em: 2026-08-17 10:40 BRT
 
 ## Regra permanente de checkpoint
 
@@ -22,6 +22,8 @@ Atualizado em: 2026-08-17 10:34 BRT
 
 ## Disparo automatico e composicao visual
 
+- Primeira publicacao real apos a trava de portugues: run `32036009272`, `https://www.instagram.com/p/DcJKe7pFvhP/`, media ID `17904573321496712`, Story ID `17963038641168267`.
+- Os cinco slides e o Story foram inspecionados visualmente e estao em portugues. A legenda publica foi extraida do proprio permalink (HTTP 200) e tambem esta integralmente em portugues, sem o vazamento `Comparing RPA`/`workflow automation`.
 - O commit `f465019` bloqueia ingles no pacote final: todos os slides e a legenda sao validados depois da montagem; pautas sem adaptacao confiavel em portugues nao podem ser publicadas.
 - A pauta n8n `RPA vs. Workflow Automation` ganhou traducao editorial explicita para portugues. O titulo original em ingles nao e mais repetido na legenda; a fonte e o link continuam preservados.
 - Primeiro teste real posterior aos ajustes visuais confirmado pelo run `32034646438`: `https://www.instagram.com/p/DcJIpuCIF_F/`, media ID `17939869695302140`, Story ID `18006552392956384`.
