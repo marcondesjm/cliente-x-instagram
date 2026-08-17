@@ -1,5 +1,18 @@
 # Historico
 
+## 2026-08-16 21:01 BRT
+
+Adicionada ao Story do Radar a orientacao para acompanhar a materia completa no feed.
+
+- Nova chamada visivel: `Acompanhe a materia na integra no feed.`
+- A chamada aparece apenas nas pautas reais do Radar, em cartao de alto contraste dentro da zona segura do Story.
+- A previa `2026-08-16-210036-slot-0-render-only` foi inspecionada e confirmou que o texto nao cobre o titulo nem a fotografia.
+- O texto tecnico oculto da fonte tambem foi alinhado para indicar `link no primeiro comentario`.
+- `npm run validate-copy` passou com todas as travas editoriais e de arquitetura visual.
+- Nenhum novo Story ou post foi enviado a Meta durante esta atualizacao.
+- Commit funcional: `22d3b1f` (`Adiciona chamada do feed ao Story`).
+- Deploy: `dpl_9nabBzn1W8fv6BWQxCC54oT7NCaE`; versao de producao `v5.21`.
+
 ## 2026-08-16 20:56 BRT
 
 Implementado o primeiro comentario automatico com a fonte completa das pautas reais do Radar.

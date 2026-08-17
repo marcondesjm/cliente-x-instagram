@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 20:56 BRT
+Atualizado em: 2026-08-16 21:01 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,21 @@ Atualizado em: 2026-08-16 20:56 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `33db605` (`Publica fonte do Radar no primeiro comentario`).
+- Checkpoint funcional atual: `22d3b1f` (`Adiciona chamada do feed ao Story`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
-- Versao visivel atual: `v5.20`
+- Versao visivel atual: `v5.21`
+
+## Chamada do Story para o feed
+
+- Stories de materias reais exibem `Acompanhe a materia na integra no feed.`
+- O cartao usa alto contraste e permanece dentro da area segura 9:16.
+- Previa inspecionada: `2026-08-16-210036-slot-0-render-only`.
+- Nenhuma publicacao foi enviada nesta alteracao.
+- Producao: commit `22d3b1f`, deploy `dpl_9nabBzn1W8fv6BWQxCC54oT7NCaE` e versao `v5.21`.
 
 ## Fonte no primeiro comentario
 

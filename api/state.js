@@ -45,8 +45,8 @@ const ACTIVE_VERSION = {
   label: 'Última versão funcionando',
   appVersion: 'v5.21',
   status: 'funcionando',
-  stableCommit: '33db605',
-  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/33db605',
+  stableCommit: '22d3b1f',
+  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/22d3b1f',
   description: 'O Story do Radar orienta o público a acompanhar a matéria completa no feed.'
 };
 const MAINTENANCE = {
