@@ -27,6 +27,7 @@ Atualizado em: 2026-08-16 21:58 BRT
 - A landing nao depende mais dos embeds que estavam indisponiveis e exibiam caixas vazias.
 - O layout das capas e responsivo em desktop e celular.
 - Nenhuma postagem foi enviada a Meta nesta alteracao.
+- Producao confirmada: commit funcional `a9b4b7f`, deploy `dpl_Hf4r1nsbxN2Zq7gGkSo2Seu3Po1L`, versao `v5.27` e landing publica `HTTP 200`.
 
 ## Variacao do ultimo slide
 

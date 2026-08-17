@@ -11,7 +11,7 @@ A landing passou a apresentar os dois posts realmente fixados no Instagram.
 - O layout permanece responsivo para desktop e celular e nao depende mais do carregamento externo do embed.
 - `npm run validate-copy` passou com todas as protecoes editoriais, de fonte, feed e Story.
 - Nenhuma postagem foi enviada a Meta nesta alteracao.
-- Commit funcional: `a9b4b7f` (`Exibe posts fixados na landing`); versao `v5.27`.
+- Commit funcional: `a9b4b7f` (`Exibe posts fixados na landing`); deploy `dpl_Hf4r1nsbxN2Zq7gGkSo2Seu3Po1L`; versao `v5.27` confirmada pela API publica.
 
 ## 2026-08-16 21:52 BRT
 
