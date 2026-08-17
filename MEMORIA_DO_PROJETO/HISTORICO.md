@@ -1,5 +1,20 @@
 # Historico
 
+## 2026-08-16 21:21 BRT
+
+Corrigida a publicacao de conteudo principal em ingles para o publico brasileiro.
+
+- Causa: a capa usava a traducao editorial, mas `articleFacts` preservava diretamente os paragrafos em ingles extraidos de fontes como n8n, OpenAI e AWS.
+- O Radar agora detecta texto predominantemente em ingles e nao permite que esses paragrafos entrem nos slides nem na legenda.
+- Quando existe uma traducao editorial factual cadastrada, ela substitui os parágrafos estrangeiros; caso contrario, a pauta usa somente o fato em portugues disponivel e nao inventa traducao.
+- A materia `Building AI Agent Observability for Production Workflows` ganhou tres pontos factuais em portugues sobre execucao, rastreabilidade e investigacao de falhas.
+- O titulo original pode aparecer apenas na referencia final, identificado como `Titulo original (em ingles)`.
+- A trava de publicacao rejeita qualquer `sourceFact` ou `sourceFacts` que ainda esteja predominantemente em ingles.
+- `npm run validate-copy` passou e um teste direto confirmou slides e legenda em portugues para a mesma pauta do n8n.
+- Nenhuma nova publicacao foi enviada a Meta durante esta correcao.
+- Commit funcional: `b7691ab` (`Bloqueia conteudo principal em ingles no Radar`).
+- Deploy: `dpl_A1ShquVa5NQA8FcDETw3q7yXniN6`; versao `v5.23`.
+
 ## 2026-08-16 21:16 BRT
 
 Publicacoes novas confirmadas pela Meta depois da correcao da trava contra repeticao.

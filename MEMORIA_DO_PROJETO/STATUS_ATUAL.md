@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-16 21:16 BRT
+Atualizado em: 2026-08-16 21:21 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,13 +12,23 @@ Atualizado em: 2026-08-16 21:16 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `c519d57` (`Bloqueia repeticao e garante fonte na legenda`).
+- Checkpoint funcional atual: `b7691ab` (`Bloqueia conteudo principal em ingles no Radar`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `d0ebb9e` (`Atualiza telas da plataforma na landing`).
-- Versao visivel atual: `v5.22`
+- Versao visivel atual: `v5.23`
+
+## Idioma obrigatorio do Radar
+
+- Slides, resumo factual e legenda editorial devem estar em portugues brasileiro.
+- Paragrafos em ingles extraidos da pagina original sao descartados antes da montagem do pack.
+- A pauta do n8n sobre observabilidade possui tres fatos editoriais em portugues validados.
+- O titulo estrangeiro permanece somente como credito, marcado `Titulo original (em ingles)`.
+- A validacao bloqueia o post se algum fato principal ainda estiver predominantemente em ingles.
+- Nenhuma postagem foi enviada nesta alteracao.
+- Producao: commit `b7691ab`, deploy `dpl_A1ShquVa5NQA8FcDETw3q7yXniN6`, versao `v5.23`.
 
 ## Publicacao imediata sem repetir materia
 

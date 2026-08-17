@@ -45,8 +45,8 @@ const ACTIVE_VERSION = {
   label: 'Última versão funcionando',
   appVersion: 'v5.23',
   status: 'funcionando',
-  stableCommit: 'c519d57',
-  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/c519d57',
+  stableCommit: 'b7691ab',
+  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/b7691ab',
   description: 'O Radar bloqueia texto principal em inglês e usa somente explicações em português para o público brasileiro.'
 };
 const MAINTENANCE = {
