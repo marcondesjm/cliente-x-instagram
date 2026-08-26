@@ -1,23 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-08-25:0:32839161615",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-08-25",
-    "slotIndex": 0,
-    "scheduledAt": "2026-08-25T09:30:00.000Z",
-    "failedAt": "2026-08-25T10:50:25.160Z",
-    "workflowRun": "32839161615",
-    "workflowName": "Instagram Watchdog Backup",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/32839161615",
-    "stage": "unknown",
-    "error": "Story rejeitado: texto sobrepoe a foto.",
-    "solution": "Corrigir o texto do pack indicado no painel, rodar validar textos e salvar antes da próxima publicação.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-08-25-075025.json",
-    "resolvedAt": "2026-08-25T13:58:34.023Z",
-    "resolvedRun": "32856371191"
-  },
-  {
     "key": "cliente-x:2026-08-25:0:32839366370",
     "status": "resolved",
     "account": "cliente-x",
@@ -892,5 +874,21 @@
     "error": "Graph POST /17841404470203300/media failed [400]: {\"error\":{\"message\":\"The caption was too long.\",\"type\":\"OAuthException\",\"code\":36004,\"error_subcode\":2207010,\"is_transient\":false,\"error_user_title\":\"Legenda muito longa\",\"error_user_msg\":\"Erro desconhecido\",\"fbtrace_id\":\"A_Ps3MTgutTUczWQdGDOR5Y\"}}",
     "solution": "Gerar novo token Meta/Instagram, atualizar o secret da conta no Vercel e no GitHub, depois rodar validar acessos no painel.",
     "failurePath": "automation/instagram-template/runs/failure-2026-08-25-205850.json"
+  },
+  {
+    "key": "cliente-x:2026-08-25:2:32913275692",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-08-25",
+    "slotIndex": 2,
+    "scheduledAt": "2026-08-25T12:00:00.000Z",
+    "failedAt": "2026-08-26T00:02:23.632Z",
+    "workflowRun": "32913275692",
+    "workflowName": "Instagram Watchdog Backup",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/32913275692",
+    "stage": "Graph POST /17841404470203300/media",
+    "error": "Graph POST /17841404470203300/media failed [400]: {\"error\":{\"message\":\"The caption was too long.\",\"type\":\"OAuthException\",\"code\":36004,\"error_subcode\":2207010,\"is_transient\":false,\"error_user_title\":\"Legenda muito longa\",\"error_user_msg\":\"Erro desconhecido\",\"fbtrace_id\":\"AtzDdXs1MWhy8xhAkK97cN7\"}}",
+    "solution": "Gerar novo token Meta/Instagram, atualizar o secret da conta no Vercel e no GitHub, depois rodar validar acessos no painel.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-08-25-210223.json"
   }
 ]
