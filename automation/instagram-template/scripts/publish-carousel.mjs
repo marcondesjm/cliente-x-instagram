@@ -3797,7 +3797,10 @@ async function main() {
     }
   }
 
-  if (!args.renderOnly && !args.dryRun && radar.enabled && !pack?.research?.sourceUrl) {
+  // O Radar continua obrigado a preservar a fonte oficial. Um pack editorial
+  // enviado explicitamente pelo painel e conteudo proprio da marca, nao uma
+  // pauta pesquisada, portanto nao deve ser bloqueado por essa exigencia.
+  if (!args.renderOnly && !args.dryRun && radar.enabled && !dashboardPack && !pack?.research?.sourceUrl) {
     throw new Error('Radar ativo: a pauta selecionada nao possui uma fonte oficial registrada. Nenhum post foi publicado.');
   }
 
