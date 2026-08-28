@@ -1,5 +1,19 @@
 # Historico
 
+## 2026-08-28 19:23 BRT
+
+- O Story ganhou autocorrecao progressiva no commit `69ed72e`: limita blocos que invadem a foto, remove rotacao e reduz a imagem quando necessario, compacta texto/CTA em ate tres passes e valida novamente colisao e area segura antes da captura.
+- A pauta real que havia falhado, uma versao com explicacao mais extensa e outra com titulo muito longo passaram no dry-run; o HTML corrigido fica salvo no artefato para auditoria.
+- Pautas em ingles agora exigem traducao editorial em portugues no commit `07fe734`. O titulo e a fonte originais permanecem identificados pelo link, mas o trecho `Entenda a materia:` nao pode conter o resumo em ingles.
+- A pauta `Supporting Thailand’s next generation of AI startups` passou a gerar: `OpenAI e o Ministerio da Educacao Superior da Tailandia lancaram um programa acelerador de oito semanas para dez startups...`.
+- Noticias em ingles sem traducao confiavel sao descartadas antes da publicacao; o pacote antigo com resumo em ingles foi bloqueado no teste.
+- `node --check` e `npm run validate-copy` passaram; a validacao inclui a traducao da pauta da Tailandia e o bloqueio de uma pauta tecnica inglesa sem traducao.
+- Teste real acionado pelo commit `b807b87`: run `33216450654` concluiu `Publish feed and story` com sucesso.
+- Publicacao confirmada: `https://www.instagram.com/p/DcmbM_kGgSV/`, media ID `17953144551209392`, Story ID `17980736346111529`.
+- A pauta selecionada no teste foi do G1 Tecnologia e ja estava em portugues; os fatos persistidos tambem estao em portugues.
+- A auditoria do teste revelou que o evento `push` sobrescrevia para `0` o indice atrasado escolhido pelo vigia. O workflow foi corrigido em `2536b35`, e o livro de slots foi restaurado com os indices `0` e `1` realmente publicados.
+- Com o livro corrigido, `node scripts/select-due-auto-slot.mjs` selecionou corretamente o proximo atraso: indice `2`, agendado para 09:00 BRT.
+
 ## 2026-08-28 19:09 BRT
 
 - Diagnosticada a interrupcao das publicacoes automaticas: o ultimo post comprovado era de 2026-08-27 07:39 BRT e os runs `33191718296`, `33206219237` e `33214757578` falharam em `Publish feed and story` com `Story rejeitado: texto sobrepoe a foto.`.

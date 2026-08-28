@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-28 19:09 BRT
+Atualizado em: 2026-08-28 19:23 BRT
 
 ## Regra permanente de checkpoint
 
@@ -22,6 +22,10 @@ Atualizado em: 2026-08-28 19:09 BRT
 
 ## Disparo automatico e composicao visual
 
+- Stories passam por autocorrecao progressiva de largura, foto e compactacao vertical antes de um slot ser bloqueado (`69ed72e`).
+- Pautas internacionais precisam apresentar traducao factual em portugues depois de `Entenda a materia:`; conteudo ingles sem traducao confiavel e descartado (`07fe734`).
+- Teste real: run `33216450654`, `https://www.instagram.com/p/DcmbM_kGgSV/`, media ID `17953144551209392`, Story ID `17980736346111529`.
+- O vigia forcado preserva o indice atrasado selecionado, em vez de sobrescreve-lo para `0`; livro de slots reparado e proximo atraso confirmado como indice `2` (`2536b35`).
 - Incidente de 2026-08-28 resolvido: o CTA do Story invadia a foto nos layouts normal e de titulo longo; correcoes funcionais em `b3377a5` e `db9dc53`.
 - Run de recuperacao `33215506981` concluiu feed e Story com sucesso e resolveu os erros abertos do vigia.
 - Prova real mais recente: `https://www.instagram.com/p/DcmZo_rk_2f/`, media ID `18090005111272483`, Story ID `18144325813720376`.
@@ -484,6 +488,11 @@ Resultado:
 ## Publicacao real mais recente confirmada
 
 - Conta: `@marcondes.machado.oficial`.
+- GitHub Actions: run `33216450654`, concluido com `success` em 2026-08-28 19:23 BRT.
+- Permalink confirmado no perfil: `https://www.instagram.com/p/DcmbM_kGgSV/`.
+- Media ID: `17953144551209392`; Story ID: `17980736346111529`.
+- Fonte: G1 Tecnologia; pauta e fatos persistidos em portugues.
+- Registro anterior:
 - GitHub Actions: run `33215506981`, concluido com `success` em 2026-08-28 19:09 BRT.
 - Permalink confirmado no perfil: `https://www.instagram.com/p/DcmZo_rk_2f/`.
 - Media ID: `18090005111272483`; Story ID: `18144325813720376`.
