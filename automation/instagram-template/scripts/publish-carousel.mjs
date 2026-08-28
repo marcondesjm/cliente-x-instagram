@@ -3695,6 +3695,15 @@ async function main() {
     if (!isPredominantlyEnglish('Your AI project WILL break. Welcome to the Day 2 problem.')) {
       throw new Error('Detector de título técnico em inglês falhou.');
     }
+    if (!isPredominantlyEnglish('Catching wildfires earlier: AI gives firefighters a head start')) {
+      throw new Error('Detector de título jornalístico em inglês falhou.');
+    }
+    if (factualSummary({
+      title: 'Catching wildfires earlier: AI gives firefighters a head start',
+      summary: 'The post Catching wildfires earlier: AI gives firefighters a head start appeared first on Source .'
+    })) {
+      throw new Error('Boilerplate de feed em inglês foi aceito como fato jornalístico.');
+    }
     const untranslatedEnglishProbe = buildResearchPack({
       source: 'n8n',
       title: 'Your AI project WILL break. Welcome to the Day 2 problem.',
