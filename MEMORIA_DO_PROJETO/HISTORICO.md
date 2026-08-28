@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-08-28 19:45 BRT
+
+- O painel passou a atualizar as metricas privadas a cada 60 segundos, ao voltar para a aba e ao receber foco, sempre sem cache e sem duplicar requisicoes (`b14c958`).
+- Deploy de producao concluido diretamente no projeto Vercel existente, sem conectar Git nem alterar dominio: `dpl_CaM64XRiAjqCAYQha1EeNf3bF3NS`, estado `READY`, associado a `https://cliente-x-instagram.vercel.app`.
+- Producao conferida no painel: ultima publicacao confirmada pela Meta em 28/08/2026 19:22 BRT, `https://www.instagram.com/p/DcmbM_kGgSV/`.
+- O alerta residual do vigia foi corrigido em `13e4245`: execucoes manuais bem-sucedidas agora resolvem erros abertos da conta, e os 50 registros historicos foram marcados como resolvidos usando como prova o run `33216450654`.
+- `.vercelignore` passou a excluir `artifact-*`, alem de `.env`, `.env.*`, runs e dependencias, para que artefatos operacionais nao entrem no pacote de deploy.
+- Validacao final: `npm run validate-copy` passou com 20 packs, 54 packs automaticos e 74 selecoes; nenhum erro aberto permaneceu em `watchdog-errors.json`.
+
 ## 2026-08-28 19:23 BRT
 
 - O Story ganhou autocorrecao progressiva no commit `69ed72e`: limita blocos que invadem a foto, remove rotacao e reduz a imagem quando necessario, compacta texto/CTA em ate tres passes e valida novamente colisao e area segura antes da captura.

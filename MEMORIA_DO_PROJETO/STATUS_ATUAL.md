@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-28 19:23 BRT
+Atualizado em: 2026-08-28 19:45 BRT
 
 ## Regra permanente de checkpoint
 
@@ -11,20 +11,24 @@ Atualizado em: 2026-08-28 19:23 BRT
 ## Projeto ativo
 
 - Pasta: `cliente-x-instagram-modern`
-- Branch: `feature/modern-editorial-system`
-- Checkpoint funcional atual: `14822ea` (`Preserva fotos inteiras no feed e Story`).
+- Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
+- Checkpoint funcional atual: `13e4245` (`Resolve alertas antigos apos recuperacao manual`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `9156514` (`Atualiza todas as telas da landing`).
 - Versao visivel atual: `v5.28`
+- Deploy de producao atual: `dpl_CaM64XRiAjqCAYQha1EeNf3bF3NS`, estado `READY`, no dominio principal.
+- O painel recarrega metricas privadas automaticamente a cada 60 segundos, ao voltar para a aba e ao receber foco (`b14c958`).
 
 ## Disparo automatico e composicao visual
 
 - Stories passam por autocorrecao progressiva de largura, foto e compactacao vertical antes de um slot ser bloqueado (`69ed72e`).
 - Pautas internacionais precisam apresentar traducao factual em portugues depois de `Entenda a materia:`; conteudo ingles sem traducao confiavel e descartado (`07fe734`).
 - Teste real: run `33216450654`, `https://www.instagram.com/p/DcmbM_kGgSV/`, media ID `17953144551209392`, Story ID `17980736346111529`.
+- O painel de producao confirmou esse post em 28/08/2026 19:22 BRT depois do deploy.
+- Execucoes manuais bem-sucedidas agora resolvem alertas anteriores do vigia; o estado atual possui zero erro aberto (`13e4245`).
 - O vigia forcado preserva o indice atrasado selecionado, em vez de sobrescreve-lo para `0`; livro de slots reparado e proximo atraso confirmado como indice `2` (`2536b35`).
 - Incidente de 2026-08-28 resolvido: o CTA do Story invadia a foto nos layouts normal e de titulo longo; correcoes funcionais em `b3377a5` e `db9dc53`.
 - Run de recuperacao `33215506981` concluiu feed e Story com sucesso e resolveu os erros abertos do vigia.
