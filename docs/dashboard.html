@@ -2737,6 +2737,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       showcaseSlides: [],
       showcaseSlideIndex: 0
     };
+    let privateMetricsRequest = null;
     let directHistoryPage = 1;
     let directHistoryDate = '';
     let directAutomationIndex = 0;
@@ -4362,13 +4363,27 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
 
     async function loadPrivateMetrics() {
       if (!appState.serverMode) return;
-      try {
-        appState.privateMetrics = await api(withAccount('/api/private-metrics'));
-        renderLatestPost(appState.privateMetrics);
-      } catch (error) {
-        appState.privateMetrics = { error: error.message };
-      }
-      renderChecks();
+      if (privateMetricsRequest) return privateMetricsRequest;
+      privateMetricsRequest = (async () => {
+        try {
+          const refreshUrl = withAccount(`/api/private-metrics?refresh=${Date.now()}`);
+          appState.privateMetrics = await api(refreshUrl, {
+            cache: 'no-store',
+            headers: {
+              'cache-control': 'no-cache',
+              pragma: 'no-cache'
+            }
+          });
+          renderLatestPost(appState.privateMetrics);
+        } catch (error) {
+          appState.privateMetrics = { error: error.message };
+        } finally {
+          privateMetricsRequest = null;
+        }
+        renderChecks();
+        return appState.privateMetrics;
+      })();
+      return privateMetricsRequest;
     }
 
     function renderLatestPost(privateMetrics) {
@@ -6947,6 +6962,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         window.history.replaceState({}, '', window.location.pathname);
       }
       setInterval(renderSchedule, 60_000);
+      setInterval(() => {
+        if (document.visibilityState === 'visible') loadPrivateMetrics();
+      }, 60_000);
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') loadPrivateMetrics();
+      });
+      window.addEventListener('focus', () => loadPrivateMetrics());
     }
 
     function bindEvents() {
