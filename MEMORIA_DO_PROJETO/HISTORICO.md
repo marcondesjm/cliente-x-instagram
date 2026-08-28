@@ -1,5 +1,15 @@
 # Historico
 
+## 2026-08-28 20:36 BRT
+
+- O Radar passou a sortear criptograficamente entre fontes oficiais elegiveis e equilibradas, sem repetir a mesma fonte em sequencia e sem enfraquecer as travas de URL, pauta, capa ou legenda repetida (`bed0a88`).
+- O conjunto oficial foi ampliado com os feeds verificados de Microsoft AI, Google Oficial e IBM AI (`e0c6ae6`).
+- A primeira tentativa, run `33220605543`, foi bloqueada corretamente porque as pautas anteriores estavam repetidas; nenhuma midia foi criada.
+- A segunda tentativa, run `33220820938`, sorteou `Microsoft AI` e publicou feed + Story: `https://www.instagram.com/p/DcmjdQPHCY2/`, media ID `18166974271460207`, Story ID `18127346965686411`.
+- A auditoria do artefato identificou que o resumo RSS dessa pauta era apenas um boilerplate em ingles. O commit `dae86f8` passou a descartar esse padrao e ampliou o detector de ingles, impedindo futuras pautas internacionais sem traducao factual em portugues.
+- Validacoes: `node --check` passou nos arquivos alterados; `npm run validate-copy` passou com `sourceBalanceGuard`, `radarSourceIntegrityGuard` e teste especifico contra boilerplate em ingles.
+- Imagens da publicacao persistidas em `440b2bb`; historico operacional em `df8741b`; nenhuma alteracao de dominio ou conexao Git/Vercel foi feita.
+
 ## 2026-08-28 20:23 BRT
 
 - Corrigida a sobreposicao visual da primeira imagem em pautas do Radar: o autocorretor movia o cartao `FONTE OFICIAL` e a foto pessoal para a mesma coordenada quando o titulo era longo.

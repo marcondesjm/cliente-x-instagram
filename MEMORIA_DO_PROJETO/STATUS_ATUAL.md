@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-28 20:23 BRT
+Atualizado em: 2026-08-28 20:36 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,8 +12,8 @@ Atualizado em: 2026-08-28 20:23 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
-- Checkpoint operacional atual: `d48ba8f` (`Update Instagram schedule state`).
-- Correcao funcional mais recente: `6dc9aac` (`Permite conteudo editorial manual com Radar ativo`).
+- Checkpoint operacional atual: `df8741b` (`Update Instagram schedule state`).
+- Correcao funcional mais recente: `dae86f8` (`Bloqueia noticias em ingles sem traducao`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
@@ -25,6 +25,10 @@ Atualizado em: 2026-08-28 20:23 BRT
 
 ## Disparo automatico e composicao visual
 
+- O Radar sorteia entre fontes oficiais elegiveis com equilibrio pelas ultimas 12 publicacoes; a mesma fonte continua proibida em sequencia e noticias repetidas continuam bloqueadas (`bed0a88`).
+- Fontes oficiais disponiveis ampliadas com Microsoft AI, Google Oficial e IBM AI (`e0c6ae6`).
+- Publicacao real mais recente: run `33220820938`, fonte sorteada `Microsoft AI`, `https://www.instagram.com/p/DcmjdQPHCY2/`, media ID `18166974271460207`, Story ID `18127346965686411`.
+- A auditoria encontrou boilerplate RSS em ingles nessa legenda; `dae86f8` agora descarta esse formato e bloqueia novas pautas internacionais sem traducao factual em portugues.
 - Capas de noticias com titulo longo mantem cartao da fonte, foto pessoal e bloco textual separados; a renderizacao e bloqueada se dois elementos visuais ainda se sobrepuserem.
 - Publicacao real mais recente: run `33219787467`, `https://www.instagram.com/p/DcmhYaAFkDC/`, media ID `18123340474891128`, Story ID `17885235213683751`; primeiro comentario sem erro.
 - O Radar encontrou 28 pautas em 30 dias, mas bloqueou todas por repeticao no run `33219596814`; o conteudo editorial proprio foi usado sem enfraquecer a trava de fontes.
