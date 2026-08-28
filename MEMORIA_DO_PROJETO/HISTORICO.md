@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-08-28 20:17 BRT
+
+- Nova publicacao solicitada depois da ampliacao do Radar para 30 dias.
+- O run `33219596814` encontrou 28 temas oficiais, mas bloqueou corretamente a publicacao porque todos ja estavam no historico; nenhuma midia foi criada e nao houve duplicacao.
+- O fluxo alternou para conteudo editorial proprio da marca, sem atribuir fonte jornalistica inexistente: `Um dono queria crescer, mas centralizava tudo.`
+- O run `33219787467` concluiu `Publish feed and story` com sucesso e resolveu o estado do vigia.
+- Permalink confirmado: `https://www.instagram.com/p/DcmhYaAFkDC/`; media ID `18123340474891128`; Story ID `17885235213683751`; primeiro comentario sem erro.
+- Imagens persistidas no commit `1aa8f6e`; historico operacional persistido em `7aa6d98`.
+
 ## 2026-08-28 20:09 BRT
 
 - O Radar da conta `cliente-x` passou de 7 para 30 dias como janela principal de pesquisa em fontes oficiais.
