@@ -128,9 +128,11 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             SLOT_INDEX="${{ github.event.inputs.slot_index || '0' }}"
-          elif [ "${{ github.event_name }}" = "push" ]; then
-            SLOT_INDEX="0"
           elif [ "${{ steps.scheduled_queue.outputs.has_due }}" = "true" ]; then
+            SLOT_INDEX="0"
+          elif [ "${{ github.event_name }}" = "push" ] && [ "${{ steps.auto_slot.outputs.has_due }}" = "true" ]; then
+            SLOT_INDEX="${{ steps.auto_slot.outputs.slot_index }}"
+          elif [ "${{ github.event_name }}" = "push" ]; then
             SLOT_INDEX="0"
           else
             SLOT_INDEX="${{ steps.auto_slot.outputs.slot_index }}"
