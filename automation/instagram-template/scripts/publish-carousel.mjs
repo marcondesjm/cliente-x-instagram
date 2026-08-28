@@ -2806,15 +2806,15 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     .title-long .brand { margin-left: 0; font-size: 38px; }
     .title-long .badge { margin-top: 46px; font-size: 31px; }
     .title-long h1 { margin-top: 42px; max-width: 860px; font-size: 64px; line-height: .98; }
-    .title-long p { margin-top: 24px; max-width: 580px; font-size: 33px; }
-    .title-long .feed-cta { margin-top: 20px; max-width: 580px; padding: 18px 25px; font-size: 27px; }
+    .title-long p { margin-top: 24px; max-width: 540px; font-size: 33px; }
+    .title-long .feed-cta { margin-top: 20px; max-width: 540px; padding: 18px 25px; font-size: 27px; }
     .title-long .avatar { right: 88px; bottom: ${STORY_SAFE_BOTTOM}px; width: 340px; height: 430px; transform: none; }
     .title-long .note { left: 88px; bottom: ${STORY_SAFE_BOTTOM + 120}px; width: 560px; padding: 24px 30px; }
     .title-long footer { left: 88px; bottom: ${STORY_SAFE_BOTTOM + 40}px; }
     .title-very-long .badge { margin-top: 62px; }
     .title-very-long h1 { margin-top: 58px; max-width: 900px; font-size: 50px; line-height: 1.04; }
     .title-very-long p { margin-top: 34px; font-size: 30px; line-height: 1.22; }
-    .title-very-long .feed-cta { margin-top: 30px; max-width: 590px; font-size: 25px; }
+    .title-very-long .feed-cta { margin-top: 30px; max-width: 540px; font-size: 25px; }
     .title-very-long .avatar { width: 320px; height: 400px; }
   </style>
 </head>
