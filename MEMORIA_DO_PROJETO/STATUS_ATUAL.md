@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-28 20:17 BRT
+Atualizado em: 2026-08-28 20:23 BRT
 
 ## Regra permanente de checkpoint
 
@@ -25,6 +25,7 @@ Atualizado em: 2026-08-28 20:17 BRT
 
 ## Disparo automatico e composicao visual
 
+- Capas de noticias com titulo longo mantem cartao da fonte, foto pessoal e bloco textual separados; a renderizacao e bloqueada se dois elementos visuais ainda se sobrepuserem.
 - Publicacao real mais recente: run `33219787467`, `https://www.instagram.com/p/DcmhYaAFkDC/`, media ID `18123340474891128`, Story ID `17885235213683751`; primeiro comentario sem erro.
 - O Radar encontrou 28 pautas em 30 dias, mas bloqueou todas por repeticao no run `33219596814`; o conteudo editorial proprio foi usado sem enfraquecer a trava de fontes.
 - O Radar usa 30 dias como janela principal e pode coletar ate 40 pautas candidatas; a validacao real encontrou 28 temas oficiais, mantendo a exclusao de fontes e pautas repetidas.

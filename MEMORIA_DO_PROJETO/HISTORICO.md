@@ -1,5 +1,12 @@
 # Historico
 
+## 2026-08-28 20:23 BRT
+
+- Corrigida a sobreposicao visual da primeira imagem em pautas do Radar: o autocorretor movia o cartao `FONTE OFICIAL` e a foto pessoal para a mesma coordenada quando o titulo era longo.
+- O ajuste agora calcula a area vertical disponivel considerando apenas blocos que realmente cruzam horizontalmente, preserva 24 px entre elementos visuais e bloqueia a renderizacao se qualquer sobreposicao entre cartao e foto permanecer.
+- A foto da capa tambem ganhou folga lateral em relacao ao bloco de texto nos layouts esquerdo e direito.
+- `node --check`, `npm run validate-copy` e duas execucoes de `npm run render-only` passaram. A previa real encontrou 28 pautas oficiais em 30 dias e confirmou cartao da fonte, foto e texto em areas separadas.
+
 ## 2026-08-28 20:17 BRT
 
 - Nova publicacao solicitada depois da ampliacao do Radar para 30 dias.

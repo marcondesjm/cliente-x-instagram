@@ -2059,8 +2059,8 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
       line-height: 1.04;
     }
     .role-hook .panel { top: 520px; width: 410px; height: 280px; border-radius: 30px; transform: none; }
-    .layout-left.role-hook .panel { left: 58px; right: auto; }
-    .layout-right.role-hook .panel { left: auto; right: 58px; }
+    .layout-left.role-hook .panel { left: 44px; right: auto; }
+    .layout-right.role-hook .panel { left: auto; right: 44px; }
     .layout-right.role-hook .headline { max-width: 520px; }
     .role-hook .note { min-height: ${Math.max(234, noteMinHeight)}px; font-size: ${Math.min(noteFontSize, 28)}px; }
     .mode-split.role-hook .note { top: 720px; }
@@ -2663,11 +2663,23 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
         || rect.bottom <= headlineRect.top
         || rect.top >= headlineRect.bottom
       );
+      const intersects = (first, second) => !(
+        first.right <= second.left
+        || first.left >= second.right
+        || first.bottom <= second.top
+        || first.top >= second.bottom
+      );
+      const safeBottomFor = (rect) => {
+        const overlapsNoteHorizontally = noteRect
+          && rect.right > noteRect.left
+          && rect.left < noteRect.right;
+        return Math.floor(Math.min(overlapsNoteHorizontally ? noteRect.top - 28 : 1120, 1120));
+      };
       for (const visual of visuals) {
         const rect = visual.getBoundingClientRect();
         if (!intersectsHeadline(rect)) continue;
         const safeTop = Math.ceil(headlineRect.bottom + 34);
-        const safeBottom = Math.floor(Math.min(noteRect?.top ? noteRect.top - 28 : 1120, 1120));
+        const safeBottom = safeBottomFor(rect);
         const safeHeight = safeBottom - safeTop;
         const preserveCoverPhoto = visual.classList.contains('panel') && document.querySelector('main')?.classList.contains('role-hook');
         const minimumHeight = preserveCoverPhoto ? 280 : 150;
@@ -2683,9 +2695,35 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
           corrected += 1;
         }
       }
-      const collisions = visuals
+      const visibleVisuals = visuals.filter((visual) => getComputedStyle(visual).display !== 'none');
+      for (let firstIndex = 0; firstIndex < visibleVisuals.length; firstIndex += 1) {
+        for (let secondIndex = firstIndex + 1; secondIndex < visibleVisuals.length; secondIndex += 1) {
+          const first = visibleVisuals[firstIndex];
+          const second = visibleVisuals[secondIndex];
+          const ordered = [first, second].sort((left, right) => left.getBoundingClientRect().top - right.getBoundingClientRect().top);
+          const upperRect = ordered[0].getBoundingClientRect();
+          const lowerRect = ordered[1].getBoundingClientRect();
+          if (!intersects(upperRect, lowerRect)) continue;
+          const safeTop = Math.ceil(upperRect.bottom + 24);
+          const safeBottom = safeBottomFor(lowerRect);
+          if (safeTop + lowerRect.height <= safeBottom) {
+            ordered[1].style.top = `${safeTop}px`;
+            corrected += 1;
+          }
+        }
+      }
+      const collisions = visibleVisuals
         .filter((visual) => getComputedStyle(visual).display !== 'none' && intersectsHeadline(visual.getBoundingClientRect()))
         .map((visual) => visual.className);
+      for (let firstIndex = 0; firstIndex < visibleVisuals.length; firstIndex += 1) {
+        for (let secondIndex = firstIndex + 1; secondIndex < visibleVisuals.length; secondIndex += 1) {
+          const firstRect = visibleVisuals[firstIndex].getBoundingClientRect();
+          const secondRect = visibleVisuals[secondIndex].getBoundingClientRect();
+          if (intersects(firstRect, secondRect)) {
+            collisions.push(`${visibleVisuals[firstIndex].className} x ${visibleVisuals[secondIndex].className}`);
+          }
+        }
+      }
       return { corrected, collisions };
     });
     if (overlapCheck.collisions.length) {
