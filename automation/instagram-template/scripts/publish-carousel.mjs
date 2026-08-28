@@ -1775,7 +1775,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const engagementRole = index === 1 ? 'hook' : index === total ? 'cta' : index === total - 1 ? 'proof' : 'value';
   const useSectorPhoto = engagementRole === 'hook' || engagementRole === 'proof';
   const researchSource = String(slide.researchSource || '').trim();
-  const researchTitle = String(slide.researchTitle || '').trim();
+  const researchTitle = String(slide.researchDisplayTitle || slide.researchTitle || '').trim();
   const researchUrl = String(slide.researchUrl || '').trim();
   const showNewsContext = Boolean(useSectorPhoto && researchSource);
   const sectorPhotoImage = useSectorPhoto ? sectorPhotoCssImage(visualCue, index, renderContext) : '';
@@ -2433,6 +2433,9 @@ function validatePack(pack) {
     if (pack.slides.some((slide) => slide.researchSource !== pack.research.source || slide.researchTitle !== sourceTitle || slide.researchUrl !== sourceUrl)) {
       throw new Error('Radar bloqueado: o anexo visual não identifica fonte, título e link da matéria real.');
     }
+    if (isPredominantlyEnglish(sourceTitle) && pack.slides.some((slide) => !slide.researchDisplayTitle || isPredominantlyEnglish(slide.researchDisplayTitle))) {
+      throw new Error('Radar bloqueado: o cartão visual da fonte ainda apresenta o título em inglês.');
+    }
   }
 }
 
@@ -2752,7 +2755,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
   const soft = slideStyle.accentSoft || 'rgba(167,86,61,0.16)';
   const visualCue = slide.visualCue || visualCueForAccount(account, `${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
   const researchSource = String(slide.researchSource || '').trim();
-  const researchTitle = String(slide.researchTitle || '').trim();
+  const researchTitle = String(slide.researchDisplayTitle || slide.researchTitle || '').trim();
   const researchUrl = String(slide.researchUrl || '').trim();
   const showNewsContext = Boolean(researchSource);
   const avatarImage = accountAvatarCssImage(account, 0, visualCue, { ...renderContext, story: true });
@@ -3692,6 +3695,17 @@ async function main() {
     if (!/dez startups|programa acelerador de oito semanas/i.test(thailandExplanation)) {
       throw new Error('Tradução da pauta internacional perdeu o fato principal da matéria.');
     }
+    const ibmTranslationProbe = buildResearchPack({
+      source: 'IBM AI',
+      url: 'https://newsroom.ibm.com/ibm-openai-core-operations',
+      title: 'IBM Partners with OpenAI to Accelerate Secure AI Deployment for Enterprises Across Core Operations',
+      publishedAt: validationNow.toISOString(),
+      summary: 'IBM and OpenAI announced a partnership to help enterprises deploy AI at scale across core operations.'
+    }, validationNow, { niche: 'automação com IA para empresas', keywords: radarKeywords });
+    validatePack(ibmTranslationProbe);
+    if (ibmTranslationProbe.slides.some((slide) => isPredominantlyEnglish(slide.researchDisplayTitle))) {
+      throw new Error('Título do cartão visual da fonte não foi traduzido para português.');
+    }
     if (!isPredominantlyEnglish('Your AI project WILL break. Welcome to the Day 2 problem.')) {
       throw new Error('Detector de título técnico em inglês falhou.');
     }
@@ -3918,6 +3932,7 @@ async function main() {
     visualCue: slide.visualCue || packVisualCue,
     researchSource: slide.researchSource || pack.research?.source || '',
     researchTitle: slide.researchTitle || pack.research?.sourceTitle || '',
+    researchDisplayTitle: slide.researchDisplayTitle || slide.title || pack.research?.sourceTitle || '',
     researchUrl: slide.researchUrl || pack.research?.sourceUrl || ''
   }));
   if (pack.research && pack.slides.some((slide) => !slide.researchSource || !slide.researchTitle || !/^https:\/\//i.test(slide.researchUrl))) {
