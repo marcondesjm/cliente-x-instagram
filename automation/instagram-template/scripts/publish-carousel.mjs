@@ -2745,7 +2745,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     h1 { position: relative; z-index: 2; margin-top: 54px; max-width: 850px; font-size: 92px; line-height: 0.98; letter-spacing: 0; font-weight: 900; color: #111; }
     h1 strong { color: ${accent}; font: inherit; }
     p { position: relative; z-index: 2; margin-top: 34px; max-width: 500px; font-size: 40px; line-height: 1.16; font-weight: 800; color: #3f332d; }
-    .feed-cta { position: relative; z-index: 3; margin-top: 28px; display: inline-flex; max-width: 590px; padding: 20px 28px; border-radius: 18px; background: #132238; color: #fff; font-size: 30px; line-height: 1.12; font-weight: 900; }
+    .feed-cta { position: relative; z-index: 3; margin-top: 28px; display: inline-flex; max-width: 500px; padding: 20px 28px; border-radius: 18px; background: #132238; color: #fff; font-size: 30px; line-height: 1.12; font-weight: 900; }
     .avatar, .panel {
       position: absolute;
       right: 82px;
