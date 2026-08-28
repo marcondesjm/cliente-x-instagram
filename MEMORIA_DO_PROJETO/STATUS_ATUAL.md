@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-28 19:45 BRT
+Atualizado em: 2026-08-28 20:03 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,7 +12,8 @@ Atualizado em: 2026-08-28 19:45 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
-- Checkpoint funcional atual: `13e4245` (`Resolve alertas antigos apos recuperacao manual`).
+- Checkpoint operacional atual: `d48ba8f` (`Update Instagram schedule state`).
+- Correcao funcional mais recente: `6dc9aac` (`Permite conteudo editorial manual com Radar ativo`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
@@ -24,6 +25,8 @@ Atualizado em: 2026-08-28 19:45 BRT
 
 ## Disparo automatico e composicao visual
 
+- Publicacao real mais recente: run `33218965450`, `https://www.instagram.com/p/Dcmf1LkH1jm/`, media ID `18368003272241923`, Story ID `17994351519033665`.
+- Packs editoriais enviados explicitamente pelo painel podem ser publicados com Radar ativo sem inventar fonte; pautas pesquisadas continuam obrigadas a preservar a fonte oficial (`6dc9aac`).
 - Stories passam por autocorrecao progressiva de largura, foto e compactacao vertical antes de um slot ser bloqueado (`69ed72e`).
 - Pautas internacionais precisam apresentar traducao factual em portugues depois de `Entenda a materia:`; conteudo ingles sem traducao confiavel e descartado (`07fe734`).
 - Teste real: run `33216450654`, `https://www.instagram.com/p/DcmbM_kGgSV/`, media ID `17953144551209392`, Story ID `17980736346111529`.

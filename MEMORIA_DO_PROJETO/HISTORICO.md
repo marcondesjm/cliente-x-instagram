@@ -1,5 +1,16 @@
 # Historico
 
+## 2026-08-28 20:03 BRT
+
+- A primeira tentativa manual, run `33218438968`, foi bloqueada corretamente porque o Radar nao encontrou pauta oficial nao repetida em ate 30 dias; nenhuma midia foi criada.
+- A segunda tentativa, run `33218701071`, revelou que a trava de fonte do Radar tambem era aplicada indevidamente a packs editoriais enviados explicitamente pelo painel; nenhuma midia foi criada nessa tentativa.
+- O commit `6dc9aac` separou os fluxos: pautas pesquisadas pelo Radar continuam obrigadas a preservar `research.sourceUrl`, enquanto conteudo proprio da marca enviado manualmente pode ser publicado sem atribuir uma fonte jornalistica inexistente.
+- `node --check`, `npm run validate-copy` e `git diff --check` passaram antes do envio.
+- Publicacao real confirmada no run `33218965450`: feed e Story concluidos com sucesso, sem erro no primeiro comentario.
+- Permalink: `https://www.instagram.com/p/Dcmf1LkH1jm/`; media ID `18368003272241923`; Story ID `17994351519033665`.
+- Conteudo: `A IA nao muda a empresa quando fica solta.`, carrossel de cinco slides e Story.
+- Imagens hospedadas no commit `cabc9f2`; historico operacional persistido pelo workflow em `d48ba8f`.
+
 ## 2026-08-28 19:45 BRT
 
 - O painel passou a atualizar as metricas privadas a cada 60 segundos, ao voltar para a aba e ao receber foco, sempre sem cache e sem duplicar requisicoes (`b14c958`).
