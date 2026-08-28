@@ -3237,7 +3237,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         .map((source) => `${source.name || ''} | ${source.url || ''}`.trim())
         .filter(Boolean)
         .join('\n');
-      document.getElementById('activeRadarMaxAgeDays').value = String(radar.maxAgeDays || appState.editorialRadar?.maxAgeDays || (account.account === 'cliente-x' ? 1 : 60));
+      document.getElementById('activeRadarMaxAgeDays').value = String(radar.maxAgeDays || appState.editorialRadar?.maxAgeDays || (account.account === 'cliente-x' ? 30 : 60));
       document.getElementById('brandBriefingGoal').value = profile.goal || 'authority';
       document.getElementById('activeBrandSummary').value = summary.description || '';
       document.getElementById('activeBrandPositioning').value = summary.positioning || '';

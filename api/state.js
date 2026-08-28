@@ -588,7 +588,7 @@ function radarConfigForAccount(account = {}) {
     : [];
   return {
     enabled: typeof saved.enabled === 'boolean' ? saved.enabled : account.account === 'cliente-x',
-    maxAgeDays: Math.max(1, Math.min(90, Number(saved.maxAgeDays) || (account.account === 'cliente-x' ? 7 : 60))),
+    maxAgeDays: Math.max(1, Math.min(90, Number(saved.maxAgeDays) || (account.account === 'cliente-x' ? 30 : 60))),
     keywords,
     excludeKeywords,
     sources: sources.length ? sources : (account.account === 'cliente-x' ? EDITORIAL_SOURCES : [])
@@ -600,7 +600,7 @@ async function publisherDailyPlan(accountKey = 'cliente-x', dateString = todaySa
   if (account && radar.enabled && radar.sources.length) {
     const news = await researchFreshEditorialPacks({
       maxAgeDays: radar.maxAgeDays,
-      limit: 13,
+      limit: radar.maxAgeDays >= 30 ? 40 : 13,
       timeoutMs: 7000,
       sources: radar.sources,
       keywords: radar.keywords,

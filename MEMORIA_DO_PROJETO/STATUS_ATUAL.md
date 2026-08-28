@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-28 20:03 BRT
+Atualizado em: 2026-08-28 20:09 BRT
 
 ## Regra permanente de checkpoint
 
@@ -25,6 +25,7 @@ Atualizado em: 2026-08-28 20:03 BRT
 
 ## Disparo automatico e composicao visual
 
+- O Radar usa 30 dias como janela principal e pode coletar ate 40 pautas candidatas; a validacao real encontrou 28 temas oficiais, mantendo a exclusao de fontes e pautas repetidas.
 - Publicacao real mais recente: run `33218965450`, `https://www.instagram.com/p/Dcmf1LkH1jm/`, media ID `18368003272241923`, Story ID `17994351519033665`.
 - Packs editoriais enviados explicitamente pelo painel podem ser publicados com Radar ativo sem inventar fonte; pautas pesquisadas continuam obrigadas a preservar a fonte oficial (`6dc9aac`).
 - Stories passam por autocorrecao progressiva de largura, foto e compactacao vertical antes de um slot ser bloqueado (`69ed72e`).

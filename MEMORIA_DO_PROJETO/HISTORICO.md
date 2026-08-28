@@ -1,5 +1,13 @@
 # Historico
 
+## 2026-08-28 20:09 BRT
+
+- O Radar da conta `cliente-x` passou de 7 para 30 dias como janela principal de pesquisa em fontes oficiais.
+- A coleta inicial pode manter ate 40 pautas candidatas quando a janela e de 30 dias; a agenda continua escolhendo somente os slots necessarios e preserva as travas contra link, noticia, legenda e capa repetidos.
+- `api/state.js`, `api/publish-now.js`, o publicador e o painel foram alinhados para exibir e usar os mesmos 30 dias, sem depender de uma tentativa anterior de 7 ou 15 dias.
+- Validacoes: `node --check` passou nos tres arquivos JavaScript alterados, `npm run validate-copy` passou com 20 packs, 54 automaticos e 74 selecoes, e `git diff --check` passou.
+- Prova real de pesquisa: `npm run render-only` encontrou 28 temas em fontes oficiais na janela de 30 dias e renderizou cinco slides e Story com `packIndex: news-1`.
+
 ## 2026-08-28 20:03 BRT
 
 - A primeira tentativa manual, run `33218438968`, foi bloqueada corretamente porque o Radar nao encontrou pauta oficial nao repetida em ate 30 dias; nenhuma midia foi criada.

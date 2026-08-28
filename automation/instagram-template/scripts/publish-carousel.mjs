@@ -1386,7 +1386,8 @@ function radarResearchOptions(account = {}) {
 }
 
 async function researchRadarWithFallback(options = {}, minimumAgeDays = 7) {
-  const windows = [7, 15, 30].filter((days) => days >= minimumAgeDays);
+  const configuredWindow = Math.max(minimumAgeDays, Math.min(30, Number(options.maxAgeDays) || 7));
+  const windows = [7, 15, 30].filter((days) => days >= configuredWindow);
   let lastResult = { packs: [], items: [], failures: [], researchedAt: new Date().toISOString() };
   for (const maxAgeDays of windows) {
     const result = await researchFreshEditorialPacks({

@@ -29,9 +29,9 @@ function activeRadar(account) {
   const sources = normalizeEditorialSources(saved.sources);
   return {
     enabled: typeof saved.enabled === 'boolean' ? saved.enabled : account.account === 'cliente-x',
-    // A busca começa na semana e pode avançar até 30 dias, sempre mantendo
-    // fonte oficial e sem cair em pack manual ou conteúdo genérico.
-    maxAgeDays: 7,
+    // A conta pode consultar diretamente ate 30 dias, sempre mantendo fonte
+    // oficial e sem cair em pack manual ou conteudo generico.
+    maxAgeDays: Math.max(1, Math.min(30, Number(saved.maxAgeDays) || 30)),
     keywords: Array.isArray(saved.keywords) ? saved.keywords : [],
     excludeKeywords: Array.isArray(saved.excludeKeywords) ? saved.excludeKeywords : [],
     sources: sources.length ? sources : (account.account === 'cliente-x' ? EDITORIAL_SOURCES : [])
@@ -44,7 +44,7 @@ async function currentRadarPack(account) {
   if (!radar.sources.length) throw new Error('O Radar está ativo, mas não há fontes oficiais configuradas para esta conta.');
 
   const published = publishedResearch(account.account);
-  for (const maxAgeDays of [7, 15, 30]) {
+  for (const maxAgeDays of [7, 15, 30].filter((days) => days >= radar.maxAgeDays)) {
     const result = await researchFreshEditorialPacks({
       maxAgeDays,
       limit: maxAgeDays === 30 ? 40 : 26,
