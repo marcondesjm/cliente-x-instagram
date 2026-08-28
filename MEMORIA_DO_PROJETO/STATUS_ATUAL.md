@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-28 20:36 BRT
+Atualizado em: 2026-08-28 20:56 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,19 +12,22 @@ Atualizado em: 2026-08-28 20:36 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
-- Checkpoint operacional atual: `df8741b` (`Update Instagram schedule state`).
-- Correcao funcional mais recente: `dae86f8` (`Bloqueia noticias em ingles sem traducao`).
+- Checkpoint operacional atual: `6f4f805` (`Update Instagram schedule state`).
+- Correcao funcional mais recente: `e37a4af` (`Traduz todo texto visual de noticias`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `9156514` (`Atualiza todas as telas da landing`).
-- Versao visivel atual: `v5.28`
-- Deploy de producao atual: `dpl_6dQF5DChNHx54rEL2eW2t8qhMB4o`, estado `READY`, no dominio principal; inclui Radar em 30 dias e protecao contra sobreposicao entre fonte e foto.
+- Versao visivel atual: `v5.30`
+- Deploy de producao atual: `dpl_9FuzqqFXWnVzvopmq4RTjHzvjNDi`, estado `READY`, no dominio principal; API publica confirmou `v5.30` e HTTP 200.
 - O painel recarrega metricas privadas automaticamente a cada 60 segundos, ao voltar para a aba e ao receber foco (`b14c958`).
 
 ## Disparo automatico e composicao visual
 
+- Regra permanente de idioma: titulo principal, slides, Story, legenda e titulo pequeno do cartao `FONTE OFICIAL` devem estar em portugues do Brasil. O titulo original em ingles fica apenas como referencia tecnica no link da legenda (`e37a4af`).
+- Publicacao real mais recente: run `33221750143`, fonte `IBM AI`, `https://www.instagram.com/p/Dcmlfu_HR8J/`, media ID `17973789066139952`, Story ID `17918202105223733`.
+- O artefato confirmou o bloco `Entenda a materia:` com dois fatos traduzidos; a primeira tentativa automatica `33221508012` foi bloqueada sem criar midia por falta de pauta nao repetida.
 - O Radar sorteia entre fontes oficiais elegiveis com equilibrio pelas ultimas 12 publicacoes; a mesma fonte continua proibida em sequencia e noticias repetidas continuam bloqueadas (`bed0a88`).
 - Fontes oficiais disponiveis ampliadas com Microsoft AI, Google Oficial e IBM AI (`e0c6ae6`).
 - Publicacao real mais recente: run `33220820938`, fonte sorteada `Microsoft AI`, `https://www.instagram.com/p/DcmjdQPHCY2/`, media ID `18166974271460207`, Story ID `18127346965686411`.

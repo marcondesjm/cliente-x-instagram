@@ -1,5 +1,16 @@
 # Historico
 
+## 2026-08-28 20:56 BRT
+
+- A versao visivel do painel foi atualizada de `v5.28` para `v5.29` e, depois da correcao completa de idioma, para `v5.30` em `api/state.js` e `docs/dashboard.html`.
+- Producao confirmada em `https://cliente-x-instagram.vercel.app`: `activeVersion.appVersion = v5.30`, status `funcionando`, HTTP 200. Deployment atual: `dpl_9FuzqqFXWnVzvopmq4RTjHzvjNDi`, estado `READY`, sem conectar Git nem alterar dominio.
+- O run `33221508012` tentou usar o Radar automatico, mas foi bloqueado porque nenhuma pauta oficial nao repetida estava disponivel; nenhuma midia foi criada.
+- Um sorteio controlado entre pautas oficiais verificadas selecionou `IBM AI`. O run `33221750143` publicou feed + Story com texto principal em portugues do Brasil.
+- Publicacao confirmada: `https://www.instagram.com/p/Dcmlfu_HR8J/`; media ID `17973789066139952`; Story ID `17918202105223733`; imagens persistidas em `5a23273`; estado operacional em `6f4f805`.
+- O artefato confirmou legenda em portugues com dois fatos depois de `Entenda a materia:`. Capa, slides principais e Story tambem foram inspecionados em portugues.
+- A auditoria identificou que o pequeno titulo dentro do cartao `FONTE OFICIAL` ainda preservava o titulo original em ingles. O commit `e37a4af` criou um titulo visual traduzido separado, bloqueia cartao em ingles e preserva o original somente como referencia tecnica do link.
+- `f2d7bfd` passou a priorizar traducoes editoriais verificadas sobre resumos RSS; `node --check`, `npm run validate-copy` e `git diff --check` passaram.
+
 ## 2026-08-28 20:36 BRT
 
 - O Radar passou a sortear criptograficamente entre fontes oficiais elegiveis e equilibradas, sem repetir a mesma fonte em sequencia e sem enfraquecer as travas de URL, pauta, capa ou legenda repetida (`bed0a88`).
