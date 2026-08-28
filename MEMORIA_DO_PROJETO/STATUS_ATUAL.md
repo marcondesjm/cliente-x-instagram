@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-17 11:29 BRT
+Atualizado em: 2026-08-28 19:09 BRT
 
 ## Regra permanente de checkpoint
 
@@ -21,6 +21,11 @@ Atualizado em: 2026-08-17 11:29 BRT
 - Versao visivel atual: `v5.28`
 
 ## Disparo automatico e composicao visual
+
+- Incidente de 2026-08-28 resolvido: o CTA do Story invadia a foto nos layouts normal e de titulo longo; correcoes funcionais em `b3377a5` e `db9dc53`.
+- Run de recuperacao `33215506981` concluiu feed e Story com sucesso e resolveu os erros abertos do vigia.
+- Prova real mais recente: `https://www.instagram.com/p/DcmZo_rk_2f/`, media ID `18090005111272483`, Story ID `18144325813720376`.
+- Slot de 2026-08-28 06:30 BRT foi marcado como publicado as 19:09 BRT; estado remoto final em `c212f13`.
 
 - O commit `8e1d4a5` reforca o rodizio do Radar usando as ultimas 12 publicacoes pesquisadas, em vez do total acumulado. Isso evita o padrao recente `G1 -> outra fonte -> G1`.
 - Pautas comerciais de compra, oferta, promocao e smartwatch foram excluidas do Radar. A primeira previa apos a mudanca escolheu `AWS Machine Learning`, com capa em portugues, e renderizou os cinco slides e Story.
@@ -479,6 +484,12 @@ Resultado:
 ## Publicacao real mais recente confirmada
 
 - Conta: `@marcondes.machado.oficial`.
+- GitHub Actions: run `33215506981`, concluido com `success` em 2026-08-28 19:09 BRT.
+- Permalink confirmado no perfil: `https://www.instagram.com/p/DcmZo_rk_2f/`.
+- Media ID: `18090005111272483`; Story ID: `18144325813720376`.
+- Pauta: OpenAI, `Supporting Thailand’s next generation of AI startups`, com fonte oficial preservada na legenda.
+- O erro `OAuthException #10` permaneceu restrito ao primeiro comentario e nao impediu feed nem Story.
+- Registro anterior:
 - GitHub Actions: run `31925600428`, concluido com `success` em 2026-08-16 01:02 BRT.
 - Permalink confirmado no perfil: `https://www.instagram.com/p/DcFjsXZHIil/`.
 - Pauta: Radar editorial com fonte oficial recente, adaptada para a realidade de empresas brasileiras.

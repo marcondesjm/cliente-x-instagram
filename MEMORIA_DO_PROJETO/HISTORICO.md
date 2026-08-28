@@ -1,5 +1,17 @@
 # Historico
 
+## 2026-08-28 19:09 BRT
+
+- Diagnosticada a interrupcao das publicacoes automaticas: o ultimo post comprovado era de 2026-08-27 07:39 BRT e os runs `33191718296`, `33206219237` e `33214757578` falharam em `Publish feed and story` com `Story rejeitado: texto sobrepoe a foto.`.
+- O artefato real do run `33214757578` mostrou o CTA terminando em `x=662` e a foto rotacionada iniciando em `x=594,7`; a colisao de 67 px ocorria no layout normal de pautas com titulo abaixo de 55 caracteres.
+- As larguras do corpo e CTA para titulos longos foram corrigidas em `b3377a5`; o CTA do layout normal foi corrigido em `db9dc53` e validado diretamente sobre o HTML que havia falhado, com 22,7 px de folga ate a foto.
+- `npm run validate-copy` passou, `npm run dry-run` renderizou cinco slides e Story, e a reproducao automatizada do artefato confirmou `overlap: false` para titulo, corpo e CTA.
+- A recuperacao foi acionada somente em `main` pelo commit `7a3e2f2`.
+- Run `33215506981` concluiu com sucesso, publicou feed e Story e resolveu os tres erros abertos do vigia.
+- Permalink confirmado: `https://www.instagram.com/p/DcmZo_rk_2f/`; media ID `18090005111272483`; Story ID `18144325813720376`.
+- Slot recuperado: 2026-08-28, indice `0`, agendado para 06:30 BRT e marcado como publicado as 19:09 BRT.
+- Registro operacional final persistido no commit remoto `c212f13`.
+
 ## 2026-08-17 11:29 BRT
 
 - Confirmado que o rodizio anterior impedia apenas repeticao consecutiva e usava todo o historico; nos cinco posts observados, o padrao foi `G1 -> n8n -> G1 -> AWS -> G1`.
