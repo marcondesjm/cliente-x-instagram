@@ -20,7 +20,7 @@ Atualizado em: 2026-08-28 20:09 BRT
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `9156514` (`Atualiza todas as telas da landing`).
 - Versao visivel atual: `v5.28`
-- Deploy de producao atual: `dpl_CaM64XRiAjqCAYQha1EeNf3bF3NS`, estado `READY`, no dominio principal.
+- Deploy de producao atual: `dpl_HhXruKG61TDMoqH5RdnHzNqP7yNF`, estado `READY`, no dominio principal; painel confirmou Radar em 30 dias e checkagem operacional sem erro.
 - O painel recarrega metricas privadas automaticamente a cada 60 segundos, ao voltar para a aba e ao receber foco (`b14c958`).
 
 ## Disparo automatico e composicao visual

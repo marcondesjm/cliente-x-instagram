@@ -7,6 +7,7 @@
 - `api/state.js`, `api/publish-now.js`, o publicador e o painel foram alinhados para exibir e usar os mesmos 30 dias, sem depender de uma tentativa anterior de 7 ou 15 dias.
 - Validacoes: `node --check` passou nos tres arquivos JavaScript alterados, `npm run validate-copy` passou com 20 packs, 54 automaticos e 74 selecoes, e `git diff --check` passou.
 - Prova real de pesquisa: `npm run render-only` encontrou 28 temas em fontes oficiais na janela de 30 dias e renderizou cinco slides e Story com `packIndex: news-1`.
+- Producao atualizada no deployment `dpl_HhXruKG61TDMoqH5RdnHzNqP7yNF`, estado `READY`; o painel confirmou `30` dias e `Checkagem: tudo OK` as 20:10 BRT.
 
 ## 2026-08-28 20:03 BRT
 
