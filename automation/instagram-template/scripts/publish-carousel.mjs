@@ -3604,6 +3604,38 @@ async function main() {
     if (englishResearchProbe.research.sourceFacts.some((fact) => isPredominantlyEnglish(fact)) || /\bLearn how\b/i.test(englishResearchProbe.caption)) {
       throw new Error('Localização obrigatória para português falhou.');
     }
+    const thailandTranslationProbe = buildResearchPack({
+      source: 'OpenAI',
+      title: 'Supporting Thailand’s next generation of AI startups',
+      url: 'https://openai.com/index/supporting-next-generation-ai-startups-thailand',
+      publishedAt: validationNow.toISOString(),
+      summary: 'OpenAI and Thailand’s MHESI launch an eight-week accelerator helping 10 health, wellness, and education startups turn AI prototypes into trusted products.'
+    }, validationNow, { niche: 'automação com IA para empresas', keywords: radarKeywords });
+    validatePack(thailandTranslationProbe);
+    const thailandExplanation = thailandTranslationProbe.caption.split('Entenda a matéria:\n')[1]?.split('\n\nPublicada em')[0] || '';
+    if (!thailandExplanation || isPredominantlyEnglish(thailandExplanation) || /eight-week accelerator|trusted products/i.test(thailandExplanation)) {
+      throw new Error('Tradução da pauta internacional não foi aplicada após Entenda a matéria.');
+    }
+    if (!/dez startups|programa acelerador de oito semanas/i.test(thailandExplanation)) {
+      throw new Error('Tradução da pauta internacional perdeu o fato principal da matéria.');
+    }
+    if (!isPredominantlyEnglish('Your AI project WILL break. Welcome to the Day 2 problem.')) {
+      throw new Error('Detector de título técnico em inglês falhou.');
+    }
+    const untranslatedEnglishProbe = buildResearchPack({
+      source: 'n8n',
+      title: 'Your AI project WILL break. Welcome to the Day 2 problem.',
+      url: 'https://blog.n8n.io/day-2-problem-test/',
+      publishedAt: validationNow.toISOString(),
+      summary: 'Your AI project will eventually fail unless the team prepares operations for the second day.'
+    }, validationNow, { niche: 'automação com IA para empresas', keywords: radarKeywords });
+    let untranslatedEnglishBlocked = false;
+    try {
+      validatePack(untranslatedEnglishProbe);
+    } catch (error) {
+      untranslatedEnglishBlocked = /contexto factual|inglês|titulo|título|banner/i.test(String(error.message || ''));
+    }
+    if (!untranslatedEnglishBlocked) throw new Error('Pauta sem tradução editorial não foi bloqueada.');
     const genericResearchProbe = {
       ...researchIntegrityProbe,
       slides: researchIntegrityProbe.slides.map((slide, index) => index === 0
