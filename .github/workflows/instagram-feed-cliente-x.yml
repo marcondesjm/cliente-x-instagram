@@ -163,7 +163,7 @@ jobs:
         run: node scripts/mark-auto-slot-published.mjs
 
       - name: Resolve watchdog error
-        if: success() && github.event_name != 'workflow_dispatch' && (steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true')
+        if: success() && (github.event_name == 'workflow_dispatch' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true')
         run: node scripts/record-watchdog-status.mjs --status=resolved
 
       - name: Record watchdog error
