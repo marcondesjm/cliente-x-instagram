@@ -2919,18 +2919,75 @@ async function renderStory(runDir, pack, account, style, renderContext = {}) {
   const storyLayout = await page.evaluate(({ safeTop, safeBottom, storyHeight, storyWidth }) => {
     const copyBlocks = [...document.querySelectorAll('h1, p, .feed-cta')].filter((element) => getComputedStyle(element).display !== 'none');
     const image = document.querySelector('.avatar');
-    const imageVisible = image && getComputedStyle(image).display !== 'none';
-    const imageRect = imageVisible ? image.getBoundingClientRect() : null;
-    const overlap = Boolean(imageRect && copyBlocks.some((copy) => {
-      const copyRect = copy.getBoundingClientRect();
-      return !(
-        copyRect.right <= imageRect.left
-        || copyRect.left >= imageRect.right
-        || copyRect.bottom <= imageRect.top
-        || copyRect.top >= imageRect.bottom
-      );
-    }));
+    const imageVisible = Boolean(image && getComputedStyle(image).display !== 'none');
+    const intersects = (copyRect, imageRect) => !(
+      copyRect.right <= imageRect.left
+      || copyRect.left >= imageRect.right
+      || copyRect.bottom <= imageRect.top
+      || copyRect.top >= imageRect.bottom
+    );
+    const collisions = () => {
+      if (!imageVisible) return [];
+      const imageRect = image.getBoundingClientRect();
+      return copyBlocks
+        .filter((copy) => intersects(copy.getBoundingClientRect(), imageRect))
+        .map((copy) => ({
+          element: copy,
+          label: copy.className || copy.tagName.toLowerCase()
+        }));
+    };
+    const constrainCopyBesideImage = () => {
+      if (!imageVisible) return 0;
+      const imageRect = image.getBoundingClientRect();
+      let changed = 0;
+      for (const { element } of collisions()) {
+        const rect = element.getBoundingClientRect();
+        const availableWidth = Math.floor(imageRect.left - rect.left - 24);
+        if (availableWidth < 280) continue;
+        element.style.maxWidth = `${availableWidth}px`;
+        element.style.width = 'fit-content';
+        changed += 1;
+      }
+      return changed;
+    };
+    let corrected = constrainCopyBesideImage();
+    if (collisions().length && imageVisible) {
+      const imageStyle = getComputedStyle(image);
+      image.style.transform = 'none';
+      image.style.width = `${Math.max(260, Math.floor(parseFloat(imageStyle.width) * 0.86))}px`;
+      image.style.height = `${Math.max(320, Math.floor(parseFloat(imageStyle.height) * 0.86))}px`;
+      image.style.right = '72px';
+      corrected += 1 + constrainCopyBesideImage();
+    }
+    if (collisions().length) {
+      for (const { element } of collisions()) {
+        const elementStyle = getComputedStyle(element);
+        element.style.fontSize = `${Math.max(22, Math.floor(parseFloat(elementStyle.fontSize) * 0.84))}px`;
+        element.style.lineHeight = '1.08';
+        element.style.marginTop = '16px';
+        if (element.classList.contains('feed-cta')) element.style.padding = '14px 18px';
+        corrected += 1;
+      }
+      corrected += constrainCopyBesideImage();
+    }
     const safeBottomEdge = storyHeight - safeBottom;
+    const copyExceedsSafeBottom = () => copyBlocks.some((element) => element.getBoundingClientRect().bottom > safeBottomEdge - 8);
+    for (let pass = 0; pass < 3 && (copyExceedsSafeBottom() || collisions().length); pass += 1) {
+      for (const element of copyBlocks) {
+        const elementStyle = getComputedStyle(element);
+        element.style.fontSize = `${Math.max(21, Math.floor(parseFloat(elementStyle.fontSize) * 0.88))}px`;
+        element.style.lineHeight = '1.06';
+        element.style.marginTop = `${Math.max(10, Math.floor(parseFloat(elementStyle.marginTop || '0') * 0.68))}px`;
+        if (element.classList.contains('feed-cta')) element.style.padding = '12px 16px';
+        corrected += 1;
+      }
+      corrected += constrainCopyBesideImage();
+    }
+    const remainingCollisions = collisions().map(({ element, label }) => {
+      const copyRect = element.getBoundingClientRect();
+      const imageRect = image.getBoundingClientRect();
+      return `${label}@${Math.round(copyRect.left)},${Math.round(copyRect.top)},${Math.round(copyRect.right)},${Math.round(copyRect.bottom)}->foto@${Math.round(imageRect.left)},${Math.round(imageRect.top)},${Math.round(imageRect.right)},${Math.round(imageRect.bottom)}`;
+    });
     const safeElements = [...document.querySelectorAll('.brand, .badge, h1, p, .feed-cta, .avatar, .note, footer')]
       .filter((element) => getComputedStyle(element).display !== 'none');
     const outsideSafeArea = safeElements
@@ -2947,9 +3004,13 @@ async function renderStory(runDir, pack, account, style, renderContext = {}) {
         return outside ? `${element.className || element.tagName.toLowerCase()}@${Math.round(rect.left)},${Math.round(rect.top)},${Math.round(rect.right)},${Math.round(rect.bottom)}` : '';
       })
       .filter(Boolean);
-    return { overlap, outsideSafeArea };
+    return { overlap: remainingCollisions.length > 0, collisions: remainingCollisions, corrected, outsideSafeArea };
   }, { safeTop: STORY_SAFE_TOP, safeBottom: STORY_SAFE_BOTTOM, storyHeight: STORY_HEIGHT, storyWidth: STORY_WIDTH });
-  if (storyLayout.overlap) throw new Error('Story rejeitado: texto sobrepoe a foto.');
+  if (storyLayout.corrected) {
+    writeFileSync(htmlPath, await page.content(), 'utf8');
+    console.log(`Story ajustado automaticamente em ${storyLayout.corrected} correcao(oes) de layout.`);
+  }
+  if (storyLayout.overlap) throw new Error(`Story rejeitado: autocorrecao nao eliminou sobreposicao (${storyLayout.collisions.join(', ')}).`);
   if (storyLayout.outsideSafeArea.length) {
     throw new Error(`Story rejeitado: elemento fora da area segura (${storyLayout.outsideSafeArea.join(', ')}).`);
   }
