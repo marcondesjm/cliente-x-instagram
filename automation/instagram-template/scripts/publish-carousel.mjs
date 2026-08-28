@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { chromium } from 'playwright';
-import { createHash } from 'node:crypto';
+import { createHash, randomInt } from 'node:crypto';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, extname, isAbsolute, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -3279,12 +3279,42 @@ function balanceResearchPacksByHistory(packs = [], publicationHistory = [], date
   return balanced;
 }
 
-function pickFreshPack(packs, dateString, slotIndex, recentMedia = [], publicationHistory = []) {
+function pickFreshPack(packs, dateString, slotIndex, recentMedia = [], publicationHistory = [], chooseIndex = randomInt) {
   const candidates = balanceResearchPacksByHistory(packs, publicationHistory, dateString, slotIndex);
-  for (let offset = 0; offset < candidates.length; offset += 1) {
-    const { pack, originalIndex: packIndex } = candidates[offset];
-    const duplicate = findDuplicateSelection(pack, recentMedia, publicationHistory);
-    if (!duplicate) return { pack, packIndex, skippedDuplicates: offset };
+  const freshCandidates = candidates.filter(({ pack }) => !findDuplicateSelection(pack, recentMedia, publicationHistory));
+  const researchCandidates = freshCandidates.filter(({ pack }) => pack?.research?.source);
+  if (researchCandidates.length) {
+    const recentSourceCounts = new Map();
+    for (const entry of publicationHistory.filter((item) => item?.research?.source).slice(-12)) {
+      const source = String(entry.research.source).trim().toLocaleLowerCase('pt-BR');
+      recentSourceCounts.set(source, (recentSourceCounts.get(source) || 0) + 1);
+    }
+    const bySource = new Map();
+    for (const candidate of researchCandidates) {
+      const source = String(candidate.pack.research.source).trim().toLocaleLowerCase('pt-BR');
+      if (!bySource.has(source)) bySource.set(source, []);
+      bySource.get(source).push(candidate);
+    }
+    const sourceGroups = [...bySource.entries()].map(([source, queue]) => ({
+      source,
+      count: recentSourceCounts.get(source) || 0,
+      queue
+    }));
+    const minimumCount = Math.min(...sourceGroups.map((item) => item.count));
+    // Sorteia de verdade entre as fontes oficiais equilibradas. A margem de uma
+    // publicacao preserva variedade sem transformar uma unica fonte em escolha fixa.
+    const balancedPool = sourceGroups.filter((item) => item.count <= minimumCount + 1);
+    const selectedSource = balancedPool[chooseIndex(balancedPool.length)];
+    const selected = selectedSource.queue[chooseIndex(selectedSource.queue.length)];
+    return {
+      pack: selected.pack,
+      packIndex: selected.originalIndex,
+      skippedDuplicates: candidates.length - freshCandidates.length
+    };
+  }
+  if (freshCandidates.length) {
+    const selected = freshCandidates[chooseIndex(freshCandidates.length)];
+    return { pack: selected.pack, packIndex: selected.originalIndex, skippedDuplicates: candidates.length - freshCandidates.length };
   }
   return {
     pack: null,
@@ -3561,6 +3591,10 @@ async function main() {
     ];
     const recentBalancedProbe = pickFreshPack(balancedProbePacks, today, slotIndex, [], [...historicalNoise, ...recentWindow]);
     if (recentBalancedProbe.pack?.research?.source !== 'Fonte C') throw new Error('Janela recente de balanceamento por fonte falhou.');
+    const randomSourceProbe = pickFreshPack(balancedProbePacks, today, slotIndex, [], [], (length) => length - 1);
+    if (randomSourceProbe.pack?.research?.source !== 'Fonte C') throw new Error('Sorteio entre fontes oficiais falhou no teste controlado.');
+    const randomFirstSourceProbe = pickFreshPack(balancedProbePacks, today, slotIndex, [], [], () => 0);
+    if (randomFirstSourceProbe.pack?.research?.source !== 'Fonte A') throw new Error('Sorteio nao percorre fontes oficiais elegiveis.');
     const avatarProbeAccount = {
       avatarRotation: { enabled: true, urls: Array.from({ length: 7 }, (_, index) => `foto-${index + 1}`) }
     };
