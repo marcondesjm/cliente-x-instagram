@@ -6,6 +6,7 @@
 - O ajuste agora calcula a area vertical disponivel considerando apenas blocos que realmente cruzam horizontalmente, preserva 24 px entre elementos visuais e bloqueia a renderizacao se qualquer sobreposicao entre cartao e foto permanecer.
 - A foto da capa tambem ganhou folga lateral em relacao ao bloco de texto nos layouts esquerdo e direito.
 - `node --check`, `npm run validate-copy` e duas execucoes de `npm run render-only` passaram. A previa real encontrou 28 pautas oficiais em 30 dias e confirmou cartao da fonte, foto e texto em areas separadas.
+- Correcao publicada no commit `50e4e97` e no deployment `dpl_6dQF5DChNHx54rEL2eW2t8qhMB4o`, estado `READY`, associado ao dominio principal.
 
 ## 2026-08-28 20:17 BRT
 
