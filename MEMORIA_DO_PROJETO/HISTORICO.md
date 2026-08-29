@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-08-29 00:04 BRT
+
+- Investigado o erro aberto do slot 2 no run `33229661388`: o Radar esgotou pautas oficiais ineditas em 30 dias e bloqueou corretamente antes da Meta.
+- A primeira recuperacao automatica `33229776330` tambem foi bloqueada porque o pack editorial fixo ja constava no historico. `9124d9a` tornou cada recuperacao unica pela edicao operacional, preservando a protecao contra repeticao.
+- Producao atualizada para `v5.41`: deploy `dpl_D93XBtCR18D7oQq8GF6hPvfS4Yuy`, estado `READY`.
+- Recuperacao real concluida no run `33230259514`: `https://www.instagram.com/reel/Dcm7Cs4kein/`, media ID `18112965037992789`, Story ID `17880179550688046`, trilha `beethoven-05-destino`. O erro foi marcado como resolvido pelo mesmo run.
+- O run redundante `33230269009` foi cancelado com autorizacao do usuario. O artefato nao possui `result.json`: houve apenas render/hospedagem, sem segunda midia publicada na Meta.
+- API publica confirmou `v5.41`, status `funcionando` e zero erros abertos.
+
 ## 2026-08-28 23:54 BRT
 
 - Corrigida a agenda visual, que continuava rotulando todos os slots como `feed + story` mesmo com Reels automaticos operacionais.

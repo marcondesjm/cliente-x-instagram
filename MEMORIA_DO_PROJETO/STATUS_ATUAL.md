@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-28 23:54 BRT
+Atualizado em: 2026-08-29 00:04 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,19 +12,21 @@ Atualizado em: 2026-08-28 23:54 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
-- Estado operacional remoto atual: `4b1e85f` (`Exibe Reels na agenda diaria`).
+- Estado operacional remoto atual: `bc6640b` (`Host Instagram Reel cliente-x 2026-08-29-000225-slot-2`).
 - Correcao funcional mais recente: `7d17fe7` (`Evita fotos repetidas no mesmo carrossel`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `9156514` (`Atualiza todas as telas da landing`).
-- Versao visivel atual: `v5.40`.
-- Deploy de producao atual: `dpl_4R7dGvdoKtTZWgN9tA5MVQwebL4U`, estado `READY`; API publica confirmou `v5.40`, HTTP 200 e status `funcionando`.
+- Versao visivel atual: `v5.41`.
+- Deploy de producao atual: `dpl_D93XBtCR18D7oQq8GF6hPvfS4Yuy`, estado `READY`; API publica confirmou `v5.41`, HTTP 200, status `funcionando` e zero erros abertos.
 - O painel recarrega metricas privadas automaticamente a cada 60 segundos, ao voltar para a aba e ao receber foco (`b14c958`).
 
 ## Disparo automatico e composicao visual
 
+- Recuperacao real do slot 2: run `33230259514`, `https://www.instagram.com/reel/Dcm7Cs4kein/`, media ID `18112965037992789`, Story ID `17880179550688046`, trilha `beethoven-05-destino`. O run redundante `33230269009` foi cancelado antes de publicar na Meta.
+- O conteudo editorial de reserva do vigia agora inclui uma edicao operacional unica no fingerprint, evitando novo bloqueio por repeticao sem remover a trava de duplicidade (`9124d9a`).
 - A agenda visual agora identifica corretamente oito slots `reel + story` (06:30, 09:00, 12:10, 13:50, 14:15, 16:00, 17:40 e 22:00) e cinco slots `feed + story` (`4b1e85f`).
 - Cada publicacao alterna um objetivo organico principal entre comentarios, salvamentos, compartilhamentos e alcance de novos publicos. O painel usa as metricas recentes para exibir o foco recomendado (`970b269`).
 - Os Reels passam a escolher entre 12 trilhas: tres composicoes proprias e nove arranjos sintetizados proprios inspirados nas Sinfonias nº 1 a nº 9 de Beethoven. Nenhuma gravacao comercial e usada (`3bcfe94`).
