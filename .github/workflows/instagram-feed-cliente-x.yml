@@ -149,6 +149,10 @@ jobs:
           fi
           echo "INSTAGRAM_TEMPLATE_SLOT_INDEX=$SLOT_INDEX" >> "$GITHUB_ENV"
 
+      - name: Resolve automatic slot metadata
+        if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || steps.auto_slot.outputs.has_due == 'true'
+        run: node scripts/resolve-slot-metadata.mjs --slot-index "$INSTAGRAM_TEMPLATE_SLOT_INDEX"
+
       - name: Publish feed and story
         if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
         shell: bash
@@ -169,7 +173,7 @@ jobs:
           npm run instagram -- --account "$ACCOUNT" $ARGS
 
       - name: Mark automatic slot published
-        if: success() && github.event_name != 'workflow_dispatch' && steps.scheduled_queue.outputs.has_due != 'true' && steps.auto_slot.outputs.has_due == 'true'
+        if: success() && env.DRY_RUN != 'true' && steps.scheduled_queue.outputs.has_due != 'true' && (steps.auto_slot.outputs.has_due == 'true' || (github.event_name == 'workflow_dispatch' && github.event.inputs.scheduled_only != 'true' && github.event.inputs.pack_json == ''))
         run: node scripts/mark-auto-slot-published.mjs
 
       - name: Resolve watchdog error

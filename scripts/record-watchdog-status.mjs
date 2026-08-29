@@ -45,6 +45,9 @@ function solutionFor(errorText = '', stage = '') {
   if (/caption too long|caption was too long|legenda muito longa|36004|2207010/.test(text)) {
     return 'Reduzir a legenda final antes de publicar, preservar a fonte oficial e rodar validar textos antes de recuperar o slot.';
   }
+  if (/radar ativo.*nenhuma pauta oficial|nenhuma pauta oficial.*nao repetida|nenhuma pauta oficial.*não repetida/.test(text)) {
+    return 'Buscar uma pauta oficial inedita nas fontes configuradas ou ampliar/revisar fontes do Radar antes de recuperar o slot. Nao renovar token para este caso.';
+  }
   if (/oauth|access token|token|permission|permiss/.test(text)) {
     return 'Gerar novo token Meta/Instagram, atualizar o secret da conta no Vercel e no GitHub, depois rodar validar acessos no painel.';
   }
