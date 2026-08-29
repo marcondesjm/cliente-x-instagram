@@ -1676,13 +1676,17 @@ function sectorPhotoCssImage(cue = 'business', slideIndex = 1, renderContext = {
     beauty: ['docs/uploads/sector-photos/beauty.jpg', 'docs/uploads/sector-photos/operations-review.png'],
     ecommerce: ['docs/uploads/sector-photos/ecommerce.jpg', 'docs/uploads/sector-photos/operations-review.png'],
     finance: ['docs/uploads/sector-photos/finance.jpg', 'docs/uploads/sector-photos/operations-review.png'],
-    services: ['docs/uploads/sector-photos/ecommerce.jpg', 'docs/uploads/sector-photos/operations-review.png'],
+    services: [
+      'docs/uploads/sector-photos/operations-review.png',
+      'docs/uploads/automation-cloud-evening.jpg',
+      'docs/uploads/automation-leave-office.jpg',
+      'docs/uploads/sector-photos/finance.jpg'
+    ],
     business: [
       'docs/uploads/sector-photos/operations-review.png',
       'docs/uploads/automation-cloud-evening.jpg',
       'docs/uploads/automation-leave-office.jpg',
-      'docs/uploads/sector-photos/finance.jpg',
-      'docs/uploads/sector-photos/ecommerce.jpg'
+      'docs/uploads/sector-photos/finance.jpg'
     ]
   };
   const options = photos[cue] || photos.business;
@@ -3840,6 +3844,20 @@ async function main() {
     const proofSectorPhoto = sectorPhotoCssImage('business', 4, sameCarouselPhotoContext);
     if (!coverSectorPhoto || !proofSectorPhoto || coverSectorPhoto === proofSectorPhoto) {
       throw new Error('Rodizio de fotos dentro do mesmo carrossel falhou.');
+    }
+    const ecommercePhoto = 'ecommerce.jpg';
+    const genericReelPhotos = Array.from({ length: 16 }, (_, index) => sectorPhotoCssImage('business', index + 1, {
+      dateString: today,
+      slotIndex: index,
+      creativeGeneration: 1,
+      variationSeed: `teste-reel-generico-${index}`
+    }));
+    if (genericReelPhotos.some((photo) => photo.includes(ecommercePhoto))) {
+      throw new Error('Foto de ecommerce vazou para o rodizio visual de Reels empresariais.');
+    }
+    const ecommerceSectorPhotos = Array.from({ length: 4 }, (_, index) => sectorPhotoCssImage('ecommerce', index + 1, sameCarouselPhotoContext));
+    if (!ecommerceSectorPhotos.some((photo) => photo.includes(ecommercePhoto))) {
+      throw new Error('Foto de ecommerce deixou de estar disponivel para pautas realmente ligadas ao setor.');
     }
     const radarKeywords = ['AI', 'artificial intelligence', 'automation', 'agent', 'workflow', 'machine learning'];
     if (matchesConfiguredEditorialIntent('Governo pode comprar luvas de choque para agentes de imigração', radarKeywords)) {
