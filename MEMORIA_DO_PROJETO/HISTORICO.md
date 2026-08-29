@@ -2238,4 +2238,7 @@ Conclusão de produção:
 - Teste por página: matéria oficial `Introducing the Meta AI App` da Meta Newsroom extraiu a imagem principal e gerou o render `2026-08-29-134243-slot-1-render-only`.
 - Teste por link direto: `Meta-AI-App_Header.jpg?w=1200` gerou o render `2026-08-29-134319-slot-0-render-only`.
 - A inspeção visual confirmou imagem oficial dentro do carrossel com título e cartão de texto preservados.
-- Deploy e prova pública: pendentes neste checkpoint intermediário. Nenhuma mídia foi publicada.
+- Commit funcional `93dc89f` enviado ao `origin/main`.
+- Deploy `dpl_AcnJA3U3nbDES1jLqUa82YYJc2Gz` concluído em `READY`, preservando domínio e sem conectar a Vercel ao Git.
+- Prova pública: HTTP 200, `Versão atual: v5.53`, rótulo `Link da imagem ou da página do site` e exemplo de URL de matéria presentes no domínio principal.
+- Nenhuma mídia foi publicada.

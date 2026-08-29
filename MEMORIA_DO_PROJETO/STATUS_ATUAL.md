@@ -618,4 +618,4 @@ Resultado:
 - Cada slide aceita link direto de imagem ou link da página do site; páginas têm sua imagem principal localizada automaticamente.
 - A imagem externa passa pelo layout do carrossel, sem eliminar título e descrição.
 - Importação segura limita HTTPS, formato, tamanho, redirecionamentos e bloqueia redes privadas.
-- Página oficial e URL direta da Meta Newsroom foram renderizadas com sucesso; deploy v5.53 pendente.
+- Página oficial e URL direta da Meta Newsroom foram renderizadas com sucesso. Commit `93dc89f`; deploy `dpl_AcnJA3U3nbDES1jLqUa82YYJc2Gz` em `READY`; v5.53 e novo campo confirmados publicamente.
