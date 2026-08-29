@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-29 01:08 BRT
+Atualizado em: 2026-08-29 01:20 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,7 +12,7 @@ Atualizado em: 2026-08-29 01:08 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
-- Estado operacional remoto atual: `246118b` (`Evita resumos truncados e legendas de imagem`).
+- Estado operacional remoto atual: `094552b` (`Update Instagram schedule state`).
 - Correcao funcional mais recente: `246118b` (`Evita resumos truncados e legendas de imagem`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
@@ -25,6 +25,7 @@ Atualizado em: 2026-08-29 01:08 BRT
 
 ## Disparo automatico e composicao visual
 
+- Publicacao real mais recente: run `33233488693`, fonte `TecMundo`, pauta `OpenAI, Anthropic e mais de 100 empresas pedem mais seguranca contra IAs`, `https://www.instagram.com/reel/DcnEFDpDxFY/`, media ID `17954855115207895` e Story ID `18120976189894058`. A legenda usa tres fatos completos, sem credito de fotografia ou texto truncado; Reel em `ba47034`, imagens em `cd66f59` e estado em `094552b`. O primeiro comentario foi recusado pela Meta com OAuthException codigo 10, sem afetar Reel e Story.
 - O Radar descarta legendas e creditos de fotografia, rejeita resumos terminados em reticencias e usa apenas frases completas do corpo da materia (`246118b`). A prova na mesma pauta do G1 removeu `O logotipo da OpenAI... Foto: AP/Michael Dwyer` e passou a apresentar tres fatos completos: operacao no Brasil, 215 milhoes de mensagens diarias e declaracao de Sam Altman. As 74 combinacoes editoriais passaram.
 - Publicacao real mais recente: run `33232626886`, pauta `OpenAI abre operacao no Brasil apos pais se tornar 3 maior mercado do ChatGPT`, fonte `G1 Tecnologia`, `https://www.instagram.com/reel/DcnBvEVgJwC/`, media ID `18147166390538141` e Story ID `18047383550657974`. Reel e Story usaram a imagem oficial da materia; video em `c527763`, imagens em `a002cad` e estado em `76fdfed`. O primeiro comentario foi recusado pela Meta com OAuthException codigo 10, sem afetar as duas publicacoes.
 - `c4dcca3` faz a validacao de acentos ignorar slugs de URLs, evitando falso bloqueio de textos corretos em portugues. As 74 combinacoes editoriais passaram e o render `2026-08-29-005525-slot-0-render-only` confirmou Reel, Story, imagem oficial e trilha `beethoven-02-vivace`.

@@ -1,5 +1,13 @@
 # Historico
 
+## 2026-08-29 01:20 BRT
+
+- O botao `Publicar agora` foi acionado em `reel-and-story`, mas bloqueou corretamente antes da Meta porque as pautas elegiveis que o Radar havia carregado ja estavam no historico.
+- Selecionada uma pauta oficial inedita do `TecMundo`: `OpenAI, Anthropic e mais de 100 empresas pedem mais seguranca contra IAs`, publicada em 28/08/2026, com imagem principal extraida da propria materia.
+- O pack foi revisado para apresentar tres fatos completos, sem legenda de fotografia, reticencias ou frases cortadas. Os slides tambem usam titulos completos e a legenda separa claramente noticia e leitura editorial.
+- Publicacao real concluida no run `33233488693`: `https://www.instagram.com/reel/DcnEFDpDxFY/`, media ID `17954855115207895` e Story ID `18120976189894058`. Reel hospedado em `ba47034`, imagens em `cd66f59` e estado salvo em `094552b`.
+- O primeiro comentario falhou com OAuthException codigo 10 por permissao da Meta; Reel e Story foram publicados normalmente e nao houve tentativa duplicada.
+
 ## 2026-08-29 01:08 BRT
 
 - Corrigida a falha apontada na legenda do Reel `DcnBvEVgJwC`: o Radar havia tratado a legenda da fotografia e um resumo RSS truncado como conteúdo factual.
