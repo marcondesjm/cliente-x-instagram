@@ -1,5 +1,13 @@
 # Historico
 
+## 2026-08-29 00:12 BRT
+
+- Identificada a imagem repetitiva enviada pelo usuario como `docs/uploads/sector-photos/ecommerce.jpg`, com cartao, caixas e notebook.
+- `a6b15aa` removeu essa imagem dos rodizios genericos `business` e `services`; ela permanece apenas em pautas realmente classificadas como ecommerce.
+- Adicionada validacao que percorre 16 escolhas visuais de Reels empresariais e falha se `ecommerce.jpg` reaparecer fora do setor correto. As 74 combinacoes editoriais passaram.
+- Render `2026-08-29-000937-slot-0-render-only` confirmou imagens distintas: `automation-leave-office.jpg` na capa e `automation-cloud-evening.jpg` no slide 4, sem a foto reclamada.
+- Producao atualizada para `v5.42`: deploy `dpl_HyJ69naNUPvv8o1gfWTjHs7LnnZq`, estado `READY`; API e HTML publicos confirmaram a versao, status `funcionando` e zero erros abertos.
+
 ## 2026-08-29 00:04 BRT
 
 - Investigado o erro aberto do slot 2 no run `33229661388`: o Radar esgotou pautas oficiais ineditas em 30 dias e bloqueou corretamente antes da Meta.
