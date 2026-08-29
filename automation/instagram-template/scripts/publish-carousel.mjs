@@ -2477,6 +2477,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .impact-carousel main { background: linear-gradient(180deg, ${slideStyle.bgTop} 0%, ${slideStyle.bgBottom} 100%); }
     .impact-carousel .brand, .impact-carousel .headline { color: ${slideStyle.text}; }
     .impact-carousel main::before { background: ${slideStyle.grid}; }
+    .impact-carousel.has-sector-photo .panel { display: none; }
     .bubble { display: none; position: absolute; right: 116px; bottom: 270px; width: 132px; height: 96px; border-radius: 34px; background: #f1d8c7; z-index: 3; }
     .bubble::before { content: "..."; position: absolute; inset: 0; display: grid; place-items: center; color: ${accent}; font-size: 58px; line-height: 0.5; font-weight: 900; letter-spacing: 5px; }
     .spark { position: absolute; color: ${accent}; opacity: 0.7; z-index: 2; font-size: 42px; font-weight: 900; }
