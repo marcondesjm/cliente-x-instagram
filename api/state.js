@@ -44,7 +44,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v5.48',
+  appVersion: 'v5.49',
   status: 'funcionando',
   stableCommit: '9156514',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/9156514',
@@ -1580,6 +1580,36 @@ async function updateAccountProfile(body = {}, session = null) {
   };
 }
 
+async function updatePostingLogic(body = {}, session = null) {
+  const accountKey = normalizeAccountKey(body.account);
+  const accountsFile = await readGithubConfig(ACCOUNTS_FILE_PATH);
+  const index = accountsFile.data.findIndex((item) => item.account === accountKey);
+  if (index === -1) throw userError(`Conta ${accountKey} nao encontrada.`, 404);
+  if (!canAccessAccount(session, accountsFile.data[index])) {
+    throw userError('Seu usuario nao pode alterar esta conta.', 403);
+  }
+
+  const ihcHanahEnabled = body.ihcHanahEnabled === true;
+  accountsFile.data[index] = {
+    ...accountsFile.data[index],
+    contentProfile: {
+      ...accountsFile.data[index].contentProfile,
+      storyMethod: {
+        ...accountsFile.data[index].contentProfile?.storyMethod,
+        ihcHanahEnabled
+      }
+    }
+  };
+
+  await writeGithubConfig(ACCOUNTS_FILE_PATH, accountsFile.data, accountsFile.sha, `Update posting logic for ${accountKey}`);
+  return {
+    ok: true,
+    account: accountsFile.data[index],
+    ihcHanahEnabled,
+    message: `Metodo IHC da Hanah ${ihcHanahEnabled ? 'ligado' : 'desligado'} para ${accountKey}.`
+  };
+}
+
 async function updateClientStatus(body = {}, session = null) {
   if (!isOwner(session)) throw userError('Somente o administrador principal pode alterar contratos.', 403);
   const accountKey = normalizeAccountKey(body.account);
@@ -2355,6 +2385,12 @@ export default async function handler(req, res) {
       }
       if (body.action === 'update-account-profile') {
         const result = await updateAccountProfile(body, session);
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json(result);
+        return;
+      }
+      if (body.action === 'update-posting-logic') {
+        const result = await updatePostingLogic(body, session);
         res.setHeader('cache-control', 'no-store');
         res.status(200).json(result);
         return;

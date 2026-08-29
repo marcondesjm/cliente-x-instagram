@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-29 12:41 BRT
+Atualizado em: 2026-08-29 13:01 BRT
 
 ## Regra permanente de checkpoint
 
@@ -19,8 +19,9 @@ Atualizado em: 2026-08-29 12:41 BRT
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `9156514` (`Atualiza todas as telas da landing`).
-- Versao atual em producao: `v5.48`, com continuacao obrigatoria do Story para o feed em publicacoes combinadas.
-- A area `Logica da postagem` agora possui botao proprio no menu. Nela, o usuario alterna entre o Metodo IHC da Hanah e a logica editorial atual e salva pelo botao `Salvar perfil da marca`.
+- Versao preparada: `v5.49`, com salvamento independente e verificavel da logica da postagem; deploy de producao pendente neste checkpoint.
+- A area `Logica da postagem` possui o botao `Salvar logica da postagem` imediatamente abaixo do controle. Ele grava apenas o liga/desliga, recarrega o estado persistido e confirma `Metodo IHC ligado/desligado` na propria area.
+- Estado solicitado para `cliente-x`: Metodo IHC da Hanah desligado (`ihcHanahEnabled: false`); as proximas postagens voltam a usar a logica editorial atual.
 - O layout da area foi corrigido: duas colunas equilibradas no desktop e uma coluna no celular, sem o painel preso no canto direito ou rolagem horizontal.
 - Deploy de producao atual: `dpl_AVXM4rPa8G8TxUaLZfcusCYYjsuu`, estado `READY`; HTML publico confirmou HTTP 200 e `v5.48`.
 - O painel recarrega metricas privadas automaticamente a cada 60 segundos, ao voltar para a aba e ao receber foco (`b14c958`).

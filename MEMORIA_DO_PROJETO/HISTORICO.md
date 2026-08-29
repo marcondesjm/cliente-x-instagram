@@ -2166,3 +2166,15 @@ Conclusão de produção:
 - Deploy `dpl_AVXM4rPa8G8TxUaLZfcusCYYjsuu` concluído em estado `READY`, mantendo o domínio principal existente.
 - HTML público confirmou HTTP 200 e `Versão atual: v5.48`.
 - O Story anterior permanece como publicado originalmente; a nova chamada vale para os próximos Stories combinados. Nenhuma mídia foi repostada nesta correção.
+
+# 2026-08-29 13:01 BRT — Salvamento independente da lógica da postagem
+
+- O relato foi confirmado pelo histórico remoto: após desmarcar e tentar salvar, nenhum novo commit de configuração foi criado; o último `Update profile for cliente-x` ainda continha `ihcHanahEnabled: true`.
+- Causa de usabilidade: o controle IHC dependia do botão geral `Salvar perfil da marca`, localizado muito abaixo e responsável por validar/gravar todo o formulário. Uma falha ou abandono em qualquer outro campo também impedia a alteração da lógica.
+- A `v5.49` adiciona `Salvar lógica da postagem` imediatamente abaixo do controle IHC.
+- A nova ação `update-posting-logic` grava somente `contentProfile.storyMethod.ihcHanahEnabled`, preservando os demais dados da conta, e retorna o estado persistido.
+- Após salvar, o painel recarrega o GitHub e só mostra sucesso se o valor confirmado for igual ao escolhido; caso contrário, exibe erro e restaura o estado real.
+- O Método IHC foi deixado desligado (`false`) para `cliente-x`, conforme solicitado; a lógica editorial atual volta a orientar as próximas postagens.
+- Teste funcional local: POST com `false` seguido de novo GET retornou `saved: false` e `reloaded: false`.
+- `git diff --check`, `node --check api/state.js`, `node --check scripts/dashboard-server.mjs` e `npm run validate-copy` passaram; 20 packs, 54 automáticos e 74 combinações foram validados.
+- Deploy/publicação: envio ao `origin/main` e deploy da Vercel pendentes neste checkpoint; nenhuma mídia foi enviada ao Instagram.

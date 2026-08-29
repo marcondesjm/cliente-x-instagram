@@ -614,6 +614,32 @@ function updateAccountProfile(body = {}) {
   };
 }
 
+function updatePostingLogic(body = {}) {
+  const accounts = readJson(ACCOUNTS_PATH);
+  const accountKey = String(body.account || ACCOUNT).trim() || ACCOUNT;
+  const index = accounts.findIndex((item) => item.account === accountKey);
+  if (index === -1) throw new Error(`Conta ${accountKey} nao encontrada.`);
+
+  const ihcHanahEnabled = body.ihcHanahEnabled === true;
+  accounts[index] = {
+    ...accounts[index],
+    contentProfile: {
+      ...accounts[index].contentProfile,
+      storyMethod: {
+        ...accounts[index].contentProfile?.storyMethod,
+        ihcHanahEnabled
+      }
+    }
+  };
+  writeJson(ACCOUNTS_PATH, accounts);
+  return {
+    ok: true,
+    account: accounts[index],
+    ihcHanahEnabled,
+    message: `Metodo IHC da Hanah ${ihcHanahEnabled ? 'ligado' : 'desligado'} para ${accountKey}.`
+  };
+}
+
 async function uploadBrandDocument(body = {}) {
   const accounts = readJson(ACCOUNTS_PATH);
   const accountKey = String(body.account || ACCOUNT).trim() || ACCOUNT;
@@ -932,6 +958,9 @@ async function handleApi(req, res, url) {
       const body = await readBody(req);
       if (body.action === 'update-account-profile') {
         return json(res, 200, updateAccountProfile(body));
+      }
+      if (body.action === 'update-posting-logic') {
+        return json(res, 200, updatePostingLogic(body));
       }
       if (body.action === 'upload-brand-document') {
         return json(res, 200, await uploadBrandDocument(body));

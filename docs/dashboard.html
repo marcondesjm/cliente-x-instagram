@@ -1687,7 +1687,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v5.48</div>
+        <div class="header-version" id="headerVersion">Versão atual: v5.49</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -2352,6 +2352,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
                   <span>Ligado: Identificação → História → Conteúdo, com 9 takes nos Reels e 10 cards nos carrosséis. Desligado: lógica editorial atual.</span>
                 </div>
               </label>
+              <button class="primary" id="savePostingLogic" type="button">Salvar lógica da postagem</button>
+              <div class="access-result" id="postingLogicResult">O estado salvo aparecerá aqui.</div>
             </div>
             <div class="document-box">
               <strong>Radar de notícias deste cliente</strong>
@@ -3982,6 +3984,45 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       } finally {
         button.disabled = false;
         button.textContent = original;
+      }
+    }
+
+    async function savePostingLogic() {
+      const button = document.getElementById('savePostingLogic');
+      const checkbox = document.getElementById('activeIhcHanahEnabled');
+      const result = document.getElementById('postingLogicResult');
+      const requestedState = checkbox.checked;
+      button.disabled = true;
+      checkbox.disabled = true;
+      button.textContent = 'Salvando lógica';
+      result.className = 'access-result warn';
+      result.textContent = 'Gravando somente a lógica da postagem...';
+
+      try {
+        const payload = await api('/api/state', {
+          method: 'POST',
+          body: JSON.stringify({
+            action: 'update-posting-logic',
+            account: appState.selectedAccount,
+            ihcHanahEnabled: requestedState
+          })
+        });
+        appState.account = payload.account || appState.account;
+        await loadState();
+        const persistedState = Boolean(appState.account?.contentProfile?.storyMethod?.ihcHanahEnabled);
+        if (persistedState !== requestedState) {
+          throw new Error('O servidor não confirmou o estado escolhido. Tente novamente.');
+        }
+        result.className = 'access-result good';
+        result.textContent = `Salvo: Método IHC ${persistedState ? 'ligado' : 'desligado'}.`;
+      } catch (error) {
+        checkbox.checked = Boolean(appState.account?.contentProfile?.storyMethod?.ihcHanahEnabled);
+        result.className = 'access-result bad';
+        result.textContent = error.message;
+      } finally {
+        button.disabled = false;
+        checkbox.disabled = false;
+        button.textContent = 'Salvar lógica da postagem';
       }
     }
 
@@ -7100,6 +7141,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('runHealthCheck').addEventListener('click', runOperationalCheck);
       document.getElementById('repeatHealthCheck').addEventListener('click', runOperationalCheck);
       document.getElementById('saveActiveProfile').addEventListener('click', saveActiveProfile);
+      document.getElementById('savePostingLogic').addEventListener('click', savePostingLogic);
       document.getElementById('uploadDirectMaterial').addEventListener('click', uploadDirectMaterial);
       document.getElementById('saveDirectAutomation').addEventListener('click', saveDirectAutomation);
       document.getElementById('createAccount').addEventListener('click', createAccount);
