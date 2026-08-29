@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-08-29 00:29 BRT
+
+- `96f55fe` ampliou o Radar para preservar todas as 14 fontes oficiais configuradas e usar, quando valida, a imagem principal da propria materia nos carrosseis, Stories e Reels.
+- A extracao reconhece imagens de RSS, `og:image`, Twitter Card e metadados estruturados. O download exige HTTPS, formato de imagem aceito e tamanho seguro; logos, SVGs, pixels, HTML, arquivos pequenos e respostas invalidas acionam o acervo visual de reserva.
+- Prova externa: uma materia do Olhar Digital entregou `roman-space-telescope.webp` com HTTP 200 e `image/webp`. A pagina da OpenAI sem imagem valida foi corretamente encaminhada ao fallback.
+- Prova completa sem publicar no Instagram: o render `2026-08-29-002617-slot-0-render-only` encontrou 29 pautas oficiais em 30 dias, selecionou uma materia do `G1 Tecnologia`, baixou a imagem real em AVIF e gerou cinco slides, Story e Reel com a fonte identificada e o link integral preservado.
+- Validacoes: sintaxe, 74 combinacoes editoriais, 14 fontes do Radar, extracao HTTPS, rejeicao de logo/SVG e inspecao visual da capa e do Story passaram.
+- Producao atualizada para `v5.43`: deploy `dpl_9sz6ZQT84XpF82jwDD87Bx2GdMHD`, estado `READY`; API e HTML publicos confirmaram a versao, status `funcionando`, 14 fontes e zero erros abertos.
+
 ## 2026-08-29 00:12 BRT
 
 - Identificada a imagem repetitiva enviada pelo usuario como `docs/uploads/sector-photos/ecommerce.jpg`, com cartao, caixas e notebook.
