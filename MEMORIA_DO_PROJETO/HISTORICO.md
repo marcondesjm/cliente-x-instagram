@@ -1,5 +1,13 @@
 # Historico
 
+## 2026-08-28 22:47 BRT
+
+- Confirmado o relato do usuario: a versao anterior tinha volume correto, mas usava ondas senoidais sustentadas e soava como tom/barulho, nao como musica.
+- `21eebd5` substituiu esse gerador por uma composicao instrumental original com bateria, baixo, acordes e melodia. Ha tres arranjos entre 98 e 110 BPM; a saida continua em AAC 48 kHz estereo, agora normalizada a `-15 LUFS`.
+- Renderizacao local confirmou `pulso-produtivo`, 104 BPM, quatro camadas instrumentais e transicoes. O MP4 realmente hospedado mediu `-17,0 dB` de volume medio e `-0,9 dB` de pico.
+- Publicacao real concluida no run `33227198988`: `https://www.instagram.com/reel/DcmyfPGlO8G/`, media ID `17929839645147286`, video em `e6c1baa` e estado remoto `0691106`; nenhum erro no primeiro comentario.
+- Producao `v5.37`: deployment `dpl_4MvN9G9Xh7HK9CS8qETyuBwumAit`, estado `READY`; API publica confirmou HTTP 200 e status `funcionando`.
+
 ## 2026-08-28 22:36 BRT
 
 - Corrigido o botao `Corrigir automaticamente`. A causa inicial era o `GITHUB_TOKEN` expirado, que fazia a Vercel receber `GitHub HTTP 401: Bad credentials`.
