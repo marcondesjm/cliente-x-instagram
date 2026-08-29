@@ -1,5 +1,15 @@
 # Historico
 
+## 2026-08-28 21:34 BRT
+
+- Implementada a primeira versao completa de Reels automaticos: o painel permite `So Reel automatico` e `Reel automatico + story`, inclusive em publicacao imediata e agendamento.
+- O gerador reutiliza as cinco cenas do Radar em portugues e cria MP4 H.264 vertical `1080x1920`, 30 FPS e 25 segundos, com preenchimento visual desfocado; a publicacao usa `media_type=REELS`, compartilha no feed, aguarda `FINISHED` e grava permalink/ID.
+- Implementacao funcional em `6b99732`; instalacao de FFmpeg no runner em `7e34b4d`. `node --check`, `npm run validate-copy`, `git diff --check`, renderizacao e `ffprobe` passaram.
+- O run `33223487396` foi bloqueado antes da Meta porque o runner nao tinha FFmpeg; o run `33223563337` foi bloqueado pelo Radar porque nao havia pauta automatica elegivel. Nenhum dos dois criou midia.
+- Prova real concluida no run `33223701381`: `https://www.instagram.com/reel/Dcmp9m2lQNJ/`, media ID `18058367948530681`, fonte oficial `n8n`; video hospedado em `a73cd0d` e estado em `796d0a6`.
+- A versao `v5.32` foi publicada no deployment `dpl_8QgRnBs9NfnREb9KuvyiTNrDTony`, estado `READY`, no dominio principal. API publica confirmou HTTP 200, versao `v5.32` e status `funcionando`.
+- O primeiro comentario do Reel falhou isoladamente com OAuthException `#10`, sem afetar a publicacao do Reel.
+
 ## 2026-08-28 21:12 BRT
 
 - Publicacao real solicitada pelo usuario concluida no run `33222614158`, usando uma pauta oficial e ainda nao utilizada do `Google Oficial`.

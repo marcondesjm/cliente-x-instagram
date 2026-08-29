@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-28 21:12 BRT
+Atualizado em: 2026-08-28 21:34 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,19 +12,21 @@ Atualizado em: 2026-08-28 21:12 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
-- Estado operacional remoto atual: `d225dbf` (`Update Instagram schedule state`).
+- Estado operacional remoto atual: `796d0a6` (`Update Instagram schedule state`).
 - Correcao funcional mais recente: `7d17fe7` (`Evita fotos repetidas no mesmo carrossel`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `9156514` (`Atualiza todas as telas da landing`).
-- Versao visivel atual: `v5.31`
-- Deploy de producao atual: `dpl_CHGiP9K2XmCHJ7Q2ezrDynaToHSQ`, estado `READY`, no dominio principal; API publica confirmou `v5.31` e HTTP 200.
+- Versao visivel atual: `v5.32`
+- Deploy de producao atual: `dpl_8QgRnBs9NfnREb9KuvyiTNrDTony`, estado `READY`, no dominio principal; API publica confirmou `v5.32` e HTTP 200.
 - O painel recarrega metricas privadas automaticamente a cada 60 segundos, ao voltar para a aba e ao receber foco (`b14c958`).
 
 ## Disparo automatico e composicao visual
 
+- Reels automaticos estao operacionais nos modos `reel-only` e `reel-and-story`: cinco cenas em portugues viram MP4 H.264 de 25 segundos, 1080x1920 e 30 FPS; o fluxo hospeda o video, aguarda o processamento da Meta e registra permalink e ID (`6b99732`, `7e34b4d`).
+- Primeiro Reel real: run `33223701381`, fonte `n8n`, `https://www.instagram.com/reel/Dcmp9m2lQNJ/`, media ID `18058367948530681`; video hospedado em `a73cd0d` e estado salvo em `796d0a6`.
 - Publicacao real mais recente: run `33222614158`, fonte `Google Oficial`, `https://www.instagram.com/p/DcmneBYASlO/`, media ID `18150159394524409`, Story ID `17955874029235228`.
 - O artefato confirmou titulo, cartao de fonte, cinco slides, Story e legenda em portugues do Brasil. Capa e slide 4 usam fotos pessoais distintas; imagens hospedadas em `40458ee` e estado salvo em `d225dbf`.
 - Carrosseis empresariais usam uma colecao de cinco fotos contextuais; capa e slide de resultado nao podem repetir a mesma imagem. A validacao automatica bloqueia qualquer regressao (`7d17fe7`).
