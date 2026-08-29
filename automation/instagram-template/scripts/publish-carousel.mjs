@@ -6,7 +6,7 @@ import { basename, dirname, extname, isAbsolute, join, resolve } from 'node:path
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { buildBrandContext } from '../../../lib/brand-analysis.js';
-import { buildResearchPack, EDITORIAL_SOURCES, extractArticleFacts, factualSummary, isPredominantlyEnglish, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
+import { buildResearchPack, EDITORIAL_SOURCES, extractArticleFacts, extractEditorialImageUrl, factualSummary, isPredominantlyEnglish, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const TEMPLATE_DIR = resolve(ROOT, 'automation', 'instagram-template');
@@ -1630,6 +1630,44 @@ function localAssetCssImage(path = '') {
   return cssUrl(`file:///${source.replace(/\\/g, '/')}`);
 }
 
+function fileCssImage(path = '') {
+  const source = isAbsolute(String(path || '')) ? String(path) : resolve(ROOT, String(path || '').replace(/^\/+/, ''));
+  if (!existsSync(source)) return '';
+  return cssUrl(`file:///${source.replace(/\\/g, '/')}`);
+}
+
+async function downloadResearchSourceImage(pack = {}, runDir = '') {
+  const sourceImageUrl = String(pack?.research?.sourceImageUrl || '').trim();
+  if (!/^https:\/\//i.test(sourceImageUrl)) return null;
+  try {
+    const response = await fetchWithContext(sourceImageUrl, {
+      headers: {
+        accept: 'image/avif,image/webp,image/png,image/jpeg',
+        'user-agent': 'Mozilla/5.0 Cliente-X-Radar/1.0'
+      },
+      redirect: 'follow'
+    }, 'radar-source-image');
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const contentType = String(response.headers.get('content-type') || '').split(';')[0].toLowerCase();
+    const extensions = new Map([
+      ['image/jpeg', '.jpg'],
+      ['image/png', '.png'],
+      ['image/webp', '.webp'],
+      ['image/avif', '.avif']
+    ]);
+    if (!extensions.has(contentType)) throw new Error(`tipo ${contentType || 'desconhecido'} nao aceito`);
+    const bytes = Buffer.from(await response.arrayBuffer());
+    if (bytes.length < 20000) throw new Error(`arquivo pequeno demais (${bytes.length} bytes)`);
+    if (bytes.length > 12000000) throw new Error(`arquivo grande demais (${bytes.length} bytes)`);
+    const destination = join(runDir, `radar-source-image${extensions.get(contentType)}`);
+    writeFileSync(destination, bytes);
+    return destination;
+  } catch (error) {
+    console.warn(`Imagem da materia indisponivel; usando rodizio visual seguro: ${error instanceof Error ? error.message : String(error)}`);
+    return null;
+  }
+}
+
 function visualCueFromText(text = '') {
   const value = normalizeSearchText(text);
   if (/\b(turismo|turistica|turistico|viagem|viagens|pousada|hotel|praia|destino|radio)\b/.test(value)) return 'tourism';
@@ -1774,11 +1812,12 @@ function htmlText(value = '') {
   return String(value || '').replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
 }
 
-function researchSourceCardHtml(source = '', sourceTitle = '', sourceUrl = '') {
+function researchSourceCardHtml(source = '', sourceTitle = '', sourceUrl = '', sourceImage = '') {
   const name = htmlText(source || 'Fonte oficial');
   const title = htmlText(sourceTitle || 'Título da matéria não informado');
   const linkStatus = /^https:\/\//i.test(sourceUrl) ? 'MATÉRIA IDENTIFICADA · LINK NA LEGENDA' : 'LINK DA MATÉRIA AUSENTE';
-  return `<div class="context-photo news-context"><span>FONTE OFICIAL</span><strong>${name}</strong><small>${title}</small><em>${linkStatus}</em><i></i></div>`;
+  const imageStyle = sourceImage ? ` style='background-image: linear-gradient(180deg, rgba(9,20,31,.18), rgba(9,20,31,.92)), ${sourceImage};'` : '';
+  return `<div class="context-photo news-context${sourceImage ? ' has-source-image' : ''}"${imageStyle}><span>FONTE OFICIAL</span><strong>${name}</strong><small>${title}</small><em>${linkStatus}</em><i></i></div>`;
 }
 
 function anatexSlideHtml(slide, index, total, account, style, renderContext = {}) {
@@ -1810,6 +1849,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const researchTitle = String(slide.researchDisplayTitle || slide.researchTitle || '').trim();
   const researchUrl = String(slide.researchUrl || '').trim();
   const showNewsContext = Boolean(useSectorPhoto && researchSource);
+  const researchImage = index === 1 ? fileCssImage(renderContext.researchSourceImagePath || '') : '';
   const sectorPhotoImage = useSectorPhoto ? sectorPhotoCssImage(visualCue, index, renderContext) : '';
   const sectorPhotoClass = sectorPhotoImage ? ' has-sector-photo' : '';
   const swipeCue = index === 1 ? '<div class="swipe-cue">arraste para ver</div>' : '';
@@ -1824,6 +1864,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     mode === 'split' ? 'layout-left' : index === 1 ? coverLayout : index % 3 === 2 ? 'layout-left' : index % 3 === 0 ? 'layout-corner' : 'layout-right',
     `mode-${mode}`,
     `role-${engagementRole}`,
+    researchImage ? 'has-research-image' : '',
     headlineLengthClass,
     index % 2 === 0 ? 'slide-even' : 'slide-odd'
   ].join(' ');
@@ -1919,6 +1960,9 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     }
     .context-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,250,246,0.10), rgba(19,34,56,0.18)); }
     .context-photo.news-context { display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 22px 24px; background: linear-gradient(135deg, #132238, ${accent}); color: #fffaf7; opacity: 1; }
+    .context-photo.news-context.has-source-image { justify-content: flex-end; background-position: center; background-size: cover; }
+    .context-photo.news-context.has-source-image small { display: none; }
+    .context-photo.news-context.has-source-image strong { font-size: 32px; }
     .context-photo.news-context::after { background: radial-gradient(circle at 88% 20%, rgba(255,255,255,.18) 0 54px, transparent 55px); }
     .news-context > * { position: relative; z-index: 1; }
     .news-context span { font-size: 15px; font-weight: 900; letter-spacing: .12em; }
@@ -2091,6 +2135,10 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
       line-height: 1.04;
     }
     .role-hook .panel { top: 520px; width: 410px; height: 280px; border-radius: 30px; transform: none; }
+    .role-hook.has-research-image .panel { display: none; }
+    .role-hook.has-research-image .news-context { top: 520px; width: 410px; height: 280px; border-radius: 30px; }
+    .layout-left.role-hook.has-research-image .news-context { left: 44px; right: auto; }
+    .layout-right.role-hook.has-research-image .news-context { left: auto; right: 44px; }
     .layout-left.role-hook .panel { left: 44px; right: auto; }
     .layout-right.role-hook .panel { left: auto; right: 44px; }
     .layout-right.role-hook .headline { max-width: 520px; }
@@ -2253,7 +2301,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     <div class="badge"><span></span>${eyebrow}</div>
     ${swipeCue}
     ${saveCue}
-    ${showNewsContext ? researchSourceCardHtml(researchSource, researchTitle, researchUrl) : (sectorPhotoImage ? '<div class="context-photo"></div>' : '')}
+    ${showNewsContext ? researchSourceCardHtml(researchSource, researchTitle, researchUrl, researchImage) : (sectorPhotoImage ? '<div class="context-photo"></div>' : '')}
     ${sectorPhotoImage || showNewsContext ? '' : sectorVisualHtml(visualCue)}
     <div class="panel${avatarClass}"></div>
     <div class="spark s1">*</div>
@@ -2790,11 +2838,12 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
   const researchTitle = String(slide.researchDisplayTitle || slide.researchTitle || '').trim();
   const researchUrl = String(slide.researchUrl || '').trim();
   const showNewsContext = Boolean(researchSource);
+  const researchImage = fileCssImage(renderContext.researchSourceImagePath || '');
   const avatarImage = accountAvatarCssImage(account, 0, visualCue, { ...renderContext, story: true });
   const sectorPhotoImage = showNewsContext ? '' : sectorPhotoCssImage(visualCue);
-  const avatarBlock = avatarImage
-    ? `<div class="avatar"></div>`
-    : `<div class="panel"><span>IA</span></div>`;
+  const avatarBlock = showNewsContext
+    ? ''
+    : (avatarImage ? `<div class="avatar"></div>` : `<div class="panel"><span>IA</span></div>`);
   const usernameDisplay = accountUsernameDisplay(account);
   return `<!DOCTYPE html>
 <html>
@@ -2846,11 +2895,14 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     .note { position: absolute; left: 72px; bottom: ${STORY_SAFE_BOTTOM + 20}px; z-index: 2; width: 600px; padding: 28px 36px; border-radius: 28px; background: rgba(255,250,246,0.78); border: 2px solid rgba(167,86,61,0.18); color: #211915; font-size: 31px; line-height: 1.18; font-weight: 900; }
     footer { position: absolute; left: 72px; bottom: ${STORY_SAFE_BOTTOM + 4}px; color: ${accent}; font-size: 30px; font-weight: 900; z-index: 2; }
     .visual-card { display: none; position: absolute; left: 72px; right: 72px; top: 820px; height: 610px; border-radius: 24px; background: ${sectorPhotoImage || slideStyle.bgBottom} center / cover no-repeat; }
-    .visual-card.news-context-story { display: none; padding: 56px; background: linear-gradient(135deg, #132238, ${accent}); color: #fffaf7; }
+    .visual-card.news-context-story { display: none; padding: 56px; background-image: ${researchImage ? `linear-gradient(180deg, rgba(9,20,31,.14), rgba(9,20,31,.92)), ${researchImage}` : `linear-gradient(135deg, #132238, ${accent})`}; background-position: center; background-size: cover; color: #fffaf7; }
     .news-context-story span, .news-context-story strong, .news-context-story small { display: block; position: relative; z-index: 1; }
     .news-context-story span { font-size: 26px; font-weight: 900; letter-spacing: .12em; }
     .news-context-story strong { margin-top: 26px; font-size: 78px; line-height: .95; }
     .news-context-story small { margin-top: 28px; max-width: 470px; font-size: 28px; line-height: 1.12; font-weight: 800; }
+    .news-context-story { justify-content: flex-end; padding: 30px; }
+    .news-context-story strong { margin-top: 10px; font-size: 48px; line-height: .98; }
+    .news-context-story small { display: none; }
     .mode-native main, .mode-visual main, .mode-statement main, .mode-profile main, .mode-editorial main { background: linear-gradient(180deg, #fff 0%, ${slideStyle.bgTop} 100%); }
     .mode-native main::before, .mode-visual main::before, .mode-statement main::before, .mode-profile main::before, .mode-editorial main::before { background: rgba(19,34,56,.12); }
     .mode-native .brand, .mode-visual .brand, .mode-statement .brand, .mode-profile .brand, .mode-editorial .brand { color: ${slideStyle.text}; }
@@ -2899,7 +2951,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     <h1>${title.replace(/\s+IA\b/i, ' <strong>IA</strong>')}</h1>
     <p>${storyBody}</p>
     ${showNewsContext ? '<div class="feed-cta">Acompanhe a matéria na íntegra no feed.</div>' : ''}
-    <div class="visual-card${showNewsContext ? ' news-context-story' : ''}">${showNewsContext ? `<span>FONTE OFICIAL</span><strong>${htmlText(researchSource)}</strong><small>${htmlText(researchTitle)}</small><small>Matéria identificada · link na legenda</small>` : ''}</div>
+    <div class="visual-card${showNewsContext ? ' news-context-story' : ''}"${showNewsContext ? ` style="display:block;left:auto;right:72px;top:auto;bottom:${STORY_SAFE_BOTTOM}px;width:390px;height:460px;"` : ''}>${showNewsContext ? `<span>FONTE OFICIAL</span><strong>${htmlText(researchSource)}</strong><small>${htmlText(researchTitle)}</small><small>Matéria identificada · link na legenda</small>` : ''}</div>
     ${avatarBlock}
     <div class="note">${account.footerText}</div>
     <footer>${account.brandName}</footer>
@@ -3866,6 +3918,17 @@ async function main() {
     if (!matchesConfiguredEditorialIntent('Empresas adotam agentes de IA para automatizar tarefas', radarKeywords)) {
       throw new Error('Filtro semantico do Radar rejeitou uma pauta valida sobre agentes de IA.');
     }
+    if (normalizeEditorialSources(EDITORIAL_SOURCES).length !== EDITORIAL_SOURCES.length) {
+      throw new Error('Rodizio do Radar descartou fontes oficiais configuradas.');
+    }
+    const editorialImageProbe = extractEditorialImageUrl(`
+      <html><head><meta property="og:image" content="/media/noticia-ia-empresas-1600x900.jpg"></head></html>
+    `, 'https://fonte-oficial.example/noticias/ia-empresas');
+    if (editorialImageProbe !== 'https://fonte-oficial.example/media/noticia-ia-empresas-1600x900.jpg') {
+      throw new Error('Extracao da imagem oficial da materia falhou.');
+    }
+    const rejectedEditorialLogo = extractEditorialImageUrl('<meta property="og:image" content="https://fonte-oficial.example/logo.svg">', 'https://fonte-oficial.example/noticia');
+    if (rejectedEditorialLogo) throw new Error('Filtro de imagem editorial aceitou logo ou SVG como foto da materia.');
     const validationNow = new Date();
     const researchIntegrityProbe = buildResearchPack({
       source: 'TecMundo',
@@ -4018,6 +4081,8 @@ async function main() {
       ,finalSlideVariationGuard: 'ok'
       ,feedArchitectureGuard: '1080x1350-4:5'
       ,storySafeZoneGuard: '250-1170-500'
+      ,radarSourceImageGuard: 'og-image-https-with-safe-fallback'
+      ,checkedRadarSources: EDITORIAL_SOURCES.length
     }, null, 2));
     return;
   }
@@ -4197,6 +4262,7 @@ async function main() {
     throw new Error('Radar bloqueado: o anexo visual precisa conter fonte, título real e link da matéria.');
   }
   validatePack(pack);
+  const researchSourceImagePath = await downloadResearchSourceImage(pack, runDir);
   if (!args.renderOnly && !args.dryRun && (scheduledPost || dashboardPack || args.storyOnly)) {
     const duplicate = findDuplicatePack(publicationHistory, historyPack);
     if (duplicate) {
@@ -4221,6 +4287,7 @@ async function main() {
     packIndex,
     variationSeed: visualSeedInput,
     avatarRotationStart,
+    researchSourceImagePath,
     scheduledFor: scheduledPost?.scheduledFor || ''
   };
   const imagePaths = storyOnly ? [] : await renderSlides(runDir, pack.slides, account, style, renderContext);
