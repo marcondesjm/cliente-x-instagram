@@ -2141,3 +2141,10 @@ Conclusão às 12:17 BRT:
 - Validação real no navegador local: em 1920 px, painel e `main` mediram 1456 px e começaram no mesmo eixo; em 390 px, painel e `main` mediram 351 px, sem rolagem horizontal (`bodyScrollWidth: 375`).
 - `git diff --check`, sintaxe da API/servidor e `npm run validate-copy` passaram; 20 packs, 54 automáticos e 74 combinações validados.
 - Deploy/publicação: deploy Vercel pendente neste checkpoint; nenhuma publicação Instagram foi feita nesta alteração visual.
+
+Conclusão de produção:
+
+- Commit funcional `81dfe5a` enviado ao `origin/main`.
+- Deploy `dpl_Ezfk6xviEBcJVpotJoamj2NoxSPZ` concluído em estado `READY` e associado ao domínio principal existente.
+- HTML público confirmou HTTP 200, `Versão atual: v5.47`, a regra de largura total de `posting-logic` e a grade desktop em duas colunas.
+- Nenhuma publicação Instagram foi enviada nesta correção de layout.
