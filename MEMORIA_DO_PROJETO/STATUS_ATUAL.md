@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-28 21:34 BRT
+Atualizado em: 2026-08-28 21:45 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,19 +12,21 @@ Atualizado em: 2026-08-28 21:34 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
-- Estado operacional remoto atual: `796d0a6` (`Update Instagram schedule state`).
+- Estado operacional remoto atual: `9b6b04f` (`Update Instagram schedule state`).
 - Correcao funcional mais recente: `7d17fe7` (`Evita fotos repetidas no mesmo carrossel`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `9156514` (`Atualiza todas as telas da landing`).
-- Versao visivel atual: `v5.32`
-- Deploy de producao atual: `dpl_8QgRnBs9NfnREb9KuvyiTNrDTony`, estado `READY`, no dominio principal; API publica confirmou `v5.32` e HTTP 200.
+- Versao visivel atual: `v5.33`
+- Deploy de producao atual: `dpl_BysQpswRJXYSLA1vibUoaXKqnJu9`, estado `READY`, no dominio principal; API publica confirmou `v5.33` e HTTP 200.
 - O painel recarrega metricas privadas automaticamente a cada 60 segundos, ao voltar para a aba e ao receber foco (`b14c958`).
 
 ## Disparo automatico e composicao visual
 
+- Reels agora recebem uma trilha instrumental original gerada pela plataforma, com rodizio entre tres variacoes, volume baixo, AAC 48 kHz e fades de entrada/saida (`f48e396`).
+- Prova real com audio: run `33224292928`, trilha `movimento-leve`, `https://www.instagram.com/reel/DcmrUxHjhK4/`, media ID `18421987573151325`; video hospedado em `215985b` e estado salvo em `9b6b04f`.
 - Reels automaticos estao operacionais nos modos `reel-only` e `reel-and-story`: cinco cenas em portugues viram MP4 H.264 de 25 segundos, 1080x1920 e 30 FPS; o fluxo hospeda o video, aguarda o processamento da Meta e registra permalink e ID (`6b99732`, `7e34b4d`).
 - Primeiro Reel real: run `33223701381`, fonte `n8n`, `https://www.instagram.com/reel/Dcmp9m2lQNJ/`, media ID `18058367948530681`; video hospedado em `a73cd0d` e estado salvo em `796d0a6`.
 - Publicacao real mais recente: run `33222614158`, fonte `Google Oficial`, `https://www.instagram.com/p/DcmneBYASlO/`, media ID `18150159394524409`, Story ID `17955874029235228`.

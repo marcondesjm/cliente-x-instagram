@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-08-28 21:45 BRT
+
+- Adicionada trilha instrumental original aos Reels (`f48e396`), sem depender da biblioteca musical do Instagram nem de arquivos de terceiros.
+- O gerador escolhe deterministicamente entre tres variacoes, mistura a trilha em volume baixo e aplica entrada de 1,2 segundo e saida de 1,8 segundo. Saida validada com H.264 `1080x1920`/30 FPS e AAC mono 48 kHz.
+- O run real `33224292928` foi aceito e publicado pela Meta com a trilha `movimento-leve`: `https://www.instagram.com/reel/DcmrUxHjhK4/`, media ID `18421987573151325`, contêiner `18422853097149007`.
+- Video hospedado em `215985b`; estado operacional em `9b6b04f`. O artefato confirmou `reelAudioTrack: movimento-leve`, duracao de 25 segundos e audio original gerado.
+- Producao atualizada para `v5.33`: deployment `dpl_BysQpswRJXYSLA1vibUoaXKqnJu9`, estado `READY`; API publica confirmou HTTP 200 e status `funcionando`.
+- O primeiro comentario falhou isoladamente com OAuthException `#10`, sem afetar o Reel ou o audio.
+
 ## 2026-08-28 21:34 BRT
 
 - Implementada a primeira versao completa de Reels automaticos: o painel permite `So Reel automatico` e `Reel automatico + story`, inclusive em publicacao imediata e agendamento.
