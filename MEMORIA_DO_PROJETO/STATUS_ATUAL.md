@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-29 12:34 BRT
+Atualizado em: 2026-08-29 12:41 BRT
 
 ## Regra permanente de checkpoint
 
@@ -19,7 +19,7 @@ Atualizado em: 2026-08-29 12:34 BRT
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `9156514` (`Atualiza todas as telas da landing`).
-- Versao atual em producao: `v5.47`, com a area `Logica da postagem` em largura total, confirmada no dominio principal.
+- Versao preparada: `v5.48`, com continuacao obrigatoria do Story para o feed em publicacoes combinadas; deploy pendente neste checkpoint.
 - A area `Logica da postagem` agora possui botao proprio no menu. Nela, o usuario alterna entre o Metodo IHC da Hanah e a logica editorial atual e salva pelo botao `Salvar perfil da marca`.
 - O layout da area foi corrigido: duas colunas equilibradas no desktop e uma coluna no celular, sem o painel preso no canto direito ou rolagem horizontal.
 - Deploy de producao atual: `dpl_Ezfk6xviEBcJVpotJoamj2NoxSPZ`, estado `READY`; HTML publico confirmou HTTP 200 e `v5.47` com as regras responsivas da area `Logica da postagem`.
@@ -27,6 +27,7 @@ Atualizado em: 2026-08-29 12:34 BRT
 
 ## Disparo automatico e composicao visual
 
+- Stories acompanhados de Reel/carrossel agora sempre comunicam a continuacao: `Continue este conteudo no feed.` para editorial proprio e `Acompanhe a materia na integra no feed.` para Radar. Story avulso nao recebe chamada enganosa. Render IHC `2026-08-29-123942-slot-2-render-only` confirmou CTA dentro da area segura e sem colisao com a foto.
 - Primeira publicacao real com Metodo IHC da Hanah: run `33260221670`, `https://www.instagram.com/reel/DcoQg0djKr3/`, media ID `18146973691557370`, Story ID `18214564504349184`, publicada em `2026-08-29T15:28:17.448Z`. O Reel usou 9 takes no fluxo Identificacao -> Historia -> Conteudo; primeiro comentario sem erro.
 - O run inicial `33260096504` foi bloqueado corretamente porque o Radar nao encontrou pauta oficial inedita em 30 dias. Para a publicacao solicitada, foi usado conteudo editorial proprio sem inventar fonte; depois da confirmacao, o Radar foi religado e o Metodo IHC permaneceu ativo.
 - Publicacao real mais recente: run `33258039686`, recuperacao manual do slot 1 de 2026-08-29, `https://www.instagram.com/p/DcoKxn_jZ2t/`, media ID `17963739330178902`, Story ID `18108159037891082`, publicada as `2026-08-29T14:37:52.907Z`. O run hospedou imagens em `e1dd202` e resolveu os alertas do Radar em `c79c04b`; a correcao local `17fea06` marca o slot 1 em `published-slots.json` e impede nova tentativa duplicada quando enviada ao remoto.

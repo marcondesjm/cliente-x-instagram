@@ -2148,3 +2148,14 @@ Conclusão de produção:
 - Deploy `dpl_Ezfk6xviEBcJVpotJoamj2NoxSPZ` concluído em estado `READY` e associado ao domínio principal existente.
 - HTML público confirmou HTTP 200, `Versão atual: v5.47`, a regra de largura total de `posting-logic` e a grade desktop em duas colunas.
 - Nenhuma publicação Instagram foi enviada nesta correção de layout.
+# 2026-08-29 12:41 BRT — Continuação obrigatória do Story para o feed
+
+- Causa confirmada na publicação IHC `DcoQg0djKr3`: o renderizador só mostrava a chamada para o feed quando `researchSource` existia. Conteúdo editorial próprio, sem Radar, ocultava o CTA.
+- A `v5.48` passa o `publishMode` ao Story e exibe continuação em todo Story acompanhado de Reel/carrossel.
+- Notícia do Radar mantém `Acompanhe a matéria na íntegra no feed.`; conteúdo editorial próprio usa `Continue este conteúdo no feed.`.
+- Story avulso (`story-only`) continua sem chamada para um feed inexistente.
+- `node --check`, `git diff --check` e `npm run validate-copy` passaram com 20 packs, 54 automáticos e 74 combinações.
+- Render de notícia `2026-08-29-123840-slot-2-render-only` preservou o CTA jornalístico.
+- Render IHC editorial `2026-08-29-123942-slot-2-render-only` confirmou Reel de 9 takes, Story sem fonte inventada e o novo CTA dentro da área segura, sem sobreposição com a foto.
+- O Radar foi desligado somente no teste local editorial e religado antes do commit.
+- Deploy/publicação: deploy Vercel pendente neste checkpoint; o Story já publicado não foi repostado e nenhuma nova mídia foi enviada à Meta.

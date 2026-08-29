@@ -3023,6 +3023,10 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
   const researchTitle = String(slide.researchDisplayTitle || slide.researchTitle || '').trim();
   const researchUrl = String(slide.researchUrl || '').trim();
   const showNewsContext = Boolean(researchSource);
+  const hasFeedContinuation = renderContext.publishMode !== 'story-only';
+  const feedContinuationText = showNewsContext
+    ? 'Acompanhe a matéria na íntegra no feed.'
+    : 'Continue este conteúdo no feed.';
   const researchImage = fileCssImage(renderContext.researchSourceImagePath || '');
   const avatarImage = accountAvatarCssImage(account, 0, visualCue, { ...renderContext, story: true });
   const sectorPhotoImage = showNewsContext ? '' : sectorPhotoCssImage(visualCue);
@@ -3135,7 +3139,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     <div class="badge">${eyebrow}</div>
     <h1>${title.replace(/\s+IA\b/i, ' <strong>IA</strong>')}</h1>
     <p>${storyBody}</p>
-    ${showNewsContext ? '<div class="feed-cta">Acompanhe a matéria na íntegra no feed.</div>' : ''}
+    ${hasFeedContinuation ? `<div class="feed-cta">${feedContinuationText}</div>` : ''}
     <div class="visual-card${showNewsContext ? ' news-context-story' : ''}"${showNewsContext ? ` style="display:block;left:auto;right:72px;top:auto;bottom:${STORY_SAFE_BOTTOM}px;width:390px;height:460px;"` : ''}>${showNewsContext ? `<span>FONTE OFICIAL</span><strong>${htmlText(researchSource)}</strong><small>${htmlText(researchTitle)}</small><small>Matéria identificada · link na legenda</small>` : ''}</div>
     ${avatarBlock}
     <div class="note">${account.footerText}</div>
@@ -4503,7 +4507,8 @@ async function main() {
     variationSeed: visualSeedInput,
     avatarRotationStart,
     researchSourceImagePath,
-    scheduledFor: scheduledPost?.scheduledFor || ''
+    scheduledFor: scheduledPost?.scheduledFor || '',
+    publishMode
   };
   const imagePaths = storyOnly ? [] : await renderSlides(runDir, pack.slides, account, style, renderContext);
   const customStoryImage = String(pack.storyImageUrl || pack.storyImagePath || '').trim();
