@@ -124,9 +124,12 @@ jobs:
         if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
         run: npx playwright install --with-deps chromium
 
-      - name: Check FFmpeg for Reels
+      - name: Install FFmpeg for Reels
         if: (github.event.inputs.publish_mode == 'reel-only' || github.event.inputs.publish_mode == 'reel-and-story')
-        run: ffmpeg -version
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          ffmpeg -version
 
       - name: Select content slot
         if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
