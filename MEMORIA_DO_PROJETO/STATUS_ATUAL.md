@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-28 21:02 BRT
+Atualizado em: 2026-08-28 21:04 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,7 +12,7 @@ Atualizado em: 2026-08-28 21:02 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
-- Checkpoint operacional atual: `6f4f805` (`Update Instagram schedule state`).
+- Checkpoint operacional atual: `6b9fc9f` (`Registra v5.31 e rodizio interno de fotos`).
 - Correcao funcional mais recente: `7d17fe7` (`Evita fotos repetidas no mesmo carrossel`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
