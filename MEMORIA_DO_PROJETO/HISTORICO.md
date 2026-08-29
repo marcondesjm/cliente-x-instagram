@@ -2211,4 +2211,7 @@ Conclusão de produção:
 - Notícias com `research.sourceUrl` ficam fora da voz Bottini para preservar precisão editorial e evitar exagero no Radar.
 - Configuração inicial de `cliente-x`: desligada e equilibrada, aguardando escolha no painel. O salvamento é independente e confirma o estado recarregado.
 - Verificações de sintaxe, `git diff --check` e `npm run validate-copy` passaram, incluindo aplicação em conteúdo próprio e exclusão do Radar; o POST local confirmou `enabled: false`, `intensity: balanced` e as cinco expressões persistidas.
-- Deploy e prova pública: pendentes neste checkpoint intermediário. Nenhuma mídia foi enviada à Meta.
+- Commit funcional `5616fa1` enviado ao `origin/main`.
+- Deploy `dpl_CSjtU1zTJp2r9zaHucozpXPeTyXe` concluído em estado `READY`, preservando o domínio principal e sem conectar a Vercel ao Git.
+- Prova pública: HTTP 200, `Versão atual: v5.51`, `Novo carrossel de impacto`, `Botão Bottini`, botão de salvar e aviso de exclusão do Radar presentes no HTML do domínio principal.
+- Nenhuma mídia foi enviada à Meta nesta atualização.

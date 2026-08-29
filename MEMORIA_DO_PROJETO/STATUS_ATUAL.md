@@ -604,4 +604,4 @@ Resultado:
 - Novo `Botão Bottini` por conta: liga/desliga, dose leve/equilibrada/alta e vocabulário editável.
 - `cliente-x`: desligado, dose equilibrada, palavras `incrível`, `sensacional`, `excelente`, `imperdível`, `isso tem qualidade`.
 - Conteúdo próprio pode receber a energia Bottini; matérias do Radar permanecem sem esse tratamento.
-- Validação de código e copy concluída; deploy v5.51 pendente.
+- Validação de código e copy concluída. Commit `5616fa1` no `origin/main`; deploy `dpl_CSjtU1zTJp2r9zaHucozpXPeTyXe` em `READY` e HTML público confirmando a v5.51 e os dois novos controles.
