@@ -605,3 +605,10 @@ Resultado:
 - `cliente-x`: desligado, dose equilibrada, palavras `incrível`, `sensacional`, `excelente`, `imperdível`, `isso tem qualidade`.
 - Conteúdo próprio pode receber a energia Bottini; matérias do Radar permanecem sem esse tratamento.
 - Validação de código e copy concluída. Commit `5616fa1` no `origin/main`; deploy `dpl_CSjtU1zTJp2r9zaHucozpXPeTyXe` em `READY` e HTML público confirmando a v5.51 e os dois novos controles.
+
+## Atualizacao 2026-08-29 13:40 BRT — v5.52
+
+- O carrossel de impacto passa a criar os oito cards com imagens e usa fotografia ampla como parte principal do layout.
+- Três imagens editoriais originais foram adicionadas para fluxo, aprovação humana e continuidade operacional.
+- Render `2026-08-29-133638-slot-0-render-only` aprovado visualmente, sem vazio central nem colisão entre foto e texto.
+- Nenhuma postagem foi repetida; deploy v5.52 pendente.

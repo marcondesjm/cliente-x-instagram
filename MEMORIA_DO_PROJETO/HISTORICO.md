@@ -2215,3 +2215,13 @@ Conclusão de produção:
 - Deploy `dpl_CSjtU1zTJp2r9zaHucozpXPeTyXe` concluído em estado `READY`, preservando o domínio principal e sem conectar a Vercel ao Git.
 - Prova pública: HTTP 200, `Versão atual: v5.51`, `Novo carrossel de impacto`, `Botão Bottini`, botão de salvar e aviso de exclusão do Radar presentes no HTML do domínio principal.
 - Nenhuma mídia foi enviada à Meta nesta atualização.
+
+# 2026-08-29 13:40 BRT — Imagens grandes no carrossel de impacto
+
+- O teste `A IA não deveria só responder` evidenciou grandes áreas vazias: somente três dos oito cards possuíam `imagePath`, e os layouts de impacto tratavam as imagens existentes como pequenos elementos auxiliares.
+- A `v5.52` transforma a imagem em elemento principal do card de impacto: foto central ampla, recorte 4:5, leve degradê e cartão de texto sobreposto com contraste.
+- O novo rascunho criado pelo botão agora entrega imagem em todos os oito cards, alternando cenas de equipe, aprovação humana, dashboard e continuidade operacional.
+- Foram geradas três fotografias editoriais originais para o projeto: `impact-ai-workflow-team-v1.png`, `impact-ai-approval-v1.png` e `impact-ai-continuity-v1.png`; sem logotipos, textos ou marcas de terceiros.
+- `developer.meta.com` foi avaliado, mas respondeu com limitação HTTP 429. Imagens institucionais da Meta não foram usadas num tema genérico para não sugerir parceria ou atribuir a pauta à empresa; fonte oficial da Meta continuará apropriada quando o assunto for especificamente um produto ou anúncio da Meta.
+- Render local `2026-08-29-133638-slot-0-render-only` concluiu oito cards e Story; capa e card 6 foram inspecionados visualmente, com fotografia ampla, título legível e sem colisão.
+- Deploy e prova pública: pendentes neste checkpoint intermediário. Nenhuma mídia foi repostada.

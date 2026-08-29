@@ -2518,6 +2518,41 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .impact-carousel .brand, .impact-carousel .headline { color: ${slideStyle.text}; }
     .impact-carousel main::before { background: ${slideStyle.grid}; }
     .impact-carousel.has-sector-photo .panel { display: none; }
+    .impact-carousel.has-sector-photo .context-photo {
+      display: block;
+      left: 58px;
+      right: 58px;
+      top: 430px;
+      width: auto;
+      height: 590px;
+      border: 0;
+      border-radius: 24px;
+      transform: none;
+      opacity: 1;
+      background-position: center;
+      box-shadow: 0 28px 72px rgba(0,0,0,.30);
+    }
+    .impact-carousel.has-sector-photo .context-photo::after {
+      background: linear-gradient(180deg, rgba(5,5,5,.02) 42%, rgba(5,5,5,.64) 100%);
+    }
+    .impact-carousel.has-sector-photo .headline {
+      margin: 152px 0 0;
+      max-width: 920px;
+      font-size: 66px;
+      text-align: left;
+    }
+    .impact-carousel.has-sector-photo .note {
+      left: 82px;
+      top: 920px;
+      width: 720px;
+      min-height: 210px;
+      padding: 30px 34px 30px 104px;
+      background: rgba(255,255,255,.94);
+      color: #111;
+      box-shadow: 0 22px 54px rgba(0,0,0,.22);
+    }
+    .impact-carousel.has-sector-photo .note .emphasis,
+    .impact-carousel.has-sector-photo .note .close { color: #111; }
     .bubble { display: none; position: absolute; right: 116px; bottom: 270px; width: 132px; height: 96px; border-radius: 34px; background: #f1d8c7; z-index: 3; }
     .bubble::before { content: "..."; position: absolute; inset: 0; display: grid; place-items: center; color: ${accent}; font-size: 58px; line-height: 0.5; font-weight: 900; letter-spacing: 5px; }
     .spark { position: absolute; color: ${accent}; opacity: 0.7; z-index: 2; font-size: 42px; font-weight: 900; }
