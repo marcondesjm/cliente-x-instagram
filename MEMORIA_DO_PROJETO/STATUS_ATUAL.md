@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-28 22:11 BRT
+Atualizado em: 2026-08-28 22:36 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,19 +12,21 @@ Atualizado em: 2026-08-28 22:11 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
-- Estado operacional remoto atual: `2a4bc48` (`Update Instagram schedule state`).
+- Estado operacional remoto atual: `e051236` (`Update Instagram schedule state`).
 - Correcao funcional mais recente: `7d17fe7` (`Evita fotos repetidas no mesmo carrossel`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `9156514` (`Atualiza todas as telas da landing`).
-- Versao visivel atual: `v5.35`
-- Deploy de producao atual: `dpl_CvCwTuaGMxrsAyVgCrMNwiHgtH3C`, estado `READY`, no dominio principal; API publica confirmou `v5.35` e HTTP 200.
+- Versao visivel atual: `v5.36`
+- Deploy de producao atual: `dpl_5M89vbfARR3ZMhoZJAXdzqi5fjMz`, estado `READY`, no dominio principal; API publica confirmou `v5.36`.
 - O painel recarrega metricas privadas automaticamente a cada 60 segundos, ao voltar para a aba e ao receber foco (`b14c958`).
 
 ## Disparo automatico e composicao visual
 
+- O botao `Corrigir automaticamente` voltou a funcionar apos a renovacao protegida do `GITHUB_TOKEN`, agora valido ate 26/11/2026. A v5.36 elimina o erro HTTP 401, bloqueia disparos duplicados por tres minutos e, quando o Radar esgota pautas oficiais ineditas, recupera o horario com conteudo editorial proprio sem enfraquecer a trava das noticias (`ee428de`).
+- Prova real da recuperacao: run `33226668709`, `https://www.instagram.com/reel/DcmxGIPlZWZ/`, media ID `17895966213599689`, Story ID `18091479335215213`; imagens em `94866ed`, video em `671cd8b` e estado salvo em `e051236`. Todos os erros abertos do slot 2 foram resolvidos pelo run.
 - A trilha dos Reels foi corrigida em `6cc8f69`: agora usa arranjo eletronico ambiente, AAC 48 kHz estereo, normalizacao para `-16 LUFS`, pico alvo `-1,5 dBTP` e fades. O arquivo real publicado mediu `-18,1 dB` de volume medio e `-6,6 dB` de pico, contra `-32,2 dB` e `-24,3 dB` no Reel anterior.
 - Prova real da correcao: run `33225513924`, `https://www.instagram.com/reel/DcmuNuZjY3D/`, media ID `18083297000306014`, video hospedado em `b57e810` e estado salvo em `2a4bc48`. O primeiro comentario nao apresentou erro.
 - O calendario preserva os 13 horarios BRT e publica Reel + Story em oito deles: 06:30, 09:00, 12:10, 13:50, 14:15, 16:00, 17:40 e 22:00. Os outros cinco horarios continuam com carrossel + Story (`c22c3ac`).

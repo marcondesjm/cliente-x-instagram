@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-08-28 22:36 BRT
+
+- Corrigido o botao `Corrigir automaticamente`. A causa inicial era o `GITHUB_TOKEN` expirado, que fazia a Vercel receber `GitHub HTTP 401: Bad credentials`.
+- O token fine-grained `cliente-x-instagram-vercel` foi regenerado sem exposicao, rotacionado na Vercel Production e configurado para expirar em 26/11/2026.
+- A primeira prova eliminou o 401 e iniciou runs reais, mas confirmou que repetir o Radar nao resolvia a falta de pauta oficial inédita. A v5.36 (`ee428de`) passou a despachar um pack editorial proprio nesse caso, preservando a exigencia de fonte oficial para noticias.
+- Adicionada trava de tres minutos por erro para impedir varios cliques ou checkagens de criarem runs concorrentes.
+- Prova ponta a ponta: run `33226668709` concluiu em 2m28s e publicou `https://www.instagram.com/reel/DcmxGIPlZWZ/`, media ID `17895966213599689` e Story ID `18091479335215213`; estado remoto `e051236` marcou todos os erros do slot 2 como resolvidos.
+- Deploy `dpl_5M89vbfARR3ZMhoZJAXdzqi5fjMz` ficou `READY` no dominio principal com a versao `v5.36`.
+
 ## 2026-08-28 22:11 BRT
 
 - Confirmado o relato do usuario: o Reel anterior tinha AAC mono 48 kHz com volume medio de apenas `-32,2 dB` e pico de `-24,3 dB`, por isso a trilha quase nao era percebida.

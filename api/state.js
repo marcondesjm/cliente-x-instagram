@@ -54,8 +54,8 @@ const MAINTENANCE = {
   githubToken: {
     label: 'GitHub token do Vercel',
     env: 'GITHUB_TOKEN',
-    expiresAt: '2026-08-21',
-    status: 'renovar antes do vencimento',
+    expiresAt: '2026-11-26',
+    status: 'ativo; renovar antes de 26/11/2026',
     action: 'Criar outro fine-grained token no GitHub com Actions e Contents read/write para marcondesjm/cliente-x-instagram, atualizar GITHUB_TOKEN no Vercel Production e redeployar.'
   },
   metaToken: {
@@ -88,7 +88,7 @@ function accessConfigForAccount(account) {
     secondaryUrl: 'https://github.com/marcondesjm/cliente-x-instagram/actions/workflows/instagram-feed-cliente-x.yml',
     status: 'Token fine-grained com Actions read/write e Contents read/write.',
     action: 'Quando vencer, criar novo token para este repositório, trocar GITHUB_TOKEN no Vercel Production e redeployar.',
-    expiresAt: '2026-08-21'
+    expiresAt: '2026-11-26'
   },
   {
     platform: 'Vercel',
