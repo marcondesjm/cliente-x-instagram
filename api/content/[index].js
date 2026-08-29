@@ -122,9 +122,9 @@ export default async function handler(req, res) {
 
     const group = groups.find((item) => item.account === account);
     if (!group) throw new Error(`Conta ${account} nao encontrada em content-packs.json.`);
-    if (!Number.isInteger(index) || index < 0 || index >= group.packs.length) throw new Error('Slot de conteudo inexistente.');
+    if (!Number.isInteger(index) || index < 0 || index > group.packs.length) throw new Error('Slot de conteudo inexistente.');
 
-    group.packs[index] = {
+    const normalizedPack = {
       slides: body.pack.slides.map((slide) => ({
         eyebrow: String(slide.eyebrow || '').trim(),
         title: String(slide.title || '').trim(),
@@ -132,8 +132,11 @@ export default async function handler(req, res) {
         ...(slide.imagePath ? { imagePath: String(slide.imagePath).trim() } : {}),
         ...(slide.imageUrl ? { imageUrl: String(slide.imageUrl).trim() } : {})
       })),
-      caption: String(body.pack.caption || '').trim()
+      caption: String(body.pack.caption || '').trim(),
+      ...(body.pack.visualDirection ? { visualDirection: String(body.pack.visualDirection).trim() } : {})
     };
+    if (index === group.packs.length) group.packs.push(normalizedPack);
+    else group.packs[index] = normalizedPack;
 
     if (!sha) throw new Error('Nao consegui obter o arquivo atual do GitHub.');
     await writeContentFile(groups, sha);

@@ -127,7 +127,9 @@ export default async function handler(req, res) {
     }
     const accounts = JSON.parse(readFileSync(ACCOUNTS_PATH, 'utf8').replace(/^\uFEFF/, ''));
     const configuredAccount = requireConfiguredAccount(accounts, account);
-    const radarPack = await currentRadarPack(configuredAccount);
+    const isOwnImpactCarousel = body.contentMode === 'impact-carousel'
+      && body.pack?.visualDirection === 'impact-carousel';
+    const radarPack = isOwnImpactCarousel ? null : await currentRadarPack(configuredAccount);
     // Com Radar ativo, a fonte oficial do dia sempre substitui o pack manual do editor.
     const pack = radarPack || body.pack;
     const packJson = pack ? JSON.stringify(pack) : '';

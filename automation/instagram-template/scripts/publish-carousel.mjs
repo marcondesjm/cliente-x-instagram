@@ -2026,16 +2026,21 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const avatarClass = avatarImage ? ' has-avatar' : '';
   const usernameDisplay = accountUsernameDisplay(account);
   const engagementRole = index === 1 ? 'hook' : index === total ? 'cta' : index === total - 1 ? 'proof' : 'value';
-  const useSectorPhoto = engagementRole === 'hook' || engagementRole === 'proof';
+  const isImpact = String(style.name || '').startsWith('impact-carousel');
+  const explicitSlideImage = slide.imagePath
+    ? fileCssImage(resolve(ROOT, String(slide.imagePath).replace(/^\/+/, '')))
+    : '';
+  const useSectorPhoto = isImpact ? Boolean(explicitSlideImage) : engagementRole === 'hook' || engagementRole === 'proof';
   const researchSource = String(slide.researchSource || '').trim();
   const researchTitle = String(slide.researchDisplayTitle || slide.researchTitle || '').trim();
   const researchUrl = String(slide.researchUrl || '').trim();
   const showNewsContext = Boolean(useSectorPhoto && researchSource);
   const researchImage = index === 1 ? fileCssImage(renderContext.researchSourceImagePath || '') : '';
-  const sectorPhotoImage = useSectorPhoto ? sectorPhotoCssImage(visualCue, index, renderContext) : '';
+  const sectorPhotoImage = explicitSlideImage || (useSectorPhoto ? sectorPhotoCssImage(visualCue, index, renderContext) : '');
   const sectorPhotoClass = sectorPhotoImage ? ' has-sector-photo' : '';
   const swipeCue = index === 1 ? '<div class="swipe-cue">arraste para ver</div>' : '';
-  const finalCue = /\bcomente\b/i.test(`${title} ${body}`) ? 'comente IA' : 'link na bio';
+  const commentKeyword = `${title} ${body}`.match(/\bcomente\s+([\p{L}\p{N}_-]+)/iu)?.[1];
+  const finalCue = commentKeyword ? `comente ${commentKeyword}` : /\bcomente\b/i.test(`${title} ${body}`) ? 'comente IA' : 'link na bio';
   const saveCue = index === total ? `<div class="save-cue">${finalCue}</div>` : index === 3 ? '<div class="save-cue">salve este passo</div>' : '';
   // A capa usa duas colunas previsiveis. O antigo layout de canto reduzia a
   // foto para um selo e quebrava a proporcao em relacao aos demais cartoes.
@@ -2047,6 +2052,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     `mode-${mode}`,
     `role-${engagementRole}`,
     researchImage ? 'has-research-image' : '',
+    isImpact ? 'impact-carousel' : '',
     headlineLengthClass,
     index % 2 === 0 ? 'slide-even' : 'slide-odd'
   ].join(' ');
@@ -2468,6 +2474,9 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .mode-native.role-cta .note .close, .mode-visual.role-cta .note .close,
     .mode-statement.role-cta .note .close, .mode-profile.role-cta .note .close,
     .mode-editorial.role-cta .note .close { background: ${accentText}; color: ${accent}; }
+    .impact-carousel main { background: linear-gradient(180deg, ${slideStyle.bgTop} 0%, ${slideStyle.bgBottom} 100%); }
+    .impact-carousel .brand, .impact-carousel .headline { color: ${slideStyle.text}; }
+    .impact-carousel main::before { background: ${slideStyle.grid}; }
     .bubble { display: none; position: absolute; right: 116px; bottom: 270px; width: 132px; height: 96px; border-radius: 34px; background: #f1d8c7; z-index: 3; }
     .bubble::before { content: "..."; position: absolute; inset: 0; display: grid; place-items: center; color: ${accent}; font-size: 58px; line-height: 0.5; font-weight: 900; letter-spacing: 5px; }
     .spark { position: absolute; color: ${accent}; opacity: 0.7; z-index: 2; font-size: 42px; font-weight: 900; }
@@ -2623,12 +2632,28 @@ function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo
     })
   ];
 
-  const variants = style.layout === 'anatex-editorial' ? anatexVariants : defaultVariants;
+  const impactVariants = [
+    paletteVariant(style, `${style.name}-black`, {
+      templateMode: 'statement', accent: '#ff3b30', accentSoft: 'rgba(255,59,48,0.16)',
+      grid: 'rgba(255,255,255,0.08)', bgTop: '#050505', bgBottom: '#111111', text: '#ffffff', muted: '#e8e8e8'
+    }),
+    paletteVariant(style, `${style.name}-white`, {
+      templateMode: 'editorial', accent: '#ff3b30', accentSoft: 'rgba(255,59,48,0.10)',
+      grid: 'rgba(0,0,0,0.08)', bgTop: '#ffffff', bgBottom: '#f1f1f1', text: '#090909', muted: '#303030'
+    }),
+    paletteVariant(style, `${style.name}-visual`, {
+      templateMode: 'visual', accent: '#ff3b30', accentSoft: 'rgba(255,59,48,0.16)',
+      grid: 'rgba(255,255,255,0.08)', bgTop: '#050505', bgBottom: '#151515', text: '#ffffff', muted: '#eeeeee'
+    })
+  ];
+
+  const isImpact = style.name === 'impact-carousel';
+  const variants = isImpact ? impactVariants : style.layout === 'anatex-editorial' ? anatexVariants : defaultVariants;
   const variationOffset = Math.abs(Number(variationSeed) || 0) % variants.length;
   const selectedIndex = style.layout === 'anatex-editorial'
     ? (daysSinceEpoch(dateString) + slotIndex + variationOffset) % variants.length
     : (pickDailyIndex(variants, dateString, slotIndex) + variationOffset) % variants.length;
-  const slidePalettes = style.layout === 'anatex-editorial'
+  const slidePalettes = style.layout === 'anatex-editorial' && !isImpact
     ? [variants[selectedIndex]]
     : rotateItems(variants, selectedIndex);
   return {
@@ -2900,7 +2925,7 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
       imagePaths.push(String(slide.imageUrl).trim());
       continue;
     }
-    if (slide.imagePath) {
+    if (slide.imagePath && !String(style.name || '').startsWith('impact-carousel')) {
       const source = resolve(ROOT, String(slide.imagePath).replace(/^\/+/, ''));
       if (!existsSync(source)) throw new Error(`Imagem do slide ${index + 1} nao encontrada: ${slide.imagePath}`);
       const customImagePath = join(runDir, `slide-${String(index + 1).padStart(2, '0')}${extname(source).toLowerCase() || '.jpg'}`);
@@ -3034,6 +3059,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     ? ''
     : (avatarImage ? `<div class="avatar"></div>` : `<div class="panel"><span>IA</span></div>`);
   const usernameDisplay = accountUsernameDisplay(account);
+  const impactClass = String(style.name || '').startsWith('impact-carousel') ? ' impact-carousel' : '';
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -3131,10 +3157,14 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     .title-very-long p { margin-top: 34px; font-size: 30px; line-height: 1.22; }
     .title-very-long .feed-cta { margin-top: 30px; max-width: 540px; font-size: 25px; }
     .title-very-long .avatar { width: 320px; height: 400px; }
+    .impact-carousel main { background: linear-gradient(180deg, ${slideStyle.bgTop} 0%, ${slideStyle.bgBottom} 100%); }
+    .impact-carousel h1 { color: ${slideStyle.text}; }
+    .impact-carousel p { color: ${slideStyle.muted}; }
+    .impact-carousel .feed-cta { background: ${accent}; color: #fff; }
   </style>
 </head>
 <body>
-  <main class="mode-${mode}${titleClass}">
+  <main class="mode-${mode}${titleClass}${impactClass}">
     <div class="brand">${usernameDisplay}</div>
     <div class="badge">${eyebrow}</div>
     <h1>${title.replace(/\s+IA\b/i, ' <strong>IA</strong>')}</h1>
@@ -4436,7 +4466,7 @@ async function main() {
   // O Radar continua obrigado a preservar a fonte oficial. Um pack editorial
   // enviado explicitamente pelo painel e conteudo proprio da marca, nao uma
   // pauta pesquisada, portanto nao deve ser bloqueado por essa exigencia.
-  if (!args.renderOnly && !args.dryRun && radar.enabled && !dashboardPack && !pack?.research?.sourceUrl) {
+  if (!args.renderOnly && !args.dryRun && radar.enabled && !dashboardPack && !scheduledPost && !pack?.research?.sourceUrl) {
     throw new Error('Radar ativo: a pauta selecionada nao possui uma fonte oficial registrada. Nenhum post foi publicado.');
   }
 
@@ -4460,8 +4490,11 @@ async function main() {
   ].filter(Boolean).join('|') || String(packIndex);
   const visualVariationSeed = stableAvatarOffset(visualSeedInput);
   const avatarRotationStart = pickAvatarRotationStart(account, publicationHistory, visualSeedInput);
+  const packVisualAccount = pack.visualDirection
+    ? { ...account, contentProfile: { ...account.contentProfile, visualDirection: pack.visualDirection } }
+    : account;
   style = styleWithBrandPalette(
-    pickVisualStyle(styles, account, today, generationSlotIndex),
+    pickVisualStyle(styles, packVisualAccount, today, generationSlotIndex),
     account,
     { dateString: today, slotIndex: generationSlotIndex, variationSeed: visualVariationSeed }
   );

@@ -827,8 +827,8 @@ function savePack(index, pack) {
   const content = readJson(CONTENT_PATH);
   const group = content.find((item) => item.account === ACCOUNT);
   if (!group) throw new Error(`Conta ${ACCOUNT} nao encontrada em content-packs.json.`);
-  if (index < 0 || index >= group.packs.length) throw new Error('Slot de conteudo inexistente.');
-  group.packs[index] = {
+  if (index < 0 || index > group.packs.length) throw new Error('Slot de conteudo inexistente.');
+  const normalizedPack = {
     slides: pack.slides.map((slide) => ({
       eyebrow: String(slide.eyebrow).trim(),
       title: String(slide.title).trim(),
@@ -836,8 +836,11 @@ function savePack(index, pack) {
       ...(slide.imagePath ? { imagePath: String(slide.imagePath).trim() } : {}),
       ...(slide.imageUrl ? { imageUrl: String(slide.imageUrl).trim() } : {})
     })),
-    caption: String(pack.caption).trim()
+    caption: String(pack.caption).trim(),
+    ...(pack.visualDirection ? { visualDirection: String(pack.visualDirection).trim() } : {})
   };
+  if (index === group.packs.length) group.packs.push(normalizedPack);
+  else group.packs[index] = normalizedPack;
   writeFileSync(CONTENT_PATH, `${JSON.stringify(content, null, 2)}\n`, 'utf8');
   return getState();
 }

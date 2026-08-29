@@ -2181,3 +2181,15 @@ Conclusão de produção:
 - Deploy `dpl_6Fp3eWmsGs4P2ooEmGaBvfPNrNQ3` concluido em estado `READY` e associado ao dominio principal existente, sem conectar Vercel ao Git nem alterar dominio.
 - Prova publica: HTTP 200, `Versao atual: v5.49`, botao `Salvar logica da postagem` presente e configuracao oficial do GitHub com `ihcHanahEnabled: false`.
 - Nenhuma midia foi enviada ao Instagram nesta correcao.
+
+# 2026-08-29 13:05 BRT — Novo carrossel de impacto
+
+- Foi criado um segundo caminho de conteudo no editor, acionado por `Novo carrossel de impacto`, independente do Metodo IHC e da logica editorial automatica.
+- O botao gera um rascunho editavel com oito cards, alternando preto/branco, destaque vermelho, fotos e capturas grandes, textos curtos e CTA final.
+- O novo estilo `impact-carousel` pode ser escolhido pelo proprio pack sem mudar a direcao visual permanente da conta.
+- Conteudo editorial proprio nesse modo nao e substituido pelo Radar; nenhuma fonte jornalistica foi inventada e nenhuma imagem/texto do perfil usado como referencia foi copiado.
+- O editor passou a permitir salvar um novo pack no fim da lista preservando `visualDirection`; posts manuais agendados continuam aceitos mesmo com Radar ativo.
+- Primeiro teste preparado: `A IA nao deveria so responder. Ela deveria ajudar o trabalho a continuar.`, oito cards e CTA `Comente FLUXO`.
+- Render final local `2026-08-29-125819-slot-0-render-only`: Feed 1080x1350 com oito cards e Story 1080x1920 com continuacao para o feed; contraste e area segura conferidos visualmente.
+- `node --check`, `git diff --check` e `npm run validate-copy` passaram; 20 packs, 54 automaticos e 74 combinacoes validados.
+- Deploy/publicacao: envio ao remoto, deploy da `v5.50` e publicacao real pendentes neste checkpoint.
