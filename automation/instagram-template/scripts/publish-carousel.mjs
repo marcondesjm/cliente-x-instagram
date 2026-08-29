@@ -3493,22 +3493,34 @@ async function hostRenderedVideoOnGitHub(videoPath, accountKey, runId) {
 function renderReelVideo(runDir, imagePaths) {
   if (!imagePaths.length) throw new Error('Reel precisa de pelo menos uma cena renderizada.');
   const reelPath = join(runDir, 'reel.mp4');
-  const durationSeconds = imagePaths.length * 5;
+  const sceneSeconds = 5;
+  const transitionSeconds = 0.65;
+  const durationSeconds = (imagePaths.length * sceneSeconds) - ((imagePaths.length - 1) * transitionSeconds);
   const tracks = [
     { id: 'foco-calmo', expression: '0.045*sin(2*PI*220*t)+0.028*sin(2*PI*277.18*t)+0.022*sin(2*PI*329.63*t)' },
     { id: 'movimento-leve', expression: '0.042*sin(2*PI*196*t)+0.026*sin(2*PI*246.94*t)+0.021*sin(2*PI*293.66*t)' },
     { id: 'tecnologia-serena', expression: '0.040*sin(2*PI*174.61*t)+0.027*sin(2*PI*220*t)+0.020*sin(2*PI*261.63*t)' }
   ];
   const audioTrack = tracks[stableAvatarOffset(imagePaths.join('|')) % tracks.length];
-  const inputs = imagePaths.flatMap((imagePath) => ['-loop', '1', '-t', '5', '-i', resolve(imagePath)]);
+  const inputs = imagePaths.flatMap((imagePath) => ['-loop', '1', '-t', String(sceneSeconds), '-i', resolve(imagePath)]);
   const filters = imagePaths.map((_, index) => `[${index}:v]split=2[bg${index}][fg${index}];[bg${index}]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,gblur=sigma=32[blur${index}];[fg${index}]scale=1080:1350:force_original_aspect_ratio=decrease[front${index}];[blur${index}][front${index}]overlay=(W-w)/2:(H-h)/2,setsar=1,fps=30[v${index}]`).join(';');
-  const concat = `${imagePaths.map((_, index) => `[v${index}]`).join('')}concat=n=${imagePaths.length}:v=1:a=0[outv]`;
+  const transitionNames = ['fade', 'slideleft', 'smoothleft', 'circleopen'];
+  const transitionSeed = stableAvatarOffset(imagePaths.join('|'));
+  const transitionParts = [];
+  let previousVideo = '[v0]';
+  for (let index = 1; index < imagePaths.length; index += 1) {
+    const output = index === imagePaths.length - 1 ? '[outv]' : `[xf${index}]`;
+    const transition = transitionNames[(transitionSeed + index - 1) % transitionNames.length];
+    const offset = (index * sceneSeconds) - (index * transitionSeconds);
+    transitionParts.push(`${previousVideo}[v${index}]xfade=transition=${transition}:duration=${transitionSeconds}:offset=${offset.toFixed(2)}${output}`);
+    previousVideo = output;
+  }
   const audioInputIndex = imagePaths.length;
   const audioFilter = `[${audioInputIndex}:a]afade=t=in:st=0:d=1.2,afade=t=out:st=${Math.max(0, durationSeconds - 1.8)}:d=1.8,volume=0.7[outa]`;
   const result = spawnSync('ffmpeg', [
     '-y', ...inputs,
     '-f', 'lavfi', '-t', String(durationSeconds), '-i', `aevalsrc=${audioTrack.expression}:s=48000:d=${durationSeconds}`,
-    '-filter_complex', `${filters};${concat};${audioFilter}`, '-map', '[outv]', '-map', '[outa]',
+    '-filter_complex', `${filters};${transitionParts.join(';')};${audioFilter}`, '-map', '[outv]', '-map', '[outa]',
     '-c:v', 'libx264', '-preset', 'medium', '-crf', '20', '-pix_fmt', 'yuv420p',
     '-c:a', 'aac', '-b:a', '128k', '-ar', '48000', '-movflags', '+faststart', '-shortest', reelPath
   ], { encoding: 'utf8', maxBuffer: 10 * 1024 * 1024 });
@@ -3520,7 +3532,9 @@ function renderReelVideo(runDir, imagePaths) {
     durationSeconds,
     sampleRate: 48000,
     fadeInSeconds: 1.2,
-    fadeOutSeconds: 1.8
+    fadeOutSeconds: 1.8,
+    transitionSeconds,
+    transitions: imagePaths.slice(1).map((_, index) => transitionNames[(transitionSeed + index) % transitionNames.length])
   }, null, 2), 'utf8');
   return { reelPath, audioTrack: audioTrack.id };
 }
@@ -3895,6 +3909,11 @@ async function main() {
     : process.env.INSTAGRAM_TEMPLATE_PUBLISH_MODE === 'feed-only'
       ? 'feed-only'
       : 'feed-and-story';
+  const automaticReelSlots = new Set((account.reelScheduleSlots || []).map(Number).filter(Number.isInteger));
+  if (process.env.INSTAGRAM_TEMPLATE_AUTOMATIC_RUN === 'true' && automaticReelSlots.has(slotIndex)) {
+    publishMode = 'reel-and-story';
+    console.log(`Horario automatico ${slotIndex} configurado para Reel + Story.`);
+  }
   let dashboardPack = null;
   if (process.env.INSTAGRAM_TEMPLATE_PACK_JSON?.trim()) {
     dashboardPack = JSON.parse(process.env.INSTAGRAM_TEMPLATE_PACK_JSON);

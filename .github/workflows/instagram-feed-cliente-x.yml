@@ -79,6 +79,7 @@ jobs:
       DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run || 'false' }}
       INSTAGRAM_TEMPLATE_PACK_JSON: ${{ github.event.inputs.pack_json || '' }}
       INSTAGRAM_TEMPLATE_PUBLISH_MODE: ${{ github.event.inputs.publish_mode || 'feed-and-story' }}
+      INSTAGRAM_TEMPLATE_AUTOMATIC_RUN: ${{ github.event_name != 'workflow_dispatch' }}
       CLIENTE_X_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.CLIENTE_X_INSTAGRAM_ACCESS_TOKEN }}
       CLIENTE_X_INSTAGRAM_USER_ID: ${{ secrets.CLIENTE_X_INSTAGRAM_USER_ID }}
       IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
@@ -125,7 +126,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Install FFmpeg for Reels
-        if: (github.event.inputs.publish_mode == 'reel-only' || github.event.inputs.publish_mode == 'reel-and-story')
+        if: (github.event_name == 'workflow_dispatch' && (github.event.inputs.publish_mode == 'reel-only' || github.event.inputs.publish_mode == 'reel-and-story')) || (github.event_name != 'workflow_dispatch' && (steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'))
         run: |
           sudo apt-get update
           sudo apt-get install -y ffmpeg
