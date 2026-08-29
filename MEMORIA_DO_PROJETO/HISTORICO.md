@@ -2112,3 +2112,11 @@ Atualização operacional:
 - O deploy manual com certificados confiáveis do Windows chegou à Vercel, mas foi recusado em autenticação com `Not authorized`; `VERCEL_TOKEN` não está disponível no ambiente local.
 - O domínio principal respondeu HTTP 200 e ainda mostrou `v5.45`, portanto a correção não foi declarada como publicada.
 - Próximo passo exato: renovar o login/token da Vercel por fluxo protegido, executar `npx vercel --prod --yes` com `NODE_OPTIONS=--use-system-ca` e confirmar no HTML público `v5.46` e `Lógica da postagem`.
+
+Conclusão às 12:17 BRT:
+
+- A autenticação protegida da Vercel foi renovada e reconheceu a conta `marcondesgestaotrafego-spec`.
+- Deploy manual de produção concluído: `dpl_BpdpLqpZLhZ1TsoDNioT1wJaD7j1`, estado `READY`.
+- O domínio principal `https://cliente-x-instagram.vercel.app` foi mantido e recebeu o alias do novo deploy; nenhuma integração Git ou alteração de domínio foi criada.
+- Prova pública sem cache: HTTP 200, `Versão atual: v5.46`, aba `Lógica da postagem` e controle `Usar MÉTODO IHC DA HANAH` encontrados no HTML de produção.
+- Nenhuma postagem foi enviada ao Instagram nesta atualização de painel.
