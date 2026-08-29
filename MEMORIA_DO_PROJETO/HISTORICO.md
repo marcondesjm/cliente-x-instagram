@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-08-28 21:02 BRT
+
+- Corrigida a repeticao de fotos dentro do mesmo carrossel: a categoria empresarial possuia apenas uma foto contextual, usada tanto na capa quanto no slide de resultado.
+- A colecao empresarial passou a ter cinco imagens distintas e a validacao bloqueia o render se os slides 1 e 4 receberem a mesma foto.
+- `node --check`, `npm run validate-copy` e `npm run render-only` passaram. A previa `2026-08-28-210114-slot-0-render-only` foi inspecionada: capa e slide 4 usam cenas contextuais diferentes e fotos pessoais diferentes.
+- Correcao funcional: `7d17fe7` (`Evita fotos repetidas no mesmo carrossel`).
+- Versao `v5.31` confirmada na API publica, status `funcionando`, HTTP 200. Deployment `dpl_CHGiP9K2XmCHJ7Q2ezrDynaToHSQ`, estado `READY`, no dominio principal.
+- Nenhuma nova publicacao foi enviada ao Instagram nesta correcao; a regra vale para os proximos carrosseis.
+
 ## 2026-08-28 20:56 BRT
 
 - A versao visivel do painel foi atualizada de `v5.28` para `v5.29` e, depois da correcao completa de idioma, para `v5.30` em `api/state.js` e `docs/dashboard.html`.

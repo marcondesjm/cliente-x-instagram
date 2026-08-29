@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-28 20:56 BRT
+Atualizado em: 2026-08-28 21:02 BRT
 
 ## Regra permanente de checkpoint
 
@@ -13,18 +13,19 @@ Atualizado em: 2026-08-28 20:56 BRT
 - Pasta: `cliente-x-instagram-modern`
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
 - Checkpoint operacional atual: `6f4f805` (`Update Instagram schedule state`).
-- Correcao funcional mais recente: `e37a4af` (`Traduz todo texto visual de noticias`).
+- Correcao funcional mais recente: `7d17fe7` (`Evita fotos repetidas no mesmo carrossel`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `9156514` (`Atualiza todas as telas da landing`).
-- Versao visivel atual: `v5.30`
-- Deploy de producao atual: `dpl_9FuzqqFXWnVzvopmq4RTjHzvjNDi`, estado `READY`, no dominio principal; API publica confirmou `v5.30` e HTTP 200.
+- Versao visivel atual: `v5.31`
+- Deploy de producao atual: `dpl_CHGiP9K2XmCHJ7Q2ezrDynaToHSQ`, estado `READY`, no dominio principal; API publica confirmou `v5.31` e HTTP 200.
 - O painel recarrega metricas privadas automaticamente a cada 60 segundos, ao voltar para a aba e ao receber foco (`b14c958`).
 
 ## Disparo automatico e composicao visual
 
+- Carrosseis empresariais usam uma colecao de cinco fotos contextuais; capa e slide de resultado nao podem repetir a mesma imagem. A validacao automatica bloqueia qualquer regressao (`7d17fe7`).
 - Regra permanente de idioma: titulo principal, slides, Story, legenda e titulo pequeno do cartao `FONTE OFICIAL` devem estar em portugues do Brasil. O titulo original em ingles fica apenas como referencia tecnica no link da legenda (`e37a4af`).
 - Publicacao real mais recente: run `33221750143`, fonte `IBM AI`, `https://www.instagram.com/p/Dcmlfu_HR8J/`, media ID `17973789066139952`, Story ID `17918202105223733`.
 - O artefato confirmou o bloco `Entenda a materia:` com dois fatos traduzidos; a primeira tentativa automatica `33221508012` foi bloqueada sem criar midia por falta de pauta nao repetida.
