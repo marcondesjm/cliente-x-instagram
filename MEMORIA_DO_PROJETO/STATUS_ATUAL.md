@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-28 23:46 BRT
+Atualizado em: 2026-08-28 23:54 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,19 +12,20 @@ Atualizado em: 2026-08-28 23:46 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
-- Estado operacional remoto atual: `27f1f60` (`Update Instagram schedule state`).
+- Estado operacional remoto atual: `4b1e85f` (`Exibe Reels na agenda diaria`).
 - Correcao funcional mais recente: `7d17fe7` (`Evita fotos repetidas no mesmo carrossel`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `9156514` (`Atualiza todas as telas da landing`).
-- Versao visivel atual: `v5.39`.
-- Deploy de producao atual: `dpl_78CPa3dGRLKvePoC9XgeQZ1tAY5j`, estado `READY`, no dominio principal; HTML e API publica confirmaram `v5.39`, HTTP 200 e status `funcionando`.
+- Versao visivel atual: `v5.40`.
+- Deploy de producao atual: `dpl_4R7dGvdoKtTZWgN9tA5MVQwebL4U`, estado `READY`; API publica confirmou `v5.40`, HTTP 200 e status `funcionando`.
 - O painel recarrega metricas privadas automaticamente a cada 60 segundos, ao voltar para a aba e ao receber foco (`b14c958`).
 
 ## Disparo automatico e composicao visual
 
+- A agenda visual agora identifica corretamente oito slots `reel + story` (06:30, 09:00, 12:10, 13:50, 14:15, 16:00, 17:40 e 22:00) e cinco slots `feed + story` (`4b1e85f`).
 - Cada publicacao alterna um objetivo organico principal entre comentarios, salvamentos, compartilhamentos e alcance de novos publicos. O painel usa as metricas recentes para exibir o foco recomendado (`970b269`).
 - Os Reels passam a escolher entre 12 trilhas: tres composicoes proprias e nove arranjos sintetizados proprios inspirados nas Sinfonias nº 1 a nº 9 de Beethoven. Nenhuma gravacao comercial e usada (`3bcfe94`).
 - A prova local `beethoven-05-destino` confirmou AAC estereo 48 kHz, 22,4 segundos, volume medio `-16,1 dB` e pico `-1,6 dB`.

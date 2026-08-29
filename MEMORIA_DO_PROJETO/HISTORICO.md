@@ -1,5 +1,12 @@
 # Historico
 
+## 2026-08-28 23:54 BRT
+
+- Corrigida a agenda visual, que continuava rotulando todos os slots como `feed + story` mesmo com Reels automaticos operacionais.
+- `4b1e85f` faz o plano diario consultar `reelScheduleSlots` tanto no publicador quanto na API e no fallback local do dashboard.
+- Validacoes: sintaxe, 74 combinacoes editoriais e plano completo passaram. O plano confirmou oito `reel + story` em 06:30, 09:00, 12:10, 13:50, 14:15, 16:00, 17:40 e 22:00; os cinco slots restantes continuam `feed + story`.
+- Producao `v5.40`: deploy `dpl_4R7dGvdoKtTZWgN9tA5MVQwebL4U`, estado `READY`. API publica confirmou HTTP 200, status `funcionando`, oito Reels e cinco carrosseis.
+
 ## 2026-08-28 23:46 BRT
 
 - Corrigida a causa que mantinha o painel em `v5.37`: o Node/Vercel CLI nao usava os certificados confiaveis do Windows e encerrava HTTPS com `UNABLE_TO_VERIFY_LEAF_SIGNATURE` / `fetch failed`.
