@@ -676,6 +676,7 @@ const FREE_PROMPTS_CTA_MARKER = 'Preparei uma seleção com 50 prompts prontos p
 const RADAR_MATERIAL_CTA = 'Quer receber 50 prompts prontos para aplicar IA no trabalho?\n\nComente IA e eu envio o material no seu Direct.';
 const LEGACY_FREE_PROMPTS_CTA = 'Comente IA para receber 🚀 50 PROMPTS DE IA GRÁTIS!';
 const DEFAULT_INSTAGRAM_HASHTAGS = '#automacao #inteligenciaartificial #iaaplicada #gestao #processos #produtividade #transformacaodigital #negocios';
+const INSTAGRAM_CAPTION_MAX_LENGTH = 2100;
 
 function withFreePromptsCtaAtEnd(caption = '') {
   const withoutLegacyCta = String(caption).replace(LEGACY_FREE_PROMPTS_CTA, '').replace(/\n{3,}/g, '\n\n').trim();
@@ -950,6 +951,54 @@ function splitCaptionParts(caption = '') {
     body: bodyLines.join('\n').trim(),
     hashtags: hashtagLines.join('\n').trim()
   };
+}
+
+function normalizeCaptionBlocks(caption = '') {
+  return String(caption || '')
+    .split(/\n{2,}/)
+    .map((block) => block.trim())
+    .filter(Boolean);
+}
+
+function fitInstagramCaption(caption = '', pack = {}) {
+  const clean = normalizeCaptionBlocks(caption).join('\n\n');
+  if (clean.length <= INSTAGRAM_CAPTION_MAX_LENGTH) return clean;
+
+  const hashtags = splitCaptionParts(clean).hashtags || DEFAULT_INSTAGRAM_HASHTAGS;
+  const sourceTitle = String(pack?.research?.sourceTitle || '').trim();
+  const sourceUrl = String(pack?.research?.sourceUrl || '').trim();
+  const requiredBlocks = [
+    sourceTitle ? `Título original: ${sourceTitle}` : '',
+    sourceUrl ? `Fonte oficial: ${sourceUrl}` : '',
+    RADAR_MATERIAL_CTA,
+    hashtags
+  ].filter(Boolean);
+  const requiredText = requiredBlocks.join('\n\n');
+  const maxBodyLength = Math.max(280, INSTAGRAM_CAPTION_MAX_LENGTH - requiredText.length - 4);
+  const bodyBlocks = normalizeCaptionBlocks(clean)
+    .filter((block) => !block.startsWith('#'))
+    .filter((block) => !block.includes(FREE_PROMPTS_CTA_MARKER))
+    .filter((block) => block !== RADAR_MATERIAL_CTA)
+    .filter((block) => !sourceUrl || !block.includes(sourceUrl))
+    .filter((block) => !sourceTitle || !block.includes(sourceTitle));
+  const fittedBody = [];
+  let bodyLength = 0;
+  for (const block of bodyBlocks) {
+    const separator = fittedBody.length ? 2 : 0;
+    if (bodyLength + separator + block.length <= maxBodyLength) {
+      fittedBody.push(block);
+      bodyLength += separator + block.length;
+      continue;
+    }
+    const room = maxBodyLength - bodyLength - separator;
+    if (room >= 80) fittedBody.push(compactSentence(block, room));
+    break;
+  }
+  const fitted = [...fittedBody, ...requiredBlocks].filter(Boolean).join('\n\n');
+  if (fitted.length > INSTAGRAM_CAPTION_MAX_LENGTH) {
+    throw new Error(`Legenda excede o limite seguro do Instagram (${fitted.length}/${INSTAGRAM_CAPTION_MAX_LENGTH}).`);
+  }
+  return fitted;
 }
 
 function compactSentence(text = '', maxLength = 132) {
@@ -2471,6 +2520,9 @@ function pickVisualStyle(styles, account, dateString, slotIndex) {
 function validatePack(pack) {
   assertNoMojibake(pack.caption);
   assertPortugueseAccents(pack.caption);
+  if (String(pack.caption || '').length > INSTAGRAM_CAPTION_MAX_LENGTH) {
+    throw new Error(`Legenda excede o limite seguro do Instagram (${String(pack.caption || '').length}/${INSTAGRAM_CAPTION_MAX_LENGTH}).`);
+  }
   if (!Array.isArray(pack.slides) || pack.slides.length < 2) throw new Error('Cada pack precisa de pelo menos 2 slides.');
   for (const slide of pack.slides) {
     const hasImage = Boolean(slide.imagePath || slide.imageUrl);
@@ -4240,6 +4292,7 @@ async function main() {
   const historyPack = JSON.parse(JSON.stringify(pack));
   const enhancement = enhancePackForEngagement(pack, today, generationSlotIndex, account);
   pack = enhancement.pack;
+  pack.caption = fitInstagramCaption(pack.caption, pack);
   // A mesma janela de publicação pode gerar várias pautas. A fonte e o tema
   // precisam participar da identidade visual para que capas de notícias
   // diferentes não pareçam cópias quando usam o mesmo slot.
