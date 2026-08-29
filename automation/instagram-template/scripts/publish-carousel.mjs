@@ -4142,9 +4142,14 @@ async function main() {
   const githubHostedUrls = !reelMode && feedImagesAreLocal
     ? await hostRenderedImagesOnGitHub(localStoryImagePath ? [...imagePaths, localStoryImagePath] : imagePaths, account.account, runId)
     : null;
+  const githubHostedReelStoryUrls = reelMode && localStoryImagePath
+    ? await hostRenderedImagesOnGitHub([localStoryImagePath], account.account, runId)
+    : null;
   const publishImagePaths = githubHostedUrls ? githubHostedUrls.slice(0, imagePaths.length) : imagePaths;
   const publishStoryImagePath = storyImagePath
-    ? (remoteStoryImage ? storyImagePath : (githubHostedUrls ? githubHostedUrls.at(-1) : localStoryImagePath))
+    ? (remoteStoryImage
+      ? storyImagePath
+      : (githubHostedUrls ? githubHostedUrls.at(-1) : (githubHostedReelStoryUrls?.[0] || localStoryImagePath)))
     : null;
   if (reelMode) {
     reelVideoUrl = await hostRenderedVideoOnGitHub(reelVideoPath, account.account, runId);
