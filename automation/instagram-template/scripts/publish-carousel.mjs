@@ -3506,16 +3506,26 @@ async function hostRenderedVideoOnGitHub(videoPath, accountKey, runId) {
   });
 }
 
+const REEL_SOUNDTRACKS = [
+  { id: 'pulso-produtivo', bpm: 104, chords: [[48, 52, 55, 59], [45, 48, 52, 55], [41, 45, 48, 52], [43, 47, 50, 53]], melody: [72, 76, 79, 76, 69, 72, 76, 72] },
+  { id: 'ideias-em-movimento', bpm: 110, chords: [[50, 54, 57, 61], [47, 50, 54, 57], [43, 47, 50, 54], [45, 49, 52, 55]], melody: [74, 78, 81, 78, 71, 74, 78, 76] },
+  { id: 'futuro-leve', bpm: 98, chords: [[45, 49, 52, 56], [41, 45, 49, 52], [38, 42, 45, 49], [40, 44, 47, 50]], melody: [69, 73, 76, 73, 66, 69, 73, 71] },
+  { id: 'beethoven-01-classica', work: 'Sinfonia nº 1', bpm: 112, classical: true, chords: [[48, 52, 55], [53, 57, 60], [55, 59, 62], [48, 52, 55]], melody: [72, 76, 79, 76, 74, 77, 81, 79] },
+  { id: 'beethoven-02-vivace', work: 'Sinfonia nº 2', bpm: 118, classical: true, chords: [[50, 54, 57], [55, 59, 62], [57, 61, 64], [50, 54, 57]], melody: [74, 78, 81, 86, 81, 78, 76, 74] },
+  { id: 'beethoven-03-heroica', work: 'Sinfonia nº 3 Eroica', bpm: 108, classical: true, chords: [[51, 55, 58], [56, 60, 63], [58, 62, 65], [51, 55, 58]], melody: [75, 79, 82, 87, 84, 82, 79, 75] },
+  { id: 'beethoven-04-luminosa', work: 'Sinfonia nº 4', bpm: 116, classical: true, chords: [[46, 50, 53], [51, 55, 58], [53, 57, 60], [46, 50, 53]], melody: [70, 74, 77, 82, 79, 77, 74, 70] },
+  { id: 'beethoven-05-destino', work: 'Sinfonia nº 5', bpm: 108, classical: true, chords: [[48, 51, 55], [44, 48, 51], [43, 47, 50], [48, 51, 55]], melody: [67, 67, 67, 63, 65, 65, 65, 62] },
+  { id: 'beethoven-06-pastoral', work: 'Sinfonia nº 6 Pastoral', bpm: 92, classical: true, chords: [[53, 57, 60], [58, 62, 65], [60, 64, 67], [53, 57, 60]], melody: [69, 72, 77, 72, 74, 72, 69, 65] },
+  { id: 'beethoven-07-allegretto', work: 'Sinfonia nº 7', bpm: 80, classical: true, chords: [[45, 48, 52], [43, 47, 50], [41, 45, 48], [40, 44, 47]], melody: [69, 69, 71, 72, 72, 71, 69, 67] },
+  { id: 'beethoven-08-brincante', work: 'Sinfonia nº 8', bpm: 120, classical: true, chords: [[53, 57, 60], [48, 52, 55], [55, 59, 62], [53, 57, 60]], melody: [77, 81, 84, 81, 79, 77, 76, 77] },
+  { id: 'beethoven-09-alegria', work: 'Sinfonia nº 9 Coral', bpm: 100, classical: true, chords: [[50, 54, 57], [55, 59, 62], [57, 61, 64], [50, 54, 57]], melody: [66, 66, 67, 69, 69, 67, 66, 64, 62, 62, 64, 66] }
+];
+
 function renderOriginalInstrumentalWav(runDir, durationSeconds, trackIndex) {
   const sampleRate = 48000;
   const channels = 2;
   const frames = Math.ceil(durationSeconds * sampleRate);
-  const definitions = [
-    { id: 'pulso-produtivo', bpm: 104, chords: [[48, 52, 55, 59], [45, 48, 52, 55], [41, 45, 48, 52], [43, 47, 50, 53]], melody: [72, 76, 79, 76, 69, 72, 76, 72] },
-    { id: 'ideias-em-movimento', bpm: 110, chords: [[50, 54, 57, 61], [47, 50, 54, 57], [43, 47, 50, 54], [45, 49, 52, 55]], melody: [74, 78, 81, 78, 71, 74, 78, 76] },
-    { id: 'futuro-leve', bpm: 98, chords: [[45, 49, 52, 56], [41, 45, 49, 52], [38, 42, 45, 49], [40, 44, 47, 50]], melody: [69, 73, 76, 73, 66, 69, 73, 71] }
-  ];
-  const track = definitions[trackIndex % definitions.length];
+  const track = REEL_SOUNDTRACKS[trackIndex % REEL_SOUNDTRACKS.length];
   const pcm = Buffer.alloc(frames * channels * 2);
   const secondsPerBeat = 60 / track.bpm;
   const midiFrequency = (note) => 440 * (2 ** ((note - 69) / 12));
@@ -3546,16 +3556,18 @@ function renderOriginalInstrumentalWav(runDir, durationSeconds, trackIndex) {
     const bassEnvelope = Math.exp(-beatTime * 3.2);
     const bass = (Math.sin(2 * Math.PI * bassFrequency * t) + 0.28 * Math.sin(2 * Math.PI * bassFrequency * 2 * t)) * bassEnvelope * 0.19;
     const kickPhase = 2 * Math.PI * (76 * beatTime - 38 * beatTime * beatTime);
-    const kick = Math.sin(kickPhase) * Math.exp(-beatTime * 17) * 0.72;
+    const percussionLevel = track.classical ? 0.12 : 1;
+    const kick = Math.sin(kickPhase) * Math.exp(-beatTime * 17) * 0.72 * percussionLevel;
     const snareActive = beatNumber % 4 === 1 || beatNumber % 4 === 3;
     const snare = snareActive && beatTime < 0.24
-      ? ((noise(sample) * 0.52) + Math.sin(2 * Math.PI * 185 * beatTime) * 0.34) * Math.exp(-beatTime * 19) * 0.42
+      ? ((noise(sample) * 0.52) + Math.sin(2 * Math.PI * 185 * beatTime) * 0.34) * Math.exp(-beatTime * 19) * 0.42 * percussionLevel
       : 0;
-    const hat = noise(sample * 3) * Math.exp(-eighthTime * 62) * (eighth % 2 ? 0.12 : 0.17);
+    const hat = noise(sample * 3) * Math.exp(-eighthTime * 62) * (eighth % 2 ? 0.12 : 0.17) * percussionLevel;
     const melodyNote = track.melody[eighth % track.melody.length];
     const melodyFrequency = midiFrequency(melodyNote);
     const melodyEnvelope = Math.exp(-eighthTime * 8.5);
-    const melody = (Math.sin(2 * Math.PI * melodyFrequency * t) + 0.32 * Math.sin(2 * Math.PI * melodyFrequency * 2 * t)) * melodyEnvelope * 0.14;
+    const bowedTone = track.classical ? 0.22 * Math.sin(2 * Math.PI * melodyFrequency * 3 * t) : 0;
+    const melody = (Math.sin(2 * Math.PI * melodyFrequency * t) + 0.32 * Math.sin(2 * Math.PI * melodyFrequency * 2 * t) + bowedTone) * melodyEnvelope * (track.classical ? 0.12 : 0.14);
     const intro = Math.min(1, t / 1.2);
     const outro = Math.min(1, Math.max(0, durationSeconds - t) / 1.8);
     const master = intro * outro;
@@ -3586,7 +3598,11 @@ function renderReelVideo(runDir, imagePaths) {
   const sceneSeconds = 5;
   const transitionSeconds = 0.65;
   const durationSeconds = (imagePaths.length * sceneSeconds) - ((imagePaths.length - 1) * transitionSeconds);
-  const audioTrack = renderOriginalInstrumentalWav(runDir, durationSeconds, stableAvatarOffset(imagePaths.join('|')) % 3);
+  const requestedTrackIndex = Number.parseInt(process.env.INSTAGRAM_REEL_SOUNDTRACK_INDEX || '', 10);
+  const trackIndex = Number.isInteger(requestedTrackIndex) && requestedTrackIndex >= 0
+    ? requestedTrackIndex % REEL_SOUNDTRACKS.length
+    : stableAvatarOffset(imagePaths.join('|')) % REEL_SOUNDTRACKS.length;
+  const audioTrack = renderOriginalInstrumentalWav(runDir, durationSeconds, trackIndex);
   const inputs = imagePaths.flatMap((imagePath) => ['-loop', '1', '-t', String(sceneSeconds), '-i', resolve(imagePath)]);
   const filters = imagePaths.map((_, index) => `[${index}:v]split=2[bg${index}][fg${index}];[bg${index}]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,gblur=sigma=32[blur${index}];[fg${index}]scale=1080:1350:force_original_aspect_ratio=decrease[front${index}];[blur${index}][front${index}]overlay=(W-w)/2:(H-h)/2,setsar=1,fps=30[v${index}]`).join(';');
   const transitionNames = ['fade', 'slideleft', 'smoothleft', 'circleopen'];
@@ -3614,6 +3630,8 @@ function renderReelVideo(runDir, imagePaths) {
   writeFileSync(join(runDir, 'reel-audio.json'), JSON.stringify({
     id: audioTrack.id,
     kind: 'instrumental-original-arranged',
+    inspiration: audioTrack.work || 'trilha original da plataforma',
+    rights: audioTrack.classical ? 'composicao em dominio publico; arranjo e sintese proprios' : 'composicao e sintese proprias',
     arrangement: ['bateria', 'baixo', 'acordes', 'melodia'],
     bpm: audioTrack.bpm,
     durationSeconds,
