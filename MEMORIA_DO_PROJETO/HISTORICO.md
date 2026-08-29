@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-08-29 01:02 BRT
+
+- O disparo direto do painel foi bloqueado com seguranca por falta de pauta oficial inedita. Os runs `33232219924` e `33232348272` nao criaram midia; o segundo confirmou a protecao contra repeticao.
+- Selecionada a pauta nova `OpenAI abre operacao no Brasil apos pais se tornar 3 maior mercado do ChatGPT`, do `G1 Tecnologia`, com artigo de 27/08/2026 e imagem editorial retirada da propria materia.
+- `c4dcca3` corrige o falso positivo da validacao de acentos em slugs de URL. As 74 combinacoes passaram e o render completo `2026-08-29-005525-slot-0-render-only` gerou Reel e Story com a imagem oficial e trilha `beethoven-02-vivace`.
+- Publicacao real concluida no run `33232626886`: `https://www.instagram.com/reel/DcnBvEVgJwC/`, media ID `18147166390538141` e Story ID `18047383550657974`. Video hospedado em `c527763`, imagens em `a002cad` e estado salvo em `76fdfed`.
+- O Reel e o Story foram publicados normalmente. Somente o primeiro comentario falhou com OAuthException codigo 10 por permissao da Meta; nenhuma republicacao foi feita.
+- Producao atualizada para `v5.44`: deploy `dpl_27HjdpRdpkcs4y9Hf91i4vUScXj8`, estado `READY`; dominio principal confirmou HTTP 200 e HTML `v5.44`.
+
 ## 2026-08-29 00:29 BRT
 
 - `96f55fe` ampliou o Radar para preservar todas as 14 fontes oficiais configuradas e usar, quando valida, a imagem principal da propria materia nos carrosseis, Stories e Reels.

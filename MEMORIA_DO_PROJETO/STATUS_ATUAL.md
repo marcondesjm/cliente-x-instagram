@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-29 00:29 BRT
+Atualizado em: 2026-08-29 01:02 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,19 +12,21 @@ Atualizado em: 2026-08-29 00:29 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
-- Estado operacional remoto atual: `96f55fe` (`Usa imagens oficiais das materias do Radar`).
-- Correcao funcional mais recente: `96f55fe` (`Usa imagens oficiais das materias do Radar`).
+- Estado operacional remoto atual: `76fdfed` (`Update Instagram schedule state`).
+- Correcao funcional mais recente: `c4dcca3` (`Ignora slugs na validacao de acentos`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `9156514` (`Atualiza todas as telas da landing`).
-- Versao visivel atual: `v5.43`.
-- Deploy de producao atual: `dpl_9sz6ZQT84XpF82jwDD87Bx2GdMHD`, estado `READY`; API e HTML publicos confirmaram `v5.43`, HTTP 200, status `funcionando`, 14 fontes no Radar e zero erros abertos.
+- Versao visivel atual: `v5.44`.
+- Deploy de producao atual: `dpl_27HjdpRdpkcs4y9Hf91i4vUScXj8`, estado `READY`; dominio principal e HTML publicos confirmaram `v5.44` e HTTP 200.
 - O painel recarrega metricas privadas automaticamente a cada 60 segundos, ao voltar para a aba e ao receber foco (`b14c958`).
 
 ## Disparo automatico e composicao visual
 
+- Publicacao real mais recente: run `33232626886`, pauta `OpenAI abre operacao no Brasil apos pais se tornar 3 maior mercado do ChatGPT`, fonte `G1 Tecnologia`, `https://www.instagram.com/reel/DcnBvEVgJwC/`, media ID `18147166390538141` e Story ID `18047383550657974`. Reel e Story usaram a imagem oficial da materia; video em `c527763`, imagens em `a002cad` e estado em `76fdfed`. O primeiro comentario foi recusado pela Meta com OAuthException codigo 10, sem afetar as duas publicacoes.
+- `c4dcca3` faz a validacao de acentos ignorar slugs de URLs, evitando falso bloqueio de textos corretos em portugues. As 74 combinacoes editoriais passaram e o render `2026-08-29-005525-slot-0-render-only` confirmou Reel, Story, imagem oficial e trilha `beethoven-02-vivace`.
 - O Radar usa todas as 14 fontes oficiais configuradas e tenta extrair a imagem principal da propria materia por RSS, `og:image`, Twitter Card ou metadados estruturados (`96f55fe`). A imagem HTTPS e baixada, validada por tipo e tamanho e aplicada na capa do carrossel, no Story e na primeira cena do Reel, sempre com fonte real e link preservados. Logos, SVGs, pixels, arquivos pequenos, HTML e downloads invalidos sao rejeitados; nesses casos entra o rodizio visual seguro.
 - Prova completa sem publicacao: render `2026-08-29-002617-slot-0-render-only`, pauta do `G1 Tecnologia`, encontrou 29 pautas oficiais em 30 dias, incorporou a foto real do artigo em AVIF e gerou cinco slides, Story e Reel com trilha `beethoven-01-classica`.
 - A foto `sector-photos/ecommerce.jpg` (cartao, caixas e notebook) saiu dos rodizios genericos `business` e `services`; ela so pode voltar em pautas realmente classificadas como ecommerce (`a6b15aa`). A validacao percorre 16 escolhas de Reel generico e bloqueia qualquer vazamento futuro. Render `2026-08-29-000937-slot-0-render-only` confirmou capa com `automation-leave-office.jpg` e slide 4 com `automation-cloud-evening.jpg`, sem a imagem reclamada.
