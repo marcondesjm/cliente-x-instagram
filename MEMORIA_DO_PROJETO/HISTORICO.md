@@ -2192,4 +2192,11 @@ Conclusão de produção:
 - Primeiro teste preparado: `A IA nao deveria so responder. Ela deveria ajudar o trabalho a continuar.`, oito cards e CTA `Comente FLUXO`.
 - Render final local `2026-08-29-125819-slot-0-render-only`: Feed 1080x1350 com oito cards e Story 1080x1920 com continuacao para o feed; contraste e area segura conferidos visualmente.
 - `node --check`, `git diff --check` e `npm run validate-copy` passaram; 20 packs, 54 automaticos e 74 combinacoes validados.
-- Deploy/publicacao: envio ao remoto, deploy da `v5.50` e publicacao real pendentes neste checkpoint.
+- Commit funcional `b76bc24` enviou o novo modo ao `origin/main`; deploy inicial `dpl_9dLr6e39a4P7A6FPjC5vqjoug4MV` ficou `READY` e confirmou a `v5.50`.
+- A primeira tentativa real, run `33262178330`, foi bloqueada antes da Meta no slide 4 por colisao entre imagem grande e avatar auxiliar. Nenhuma midia foi criada.
+- A segunda tentativa, run `33262339312`, avancou ate o slide 7 e confirmou a mesma causa em outra composicao. Nenhuma midia foi criada.
+- `7370021` corrigiu a causa na raiz: cards de impacto com foto explicita ocultam o avatar auxiliar, preservando titulo e imagem.
+- Run real `33262436434` concluiu `Publish feed and story` e persistiu o estado.
+- Publicacao: `https://www.instagram.com/p/DcoWISMCapA/`, media ID `18404277577091475`, Story ID `17988731289012552`, publicada em `2026-08-29T16:16:57.799Z`.
+- O carrossel possui oito cards; o Story comunica `Continue este conteudo no feed.`; primeiro comentario sem ID e sem erro. Imagens hospedadas em `e4ffa6e` e estado em `67d3ff7`.
+- Conteudo editorial proprio, sem fonte jornalistica inventada e sem copiar imagens ou textos do perfil de referencia.
