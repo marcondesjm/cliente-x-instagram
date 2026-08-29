@@ -6,7 +6,7 @@ import { basename, dirname, extname, isAbsolute, join, resolve } from 'node:path
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { buildBrandContext } from '../../../lib/brand-analysis.js';
-import { buildResearchPack, EDITORIAL_SOURCES, extractArticleFacts, extractEditorialImageUrl, factualSummary, isPredominantlyEnglish, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
+import { buildResearchPack, EDITORIAL_SOURCES, extractArticleFacts, extractEditorialImageUrl, factualSummary, isPredominantlyEnglish, isUsableEditorialFact, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const TEMPLATE_DIR = resolve(ROOT, 'automation', 'instagram-template');
@@ -3955,6 +3955,7 @@ async function main() {
       throw new Error('Extração do contexto factual da matéria falhou.');
     }
     const articleFactsProbe = extractArticleFacts(`
+      <p>O logotipo da OpenAI é visto em um telefone celular em frente à tela inicial do ChatGPT — Foto: AP/Michael Dwyer, Arquivo</p>
       <p>A percepção do público sobre inteligência artificial virou o centro de um debate no setor de tecnologia.</p>
       <p>Amodei afirmou que busca equilibrar os riscos reais e as oportunidades criadas pela tecnologia.</p>
       <p>A rejeição, segundo o executivo, decorre de uma crise de confiança acumulada ao longo de décadas.</p>
@@ -3969,6 +3970,12 @@ async function main() {
     }, validationNow, { niche: 'automação com IA para empresas', keywords: radarKeywords });
     if (articleFactsProbe.length < 3 || continuedResearchProbe.slides[2]?.eyebrow !== 'A MATÉRIA CONTINUA' || !continuedResearchProbe.caption.includes(articleFactsProbe[2])) {
       throw new Error('Continuidade factual entre matéria, slide 3 e legenda falhou.');
+    }
+    if (articleFactsProbe.some((fact) => /Foto:|Michael Dwyer|logotipo da OpenAI/i.test(fact))) {
+      throw new Error('Legenda ou crédito de imagem foi aceito como fato da matéria.');
+    }
+    if (isUsableEditorialFact('A empresa anunciou uma operação comercial no Brasil, mas os detalhes ainda serão...')) {
+      throw new Error('Resumo factual truncado foi aceito pelo Radar.');
     }
     const closingVariationProbe = Array.from({ length: 12 }, (_, index) => buildResearchPack({
       source: 'Fonte de teste',
