@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-08-28 23:31 BRT
+
+- O usuario autorizou explicitamente o deploy da `v5.39` e uma publicacao real de Reel + Story.
+- O deploy Vercel foi tentado duas vezes, mas a conexao local falhou com `fetch failed`; ate `vercel whoami` apresentou o mesmo erro. Nenhum deployment novo foi criado e a producao permanece honestamente em `v5.37`.
+- A primeira tentativa de publicacao, run `33228825486`, foi bloqueada antes da Meta porque o Radar nao encontrou pauta oficial inedita em 30 dias. Nenhuma midia foi criada.
+- A recuperacao usou conteudo editorial proprio sobre crescimento organico, sem repetir noticia nem enfraquecer a exigencia de fonte para pautas jornalisticas.
+- Publicacao real concluida no run `33228996617`: `https://www.instagram.com/reel/Dcm3ck6ElYC/`, media ID `18107059028331902`, Story ID `18156576109501120`.
+- O Reel usou `beethoven-03-heroica`, arranjo proprio inspirado na Sinfonia nº 3 Eroica, AAC estereo 48 kHz, 108 BPM, 22,4 segundos e quatro transicoes. Video em `a352eae`, Story em `7c379c9` e estado remoto em `13ecfc4`.
+
 ## 2026-08-28 23:15 BRT
 
 - A inteligencia editorial passou a alternar um objetivo organico principal por publicacao: comentarios, salvamentos, compartilhamentos ou alcance de novos publicos. O painel tambem indica o sinal prioritario a partir das metricas recentes (`970b269`, versao preparada `v5.38`).
