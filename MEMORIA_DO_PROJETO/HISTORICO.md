@@ -2251,4 +2251,8 @@ Conclusão de produção:
 - Os atalhos de configuração rolam diretamente até o bloco correspondente; o carrossel de impacto e o salvamento completo executam suas ações normalmente.
 - Responsividade: cinco colunas em telas largas, duas em tablets e uma coluna no celular.
 - A aba aberta no Chrome foi inspecionada e confirmou que o usuário estava autenticado, mas ainda via a versão em cache `v5.52`; o deploy v5.54 e a recarga serão verificados antes da conclusão.
-- Deploy e prova pública: pendentes neste checkpoint intermediário. Nenhuma mídia foi publicada.
+- Commit funcional `1d6f1f2` enviado ao `origin/main`.
+- Deploy `dpl_785ZvJbNbpArFJk9iRQ4vx85mc4J` concluído em `READY`, sem alterar domínio nem conectar a Vercel ao Git.
+- A sessão autenticada aberta no Chrome foi recarregada e confirmou `Versão atual: v5.54`, checkagem OK e a faixa visível com os cinco botões: carrossel, IHC, Bottini, Radar e salvar perfil.
+- Inspeção visual em tela larga confirmou que a plataforma ocupa a área útil corretamente e que os controles aparecem antes dos campos do perfil.
+- Nenhuma mídia foi publicada.

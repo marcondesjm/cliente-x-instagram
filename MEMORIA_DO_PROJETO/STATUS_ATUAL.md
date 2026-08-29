@@ -624,4 +624,4 @@ Resultado:
 
 - A aba `Lógica da postagem` ganhou uma faixa superior com todos os cinco botões principais, antes dos campos longos do perfil.
 - Atalhos: carrossel de impacto, Método IHC, Bottini, Radar e salvar perfil completo.
-- Layout responsivo em 5/2/1 colunas; deploy v5.54 pendente.
+- Layout responsivo em 5/2/1 colunas. Commit `1d6f1f2`; deploy `dpl_785ZvJbNbpArFJk9iRQ4vx85mc4J` em `READY`; sessão autenticada confirmou v5.54 e todos os cinco botões visíveis no topo.
