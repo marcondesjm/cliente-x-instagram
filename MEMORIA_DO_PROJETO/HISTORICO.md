@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-08-28 23:15 BRT
+
+- A inteligencia editorial passou a alternar um objetivo organico principal por publicacao: comentarios, salvamentos, compartilhamentos ou alcance de novos publicos. O painel tambem indica o sinal prioritario a partir das metricas recentes (`970b269`, versao preparada `v5.38`).
+- Adicionada rotacao de 12 trilhas aos Reels: tres composicoes proprias existentes e nove arranjos sintetizados pela plataforma, inspirados nas Sinfonias nº 1 a nº 9 de Beethoven (`3bcfe94`, versao preparada `v5.39`).
+- Nenhuma gravacao comercial foi incorporada. As composicoes classicas estao em dominio publico; os novos arranjos e a sintese sao proprios, com percussao reduzida e timbre melodico de cordas.
+- `node --check`, `npm run validate-copy` com 74 combinacoes e `git diff --check` passaram.
+- Prova tecnica local da variacao `beethoven-05-destino`: Reel H.264 com AAC estereo 48 kHz, 22,4 segundos, volume medio `-16,1 dB` e pico `-1,6 dB`; metadados registram a inspiracao e os direitos do arranjo.
+- Estado enviado ao `origin/main` em `3bcfe94`. Deploy Vercel e publicacao Instagram real ainda aguardam confirmacao explicita da acao externa.
+
 ## 2026-08-28 22:47 BRT
 
 - Confirmado o relato do usuario: a versao anterior tinha volume correto, mas usava ondas senoidais sustentadas e soava como tom/barulho, nao como musica.

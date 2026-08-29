@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-28 22:47 BRT
+Atualizado em: 2026-08-28 23:15 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,19 +12,22 @@ Atualizado em: 2026-08-28 22:47 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
-- Estado operacional remoto atual: `0691106` (`Update Instagram schedule state`).
+- Estado operacional remoto atual: `3bcfe94` (`Adiciona nove trilhas inspiradas em Beethoven`).
 - Correcao funcional mais recente: `7d17fe7` (`Evita fotos repetidas no mesmo carrossel`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `9156514` (`Atualiza todas as telas da landing`).
-- Versao visivel atual: `v5.37`
+- Versao preparada no repositorio: `v5.39`; producao permanece em `v5.37` ate novo deploy autorizado.
 - Deploy de producao atual: `dpl_4MvN9G9Xh7HK9CS8qETyuBwumAit`, estado `READY`, no dominio principal; API publica confirmou `v5.37`, HTTP 200 e status `funcionando`.
 - O painel recarrega metricas privadas automaticamente a cada 60 segundos, ao voltar para a aba e ao receber foco (`b14c958`).
 
 ## Disparo automatico e composicao visual
 
+- Cada publicacao alterna um objetivo organico principal entre comentarios, salvamentos, compartilhamentos e alcance de novos publicos. O painel usa as metricas recentes para exibir o foco recomendado (`970b269`).
+- Os Reels passam a escolher entre 12 trilhas: tres composicoes proprias e nove arranjos sintetizados proprios inspirados nas Sinfonias nº 1 a nº 9 de Beethoven. Nenhuma gravacao comercial e usada (`3bcfe94`).
+- A prova local `beethoven-05-destino` confirmou AAC estereo 48 kHz, 22,4 segundos, volume medio `-16,1 dB` e pico `-1,6 dB`. Deploy e prova real aguardam autorizacao externa.
 - Os tons continuos dos Reels foram removidos em `21eebd5`. A v5.37 gera trilhas musicais originais arranjadas com bateria, baixo, acordes e melodia, em tres variacoes de 98 a 110 BPM, AAC 48 kHz estereo e normalizacao a `-15 LUFS`.
 - Prova real: run `33227198988`, trilha `pulso-produtivo` a 104 BPM, `https://www.instagram.com/reel/DcmyfPGlO8G/`, media ID `17929839645147286`; video em `e6c1baa` e estado em `0691106`. O MP4 publicado foi auditado com volume medio `-17,0 dB`, pico `-0,9 dB` e nenhum erro de primeiro comentario.
 - O botao `Corrigir automaticamente` voltou a funcionar apos a renovacao protegida do `GITHUB_TOKEN`, agora valido ate 26/11/2026. A v5.36 elimina o erro HTTP 401, bloqueia disparos duplicados por tres minutos e, quando o Radar esgota pautas oficiais ineditas, recupera o horario com conteudo editorial proprio sem enfraquecer a trava das noticias (`ee428de`).
