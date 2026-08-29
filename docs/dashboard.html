@@ -1687,7 +1687,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v5.52</div>
+        <div class="header-version" id="headerVersion">Versão atual: v5.53</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -5484,8 +5484,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           ${slide.imagePath || slide.imageUrl ? `<img class="image-preview" src="${escapeHtml(slide.imagePath || slide.imageUrl)}" alt="Imagem do slide ${index + 1}">` : ''}
           <div class="image-tools">
             <label>
-              URL pública da imagem
-              <input data-slide="${index}" data-field="imageUrl" value="${escapeHtml(slide.imageUrl || '')}" placeholder="https://...">
+              Link da imagem ou da página do site
+              <input data-slide="${index}" data-field="imageUrl" value="${escapeHtml(slide.imageUrl || '')}" placeholder="https://site.com/imagem.jpg ou https://site.com/materia">
             </label>
             <button type="button" data-clear-image="${index}">Limpar imagem</button>
           </div>

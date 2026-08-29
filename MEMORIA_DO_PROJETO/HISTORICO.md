@@ -2228,3 +2228,14 @@ Conclusão de produção:
 - Deploy `dpl_AdPoEwmT4qwEHCBmVwiAcbRi6w6b` concluído em `READY`, sem alterar domínio nem conectar a Vercel ao Git.
 - Prova pública: HTTP 200, `Versão atual: v5.52`, referência do novo conjunto visual no HTML e imagem `impact-ai-workflow-team-v1.png` acessível em `/docs/uploads/` com HTTP 200 e 1.613.037 bytes.
 - Nenhuma mídia foi repostada; a correção vale para os próximos carrosséis criados pelo botão.
+
+# 2026-08-29 13:45 BRT — Importar imagem por link ou página
+
+- A `v5.53` amplia o campo de imagem de cada slide para aceitar tanto URL direta de JPG/PNG/WebP/AVIF quanto URL de uma página de site.
+- Quando recebe uma página, a plataforma procura a imagem principal declarada pelo site (`og:image`/imagem editorial), baixa o arquivo e o incorpora ao layout do carrossel, preservando título, texto e identidade visual.
+- O comportamento antigo de `imageUrl` enviava a imagem crua e pulava a composição; agora a imagem remota é transformada em fonte local temporária para renderizar o card completo.
+- Segurança: somente HTTPS, até cinco redirecionamentos, 20 KB a 12 MB, formatos permitidos e bloqueio de localhost, domínios `.local` e redes privadas.
+- Teste por página: matéria oficial `Introducing the Meta AI App` da Meta Newsroom extraiu a imagem principal e gerou o render `2026-08-29-134243-slot-1-render-only`.
+- Teste por link direto: `Meta-AI-App_Header.jpg?w=1200` gerou o render `2026-08-29-134319-slot-0-render-only`.
+- A inspeção visual confirmou imagem oficial dentro do carrossel com título e cartão de texto preservados.
+- Deploy e prova pública: pendentes neste checkpoint intermediário. Nenhuma mídia foi publicada.

@@ -612,3 +612,10 @@ Resultado:
 - Três imagens editoriais originais foram adicionadas para fluxo, aprovação humana e continuidade operacional.
 - Render `2026-08-29-133638-slot-0-render-only` aprovado visualmente, sem vazio central nem colisão entre foto e texto.
 - Nenhuma postagem foi repetida. Commit `a81b313` no `origin/main`; deploy `dpl_AdPoEwmT4qwEHCBmVwiAcbRi6w6b` em `READY`; v5.52 e novo ativo visual confirmados publicamente.
+
+## Atualizacao 2026-08-29 13:45 BRT — v5.53
+
+- Cada slide aceita link direto de imagem ou link da página do site; páginas têm sua imagem principal localizada automaticamente.
+- A imagem externa passa pelo layout do carrossel, sem eliminar título e descrição.
+- Importação segura limita HTTPS, formato, tamanho, redirecionamentos e bloqueia redes privadas.
+- Página oficial e URL direta da Meta Newsroom foram renderizadas com sucesso; deploy v5.53 pendente.

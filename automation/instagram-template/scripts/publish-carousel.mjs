@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 import { chromium } from 'playwright';
 import { createHash, randomInt } from 'node:crypto';
+import { lookup } from 'node:dns/promises';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { isIP } from 'node:net';
 import { basename, dirname, extname, isAbsolute, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
@@ -1890,6 +1892,68 @@ async function downloadResearchSourceImage(pack = {}, runDir = '') {
   }
 }
 
+function isPrivateNetworkAddress(address = '') {
+  const value = String(address || '').toLowerCase();
+  if (value === '::1' || value.startsWith('fc') || value.startsWith('fd') || value.startsWith('fe80:')) return true;
+  const parts = value.split('.').map(Number);
+  if (parts.length !== 4 || parts.some((part) => !Number.isInteger(part))) return false;
+  return parts[0] === 10
+    || parts[0] === 127
+    || parts[0] === 0
+    || (parts[0] === 169 && parts[1] === 254)
+    || (parts[0] === 172 && parts[1] >= 16 && parts[1] <= 31)
+    || (parts[0] === 192 && parts[1] === 168);
+}
+
+async function assertSafeExternalImageUrl(rawUrl = '') {
+  const url = new URL(String(rawUrl || '').trim());
+  if (url.protocol !== 'https:') throw new Error('Use um link HTTPS para buscar imagem externa.');
+  const hostname = url.hostname.toLowerCase();
+  if (!hostname || hostname === 'localhost' || hostname.endsWith('.local')) throw new Error('Este endereço de imagem não é permitido.');
+  const addresses = isIP(hostname) ? [{ address: hostname }] : await lookup(hostname, { all: true });
+  if (!addresses.length || addresses.some((item) => isPrivateNetworkAddress(item.address))) {
+    throw new Error('O link de imagem aponta para uma rede privada e foi bloqueado.');
+  }
+  return url;
+}
+
+async function fetchSafeExternalResource(rawUrl, accept, label) {
+  let current = await assertSafeExternalImageUrl(rawUrl);
+  for (let redirect = 0; redirect < 5; redirect += 1) {
+    const response = await fetchWithContext(current, {
+      headers: { accept, 'user-agent': 'Mozilla/5.0 Cliente-X-Image-Importer/1.0' },
+      redirect: 'manual'
+    }, label);
+    if (response.status < 300 || response.status >= 400) return { response, url: current };
+    const location = response.headers.get('location');
+    if (!location) throw new Error('O site redirecionou sem informar o destino da imagem.');
+    current = await assertSafeExternalImageUrl(new URL(location, current).toString());
+  }
+  throw new Error('O link de imagem redirecionou muitas vezes.');
+}
+
+async function downloadExternalSlideImage(rawUrl, runDir, slideIndex) {
+  let targetUrl = String(rawUrl || '').trim();
+  let fetched = await fetchSafeExternalResource(targetUrl, 'image/avif,image/webp,image/png,image/jpeg,text/html', `slide-${slideIndex}-source`);
+  let contentType = String(fetched.response.headers.get('content-type') || '').split(';')[0].toLowerCase();
+  if (contentType === 'text/html' || contentType === 'application/xhtml+xml') {
+    const html = await fetched.response.text();
+    if (html.length > 2500000) throw new Error(`A página do slide ${slideIndex} é grande demais para localizar a imagem principal.`);
+    targetUrl = extractEditorialImageUrl(html, fetched.url.toString());
+    if (!targetUrl) throw new Error(`Não encontrei uma imagem principal válida na página informada para o slide ${slideIndex}.`);
+    fetched = await fetchSafeExternalResource(targetUrl, 'image/avif,image/webp,image/png,image/jpeg', `slide-${slideIndex}-image`);
+    contentType = String(fetched.response.headers.get('content-type') || '').split(';')[0].toLowerCase();
+  }
+  if (!fetched.response.ok) throw new Error(`Imagem externa do slide ${slideIndex} indisponível: HTTP ${fetched.response.status}.`);
+  const extensions = new Map([['image/jpeg', '.jpg'], ['image/png', '.png'], ['image/webp', '.webp'], ['image/avif', '.avif']]);
+  if (!extensions.has(contentType)) throw new Error(`O link do slide ${slideIndex} não retornou JPG, PNG, WebP ou AVIF.`);
+  const bytes = Buffer.from(await fetched.response.arrayBuffer());
+  if (bytes.length < 20000 || bytes.length > 12000000) throw new Error(`A imagem externa do slide ${slideIndex} precisa ter entre 20 KB e 12 MB.`);
+  const destination = join(runDir, `slide-source-${String(slideIndex).padStart(2, '0')}${extensions.get(contentType)}`);
+  writeFileSync(destination, bytes);
+  return destination;
+}
+
 function visualCueFromText(text = '') {
   const value = normalizeSearchText(text);
   if (/\b(turismo|turistica|turistico|viagem|viagens|pousada|hotel|praia|destino|radio)\b/.test(value)) return 'tourism';
@@ -2995,11 +3059,11 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
   const page = await browser.newPage({ viewport: { width: FEED_WIDTH, height: FEED_HEIGHT }, deviceScaleFactor: 1 });
   const imagePaths = [];
   for (let index = 0; index < slides.length; index += 1) {
-    const slide = slides[index];
+    let slide = slides[index];
     const imagePath = join(runDir, `slide-${String(index + 1).padStart(2, '0')}.jpg`);
     if (slide.imageUrl) {
-      imagePaths.push(String(slide.imageUrl).trim());
-      continue;
+      const downloadedImagePath = await downloadExternalSlideImage(slide.imageUrl, runDir, index + 1);
+      slide = { ...slide, imagePath: downloadedImagePath, imageUrl: '' };
     }
     if (slide.imagePath && !String(style.name || '').startsWith('impact-carousel')) {
       const source = resolve(ROOT, String(slide.imagePath).replace(/^\/+/, ''));
