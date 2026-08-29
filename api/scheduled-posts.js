@@ -130,7 +130,7 @@ export default async function handler(req, res) {
       packIndex,
       pack,
       scheduledFor: body.publishNow ? new Date().toISOString() : brtDateTimeToIso(body.date, body.time),
-      mode: body.mode === 'story-only' ? 'story-only' : 'feed-and-story',
+      mode: ['story-only', 'feed-only', 'reel-only', 'reel-and-story'].includes(body.mode) ? body.mode : 'feed-and-story',
       title: pack?.slides?.[0]?.title || `Pack ${packIndex}`,
       createdAt: new Date().toISOString()
     };

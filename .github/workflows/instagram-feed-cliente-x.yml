@@ -55,6 +55,8 @@ on:
           - "feed-and-story"
           - "feed-only"
           - "story-only"
+          - "reel-only"
+          - "reel-and-story"
       scheduled_only:
         description: "Run only due manual queue"
         required: true
@@ -121,6 +123,10 @@ jobs:
       - name: Install Playwright Chromium
         if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
         run: npx playwright install --with-deps chromium
+
+      - name: Check FFmpeg for Reels
+        if: (github.event.inputs.publish_mode == 'reel-only' || github.event.inputs.publish_mode == 'reel-and-story')
+        run: ffmpeg -version
 
       - name: Select content slot
         if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'

@@ -4,6 +4,7 @@ import { createHash, randomInt } from 'node:crypto';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, extname, isAbsolute, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { spawnSync } from 'node:child_process';
 import { buildBrandContext } from '../../../lib/brand-analysis.js';
 import { buildResearchPack, EDITORIAL_SOURCES, extractArticleFacts, factualSummary, isPredominantlyEnglish, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
 
@@ -3369,6 +3370,23 @@ async function assertRemoteImageReady(imageUrl) {
   }, 4);
 }
 
+async function assertRemoteVideoReady(videoUrl) {
+  await withRetry('Video URL check', async () => {
+    const res = await fetchWithContext(videoUrl, {
+      method: 'GET',
+      headers: { 'user-agent': 'facebookexternalhit/1.1' }
+    }, 'Video URL check');
+    const contentType = (res.headers.get('content-type') || '').toLowerCase();
+    if (!res.ok || (!contentType.startsWith('video/') && !contentType.includes('octet-stream'))) {
+      const error = new Error(`URL de video ainda nao pronta: HTTP ${res.status} ${contentType}`);
+      error.stage = 'Video URL check';
+      error.retryable = true;
+      throw error;
+    }
+    await res.arrayBuffer();
+  }, 4);
+}
+
 async function uploadReadyImageToImgBB(imagePath, apiKey) {
   const imageUrl = await uploadToImgBB(imagePath, apiKey);
   await assertRemoteImageReady(imageUrl);
@@ -3439,6 +3457,61 @@ async function hostRenderedImagesOnGitHub(imagePaths, accountKey, runId) {
     console.log(`Imagens hospedadas no GitHub em um unico commit: ${commit.sha}.`);
     return urls;
   });
+}
+
+async function hostRenderedVideoOnGitHub(videoPath, accountKey, runId) {
+  const repository = process.env.GITHUB_REPOSITORY;
+  const branch = process.env.GITHUB_REF_NAME || 'main';
+  if (!repository || !process.env.GITHUB_TOKEN || process.env.GITHUB_ACTIONS !== 'true') return null;
+  return withRetry('GitHub video hosting', async () => {
+    const ref = await githubApi(`/repos/${repository}/git/ref/heads/${encodeURIComponent(branch)}`);
+    const headSha = ref.object?.sha;
+    if (!headSha) throw new Error(`Nao foi possivel identificar o HEAD de ${repository}:${branch}.`);
+    const blob = await githubApi(`/repos/${repository}/git/blobs`, {
+      method: 'POST',
+      body: JSON.stringify({ content: readFileSync(resolve(videoPath)).toString('base64'), encoding: 'base64' })
+    });
+    const assetPath = `docs/generated/${accountKey}/${runId}/${basename(videoPath)}`;
+    const createdTree = await githubApi(`/repos/${repository}/git/trees`, {
+      method: 'POST',
+      body: JSON.stringify({ base_tree: headSha, tree: [{ path: assetPath, mode: '100644', type: 'blob', sha: blob.sha }] })
+    });
+    const commit = await githubApi(`/repos/${repository}/git/commits`, {
+      method: 'POST',
+      body: JSON.stringify({ message: `Host Instagram Reel ${accountKey} ${runId}`, tree: createdTree.sha, parents: [headSha] })
+    });
+    await githubApi(`/repos/${repository}/git/refs/heads/${encodeURIComponent(branch)}`, {
+      method: 'PATCH', body: JSON.stringify({ sha: commit.sha, force: false })
+    });
+    const url = `https://raw.githubusercontent.com/${repository}/${commit.sha}/${assetPath}`;
+    await assertRemoteVideoReady(url);
+    console.log(`Reel hospedado no GitHub: ${commit.sha}.`);
+    return url;
+  });
+}
+
+function renderReelVideo(runDir, imagePaths) {
+  if (!imagePaths.length) throw new Error('Reel precisa de pelo menos uma cena renderizada.');
+  const reelPath = join(runDir, 'reel.mp4');
+  const inputs = imagePaths.flatMap((imagePath) => ['-loop', '1', '-t', '5', '-i', resolve(imagePath)]);
+  const filters = imagePaths.map((_, index) => `[${index}:v]split=2[bg${index}][fg${index}];[bg${index}]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,gblur=sigma=32[blur${index}];[fg${index}]scale=1080:1350:force_original_aspect_ratio=decrease[front${index}];[blur${index}][front${index}]overlay=(W-w)/2:(H-h)/2,setsar=1,fps=30[v${index}]`).join(';');
+  const concat = `${imagePaths.map((_, index) => `[v${index}]`).join('')}concat=n=${imagePaths.length}:v=1:a=0[outv]`;
+  const result = spawnSync('ffmpeg', [
+    '-y', ...inputs, '-filter_complex', `${filters};${concat}`, '-map', '[outv]',
+    '-c:v', 'libx264', '-preset', 'medium', '-crf', '20', '-pix_fmt', 'yuv420p',
+    '-movflags', '+faststart', reelPath
+  ], { encoding: 'utf8', maxBuffer: 10 * 1024 * 1024 });
+  if (result.error) throw new Error(`FFmpeg indisponivel para gerar Reel: ${result.error.message}`);
+  if (result.status !== 0 || !existsSync(reelPath)) throw new Error(`Falha ao gerar Reel: ${(result.stderr || '').slice(-1600)}`);
+  return reelPath;
+}
+
+async function createReel(userId, token, videoUrl, caption) {
+  const reel = await graphPost(`/${userId}/media`, {
+    media_type: 'REELS', video_url: videoUrl, caption, share_to_feed: 'true', access_token: token
+  });
+  await pollContainer(reel.id, token);
+  return reel;
 }
 
 async function createCarouselChildFromImage(userId, token, imagePath, apiKey) {
@@ -3796,6 +3869,10 @@ async function main() {
   let scheduledPost = null;
   let publishMode = process.env.INSTAGRAM_TEMPLATE_PUBLISH_MODE === 'story-only' || args.storyOnly
     ? 'story-only'
+    : process.env.INSTAGRAM_TEMPLATE_PUBLISH_MODE === 'reel-only'
+      ? 'reel-only'
+      : process.env.INSTAGRAM_TEMPLATE_PUBLISH_MODE === 'reel-and-story'
+        ? 'reel-and-story'
     : process.env.INSTAGRAM_TEMPLATE_PUBLISH_MODE === 'feed-only'
       ? 'feed-only'
       : 'feed-and-story';
@@ -3824,7 +3901,7 @@ async function main() {
       packIndex = scheduledPost.source === 'weekly-program'
         ? `weekly-${scheduledPost.packIndex}`
         : `scheduled-${scheduledPost.packIndex}`;
-      publishMode = ['story-only', 'feed-only'].includes(scheduledPost.mode) ? scheduledPost.mode : 'feed-and-story';
+      publishMode = ['story-only', 'feed-only', 'reel-only', 'reel-and-story'].includes(scheduledPost.mode) ? scheduledPost.mode : 'feed-and-story';
       console.log(`Post agendado selecionado: ${scheduledPost.id} pack ${scheduledPost.packIndex} (${scheduledPost.scheduledFor}).`);
     } else if (args.scheduledOnly) {
       console.log(JSON.stringify({
@@ -3963,6 +4040,9 @@ async function main() {
   writeFileSync(join(runDir, 'caption.txt'), pack.caption, 'utf8');
   const storyOnly = publishMode === 'story-only';
   const feedOnly = publishMode === 'feed-only';
+  const reelOnly = publishMode === 'reel-only';
+  const reelAndStory = publishMode === 'reel-and-story';
+  const reelMode = reelOnly || reelAndStory;
   const slotCron = (account.scheduleUtc || [])[slotIndex] || '';
   const renderContext = {
     dateString: today,
@@ -3976,10 +4056,11 @@ async function main() {
   };
   const imagePaths = storyOnly ? [] : await renderSlides(runDir, pack.slides, account, style, renderContext);
   const customStoryImage = String(pack.storyImageUrl || pack.storyImagePath || '').trim();
-  const storyImagePath = feedOnly ? null : (customStoryImage || await renderStory(runDir, pack, account, style, renderContext));
+  const storyImagePath = (feedOnly || reelOnly) ? null : (customStoryImage || await renderStory(runDir, pack, account, style, renderContext));
+  const reelVideoPath = reelMode ? renderReelVideo(runDir, imagePaths) : null;
 
   if (args.renderOnly) {
-    console.log(JSON.stringify({ ok: true, renderOnly: true, account: account.account, runDir, visualStyle: style.name, slotIndex, packIndex, avatarRotationStart, coverAvatar: Number.isInteger(avatarRotationStart) ? accountAvatarRotationUrls(account)[avatarRotationStart] || null : null, imagePaths, storyImagePath }, null, 2));
+    console.log(JSON.stringify({ ok: true, renderOnly: true, account: account.account, runDir, visualStyle: style.name, slotIndex, packIndex, publishMode, avatarRotationStart, coverAvatar: Number.isInteger(avatarRotationStart) ? accountAvatarRotationUrls(account)[avatarRotationStart] || null : null, imagePaths, storyImagePath, reelVideoPath }, null, 2));
     return;
   }
 
@@ -3995,7 +4076,8 @@ async function main() {
       creativeGeneration,
       creativeBatchRemaining,
       imagePaths,
-      storyImagePath
+      storyImagePath,
+      reelVideoPath
     };
     writeFileSync(join(runDir, 'result.json'), JSON.stringify(dryRunResult, null, 2), 'utf8');
     console.log(JSON.stringify(dryRunResult, null, 2));
@@ -4007,6 +4089,8 @@ async function main() {
   let imageUrls = [];
   let childIds = [];
   let carousel = null;
+  let reel = null;
+  let reelVideoUrl = '';
   const remoteStoryImage = /^https?:\/\//i.test(String(storyImagePath || ''));
   const localStoryImagePath = storyImagePath && !remoteStoryImage
     ? (isAbsolute(String(storyImagePath))
@@ -4014,14 +4098,18 @@ async function main() {
       : resolve(ROOT, String(storyImagePath).replace(/^\/+/, '')))
     : null;
   const feedImagesAreLocal = imagePaths.every((imagePath) => !/^https?:\/\//i.test(String(imagePath || '')));
-  const githubHostedUrls = feedImagesAreLocal
+  const githubHostedUrls = !reelMode && feedImagesAreLocal
     ? await hostRenderedImagesOnGitHub(localStoryImagePath ? [...imagePaths, localStoryImagePath] : imagePaths, account.account, runId)
     : null;
   const publishImagePaths = githubHostedUrls ? githubHostedUrls.slice(0, imagePaths.length) : imagePaths;
   const publishStoryImagePath = storyImagePath
     ? (remoteStoryImage ? storyImagePath : (githubHostedUrls ? githubHostedUrls.at(-1) : localStoryImagePath))
     : null;
-  if (!storyOnly) {
+  if (reelMode) {
+    reelVideoUrl = await hostRenderedVideoOnGitHub(reelVideoPath, account.account, runId);
+    if (!reelVideoUrl) throw new Error('A publicacao de Reel exige hospedagem publica do video no GitHub Actions.');
+    reel = await createReel(userId, token, reelVideoUrl, pack.caption);
+  } else if (!storyOnly) {
     const children = [];
     for (const imagePath of publishImagePaths) {
       const result = await createCarouselChildFromImage(userId, token, imagePath, imgbbKey);
@@ -4038,12 +4126,14 @@ async function main() {
     });
     await pollContainer(carousel.id, token);
   }
-  if (!feedOnly) ({ story, imageUrl: storyImageUrl } = await createStoryFromImage(userId, token, publishStoryImagePath, imgbbKey));
+  if (!feedOnly && !reelOnly) ({ story, imageUrl: storyImageUrl } = await createStoryFromImage(userId, token, publishStoryImagePath, imgbbKey));
 
   const baseResult = {
     ok: true,
     dryRun: args.dryRun,
     storyOnly,
+    reelMode,
+    publishMode,
     scheduledPostId: scheduledPost?.id,
     account: account.account,
     runDir,
@@ -4054,23 +4144,26 @@ async function main() {
     storyImagePath,
     imageUrls,
     storyImageUrl,
+    reelVideoPath,
+    reelVideoUrl,
     avatarRotationStart,
     coverAvatar: Number.isInteger(avatarRotationStart)
       ? accountAvatarRotationUrls(account)[avatarRotationStart] || null
       : null,
     childIds,
     carouselId: carousel?.id,
+    reelContainerId: reel?.id || null,
     storyContainerId: story?.id || null
   };
   let media = null;
   let details = null;
   if (!storyOnly) {
-    media = await graphPost(`/${userId}/media_publish`, { creation_id: carousel.id, access_token: token });
+    media = await graphPost(`/${userId}/media_publish`, { creation_id: reelMode ? reel.id : carousel.id, access_token: token });
     details = await graphGet(`/${media.id}`, { fields: 'id,permalink,timestamp', access_token: token });
   }
   let storyMedia = null;
   let storyDetails = null;
-  if (!feedOnly) {
+  if (!feedOnly && !reelOnly) {
     storyMedia = await graphPost(`/${userId}/media_publish`, { creation_id: story.id, access_token: token });
     storyDetails = await graphGet(`/${storyMedia.id}`, { fields: 'id,timestamp', access_token: token });
   }

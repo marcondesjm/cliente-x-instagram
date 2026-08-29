@@ -1670,7 +1670,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v5.31</div>
+        <div class="header-version" id="headerVersion">Versão atual: v5.32</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -2086,6 +2086,8 @@
                 <option value="feed-and-story">Feed + story</option>
                 <option value="feed-only">Só feed</option>
                 <option value="story-only">Só story</option>
+                <option value="reel-only">Só Reel automático</option>
+                <option value="reel-and-story">Reel automático + story</option>
               </select>
             </label>
             <button class="primary" id="queuePost" type="button">Agendar pack</button>
@@ -3021,7 +3023,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         {
           good: DATA.packCount >= DATA.schedulesUtc.length,
           title: 'Conteúdo e criativos',
-          body: `${DATA.packCount} conteúdos disponíveis para ${DATA.schedulesUtc.length} horários, com carrossel, Story, legenda e identidade da marca.`,
+          body: `${DATA.packCount} conteúdos disponíveis para ${DATA.schedulesUtc.length} horários, com carrossel, Reel automático, Story, legenda e identidade da marca.`,
           state: 'Criação automática'
         },
         {
@@ -5173,7 +5175,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <div class="run-time">${dateFormatter.format(when)}</div>
             <div>
               <div class="queue-title">${escapeHtml(post.title || `Pack ${post.packIndex}`)}</div>
-              <div class="queue-meta">slot ${post.packIndex} · ${post.mode === 'story-only' ? 'story' : 'feed + story'}</div>
+              <div class="queue-meta">slot ${post.packIndex} · ${{'story-only':'story','feed-only':'feed','reel-only':'Reel','reel-and-story':'Reel + story'}[post.mode] || 'feed + story'}</div>
             </div>
             ${canCancel
               ? `<button type="button" data-cancel-post="${escapeHtml(post.id)}">Cancelar</button>`

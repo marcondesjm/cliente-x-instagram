@@ -43,11 +43,11 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v5.31',
+  appVersion: 'v5.32',
   status: 'funcionando',
   stableCommit: '9156514',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/9156514',
-  description: 'A landing exibe capturas atuais das dez áreas da plataforma e mantém todos os seletores visíveis, além dos posts fixados no Instagram.'
+  description: 'Publica carrossel, Story e Reels automáticos em português, com Radar oficial, agenda e vigia.'
 };
 const MAINTENANCE = {
   githubToken: {
@@ -1653,7 +1653,7 @@ function normalizeWeeklyProgram(program = {}) {
     host: String(program.host || '').trim(),
     weekdays,
     time,
-    mode: program.mode === 'story-only' ? 'story-only' : 'feed-and-story',
+    mode: ['story-only', 'feed-only', 'reel-only', 'reel-and-story'].includes(program.mode) ? program.mode : 'feed-and-story',
     description: String(program.description || '').trim(),
     callToAction: String(program.callToAction || '').trim(),
     imagePath: String(program.imagePath || '').trim(),
