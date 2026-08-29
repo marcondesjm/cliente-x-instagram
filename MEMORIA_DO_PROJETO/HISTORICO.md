@@ -2224,4 +2224,7 @@ Conclusão de produção:
 - Foram geradas três fotografias editoriais originais para o projeto: `impact-ai-workflow-team-v1.png`, `impact-ai-approval-v1.png` e `impact-ai-continuity-v1.png`; sem logotipos, textos ou marcas de terceiros.
 - `developer.meta.com` foi avaliado, mas respondeu com limitação HTTP 429. Imagens institucionais da Meta não foram usadas num tema genérico para não sugerir parceria ou atribuir a pauta à empresa; fonte oficial da Meta continuará apropriada quando o assunto for especificamente um produto ou anúncio da Meta.
 - Render local `2026-08-29-133638-slot-0-render-only` concluiu oito cards e Story; capa e card 6 foram inspecionados visualmente, com fotografia ampla, título legível e sem colisão.
-- Deploy e prova pública: pendentes neste checkpoint intermediário. Nenhuma mídia foi repostada.
+- Commit funcional `a81b313` enviado ao `origin/main`.
+- Deploy `dpl_AdPoEwmT4qwEHCBmVwiAcbRi6w6b` concluído em `READY`, sem alterar domínio nem conectar a Vercel ao Git.
+- Prova pública: HTTP 200, `Versão atual: v5.52`, referência do novo conjunto visual no HTML e imagem `impact-ai-workflow-team-v1.png` acessível em `/docs/uploads/` com HTTP 200 e 1.613.037 bytes.
+- Nenhuma mídia foi repostada; a correção vale para os próximos carrosséis criados pelo botão.

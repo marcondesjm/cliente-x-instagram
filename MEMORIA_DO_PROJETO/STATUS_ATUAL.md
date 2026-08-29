@@ -611,4 +611,4 @@ Resultado:
 - O carrossel de impacto passa a criar os oito cards com imagens e usa fotografia ampla como parte principal do layout.
 - Três imagens editoriais originais foram adicionadas para fluxo, aprovação humana e continuidade operacional.
 - Render `2026-08-29-133638-slot-0-render-only` aprovado visualmente, sem vazio central nem colisão entre foto e texto.
-- Nenhuma postagem foi repetida; deploy v5.52 pendente.
+- Nenhuma postagem foi repetida. Commit `a81b313` no `origin/main`; deploy `dpl_AdPoEwmT4qwEHCBmVwiAcbRi6w6b` em `READY`; v5.52 e novo ativo visual confirmados publicamente.
