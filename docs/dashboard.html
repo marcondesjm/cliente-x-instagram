@@ -1670,7 +1670,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v5.37</div>
+        <div class="header-version" id="headerVersion">Versão atual: v5.38</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -6691,8 +6691,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             ? `Último post (${latestDate}): ${formatNumber(media.like_count)} curtidas · ${formatNumber(media.comments_count)} comentários`
             : `Conta confirmada: @${privateMetrics.account.username}`,
           body: insights?.available
-            ? `Somente o último post: alcance ${formatNumber(reach)} · salvos ${formatNumber(insights.saved)} · interações confirmadas ${formatNumber(latestInteractions)}.${recentSummary}`
-            : `Último post: ${formatNumber(media.like_count)} curtidas e ${formatNumber(media.comments_count)} comentários.${recentSummary} ${insightsHelpText(insights?.error)}`
+            ? `Somente o último post: alcance ${formatNumber(reach)} · salvos ${formatNumber(insights.saved)} · interações confirmadas ${formatNumber(latestInteractions)}.${recentSummary}${privateMetrics.growthFocus ? ` Foco orgânico agora: ${privateMetrics.growthFocus.signal} — ${privateMetrics.growthFocus.action}.` : ''}`
+            : `Último post: ${formatNumber(media.like_count)} curtidas e ${formatNumber(media.comments_count)} comentários.${recentSummary} ${insightsHelpText(insights?.error)}${privateMetrics.growthFocus ? ` Foco orgânico agora: ${privateMetrics.growthFocus.signal} — ${privateMetrics.growthFocus.action}.` : ''}`
         };
       } else if (privateMetrics?.account) {
         privateCheck = {

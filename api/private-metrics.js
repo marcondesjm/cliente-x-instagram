@@ -36,6 +36,19 @@ function insightValue(insights, name) {
   return typeof value === 'number' ? value : null;
 }
 
+function growthFocus({ recentMedia = [], latestInsights = null } = {}) {
+  const likes = recentMedia.reduce((total, item) => total + (Number(item.like_count) || 0), 0);
+  const comments = recentMedia.reduce((total, item) => total + (Number(item.comments_count) || 0), 0);
+  const activePosts = recentMedia.filter((item) => (Number(item.like_count) || 0) + (Number(item.comments_count) || 0) > 0).length;
+  const reach = Number(latestInsights?.reach) || 0;
+  const saved = Number(latestInsights?.saved) || 0;
+  if (comments === 0) return { signal: 'comentarios', action: 'usar uma pergunta especifica e simples, ligada ao problema real do post' };
+  if (saved === 0) return { signal: 'salvamentos', action: 'entregar checklist, passo a passo ou criterio que mereca consulta posterior' };
+  if (reach > 0 && likes + comments < Math.max(2, Math.ceil(reach * 0.03))) return { signal: 'relevancia inicial', action: 'abrir com dor concreta e beneficio claro para um publico bem definido' };
+  if (activePosts < Math.ceil(recentMedia.length / 2)) return { signal: 'consistencia', action: 'replicar os temas que geraram interacao e variar o angulo, sem repetir a publicacao' };
+  return { signal: 'compartilhamentos', action: 'produzir conteudo util para uma pessoa enviar a colega, socio ou gestor' };
+}
+
 export default async function handler(req, res) {
   const session = requireAdmin(req, res);
   if (!session) return;
@@ -69,6 +82,7 @@ export default async function handler(req, res) {
     account: null,
     latestMedia: null,
     recentMediaSummary: null,
+    growthFocus: null,
     insights: null,
     checkedAt: new Date().toISOString()
   };
@@ -139,6 +153,8 @@ export default async function handler(req, res) {
       };
     }
   }
+
+  result.growthFocus = growthFocus({ recentMedia, latestInsights: result.insights });
 
   res.status(200).json(result);
 }

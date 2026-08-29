@@ -637,6 +637,13 @@ const ENGAGEMENT_INTELLIGENCE = {
   visualVariants: ['focus', 'numbered', 'quote', 'signal']
 };
 
+const ORGANIC_DISCOVERY_STRATEGIES = [
+  { id: 'conversation', primarySignal: 'comentarios', hook: 'Se isso acontece na sua empresa, você não está sozinho.', prompt: 'Qual etapa mais trava sua rotina hoje? Conte um exemplo nos comentários.', cta: 'Comente a etapa que mais pesa. Vou usar as respostas para aprofundar os próximos conteúdos.' },
+  { id: 'save', primarySignal: 'salvamentos', hook: 'Este é um diagnóstico rápido para aplicar ainda hoje.', prompt: 'Antes de automatizar, revise: problema, responsável, regra e resultado esperado.', cta: 'Salve este post e use esses quatro pontos na próxima revisão de processo.' },
+  { id: 'share', primarySignal: 'compartilhamentos', hook: 'Uma decisão simples pode poupar retrabalho de uma equipe inteira.', prompt: 'Quem precisa participar dessa conversa para a mudança sair do papel?', cta: 'Envie para a pessoa que pode ajudar a transformar essa rotina em processo.' },
+  { id: 'new-audience', primarySignal: 'alcance de nao seguidores', hook: 'Para quem lidera uma empresa e ainda depende de tarefas manuais todos os dias.', prompt: 'Você está no começo da automação ou já tem algum processo funcionando?', cta: 'Responda "começando" ou "em andamento" nos comentários.' }
+];
+
 const FINAL_SLIDE_CALL_CTA = {
   eyebrow: 'Material gratuito',
   title: 'Comente IA para receber.',
@@ -1035,7 +1042,11 @@ function enhanceSlide(slide, index, dateString, slotIndex, goal = CONTENT_GOALS.
   return next;
 }
 
-function enhanceCaption(caption, dateString, slotIndex, goal = CONTENT_GOALS.authority) {
+function organicDiscoveryStrategy(dateString, slotIndex) {
+  return ORGANIC_DISCOVERY_STRATEGIES[pickDailyIndex(ORGANIC_DISCOVERY_STRATEGIES, dateString, slotIndex)];
+}
+
+function enhanceCaption(caption, dateString, slotIndex, goal = CONTENT_GOALS.authority, discovery = organicDiscoveryStrategy(dateString, slotIndex)) {
   const { body, hashtags } = splitCaptionParts(caption);
   const markerIndex = body.indexOf(FREE_PROMPTS_CTA_MARKER);
   const withoutCta = markerIndex === -1 ? body : body.slice(0, markerIndex).trim();
@@ -1043,11 +1054,12 @@ function enhanceCaption(caption, dateString, slotIndex, goal = CONTENT_GOALS.aut
   const angle = angles[pickDailyIndex(angles, dateString, slotIndex)];
   const slotNote = angle;
   const bodyWithAngle = withoutCta.includes(slotNote) ? withoutCta : `${withoutCta}\n\n${slotNote}`;
+  const discoveryBlock = [discovery.hook, discovery.prompt, discovery.cta].filter(Boolean).join('\n\n');
   // O Radar pode partir de uma notícia sem hashtags. A legenda precisa sempre
   // terminar com elas, depois do CTA, para preservar descoberta sem misturar
   // tags ao texto principal.
   const finalHashtags = hashtags || DEFAULT_INSTAGRAM_HASHTAGS;
-  return [bodyWithAngle.trim(), FREE_PROMPTS_CTA, finalHashtags].filter(Boolean).join('\n\n');
+  return [bodyWithAngle.trim(), discoveryBlock, RADAR_MATERIAL_CTA, finalHashtags].filter(Boolean).join('\n\n');
 }
 
 function enhancePackForEngagement(pack, dateString, slotIndex, account = {}) {
@@ -1063,6 +1075,7 @@ function enhancePackForEngagement(pack, dateString, slotIndex, account = {}) {
 
   const enhanced = JSON.parse(JSON.stringify(pack));
   const goal = contentGoalFromAccount(account);
+  const discovery = organicDiscoveryStrategy(dateString, slotIndex);
   const totalSlides = (enhanced.slides || []).length;
   const preserveResearchCopy = Boolean(enhanced.research?.sourceUrl);
   if (preserveResearchCopy) {
@@ -1070,11 +1083,13 @@ function enhancePackForEngagement(pack, dateString, slotIndex, account = {}) {
       ...slide,
       ...(slide.imagePath || slide.imageUrl ? {} : { visualVariant: engagementVariant(dateString, slotIndex, index) })
     }));
-    enhanced.caption = `${enhanced.caption || ''}\n\n${RADAR_MATERIAL_CTA}\n\n${DEFAULT_INSTAGRAM_HASHTAGS}`.trim();
+    enhanced.caption = `${enhanced.caption || ''}\n\n${discovery.hook}\n\n${discovery.prompt}\n\n${discovery.cta}\n\n${RADAR_MATERIAL_CTA}\n\n${DEFAULT_INSTAGRAM_HASHTAGS}`.trim();
     enhanced.engagementIntelligence = {
-      version: 2,
+      version: 3,
       appliedAt: new Date().toISOString(),
-      strategy: 'fonte preservada + CTA + variacao visual',
+      strategy: `fonte preservada + descoberta organica + ${discovery.primarySignal} + variacao visual`,
+      discoveryStrategy: discovery.id,
+      primarySignal: discovery.primarySignal,
       goal: goal.label,
       sourceCopyPreserved: true,
       visualVariants: enhanced.slides.map((slide) => slide.visualVariant || 'custom-image'),
@@ -1083,16 +1098,17 @@ function enhancePackForEngagement(pack, dateString, slotIndex, account = {}) {
     return { pack: enhanced, intelligence: enhanced.engagementIntelligence };
   }
   enhanced.slides = (enhanced.slides || []).map((slide, index) => enhanceSlide(slide, index, dateString, slotIndex, goal, totalSlides));
-  enhanced.caption = enhanceCaption(enhanced.caption || '', dateString, slotIndex, goal);
+  enhanced.caption = enhanceCaption(enhanced.caption || '', dateString, slotIndex, goal, discovery);
   if (account.contentProfile?.visualDirection === 'anatex-editorial') {
     Object.assign(enhanced, sanitizePackForAnatexStyle(enhanced));
   }
-  enhanced.caption = withFreePromptsCtaAtEnd(enhanced.caption);
   enhanced.engagementIntelligence = {
-    version: 1,
+    version: 3,
     appliedAt: new Date().toISOString(),
-    strategy: `hook + CTA + visual variance + ${goal.label}`,
+    strategy: `hook + descoberta organica + ${discovery.primarySignal} + visual variance + ${goal.label}`,
     goal: goal.label,
+    discoveryStrategy: discovery.id,
+    primarySignal: discovery.primarySignal,
     visualVariants: enhanced.slides.map((slide) => slide.visualVariant || 'custom-image'),
     captionCtaAdded: enhanced.caption !== pack.caption
   };
