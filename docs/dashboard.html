@@ -306,6 +306,20 @@
       grid-column: 1 / -1;
     }
 
+    .logic-quick-actions {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin: 14px 0 18px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #f6f9f7;
+    }
+
+    .logic-quick-actions strong { grid-column: 1 / -1; font-size: 13px; }
+    .logic-quick-actions button { width: 100%; min-height: 52px; }
+
     .bio-workspace {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(360px, 430px);
@@ -1589,6 +1603,7 @@
       .actions { justify-content: stretch; }
       .actions > * { flex: 1 1 180px; }
       .dashboard-nav button { flex: 0 0 auto; padding-inline: 16px; }
+      .logic-quick-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .panel-head {
         align-items: stretch;
         flex-direction: column;
@@ -1626,6 +1641,7 @@
       .metrics { grid-template-columns: 1fr; }
       .client-workflow { grid-template-columns: 1fr; }
       .capability-grid { grid-template-columns: 1fr; }
+      .logic-quick-actions { grid-template-columns: 1fr; }
       .panel, .metric { padding: 14px; }
       .metric { min-height: 96px; }
       .metric .value { font-size: 27px; }
@@ -1687,7 +1703,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v5.53</div>
+        <div class="header-version" id="headerVersion">Versão atual: v5.54</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -2299,6 +2315,14 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               </div>
             </div>
           </div>
+          <div class="logic-quick-actions" aria-label="Ações rápidas da lógica da postagem">
+            <strong>Todos os botões principais</strong>
+            <button class="primary" id="quickImpactCarousel" type="button">Criar carrossel de impacto</button>
+            <button type="button" data-logic-target="postingLogicIhcBox">Método IHC</button>
+            <button type="button" data-logic-target="postingLogicBottiniBox">Botão Bottini</button>
+            <button type="button" data-logic-target="postingLogicRadarBox">Radar de notícias</button>
+            <button type="button" id="quickSaveProfile">Salvar perfil completo</button>
+          </div>
           <div class="access-manager">
             <label>
               Instagram
@@ -2343,12 +2367,12 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
                 <option value="reactivation">Reativação</option>
               </select>
             </label>
-            <div class="document-box">
+            <div class="document-box" id="postingLogicImpactBox">
               <strong>Criar conteúdo com impacto</strong>
               <span>Abra um novo carrossel com capa forte, desenvolvimento visual e chamada para ação. O rascunho será aberto na aba Conteúdo para você revisar antes de publicar.</span>
               <button class="primary" id="openImpactCarousel" type="button">Novo carrossel de impacto</button>
             </div>
-            <div class="document-box">
+            <div class="document-box" id="postingLogicIhcBox">
               <strong>Modelo de criação das postagens automáticas</strong>
               <span>Use o botão abaixo para alternar entre a lógica editorial atual e o Método IHC da Hanah.</span>
               <label class="check" style="align-items:center;">
@@ -2361,7 +2385,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               <button class="primary" id="savePostingLogic" type="button">Salvar lógica da postagem</button>
               <div class="access-result" id="postingLogicResult">O estado salvo aparecerá aqui.</div>
             </div>
-            <div class="document-box">
+            <div class="document-box" id="postingLogicBottiniBox">
               <strong>Botão Bottini — palavras com atitude</strong>
               <span>Coloque energia na dose certa, sem transformar todo texto em propaganda. Não é aplicado às notícias do Radar.</span>
               <label class="check" style="align-items:center;">
@@ -2386,7 +2410,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               <button class="primary" id="saveBottiniVoice" type="button">Salvar Botão Bottini</button>
               <div class="access-result" id="bottiniVoiceResult">O estado salvo aparecerá aqui.</div>
             </div>
-            <div class="document-box">
+            <div class="document-box" id="postingLogicRadarBox">
               <strong>Radar de notícias deste cliente</strong>
               <span>Configure assuntos e fontes oficiais do nicho. O Radar só usa estes sites para sugerir pautas automáticas.</span>
               <label class="check" style="align-items:center;">
@@ -7251,6 +7275,12 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('savePostingLogic').addEventListener('click', savePostingLogic);
       document.getElementById('saveBottiniVoice').addEventListener('click', saveBottiniVoice);
       document.getElementById('openImpactCarousel').addEventListener('click', openImpactCarouselCreator);
+      document.getElementById('quickImpactCarousel').addEventListener('click', openImpactCarouselCreator);
+      document.getElementById('quickSaveProfile').addEventListener('click', saveActiveProfile);
+      document.querySelector('.logic-quick-actions').addEventListener('click', (event) => {
+        const targetId = event.target.closest('[data-logic-target]')?.dataset.logicTarget;
+        if (targetId) document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
       document.getElementById('uploadDirectMaterial').addEventListener('click', uploadDirectMaterial);
       document.getElementById('saveDirectAutomation').addEventListener('click', saveDirectAutomation);
       document.getElementById('createAccount').addEventListener('click', createAccount);

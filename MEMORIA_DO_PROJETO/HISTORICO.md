@@ -2242,3 +2242,13 @@ Conclusão de produção:
 - Deploy `dpl_AcnJA3U3nbDES1jLqUa82YYJc2Gz` concluído em `READY`, preservando domínio e sem conectar a Vercel ao Git.
 - Prova pública: HTTP 200, `Versão atual: v5.53`, rótulo `Link da imagem ou da página do site` e exemplo de URL de matéria presentes no domínio principal.
 - Nenhuma mídia foi publicada.
+
+# 2026-08-29 13:50 BRT — Todos os botões visíveis no topo
+
+- O relato de botões ausentes foi reproduzido na estrutura da aba `Lógica da postagem`: oito campos do perfil apareciam antes das ações, empurrando os botões para muito abaixo da primeira tela.
+- A `v5.54` adiciona a faixa `Todos os botões principais` logo abaixo do cabeçalho da aba.
+- A faixa mostra acesso imediato a `Criar carrossel de impacto`, `Método IHC`, `Botão Bottini`, `Radar de notícias` e `Salvar perfil completo`.
+- Os atalhos de configuração rolam diretamente até o bloco correspondente; o carrossel de impacto e o salvamento completo executam suas ações normalmente.
+- Responsividade: cinco colunas em telas largas, duas em tablets e uma coluna no celular.
+- A aba aberta no Chrome foi inspecionada e confirmou que o usuário estava autenticado, mas ainda via a versão em cache `v5.52`; o deploy v5.54 e a recarga serão verificados antes da conclusão.
+- Deploy e prova pública: pendentes neste checkpoint intermediário. Nenhuma mídia foi publicada.

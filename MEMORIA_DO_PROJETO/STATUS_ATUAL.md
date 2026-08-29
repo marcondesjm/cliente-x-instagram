@@ -619,3 +619,9 @@ Resultado:
 - A imagem externa passa pelo layout do carrossel, sem eliminar título e descrição.
 - Importação segura limita HTTPS, formato, tamanho, redirecionamentos e bloqueia redes privadas.
 - Página oficial e URL direta da Meta Newsroom foram renderizadas com sucesso. Commit `93dc89f`; deploy `dpl_AcnJA3U3nbDES1jLqUa82YYJc2Gz` em `READY`; v5.53 e novo campo confirmados publicamente.
+
+## Atualizacao 2026-08-29 13:50 BRT — v5.54
+
+- A aba `Lógica da postagem` ganhou uma faixa superior com todos os cinco botões principais, antes dos campos longos do perfil.
+- Atalhos: carrossel de impacto, Método IHC, Bottini, Radar e salvar perfil completo.
+- Layout responsivo em 5/2/1 colunas; deploy v5.54 pendente.
