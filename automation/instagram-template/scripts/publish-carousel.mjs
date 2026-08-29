@@ -3490,18 +3490,87 @@ async function hostRenderedVideoOnGitHub(videoPath, accountKey, runId) {
   });
 }
 
+function renderOriginalInstrumentalWav(runDir, durationSeconds, trackIndex) {
+  const sampleRate = 48000;
+  const channels = 2;
+  const frames = Math.ceil(durationSeconds * sampleRate);
+  const definitions = [
+    { id: 'pulso-produtivo', bpm: 104, chords: [[48, 52, 55, 59], [45, 48, 52, 55], [41, 45, 48, 52], [43, 47, 50, 53]], melody: [72, 76, 79, 76, 69, 72, 76, 72] },
+    { id: 'ideias-em-movimento', bpm: 110, chords: [[50, 54, 57, 61], [47, 50, 54, 57], [43, 47, 50, 54], [45, 49, 52, 55]], melody: [74, 78, 81, 78, 71, 74, 78, 76] },
+    { id: 'futuro-leve', bpm: 98, chords: [[45, 49, 52, 56], [41, 45, 49, 52], [38, 42, 45, 49], [40, 44, 47, 50]], melody: [69, 73, 76, 73, 66, 69, 73, 71] }
+  ];
+  const track = definitions[trackIndex % definitions.length];
+  const pcm = Buffer.alloc(frames * channels * 2);
+  const secondsPerBeat = 60 / track.bpm;
+  const midiFrequency = (note) => 440 * (2 ** ((note - 69) / 12));
+  const noise = (sample) => {
+    const value = Math.sin((sample + 1) * 12.9898 + trackIndex * 78.233) * 43758.5453;
+    return ((value - Math.floor(value)) * 2) - 1;
+  };
+  let peak = 0;
+  const left = new Float32Array(frames);
+  const right = new Float32Array(frames);
+  for (let sample = 0; sample < frames; sample += 1) {
+    const t = sample / sampleRate;
+    const beat = t / secondsPerBeat;
+    const beatNumber = Math.floor(beat);
+    const beatTime = (beat - beatNumber) * secondsPerBeat;
+    const eighth = Math.floor(beat * 2);
+    const eighthTime = ((beat * 2) - eighth) * (secondsPerBeat / 2);
+    const chord = track.chords[Math.floor(beatNumber / 4) % track.chords.length];
+    let pad = 0;
+    for (const note of chord) {
+      const frequency = midiFrequency(note + 12);
+      pad += Math.sin(2 * Math.PI * frequency * t) * 0.55;
+      pad += Math.sin(2 * Math.PI * frequency * 2 * t) * 0.16;
+      pad += Math.sin(2 * Math.PI * frequency * 0.5 * t) * 0.12;
+    }
+    pad *= 0.07 * (0.78 + 0.22 * Math.sin(2 * Math.PI * 0.12 * t));
+    const bassFrequency = midiFrequency(chord[0] - 12);
+    const bassEnvelope = Math.exp(-beatTime * 3.2);
+    const bass = (Math.sin(2 * Math.PI * bassFrequency * t) + 0.28 * Math.sin(2 * Math.PI * bassFrequency * 2 * t)) * bassEnvelope * 0.19;
+    const kickPhase = 2 * Math.PI * (76 * beatTime - 38 * beatTime * beatTime);
+    const kick = Math.sin(kickPhase) * Math.exp(-beatTime * 17) * 0.72;
+    const snareActive = beatNumber % 4 === 1 || beatNumber % 4 === 3;
+    const snare = snareActive && beatTime < 0.24
+      ? ((noise(sample) * 0.52) + Math.sin(2 * Math.PI * 185 * beatTime) * 0.34) * Math.exp(-beatTime * 19) * 0.42
+      : 0;
+    const hat = noise(sample * 3) * Math.exp(-eighthTime * 62) * (eighth % 2 ? 0.12 : 0.17);
+    const melodyNote = track.melody[eighth % track.melody.length];
+    const melodyFrequency = midiFrequency(melodyNote);
+    const melodyEnvelope = Math.exp(-eighthTime * 8.5);
+    const melody = (Math.sin(2 * Math.PI * melodyFrequency * t) + 0.32 * Math.sin(2 * Math.PI * melodyFrequency * 2 * t)) * melodyEnvelope * 0.14;
+    const intro = Math.min(1, t / 1.2);
+    const outro = Math.min(1, Math.max(0, durationSeconds - t) / 1.8);
+    const master = intro * outro;
+    const leftValue = (pad + bass + kick + snare * 0.92 + hat * 0.72 + melody * 0.78) * master;
+    const rightValue = (pad * 0.96 + bass + kick + snare + hat + melody) * master;
+    left[sample] = leftValue;
+    right[sample] = rightValue;
+    peak = Math.max(peak, Math.abs(leftValue), Math.abs(rightValue));
+  }
+  const gain = peak > 0 ? Math.min(0.92 / peak, 1.8) : 1;
+  for (let sample = 0; sample < frames; sample += 1) {
+    pcm.writeInt16LE(Math.round(Math.max(-1, Math.min(1, left[sample] * gain)) * 32767), sample * 4);
+    pcm.writeInt16LE(Math.round(Math.max(-1, Math.min(1, right[sample] * gain)) * 32767), sample * 4 + 2);
+  }
+  const wav = Buffer.alloc(44 + pcm.length);
+  wav.write('RIFF', 0); wav.writeUInt32LE(36 + pcm.length, 4); wav.write('WAVE', 8);
+  wav.write('fmt ', 12); wav.writeUInt32LE(16, 16); wav.writeUInt16LE(1, 20); wav.writeUInt16LE(channels, 22);
+  wav.writeUInt32LE(sampleRate, 24); wav.writeUInt32LE(sampleRate * channels * 2, 28); wav.writeUInt16LE(channels * 2, 32); wav.writeUInt16LE(16, 34);
+  wav.write('data', 36); wav.writeUInt32LE(pcm.length, 40); pcm.copy(wav, 44);
+  const audioPath = join(runDir, `${track.id}.wav`);
+  writeFileSync(audioPath, wav);
+  return { ...track, audioPath };
+}
+
 function renderReelVideo(runDir, imagePaths) {
   if (!imagePaths.length) throw new Error('Reel precisa de pelo menos uma cena renderizada.');
   const reelPath = join(runDir, 'reel.mp4');
   const sceneSeconds = 5;
   const transitionSeconds = 0.65;
   const durationSeconds = (imagePaths.length * sceneSeconds) - ((imagePaths.length - 1) * transitionSeconds);
-  const tracks = [
-    { id: 'foco-calmo', expression: '(0.085+0.035*sin(2*PI*2*t))*(sin(2*PI*220*t)+0.62*sin(2*PI*277.18*t)+0.48*sin(2*PI*329.63*t))+0.025*sin(2*PI*440*t+0.7*sin(2*PI*0.25*t))' },
-    { id: 'movimento-leve', expression: '(0.082+0.038*sin(2*PI*2.4*t))*(sin(2*PI*196*t)+0.64*sin(2*PI*246.94*t)+0.46*sin(2*PI*293.66*t))+0.026*sin(2*PI*392*t+0.8*sin(2*PI*0.3*t))' },
-    { id: 'tecnologia-serena', expression: '(0.080+0.040*sin(2*PI*1.8*t))*(sin(2*PI*174.61*t)+0.66*sin(2*PI*220*t)+0.44*sin(2*PI*261.63*t))+0.024*sin(2*PI*349.23*t+0.75*sin(2*PI*0.22*t))' }
-  ];
-  const audioTrack = tracks[stableAvatarOffset(imagePaths.join('|')) % tracks.length];
+  const audioTrack = renderOriginalInstrumentalWav(runDir, durationSeconds, stableAvatarOffset(imagePaths.join('|')) % 3);
   const inputs = imagePaths.flatMap((imagePath) => ['-loop', '1', '-t', String(sceneSeconds), '-i', resolve(imagePath)]);
   const filters = imagePaths.map((_, index) => `[${index}:v]split=2[bg${index}][fg${index}];[bg${index}]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,gblur=sigma=32[blur${index}];[fg${index}]scale=1080:1350:force_original_aspect_ratio=decrease[front${index}];[blur${index}][front${index}]overlay=(W-w)/2:(H-h)/2,setsar=1,fps=30[v${index}]`).join(';');
   const transitionNames = ['fade', 'slideleft', 'smoothleft', 'circleopen'];
@@ -3516,10 +3585,10 @@ function renderReelVideo(runDir, imagePaths) {
     previousVideo = output;
   }
   const audioInputIndex = imagePaths.length;
-  const audioFilter = `[${audioInputIndex}:a]highpass=f=80,lowpass=f=6500,afade=t=in:st=0:d=1.2,afade=t=out:st=${Math.max(0, durationSeconds - 1.8)}:d=1.8,asplit=2[audioLeft][audioRight];[audioRight]adelay=18[audioRightDelayed];[audioLeft][audioRightDelayed]amerge=inputs=2,loudnorm=I=-16:LRA=7:TP=-1.5[outa]`;
+  const audioFilter = `[${audioInputIndex}:a]highpass=f=45,lowpass=f=14000,loudnorm=I=-15:LRA=9:TP=-1.5[outa]`;
   const result = spawnSync('ffmpeg', [
     '-y', ...inputs,
-    '-f', 'lavfi', '-t', String(durationSeconds), '-i', `aevalsrc=${audioTrack.expression}:s=48000:d=${durationSeconds}`,
+    '-i', audioTrack.audioPath,
     '-filter_complex', `${filters};${transitionParts.join(';')};${audioFilter}`, '-map', '[outv]', '-map', '[outa]',
     '-c:v', 'libx264', '-preset', 'medium', '-crf', '20', '-pix_fmt', 'yuv420p',
     '-c:a', 'aac', '-b:a', '128k', '-ar', '48000', '-movflags', '+faststart', '-shortest', reelPath
@@ -3528,11 +3597,13 @@ function renderReelVideo(runDir, imagePaths) {
   if (result.status !== 0 || !existsSync(reelPath)) throw new Error(`Falha ao gerar Reel: ${(result.stderr || '').slice(-1600)}`);
   writeFileSync(join(runDir, 'reel-audio.json'), JSON.stringify({
     id: audioTrack.id,
-    kind: 'instrumental-original-generated',
+    kind: 'instrumental-original-arranged',
+    arrangement: ['bateria', 'baixo', 'acordes', 'melodia'],
+    bpm: audioTrack.bpm,
     durationSeconds,
     sampleRate: 48000,
     channels: 2,
-    loudnessTargetLufs: -16,
+    loudnessTargetLufs: -15,
     truePeakTargetDb: -1.5,
     fadeInSeconds: 1.2,
     fadeOutSeconds: 1.8,
