@@ -7,6 +7,7 @@
 - A recuperacao automatica disparada por `b814d03` concluiu com sucesso no run `33257167618` as 11:20 BRT. Publicacao real: `https://www.instagram.com/reel/DcoIsXRglsx/`, media ID `18113312665991179`, Story ID `18048933059597084`, fonte `G1 Tecnologia`, pauta sobre os cinco profissionais de tecnologia mais disputados pelos bancos e investimento de R$ 3 bilhoes em IA.
 - O erro aberto `cliente-x:2026-08-29:0:33254423905` foi marcado como resolvido pelo run `33257167618`; estado remoto salvo em `4717510`, Reel hospedado em `c4dfc5d` e Story em `0b3b52b`.
 - `dbf7d42` adiciona limite seguro de legenda antes da chamada a Meta: o publicador reduz a legenda por blocos, preserva titulo original, link HTTPS da fonte, CTA do material e hashtags, e bloqueia qualquer legenda final acima do limite seguro.
+- A heuristica do vigia tambem foi corrigida para erros `Caption Too Long` / `36004`: a solucao exibida agora orienta reduzir a legenda final, em vez de renovar token Meta.
 - Validacoes locais: `node --check automation/instagram-template/scripts/publish-carousel.mjs` passou; `npm run validate-copy` passou com 20 packs, 54 auto packs e 74 combinacoes automaticas.
 - Deploy: nao houve deploy Vercel nesta correcao. Instagram real: sim, via run `33257167618`.
 

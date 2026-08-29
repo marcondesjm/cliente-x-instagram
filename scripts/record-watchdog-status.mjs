@@ -42,6 +42,9 @@ function latestFailure() {
 
 function solutionFor(errorText = '', stage = '') {
   const text = `${stage} ${errorText}`.toLowerCase();
+  if (/caption too long|caption was too long|legenda muito longa|36004|2207010/.test(text)) {
+    return 'Reduzir a legenda final antes de publicar, preservar a fonte oficial e rodar validar textos antes de recuperar o slot.';
+  }
   if (/oauth|access token|token|permission|permiss/.test(text)) {
     return 'Gerar novo token Meta/Instagram, atualizar o secret da conta no Vercel e no GitHub, depois rodar validar acessos no painel.';
   }
