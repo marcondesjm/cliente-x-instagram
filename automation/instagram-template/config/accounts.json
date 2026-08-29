@@ -11,6 +11,9 @@
       "offer": "consultoria, treinamentos e automações com IA para atendimento, vendas e operação",
       "tone": "consultivo",
       "goal": "leads",
+      "storyMethod": {
+        "ihcHanahEnabled": true
+      },
       "radar": {
         "enabled": true,
         "maxAgeDays": 30,
@@ -24,12 +27,72 @@
           "business",
           "enterprise"
         ],
-        "excludeKeywords": []
+        "excludeKeywords": [],
+        "sources": [
+          {
+            "name": "OpenAI",
+            "url": "https://openai.com/news/rss.xml"
+          },
+          {
+            "name": "AWS Machine Learning",
+            "url": "https://aws.amazon.com/blogs/machine-learning/feed/"
+          },
+          {
+            "name": "Microsoft Cloud",
+            "url": "https://www.microsoft.com/en-us/microsoft-cloud/blog/feed/"
+          },
+          {
+            "name": "Google Cloud",
+            "url": "https://cloud.google.com/blog/products/ai-machine-learning/rss"
+          },
+          {
+            "name": "Google DeepMind",
+            "url": "https://deepmind.google/sitemap.xml",
+            "format": "sitemap",
+            "pathPattern": {}
+          },
+          {
+            "name": "Anthropic Claude",
+            "url": "https://www.anthropic.com/sitemap.xml",
+            "format": "sitemap",
+            "pathPattern": {}
+          },
+          {
+            "name": "NVIDIA AI",
+            "url": "https://blogs.nvidia.com/blog/category/deep-learning/feed/"
+          },
+          {
+            "name": "n8n",
+            "url": "https://blog.n8n.io/rss/"
+          },
+          {
+            "name": "G1 Tecnologia",
+            "url": "https://g1.globo.com/rss/g1/tecnologia/"
+          },
+          {
+            "name": "Olhar Digital",
+            "url": "https://olhardigital.com.br/feed/"
+          },
+          {
+            "name": "TecMundo",
+            "url": "https://www.tecmundo.com.br/news-sitemap.xml",
+            "format": "sitemap"
+          },
+          {
+            "name": "Microsoft AI",
+            "url": "https://news.microsoft.com/source/tag/ai/feed/"
+          },
+          {
+            "name": "Google Oficial",
+            "url": "https://blog.google/feed/"
+          },
+          {
+            "name": "IBM AI",
+            "url": "https://newsroom.ibm.com/press-releases-artificial-intelligence?pagetemplate=rss"
+          }
+        ]
       },
-      "visualDirection": "anatex-editorial",
-      "storyMethod": {
-        "ihcHanahEnabled": true
-      }
+      "visualDirection": "anatex-editorial"
     },
     "brandSummary": {
       "description": "Marcondes Machado ajuda empresas a aplicar IA em vendas, atendimento e operação com automações práticas, conteúdo educativo e processos claros.",
