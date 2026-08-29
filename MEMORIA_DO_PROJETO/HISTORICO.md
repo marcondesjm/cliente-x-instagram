@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-08-28 22:01 BRT
+
+- Configurados oito Reels automaticos por dia sem remover os 13 horarios existentes: slots BRT 06:30, 09:00, 12:10, 13:50, 14:15, 16:00, 17:40 e 22:00 publicam Reel + Story; os demais mantem carrossel + Story (`c22c3ac`).
+- O video passou a alternar quatro transicoes de 0,65 segundo (`fade`, `slideleft`, `smoothleft`, `circleopen`). A prova tecnica confirmou MP4 vertical H.264, 22,4 segundos, 30 FPS e trilha AAC 48 kHz.
+- O run `33224758391` nao criou midia: o Reel foi renderizado, mas o Story parou no limite do ImgBB. `880b2c3` passou a hospedar tambem o Story dos Reels no fallback do GitHub.
+- Publicacao real concluida no run `33224978112`: `https://www.instagram.com/reel/Dcms-MJjoGX/`, media ID `17991592248039786`, Story ID `17907262068494462`, trilha `tecnologia-serena` e quatro transicoes confirmadas no artefato.
+- Video hospedado em `70bec66`, Story em `fbe8e02` e estado em `269d2fc`. O primeiro comentario falhou isoladamente com OAuthException `#10`, sem afetar Reel, audio ou Story.
+- Producao `v5.34`: deployment `dpl_6wTaDycWXHRKERPh977xf3snC8Ek`, estado `READY`; API publica confirmou HTTP 200 e status `funcionando`.
+
 ## 2026-08-28 21:45 BRT
 
 - Adicionada trilha instrumental original aos Reels (`f48e396`), sem depender da biblioteca musical do Instagram nem de arquivos de terceiros.

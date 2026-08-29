@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-28 21:45 BRT
+Atualizado em: 2026-08-28 22:01 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,19 +12,23 @@ Atualizado em: 2026-08-28 21:45 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
-- Estado operacional remoto atual: `9b6b04f` (`Update Instagram schedule state`).
+- Estado operacional remoto atual: `269d2fc` (`Update Instagram schedule state`).
 - Correcao funcional mais recente: `7d17fe7` (`Evita fotos repetidas no mesmo carrossel`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `9156514` (`Atualiza todas as telas da landing`).
-- Versao visivel atual: `v5.33`
-- Deploy de producao atual: `dpl_BysQpswRJXYSLA1vibUoaXKqnJu9`, estado `READY`, no dominio principal; API publica confirmou `v5.33` e HTTP 200.
+- Versao visivel atual: `v5.34`
+- Deploy de producao atual: `dpl_6wTaDycWXHRKERPh977xf3snC8Ek`, estado `READY`, no dominio principal; API publica confirmou `v5.34` e HTTP 200.
 - O painel recarrega metricas privadas automaticamente a cada 60 segundos, ao voltar para a aba e ao receber foco (`b14c958`).
 
 ## Disparo automatico e composicao visual
 
+- O calendario preserva os 13 horarios BRT e publica Reel + Story em oito deles: 06:30, 09:00, 12:10, 13:50, 14:15, 16:00, 17:40 e 22:00. Os outros cinco horarios continuam com carrossel + Story (`c22c3ac`).
+- Reels usam transicoes de 0,65 segundo em rodizio entre `fade`, `slideleft`, `smoothleft` e `circleopen`, mantendo a trilha instrumental original.
+- Prova real completa: run `33224978112`, `https://www.instagram.com/reel/Dcms-MJjoGX/`, media ID `17991592248039786`, Story ID `17907262068494462`, trilha `tecnologia-serena`; video em `70bec66`, Story em `fbe8e02` e estado em `269d2fc`.
+- Stories de Reels usam a hospedagem reserva do GitHub para nao depender do limite do ImgBB (`880b2c3`).
 - Reels agora recebem uma trilha instrumental original gerada pela plataforma, com rodizio entre tres variacoes, volume baixo, AAC 48 kHz e fades de entrada/saida (`f48e396`).
 - Prova real com audio: run `33224292928`, trilha `movimento-leve`, `https://www.instagram.com/reel/DcmrUxHjhK4/`, media ID `18421987573151325`; video hospedado em `215985b` e estado salvo em `9b6b04f`.
 - Reels automaticos estao operacionais nos modos `reel-only` e `reel-and-story`: cinco cenas em portugues viram MP4 H.264 de 25 segundos, 1080x1920 e 30 FPS; o fluxo hospeda o video, aguarda o processamento da Meta e registra permalink e ID (`6b99732`, `7e34b4d`).
