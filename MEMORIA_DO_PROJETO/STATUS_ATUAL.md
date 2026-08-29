@@ -20,7 +20,7 @@ Atualizado em: 2026-08-28 22:36 BRT
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `9156514` (`Atualiza todas as telas da landing`).
 - Versao visivel atual: `v5.36`
-- Deploy de producao atual: `dpl_5M89vbfARR3ZMhoZJAXdzqi5fjMz`, estado `READY`, no dominio principal; API publica confirmou `v5.36`.
+- Deploy de producao atual: `dpl_GmK4NeeLXtKEohE5bkYDy3EXAcTy`, estado `READY`, no dominio principal; API publica confirmou `v5.36`, HTTP 200, zero erro aberto e token valido ate 26/11/2026.
 - O painel recarrega metricas privadas automaticamente a cada 60 segundos, ao voltar para a aba e ao receber foco (`b14c958`).
 
 ## Disparo automatico e composicao visual

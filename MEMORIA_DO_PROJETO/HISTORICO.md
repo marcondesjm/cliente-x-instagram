@@ -7,7 +7,7 @@
 - A primeira prova eliminou o 401 e iniciou runs reais, mas confirmou que repetir o Radar nao resolvia a falta de pauta oficial inédita. A v5.36 (`ee428de`) passou a despachar um pack editorial proprio nesse caso, preservando a exigencia de fonte oficial para noticias.
 - Adicionada trava de tres minutos por erro para impedir varios cliques ou checkagens de criarem runs concorrentes.
 - Prova ponta a ponta: run `33226668709` concluiu em 2m28s e publicou `https://www.instagram.com/reel/DcmxGIPlZWZ/`, media ID `17895966213599689` e Story ID `18091479335215213`; estado remoto `e051236` marcou todos os erros do slot 2 como resolvidos.
-- Deploy `dpl_5M89vbfARR3ZMhoZJAXdzqi5fjMz` ficou `READY` no dominio principal com a versao `v5.36`.
+- Deploy final `dpl_GmK4NeeLXtKEohE5bkYDy3EXAcTy` ficou `READY`; API publica confirmou `v5.36`, HTTP 200, zero erro aberto e token valido ate 26/11/2026.
 
 ## 2026-08-28 22:11 BRT
 
