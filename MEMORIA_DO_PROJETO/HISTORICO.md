@@ -1,5 +1,12 @@
 # Historico
 
+## 2026-08-28 23:46 BRT
+
+- Corrigida a causa que mantinha o painel em `v5.37`: o Node/Vercel CLI nao usava os certificados confiaveis do Windows e encerrava HTTPS com `UNABLE_TO_VERIFY_LEAF_SIGNATURE` / `fetch failed`.
+- A conexao voltou com `--use-system-ca`, sem desativar TLS; `vercel whoami` autenticou corretamente.
+- Deploy `v5.39` concluido: `dpl_78CPa3dGRLKvePoC9XgeQZ1tAY5j`, estado `READY`, alias `https://cliente-x-instagram.vercel.app`.
+- Prova publica: HTTP `200`, HTML com `Versão atual: v5.39` e API com `activeVersion.appVersion: v5.39`, status `funcionando`.
+
 ## 2026-08-28 23:31 BRT
 
 - O usuario autorizou explicitamente o deploy da `v5.39` e uma publicacao real de Reel + Story.
