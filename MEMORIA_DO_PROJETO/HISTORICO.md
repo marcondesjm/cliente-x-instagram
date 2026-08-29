@@ -2105,3 +2105,10 @@ Observacao: o projeto original `cliente-x-instagram` tambem esta presente no wor
 - `git diff --check`, `node --check api/state.js`, `node --check scripts/dashboard-server.mjs` e `npm run validate-copy` passaram; a validação cobriu 20 packs, 54 packs automáticos e 74 combinações.
 - O servidor local abriu em `http://localhost:4173`; a tela de login foi confirmada. A área autenticada não foi alterada nem salva durante a checagem visual.
 - Deploy/publicação: pendente neste checkpoint; enviar para `origin/main`, publicar na Vercel e confirmar `v5.46` no domínio principal.
+
+Atualização operacional:
+
+- Os oito commits locais foram reaplicados sem conflito sobre o `origin/main` atualizado e enviados ao remoto; commit final da correção: `1ec68a8`.
+- O deploy manual com certificados confiáveis do Windows chegou à Vercel, mas foi recusado em autenticação com `Not authorized`; `VERCEL_TOKEN` não está disponível no ambiente local.
+- O domínio principal respondeu HTTP 200 e ainda mostrou `v5.45`, portanto a correção não foi declarada como publicada.
+- Próximo passo exato: renovar o login/token da Vercel por fluxo protegido, executar `npx vercel --prod --yes` com `NODE_OPTIONS=--use-system-ca` e confirmar no HTML público `v5.46` e `Lógica da postagem`.
