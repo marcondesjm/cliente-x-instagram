@@ -1467,7 +1467,10 @@ function stripHashtagLines(text) {
 }
 
 function assertPortugueseAccents(text) {
-  const searchable = stripHashtagLines(text);
+  // Slugs de URLs nao usam acentos por padrao (ex.: /operacao-comercial/).
+  // A revisao deve analisar apenas o texto que o publico le, sem confundir o
+  // endereco tecnico da fonte oficial com erro ortografico na publicacao.
+  const searchable = stripHashtagLines(text).replace(/https?:\/\/\S+/gi, ' ');
   const found = PLAIN_ASCII_PORTUGUESE.find(([plain]) => {
     const pattern = new RegExp(`(^|[^\\p{L}])${plain}([^\\p{L}]|$)`, 'iu');
     return pattern.test(searchable);
@@ -3929,6 +3932,7 @@ async function main() {
     }
     const rejectedEditorialLogo = extractEditorialImageUrl('<meta property="og:image" content="https://fonte-oficial.example/logo.svg">', 'https://fonte-oficial.example/noticia');
     if (rejectedEditorialLogo) throw new Error('Filtro de imagem editorial aceitou logo ou SVG como foto da materia.');
+    assertPortugueseAccents('Operação confirmada. https://fonte-oficial.example/noticia/operacao-comercial-no-brasil');
     const validationNow = new Date();
     const researchIntegrityProbe = buildResearchPack({
       source: 'TecMundo',
