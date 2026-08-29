@@ -2120,3 +2120,15 @@ Conclusão às 12:17 BRT:
 - O domínio principal `https://cliente-x-instagram.vercel.app` foi mantido e recebeu o alias do novo deploy; nenhuma integração Git ou alteração de domínio foi criada.
 - Prova pública sem cache: HTTP 200, `Versão atual: v5.46`, aba `Lógica da postagem` e controle `Usar MÉTODO IHC DA HANAH` encontrados no HTML de produção.
 - Nenhuma postagem foi enviada ao Instagram nesta atualização de painel.
+# 2026-08-29 12:28 BRT — Primeira publicação real com Método IHC da Hanah
+
+- O Método IHC da Hanah foi ativado em `contentProfile.storyMethod.ihcHanahEnabled` e permanece ligado para as próximas publicações automáticas.
+- Preflight: `node --check`, `git diff --check` e `npm run validate-copy` passaram; a validação cobriu 20 packs, 54 automáticos e 74 combinações.
+- Render local `2026-08-29-122105-slot-2-render-only` confirmou `reel-and-story`, exatamente 9 takes, formato `reels-9-takes`, Story e trilha `pulso-produtivo`.
+- A primeira tentativa real, run `33260096504`, foi bloqueada antes da Meta porque o Radar não encontrou pauta oficial inédita em 30 dias. Nenhum post foi criado nessa tentativa.
+- Para não inventar fonte, o Radar foi desligado somente durante o disparo de conteúdo editorial próprio da marca. O Método IHC permaneceu ativo.
+- Run real `33260221670` concluiu todas as etapas, incluindo `Publish feed and story`, marcação do slot 2, resolução do alerta anterior e persistência do estado.
+- Publicação: `https://www.instagram.com/reel/DcoQg0djKr3/`, media ID `18146973691557370`, Story ID `18214564504349184`, publicada em `2026-08-29T15:28:17.448Z`.
+- Título de abertura: `Você sente que trabalha muito e mesmo assim a operação escapa?`; conteúdo editorial próprio, sem fonte jornalística inventada.
+- Primeiro comentário: sem ID e sem erro. Reel hospedado em `1e85413`, Story em `4f0cddd` e estado em `9770bc2`.
+- O Radar foi religado imediatamente após a confirmação; IHC continua ligado. Nenhuma alteração de domínio ou integração Vercel/Git foi realizada.

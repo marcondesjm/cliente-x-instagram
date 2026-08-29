@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-29 12:17 BRT
+Atualizado em: 2026-08-29 12:28 BRT
 
 ## Regra permanente de checkpoint
 
@@ -26,6 +26,8 @@ Atualizado em: 2026-08-29 12:17 BRT
 
 ## Disparo automatico e composicao visual
 
+- Primeira publicacao real com Metodo IHC da Hanah: run `33260221670`, `https://www.instagram.com/reel/DcoQg0djKr3/`, media ID `18146973691557370`, Story ID `18214564504349184`, publicada em `2026-08-29T15:28:17.448Z`. O Reel usou 9 takes no fluxo Identificacao -> Historia -> Conteudo; primeiro comentario sem erro.
+- O run inicial `33260096504` foi bloqueado corretamente porque o Radar nao encontrou pauta oficial inedita em 30 dias. Para a publicacao solicitada, foi usado conteudo editorial proprio sem inventar fonte; depois da confirmacao, o Radar foi religado e o Metodo IHC permaneceu ativo.
 - Publicacao real mais recente: run `33258039686`, recuperacao manual do slot 1 de 2026-08-29, `https://www.instagram.com/p/DcoKxn_jZ2t/`, media ID `17963739330178902`, Story ID `18108159037891082`, publicada as `2026-08-29T14:37:52.907Z`. O run hospedou imagens em `e1dd202` e resolveu os alertas do Radar em `c79c04b`; a correcao local `17fea06` marca o slot 1 em `published-slots.json` e impede nova tentativa duplicada quando enviada ao remoto.
 - Incidente do slot 1: o Radar bloqueou corretamente por falta de pauta oficial inedita em 30 dias. A solucao do vigia foi corrigida para orientar buscar pauta oficial/ampliar fontes do Radar, nao renovar token Meta.
 - Modo editorial opcional no painel: `PROMPT -- METODO IHC DA HANAH`, salvo em `contentProfile.storyMethod.ihcHanahEnabled` e desligado por padrao. Quando ativado, apenas publicacoes automaticas/Radar usam o fluxo Identificacao -> Historia -> Conteudo; Reels saem com exatamente 9 takes e carrosseis com exatamente 10 cards. Packs manuais ou agendados explicitamente pelo painel nao sao reescritos.
