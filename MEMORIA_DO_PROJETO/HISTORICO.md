@@ -1,5 +1,13 @@
 # Historico
 
+## 2026-08-28 22:11 BRT
+
+- Confirmado o relato do usuario: o Reel anterior tinha AAC mono 48 kHz com volume medio de apenas `-32,2 dB` e pico de `-24,3 dB`, por isso a trilha quase nao era percebida.
+- A correcao `6cc8f69` substituiu os tons estaticos por arranjos eletronicos ambientes com pulsacao, converteu a saida para estereo e aplicou normalizacao `-16 LUFS`/`-1,5 dBTP`, mantendo fades e transicoes.
+- O arquivo MP4 realmente hospedado foi auditado: AAC 48 kHz estereo, aproximadamente 137 kbps, volume medio `-18,1 dB` e pico `-6,6 dB`, ganho efetivo de cerca de 14 dB.
+- Publicacao real concluida no run `33225513924`: `https://www.instagram.com/reel/DcmuNuZjY3D/`, media ID `18083297000306014`; video em `b57e810`, estado em `2a4bc48` e nenhum erro no primeiro comentario.
+- Producao atualizada para `v5.35`: deployment `dpl_CvCwTuaGMxrsAyVgCrMNwiHgtH3C`, estado `READY`; API publica confirmou HTTP 200 e status `funcionando`.
+
 ## 2026-08-28 22:01 BRT
 
 - Configurados oito Reels automaticos por dia sem remover os 13 horarios existentes: slots BRT 06:30, 09:00, 12:10, 13:50, 14:15, 16:00, 17:40 e 22:00 publicam Reel + Story; os demais mantem carrossel + Story (`c22c3ac`).

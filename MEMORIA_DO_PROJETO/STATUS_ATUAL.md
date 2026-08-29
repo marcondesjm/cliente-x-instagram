@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-28 22:01 BRT
+Atualizado em: 2026-08-28 22:11 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,19 +12,21 @@ Atualizado em: 2026-08-28 22:01 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
-- Estado operacional remoto atual: `269d2fc` (`Update Instagram schedule state`).
+- Estado operacional remoto atual: `2a4bc48` (`Update Instagram schedule state`).
 - Correcao funcional mais recente: `7d17fe7` (`Evita fotos repetidas no mesmo carrossel`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `9156514` (`Atualiza todas as telas da landing`).
-- Versao visivel atual: `v5.34`
-- Deploy de producao atual: `dpl_6wTaDycWXHRKERPh977xf3snC8Ek`, estado `READY`, no dominio principal; API publica confirmou `v5.34` e HTTP 200.
+- Versao visivel atual: `v5.35`
+- Deploy de producao atual: `dpl_CvCwTuaGMxrsAyVgCrMNwiHgtH3C`, estado `READY`, no dominio principal; API publica confirmou `v5.35` e HTTP 200.
 - O painel recarrega metricas privadas automaticamente a cada 60 segundos, ao voltar para a aba e ao receber foco (`b14c958`).
 
 ## Disparo automatico e composicao visual
 
+- A trilha dos Reels foi corrigida em `6cc8f69`: agora usa arranjo eletronico ambiente, AAC 48 kHz estereo, normalizacao para `-16 LUFS`, pico alvo `-1,5 dBTP` e fades. O arquivo real publicado mediu `-18,1 dB` de volume medio e `-6,6 dB` de pico, contra `-32,2 dB` e `-24,3 dB` no Reel anterior.
+- Prova real da correcao: run `33225513924`, `https://www.instagram.com/reel/DcmuNuZjY3D/`, media ID `18083297000306014`, video hospedado em `b57e810` e estado salvo em `2a4bc48`. O primeiro comentario nao apresentou erro.
 - O calendario preserva os 13 horarios BRT e publica Reel + Story em oito deles: 06:30, 09:00, 12:10, 13:50, 14:15, 16:00, 17:40 e 22:00. Os outros cinco horarios continuam com carrossel + Story (`c22c3ac`).
 - Reels usam transicoes de 0,65 segundo em rodizio entre `fade`, `slideleft`, `smoothleft` e `circleopen`, mantendo a trilha instrumental original.
 - Prova real completa: run `33224978112`, `https://www.instagram.com/reel/Dcms-MJjoGX/`, media ID `17991592248039786`, Story ID `17907262068494462`, trilha `tecnologia-serena`; video em `70bec66`, Story em `fbe8e02` e estado em `269d2fc`.
