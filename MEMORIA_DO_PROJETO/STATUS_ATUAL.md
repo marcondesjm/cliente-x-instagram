@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-29 01:02 BRT
+Atualizado em: 2026-08-29 01:08 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,19 +12,20 @@ Atualizado em: 2026-08-29 01:02 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
-- Estado operacional remoto atual: `76fdfed` (`Update Instagram schedule state`).
-- Correcao funcional mais recente: `c4dcca3` (`Ignora slugs na validacao de acentos`).
+- Estado operacional remoto atual: `246118b` (`Evita resumos truncados e legendas de imagem`).
+- Correcao funcional mais recente: `246118b` (`Evita resumos truncados e legendas de imagem`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `9156514` (`Atualiza todas as telas da landing`).
-- Versao visivel atual: `v5.44`.
-- Deploy de producao atual: `dpl_27HjdpRdpkcs4y9Hf91i4vUScXj8`, estado `READY`; dominio principal e HTML publicos confirmaram `v5.44` e HTTP 200.
+- Versao visivel atual: `v5.45`.
+- Deploy de producao atual: `dpl_AUiS7MQQeVbF8LibeKH4uuVUBbU3`, estado `READY`; dominio principal e HTML publicos confirmaram `v5.45` e HTTP 200.
 - O painel recarrega metricas privadas automaticamente a cada 60 segundos, ao voltar para a aba e ao receber foco (`b14c958`).
 
 ## Disparo automatico e composicao visual
 
+- O Radar descarta legendas e creditos de fotografia, rejeita resumos terminados em reticencias e usa apenas frases completas do corpo da materia (`246118b`). A prova na mesma pauta do G1 removeu `O logotipo da OpenAI... Foto: AP/Michael Dwyer` e passou a apresentar tres fatos completos: operacao no Brasil, 215 milhoes de mensagens diarias e declaracao de Sam Altman. As 74 combinacoes editoriais passaram.
 - Publicacao real mais recente: run `33232626886`, pauta `OpenAI abre operacao no Brasil apos pais se tornar 3 maior mercado do ChatGPT`, fonte `G1 Tecnologia`, `https://www.instagram.com/reel/DcnBvEVgJwC/`, media ID `18147166390538141` e Story ID `18047383550657974`. Reel e Story usaram a imagem oficial da materia; video em `c527763`, imagens em `a002cad` e estado em `76fdfed`. O primeiro comentario foi recusado pela Meta com OAuthException codigo 10, sem afetar as duas publicacoes.
 - `c4dcca3` faz a validacao de acentos ignorar slugs de URLs, evitando falso bloqueio de textos corretos em portugues. As 74 combinacoes editoriais passaram e o render `2026-08-29-005525-slot-0-render-only` confirmou Reel, Story, imagem oficial e trilha `beethoven-02-vivace`.
 - O Radar usa todas as 14 fontes oficiais configuradas e tenta extrair a imagem principal da propria materia por RSS, `og:image`, Twitter Card ou metadados estruturados (`96f55fe`). A imagem HTTPS e baixada, validada por tipo e tamanho e aplicada na capa do carrossel, no Story e na primeira cena do Reel, sempre com fonte real e link preservados. Logos, SVGs, pixels, arquivos pequenos, HTML e downloads invalidos sao rejeitados; nesses casos entra o rodizio visual seguro.

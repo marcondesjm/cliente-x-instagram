@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-08-29 01:08 BRT
+
+- Corrigida a falha apontada na legenda do Reel `DcnBvEVgJwC`: o Radar havia tratado a legenda da fotografia e um resumo RSS truncado como conteúdo factual.
+- `246118b` identifica e descarta descricoes/creditos de imagem e rejeita fatos terminados em reticencias. Resumos longos agora sao reduzidos somente em limites de frases completas, nunca pelo corte de caracteres.
+- Prova direta na mesma materia do G1: a extracao removeu `O logotipo da OpenAI... Foto: AP/Michael Dwyer` e retornou fatos completos sobre a operacao brasileira, 215 milhoes de mensagens por dia e a declaracao de Sam Altman.
+- Validacoes: sintaxe dos dois modulos e 74 combinacoes editoriais passaram, incluindo novas travas contra legenda de foto e texto incompleto.
+- Producao atualizada para `v5.45`: deploy `dpl_AUiS7MQQeVbF8LibeKH4uuVUBbU3`, estado `READY`; dominio principal confirmou HTTP 200 e HTML `v5.45`.
+- A publicacao ja existente nao foi apagada nem republicada sem pedido expresso; a protecao vale para todas as proximas pautas.
+
 ## 2026-08-29 01:02 BRT
 
 - O disparo direto do painel foi bloqueado com seguranca por falta de pauta oficial inedita. Os runs `33232219924` e `33232348272` nao criaram midia; o segundo confirmou a protecao contra repeticao.
