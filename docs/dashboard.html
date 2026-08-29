@@ -275,7 +275,8 @@
     main[data-active-view="bio"],
     main[data-active-view="schedule"],
     main[data-active-view="weekly"],
-    main[data-active-view="direct-history"] {
+    main[data-active-view="direct-history"],
+    main[data-active-view="posting-logic"] {
       grid-template-columns: minmax(0, 1fr);
     }
 
@@ -290,6 +291,20 @@
     main[data-active-view="schedule"] > .grid { width: 100%; }
     main[data-active-view="weekly"] > .grid { width: 100%; }
     main[data-active-view="direct-history"] > .grid { width: 100%; }
+    main[data-active-view="posting-logic"] > .grid,
+    main[data-active-view="posting-logic"] > aside.grid { width: 100%; }
+
+    main[data-active-view="posting-logic"] [data-dashboard-group="posting-logic"] .access-manager {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    main[data-active-view="posting-logic"] [data-dashboard-group="posting-logic"] .access-manager > .document-box,
+    main[data-active-view="posting-logic"] [data-dashboard-group="posting-logic"] .access-manager > .brand-palette,
+    main[data-active-view="posting-logic"] [data-dashboard-group="posting-logic"] .access-manager > button,
+    main[data-active-view="posting-logic"] [data-dashboard-group="posting-logic"] .access-manager > .access-result {
+      grid-column: 1 / -1;
+    }
 
     .bio-workspace {
       display: grid;
@@ -1596,8 +1611,10 @@
       .client-workflow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .capability-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       #newAccountPanel .access-manager,
+      main[data-active-view="posting-logic"] [data-dashboard-group="posting-logic"] .access-manager,
       #usersPanel #userManager { grid-template-columns: 1fr; }
       #newAccountPanel .access-manager > * ,
+      main[data-active-view="posting-logic"] [data-dashboard-group="posting-logic"] .access-manager > *,
       #usersPanel #userManager > * { grid-column: 1; }
     }
 
@@ -1670,7 +1687,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v5.46</div>
+        <div class="header-version" id="headerVersion">Versão atual: v5.47</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>

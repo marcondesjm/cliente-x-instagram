@@ -2132,3 +2132,12 @@ Conclusão às 12:17 BRT:
 - Título de abertura: `Você sente que trabalha muito e mesmo assim a operação escapa?`; conteúdo editorial próprio, sem fonte jornalística inventada.
 - Primeiro comentário: sem ID e sem erro. Reel hospedado em `1e85413`, Story em `4f0cddd` e estado em `9770bc2`.
 - O Radar foi religado imediatamente após a confirmação; IHC continua ligado. Nenhuma alteração de domínio ou integração Vercel/Git foi realizada.
+# 2026-08-29 12:34 BRT — Layout em largura total da lógica da postagem
+
+- Causa confirmada: a nova view `posting-logic` não estava na regra de telas em coluna única e, por estar dentro do `aside`, era renderizada inteira na coluna lateral direita.
+- A `v5.47` adiciona `posting-logic` às views de largura total e faz as duas grades internas ocuparem 100% da área útil.
+- No desktop, o formulário editorial usa duas colunas equilibradas; Método IHC, Radar, paleta, ações e resultado ocupam a largura completa.
+- Em telas de até 760 px, todos os campos voltam para uma coluna.
+- Validação real no navegador local: em 1920 px, painel e `main` mediram 1456 px e começaram no mesmo eixo; em 390 px, painel e `main` mediram 351 px, sem rolagem horizontal (`bodyScrollWidth: 375`).
+- `git diff --check`, sintaxe da API/servidor e `npm run validate-copy` passaram; 20 packs, 54 automáticos e 74 combinações validados.
+- Deploy/publicação: deploy Vercel pendente neste checkpoint; nenhuma publicação Instagram foi feita nesta alteração visual.
