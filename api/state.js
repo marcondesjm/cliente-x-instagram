@@ -44,7 +44,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v5.40',
+  appVersion: 'v5.41',
   status: 'funcionando',
   stableCommit: '9156514',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/9156514',
@@ -1262,7 +1262,7 @@ async function forceInstagramWatchdog(session) {
         { eyebrow: 'Sinal 1', title: 'O processo depende de mensagens soltas.', body: 'Pedidos, aprovações e pendências ficam espalhados. A automação organiza a passagem sem esconder as exceções.' },
         { eyebrow: 'Sinal 2', title: 'A mesma conferência acontece várias vezes.', body: 'Quando pessoas diferentes revisam os mesmos dados, faltam critério claro, registro e uma fonte única de verdade.' },
         { eyebrow: 'Aplicação', title: 'Automatize a passagem, não a decisão importante.', body: 'O sistema coleta, valida e encaminha. A equipe continua responsável pelo que exige contexto e julgamento.' },
-        { eyebrow: 'Próximo passo', title: 'Escolha hoje uma espera que pode desaparecer.', body: 'Mapeie quem entrega, quem recebe e qual informação precisa chegar completa para o trabalho continuar.' }
+        { eyebrow: 'Próximo passo', title: 'Escolha hoje uma espera que pode desaparecer.', body: `Mapeie quem entrega, quem recebe e qual informação precisa chegar completa para o trabalho continuar. Edição operacional: ${edition} BRT.` }
       ],
       caption: `Muitos gargalos não estão dentro de uma tarefa. Eles aparecem na passagem entre uma pessoa, uma planilha e o próximo sistema.\n\nUma boa automação organiza essa transição: coleta o que importa, valida o básico e encaminha com responsável e prazo. A decisão importante continua humana.\n\nEdição operacional: ${edition} BRT.\n\n#inteligenciaartificial #automacao #gestao #processos #empresas`
     };
