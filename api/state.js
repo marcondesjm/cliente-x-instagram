@@ -44,7 +44,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v5.39',
+  appVersion: 'v5.40',
   status: 'funcionando',
   stableCommit: '9156514',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/9156514',
@@ -328,6 +328,11 @@ function compactText(text = '', maxLength = 150) {
   const sliced = clean.slice(0, maxLength);
   const cut = sliced.lastIndexOf(' ');
   return `${sliced.slice(0, cut > 80 ? cut : maxLength).trim()}...`;
+}
+
+function plannedModeForSlot(account = {}, slotIndex = 0) {
+  const reelSlots = new Set((account.reelScheduleSlots || []).map(Number).filter(Number.isInteger));
+  return reelSlots.has(Number(slotIndex)) ? 'reel + story' : 'feed + story';
 }
 
 function activeWeeklyProgramsForDate(programs = [], dateString = todaySaoPaulo()) {
@@ -620,7 +625,7 @@ async function publisherDailyPlan(accountKey = 'cliente-x', dateString = todaySa
           status: 'planned',
           title: pack.slides?.[0]?.title || `Notícia recente para ${account.contentProfile?.niche || 'sua área'}`,
           caption: compactText(pack.caption || ''),
-          mode: 'feed + story',
+          mode: plannedModeForSlot(account, slotIndex),
           packIndex: `news-${packIndex}`,
           slides: pack.slides || [],
           sourceUrl: pack.research?.sourceUrl || '',

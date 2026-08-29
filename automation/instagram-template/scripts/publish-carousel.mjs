@@ -1353,6 +1353,11 @@ function compactPlanText(text = '', maxLength = 160) {
   return `${sliced.slice(0, cut > 80 ? cut : maxLength).trim()}...`;
 }
 
+function plannedModeForSlot(account = {}, slotIndex = 0) {
+  const reelSlots = new Set((account.reelScheduleSlots || []).map(Number).filter(Number.isInteger));
+  return reelSlots.has(Number(slotIndex)) ? 'reel + story' : 'feed + story';
+}
+
 function planForAutomaticSlots(account, localPacks, dateString) {
   return (account.scheduleUtc || []).map((cron, slotIndex) => {
     const profilePacks = buildProfileContentPacks(account, dateString, slotIndex);
@@ -1368,7 +1373,7 @@ function planForAutomaticSlots(account, localPacks, dateString) {
       status: 'planned',
       title: pack.slides?.[0]?.title || 'Conteúdo automático pelo perfil da conta',
       caption: compactPlanText(pack.caption || ''),
-      mode: 'feed + story',
+      mode: plannedModeForSlot(account, slotIndex),
       packIndex: profilePacks.length ? `profile-${packIndexNumber}` : packIndexNumber
     };
   });
@@ -1432,7 +1437,7 @@ function planForNewsSlots(account, newsPacks, dateString) {
       status: 'planned',
       title: pack.slides?.[0]?.title || `Notícia recente para ${account.contentProfile?.niche || 'sua área'}`,
       caption: compactPlanText(pack.caption || ''),
-      mode: 'feed + story',
+      mode: plannedModeForSlot(account, slotIndex),
       packIndex: `news-${packIndexNumber}`,
       sourceUrl: rawPack.research?.sourceUrl || '',
       source: rawPack.research?.source || '',
