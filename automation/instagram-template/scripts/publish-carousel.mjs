@@ -3497,9 +3497,9 @@ function renderReelVideo(runDir, imagePaths) {
   const transitionSeconds = 0.65;
   const durationSeconds = (imagePaths.length * sceneSeconds) - ((imagePaths.length - 1) * transitionSeconds);
   const tracks = [
-    { id: 'foco-calmo', expression: '0.045*sin(2*PI*220*t)+0.028*sin(2*PI*277.18*t)+0.022*sin(2*PI*329.63*t)' },
-    { id: 'movimento-leve', expression: '0.042*sin(2*PI*196*t)+0.026*sin(2*PI*246.94*t)+0.021*sin(2*PI*293.66*t)' },
-    { id: 'tecnologia-serena', expression: '0.040*sin(2*PI*174.61*t)+0.027*sin(2*PI*220*t)+0.020*sin(2*PI*261.63*t)' }
+    { id: 'foco-calmo', expression: '(0.085+0.035*sin(2*PI*2*t))*(sin(2*PI*220*t)+0.62*sin(2*PI*277.18*t)+0.48*sin(2*PI*329.63*t))+0.025*sin(2*PI*440*t+0.7*sin(2*PI*0.25*t))' },
+    { id: 'movimento-leve', expression: '(0.082+0.038*sin(2*PI*2.4*t))*(sin(2*PI*196*t)+0.64*sin(2*PI*246.94*t)+0.46*sin(2*PI*293.66*t))+0.026*sin(2*PI*392*t+0.8*sin(2*PI*0.3*t))' },
+    { id: 'tecnologia-serena', expression: '(0.080+0.040*sin(2*PI*1.8*t))*(sin(2*PI*174.61*t)+0.66*sin(2*PI*220*t)+0.44*sin(2*PI*261.63*t))+0.024*sin(2*PI*349.23*t+0.75*sin(2*PI*0.22*t))' }
   ];
   const audioTrack = tracks[stableAvatarOffset(imagePaths.join('|')) % tracks.length];
   const inputs = imagePaths.flatMap((imagePath) => ['-loop', '1', '-t', String(sceneSeconds), '-i', resolve(imagePath)]);
@@ -3516,7 +3516,7 @@ function renderReelVideo(runDir, imagePaths) {
     previousVideo = output;
   }
   const audioInputIndex = imagePaths.length;
-  const audioFilter = `[${audioInputIndex}:a]afade=t=in:st=0:d=1.2,afade=t=out:st=${Math.max(0, durationSeconds - 1.8)}:d=1.8,volume=0.7[outa]`;
+  const audioFilter = `[${audioInputIndex}:a]highpass=f=80,lowpass=f=6500,afade=t=in:st=0:d=1.2,afade=t=out:st=${Math.max(0, durationSeconds - 1.8)}:d=1.8,asplit=2[audioLeft][audioRight];[audioRight]adelay=18[audioRightDelayed];[audioLeft][audioRightDelayed]amerge=inputs=2,loudnorm=I=-16:LRA=7:TP=-1.5[outa]`;
   const result = spawnSync('ffmpeg', [
     '-y', ...inputs,
     '-f', 'lavfi', '-t', String(durationSeconds), '-i', `aevalsrc=${audioTrack.expression}:s=48000:d=${durationSeconds}`,
@@ -3531,6 +3531,9 @@ function renderReelVideo(runDir, imagePaths) {
     kind: 'instrumental-original-generated',
     durationSeconds,
     sampleRate: 48000,
+    channels: 2,
+    loudnessTargetLufs: -16,
+    truePeakTargetDb: -1.5,
     fadeInSeconds: 1.2,
     fadeOutSeconds: 1.8,
     transitionSeconds,
