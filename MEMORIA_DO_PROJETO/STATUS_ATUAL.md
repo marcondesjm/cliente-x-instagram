@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-29 11:35 BRT
+Atualizado em: 2026-08-29 11:44 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,8 +12,8 @@ Atualizado em: 2026-08-29 11:35 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
-- Estado operacional remoto atual: `4717510` (`Update Instagram schedule state`), com correcoes locais preparadas ate `741f7f7`.
-- Correcao funcional mais recente: `741f7f7` (`Adiciona modo IHC da Hanah no painel`).
+- Estado operacional remoto atual: `c79c04b` (`Update Instagram schedule state`), com correcoes locais preparadas ate `17fea06`.
+- Correcao funcional mais recente: `17fea06` (`Marca slot recuperado no fluxo manual`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
@@ -25,9 +25,11 @@ Atualizado em: 2026-08-29 11:35 BRT
 
 ## Disparo automatico e composicao visual
 
+- Publicacao real mais recente: run `33258039686`, recuperacao manual do slot 1 de 2026-08-29, `https://www.instagram.com/p/DcoKxn_jZ2t/`, media ID `17963739330178902`, Story ID `18108159037891082`, publicada as `2026-08-29T14:37:52.907Z`. O run hospedou imagens em `e1dd202` e resolveu os alertas do Radar em `c79c04b`; a correcao local `17fea06` marca o slot 1 em `published-slots.json` e impede nova tentativa duplicada quando enviada ao remoto.
+- Incidente do slot 1: o Radar bloqueou corretamente por falta de pauta oficial inedita em 30 dias. A solucao do vigia foi corrigida para orientar buscar pauta oficial/ampliar fontes do Radar, nao renovar token Meta.
 - Modo editorial opcional no painel: `PROMPT -- METODO IHC DA HANAH`, salvo em `contentProfile.storyMethod.ihcHanahEnabled` e desligado por padrao. Quando ativado, apenas publicacoes automaticas/Radar usam o fluxo Identificacao -> Historia -> Conteudo; Reels saem com exatamente 9 takes e carrosseis com exatamente 10 cards. Packs manuais ou agendados explicitamente pelo painel nao sao reescritos.
 - Validacoes da feature IHC: sintaxe do publicador, API e servidor local passaram; `npm run validate-copy` passou com 20 packs, 54 auto packs e 74 combinacoes automaticas. Sem push, deploy Vercel ou publicacao Instagram nesta alteracao.
-- Publicacao real mais recente: run `33257167618`, fonte `G1 Tecnologia`, pauta `Veja os 5 profissionais de tecnologia mais disputados pelos bancos; setor investirá R$ 3 bilhões em IA`, `https://www.instagram.com/reel/DcoIsXRglsx/`, media ID `18113312665991179` e Story ID `18048933059597084`. O erro do slot 0 foi resolvido pelo mesmo run; Reel em `c4dfc5d`, Story em `0b3b52b` e estado em `4717510`. O primeiro comentario foi recusado pela Meta com OAuthException codigo 10, sem afetar Reel e Story.
+- Publicacao real anterior: run `33257167618`, fonte `G1 Tecnologia`, pauta `Veja os 5 profissionais de tecnologia mais disputados pelos bancos; setor investirá R$ 3 bilhões em IA`, `https://www.instagram.com/reel/DcoIsXRglsx/`, media ID `18113312665991179` e Story ID `18048933059597084`. O erro do slot 0 foi resolvido pelo mesmo run; Reel em `c4dfc5d`, Story em `0b3b52b` e estado em `4717510`. O primeiro comentario foi recusado pela Meta com OAuthException codigo 10, sem afetar Reel e Story.
 - Incidente de 2026-08-29 resolvido: o vigia `33254423905` falhou as 10:13 BRT em `Graph POST /17841404470203300/media` porque a Meta recusou a legenda com `The caption was too long`. `dbf7d42` aplica limite seguro antes da publicacao, reduz blocos longos e preserva titulo original, fonte HTTPS, CTA e hashtags. A mensagem de solucao do vigia para `Caption Too Long` / `36004` foi ajustada para nao sugerir renovacao de token Meta.
 - Publicacao anterior confirmada: run `33233488693`, fonte `TecMundo`, pauta `OpenAI, Anthropic e mais de 100 empresas pedem mais seguranca contra IAs`, `https://www.instagram.com/reel/DcnEFDpDxFY/`, media ID `17954855115207895` e Story ID `18120976189894058`. A legenda usa tres fatos completos, sem credito de fotografia ou texto truncado; Reel em `ba47034`, imagens em `cd66f59` e estado em `094552b`. O primeiro comentario foi recusado pela Meta com OAuthException codigo 10, sem afetar Reel e Story.
 - O Radar descarta legendas e creditos de fotografia, rejeita resumos terminados em reticencias e usa apenas frases completas do corpo da materia (`246118b`). A prova na mesma pauta do G1 removeu `O logotipo da OpenAI... Foto: AP/Michael Dwyer` e passou a apresentar tres fatos completos: operacao no Brasil, 215 milhoes de mensagens diarias e declaracao de Sam Altman. As 74 combinacoes editoriais passaram.

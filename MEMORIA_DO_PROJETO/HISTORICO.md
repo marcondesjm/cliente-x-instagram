@@ -1,5 +1,15 @@
 # Historico
 
+## 2026-08-29 11:44 BRT
+
+- Investigado o novo alerta do vigia no slot 1 (`2026-08-29T11:10:00.000Z`): os runs `33257564135`, `33257565661` e `33257949631` bloquearam corretamente porque o Radar nao encontrou pauta oficial inedita em 30 dias.
+- O run de recuperacao manual `33258039686` terminou verde e publicou de fato o carrossel/Story: `https://www.instagram.com/p/DcoKxn_jZ2t/`, media ID `17963739330178902`, Story ID `18108159037891082`, publicado as `2026-08-29T14:37:52.907Z`. A pauta foi editorial propria, sem fonte Radar, porque o Radar havia esgotado fontes ineditas.
+- Causa do alerta persistente: o workflow `workflow_dispatch` publicava e resolvia o erro, mas pulava `Mark automatic slot published`; por isso `published-slots.json` nao recebia o slot 1 e o painel podia continuar enxergando o horario como pendente.
+- `17fea06` adiciona `scripts/resolve-slot-metadata.mjs`, preenche data/horario do slot em recuperacoes manuais, marca o slot publicado quando `dry_run=false` e melhora a solucao do vigia para Radar esgotado: buscar pauta oficial/ampliar fontes, nao renovar token.
+- Estado local atualizado: `published-slots.json` recebeu `cliente-x`, data `2026-08-29`, slot `1`, workflow `33258039686`.
+- Validacoes locais: `node --check scripts/resolve-slot-metadata.mjs`, `node --check scripts/record-watchdog-status.mjs`, `node scripts/resolve-slot-metadata.mjs --slot-index 1 --date 2026-08-29` e `npm run validate-copy` passaram.
+- Deploy/publicacao: nenhuma nova publicacao foi disparada nesta correcao. A publicacao real citada ja havia ocorrido no run `33258039686`. Pendente autorizacao explicita para push/deploy.
+
 ## 2026-08-29 11:35 BRT
 
 - Implementado o botao `PROMPT -- METODO IHC DA HANAH` no painel da conta ativa. A chave fica salva em `contentProfile.storyMethod.ihcHanahEnabled` e permanece desligada por padrao em `cliente-x`.
