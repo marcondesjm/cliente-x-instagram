@@ -2177,4 +2177,7 @@ Conclusão de produção:
 - O Método IHC foi deixado desligado (`false`) para `cliente-x`, conforme solicitado; a lógica editorial atual volta a orientar as próximas postagens.
 - Teste funcional local: POST com `false` seguido de novo GET retornou `saved: false` e `reloaded: false`.
 - `git diff --check`, `node --check api/state.js`, `node --check scripts/dashboard-server.mjs` e `npm run validate-copy` passaram; 20 packs, 54 automáticos e 74 combinações foram validados.
-- Deploy/publicação: envio ao `origin/main` e deploy da Vercel pendentes neste checkpoint; nenhuma mídia foi enviada ao Instagram.
+- Commit funcional `d5578ca` enviado ao `origin/main`.
+- Deploy `dpl_6Fp3eWmsGs4P2ooEmGaBvfPNrNQ3` concluido em estado `READY` e associado ao dominio principal existente, sem conectar Vercel ao Git nem alterar dominio.
+- Prova publica: HTTP 200, `Versao atual: v5.49`, botao `Salvar logica da postagem` presente e configuracao oficial do GitHub com `ihcHanahEnabled: false`.
+- Nenhuma midia foi enviada ao Instagram nesta correcao.
