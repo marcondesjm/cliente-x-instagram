@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-29 11:22 BRT
+Atualizado em: 2026-08-29 11:35 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,8 +12,8 @@ Atualizado em: 2026-08-29 11:22 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
-- Estado operacional remoto atual: `4717510` (`Update Instagram schedule state`), com correcao local preparada em `dbf7d42`.
-- Correcao funcional mais recente: `dbf7d42` (`Limita legenda antes de publicar no Instagram`).
+- Estado operacional remoto atual: `4717510` (`Update Instagram schedule state`), com correcoes locais preparadas ate `741f7f7`.
+- Correcao funcional mais recente: `741f7f7` (`Adiciona modo IHC da Hanah no painel`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
 - Dashboard: `https://cliente-x-instagram.vercel.app`
@@ -25,6 +25,8 @@ Atualizado em: 2026-08-29 11:22 BRT
 
 ## Disparo automatico e composicao visual
 
+- Modo editorial opcional no painel: `PROMPT -- METODO IHC DA HANAH`, salvo em `contentProfile.storyMethod.ihcHanahEnabled` e desligado por padrao. Quando ativado, apenas publicacoes automaticas/Radar usam o fluxo Identificacao -> Historia -> Conteudo; Reels saem com exatamente 9 takes e carrosseis com exatamente 10 cards. Packs manuais ou agendados explicitamente pelo painel nao sao reescritos.
+- Validacoes da feature IHC: sintaxe do publicador, API e servidor local passaram; `npm run validate-copy` passou com 20 packs, 54 auto packs e 74 combinacoes automaticas. Sem push, deploy Vercel ou publicacao Instagram nesta alteracao.
 - Publicacao real mais recente: run `33257167618`, fonte `G1 Tecnologia`, pauta `Veja os 5 profissionais de tecnologia mais disputados pelos bancos; setor investirá R$ 3 bilhões em IA`, `https://www.instagram.com/reel/DcoIsXRglsx/`, media ID `18113312665991179` e Story ID `18048933059597084`. O erro do slot 0 foi resolvido pelo mesmo run; Reel em `c4dfc5d`, Story em `0b3b52b` e estado em `4717510`. O primeiro comentario foi recusado pela Meta com OAuthException codigo 10, sem afetar Reel e Story.
 - Incidente de 2026-08-29 resolvido: o vigia `33254423905` falhou as 10:13 BRT em `Graph POST /17841404470203300/media` porque a Meta recusou a legenda com `The caption was too long`. `dbf7d42` aplica limite seguro antes da publicacao, reduz blocos longos e preserva titulo original, fonte HTTPS, CTA e hashtags. A mensagem de solucao do vigia para `Caption Too Long` / `36004` foi ajustada para nao sugerir renovacao de token Meta.
 - Publicacao anterior confirmada: run `33233488693`, fonte `TecMundo`, pauta `OpenAI, Anthropic e mais de 100 empresas pedem mais seguranca contra IAs`, `https://www.instagram.com/reel/DcnEFDpDxFY/`, media ID `17954855115207895` e Story ID `18120976189894058`. A legenda usa tres fatos completos, sem credito de fotografia ou texto truncado; Reel em `ba47034`, imagens em `cd66f59` e estado em `094552b`. O primeiro comentario foi recusado pela Meta com OAuthException codigo 10, sem afetar Reel e Story.

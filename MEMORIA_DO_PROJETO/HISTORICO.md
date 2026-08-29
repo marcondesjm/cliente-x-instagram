@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-08-29 11:35 BRT
+
+- Implementado o botao `PROMPT -- METODO IHC DA HANAH` no painel da conta ativa. A chave fica salva em `contentProfile.storyMethod.ihcHanahEnabled` e permanece desligada por padrao em `cliente-x`.
+- Quando ativado no painel, apenas publicacoes automaticas/Radar passam pelo metodo IHC: Reels sao reestruturados em exatamente 9 takes e carrosseis em exatamente 10 cards, sempre no fluxo Identificacao -> Historia -> Conteudo. Packs manuais ou agendados explicitamente pelo painel nao sao reescritos.
+- O publicador preserva fonte oficial, titulo original e link HTTPS na legenda quando o Radar fornece pesquisa, alem de registrar o metodo em `engagement-intelligence.json` e `daily-pack.json` da execucao.
+- Commit funcional local: `741f7f7` (`Adiciona modo IHC da Hanah no painel`).
+- Validacoes locais: `node --check automation/instagram-template/scripts/publish-carousel.mjs`, `node --check api/state.js`, `node --check scripts/dashboard-server.mjs` e `npm run validate-copy` passaram. A validacao conferiu 20 packs, 54 auto packs e 74 combinacoes automaticas.
+- Deploy/publicacao: nao houve push, deploy Vercel ou publicacao Instagram nesta alteracao. Pendente autorizacao explicita para enviar ao remoto/producao.
+
 ## 2026-08-29 11:22 BRT
 
 - Investigado o relato de parada das publicacoes automaticas. O run agendado `33245349884` terminou verde as 06:23 BRT, mas nao deixou artefato de publicacao; o vigia `33254423905` tentou recuperar o slot 0 de 06:30 BRT e falhou as 10:13 BRT em `Graph POST /17841404470203300/media`.
