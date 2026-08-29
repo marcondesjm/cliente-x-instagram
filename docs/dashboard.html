@@ -2325,6 +2325,17 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               </select>
             </label>
             <div class="document-box">
+              <strong>Método de storytelling</strong>
+              <span>Ative somente quando quiser que as próximas postagens automáticas sigam Identificação, História e Conteúdo.</span>
+              <label class="check" style="align-items:center;">
+                <input id="activeIhcHanahEnabled" type="checkbox">
+                <div>
+                  <strong>PROMPT — MÉTODO IHC DA HANAH</strong>
+                  <span>Ligado: Reels usam 9 takes e carrosséis usam 10 cards. Desligado: mantém o modelo editorial atual.</span>
+                </div>
+              </label>
+            </div>
+            <div class="document-box">
               <strong>Radar de notícias deste cliente</strong>
               <span>Configure assuntos e fontes oficiais do nicho. O Radar só usa estes sites para sugerir pautas automáticas.</span>
               <label class="check" style="align-items:center;">
@@ -3232,6 +3243,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('activeAccountOffer').value = profile.offer || '';
       document.getElementById('activeAccountTone').value = profile.tone || 'consultivo';
       document.getElementById('activeAccountGoal').value = profile.goal || 'authority';
+      document.getElementById('activeIhcHanahEnabled').checked = Boolean(profile.storyMethod?.ihcHanahEnabled);
       document.getElementById('activeRadarEnabled').checked = typeof radar.enabled === 'boolean' ? radar.enabled : account.account === 'cliente-x';
       document.getElementById('activeRadarKeywords').value = Array.isArray(radar.keywords) ? radar.keywords.join(', ') : '';
       document.getElementById('activeRadarExcludeKeywords').value = Array.isArray(radar.excludeKeywords) ? radar.excludeKeywords.join(', ') : '';
@@ -3904,6 +3916,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             offer: document.getElementById('activeAccountOffer').value.trim(),
             tone: document.getElementById('activeAccountTone').value,
             goal: document.getElementById('activeAccountGoal').value,
+            storyMethod: {
+              ihcHanahEnabled: document.getElementById('activeIhcHanahEnabled').checked
+            },
             radar: {
               enabled: document.getElementById('activeRadarEnabled').checked,
               maxAgeDays: Number(document.getElementById('activeRadarMaxAgeDays').value),

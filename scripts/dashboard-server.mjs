@@ -585,7 +585,13 @@ function updateAccountProfile(body = {}) {
     audience: String(body.audience || '').trim(),
     offer: String(body.offer || '').trim(),
     tone: String(body.tone || 'consultivo').trim() || 'consultivo',
-    goal: String(body.goal || accounts[index].contentProfile?.goal || 'authority').trim() || 'authority'
+    goal: String(body.goal || accounts[index].contentProfile?.goal || 'authority').trim() || 'authority',
+    radar: accounts[index].contentProfile?.radar,
+    visualDirection: accounts[index].contentProfile?.visualDirection,
+    storyMethod: {
+      ...accounts[index].contentProfile?.storyMethod,
+      ihcHanahEnabled: Boolean(body.storyMethod?.ihcHanahEnabled)
+    }
   };
   if (!contentProfile.niche || !contentProfile.audience || !contentProfile.offer) {
     throw new Error('Informe nicho, publico ideal e oferta principal para atualizar a conta.');

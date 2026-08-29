@@ -1416,7 +1416,10 @@ async function createAccountConfig(body = {}, session = null, req = null) {
     audience: String(body.audience || '').trim(),
     offer: String(body.offer || '').trim(),
     tone: String(body.tone || 'consultivo').trim() || 'consultivo',
-    goal: String(body.goal || 'authority').trim() || 'authority'
+    goal: String(body.goal || 'authority').trim() || 'authority',
+    storyMethod: {
+      ihcHanahEnabled: Boolean(body.storyMethod?.ihcHanahEnabled)
+    }
   };
   const brandSummary = normalizeBrandSummary(body.brandSummary || {});
   const brandPalette = {
@@ -1533,6 +1536,10 @@ async function updateAccountProfile(body = {}, session = null) {
     offer: String(body.offer || '').trim(),
     tone: String(body.tone || 'consultivo').trim() || 'consultivo',
     goal: String(body.goal || accountsFile.data[index].contentProfile?.goal || 'authority').trim() || 'authority',
+    storyMethod: {
+      ...accountsFile.data[index].contentProfile?.storyMethod,
+      ihcHanahEnabled: Boolean(body.storyMethod?.ihcHanahEnabled)
+    },
     radar,
     visualDirection: accountsFile.data[index].contentProfile?.visualDirection || 'anatex-editorial'
   };

@@ -1059,6 +1059,132 @@ function contentGoalFromAccount(account = {}) {
   return CONTENT_GOALS[goal] || CONTENT_GOALS.authority;
 }
 
+function isIhcHanahEnabled(account = {}) {
+  return Boolean(account.contentProfile?.storyMethod?.ihcHanahEnabled);
+}
+
+function shortWords(text = '', maxWords = 15) {
+  const words = String(text || '').replace(/\s+/g, ' ').trim().split(' ').filter(Boolean);
+  return words.slice(0, maxWords).join(' ');
+}
+
+function sourceReferenceForCaption(pack = {}) {
+  if (!pack.research?.sourceUrl) return '';
+  const source = String(pack.research.source || 'Fonte oficial').trim();
+  const sourceTitle = String(pack.research.sourceTitle || '').trim();
+  const sourceUrl = String(pack.research.sourceUrl || '').trim();
+  return [
+    `Fonte consultada: ${source}`,
+    sourceTitle ? `Título original: ${sourceTitle}` : '',
+    sourceUrl
+  ].filter(Boolean).join('\n');
+}
+
+function applyIhcHanahMethod(pack = {}, account = {}, dateString = todaySaoPaulo(), slotIndex = 0, publishMode = 'feed-and-story') {
+  const next = JSON.parse(JSON.stringify(pack));
+  const source = String(next.research?.source || '').trim();
+  const sourceTitle = String(next.research?.sourceTitle || next.slides?.[0]?.title || '').trim();
+  const sourceFacts = Array.isArray(next.research?.sourceFacts) && next.research.sourceFacts.length
+    ? next.research.sourceFacts
+    : [next.research?.sourceFact, next.slides?.[1]?.title, next.slides?.[2]?.title].filter(Boolean);
+  const fact = compactSentence(sourceFacts[0] || next.slides?.[0]?.body || 'uma rotina importante fica pesada quando depende de improviso.', 150);
+  const secondFact = compactSentence(sourceFacts[1] || 'o problema aparece quando a equipe precisa decidir rápido sem contexto suficiente.', 145);
+  const audience = String(account.contentProfile?.audience || 'donos e gestores').split(',')[0].trim() || 'donos e gestores';
+  const offer = String(account.contentProfile?.offer || 'consultoria e automações com IA').trim();
+  const hooks = [
+    'Você sente que trabalha muito e mesmo assim a operação escapa?',
+    'Tem tarefa que parece pequena, mas drena a equipe inteira?',
+    'Seu time responde rápido, mas ainda perde contexto no caminho?',
+    'A rotina cresceu e ninguém percebeu onde ela começou a pesar?'
+  ];
+  const hook = shortWords(hooks[pickDailyIndex(hooks, dateString, slotIndex)], 15);
+  const realisticScene = source
+    ? `Uma cena comum: ${audience} leem uma notícia da ${source} e percebem que a pressão por IA já chegou na rotina.`
+    : `Uma cena comum: ${audience} começam o dia tentando resolver tudo no improviso.`;
+  const story = [
+    realisticScene,
+    'No começo, parece só mais uma demanda. Uma mensagem chega, outra fica parada e alguém tenta lembrar o combinado.',
+    'A equipe se esforça, mas o processo não ajuda. O problema não é falta de vontade; é falta de caminho visível.',
+    `A virada aparece quando a história encontra um sinal concreto: ${fact}`
+  ];
+  const content = [
+    'O aprendizado é simples: antes de pedir mais velocidade, desenhe a rotina que está travando.',
+    `Transforme de improviso para fluxo: entrada clara, regra de decisão, responsável e revisão humana.`,
+    `Se o tema é ${sourceTitle || 'IA aplicada'}, comece pequeno e meça se reduziu espera, erro ou retrabalho.`
+  ];
+  const cta = `Comente IA ou chame no Direct para mapear uma rotina que pode virar sistema.`;
+  const isReel = publishMode === 'reel-only' || publishMode === 'reel-and-story';
+  const items = isReel
+    ? [
+      ['IDENTIFICAÇÃO', hook, 'Se isso já aconteceu na sua empresa, este conteúdo é para você.'],
+      ['HISTÓRIA', 'A rotina começou pequena.', story[0]],
+      ['HISTÓRIA', 'Depois virou urgência.', story[1]],
+      ['HISTÓRIA', 'O esforço não bastou.', story[2]],
+      ['HISTÓRIA', 'A descoberta veio do sinal.', story[3]],
+      ['CONTEÚDO', 'Primeiro, desenhe o caminho.', content[0]],
+      ['CONTEÚDO', 'Depois, defina o critério.', content[1]],
+      ['CONTEÚDO', 'Por fim, acompanhe o ganho.', content[2]],
+      ['AÇÃO', 'Quer aplicar isso sem adivinhar?', cta]
+    ]
+    : [
+      ['IDENTIFICAÇÃO', hook, 'Se isso já aconteceu na sua empresa, este carrossel é para você.'],
+      ['HISTÓRIA', 'A rotina começou pequena.', story[0]],
+      ['HISTÓRIA', 'Depois virou urgência.', story[1]],
+      ['HISTÓRIA', 'O time tentou compensar.', 'Mais mensagem, mais reunião, mais cobrança. Só que esforço sem processo cansa rápido.'],
+      ['HISTÓRIA', 'A descoberta veio do sinal.', story[3]],
+      ['CONTEÚDO', 'Nomeie a dor.', 'Escolha uma rotina específica: atendimento, proposta, cobrança, relatório ou suporte.'],
+      ['CONTEÚDO', 'Desenhe o caminho.', content[0]],
+      ['CONTEÚDO', 'Defina o critério.', content[1]],
+      ['CONTEÚDO', 'Meça a transformação.', content[2]],
+      ['AÇÃO', 'Quer transformar uma rotina em sistema?', cta]
+    ];
+  next.slides = items.map(([eyebrow, title, body]) => ({
+    eyebrow,
+    title,
+    body,
+    ihcMethod: 'hanah',
+    researchSource: next.research?.source || '',
+    researchTitle: next.research?.sourceTitle || '',
+    researchDisplayTitle: title,
+    researchUrl: next.research?.sourceUrl || ''
+  }));
+  const sourceReference = sourceReferenceForCaption(next);
+  next.caption = [
+    hook,
+    'História:',
+    ...story,
+    'Conteúdo:',
+    ...content,
+    cta,
+    sourceReference,
+    DEFAULT_INSTAGRAM_HASHTAGS
+  ].filter(Boolean).join('\n\n');
+  next.ihcHanahMethod = {
+    enabled: true,
+    format: isReel ? 'reels-9-takes' : 'carousel-10-cards',
+    appliedAt: new Date().toISOString()
+  };
+  return next;
+}
+
+function preparePackForPublication(pack, dateString, slotIndex, account = {}, publishMode = 'feed-and-story', options = {}) {
+  if (options.allowIhc !== false && isIhcHanahEnabled(account)) {
+    const ihcPack = applyIhcHanahMethod(pack, account, dateString, slotIndex, publishMode);
+    return {
+      pack: ihcPack,
+      intelligence: {
+        enabled: true,
+        version: 1,
+        method: 'Método IHC da Hanah',
+        strategy: ihcPack.ihcHanahMethod?.format || 'ihc',
+        appliedAt: ihcPack.ihcHanahMethod?.appliedAt,
+        sourceCopyPreserved: Boolean(ihcPack.research?.sourceUrl)
+      }
+    };
+  }
+  return enhancePackForEngagement(pack, dateString, slotIndex, account);
+}
+
 function enhanceSlide(slide, index, dateString, slotIndex, goal = CONTENT_GOALS.authority, totalSlides = 0) {
   const next = { ...slide };
   if (next.imagePath || next.imageUrl) return next;
@@ -1413,7 +1539,9 @@ function planForAutomaticSlots(account, localPacks, dateString) {
     const automaticSelectionPacks = profilePacks.length ? mergePacks(profilePacks, localPacks) : localPacks;
     const packIndexNumber = pickDailyIndex(automaticSelectionPacks, dateString, slotIndex);
     const rawPack = automaticSelectionPacks[packIndexNumber] || {};
-    const enhancement = enhancePackForEngagement(rawPack, dateString, slotIndex, account);
+    const mode = plannedModeForSlot(account, slotIndex);
+    const publishMode = mode === 'reel + story' ? 'reel-and-story' : 'feed-and-story';
+    const enhancement = preparePackForPublication(rawPack, dateString, slotIndex, account, publishMode);
     const pack = enhancement.pack || rawPack;
     return {
       time: cronToBrtTime(cron),
@@ -1422,7 +1550,7 @@ function planForAutomaticSlots(account, localPacks, dateString) {
       status: 'planned',
       title: pack.slides?.[0]?.title || 'Conteúdo automático pelo perfil da conta',
       caption: compactPlanText(pack.caption || ''),
-      mode: plannedModeForSlot(account, slotIndex),
+      mode,
       packIndex: profilePacks.length ? `profile-${packIndexNumber}` : packIndexNumber
     };
   });
@@ -1477,7 +1605,9 @@ function planForNewsSlots(account, newsPacks, dateString) {
   return (account.scheduleUtc || []).map((cron, slotIndex) => {
     const packIndexNumber = pickDailyIndex(newsPacks, dateString, slotIndex);
     const rawPack = newsPacks[packIndexNumber] || {};
-    const enhancement = enhancePackForEngagement(rawPack, dateString, slotIndex, account);
+    const mode = plannedModeForSlot(account, slotIndex);
+    const publishMode = mode === 'reel + story' ? 'reel-and-story' : 'feed-and-story';
+    const enhancement = preparePackForPublication(rawPack, dateString, slotIndex, account, publishMode);
     const pack = enhancement.pack || rawPack;
     return {
       time: cronToBrtTime(cron),
@@ -1486,7 +1616,7 @@ function planForNewsSlots(account, newsPacks, dateString) {
       status: 'planned',
       title: pack.slides?.[0]?.title || `Notícia recente para ${account.contentProfile?.niche || 'sua área'}`,
       caption: compactPlanText(pack.caption || ''),
-      mode: plannedModeForSlot(account, slotIndex),
+      mode,
       packIndex: `news-${packIndexNumber}`,
       sourceUrl: rawPack.research?.sourceUrl || '',
       source: rawPack.research?.source || '',
@@ -3999,6 +4129,26 @@ async function main() {
       offer: 'consultoria e automações com IA'
     });
     validatePack(researchIntegrityProbe);
+    const ihcProbeAccount = {
+      contentProfile: {
+        audience: 'gestores',
+        offer: 'consultoria e automações com IA',
+        storyMethod: { ihcHanahEnabled: true }
+      }
+    };
+    const ihcReelProbe = preparePackForPublication(researchIntegrityProbe, today, slotIndex, ihcProbeAccount, 'reel-and-story').pack;
+    const ihcCarouselProbe = preparePackForPublication(researchIntegrityProbe, today, slotIndex, ihcProbeAccount, 'feed-and-story').pack;
+    validatePack(ihcReelProbe);
+    validatePack(ihcCarouselProbe);
+    if (ihcReelProbe.slides.length !== 9 || ihcCarouselProbe.slides.length !== 10) {
+      throw new Error('Método IHC da Hanah não respeitou 9 takes para Reel e 10 cards para carrossel.');
+    }
+    if (shortWords(ihcReelProbe.slides[0]?.title || '', 15) !== ihcReelProbe.slides[0]?.title) {
+      throw new Error('Gancho inicial do Método IHC passou de 15 palavras.');
+    }
+    if (!ihcReelProbe.caption.includes(researchIntegrityProbe.research.sourceUrl)) {
+      throw new Error('Método IHC perdeu o link da fonte oficial.');
+    }
     const realSummaryProbe = factualSummary({
       title: 'CEO da Anthropic: rejeição à IA é crise de confiança no setor',
       summary: 'Dario Amodei nega pessimismo em relação às inteligências artificiais e reconhece que o público geral questiona os ganhos com o avanço da tecnologia. O post CEO da Anthropic: rejeição à IA é crise de confiança no setor apareceu primeiro em Olhar Digital.'
@@ -4289,10 +4439,11 @@ async function main() {
   const runId = `${timestampSaoPaulo()}-slot-${slotIndex}${args.renderOnly ? '-render-only' : ''}`;
   const runDir = join(RUNS_DIR, account.account, runId);
   mkdirSync(runDir, { recursive: true });
-  const historyPack = JSON.parse(JSON.stringify(pack));
-  const enhancement = enhancePackForEngagement(pack, today, generationSlotIndex, account);
+  const methodAllowed = !dashboardPack && !scheduledPost;
+  const enhancement = preparePackForPublication(pack, today, generationSlotIndex, account, publishMode, { allowIhc: methodAllowed });
   pack = enhancement.pack;
   pack.caption = fitInstagramCaption(pack.caption, pack);
+  const historyPack = JSON.parse(JSON.stringify(pack));
   // A mesma janela de publicação pode gerar várias pautas. A fonte e o tema
   // precisam participar da identidade visual para que capas de notícias
   // diferentes não pareçam cópias quando usam o mesmo slot.
