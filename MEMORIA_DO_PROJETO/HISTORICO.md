@@ -2200,3 +2200,4 @@ Conclusão de produção:
 - Publicacao: `https://www.instagram.com/p/DcoWISMCapA/`, media ID `18404277577091475`, Story ID `17988731289012552`, publicada em `2026-08-29T16:16:57.799Z`.
 - O carrossel possui oito cards; o Story comunica `Continue este conteudo no feed.`; primeiro comentario sem ID e sem erro. Imagens hospedadas em `e4ffa6e` e estado em `67d3ff7`.
 - Conteudo editorial proprio, sem fonte jornalistica inventada e sem copiar imagens ou textos do perfil de referencia.
+- Deploy final `dpl_471TGBAgwQ88RQwZktufHEhWNdZG` concluido em estado `READY`; HTML publico confirmou HTTP 200, `Versao atual: v5.50` e `Novo carrossel de impacto` no dominio principal existente.
