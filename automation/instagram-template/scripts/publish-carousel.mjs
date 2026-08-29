@@ -1167,10 +1167,48 @@ function applyIhcHanahMethod(pack = {}, account = {}, dateString = todaySaoPaulo
   return next;
 }
 
+function applyBottiniVoice(enhancement, account = {}) {
+  const config = account.contentProfile?.bottiniVoice || {};
+  const pack = enhancement?.pack;
+  if (!config.enabled || !pack || pack.research?.sourceUrl) return enhancement;
+
+  const words = (Array.isArray(config.words) ? config.words : [])
+    .map((item) => String(item || '').trim()).filter(Boolean);
+  const available = words.length ? words : ['incrível', 'sensacional', 'excelente', 'imperdível', 'isso tem qualidade'];
+  const searchable = [pack.caption, ...(pack.slides || []).flatMap((slide) => [slide.title, slide.body])].filter(Boolean).join(' ').toLocaleLowerCase('pt-BR');
+  const promotion = /promoção|oferta|desconto|lançamento/.test(searchable);
+  const product = /produto|celular|serviço|solução/.test(searchable);
+  const preferredPatterns = promotion ? [/imperd/i, /sensacion/i] : product ? [/incr[ií]vel/i, /excelente/i] : [/sensacion/i, /qualidade/i, /excelente/i];
+  const word = preferredPatterns.map((pattern) => available.find((item) => pattern.test(item))).find(Boolean) || available[0];
+  const phrase = promotion
+    ? `Atenção: esta oportunidade é ${word}.`
+    : product
+      ? `Olha isso: este produto é ${word}.`
+      : /isso tem qualidade/i.test(word)
+        ? 'Isso tem qualidade.'
+        : `Olha isso: é ${word}.`;
+  const next = JSON.parse(JSON.stringify(pack));
+  if (!String(next.caption || '').toLocaleLowerCase('pt-BR').includes(word.toLocaleLowerCase('pt-BR'))) {
+    next.caption = `${phrase}\n\n${next.caption || ''}`.trim();
+  }
+  const intensity = ['low', 'balanced', 'high'].includes(config.intensity) ? config.intensity : 'balanced';
+  if (intensity !== 'low' && next.slides?.[0]) next.slides[0].eyebrow = promotion ? 'ATENÇÃO' : 'OLHA ISSO';
+  if (intensity === 'high' && next.slides?.[0] && !String(next.slides[0].body || '').toLocaleLowerCase('pt-BR').includes(word.toLocaleLowerCase('pt-BR'))) {
+    next.slides[0].body = `${phrase} ${next.slides[0].body || ''}`.trim().slice(0, 190);
+  }
+  next.bottiniVoice = { enabled: true, intensity, word, appliedAt: new Date().toISOString() };
+  return {
+    ...enhancement,
+    pack: next,
+    intelligence: { ...(enhancement.intelligence || {}), bottiniVoice: next.bottiniVoice }
+  };
+}
+
 function preparePackForPublication(pack, dateString, slotIndex, account = {}, publishMode = 'feed-and-story', options = {}) {
+  let enhancement;
   if (options.allowIhc !== false && isIhcHanahEnabled(account)) {
     const ihcPack = applyIhcHanahMethod(pack, account, dateString, slotIndex, publishMode);
-    return {
+    enhancement = {
       pack: ihcPack,
       intelligence: {
         enabled: true,
@@ -1181,8 +1219,10 @@ function preparePackForPublication(pack, dateString, slotIndex, account = {}, pu
         sourceCopyPreserved: Boolean(ihcPack.research?.sourceUrl)
       }
     };
+  } else {
+    enhancement = enhancePackForEngagement(pack, dateString, slotIndex, account);
   }
-  return enhancePackForEngagement(pack, dateString, slotIndex, account);
+  return applyBottiniVoice(enhancement, account);
 }
 
 function enhanceSlide(slide, index, dateString, slotIndex, goal = CONTENT_GOALS.authority, totalSlides = 0) {
@@ -4183,6 +4223,27 @@ async function main() {
     }
     if (!ihcReelProbe.caption.includes(researchIntegrityProbe.research.sourceUrl)) {
       throw new Error('Método IHC perdeu o link da fonte oficial.');
+    }
+    const bottiniProbeAccount = {
+      contentProfile: {
+        bottiniVoice: {
+          enabled: true,
+          intensity: 'balanced',
+          words: ['incrível', 'sensacional', 'excelente', 'imperdível', 'isso tem qualidade']
+        }
+      }
+    };
+    const proprietaryBottiniProbe = {
+      caption: 'Conheça este produto para automatizar o atendimento.',
+      slides: [{ eyebrow: 'PRODUTO', title: 'Um atendimento mais rápido', body: 'A solução organiza as conversas.' }]
+    };
+    const bottiniPrepared = preparePackForPublication(proprietaryBottiniProbe, today, slotIndex, bottiniProbeAccount, 'feed-and-story');
+    if (!bottiniPrepared.pack.caption.includes('incrível') || bottiniPrepared.pack.slides[0]?.eyebrow !== 'OLHA ISSO') {
+      throw new Error(`Botão Bottini não aplicou a dose equilibrada ao conteúdo próprio: ${JSON.stringify({ caption: bottiniPrepared.pack.caption, eyebrow: bottiniPrepared.pack.slides[0]?.eyebrow, bottiniVoice: bottiniPrepared.pack.bottiniVoice })}`);
+    }
+    const radarBottiniPrepared = preparePackForPublication(researchIntegrityProbe, today, slotIndex, bottiniProbeAccount, 'feed-and-story');
+    if (radarBottiniPrepared.pack.bottiniVoice || radarBottiniPrepared.pack.caption.includes('Olha isso:')) {
+      throw new Error('Botão Bottini alterou indevidamente uma notícia do Radar.');
     }
     const realSummaryProbe = factualSummary({
       title: 'CEO da Anthropic: rejeição à IA é crise de confiança no setor',

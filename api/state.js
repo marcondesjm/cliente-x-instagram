@@ -44,7 +44,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v5.50',
+  appVersion: 'v5.51',
   status: 'funcionando',
   stableCommit: '9156514',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/9156514',
@@ -1541,6 +1541,7 @@ async function updateAccountProfile(body = {}, session = null) {
       ihcHanahEnabled: Boolean(body.storyMethod?.ihcHanahEnabled)
     },
     radar,
+    bottiniVoice: accountsFile.data[index].contentProfile?.bottiniVoice,
     visualDirection: accountsFile.data[index].contentProfile?.visualDirection || 'anatex-editorial'
   };
   const brandSummary = normalizeBrandSummary(body.brandSummary || accountsFile.data[index].brandSummary || {});
@@ -1608,6 +1609,34 @@ async function updatePostingLogic(body = {}, session = null) {
     ihcHanahEnabled,
     message: `Metodo IHC da Hanah ${ihcHanahEnabled ? 'ligado' : 'desligado'} para ${accountKey}.`
   };
+}
+
+function normalizeBottiniVoice(body = {}) {
+  const defaults = ['incrível', 'sensacional', 'excelente', 'imperdível', 'isso tem qualidade'];
+  const words = (Array.isArray(body.words) ? body.words : defaults)
+    .map((item) => String(item || '').trim()).filter(Boolean)
+    .filter((item, index, items) => items.findIndex((value) => value.toLocaleLowerCase('pt-BR') === item.toLocaleLowerCase('pt-BR')) === index)
+    .slice(0, 12).map((item) => item.slice(0, 40));
+  return {
+    enabled: body.enabled === true,
+    intensity: ['low', 'balanced', 'high'].includes(body.intensity) ? body.intensity : 'balanced',
+    words: words.length ? words : defaults
+  };
+}
+
+async function updateBottiniVoice(body = {}, session = null) {
+  const accountKey = normalizeAccountKey(body.account);
+  const accountsFile = await readGithubConfig(ACCOUNTS_FILE_PATH);
+  const index = accountsFile.data.findIndex((item) => item.account === accountKey);
+  if (index === -1) throw userError(`Conta ${accountKey} nao encontrada.`, 404);
+  if (!canAccessAccount(session, accountsFile.data[index])) throw userError('Seu usuario nao pode alterar esta conta.', 403);
+  const bottiniVoice = normalizeBottiniVoice(body);
+  accountsFile.data[index] = {
+    ...accountsFile.data[index],
+    contentProfile: { ...accountsFile.data[index].contentProfile, bottiniVoice }
+  };
+  await writeGithubConfig(ACCOUNTS_FILE_PATH, accountsFile.data, accountsFile.sha, `Update Bottini voice for ${accountKey}`);
+  return { ok: true, account: accountsFile.data[index], bottiniVoice, message: `Botao Bottini ${bottiniVoice.enabled ? 'ligado' : 'desligado'} para ${accountKey}.` };
 }
 
 async function updateClientStatus(body = {}, session = null) {
@@ -2391,6 +2420,12 @@ export default async function handler(req, res) {
       }
       if (body.action === 'update-posting-logic') {
         const result = await updatePostingLogic(body, session);
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json(result);
+        return;
+      }
+      if (body.action === 'update-bottini-voice') {
+        const result = await updateBottiniVoice(body, session);
         res.setHeader('cache-control', 'no-store');
         res.status(200).json(result);
         return;

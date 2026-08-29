@@ -2201,3 +2201,14 @@ Conclusão de produção:
 - O carrossel possui oito cards; o Story comunica `Continue este conteudo no feed.`; primeiro comentario sem ID e sem erro. Imagens hospedadas em `e4ffa6e` e estado em `67d3ff7`.
 - Conteudo editorial proprio, sem fonte jornalistica inventada e sem copiar imagens ou textos do perfil de referencia.
 - Deploy final `dpl_471TGBAgwQ88RQwZktufHEhWNdZG` concluido em estado `READY`; HTML publico confirmou HTTP 200, `Versao atual: v5.50` e `Novo carrossel de impacto` no dominio principal existente.
+
+# 2026-08-29 13:25 BRT — Botão Bottini e acesso visível ao carrossel de impacto
+
+- `Novo carrossel de impacto` estava somente em `Conteúdo`; agora também aparece destacado em `Lógica da postagem` e, ao clicar, cria o rascunho e abre o editor.
+- A `v5.51` adiciona o `Botão Bottini — palavras com atitude`, separado do Método IHC.
+- O controle possui liga/desliga, dose `leve`, `equilibrada` ou `alta` e até 12 palavras/expressões editáveis. Valores iniciais: `incrível`, `sensacional`, `excelente`, `imperdível` e `isso tem qualidade`.
+- A dose leve atua na legenda; a equilibrada também reforça a capa; a alta pode reforçar o texto da capa. A palavra é escolhida conforme produto, promoção ou conteúdo geral.
+- Notícias com `research.sourceUrl` ficam fora da voz Bottini para preservar precisão editorial e evitar exagero no Radar.
+- Configuração inicial de `cliente-x`: desligada e equilibrada, aguardando escolha no painel. O salvamento é independente e confirma o estado recarregado.
+- Verificações de sintaxe, `git diff --check` e `npm run validate-copy` passaram, incluindo aplicação em conteúdo próprio e exclusão do Radar; o POST local confirmou `enabled: false`, `intensity: balanced` e as cinco expressões persistidas.
+- Deploy e prova pública: pendentes neste checkpoint intermediário. Nenhuma mídia foi enviada à Meta.

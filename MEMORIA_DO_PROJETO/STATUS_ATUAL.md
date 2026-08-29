@@ -597,3 +597,11 @@ Resultado:
 - Para a landing, preservar a promocao de `R$ 397/mes` por `R$ 197/mes`, implantacao gratuita, mais de 12 carrosseis no feed por dia, 12 Stories diarios, planos menores sob consulta e a mensagem de seguidores reais com potencial comercial sem garantia de resultado.
 - Para o Direct, acompanhar as proximas entregas das duas automacoes pelo historico; `Quero` e a campanha dos 50 prompts ja possuem envios reais comprovados.
 - Antes de vender em escala, validar o nome `Nerion Social`, preparar termos/politica de privacidade e definir contrato e onboarding.
+
+## Atualizacao 2026-08-29 13:25 BRT — v5.51
+
+- `Novo carrossel de impacto` agora também aparece em `Lógica da postagem` e leva ao editor em `Conteúdo`.
+- Novo `Botão Bottini` por conta: liga/desliga, dose leve/equilibrada/alta e vocabulário editável.
+- `cliente-x`: desligado, dose equilibrada, palavras `incrível`, `sensacional`, `excelente`, `imperdível`, `isso tem qualidade`.
+- Conteúdo próprio pode receber a energia Bottini; matérias do Radar permanecem sem esse tratamento.
+- Validação de código e copy concluída; deploy v5.51 pendente.

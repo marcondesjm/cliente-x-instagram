@@ -587,6 +587,7 @@ function updateAccountProfile(body = {}) {
     tone: String(body.tone || 'consultivo').trim() || 'consultivo',
     goal: String(body.goal || accounts[index].contentProfile?.goal || 'authority').trim() || 'authority',
     radar: accounts[index].contentProfile?.radar,
+    bottiniVoice: accounts[index].contentProfile?.bottiniVoice,
     visualDirection: accounts[index].contentProfile?.visualDirection,
     storyMethod: {
       ...accounts[index].contentProfile?.storyMethod,
@@ -638,6 +639,23 @@ function updatePostingLogic(body = {}) {
     ihcHanahEnabled,
     message: `Metodo IHC da Hanah ${ihcHanahEnabled ? 'ligado' : 'desligado'} para ${accountKey}.`
   };
+}
+
+function updateBottiniVoice(body = {}) {
+  const accounts = readJson(ACCOUNTS_PATH);
+  const accountKey = String(body.account || ACCOUNT).trim() || ACCOUNT;
+  const index = accounts.findIndex((item) => item.account === accountKey);
+  if (index === -1) throw new Error(`Conta ${accountKey} nao encontrada.`);
+  const defaults = ['incrível', 'sensacional', 'excelente', 'imperdível', 'isso tem qualidade'];
+  const words = (Array.isArray(body.words) ? body.words : defaults).map((item) => String(item || '').trim()).filter(Boolean).slice(0, 12);
+  const bottiniVoice = {
+    enabled: body.enabled === true,
+    intensity: ['low', 'balanced', 'high'].includes(body.intensity) ? body.intensity : 'balanced',
+    words: words.length ? words : defaults
+  };
+  accounts[index] = { ...accounts[index], contentProfile: { ...accounts[index].contentProfile, bottiniVoice } };
+  writeJson(ACCOUNTS_PATH, accounts);
+  return { ok: true, account: accounts[index], bottiniVoice, message: `Botao Bottini ${bottiniVoice.enabled ? 'ligado' : 'desligado'} para ${accountKey}.` };
 }
 
 async function uploadBrandDocument(body = {}) {
@@ -964,6 +982,9 @@ async function handleApi(req, res, url) {
       }
       if (body.action === 'update-posting-logic') {
         return json(res, 200, updatePostingLogic(body));
+      }
+      if (body.action === 'update-bottini-voice') {
+        return json(res, 200, updateBottiniVoice(body));
       }
       if (body.action === 'upload-brand-document') {
         return json(res, 200, await uploadBrandDocument(body));

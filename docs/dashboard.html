@@ -1687,7 +1687,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v5.50</div>
+        <div class="header-version" id="headerVersion">Versão atual: v5.51</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -2344,6 +2344,11 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               </select>
             </label>
             <div class="document-box">
+              <strong>Criar conteúdo com impacto</strong>
+              <span>Abra um novo carrossel com capa forte, desenvolvimento visual e chamada para ação. O rascunho será aberto na aba Conteúdo para você revisar antes de publicar.</span>
+              <button class="primary" id="openImpactCarousel" type="button">Novo carrossel de impacto</button>
+            </div>
+            <div class="document-box">
               <strong>Modelo de criação das postagens automáticas</strong>
               <span>Use o botão abaixo para alternar entre a lógica editorial atual e o Método IHC da Hanah.</span>
               <label class="check" style="align-items:center;">
@@ -2355,6 +2360,31 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               </label>
               <button class="primary" id="savePostingLogic" type="button">Salvar lógica da postagem</button>
               <div class="access-result" id="postingLogicResult">O estado salvo aparecerá aqui.</div>
+            </div>
+            <div class="document-box">
+              <strong>Botão Bottini — palavras com atitude</strong>
+              <span>Coloque energia na dose certa, sem transformar todo texto em propaganda. Não é aplicado às notícias do Radar.</span>
+              <label class="check" style="align-items:center;">
+                <input id="activeBottiniEnabled" type="checkbox">
+                <div>
+                  <strong>Usar voz Bottini nas próximas postagens</strong>
+                  <span>Ex.: “Este celular é incrível”, “Isso tem qualidade” e “Esta promoção é imperdível”.</span>
+                </div>
+              </label>
+              <label>
+                Dose de energia
+                <select id="activeBottiniIntensity">
+                  <option value="low">Leve — um toque na legenda</option>
+                  <option value="balanced">Equilibrada — frase forte e capa</option>
+                  <option value="high">Alta — capa, texto e chamada</option>
+                </select>
+              </label>
+              <label>
+                Palavras e expressões (uma por linha)
+                <textarea id="activeBottiniWords" rows="5" placeholder="incrível&#10;sensacional&#10;excelente&#10;imperdível&#10;isso tem qualidade"></textarea>
+              </label>
+              <button class="primary" id="saveBottiniVoice" type="button">Salvar Botão Bottini</button>
+              <div class="access-result" id="bottiniVoiceResult">O estado salvo aparecerá aqui.</div>
             </div>
             <div class="document-box">
               <strong>Radar de notícias deste cliente</strong>
@@ -3249,6 +3279,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const account = appState.account || {};
       const profile = account.contentProfile || {};
       const radar = profile.radar || {};
+      const bottini = profile.bottiniVoice || {};
       const summary = account.brandSummary || {};
       const palette = account.brandPalette || {};
       const documentInfo = account.brandDocument || {};
@@ -3266,6 +3297,11 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('activeAccountTone').value = profile.tone || 'consultivo';
       document.getElementById('activeAccountGoal').value = profile.goal || 'authority';
       document.getElementById('activeIhcHanahEnabled').checked = Boolean(profile.storyMethod?.ihcHanahEnabled);
+      document.getElementById('activeBottiniEnabled').checked = Boolean(bottini.enabled);
+      document.getElementById('activeBottiniIntensity').value = ['low', 'balanced', 'high'].includes(bottini.intensity) ? bottini.intensity : 'balanced';
+      document.getElementById('activeBottiniWords').value = (Array.isArray(bottini.words) && bottini.words.length
+        ? bottini.words
+        : ['incrível', 'sensacional', 'excelente', 'imperdível', 'isso tem qualidade']).join('\n');
       document.getElementById('activeRadarEnabled').checked = typeof radar.enabled === 'boolean' ? radar.enabled : account.account === 'cliente-x';
       document.getElementById('activeRadarKeywords').value = Array.isArray(radar.keywords) ? radar.keywords.join(', ') : '';
       document.getElementById('activeRadarExcludeKeywords').value = Array.isArray(radar.excludeKeywords) ? radar.excludeKeywords.join(', ') : '';
@@ -4025,6 +4061,50 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         checkbox.disabled = false;
         button.textContent = 'Salvar lógica da postagem';
       }
+    }
+
+    async function saveBottiniVoice() {
+      const button = document.getElementById('saveBottiniVoice');
+      const checkbox = document.getElementById('activeBottiniEnabled');
+      const result = document.getElementById('bottiniVoiceResult');
+      const requested = {
+        enabled: checkbox.checked,
+        intensity: document.getElementById('activeBottiniIntensity').value,
+        words: document.getElementById('activeBottiniWords').value.split(/[\n,]+/).map((item) => item.trim()).filter(Boolean)
+      };
+      button.disabled = true;
+      checkbox.disabled = true;
+      button.textContent = 'Salvando Bottini';
+      result.className = 'access-result warn';
+      result.textContent = 'Gravando voz, dose e palavras...';
+      try {
+        const payload = await api('/api/state', {
+          method: 'POST',
+          body: JSON.stringify({ action: 'update-bottini-voice', account: appState.selectedAccount, ...requested })
+        });
+        appState.account = payload.account || appState.account;
+        await loadState();
+        const persisted = appState.account?.contentProfile?.bottiniVoice || {};
+        if (Boolean(persisted.enabled) !== requested.enabled || persisted.intensity !== requested.intensity) {
+          throw new Error('O servidor não confirmou a configuração do Botão Bottini.');
+        }
+        result.className = 'access-result good';
+        result.textContent = `Salvo: Bottini ${persisted.enabled ? 'ligado' : 'desligado'}, dose ${persisted.intensity === 'high' ? 'alta' : persisted.intensity === 'low' ? 'leve' : 'equilibrada'}.`;
+      } catch (error) {
+        renderActiveProfile();
+        result.className = 'access-result bad';
+        result.textContent = error.message;
+      } finally {
+        button.disabled = false;
+        checkbox.disabled = false;
+        button.textContent = 'Salvar Botão Bottini';
+      }
+    }
+
+    function openImpactCarouselCreator() {
+      createImpactCarouselDraft();
+      activateDashboardView('content');
+      document.getElementById('packSelect')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
     function directAutomations() {
@@ -7169,6 +7249,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('repeatHealthCheck').addEventListener('click', runOperationalCheck);
       document.getElementById('saveActiveProfile').addEventListener('click', saveActiveProfile);
       document.getElementById('savePostingLogic').addEventListener('click', savePostingLogic);
+      document.getElementById('saveBottiniVoice').addEventListener('click', saveBottiniVoice);
+      document.getElementById('openImpactCarousel').addEventListener('click', openImpactCarouselCreator);
       document.getElementById('uploadDirectMaterial').addEventListener('click', uploadDirectMaterial);
       document.getElementById('saveDirectAutomation').addEventListener('click', saveDirectAutomation);
       document.getElementById('createAccount').addEventListener('click', createAccount);
