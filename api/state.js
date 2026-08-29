@@ -37,13 +37,14 @@ const DIRECT_AUTOMATIONS_FILE_PATH = 'automation/instagram-template/config/direc
 const BIO_PAGE_FILE_PATH = 'automation/instagram-template/config/bio-page.json';
 const DIRECT_DELIVERY_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
 const FORCE_WATCHDOG_FILE_PATH = '.github/force-instagram-watchdog.txt';
+const WATCHDOG_RECOVERY_REQUEST_FILE_PATH = 'automation/instagram-template/config/watchdog-recovery-request.json';
 const VERCEL_PROJECT_ID = process.env.VERCEL_PROJECT_ID || 'prj_AVyS8LGjVuhUOxkpfZZwOF5vMmPj';
 const VERCEL_TEAM_ID = process.env.VERCEL_TEAM_ID || 'team_T4Th6hb1UxtrbtcWfLxlWNRQ';
 const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instagram';
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v5.35',
+  appVersion: 'v5.36',
   status: 'funcionando',
   stableCommit: '9156514',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/9156514',
@@ -1224,6 +1225,63 @@ async function writeGithubFile(filePath, base64Content, message) {
 async function forceInstagramWatchdog(session) {
   if (!isOwner(session)) throw userError('Apenas o admin principal pode forcar o vigia.', 403);
   const now = new Date().toISOString();
+  const errorsFile = await readGithubConfig(WATCHDOG_ERRORS_FILE_PATH);
+  const openError = [...(Array.isArray(errorsFile.data) ? errorsFile.data : [])]
+    .reverse()
+    .find((item) => item.status === 'open' && (!item.account || item.account === 'cliente-x'));
+
+  let previousRequest = null;
+  try {
+    previousRequest = await readGithubConfig(WATCHDOG_RECOVERY_REQUEST_FILE_PATH);
+  } catch (error) {
+    if (error.statusCode !== 404) throw error;
+  }
+  const previousAt = Date.parse(previousRequest?.data?.requestedAt || '');
+  if (previousRequest?.data?.errorKey === openError?.key && Number.isFinite(previousAt) && Date.now() - previousAt < 3 * 60 * 1000) {
+    return {
+      ok: true,
+      duplicate: true,
+      message: 'A correcao deste erro ja esta em andamento. Nenhum disparo duplicado foi criado.',
+      forcedAt: previousRequest.data.requestedAt,
+      runMode: previousRequest.data.runMode || 'watchdog'
+    };
+  }
+
+  if (openError && /nenhuma pauta oficial dos ultimos 30 dias/i.test(String(openError.error || ''))) {
+    const edition = new Intl.DateTimeFormat('pt-BR', {
+      timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+    }).format(new Date());
+    const pack = {
+      slides: [
+        { eyebrow: 'Diagnóstico', title: 'O gargalo invisível aparece entre uma tarefa e outra.', body: 'A equipe conclui uma etapa, mas a informação para no caminho e alguém precisa lembrar manualmente o próximo passo.' },
+        { eyebrow: 'Sinal 1', title: 'O processo depende de mensagens soltas.', body: 'Pedidos, aprovações e pendências ficam espalhados. A automação organiza a passagem sem esconder as exceções.' },
+        { eyebrow: 'Sinal 2', title: 'A mesma conferência acontece várias vezes.', body: 'Quando pessoas diferentes revisam os mesmos dados, faltam critério claro, registro e uma fonte única de verdade.' },
+        { eyebrow: 'Aplicação', title: 'Automatize a passagem, não a decisão importante.', body: 'O sistema coleta, valida e encaminha. A equipe continua responsável pelo que exige contexto e julgamento.' },
+        { eyebrow: 'Próximo passo', title: 'Escolha hoje uma espera que pode desaparecer.', body: 'Mapeie quem entrega, quem recebe e qual informação precisa chegar completa para o trabalho continuar.' }
+      ],
+      caption: `Muitos gargalos não estão dentro de uma tarefa. Eles aparecem na passagem entre uma pessoa, uma planilha e o próximo sistema.\n\nUma boa automação organiza essa transição: coleta o que importa, valida o básico e encaminha com responsável e prazo. A decisão importante continua humana.\n\nEdição operacional: ${edition} BRT.\n\n#inteligenciaartificial #automacao #gestao #processos #empresas`
+    };
+    const slotIndex = Number.isInteger(Number(openError.slotIndex)) ? String(openError.slotIndex) : '0';
+    const account = readJson(ACCOUNTS_PATH).find((item) => item.account === 'cliente-x');
+    const reelSlots = Array.isArray(account?.reelScheduleSlots) ? account.reelScheduleSlots.map(Number) : [];
+    const publishMode = reelSlots.includes(Number(slotIndex)) ? 'reel-and-story' : 'feed-and-story';
+    await githubJson('actions/workflows/instagram-feed-cliente-x.yml/dispatches', {
+      method: 'POST',
+      body: JSON.stringify({
+        ref: 'main',
+        inputs: { account: 'cliente-x', dry_run: 'false', slot_index: slotIndex, publish_mode: publishMode, scheduled_only: 'false', pack_json: JSON.stringify(pack) }
+      })
+    });
+    const request = { requestedAt: now, errorKey: openError.key, slotIndex: Number(slotIndex), runMode: publishMode };
+    await writeGithubConfig(WATCHDOG_RECOVERY_REQUEST_FILE_PATH, request, previousRequest?.sha || undefined, `Record watchdog recovery ${now}`);
+    return {
+      ok: true,
+      message: 'Correcao editorial acionada com conteudo proprio e inedito. O GitHub Actions iniciou a recuperacao.',
+      forcedAt: now,
+      runMode: publishMode
+    };
+  }
+
   const content = [
     `force=${now}`,
     'reason=dashboard-watchdog-force',
