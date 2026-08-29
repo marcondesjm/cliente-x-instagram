@@ -1,5 +1,13 @@
 # Historico
 
+## 2026-08-28 21:12 BRT
+
+- Publicacao real solicitada pelo usuario concluida no run `33222614158`, usando uma pauta oficial e ainda nao utilizada do `Google Oficial`.
+- Feed confirmado em `https://www.instagram.com/p/DcmneBYASlO/`; media ID `18150159394524409`; Story ID `17955874029235228`.
+- Titulo publicado: `Google adiciona novas ferramentas de IA ao Ads e ao Analytics.` A legenda inclui `Entenda a materia:` com dois fatos traduzidos para portugues do Brasil e mantem o titulo original em ingles apenas como referencia tecnica no link.
+- Capa, slide 4 e Story foram inspecionados no artefato: todo texto visual esta em portugues; capa e slide 4 usam fotos pessoais diferentes, sem repeticao no mesmo carrossel.
+- Imagens persistidas em `40458ee`; estado da agenda e historico de publicacao em `d225dbf`. O primeiro comentario falhou isoladamente com OAuthException `#10`, sem afetar o feed ou o Story.
+
 ## 2026-08-28 21:02 BRT
 
 - Corrigida a repeticao de fotos dentro do mesmo carrossel: a categoria empresarial possuia apenas uma foto contextual, usada tanto na capa quanto no slide de resultado.

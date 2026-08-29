@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-28 21:04 BRT
+Atualizado em: 2026-08-28 21:12 BRT
 
 ## Regra permanente de checkpoint
 
@@ -12,7 +12,7 @@ Atualizado em: 2026-08-28 21:04 BRT
 
 - Pasta: `cliente-x-instagram-modern`
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
-- Checkpoint operacional atual: `6b9fc9f` (`Registra v5.31 e rodizio interno de fotos`).
+- Estado operacional remoto atual: `d225dbf` (`Update Instagram schedule state`).
 - Correcao funcional mais recente: `7d17fe7` (`Evita fotos repetidas no mesmo carrossel`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
 - Repositorio operacional: `origin/main` contem a trava do Radar e a landing atualizada.
@@ -25,6 +25,8 @@ Atualizado em: 2026-08-28 21:04 BRT
 
 ## Disparo automatico e composicao visual
 
+- Publicacao real mais recente: run `33222614158`, fonte `Google Oficial`, `https://www.instagram.com/p/DcmneBYASlO/`, media ID `18150159394524409`, Story ID `17955874029235228`.
+- O artefato confirmou titulo, cartao de fonte, cinco slides, Story e legenda em portugues do Brasil. Capa e slide 4 usam fotos pessoais distintas; imagens hospedadas em `40458ee` e estado salvo em `d225dbf`.
 - Carrosseis empresariais usam uma colecao de cinco fotos contextuais; capa e slide de resultado nao podem repetir a mesma imagem. A validacao automatica bloqueia qualquer regressao (`7d17fe7`).
 - Regra permanente de idioma: titulo principal, slides, Story, legenda e titulo pequeno do cartao `FONTE OFICIAL` devem estar em portugues do Brasil. O titulo original em ingles fica apenas como referencia tecnica no link da legenda (`e37a4af`).
 - Publicacao real mais recente: run `33221750143`, fonte `IBM AI`, `https://www.instagram.com/p/Dcmlfu_HR8J/`, media ID `17973789066139952`, Story ID `17918202105223733`.
