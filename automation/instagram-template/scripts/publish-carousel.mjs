@@ -1655,7 +1655,13 @@ function sectorPhotoCssImage(cue = 'business', slideIndex = 1, renderContext = {
     ecommerce: ['docs/uploads/sector-photos/ecommerce.jpg', 'docs/uploads/sector-photos/operations-review.png'],
     finance: ['docs/uploads/sector-photos/finance.jpg', 'docs/uploads/sector-photos/operations-review.png'],
     services: ['docs/uploads/sector-photos/ecommerce.jpg', 'docs/uploads/sector-photos/operations-review.png'],
-    business: ['docs/uploads/sector-photos/operations-review.png']
+    business: [
+      'docs/uploads/sector-photos/operations-review.png',
+      'docs/uploads/automation-cloud-evening.jpg',
+      'docs/uploads/automation-leave-office.jpg',
+      'docs/uploads/sector-photos/finance.jpg',
+      'docs/uploads/sector-photos/ecommerce.jpg'
+    ]
   };
   const options = photos[cue] || photos.business;
   const dateSeed = daysSinceEpoch(renderContext.dateString || todaySaoPaulo());
@@ -3610,6 +3616,12 @@ async function main() {
       avatarProbeHistory.push({ coverAvatar });
     }
     if (new Set(avatarProbeCovers).size !== 7) throw new Error('Rodizio anti-repeticao de fotos falhou no teste de historico.');
+    const sameCarouselPhotoContext = { dateString: today, slotIndex, creativeGeneration: 1, variationSeed: 'teste-carrossel' };
+    const coverSectorPhoto = sectorPhotoCssImage('business', 1, sameCarouselPhotoContext);
+    const proofSectorPhoto = sectorPhotoCssImage('business', 4, sameCarouselPhotoContext);
+    if (!coverSectorPhoto || !proofSectorPhoto || coverSectorPhoto === proofSectorPhoto) {
+      throw new Error('Rodizio de fotos dentro do mesmo carrossel falhou.');
+    }
     const radarKeywords = ['AI', 'artificial intelligence', 'automation', 'agent', 'workflow', 'machine learning'];
     if (matchesConfiguredEditorialIntent('Governo pode comprar luvas de choque para agentes de imigração', radarKeywords)) {
       throw new Error('Filtro semantico do Radar confundiu agentes de imigracao com agentes de IA.');
