@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-29 11:44 BRT
+Atualizado em: 2026-08-29 12:06 BRT
 
 ## Regra permanente de checkpoint
 
@@ -19,8 +19,9 @@ Atualizado em: 2026-08-29 11:44 BRT
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `9156514` (`Atualiza todas as telas da landing`).
-- Versao visivel atual: `v5.45`.
-- Deploy de producao atual: `dpl_AUiS7MQQeVbF8LibeKH4uuVUBbU3`, estado `READY`; dominio principal e HTML publicos confirmaram `v5.45` e HTTP 200.
+- Versao preparada localmente: `v5.46`; a producao ainda precisa de push/deploy e confirmacao no dominio principal.
+- A area `Logica da postagem` agora possui botao proprio no menu. Nela, o usuario alterna entre o Metodo IHC da Hanah e a logica editorial atual e salva pelo botao `Salvar perfil da marca`.
+- Deploy de producao confirmado anteriormente: `dpl_AUiS7MQQeVbF8LibeKH4uuVUBbU3`, estado `READY`, ainda servindo `v5.45` antes desta atualizacao.
 - O painel recarrega metricas privadas automaticamente a cada 60 segundos, ao voltar para a aba e ao receber foco (`b14c958`).
 
 ## Disparo automatico e composicao visual

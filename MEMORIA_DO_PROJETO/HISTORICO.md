@@ -2096,3 +2096,12 @@ Estado registrado:
 - Nenhuma publicacao real feita
 
 Observacao: o projeto original `cliente-x-instagram` tambem esta presente no workspace e contem o arquivo aberto `supabase/instagram-posts.sql`.
+# 2026-08-29 12:06 BRT — Versão v5.46 e acesso direto à lógica da postagem
+
+- Causa confirmada: a implementação do Método IHC estava somente na branch local, sem push/deploy, e a versão permanecia fixada em `v5.45`.
+- A versão visível foi atualizada para `v5.46` em `api/state.js` e `docs/dashboard.html`.
+- O menu ganhou a área própria `Lógica da postagem`; o controle deixou de ficar escondido dentro de `Conteúdo`.
+- O painel explica claramente os dois estados: Método IHC da Hanah ligado (Identificação, História e Conteúdo; 9 takes/10 cards) ou lógica editorial atual.
+- `git diff --check`, `node --check api/state.js`, `node --check scripts/dashboard-server.mjs` e `npm run validate-copy` passaram; a validação cobriu 20 packs, 54 packs automáticos e 74 combinações.
+- O servidor local abriu em `http://localhost:4173`; a tela de login foi confirmada. A área autenticada não foi alterada nem salva durante a checagem visual.
+- Deploy/publicação: pendente neste checkpoint; enviar para `origin/main`, publicar na Vercel e confirmar `v5.46` no domínio principal.

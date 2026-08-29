@@ -1670,7 +1670,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v5.45</div>
+        <div class="header-version" id="headerVersion">Versão atual: v5.46</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -1695,6 +1695,7 @@
     <nav class="dashboard-nav" aria-label="Áreas do painel">
       <button type="button" class="active" data-dashboard-view="overview">Visão geral</button>
       <button type="button" data-dashboard-view="content">Conteúdo</button>
+      <button type="button" data-dashboard-view="posting-logic">Lógica da postagem</button>
       <button type="button" data-dashboard-view="direct-history">Histórico do Direct</button>
       <button type="button" data-dashboard-view="schedule">Agenda</button>
       <button type="button" data-dashboard-view="weekly">Grade semanal</button>
@@ -2266,8 +2267,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         <div class="panel">
           <div class="panel-head">
             <div>
-              <div class="section-label">Estratégia</div>
-              <h2>Perfil editorial da conta ativa</h2>
+              <div class="section-label">Lógica da postagem</div>
+              <h2>Escolha como os próximos posts serão criados</h2>
             </div>
             <span class="status-pill good" id="activeProfileStatus">Configurado</span>
           </div>
@@ -2325,13 +2326,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               </select>
             </label>
             <div class="document-box">
-              <strong>Método de storytelling</strong>
-              <span>Ative somente quando quiser que as próximas postagens automáticas sigam Identificação, História e Conteúdo.</span>
+              <strong>Modelo de criação das postagens automáticas</strong>
+              <span>Use o botão abaixo para alternar entre a lógica editorial atual e o Método IHC da Hanah.</span>
               <label class="check" style="align-items:center;">
                 <input id="activeIhcHanahEnabled" type="checkbox">
                 <div>
-                  <strong>PROMPT — MÉTODO IHC DA HANAH</strong>
-                  <span>Ligado: Reels usam 9 takes e carrosséis usam 10 cards. Desligado: mantém o modelo editorial atual.</span>
+                  <strong>Usar MÉTODO IHC DA HANAH</strong>
+                  <span>Ligado: Identificação → História → Conteúdo, com 9 takes nos Reels e 10 cards nos carrosséis. Desligado: lógica editorial atual.</span>
                 </div>
               </label>
             </div>
@@ -2758,7 +2759,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
 
     const DASHBOARD_GROUPS = {
       overview: ['instagramShowcase', 'latestPostTitle'],
-      content: ['packSelect', 'activeProfileStatus', 'directAutomationStatus'],
+      content: ['packSelect', 'directAutomationStatus'],
+      'posting-logic': ['activeProfileStatus'],
       'direct-history': ['directHistoryPanel'],
       schedule: ['timeline', 'queueStatus'],
       weekly: ['weeklyProgramsPanel'],
