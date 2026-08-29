@@ -19,10 +19,10 @@ Atualizado em: 2026-08-29 12:41 BRT
 - Dashboard: `https://cliente-x-instagram.vercel.app`
 - Landing comercial: `https://cliente-x-instagram.vercel.app/plataforma`
 - Commit mais recente da landing: `9156514` (`Atualiza todas as telas da landing`).
-- Versao preparada: `v5.48`, com continuacao obrigatoria do Story para o feed em publicacoes combinadas; deploy pendente neste checkpoint.
+- Versao atual em producao: `v5.48`, com continuacao obrigatoria do Story para o feed em publicacoes combinadas.
 - A area `Logica da postagem` agora possui botao proprio no menu. Nela, o usuario alterna entre o Metodo IHC da Hanah e a logica editorial atual e salva pelo botao `Salvar perfil da marca`.
 - O layout da area foi corrigido: duas colunas equilibradas no desktop e uma coluna no celular, sem o painel preso no canto direito ou rolagem horizontal.
-- Deploy de producao atual: `dpl_Ezfk6xviEBcJVpotJoamj2NoxSPZ`, estado `READY`; HTML publico confirmou HTTP 200 e `v5.47` com as regras responsivas da area `Logica da postagem`.
+- Deploy de producao atual: `dpl_AVXM4rPa8G8TxUaLZfcusCYYjsuu`, estado `READY`; HTML publico confirmou HTTP 200 e `v5.48`.
 - O painel recarrega metricas privadas automaticamente a cada 60 segundos, ao voltar para a aba e ao receber foco (`b14c958`).
 
 ## Disparo automatico e composicao visual

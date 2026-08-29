@@ -2159,3 +2159,10 @@ Conclusão de produção:
 - Render IHC editorial `2026-08-29-123942-slot-2-render-only` confirmou Reel de 9 takes, Story sem fonte inventada e o novo CTA dentro da área segura, sem sobreposição com a foto.
 - O Radar foi desligado somente no teste local editorial e religado antes do commit.
 - Deploy/publicação: deploy Vercel pendente neste checkpoint; o Story já publicado não foi repostado e nenhuma nova mídia foi enviada à Meta.
+
+Conclusão de produção:
+
+- Commit funcional `51baed1` enviado ao `origin/main` depois de integrar o perfil salvo remotamente em `88ec4cb`.
+- Deploy `dpl_AVXM4rPa8G8TxUaLZfcusCYYjsuu` concluído em estado `READY`, mantendo o domínio principal existente.
+- HTML público confirmou HTTP 200 e `Versão atual: v5.48`.
+- O Story anterior permanece como publicado originalmente; a nova chamada vale para os próximos Stories combinados. Nenhuma mídia foi repostada nesta correção.
