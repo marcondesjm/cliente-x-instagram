@@ -7,7 +7,8 @@
 - A separacao editorial permanece estrita: noticias do Radar continuam obrigadas a ter fonte oficial, titulo original, fatos completos e `research.sourceUrl`; somente o conteudo proprietario de reserva e dispensado de fonte jornalistica, sem inventar atribuicao.
 - Validacoes locais: `node --check automation/instagram-template/scripts/publish-carousel.mjs`, `npm run validate-copy` (20 packs, 54 automaticos e 74 combinacoes) e `git diff --check` passaram.
 - Recuperacao real confirmada: run `33404188722`, `https://www.instagram.com/reel/DctVSMOFPrW/`, media ID `17922140778422826`, Story ID `18112661300331225`, publicado em `2026-08-31T14:46:11.931Z`; primeiro comentario sem erro. Reel/Story em `86df2a9`/`5112e30` e historico persistido em `83c8389`.
-- Branch: `fix/watchdog-story-overlap-20260828`, sincronizada com `origin/main` em `83c8389` antes do envio da correcao. Pendente enviar `a2faee3` e este checkpoint ao remoto.
+- O fechamento do Vigia tambem foi tornado permanente em `scripts/record-watchdog-status.mjs`: uma recuperacao manual bem-sucedida resolve todas as tentativas abertas do mesmo slot, mesmo quando a recuperacao ocorre no dia seguinte. As nove ocorrencias abertas do slot 2 de 30/08, inclusive `33347950948`, foram vinculadas ao run `33404188722` e marcadas como resolvidas; `published-slots.json` registra o slot como publicado.
+- Branch: `fix/watchdog-story-overlap-20260828`, sincronizada com `origin/main`; `a2faee3` e os checkpoints iniciais foram enviados ao remoto em `b8b5754`. Pendente enviar o fechamento consolidado do Vigia.
 
 ## 2026-08-29 11:44 BRT
 

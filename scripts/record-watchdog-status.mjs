@@ -46,7 +46,7 @@ function solutionFor(errorText = '', stage = '') {
     return 'Reduzir a legenda final antes de publicar, preservar a fonte oficial e rodar validar textos antes de recuperar o slot.';
   }
   if (/radar ativo.*nenhuma pauta oficial|nenhuma pauta oficial.*nao repetida|nenhuma pauta oficial.*não repetida/.test(text)) {
-    return 'Buscar uma pauta oficial inedita nas fontes configuradas ou ampliar/revisar fontes do Radar antes de recuperar o slot. Nao renovar token para este caso.';
+    return 'Recuperar o slot com a reserva editorial propria e inedita. O fluxo automatico nao deve renovar token nem repetir ou inventar uma fonte jornalistica.';
   }
   if (/oauth|access token|token|permission|permiss/.test(text)) {
     return 'Gerar novo token Meta/Instagram, atualizar o secret da conta no Vercel e no GitHub, depois rodar validar acessos no painel.';
@@ -81,9 +81,10 @@ const runUrl = workflowRun
 
 if (status === 'resolved') {
   let touched = false;
+  const manualRecovery = process.env.GITHUB_EVENT_NAME === 'workflow_dispatch';
   for (const entry of errors) {
     const sameSlot = entry.account === ACCOUNT &&
-      (!slotDate || entry.date === slotDate) &&
+      (!slotDate || entry.date === slotDate || manualRecovery) &&
       (!Number.isInteger(slotIndex) || Number(entry.slotIndex) === slotIndex);
     if (sameSlot && entry.status === 'open') {
       entry.status = 'resolved';
