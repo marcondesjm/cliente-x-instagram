@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-31 12:49 BRT
+Atualizado em: 2026-08-31 13:17 BRT
 
 ## Regra permanente de checkpoint
 
@@ -37,6 +37,7 @@ Atualizado em: 2026-08-31 12:49 BRT
 
 ## Disparo automatico e composicao visual
 
+- Slot 5 das 13:00 BRT recuperado no run `33412961116`: `https://www.instagram.com/p/DctfosPmWyC/`, media ID `17990223194844851`, Story ID `18100193324369979`, primeiro comentario sem erro. O agendador nao criou o run ate 13:13 BRT; o disparo manual concluiu e persistiu o slot as 13:16 BRT em `502f74d`.
 - O selo fixo `PROCESSO ANTES DA FERRAMENTA` foi removido de Story, Feed e Reel. A frase tambem saiu do card Radar e da previa reserva do dashboard. O render `2026-08-31-124857-slot-5-render-only` confirmou o Feed sem o selo e o Story somente com o CTA correto.
 - Stories acompanhados de Feed/Reel usam a chamada direta `Confira o conteudo completo no feed.` para conteudo proprio e Radar. Story avulso permanece sem CTA para uma publicacao inexistente. O render `2026-08-31-124342-slot-5-render-only` confirmou leitura e area segura.
 - Primeira publicacao real com Metodo IHC da Hanah: run `33260221670`, `https://www.instagram.com/reel/DcoQg0djKr3/`, media ID `18146973691557370`, Story ID `18214564504349184`, publicada em `2026-08-29T15:28:17.448Z`. O Reel usou 9 takes no fluxo Identificacao -> Historia -> Conteudo; primeiro comentario sem erro.

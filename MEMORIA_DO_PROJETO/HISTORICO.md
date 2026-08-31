@@ -1,5 +1,12 @@
 # Historico
 
+## 2026-08-31 13:17 BRT
+
+- Monitorado o slot 5 das 13:00 BRT. O GitHub nao criou a execucao agendada nas janelas esperadas ate 13:13 BRT; para evitar atraso indefinido, a mesma publicacao foi recuperada por `workflow_dispatch`, sem pack fixo e com as travas atuais de ineditismo.
+- Recuperacao real confirmada no run `33412961116`: `https://www.instagram.com/p/DctfosPmWyC/`, media ID `17990223194844851`, Story ID `18100193324369979`, publicado em `2026-08-31T16:16:21.489Z`. Titulo: `Um teste de 30 minutos para o uso do Codex.`; conteudo editorial proprio, sem fonte jornalistica inventada; primeiro comentario sem erro.
+- O slot 5 de 31/08 foi registrado como publicado as 13:16 BRT, com `scheduledAt` de 13:00 BRT e workflow `33412961116`. Estado remoto persistido em `502f74d`; artes hospedadas em `d0d63f4`.
+- O run passou por validacao de copy, renderizacao, `Publish feed and story`, marcacao do slot, resolucao do Vigia e persistencia de estado. Nenhuma correcao de codigo adicional foi necessaria.
+
 ## 2026-08-31 12:49 BRT
 
 - Esclarecido que a mensagem indesejada era o selo visual `PROCESSO ANTES DA FERRAMENTA`, inserido por CSS no layout `corner` e por isso visivel tambem em Feed e Reel.
