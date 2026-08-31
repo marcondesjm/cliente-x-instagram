@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-31 13:24 BRT
+Atualizado em: 2026-08-31 14:05 BRT
 
 ## Regra permanente de checkpoint
 
@@ -37,6 +37,7 @@ Atualizado em: 2026-08-31 13:24 BRT
 
 ## Disparo automatico e composicao visual
 
+- A escrita automatica deixou de repetir uma unica arquitetura: noticias do Radar alternam seis aberturas, rotulos, transicoes e duas ordens de cards; conteudos proprios alternam seis conjuntos de secoes. Fatos, fonte oficial, URL, separacao da analise e trava de duplicidade permanecem obrigatorios. Uma validacao exige ao menos cinco estruturas distintas em 12 pautas.
 - Recuperacao manual deixou de ser requisito operacional: o fluxo principal roda uma vez para cada um dos 13 slots, sete minutos depois do horario, e o Vigia independente revisa pendencias a cada 15 minutos. Ambos consultam o livro de slots antes de publicar. O Vigia tambem instala FFmpeg e respeita automaticamente Reel/Feed por slot.
 - A carga de agendamento caiu de ate 576 para 109 eventos por dia, afastados do inicio da hora para reduzir atrasos e descartes do `schedule` no GitHub Actions. Proxima validacao operacional deve ocorrer naturalmente, sem `workflow_dispatch`.
 - Slot 5 das 13:00 BRT recuperado no run `33412961116`: `https://www.instagram.com/p/DctfosPmWyC/`, media ID `17990223194844851`, Story ID `18100193324369979`, primeiro comentario sem erro. O agendador nao criou o run ate 13:13 BRT; o disparo manual concluiu e persistiu o slot as 13:16 BRT em `502f74d`.

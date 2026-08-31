@@ -1,5 +1,13 @@
 # Historico
 
+## 2026-08-31 14:05 BRT
+
+- Reduzido o aspecto padronizado dos textos automaticos. O Radar agora escolhe deterministicamente entre seis vozes editoriais, variando abertura, rotulos, transicao para a analise e a ordem dos cards centrais sem alterar os fatos nem a fonte.
+- A legenda ganhou introducoes e pontes mais naturais, preservando o bloco factual `Entenda a materia`, data, titulo original, fonte e URL. A aplicacao empresarial continua identificada como analise editorial separada da noticia.
+- Conteudos editoriais proprios tambem alternam seis conjuntos de rotulos em vez de repetir sempre `Diagnostico`, `Organizacao`, `Aplicacao` e `Proximo passo`.
+- Foi adicionada uma trava de regressao que exige pelo menos cinco arquiteturas distintas em uma amostra de 12 pautas, alem das travas existentes de variacao de CTA, integridade factual e anti-repeticao.
+- Validacoes: sintaxe dos dois modulos, `git diff --check` e `npm run validate-copy` passaram com 20 packs, 54 automaticos, 74 combinacoes, integridade da fonte e continuidade factual. Nenhuma publicacao foi disparada nesta alteracao.
+
 ## 2026-08-31 13:24 BRT
 
 - Removida a dependencia operacional de recuperacao manual. A causa de confiabilidade era o excesso de dois crons a cada cinco minutos, totalizando ate 576 eventos agendados por dia na mesma fila; o GitHub documenta que eventos `schedule` podem atrasar ou ser descartados sob carga, sobretudo perto do inicio da hora.
