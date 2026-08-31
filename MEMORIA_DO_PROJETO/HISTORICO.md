@@ -1,5 +1,15 @@
 # Historico
 
+## 2026-08-31 12:23 BRT
+
+- Confirmada a reclamacao de repeticao: o Reel `https://www.instagram.com/reel/DctVSMOFPrW/` repetiu o titulo e o tema proprietario `O gargalo invisivel aparece entre uma tarefa e outra.`, ja publicados em `https://www.instagram.com/p/DcodcW-lqbM/` em 29/08. Alterar apenas a linha `Edicao operacional` fez o fingerprint divergir, mas nao tornou a pauta nova.
+- O novo disparo antigo `33407252384` foi cancelado durante `Publish feed and story` para impedir outra repeticao; ele nao marcou slot, nao resolveu alerta e nao persistiu publicacao no historico.
+- `5dea2b3` (`Block dated editorial duplicates`) remove o pack fixo do botao `Corrigir automaticamente`, obriga conteudo proprietario a passar tambem pela trava de titulo de capa, ignora data/edicao no nucleo comparado e testa ate 74 reservas. Se nenhuma for realmente inedita, o fluxo bloqueia sem publicar repetido.
+- Teste de regressao incluido: a mesma pauta com outra data de edicao precisa ser reconhecida como duplicada. `node --check` no publicador e na API, `npm run validate-copy` (20 packs, 54 automaticos e 74 combinacoes) e `git diff --check` passaram.
+- Recuperacao real do slot 4: run `33407799274`, `https://www.instagram.com/reel/DctZbQkAuvq/`, media ID `18349783783221542`, Story ID `18097489712377177`, publicado em `2026-08-31T15:22:25.895Z`. O primeiro comentario foi recusado pela Meta com OAuthException codigo 10, sem afetar Reel e Story.
+- As quatro ocorrencias abertas do slot 4 foram resolvidas pelo run `33407799274`, e o slot foi registrado como publicado. Estado remoto em `73c997a`; Reel/Story em `3ee4df5`/`1145fe6`.
+- O deploy CLI da API do painel falhou com `Not authorized`. A sessao web autenticada localizou o projeto correto, mas o envio dos arquivos pelo navegador requer confirmacao do usuario; ate esse deploy, o GitHub esta corrigido, mas o botao publicado no painel ainda pode executar a versao antiga.
+
 ## 2026-08-31 11:48 BRT
 
 - Investigado o erro recorrente do Radar no slot 2, incluindo o run `33347950948`: a etapa `Publish feed and story` falhou porque todas as pautas oficiais elegiveis de ate 30 dias ja apareciam no historico; nao era falha de token Meta.

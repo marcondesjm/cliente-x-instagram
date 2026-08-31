@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-31 11:48 BRT
+Atualizado em: 2026-08-31 12:23 BRT
 
 ## Regra permanente de checkpoint
 
@@ -13,6 +13,9 @@ Atualizado em: 2026-08-31 11:48 BRT
 - Pasta ativa: `cliente-x-instagram-modern-incident`
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
 - Correcao funcional mais recente: `a2faee3` (`Use editorial reserve when Radar is exhausted`). Quando as pautas oficiais ineditas de ate 30 dias acabam, o fluxo automatico usa reserva editorial propria e inedita; se necessario, gera uma edicao operacional unica. A trava de fonte oficial continua obrigatoria para qualquer noticia do Radar.
+- Correcao anti-repeticao mais recente: `5dea2b3` (`Block dated editorial duplicates`). O botao nao envia mais o pack fixo `O gargalo invisivel...`; titulo/tema proprietario repetido e bloqueado mesmo com outra data, e a reserva percorre ate 74 alternativas antes de desistir sem publicar.
+- Slot 4 recuperado no run `33407799274`: `https://www.instagram.com/reel/DctZbQkAuvq/`, media ID `18349783783221542`, Story ID `18097489712377177`; quatro alertas fechados e slot registrado. Primeiro comentario: OAuthException codigo 10, separado do sucesso do Reel e Story.
+- Deploy do botao no painel pendente: a CLI Vercel retornou `Not authorized`; o projeto web correto foi localizado, mas o upload pelo navegador aguarda confirmacao explicita.
 - Incidente relatado: run `33347950948`, falha em `Publish feed and story` por esgotamento de pautas oficiais nao repetidas, sem relacao com token Meta. Recuperacao real confirmada no run `33404188722`: `https://www.instagram.com/reel/DctVSMOFPrW/`, media ID `17922140778422826`, Story ID `18112661300331225`, primeiro comentario sem erro; historico persistido em `83c8389`.
 - Todas as nove ocorrencias abertas do slot 2 de 30/08 foram resolvidas pelo run `33404188722`, e o slot foi registrado como publicado. Recuperacoes manuais futuras passam a fechar tentativas antigas do mesmo slot mesmo quando executadas no dia seguinte.
 - Estado operacional remoto atual: `c79c04b` (`Update Instagram schedule state`), com correcoes locais preparadas ate `17fea06`.
