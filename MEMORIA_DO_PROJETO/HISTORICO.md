@@ -1,5 +1,12 @@
 # Historico
 
+## 2026-08-31 12:44 BRT
+
+- A chamada dos Stories acompanhados de Feed/Reel foi unificada para `Confira o conteudo completo no feed.`, deixando explicito que a explicacao integral esta na publicacao principal.
+- A frase substitui tanto `Continue este conteudo no feed.` quanto `Acompanhe a materia na integra no feed.`; Stories avulsos continuam sem chamada para o feed.
+- Validacoes: `node --check automation/instagram-template/scripts/publish-carousel.mjs`, `npm run validate-copy` (20 packs, 54 automaticos e 74 combinacoes), render `2026-08-31-124342-slot-5-render-only`, inspecao visual do Story e `git diff --check` passaram. O CTA ficou dentro da area segura, legivel e sem colisao com o cartao de fonte.
+- Branch: `fix/watchdog-story-overlap-20260828`, sincronizada com `origin/main` em `228d7bc`. Pendente commit e envio ao remoto; nenhuma publicacao Instagram foi disparada por esta alteracao.
+
 ## 2026-08-31 12:23 BRT
 
 - Confirmada a reclamacao de repeticao: o Reel `https://www.instagram.com/reel/DctVSMOFPrW/` repetiu o titulo e o tema proprietario `O gargalo invisivel aparece entre uma tarefa e outra.`, ja publicados em `https://www.instagram.com/p/DcodcW-lqbM/` em 29/08. Alterar apenas a linha `Edicao operacional` fez o fingerprint divergir, mas nao tornou a pauta nova.

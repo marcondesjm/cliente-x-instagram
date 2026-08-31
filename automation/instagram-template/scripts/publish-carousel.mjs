@@ -3189,9 +3189,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
   const researchUrl = String(slide.researchUrl || '').trim();
   const showNewsContext = Boolean(researchSource);
   const hasFeedContinuation = renderContext.publishMode !== 'story-only';
-  const feedContinuationText = showNewsContext
-    ? 'Acompanhe a matéria na íntegra no feed.'
-    : 'Continue este conteúdo no feed.';
+  const feedContinuationText = 'Confira o conteúdo completo no feed.';
   const researchImage = fileCssImage(renderContext.researchSourceImagePath || '');
   const avatarImage = accountAvatarCssImage(account, 0, visualCue, { ...renderContext, story: true });
   const sectorPhotoImage = showNewsContext ? '' : sectorPhotoCssImage(visualCue);
