@@ -4188,6 +4188,7 @@ async function main() {
   }
   const baseSelectionPacks = profilePacks.length ? mergePacks(profilePacks, packs) : packs;
   let useResearchThisSlot = radar.enabled && editorialResearch.packs.length > 0;
+  let usedEditorialReserveThisSlot = false;
   let automaticSelectionPacks = useResearchThisSlot
     ? editorialResearch.packs
     : baseSelectionPacks;
@@ -4600,23 +4601,42 @@ async function main() {
       }
       if (!fresh.pack) {
         if (radar.enabled) {
-          throw new Error('Radar ativo: nenhuma pauta oficial dos ultimos 30 dias e nao repetida esta disponivel para este horario. Nenhum post foi publicado.');
+          const reserveFresh = pickFreshPack(baseSelectionPacks, today, generationSlotIndex, recentMedia, publicationHistory);
+          if (reserveFresh.pack) {
+            fresh = reserveFresh;
+            automaticSelectionPacks = baseSelectionPacks;
+            useResearchThisSlot = false;
+            usedEditorialReserveThisSlot = true;
+            console.log(`Radar editorial: fontes oficiais esgotadas; reserva editorial propria e inedita selecionada sem inventar fonte jornalistica.`);
+          } else {
+            const fallbackPack = buildLastResortPack(today, generationSlotIndex);
+            validatePack(fallbackPack);
+            pack = fallbackPack;
+            packIndex = `editorial-reserve-${slotIndex}`;
+            skippedDuplicates = fresh.skippedDuplicates + reserveFresh.skippedDuplicates;
+            useResearchThisSlot = false;
+            usedEditorialReserveThisSlot = true;
+            console.log('Radar editorial: fontes oficiais e packs editoriais recentes esgotados; edicao operacional unica selecionada sem inventar fonte jornalistica.');
+          }
         }
-        const autoFresh = pickFreshPack(autoPacks, today, generationSlotIndex, recentMedia, publicationHistory);
-        if (!autoFresh.pack) {
-          const fallbackPack = buildLastResortPack(today, generationSlotIndex);
-          validatePack(fallbackPack);
-          pack = fallbackPack;
-          packIndex = `auto-unique-${slotIndex}`;
-          skippedDuplicates = fresh.skippedDuplicates + autoFresh.skippedDuplicates;
-          console.log(`Conteudo unico de emergencia selecionado porque ${automaticSelectionPacks.length} captions preferenciais e ${autoPacks.length} captions automaticas ja aparecem nas midias recentes.`);
-        } else {
-          pack = autoFresh.pack;
-          packIndex = `auto-${autoFresh.packIndex}`;
-          skippedDuplicates = fresh.skippedDuplicates + autoFresh.skippedDuplicates;
-          console.log(`Conteudo automatico selecionado porque ${automaticSelectionPacks.length} captions preferenciais ja aparecem nas midias recentes.`);
+        if (!radar.enabled) {
+          const autoFresh = pickFreshPack(autoPacks, today, generationSlotIndex, recentMedia, publicationHistory);
+          if (!autoFresh.pack) {
+            const fallbackPack = buildLastResortPack(today, generationSlotIndex);
+            validatePack(fallbackPack);
+            pack = fallbackPack;
+            packIndex = `auto-unique-${slotIndex}`;
+            skippedDuplicates = fresh.skippedDuplicates + autoFresh.skippedDuplicates;
+            console.log(`Conteudo unico de emergencia selecionado porque ${automaticSelectionPacks.length} captions preferenciais e ${autoPacks.length} captions automaticas ja aparecem nas midias recentes.`);
+          } else {
+            pack = autoFresh.pack;
+            packIndex = `auto-${autoFresh.packIndex}`;
+            skippedDuplicates = fresh.skippedDuplicates + autoFresh.skippedDuplicates;
+            console.log(`Conteudo automatico selecionado porque ${automaticSelectionPacks.length} captions preferenciais ja aparecem nas midias recentes.`);
+          }
         }
-      } else {
+      }
+      if (fresh.pack) {
         pack = fresh.pack;
         packIndex = useResearchThisSlot ? `news-${fresh.packIndex}` : profilePacks.length ? `profile-${fresh.packIndex}` : fresh.packIndex;
         skippedDuplicates = fresh.skippedDuplicates;
@@ -4627,7 +4647,7 @@ async function main() {
   // O Radar continua obrigado a preservar a fonte oficial. Um pack editorial
   // enviado explicitamente pelo painel e conteudo proprio da marca, nao uma
   // pauta pesquisada, portanto nao deve ser bloqueado por essa exigencia.
-  if (!args.renderOnly && !args.dryRun && radar.enabled && !dashboardPack && !scheduledPost && !pack?.research?.sourceUrl) {
+  if (!args.renderOnly && !args.dryRun && radar.enabled && !dashboardPack && !scheduledPost && !usedEditorialReserveThisSlot && !pack?.research?.sourceUrl) {
     throw new Error('Radar ativo: a pauta selecionada nao possui uma fonte oficial registrada. Nenhum post foi publicado.');
   }
 
