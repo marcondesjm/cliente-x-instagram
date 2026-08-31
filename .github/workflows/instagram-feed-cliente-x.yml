@@ -12,7 +12,21 @@ on:
     paths:
       - ".github/force-instagram-watchdog.txt"
   schedule:
-    - cron: "3,8,13,18,23,28,33,38,43,48,53,58 * * * *"
+    # Sete minutos depois de cada um dos 13 horarios reais (UTC). O seletor
+    # ainda confere o livro de slots antes de publicar, evitando duplicidade.
+    - cron: "37 9 * * *"
+    - cron: "17 11 * * *"
+    - cron: "7 12 * * *"
+    - cron: "57 14 * * *"
+    - cron: "17 15 * * *"
+    - cron: "7 16 * * *"
+    - cron: "57 16 * * *"
+    - cron: "22 17 * * *"
+    - cron: "57 17 * * *"
+    - cron: "7 19 * * *"
+    - cron: "47 20 * * *"
+    - cron: "7 22 * * *"
+    - cron: "7 1 * * *"
   workflow_dispatch:
     inputs:
       account:

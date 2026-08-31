@@ -1,5 +1,13 @@
 # Historico
 
+## 2026-08-31 13:24 BRT
+
+- Removida a dependencia operacional de recuperacao manual. A causa de confiabilidade era o excesso de dois crons a cada cinco minutos, totalizando ate 576 eventos agendados por dia na mesma fila; o GitHub documenta que eventos `schedule` podem atrasar ou ser descartados sob carga, sobretudo perto do inicio da hora.
+- O workflow principal agora possui 13 eventos exatos, um para cada horario da agenda, sete minutos depois do slot e fora do minuto zero. O seletor continua consultando `published-slots.json`, portanto uma execucao atrasada nao duplica um slot ja concluido.
+- O `Instagram Watchdog Backup` passou a rodar de forma independente a cada 15 minutos (`14,29,44,59`), recuperando o slot pendente mais antigo. O total caiu de ate 576 para 109 eventos agendados por dia, reduzindo fila e substituicao de execucoes pendentes.
+- O Vigia reserva agora define `INSTAGRAM_TEMPLATE_AUTOMATIC_RUN=true` e instala FFmpeg quando existe slot automatico pendente; assim, os oito slots de Reel sao recuperados como Reel + Story, e os demais como Feed + Story, sem botao ou disparo humano.
+- Validacoes locais: sintaxe de `select-due-auto-slot.mjs` e do publicador, `npm run validate-copy` (20 packs, 54 automaticos e 74 combinacoes), conferencia dos 13 crons principais e `git diff --check` passaram. Pendente primeira prova natural no proximo horario, sem `workflow_dispatch` manual.
+
 ## 2026-08-31 13:17 BRT
 
 - Monitorado o slot 5 das 13:00 BRT. O GitHub nao criou a execucao agendada nas janelas esperadas ate 13:13 BRT; para evitar atraso indefinido, a mesma publicacao foi recuperada por `workflow_dispatch`, sem pack fixo e com as travas atuais de ineditismo.

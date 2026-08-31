@@ -9,7 +9,9 @@ concurrency:
 
 on:
   schedule:
-    - cron: "1,6,11,16,21,26,31,36,41,46,51,56 * * * *"
+    # Rede de seguranca independente. Roda em minutos afastados do topo da
+    # hora e recupera automaticamente o slot mais antigo ainda pendente.
+    - cron: "14,29,44,59 * * * *"
 
 jobs:
   instagram-watchdog:
@@ -20,6 +22,7 @@ jobs:
       DRY_RUN: "false"
       INSTAGRAM_TEMPLATE_PACK_JSON: ""
       INSTAGRAM_TEMPLATE_PUBLISH_MODE: feed-and-story
+      INSTAGRAM_TEMPLATE_AUTOMATIC_RUN: "true"
       CLIENTE_X_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.CLIENTE_X_INSTAGRAM_ACCESS_TOKEN }}
       CLIENTE_X_INSTAGRAM_USER_ID: ${{ secrets.CLIENTE_X_INSTAGRAM_USER_ID }}
       IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
@@ -64,6 +67,13 @@ jobs:
       - name: Install Playwright Chromium
         if: steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
         run: npx playwright install --with-deps chromium
+
+      - name: Install FFmpeg for automatic Reels
+        if: steps.auto_slot.outputs.has_due == 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          ffmpeg -version
 
       - name: Select content slot
         if: steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
