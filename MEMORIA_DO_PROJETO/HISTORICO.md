@@ -6,8 +6,8 @@
 - Causa estrutural corrigida em `a2faee3` (`Use editorial reserve when Radar is exhausted`): depois de esgotar pautas oficiais ineditas em 7, 15 e 30 dias, o publicador passa automaticamente para conteudo editorial proprio e inedito. Se os packs proprietarios tambem estiverem repetidos, usa uma edicao operacional unica gerada para a data e o slot.
 - A separacao editorial permanece estrita: noticias do Radar continuam obrigadas a ter fonte oficial, titulo original, fatos completos e `research.sourceUrl`; somente o conteudo proprietario de reserva e dispensado de fonte jornalistica, sem inventar atribuicao.
 - Validacoes locais: `node --check automation/instagram-template/scripts/publish-carousel.mjs`, `npm run validate-copy` (20 packs, 54 automaticos e 74 combinacoes) e `git diff --check` passaram.
-- Recuperacao do incidente: o botao automatico disparou o run `33404188722`, concluido com sucesso as 11:47 BRT. O remoto hospedou Reel e Story em `86df2a9`/`5112e30`; a confirmacao persistida de permalink e IDs ainda precisa ser auditada separadamente antes de considerar essa execucao prova final.
-- Branch: `fix/watchdog-story-overlap-20260828`, sincronizada por fast-forward com `origin/main` em `86df2a9` antes da correcao. Pendente enviar `a2faee3` e este checkpoint ao remoto.
+- Recuperacao real confirmada: run `33404188722`, `https://www.instagram.com/reel/DctVSMOFPrW/`, media ID `17922140778422826`, Story ID `18112661300331225`, publicado em `2026-08-31T14:46:11.931Z`; primeiro comentario sem erro. Reel/Story em `86df2a9`/`5112e30` e historico persistido em `83c8389`.
+- Branch: `fix/watchdog-story-overlap-20260828`, sincronizada com `origin/main` em `83c8389` antes do envio da correcao. Pendente enviar `a2faee3` e este checkpoint ao remoto.
 
 ## 2026-08-29 11:44 BRT
 
