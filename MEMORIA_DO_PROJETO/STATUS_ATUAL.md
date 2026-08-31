@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-29 13:17 BRT
+Atualizado em: 2026-08-31 11:48 BRT
 
 ## Regra permanente de checkpoint
 
@@ -10,8 +10,10 @@ Atualizado em: 2026-08-29 13:17 BRT
 
 ## Projeto ativo
 
-- Pasta: `cliente-x-instagram-modern`
+- Pasta ativa: `cliente-x-instagram-modern-incident`
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
+- Correcao funcional mais recente: `a2faee3` (`Use editorial reserve when Radar is exhausted`). Quando as pautas oficiais ineditas de ate 30 dias acabam, o fluxo automatico usa reserva editorial propria e inedita; se necessario, gera uma edicao operacional unica. A trava de fonte oficial continua obrigatoria para qualquer noticia do Radar.
+- Incidente relatado: run `33347950948`, falha em `Publish feed and story` por esgotamento de pautas oficiais nao repetidas, sem relacao com token Meta. A recuperacao acionada pelo painel, run `33404188722`, terminou com sucesso; Reel e Story foram hospedados no remoto, mas permalink e IDs ainda aguardam confirmacao no estado persistido.
 - Estado operacional remoto atual: `c79c04b` (`Update Instagram schedule state`), com correcoes locais preparadas ate `17fea06`.
 - Correcao funcional mais recente: `17fea06` (`Marca slot recuperado no fluxo manual`).
 - Radar progressivo, protecao contra capas repetidas e rodizio de fontes fazem parte do estado atual; landing humana e cartao de fonte corrigido permanecem preservados.
