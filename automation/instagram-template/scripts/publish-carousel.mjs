@@ -2331,20 +2331,6 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .layout-left .sector-cue { left: 92px; right: auto; top: 198px; width: 238px; opacity: 0.28; }
     .layout-corner .badge { top: 112px; }
     .layout-corner .headline { max-width: 760px; font-size: 62px; line-height: 1.02; }
-    .layout-corner .headline::after {
-      content: "Processo antes da ferramenta";
-      display: inline-flex;
-      margin-top: 38px;
-      padding: 16px 24px;
-      border-radius: 16px;
-      background: rgba(255,250,246,0.68);
-      border: 2px solid rgba(167,86,61,0.18);
-      color: ${accent};
-      font-size: 26px;
-      line-height: 1;
-      font-weight: 900;
-      text-transform: uppercase;
-    }
     .layout-corner .panel { top: 610px; right: 70px; bottom: auto; width: 310px; height: 310px; border-radius: 50%; transform: rotate(0deg); z-index: 3; }
     .layout-corner .context-photo { right: 72px; top: 284px; width: 316px; height: 220px; border-radius: 34px; }
     .layout-corner .panel::before { font-size: 62px; left: 50%; top: 50%; transform: translate(-50%, -50%); }

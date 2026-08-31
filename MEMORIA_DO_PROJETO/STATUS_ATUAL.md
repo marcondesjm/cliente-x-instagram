@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-31 12:44 BRT
+Atualizado em: 2026-08-31 12:49 BRT
 
 ## Regra permanente de checkpoint
 
@@ -37,6 +37,7 @@ Atualizado em: 2026-08-31 12:44 BRT
 
 ## Disparo automatico e composicao visual
 
+- O selo fixo `PROCESSO ANTES DA FERRAMENTA` foi removido de Story, Feed e Reel. A frase tambem saiu do card Radar e da previa reserva do dashboard. O render `2026-08-31-124857-slot-5-render-only` confirmou o Feed sem o selo e o Story somente com o CTA correto.
 - Stories acompanhados de Feed/Reel usam a chamada direta `Confira o conteudo completo no feed.` para conteudo proprio e Radar. Story avulso permanece sem CTA para uma publicacao inexistente. O render `2026-08-31-124342-slot-5-render-only` confirmou leitura e area segura.
 - Primeira publicacao real com Metodo IHC da Hanah: run `33260221670`, `https://www.instagram.com/reel/DcoQg0djKr3/`, media ID `18146973691557370`, Story ID `18214564504349184`, publicada em `2026-08-29T15:28:17.448Z`. O Reel usou 9 takes no fluxo Identificacao -> Historia -> Conteudo; primeiro comentario sem erro.
 - O run inicial `33260096504` foi bloqueado corretamente porque o Radar nao encontrou pauta oficial inedita em 30 dias. Para a publicacao solicitada, foi usado conteudo editorial proprio sem inventar fonte; depois da confirmacao, o Radar foi religado e o Metodo IHC permaneceu ativo.

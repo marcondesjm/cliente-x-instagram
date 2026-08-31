@@ -1,5 +1,13 @@
 # Historico
 
+## 2026-08-31 12:49 BRT
+
+- Esclarecido que a mensagem indesejada era o selo visual `PROCESSO ANTES DA FERRAMENTA`, inserido por CSS no layout `corner` e por isso visivel tambem em Feed e Reel.
+- O selo fixo foi removido do template compartilhado. A mesma frase saiu do quarto card gerado pelo Radar e da previa reserva do dashboard, impedindo que reapareca por outro caminho; o card Radar passou a usar `Comece por um fluxo pequeno e mensuravel.` como orientacao editorial contextual.
+- `Confira o conteudo completo no feed.` permanece exclusivamente no Story quando existe Feed/Reel associado. Feed e Reel nao exibem essa chamada.
+- Validacoes: sintaxe do publicador e da pesquisa editorial, `npm run validate-copy` (20 packs, 54 automaticos e 74 combinacoes), busca sem ocorrencias nos tres geradores, `git diff --check` e render `2026-08-31-124857-slot-5-render-only` passaram. Slide 3 e Story foram inspecionados visualmente sem o selo antigo.
+- Nenhuma publicacao Instagram foi disparada; pendente commit e envio ao remoto.
+
 ## 2026-08-31 12:44 BRT
 
 - A chamada dos Stories acompanhados de Feed/Reel foi unificada para `Confira o conteudo completo no feed.`, deixando explicito que a explicacao integral esta na publicacao principal.
