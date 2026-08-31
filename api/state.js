@@ -1253,19 +1253,6 @@ async function forceInstagramWatchdog(session) {
   }
 
   if (openError && /nenhuma pauta oficial dos ultimos 30 dias/i.test(String(openError.error || ''))) {
-    const edition = new Intl.DateTimeFormat('pt-BR', {
-      timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
-    }).format(new Date());
-    const pack = {
-      slides: [
-        { eyebrow: 'Diagnóstico', title: 'O gargalo invisível aparece entre uma tarefa e outra.', body: 'A equipe conclui uma etapa, mas a informação para no caminho e alguém precisa lembrar manualmente o próximo passo.' },
-        { eyebrow: 'Sinal 1', title: 'O processo depende de mensagens soltas.', body: 'Pedidos, aprovações e pendências ficam espalhados. A automação organiza a passagem sem esconder as exceções.' },
-        { eyebrow: 'Sinal 2', title: 'A mesma conferência acontece várias vezes.', body: 'Quando pessoas diferentes revisam os mesmos dados, faltam critério claro, registro e uma fonte única de verdade.' },
-        { eyebrow: 'Aplicação', title: 'Automatize a passagem, não a decisão importante.', body: 'O sistema coleta, valida e encaminha. A equipe continua responsável pelo que exige contexto e julgamento.' },
-        { eyebrow: 'Próximo passo', title: 'Escolha hoje uma espera que pode desaparecer.', body: `Mapeie quem entrega, quem recebe e qual informação precisa chegar completa para o trabalho continuar. Edição operacional: ${edition} BRT.` }
-      ],
-      caption: `Muitos gargalos não estão dentro de uma tarefa. Eles aparecem na passagem entre uma pessoa, uma planilha e o próximo sistema.\n\nUma boa automação organiza essa transição: coleta o que importa, valida o básico e encaminha com responsável e prazo. A decisão importante continua humana.\n\nEdição operacional: ${edition} BRT.\n\n#inteligenciaartificial #automacao #gestao #processos #empresas`
-    };
     const slotIndex = Number.isInteger(Number(openError.slotIndex)) ? String(openError.slotIndex) : '0';
     const account = readJson(ACCOUNTS_PATH).find((item) => item.account === 'cliente-x');
     const reelSlots = Array.isArray(account?.reelScheduleSlots) ? account.reelScheduleSlots.map(Number) : [];
@@ -1274,14 +1261,14 @@ async function forceInstagramWatchdog(session) {
       method: 'POST',
       body: JSON.stringify({
         ref: 'main',
-        inputs: { account: 'cliente-x', dry_run: 'false', slot_index: slotIndex, publish_mode: publishMode, scheduled_only: 'false', pack_json: JSON.stringify(pack) }
+        inputs: { account: 'cliente-x', dry_run: 'false', slot_index: slotIndex, publish_mode: publishMode, scheduled_only: 'false', pack_json: '' }
       })
     });
     const request = { requestedAt: now, errorKey: openError.key, slotIndex: Number(slotIndex), runMode: publishMode };
     await writeGithubConfig(WATCHDOG_RECOVERY_REQUEST_FILE_PATH, request, previousRequest?.sha || undefined, `Record watchdog recovery ${now}`);
     return {
       ok: true,
-      message: 'Correcao editorial acionada com conteudo proprio e inedito. O GitHub Actions iniciou a recuperacao.',
+      message: 'Correcao editorial acionada. O publicador escolhera uma pauta realmente inedita pelo historico antes de publicar.',
       forcedAt: now,
       runMode: publishMode
     };

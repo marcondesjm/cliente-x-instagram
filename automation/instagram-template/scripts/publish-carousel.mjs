@@ -3578,7 +3578,7 @@ function normalizeContentFingerprint(value = '') {
     .toLowerCase()
     .replace(/https?:\/\/\S+/g, ' ')
     .replace(/#\S+/g, ' ')
-    .replace(/\b(?:serie pratica|slot|run)\b[^\n.]*/g, ' ')
+    .replace(/\b(?:serie pratica|edicao operacional|slot|run)\b[^\n.]*/g, ' ')
     .replace(/[^a-z0-9]+/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
@@ -3675,7 +3675,9 @@ function findDuplicateSelection(pack, recentMedia = [], publicationHistory = [])
       || findDuplicateCoverTitle(recentMedia, publicationHistory, pack)
       || findDuplicatePack(publicationHistory, pack);
   }
-  return findDuplicateCaption(recentMedia, pack.caption) || findDuplicatePack(publicationHistory, pack);
+  return findDuplicateCoverTitle(recentMedia, publicationHistory, pack)
+    || findDuplicateCaption(recentMedia, pack.caption)
+    || findDuplicatePack(publicationHistory, pack);
 }
 
 function balanceResearchPacksByHistory(packs = [], publicationHistory = [], dateString = '', slotIndex = 0) {
@@ -4206,6 +4208,19 @@ async function main() {
       coverTitle: duplicateProbePack?.slides?.[0]?.title || ''
     }], duplicateProbePack);
     if (!coverProbe) throw new Error('Protecao anti-repeticao de capa falhou no teste de historico.');
+    const datedDuplicateProbe = {
+      ...duplicateProbePack,
+      slides: duplicateProbePack.slides.map((slide, index) => index === duplicateProbePack.slides.length - 1
+        ? { ...slide, body: `${slide.body} Edicao operacional 31/08/2026 12:00 BRT.` }
+        : slide),
+      caption: `${duplicateProbePack.caption}\n\nEdicao operacional 31/08/2026 12:00 BRT.`
+    };
+    if (!findDuplicateSelection(datedDuplicateProbe, [], [{
+      coverTitle: duplicateProbePack?.slides?.[0]?.title || '',
+      feedFingerprint: packContentFingerprint(duplicateProbePack)
+    }])) {
+      throw new Error('Data de edicao permitiu repetir titulo ou tema editorial no teste de historico.');
+    }
     const sourceProbePack = {
       ...duplicateProbePack,
       research: { source: 'Fonte de teste', sourceUrl: 'https://example.com/noticia-nova' }
@@ -4609,24 +4624,30 @@ async function main() {
             usedEditorialReserveThisSlot = true;
             console.log(`Radar editorial: fontes oficiais esgotadas; reserva editorial propria e inedita selecionada sem inventar fonte jornalistica.`);
           } else {
-            const fallbackPack = buildLastResortPack(today, generationSlotIndex);
-            validatePack(fallbackPack);
-            pack = fallbackPack;
-            packIndex = `editorial-reserve-${slotIndex}`;
-            skippedDuplicates = fresh.skippedDuplicates + reserveFresh.skippedDuplicates;
+            const fallbackPacks = Array.from({ length: creativeBatchSize }, (_, offset) => buildLastResortPack(today, generationSlotIndex + offset));
+            const fallbackFresh = pickFreshPack(fallbackPacks, today, generationSlotIndex, recentMedia, publicationHistory);
+            if (!fallbackFresh.pack) {
+              throw new Error('Reserva editorial bloqueada: nenhuma pauta realmente inedita esta disponivel. Nenhum post repetido foi publicado.');
+            }
+            validatePack(fallbackFresh.pack);
+            pack = fallbackFresh.pack;
+            packIndex = `editorial-reserve-${fallbackFresh.packIndex}`;
+            skippedDuplicates = fresh.skippedDuplicates + reserveFresh.skippedDuplicates + fallbackFresh.skippedDuplicates;
             useResearchThisSlot = false;
             usedEditorialReserveThisSlot = true;
-            console.log('Radar editorial: fontes oficiais e packs editoriais recentes esgotados; edicao operacional unica selecionada sem inventar fonte jornalistica.');
+            console.log('Radar editorial: fontes oficiais e packs editoriais recentes esgotados; reserva operacional com titulo e tema ineditos selecionada sem inventar fonte jornalistica.');
           }
         }
         if (!radar.enabled) {
           const autoFresh = pickFreshPack(autoPacks, today, generationSlotIndex, recentMedia, publicationHistory);
           if (!autoFresh.pack) {
-            const fallbackPack = buildLastResortPack(today, generationSlotIndex);
-            validatePack(fallbackPack);
-            pack = fallbackPack;
-            packIndex = `auto-unique-${slotIndex}`;
-            skippedDuplicates = fresh.skippedDuplicates + autoFresh.skippedDuplicates;
+            const fallbackPacks = Array.from({ length: creativeBatchSize }, (_, offset) => buildLastResortPack(today, generationSlotIndex + offset));
+            const fallbackFresh = pickFreshPack(fallbackPacks, today, generationSlotIndex, recentMedia, publicationHistory);
+            if (!fallbackFresh.pack) throw new Error('Conteudo automatico bloqueado: nenhuma pauta realmente inedita esta disponivel. Nenhum post repetido foi publicado.');
+            validatePack(fallbackFresh.pack);
+            pack = fallbackFresh.pack;
+            packIndex = `auto-unique-${fallbackFresh.packIndex}`;
+            skippedDuplicates = fresh.skippedDuplicates + autoFresh.skippedDuplicates + fallbackFresh.skippedDuplicates;
             console.log(`Conteudo unico de emergencia selecionado porque ${automaticSelectionPacks.length} captions preferenciais e ${autoPacks.length} captions automaticas ja aparecem nas midias recentes.`);
           } else {
             pack = autoFresh.pack;
