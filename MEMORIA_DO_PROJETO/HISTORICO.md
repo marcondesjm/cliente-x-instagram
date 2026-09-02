@@ -2383,3 +2383,12 @@ Conclusao de ativacao:
 - Tambem foram corrigidos os contrastes de `SALVE ESTE PASSO` e da primeira linha do CTA final.
 - Carrossel completo validado no render `2026-09-02-155412-slot-12-render-only`: cinco slides com fotografia, texto legivel e sem vazio estrutural.
 - `npm run validate-copy`, `node --check` e `git diff --check` aprovados. Os dois posts ja publicados foram preservados.
+
+# 2026-09-02 16:01 BRT — Carrossel corrigido publicado para avaliacao
+
+- O terceiro conteudo da campanha foi antecipado sem duplicar os dois posts anteriores.
+- Titulo: `O gestor de IA não substitui especialistas. Ele coordena.`.
+- Os cinco slides foram publicados com imagens e composicoes alternadas.
+- Run `33670504478` concluido com sucesso; permalink `https://www.instagram.com/p/Dcy8DiAmLUq/`.
+- Carrossel ID `17884934352476762`; Story ID `18094862405434959`; publicado em `2026-09-02T19:00:53.101Z` (16:00 BRT).
+- Estado persistido como `published`; restam 18 posts pendentes na campanha.
