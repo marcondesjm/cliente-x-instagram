@@ -608,6 +608,7 @@ Resultado:
 ## Proximo passo recomendado
 
 - Correcao de 2026-09-02 19:35 BRT pronta para envio: separar a fila manual da fila automatica, reforcar os quatro disparos independentes de 15 minutos do watchdog, executar recuperacao apos o workflow principal e persistir por 48 horas a ultima coleta valida do Radar. O cache inicial contem 27 pautas de G1 Tecnologia, n8n e OpenAI. A Vercel Hobby foi descartada como segundo cron por aceitar apenas execucao diaria. Depois do envio, exigir prova do proximo slot automatico por run final, ledger, permalink, ID do Feed/Reel e ID do Story.
+- Primeira prova sem intervencao: run agendado `33692327772` as 19:50 BRT acionou o watchdog `33692370977` por `workflow_run`; ambos concluiram com sucesso no commit `30c9b3f` e nao publicaram fora de horario. O proximo teste com publicacao devida e o slot 12, as 22:00 BRT.
 
 - Capa dos proximos Reels corrigida em 2026-09-02 17:30 BRT: a foto deixa de ser miniatura isolada no alto; tres composicoes amplas passam a alternar por horario e o banco empresarial sobe de quatro para sete imagens. Confirmar visualmente o proximo Reel real antes de considerar a correcao encerrada.
 
