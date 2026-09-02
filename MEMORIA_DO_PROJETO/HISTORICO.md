@@ -2420,3 +2420,12 @@ Conclusao de ativacao:
 - Permalink: `https://www.instagram.com/p/Dcy_cy5DfLo/`; Feed ID `18436198660131973`; Story ID `17912968407263304`; publicado as 16:30 BRT.
 - A imagem hospedada do Story foi inspecionada: fotografia ampla de desenvolvimento ocupa a metade inferior da composicao 9:16, preservando titulo, referencia do livro e CTA.
 - Imagens persistidas no commit `ff4d3c9`; fila e historico persistidos em `60ca672`. Restam 17 posts pendentes na campanha.
+
+# 2026-09-02 16:40 BRT — Reel seguinte publicado sob demanda
+
+- O item `livro-claude-code-20260902-05`, `Pare de consumir respostas. Comece a arquitetar resultados.`, foi antecipado mantendo a ordem da campanha.
+- A primeira tentativa, run `33673971851`, falhou antes da Meta por concorrencia ao atualizar a referencia do GitHub (`422 Update is not a fast forward`); nenhum permalink ou ID foi produzido.
+- Depois de sincronizar `origin/main`, o mesmo item foi recolocado como pendente, sem mudar seu conteudo, e repetido pelo run `33674428382`.
+- Publicacao real confirmada: `https://www.instagram.com/reel/DczAgGDjrOF/`; Reel ID `18103495247195444`; Story ID `17913972708445687`; publicado as 16:40 BRT.
+- O Story hospedado foi inspecionado: titulo, referencia e CTA legiveis sobre fundo escuro, com fotografia ampla de planejamento na metade inferior e sem sobreposicao.
+- Midias persistidas em `e54b9aa` e `bc7a8f3`; fila e historico em `f03acb7`. Restam 16 posts pendentes.
