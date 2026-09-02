@@ -607,6 +607,8 @@ Resultado:
 
 ## Proximo passo recomendado
 
+- Correcao preparada em 2026-09-02 17:24 BRT para contornar automaticamente o `422 Update is not a fast forward` na hospedagem GitHub: carrossel, Story e Reel passam a reler o HEAD e repetir somente essa colisao segura ate seis vezes. Validacoes de sintaxe, diff e copy aprovadas; falta enviar o commit ao `origin/main` e confirmar o proximo run real.
+
 - Direct: `LIVRO` esta cadastrado na automacao `50 Prompts de IA`, mas a Meta bloqueia o envio enquanto `Permitir acesso as mensagens` estiver desligado no aplicativo Instagram. Ativar essa chave e testar com comentario de outra conta.
 
 - Conferir visualmente o Reel `https://www.instagram.com/reel/Dcy6bJVAPuC/`, publicado com a nova capa lateral; IDs confirmados: Reel `18077182838342033` e Story `18063951035769508`.

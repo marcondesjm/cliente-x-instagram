@@ -32,6 +32,7 @@ const FORBIDDEN_GENERIC_RESEARCH_COVERS = [
 const IG_BASE = 'https://graph.facebook.com/v21.0';
 const RETRY_ATTEMPTS = Number.parseInt(process.env.INSTAGRAM_TEMPLATE_RETRY_ATTEMPTS || '3', 10);
 const RETRY_BASE_DELAY_MS = Number.parseInt(process.env.INSTAGRAM_TEMPLATE_RETRY_BASE_DELAY_MS || '2500', 10);
+const GITHUB_REF_RETRY_ATTEMPTS = Number.parseInt(process.env.INSTAGRAM_TEMPLATE_GITHUB_REF_RETRY_ATTEMPTS || '6', 10);
 const MEDIA_URL_RETRY_ATTEMPTS = Number.parseInt(process.env.INSTAGRAM_TEMPLATE_MEDIA_URL_RETRY_ATTEMPTS || '3', 10);
 const RETRYABLE_STATUS = new Set([408, 409, 425, 429, 500, 502, 503, 504]);
 const RETRYABLE_CODES = new Set([
@@ -2950,10 +2951,16 @@ function createHttpError(label, status, body) {
   const graphMediaDownloadRejected = graphError
     && graphError.code === 9004
     && graphError.error_subcode === 2207052;
+  const githubRefRace = label.startsWith('GitHub ')
+    && status === 422
+    && /update is not a fast forward/i.test(String(payload?.message || body));
   error.stage = label;
   error.status = status;
   error.responseBody = bodyPreview;
-  error.retryable = RETRYABLE_STATUS.has(status) || Boolean(graphMediaTimeout) || Boolean(graphMediaDownloadRejected);
+  error.retryable = RETRYABLE_STATUS.has(status)
+    || Boolean(graphMediaTimeout)
+    || Boolean(graphMediaDownloadRejected)
+    || githubRefRace;
   error.mediaUrlRejected = Boolean(graphMediaDownloadRejected);
   return error;
 }
@@ -3964,7 +3971,7 @@ async function hostRenderedImagesOnGitHub(imagePaths, accountKey, runId) {
     await Promise.all(urls.map((url) => assertRemoteImageReady(url)));
     console.log(`Imagens hospedadas no GitHub em um unico commit: ${commit.sha}.`);
     return urls;
-  });
+  }, GITHUB_REF_RETRY_ATTEMPTS);
 }
 
 async function hostRenderedVideoOnGitHub(videoPath, accountKey, runId) {
@@ -3995,7 +4002,7 @@ async function hostRenderedVideoOnGitHub(videoPath, accountKey, runId) {
     await assertRemoteVideoReady(url);
     console.log(`Reel hospedado no GitHub: ${commit.sha}.`);
     return url;
-  });
+  }, GITHUB_REF_RETRY_ATTEMPTS);
 }
 
 const REEL_SOUNDTRACKS = [
@@ -4268,6 +4275,18 @@ async function main() {
   validatePacks(autoPacks);
   validatePacks(automaticSelectionPacks);
   if (args.validateCopy) {
+    const githubRaceProbe = createHttpError(
+      'GitHub image hosting',
+      422,
+      JSON.stringify({ message: 'Update is not a fast forward', status: '422' })
+    );
+    if (!githubRaceProbe.retryable) throw new Error('Recuperacao da corrida de referencia do GitHub falhou no teste.');
+    const githubInvalidProbe = createHttpError(
+      'GitHub image hosting',
+      422,
+      JSON.stringify({ message: 'Validation Failed', status: '422' })
+    );
+    if (githubInvalidProbe.retryable) throw new Error('Erro permanente 422 do GitHub foi marcado para repeticao indevida.');
     const duplicateProbePack = automaticSelectionPacks[0];
     const duplicateProbe = pickFreshPack([duplicateProbePack], today, slotIndex, [], [{
       feedFingerprint: packContentFingerprint(duplicateProbePack),

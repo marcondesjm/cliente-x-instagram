@@ -2446,3 +2446,11 @@ Conclusao de ativacao:
 - Os cinco slides hospedados e o Story foram inspecionados visualmente. Foto, titulo e cartao ocupam areas separadas em todas as pecas; nenhuma sobreposicao foi encontrada.
 - Imagens persistidas em `7552836`; fila e historico em `2afb8f4`.
 - A campanha mantem a cadencia contratada de tres posts por dia. Como os tres itens de 03/09 foram antecipados e ja publicados, restam 15 itens: tres por dia entre 04/09 e 08/09, nos horarios 08:10, 14:15 e 19:00 BRT.
+
+# 2026-09-02 17:24 BRT — Recuperacao automatica da corrida de referencia do GitHub
+
+- O erro `422 Update is not a fast forward` foi confirmado como concorrencia entre workflows ao hospedar midia na mesma branch, e nao como falha de token ou conteudo.
+- O publicador agora classifica somente essa resposta 422 especifica como recuperavel, rele o HEAD e repete a operacao ate seis vezes com espera progressiva.
+- A protecao vale para imagens de carrossel/Story e para videos de Reel; outros erros 422 continuam bloqueando para nao esconder configuracoes invalidas.
+- Validacoes locais aprovadas: `node --check`, `git diff --check` e `npm run validate-copy`, incluindo testes positivo e negativo da nova classificacao.
+- A alteracao nao disparou postagem adicional. O erro aberto do slot 9 permanece como registro da tentativa anterior e deve ser resolvido apenas por um run automatico real concluido com IDs e permalink.
