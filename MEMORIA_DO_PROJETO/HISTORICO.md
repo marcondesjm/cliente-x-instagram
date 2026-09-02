@@ -2411,3 +2411,12 @@ Conclusao de ativacao:
 - Validacoes locais aprovadas: `node --check`, `git diff --check` e `npm run validate-copy` com 20 packs locais, 54 automaticos e 74 combinacoes.
 - Esta alteracao vale para os 18 posts pendentes; o Story ja publicado foi preservado. A prova de producao sera o proximo run completo, com permalink, ID do Feed/Reel e ID do Story.
 - Correcao funcional enviada ao `origin/main` no commit `6dca382`; nenhum deploy Vercel foi necessario porque o publicador e executado pelo GitHub Actions.
+
+# 2026-09-02 16:30 BRT — Primeiro Story com fotografia grande publicado
+
+- O item `livro-claude-code-20260902-04` foi antecipado para publicacao imediata, sem alterar a ordem dos demais itens pendentes.
+- Titulo: `Oito competências para liderar projetos com IA.`; formato Feed + Story; conta confirmada `@marcondes.machado.oficial`.
+- Run `33673473650` concluiu com sucesso, incluindo `Publish feed and story` e persistencia da fila.
+- Permalink: `https://www.instagram.com/p/Dcy_cy5DfLo/`; Feed ID `18436198660131973`; Story ID `17912968407263304`; publicado as 16:30 BRT.
+- A imagem hospedada do Story foi inspecionada: fotografia ampla de desenvolvimento ocupa a metade inferior da composicao 9:16, preservando titulo, referencia do livro e CTA.
+- Imagens persistidas no commit `ff4d3c9`; fila e historico persistidos em `60ca672`. Restam 17 posts pendentes na campanha.
