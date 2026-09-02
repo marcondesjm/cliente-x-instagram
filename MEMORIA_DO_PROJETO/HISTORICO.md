@@ -2335,3 +2335,15 @@ Conclusao de ativacao:
 - Campanha, agenda e checkpoint enviados ao `origin/main`; estado remoto confirmado em `5f0f488`.
 - Nenhum deploy Vercel foi necessario, pois a alteracao atua no fluxo editorial e na fila persistida do GitHub Actions.
 - Primeira pauta agendada para 02/09/2026 16:00 BRT; a publicacao somente sera considerada comprovada depois do run final, historico persistido, permalink, ID do Feed/Reel e ID do Story.
+
+# 2026-09-02 15:15 BRT — Primeira divulgacao real do livro
+
+- A pedido do usuario, o primeiro item da campanha foi antecipado para 15:12 BRT no commit `869cdf8` e disparado como fila agendada, evitando uma segunda publicacao do mesmo item as 16:00.
+- A confirmacao de seguranca permaneceu ativa: o publicador validou a conta esperada `@marcondes.machado.oficial` antes do envio a Meta.
+- Run `33665825418` concluiu `Publish feed and story`, persistencia da fila e historico sem etapa com falha.
+- Publicacao: `https://www.instagram.com/p/Dcy2yCcIJ8P/`.
+- Carrossel ID `17897174445596019`; Story ID `17965005330177964`; publicado em `2026-09-02T18:14:47.755Z` (15:14 BRT).
+- Titulo: `A IA ficou mais rápida. A gestão ficou mais importante.`; trecho autoral do Prefacio, pagina 3, sem `research` jornalistico inventado.
+- Primeiro comentario: sem ID e sem erro. O vigia ficou com zero erro aberto.
+- Imagens hospedadas no commit `b077353`; fila e historico persistidos em `e1bd3cd`.
+- Proximo passo: manter os demais 20 itens agendados e usar o permalink real para avaliacao visual do primeiro carrossel.

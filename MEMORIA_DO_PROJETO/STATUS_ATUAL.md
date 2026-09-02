@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-09-02 15:08 BRT
+Atualizado em: 2026-09-02 15:15 BRT
 
 ## Regra permanente de checkpoint
 
@@ -10,12 +10,14 @@ Atualizado em: 2026-09-02 15:08 BRT
 
 ## Projeto ativo
 
+- Primeira publicacao real do livro confirmada no run `33665825418`: `https://www.instagram.com/p/Dcy2yCcIJ8P/`, carrossel ID `17897174445596019` e Story ID `17965005330177964`, publicados as 15:14 BRT. Primeiro comentario sem ID e sem erro.
+- Pauta publicada: `A IA ficou mais rápida. A gestão ficou mais importante.`, baseada no Prefacio, pagina 3. O item `livro-claude-code-20260902-01` esta persistido como `published`; zero erro aberto no vigia.
 - Campanha autoral do livro `Como Ser Gestor do Claude Code`, de Marcondes Jorge Machado, preparada na branch `feature/claude-book-editorial` sobre o `origin/main` atualizado.
 - A agenda possui 21 publicacoes entre 02/09 e 08/09/2026, sempre 3 por dia. Em 02/09: 16:00, 19:00 e 22:00 BRT; nos demais dias: 08:10, 14:15 e 19:00 BRT.
 - Cada pack possui cinco cards com trecho curto, capitulo, pagina, explicacao, aplicacao pratica e divulgacao da obra completa. Os packs sao autorais, nao possuem `research` e nao inventam fonte jornalistica do Radar.
 - O ultimo card usa `Comente LIVRO` sem prometer envio ou link de compra ainda nao informado. Os rótulos autorais com `preserveEngagementCopy` permanecem intactos durante o aprimoramento automatico.
 - Validacoes: 21 itens e 3 itens por dia confirmados, `node --check`, `git diff --check` e `npm run validate-copy` aprovados. Tres packs foram renderizados e o primeiro foi reinspecionado apos os ajustes; Feed 1080x1350 e Story 1080x1920 ficaram legiveis, sem sobreposicao e sem a chamada falsa `link na bio`.
-- Campanha enviada ao `origin/main` pelos commits `179fcf4` (`Add authored Claude book campaign`), `7b3b306` (`Schedule Claude book publication series`) e checkpoint `5f0f488`. A primeira publicacao real esta agendada para 02/09/2026 16:00 BRT.
+- Campanha enviada ao `origin/main` pelos commits `179fcf4` (`Add authored Claude book campaign`), `7b3b306` (`Schedule Claude book publication series`) e checkpoint `5f0f488`. A antecipacao solicitada foi registrada em `869cdf8`; o estado publicado foi persistido automaticamente em `e1bd3cd`.
 - Pasta operacional registrada: `cliente-x-instagram-modern-incident`; campanha preparada em worktree limpa `cliente-x-instagram-modern-book` para preservar o trabalho local existente.
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
 - Correcao funcional mais recente: `a2faee3` (`Use editorial reserve when Radar is exhausted`). Quando as pautas oficiais ineditas de ate 30 dias acabam, o fluxo automatico usa reserva editorial propria e inedita; se necessario, gera uma edicao operacional unica. A trava de fonte oficial continua obrigatoria para qualquer noticia do Radar.
