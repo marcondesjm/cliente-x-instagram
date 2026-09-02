@@ -1241,6 +1241,7 @@ function enhanceSlide(slide, index, dateString, slotIndex, goal = CONTENT_GOALS.
   if (next.imagePath || next.imageUrl) return next;
 
   next.visualVariant = engagementVariant(dateString, slotIndex, index);
+  if (next.preserveEngagementCopy) return next;
   if (totalSlides > 1 && index === totalSlides - 1 && !next.preserveEngagementCopy) {
     return {
       ...next,
