@@ -201,6 +201,10 @@ const schedules = [
 ];
 
 function buildPack(topic, index) {
+  const visualForSlide = (slideIndex) => ({
+    imagePath: BOOK_VISUALS[(index + slideIndex) % BOOK_VISUALS.length],
+    imageLayout: BOOK_IMAGE_LAYOUTS[(index + slideIndex) % BOOK_IMAGE_LAYOUTS.length]
+  });
   const cta = index % 3 === 0
     ? 'Qual parte da gestão de IA mais desafia você hoje?'
     : index % 3 === 1
@@ -219,14 +223,13 @@ function buildPack(topic, index) {
         eyebrow: 'Trecho do livro',
         title: topic.cover,
         body: `${BOOK_TITLE}, ${topic.chapter}, página ${topic.page}.`,
-        imagePath: BOOK_VISUALS[index % BOOK_VISUALS.length],
-        imageLayout: BOOK_IMAGE_LAYOUTS[index % BOOK_IMAGE_LAYOUTS.length],
+        ...visualForSlide(0),
         preserveEngagementCopy: true
       },
-      { eyebrow: 'Nas palavras do autor', title: `“${topic.excerpt}”`, body: 'Trecho selecionado da obra.', preserveEngagementCopy: true },
-      { eyebrow: 'O que isso significa', title: 'A ideia precisa sair do papel.', body: topic.lesson, preserveEngagementCopy: true },
-      { eyebrow: 'Aplicação prática', title: 'Leve o conceito para o próximo projeto.', body: topic.action, preserveEngagementCopy: true },
-      { eyebrow: 'Livro completo', title: BOOK_TITLE, body: `Comente LIVRO e diga qual tema você quer ver nos próximos posts. Obra de ${BOOK_AUTHOR}.`, preserveEngagementCopy: true }
+      { eyebrow: 'Nas palavras do autor', title: `“${topic.excerpt}”`, body: 'Trecho selecionado da obra.', ...visualForSlide(1), preserveEngagementCopy: true },
+      { eyebrow: 'O que isso significa', title: 'A ideia precisa sair do papel.', body: topic.lesson, ...visualForSlide(2), preserveEngagementCopy: true },
+      { eyebrow: 'Aplicação prática', title: 'Leve o conceito para o próximo projeto.', body: topic.action, ...visualForSlide(3), preserveEngagementCopy: true },
+      { eyebrow: 'Livro completo', title: BOOK_TITLE, body: `Comente LIVRO e diga qual tema você quer ver nos próximos posts. Obra de ${BOOK_AUTHOR}.`, ...visualForSlide(4), preserveEngagementCopy: true }
     ],
     caption: `${topic.cover}\n\n“${topic.excerpt}”\n\n${topic.lesson}\n\nAplicação prática: ${topic.action}\n\nEste é um trecho de ${BOOK_TITLE}, de ${BOOK_AUTHOR}. A obra completa reúne fundamentos, prompts, checklists, estudos de caso, ideias de negócios e um plano de execução para liderar projetos com inteligência artificial.\n\n${cta}\n\nComente LIVRO e diga qual assunto você quer acompanhar nesta série.\n\n#ClaudeCode #InteligenciaArtificial #AgentesDeIA #GestaoDeProjetos #Automacao #SaaS #Livro #Tecnologia`
   };

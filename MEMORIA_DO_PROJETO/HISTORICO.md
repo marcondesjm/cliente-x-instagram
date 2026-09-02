@@ -2374,3 +2374,12 @@ Conclusao de ativacao:
 - Reel ID `18077182838342033`; Story ID `18063951035769508`; publicado em `2026-09-02T18:46:56.755Z` (15:46 BRT).
 - A fila persistida marcou o item como `published`; nenhum disparo duplicado foi executado.
 - Restam 19 posts pendentes na campanha do livro.
+
+# 2026-09-02 15:55 BRT — Imagens corrigidas em todos os slides do livro
+
+- A revisao do Reel publicado revelou que apenas a capa recebia `imagePath`; os slides 2 a 5 voltavam ao layout antigo sem fotografia.
+- O gerador agora atribui imagem e composicao a cada um dos cinco slides dos 19 posts pendentes.
+- Dentro de cada carrossel, as imagens percorrem o banco de oito visuais e as composicoes alternam entre `book-hero`, `book-split` e `book-editorial`.
+- Tambem foram corrigidos os contrastes de `SALVE ESTE PASSO` e da primeira linha do CTA final.
+- Carrossel completo validado no render `2026-09-02-155412-slot-12-render-only`: cinco slides com fotografia, texto legivel e sem vazio estrutural.
+- `npm run validate-copy`, `node --check` e `git diff --check` aprovados. Os dois posts ja publicados foram preservados.

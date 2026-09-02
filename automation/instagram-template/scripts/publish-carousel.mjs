@@ -2616,6 +2616,8 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     }
     .impact-carousel.has-sector-photo .note .emphasis,
     .impact-carousel.has-sector-photo .note .close { color: #111; }
+    .impact-carousel.has-sector-photo .save-cue { background: #111; color: #fff; }
+    .impact-carousel.has-sector-photo.role-cta .note .lead { color: ${accent}; }
     .impact-carousel.has-sector-photo.book-split .context-photo {
       left: 570px;
       right: 58px;
