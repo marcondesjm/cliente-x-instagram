@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-08-31 14:05 BRT
+Atualizado em: 2026-09-02 15:08 BRT
 
 ## Regra permanente de checkpoint
 
@@ -10,7 +10,13 @@ Atualizado em: 2026-08-31 14:05 BRT
 
 ## Projeto ativo
 
-- Pasta ativa: `cliente-x-instagram-modern-incident`
+- Campanha autoral do livro `Como Ser Gestor do Claude Code`, de Marcondes Jorge Machado, preparada na branch `feature/claude-book-editorial` sobre o `origin/main` atualizado.
+- A agenda possui 21 publicacoes entre 02/09 e 08/09/2026, sempre 3 por dia. Em 02/09: 16:00, 19:00 e 22:00 BRT; nos demais dias: 08:10, 14:15 e 19:00 BRT.
+- Cada pack possui cinco cards com trecho curto, capitulo, pagina, explicacao, aplicacao pratica e divulgacao da obra completa. Os packs sao autorais, nao possuem `research` e nao inventam fonte jornalistica do Radar.
+- O ultimo card usa `Comente LIVRO` sem prometer envio ou link de compra ainda nao informado. Os rótulos autorais com `preserveEngagementCopy` permanecem intactos durante o aprimoramento automatico.
+- Validacoes: 21 itens e 3 itens por dia confirmados, `node --check`, `git diff --check` e `npm run validate-copy` aprovados. Tres packs foram renderizados e o primeiro foi reinspecionado apos os ajustes; Feed 1080x1350 e Story 1080x1920 ficaram legiveis, sem sobreposicao e sem a chamada falsa `link na bio`.
+- Commits preparados: `179fcf4` (`Add authored Claude book campaign`) e `7b3b306` (`Schedule Claude book publication series`). Envio ao `origin/main` e primeira publicacao real ainda pendentes neste checkpoint.
+- Pasta operacional registrada: `cliente-x-instagram-modern-incident`; campanha preparada em worktree limpa `cliente-x-instagram-modern-book` para preservar o trabalho local existente.
 - Branch operacional: `main` (trabalho preparado em `fix/watchdog-story-overlap-20260828`).
 - Correcao funcional mais recente: `a2faee3` (`Use editorial reserve when Radar is exhausted`). Quando as pautas oficiais ineditas de ate 30 dias acabam, o fluxo automatico usa reserva editorial propria e inedita; se necessario, gera uma edicao operacional unica. A trava de fonte oficial continua obrigatoria para qualquer noticia do Radar.
 - Correcao anti-repeticao mais recente: `5dea2b3` (`Block dated editorial duplicates`). O botao nao envia mais o pack fixo `O gargalo invisivel...`; titulo/tema proprietario repetido e bloqueado mesmo com outra data, e a reserva percorre ate 74 alternativas antes de desistir sem publicar.

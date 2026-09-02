@@ -2314,3 +2314,18 @@ Conclusão de produção:
 - A sessão autenticada aberta no Chrome foi recarregada e confirmou `Versão atual: v5.54`, checkagem OK e a faixa visível com os cinco botões: carrossel, IHC, Bottini, Radar e salvar perfil.
 - Inspeção visual em tela larga confirmou que a plataforma ocupa a área útil corretamente e que os controles aparecem antes dos campos do perfil.
 - Nenhuma mídia foi publicada.
+
+# 2026-09-02 15:08 BRT — Campanha autoral do livro Como Ser Gestor do Claude Code
+
+- Fonte autoral analisada: PDF completo ilustrado com 101 paginas, de Marcondes Jorge Machado.
+- Foram selecionados 21 trechos curtos dos capitulos sobre lideranca de IA, requisitos, prompts, gestao, seguranca, monetizacao e SaaS.
+- Cada pauta possui cinco cards: abertura, trecho identificado por capitulo/pagina, interpretacao, aplicacao pratica e divulgacao do livro completo.
+- A agenda inicial cobre 02/09 a 08/09/2026 com exatamente tres conteudos do livro por dia. Hoje: 16:00, 19:00 e 22:00 BRT; depois: 08:10, 14:15 e 19:00 BRT.
+- Os demais horarios existentes foram preservados. Conteudo do livro e autoral, nao recebe `research` e nao e apresentado como materia jornalistica do Radar.
+- O CTA final usa `Comente LIVRO` apenas como interacao. Nao foi prometido envio automatico nem usado `link na bio`, pois nenhum endereco de compra foi informado.
+- `179fcf4` adiciona o gerador reproduzivel `scripts/schedule-claude-book-campaign.mjs` e preserva textos marcados com `preserveEngagementCopy`.
+- `7b3b306` registra os 21 posts pendentes em `scheduled-posts.json` sobre o estado remoto atualizado.
+- Validacoes aprovadas: 21 posts, 3 por dia, legendas abaixo de 2.100 caracteres, cinco slides por pack, `node --check`, `git diff --check` e `npm run validate-copy` com 20 packs locais, 54 automaticos e 74 combinacoes.
+- Renders inspecionados: `2026-09-02-150558-slot-0-render-only`, `2026-09-02-150608-slot-1-render-only`, `2026-09-02-150615-slot-7-render-only` e render final corrigido `2026-09-02-150745-slot-0-render-only`.
+- No render final, capa, trecho, CTA e Story ficaram legiveis e sem sobreposicao; o selo final mostra `COMENTE LIVRO`.
+- Publicacao real: ainda nao executada neste checkpoint. Proximo passo: enviar a agenda ao `origin/main` e acompanhar o primeiro horario ate permalink, Feed/Reel ID e Story ID.
