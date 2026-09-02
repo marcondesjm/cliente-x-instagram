@@ -2152,6 +2152,9 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const researchImage = index === 1 ? fileCssImage(renderContext.researchSourceImagePath || '') : '';
   const sectorPhotoImage = explicitSlideImage || (useSectorPhoto ? sectorPhotoCssImage(visualCue, index, renderContext) : '');
   const sectorPhotoClass = sectorPhotoImage ? ' has-sector-photo' : '';
+  const imageLayoutClass = isImpact && sectorPhotoImage && ['book-hero', 'book-split', 'book-editorial'].includes(slide.imageLayout)
+    ? ` ${slide.imageLayout}`
+    : '';
   const swipeCue = index === 1 ? '<div class="swipe-cue">arraste para ver</div>' : '';
   const commentKeyword = `${title} ${body}`.match(/\bcomente\s+([\p{L}\p{N}_-]+)/iu)?.[1];
   const finalCue = commentKeyword ? `comente ${commentKeyword}` : /\bcomente\b/i.test(`${title} ${body}`) ? 'comente IA' : 'link na bio';
@@ -2613,6 +2616,43 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     }
     .impact-carousel.has-sector-photo .note .emphasis,
     .impact-carousel.has-sector-photo .note .close { color: #111; }
+    .impact-carousel.has-sector-photo.book-split .context-photo {
+      left: 570px;
+      right: 58px;
+      top: 255px;
+      width: auto;
+      height: 790px;
+    }
+    .impact-carousel.has-sector-photo.book-split .headline {
+      margin-top: 165px;
+      max-width: 450px;
+      font-size: 61px;
+    }
+    .impact-carousel.has-sector-photo.book-split .note {
+      left: 70px;
+      top: 820px;
+      width: 450px;
+      min-height: 225px;
+    }
+    .impact-carousel.has-sector-photo.book-editorial .context-photo {
+      left: 58px;
+      right: auto;
+      top: 330px;
+      width: 555px;
+      height: 735px;
+    }
+    .impact-carousel.has-sector-photo.book-editorial .headline {
+      margin: 178px 0 0 590px;
+      max-width: 390px;
+      font-size: 58px;
+    }
+    .impact-carousel.has-sector-photo.book-editorial .note {
+      left: 655px;
+      top: 785px;
+      width: 360px;
+      min-height: 280px;
+      padding-left: 96px;
+    }
     .bubble { display: none; position: absolute; right: 116px; bottom: 270px; width: 132px; height: 96px; border-radius: 34px; background: #f1d8c7; z-index: 3; }
     .bubble::before { content: "..."; position: absolute; inset: 0; display: grid; place-items: center; color: ${accent}; font-size: 58px; line-height: 0.5; font-weight: 900; letter-spacing: 5px; }
     .spark { position: absolute; color: ${accent}; opacity: 0.7; z-index: 2; font-size: 42px; font-weight: 900; }
@@ -2622,7 +2662,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   </style>
 </head>
 <body>
-  <main class="${placement}${sectorPhotoClass}">
+  <main class="${placement}${sectorPhotoClass}${imageLayoutClass}">
     <div class="brand">${usernameDisplay}</div>
     <div class="arrows">&gt;&gt;</div>
     <div class="badge"><span></span>${eyebrow}</div>

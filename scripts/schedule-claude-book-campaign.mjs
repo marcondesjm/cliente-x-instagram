@@ -7,6 +7,16 @@ const QUEUE_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'sch
 const CAMPAIGN_PREFIX = 'livro-claude-code-20260902';
 const BOOK_TITLE = 'Como Ser Gestor do Claude Code';
 const BOOK_AUTHOR = 'Marcondes Jorge Machado';
+const BOOK_VISUALS = [
+  'docs/uploads/book-claude-leadership.png',
+  'docs/uploads/book-claude-workflow.png',
+  'docs/uploads/book-claude-briefing.png',
+  'docs/uploads/book-claude-security.png',
+  'docs/uploads/book-claude-saas.png',
+  'docs/uploads/book-claude-systems.png',
+  'docs/uploads/book-claude-consulting.png'
+];
+const BOOK_IMAGE_LAYOUTS = ['book-hero', 'book-split', 'book-editorial'];
 
 const topics = [
   {
@@ -196,6 +206,7 @@ function buildPack(topic, index) {
       ? 'Salve este conteúdo para aplicar no seu próximo projeto.'
       : 'Envie este conteúdo para alguém que está começando a trabalhar com IA.';
   return {
+    visualDirection: 'impact-carousel',
     authoredBook: {
       title: BOOK_TITLE,
       author: BOOK_AUTHOR,
@@ -203,7 +214,14 @@ function buildPack(topic, index) {
       page: topic.page
     },
     slides: [
-      { eyebrow: 'Trecho do livro', title: topic.cover, body: `${BOOK_TITLE}, ${topic.chapter}, página ${topic.page}.`, preserveEngagementCopy: true },
+      {
+        eyebrow: 'Trecho do livro',
+        title: topic.cover,
+        body: `${BOOK_TITLE}, ${topic.chapter}, página ${topic.page}.`,
+        imagePath: BOOK_VISUALS[index % BOOK_VISUALS.length],
+        imageLayout: BOOK_IMAGE_LAYOUTS[index % BOOK_IMAGE_LAYOUTS.length],
+        preserveEngagementCopy: true
+      },
       { eyebrow: 'Nas palavras do autor', title: `“${topic.excerpt}”`, body: 'Trecho selecionado da obra.', preserveEngagementCopy: true },
       { eyebrow: 'O que isso significa', title: 'A ideia precisa sair do papel.', body: topic.lesson, preserveEngagementCopy: true },
       { eyebrow: 'Aplicação prática', title: 'Leve o conceito para o próximo projeto.', body: topic.action, preserveEngagementCopy: true },
@@ -219,6 +237,11 @@ if (!group) {
   group = { account: 'cliente-x', posts: [] };
   queue.push(group);
 }
+const completedCampaignPosts = new Map(
+  (group.posts || [])
+    .filter((post) => String(post.id || '').startsWith(CAMPAIGN_PREFIX) && post.status !== 'pending')
+    .map((post) => [post.id, post])
+);
 group.posts = (group.posts || []).filter((post) => !String(post.id || '').startsWith(CAMPAIGN_PREFIX));
 
 let topicIndex = 0;
@@ -226,7 +249,7 @@ for (const [date, times] of schedules) {
   for (const time of times) {
     const topic = topics[topicIndex];
     const id = `${CAMPAIGN_PREFIX}-${String(topicIndex + 1).padStart(2, '0')}`;
-    group.posts.push({
+    group.posts.push(completedCampaignPosts.get(id) || {
       id,
       status: 'pending',
       packIndex: 0,
