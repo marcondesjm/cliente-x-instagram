@@ -2364,3 +2364,13 @@ Conclusao de ativacao:
 - Pesquisa editorial consultou materiais oficiais da Anthropic e da OpenAI sobre contexto do projeto, supervisao humana, testes, fluxos de agentes e seguranca.
 - Foi criada uma oitava imagem original para representar supervisao humana de varios fluxos de IA, sem copiar fotografia externa, logotipo ou interface de marca.
 - A fila continua com um item publicado e 20 pendentes; o rodizio agora possui oito imagens e tres composicoes.
+
+# 2026-09-02 15:47 BRT — Segundo post do livro publicado com o novo visual
+
+- O item `livro-claude-code-20260902-02` foi antecipado a pedido do usuario e era o unico post vencido na fila.
+- Titulo: `Usar IA de forma improvisada custa caro.`; Introducao, pagina 6 do livro.
+- Formato publicado: Reel e Story, com fotografia grande e composicao lateral `book-split`.
+- Run final `33668708853` concluido com sucesso; permalink `https://www.instagram.com/reel/Dcy6bJVAPuC/`.
+- Reel ID `18077182838342033`; Story ID `18063951035769508`; publicado em `2026-09-02T18:46:56.755Z` (15:46 BRT).
+- A fila persistida marcou o item como `published`; nenhum disparo duplicado foi executado.
+- Restam 19 posts pendentes na campanha do livro.

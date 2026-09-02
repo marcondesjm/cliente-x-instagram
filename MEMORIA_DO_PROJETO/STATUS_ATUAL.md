@@ -607,6 +607,9 @@ Resultado:
 
 ## Proximo passo recomendado
 
+- Conferir visualmente o Reel `https://www.instagram.com/reel/Dcy6bJVAPuC/`, publicado com a nova capa lateral; IDs confirmados: Reel `18077182838342033` e Story `18063951035769508`.
+- A campanha do livro possui agora dois itens publicados e 19 pendentes.
+
 - Campanha do livro: acompanhar o proximo item das 19:00 BRT ja com imagem grande e composicao alternada; confirmar a publicacao por permalink, ID do Feed/Reel e ID do Story.
 - Manter os sete visuais e as tres composicoes rotativas nos 20 posts pendentes; nao recolocar o primeiro item publicado na fila.
 - O rodizio da campanha foi ampliado para oito visuais originais; pesquisas externas devem usar fonte oficial e nunca ser apresentadas como trecho do livro.
