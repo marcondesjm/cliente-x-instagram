@@ -2452,5 +2452,6 @@ Conclusao de ativacao:
 - O erro `422 Update is not a fast forward` foi confirmado como concorrencia entre workflows ao hospedar midia na mesma branch, e nao como falha de token ou conteudo.
 - O publicador agora classifica somente essa resposta 422 especifica como recuperavel, rele o HEAD e repete a operacao ate seis vezes com espera progressiva.
 - A protecao vale para imagens de carrossel/Story e para videos de Reel; outros erros 422 continuam bloqueando para nao esconder configuracoes invalidas.
+- O painel passa a explicar essa colisao como temporaria e recuperavel, sem recomendar incorretamente a troca de token.
 - Validacoes locais aprovadas: `node --check`, `git diff --check` e `npm run validate-copy`, incluindo testes positivo e negativo da nova classificacao.
 - A alteracao nao disparou postagem adicional. O erro aberto do slot 9 permanece como registro da tentativa anterior e deve ser resolvido apenas por um run automatico real concluido com IDs e permalink.

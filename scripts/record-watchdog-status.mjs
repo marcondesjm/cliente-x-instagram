@@ -48,6 +48,9 @@ function solutionFor(errorText = '', stage = '') {
   if (/radar ativo.*nenhuma pauta oficial|nenhuma pauta oficial.*nao repetida|nenhuma pauta oficial.*não repetida/.test(text)) {
     return 'Recuperar o slot com a reserva editorial propria e inedita. O fluxo automatico nao deve renovar token nem repetir ou inventar uma fonte jornalistica.';
   }
+  if (/update is not a fast forward/.test(text)) {
+    return 'Concorrencia temporaria ao hospedar a midia. O publicador rele o HEAD e tenta novamente automaticamente; se todas as tentativas falharem, o vigia recupera o slot sem duplicar a publicacao.';
+  }
   if (/oauth|access token|token|permission|permiss/.test(text)) {
     return 'Gerar novo token Meta/Instagram, atualizar o secret da conta no Vercel e no GitHub, depois rodar validar acessos no painel.';
   }
