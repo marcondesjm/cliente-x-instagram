@@ -616,6 +616,7 @@ Resultado:
 
 - Campanha do livro: acompanhar o proximo item das 19:00 BRT ja com imagem grande e composicao alternada; confirmar a publicacao por permalink, ID do Feed/Reel e ID do Story.
 - Story da campanha corrigido: os 18 itens pendentes passam a reutilizar a imagem da capa em um painel fotografico grande no formato 9:16; a trava automatica impede regressao para Story apenas textual. Aguardar o proximo run real para a prova visual e os IDs.
+- Commit funcional do Story: `6dca382`, enviado ao `origin/main`; sem deploy Vercel. Validacoes: sintaxe, `git diff --check` e `validate-copy` aprovados.
 - Manter os sete visuais e as tres composicoes rotativas nos 20 posts pendentes; nao recolocar o primeiro item publicado na fila.
 - O rodizio da campanha foi ampliado para oito visuais originais; pesquisas externas devem usar fonte oficial e nunca ser apresentadas como trecho do livro.
 

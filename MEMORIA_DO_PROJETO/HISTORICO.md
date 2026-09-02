@@ -2410,3 +2410,4 @@ Conclusao de ativacao:
 - Foi adicionada a trava `storyCampaignImageGuard: explicit-image-prominent` para impedir que campanhas com imagem retornem silenciosamente ao layout apenas textual.
 - Validacoes locais aprovadas: `node --check`, `git diff --check` e `npm run validate-copy` com 20 packs locais, 54 automaticos e 74 combinacoes.
 - Esta alteracao vale para os 18 posts pendentes; o Story ja publicado foi preservado. A prova de producao sera o proximo run completo, com permalink, ID do Feed/Reel e ID do Story.
+- Correcao funcional enviada ao `origin/main` no commit `6dca382`; nenhum deploy Vercel foi necessario porque o publicador e executado pelo GitHub Actions.
