@@ -1637,6 +1637,39 @@ function radarResearchOptions(account = {}) {
   };
 }
 
+function radarCachePath(configDir) {
+  return join(configDir, 'radar-cache.json');
+}
+
+function readRadarCache(configDir, accountKey, maxAgeHours = 48) {
+  const path = radarCachePath(configDir);
+  if (!existsSync(path)) return null;
+  const cache = readJson(path)?.[accountKey];
+  if (!Array.isArray(cache?.packs) || !cache.packs.length) return null;
+  const researchedAt = Date.parse(cache.researchedAt || '');
+  if (!Number.isFinite(researchedAt) || Date.now() - researchedAt > maxAgeHours * 60 * 60 * 1000) return null;
+  return {
+    packs: cache.packs,
+    items: [],
+    failures: [],
+    researchedAt: cache.researchedAt,
+    maxAgeDays: cache.maxAgeDays,
+    fromCache: true
+  };
+}
+
+function writeRadarCache(configDir, accountKey, result = {}) {
+  if (!Array.isArray(result.packs) || !result.packs.length) return;
+  const path = radarCachePath(configDir);
+  const cache = existsSync(path) ? readJson(path) : {};
+  cache[accountKey] = {
+    researchedAt: result.researchedAt || new Date().toISOString(),
+    maxAgeDays: result.maxAgeDays || 7,
+    packs: result.packs
+  };
+  writeJson(path, cache);
+}
+
 async function researchRadarWithFallback(options = {}, minimumAgeDays = 7) {
   const configuredWindow = Math.max(minimumAgeDays, Math.min(30, Number(options.maxAgeDays) || 7));
   const windows = [7, 15, 30].filter((days) => days >= configuredWindow);
@@ -4266,10 +4299,25 @@ async function main() {
   if (!args.validateCopy && radar.enabled && radar.sources.length) {
     try {
       editorialResearch = await researchRadarWithFallback(radarOptions);
+      if (editorialResearch.packs.length && !args.dryRun) {
+        writeRadarCache(args.configDir, account.account, editorialResearch);
+      } else if (!editorialResearch.packs.length) {
+        const cachedResearch = readRadarCache(args.configDir, account.account);
+        if (cachedResearch) {
+          editorialResearch = cachedResearch;
+          console.log(`Radar editorial: coleta atual sem pautas; ${cachedResearch.packs.length} pautas da ultima coleta valida foram recuperadas automaticamente.`);
+        }
+      }
       console.log(`Radar editorial: ${editorialResearch.packs.length} temas encontrados em fontes oficiais na janela de ${editorialResearch.maxAgeDays || 7} dias.`);
       if (editorialResearch.failures.length) console.log(`Radar editorial: ${editorialResearch.failures.length} fonte(s) indisponivel(is); fluxo continuara com as demais.`);
     } catch (error) {
-      console.log(`Radar editorial indisponivel (${error.message}). A publicacao real sera bloqueada para nao usar conteudo generico.`);
+      const cachedResearch = readRadarCache(args.configDir, account.account);
+      if (cachedResearch) {
+        editorialResearch = cachedResearch;
+        console.log(`Radar editorial indisponivel (${error.message}); ${cachedResearch.packs.length} pautas da ultima coleta valida foram recuperadas automaticamente.`);
+      } else {
+        console.log(`Radar editorial indisponivel (${error.message}). A publicacao real sera bloqueada para nao usar conteudo generico.`);
+      }
     }
   }
   const baseSelectionPacks = profilePacks.length ? mergePacks(profilePacks, packs) : packs;

@@ -607,6 +607,8 @@ Resultado:
 
 ## Proximo passo recomendado
 
+- Correcao de 2026-09-02 19:35 BRT pronta para envio: separar a fila manual da fila automatica, reforcar os quatro disparos independentes de 15 minutos do watchdog, executar recuperacao apos o workflow principal e persistir por 48 horas a ultima coleta valida do Radar. O cache inicial contem 27 pautas de G1 Tecnologia, n8n e OpenAI. A Vercel Hobby foi descartada como segundo cron por aceitar apenas execucao diaria. Depois do envio, exigir prova do proximo slot automatico por run final, ledger, permalink, ID do Feed/Reel e ID do Story.
+
 - Capa dos proximos Reels corrigida em 2026-09-02 17:30 BRT: a foto deixa de ser miniatura isolada no alto; tres composicoes amplas passam a alternar por horario e o banco empresarial sobe de quatro para sete imagens. Confirmar visualmente o proximo Reel real antes de considerar a correcao encerrada.
 
 - Correcao enviada ao `origin/main` em 2026-09-02 17:24 BRT para contornar automaticamente o `422 Update is not a fast forward` na hospedagem GitHub: carrossel, Story e Reel passam a reler o HEAD e repetir somente essa colisao segura ate seis vezes. Validacoes de sintaxe, diff e copy aprovadas; falta apenas confirmar o comportamento no proximo run automatico real.

@@ -2464,3 +2464,14 @@ Conclusao de ativacao:
 - O banco visual empresarial foi ampliado de quatro para sete imagens, incorporando cenas de aprovacao, continuidade e equipe em fluxo de IA.
 - Tres capas consecutivas foram renderizadas nos slots 9, 10 e 11; a alternancia estrutural foi confirmada sem republicar o Reel existente.
 - Validacoes locais: `node --check`, `git diff --check` e `npm run validate-copy` aprovados. A prova definitiva permanece o proximo Reel automatico real, com inspecao visual, permalink e IDs.
+
+# 2026-09-02 19:35 BRT — Recuperacao automatica isolada e Radar resiliente
+
+- O slot das 19:00 BRT precisou de um disparo corretivo as 19:26; a publicacao foi confirmada em `https://www.instagram.com/p/DczTi3sFg1s/`, Feed `18119042939491321` e Story `17988319866048366`.
+- A API do GitHub confirmou o watchdog ativo, mas com disparos agendados omitidos por horas. A fila compartilhada tambem permitia que execucoes manuais ocupassem a unica vaga pendente da automacao.
+- Feed automatico e watchdog agora usam a fila `instagram-feed-cliente-x-automatic`; execucoes manuais usam fila separada e nao conseguem mais impedir a recuperacao dos 13 slots.
+- O watchdog preserva a verificacao a cada 15 minutos em quatro agendamentos independentes e tambem roda automaticamente quando o workflow principal termina, inclusive para recuperar falhas sem intervencao humana.
+- O Radar continua com 14 sites configurados. A coleta real encontrou 27 pautas elegiveis de G1 Tecnologia, n8n e OpenAI; as demais fontes nao tinham pauta elegivel na janela atual.
+- A ultima coleta valida do Radar passa a ser persistida por 48 horas. Se RSS/site falhar temporariamente, a automacao recupera esse conjunto, aplica novamente as travas de URL, titulo, fonte e repeticao e mantem a postagem baseada em site quando houver pauta inedita.
+- Cache inicial persistido com 27 pautas pesquisadas em 02/09/2026. `node --check`, `git diff --check`, `validate-copy` e `render-only` aprovados; nenhuma publicacao adicional foi feita durante a validacao.
+- Uma segunda origem de cron pela Vercel foi avaliada e descartada antes do deploy: o plano Hobby permite apenas execucao diaria, insuficiente para recuperacao operacional. Nenhuma rota ou agenda Vercel dessa tentativa permaneceu no projeto.

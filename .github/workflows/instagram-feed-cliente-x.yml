@@ -4,7 +4,9 @@ permissions:
   contents: write
 
 concurrency:
-  group: instagram-feed-cliente-x
+  # Publicacoes manuais nao podem ocupar a vaga pendente da fila automatica.
+  # O feed agendado e o watchdog continuam serializados entre si.
+  group: instagram-feed-cliente-x-${{ github.event_name == 'workflow_dispatch' && 'manual' || 'automatic' }}
   cancel-in-progress: false
 
 on:
@@ -209,6 +211,7 @@ jobs:
           git add automation/instagram-template/config/published-slots.json
           git add automation/instagram-template/config/watchdog-errors.json
           git add automation/instagram-template/config/publication-history.json
+          git add automation/instagram-template/config/radar-cache.json
           if git diff --cached --quiet; then
             echo "No schedule state changes to persist."
           else

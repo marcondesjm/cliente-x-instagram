@@ -4,14 +4,23 @@ permissions:
   contents: write
 
 concurrency:
-  group: instagram-feed-cliente-x
+  group: instagram-feed-cliente-x-automatic
   cancel-in-progress: false
 
 on:
   schedule:
     # Rede de seguranca independente. Roda em minutos afastados do topo da
     # hora e recupera automaticamente o slot mais antigo ainda pendente.
-    - cron: "14,29,44,59 * * * *"
+    # Entradas separadas mantem quatro disparadores independentes no GitHub.
+    - cron: "14 * * * *"
+    - cron: "29 * * * *"
+    - cron: "44 * * * *"
+    - cron: "59 * * * *"
+  workflow_run:
+    workflows:
+      - Instagram Feed Cliente X
+    types:
+      - completed
 
 jobs:
   instagram-watchdog:
@@ -119,6 +128,7 @@ jobs:
           git add automation/instagram-template/config/published-slots.json
           git add automation/instagram-template/config/watchdog-errors.json
           git add automation/instagram-template/config/publication-history.json
+          git add automation/instagram-template/config/radar-cache.json
           if git diff --cached --quiet; then
             echo "No schedule state changes to persist."
           else
