@@ -1,23 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-08-25:2:32917785807",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-08-25",
-    "slotIndex": 2,
-    "scheduledAt": "2026-08-25T12:00:00.000Z",
-    "failedAt": "2026-08-26T01:08:41.984Z",
-    "workflowRun": "32917785807",
-    "workflowName": "Instagram Feed Cliente X",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/32917785807",
-    "stage": "unknown",
-    "error": "Story rejeitado: texto sobrepoe a foto.",
-    "solution": "Corrigir o texto do pack indicado no painel, rodar validar textos e salvar antes da próxima publicação.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-08-25-220841.json",
-    "resolvedAt": "2026-08-28T22:44:41.008Z",
-    "resolvedRun": "33216450654"
-  },
-  {
     "key": "cliente-x:2026-08-25:2:32919550303",
     "status": "resolved",
     "account": "cliente-x",
@@ -898,5 +880,21 @@
     "failurePath": "automation/instagram-template/runs/failure-2026-09-02-071920.json",
     "resolvedAt": "2026-09-02T14:07:49.893Z",
     "resolvedRun": "33638235615"
+  },
+  {
+    "key": "cliente-x:2026-09-02:2:33646475688",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-09-02",
+    "slotIndex": 2,
+    "scheduledAt": "2026-09-02T12:00:00.000Z",
+    "failedAt": "2026-09-02T15:26:02.861Z",
+    "workflowRun": "33646475688",
+    "workflowName": "Instagram Feed Cliente X",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/33646475688",
+    "stage": "GitHub image hosting",
+    "error": "GitHub image hosting failed [422]: {\"message\":\"Update is not a fast forward\",\"documentation_url\":\"https://docs.github.com/rest/git/refs#update-a-reference\",\"status\":\"422\"}",
+    "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o token, conteúdo ou dependência indicada antes da próxima tentativa.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-09-02-122602.json"
   }
 ]
