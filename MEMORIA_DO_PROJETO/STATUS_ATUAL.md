@@ -619,6 +619,7 @@ Resultado:
 - Commit funcional do Story: `6dca382`, enviado ao `origin/main`; sem deploy Vercel. Validacoes: sintaxe, `git diff --check` e `validate-copy` aprovados.
 - Publicacao real com o Story corrigido confirmada no run `33673473650`: `https://www.instagram.com/p/Dcy_cy5DfLo/`, Feed `18436198660131973`, Story `17912968407263304`, as 16:30 BRT. A arte hospedada foi inspecionada e possui fotografia grande na metade inferior. Fila persistida em `60ca672`; restam 17 posts do livro.
 - Publicacao seguinte confirmada no run `33674428382`: `https://www.instagram.com/reel/DczAgGDjrOF/`, Reel `18103495247195444`, Story `17913972708445687`, as 16:40 BRT. A tentativa anterior `33673971851` falhou antes da Meta por corrida de referencia do GitHub e nao gerou post. Story final inspecionado com fotografia ampla e sem sobreposicao; restam 16 itens.
+- Falha visual identificada no slide 2 desse Reel: o cartao cobriu a citacao. O renderizador agora detecta `headline x note`, ajusta o titulo/cartao e bloqueia qualquer colisao restante. O pack completo corrigido foi aprovado visualmente no dry-run `2026-09-02-164520-slot-0`; o post existente nao foi republicado.
 - Manter os sete visuais e as tres composicoes rotativas nos 20 posts pendentes; nao recolocar o primeiro item publicado na fila.
 - O rodizio da campanha foi ampliado para oito visuais originais; pesquisas externas devem usar fonte oficial e nunca ser apresentadas como trecho do livro.
 

@@ -2429,3 +2429,12 @@ Conclusao de ativacao:
 - Publicacao real confirmada: `https://www.instagram.com/reel/DczAgGDjrOF/`; Reel ID `18103495247195444`; Story ID `17913972708445687`; publicado as 16:40 BRT.
 - O Story hospedado foi inspecionado: titulo, referencia e CTA legiveis sobre fundo escuro, com fotografia ampla de planejamento na metade inferior e sem sobreposicao.
 - Midias persistidas em `e54b9aa` e `bc7a8f3`; fila e historico em `f03acb7`. Restam 16 posts pendentes.
+
+# 2026-09-02 16:46 BRT — Bloqueio de sobreposicao entre titulo e cartao
+
+- A revisao do slide 2 do Reel `DczAgGDjrOF` confirmou que o cartao `Trecho selecionado da obra` cobriu a parte final da citacao; essa composicao nao e aceitavel.
+- A validacao geometrica anterior conferia fotografia contra titulo e fotografia contra cartao, mas nao conferia diretamente titulo contra cartao.
+- O renderizador agora reduz progressivamente apenas o titulo longo ate o limite legivel de 38 px, tenta reposicionar o cartao quando ha espaco e bloqueia o slide com `headline x note` se ainda existir colisao.
+- O mesmo pack foi reproduzido localmente em dry-run, sem republicar, no render `2026-09-02-164520-slot-0`.
+- Os cinco slides foram inspecionados: slide 2 sem sobreposicao e com a citacao completa; slides 1, 3, 4 e 5 preservam fotografia, texto e cartao em areas separadas.
+- O post ja publicado foi preservado. A trava passa a valer para os 16 itens pendentes e para os demais carrosseis gerados por esse renderizador.

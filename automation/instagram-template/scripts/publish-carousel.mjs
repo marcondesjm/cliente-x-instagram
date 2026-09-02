@@ -3140,6 +3140,27 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
         || first.bottom <= second.top
         || first.top >= second.bottom
       );
+      const headlineIntersectsNote = () => {
+        if (!note || getComputedStyle(note).display === 'none') return false;
+        return intersects(headline.getBoundingClientRect(), note.getBoundingClientRect());
+      };
+      // O cartao de apoio tambem e um bloco visual. Titulos longos em layouts
+      // editoriais podiam crescer por baixo dele sem que a validacao percebesse.
+      for (let pass = 0; pass < 4 && headlineIntersectsNote(); pass += 1) {
+        const headlineStyle = getComputedStyle(headline);
+        headline.style.fontSize = `${Math.max(38, Math.floor(parseFloat(headlineStyle.fontSize) * 0.88))}px`;
+        headline.style.lineHeight = '0.96';
+        corrected += 1;
+      }
+      if (headlineIntersectsNote()) {
+        const headlineBottom = Math.ceil(headline.getBoundingClientRect().bottom);
+        const noteHeight = Math.ceil(note.getBoundingClientRect().height);
+        const desiredTop = headlineBottom + 28;
+        if (desiredTop + noteHeight <= 1120) {
+          note.style.top = `${desiredTop}px`;
+          corrected += 1;
+        }
+      }
       const safeBottomFor = (rect) => {
         const overlapsNoteHorizontally = noteRect
           && rect.right > noteRect.left
@@ -3186,6 +3207,7 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
       const collisions = visibleVisuals
         .filter((visual) => getComputedStyle(visual).display !== 'none' && intersectsHeadline(visual.getBoundingClientRect()))
         .map((visual) => visual.className);
+      if (headlineIntersectsNote()) collisions.push('headline x note');
       for (let firstIndex = 0; firstIndex < visibleVisuals.length; firstIndex += 1) {
         for (let secondIndex = firstIndex + 1; secondIndex < visibleVisuals.length; secondIndex += 1) {
           const firstRect = visibleVisuals[firstIndex].getBoundingClientRect();
