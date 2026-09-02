@@ -2438,3 +2438,11 @@ Conclusao de ativacao:
 - O mesmo pack foi reproduzido localmente em dry-run, sem republicar, no render `2026-09-02-164520-slot-0`.
 - Os cinco slides foram inspecionados: slide 2 sem sobreposicao e com a citacao completa; slides 1, 3, 4 e 5 preservam fotografia, texto e cartao em areas separadas.
 - O post ja publicado foi preservado. A trava passa a valer para os 16 itens pendentes e para os demais carrosseis gerados por esse renderizador.
+
+# 2026-09-02 16:50 BRT — Primeiro carrossel publicado com a trava de colisao
+
+- O item `livro-claude-code-20260902-06`, `Problema antes da ferramenta.`, foi antecipado a pedido do usuario e publicado para `@marcondes.machado.oficial`.
+- Run `33675445921` concluido com sucesso; permalink `https://www.instagram.com/p/DczBszGnftV/`; Feed ID `18625376119055915`; Story ID `17887053027614953`.
+- Os cinco slides hospedados e o Story foram inspecionados visualmente. Foto, titulo e cartao ocupam areas separadas em todas as pecas; nenhuma sobreposicao foi encontrada.
+- Imagens persistidas em `7552836`; fila e historico em `2afb8f4`.
+- A campanha mantem a cadencia contratada de tres posts por dia. Como os tres itens de 03/09 foram antecipados e ja publicados, restam 15 itens: tres por dia entre 04/09 e 08/09, nos horarios 08:10, 14:15 e 19:00 BRT.
