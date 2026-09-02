@@ -607,6 +607,9 @@ Resultado:
 
 ## Proximo passo recomendado
 
+- Campanha do livro: acompanhar o proximo item das 19:00 BRT ja com imagem grande e composicao alternada; confirmar a publicacao por permalink, ID do Feed/Reel e ID do Story.
+- Manter os sete visuais e as tres composicoes rotativas nos 20 posts pendentes; nao recolocar o primeiro item publicado na fila.
+
 - Entrar no dashboard e aguardar a checkagem automatica terminar; registrar o resultado final e corrigir qualquer item que apareca como `ERRO`.
 - Acompanhar os proximos posts automaticos e conferir se o publico responde melhor ao novo tom humano e consultivo.
 - Acompanhar a resposta ao post `DcFh6FWG8f0` e manter a confirmacao por permalink em cada nova publicacao manual.

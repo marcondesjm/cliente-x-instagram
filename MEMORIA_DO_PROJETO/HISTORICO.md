@@ -2347,3 +2347,14 @@ Conclusao de ativacao:
 - Primeiro comentario: sem ID e sem erro. O vigia ficou com zero erro aberto.
 - Imagens hospedadas no commit `b077353`; fila e historico persistidos em `e1bd3cd`.
 - Proximo passo: manter os demais 20 itens agendados e usar o permalink real para avaliacao visual do primeiro carrossel.
+
+# 2026-09-02 15:36 BRT — Nova direcao visual para a campanha do livro
+
+- A avaliacao do primeiro post identificou foto pequena no alto, vazio excessivo e repeticao de uma composicao pouco atraente.
+- O post ja publicado foi preservado; nenhum conteudo ou ID real foi apagado.
+- Os 20 posts pendentes passaram a usar sete imagens autorais diferentes, criadas para os temas de lideranca, fluxo, briefing, seguranca, SaaS, sistemas e consultoria.
+- As capas agora alternam tres composicoes: imagem panoramica, divisao lateral e editorial assimetrica. A fotografia ocupa uma area principal, sem a miniatura isolada no topo.
+- A regeneracao da campanha preserva itens `published` ou cancelados, impedindo que o primeiro post volte para a fila.
+- Validacoes aprovadas: `node --check`, `git diff --check`, `npm run validate-copy` (20 packs locais, 54 automaticos e 74 combinacoes) e renders reais das tres composicoes.
+- Renders revisados: `2026-09-02-153209-slot-11-render-only`, `2026-09-02-153251-slot-12-render-only` e `2026-09-02-153309-slot-13-render-only`.
+- Proximo item da campanha permanece agendado para 19:00 BRT; a mudanca nao altera os demais horarios existentes.
