@@ -3230,7 +3230,11 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
   const feedContinuationText = 'Confira o conteúdo completo no feed.';
   const researchImage = fileCssImage(renderContext.researchSourceImagePath || '');
   const avatarImage = accountAvatarCssImage(account, 0, visualCue, { ...renderContext, story: true });
-  const sectorPhotoImage = showNewsContext ? '' : sectorPhotoCssImage(visualCue);
+  const explicitStoryImage = slide.imagePath
+    ? fileCssImage(resolve(ROOT, String(slide.imagePath).replace(/^\/+/, '')))
+    : '';
+  const sectorPhotoImage = showNewsContext ? '' : (explicitStoryImage || sectorPhotoCssImage(visualCue));
+  const storyPhotoClass = explicitStoryImage ? ' has-story-photo' : '';
   const avatarBlock = showNewsContext
     ? ''
     : (avatarImage ? `<div class="avatar"></div>` : `<div class="panel"><span>IA</span></div>`);
@@ -3337,10 +3341,18 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     .impact-carousel h1 { color: ${slideStyle.text}; }
     .impact-carousel p { color: ${slideStyle.muted}; }
     .impact-carousel .feed-cta { background: ${accent}; color: #fff; }
+    .impact-carousel.has-story-photo .visual-card { display: block; left: 72px; right: 72px; top: 930px; height: 480px; border-radius: 30px; background-position: center; box-shadow: 0 28px 72px rgba(0,0,0,.28); }
+    .impact-carousel.has-story-photo .avatar, .impact-carousel.has-story-photo .panel, .impact-carousel.has-story-photo .note { display: none; }
+    .impact-carousel.has-story-photo footer { bottom: ${STORY_SAFE_BOTTOM + 26}px; }
+    .impact-carousel.has-story-photo.mode-statement .badge { margin-top: 62px; text-align: left; }
+    .impact-carousel.has-story-photo.mode-statement h1 { margin: 52px 0 0; max-width: 900px; font-size: 68px; text-align: left; }
+    .impact-carousel.has-story-photo.mode-statement h1::before { width: 84px; height: 9px; margin: 0 0 34px; }
+    .impact-carousel.has-story-photo.mode-statement p { margin: 28px 0 0; max-width: 850px; font-size: 31px; text-align: left; }
+    .impact-carousel.has-story-photo.mode-statement .feed-cta { margin-top: 22px; max-width: 560px; padding: 16px 22px; font-size: 27px; }
   </style>
 </head>
 <body>
-  <main class="mode-${mode}${titleClass}${impactClass}">
+  <main class="mode-${mode}${titleClass}${impactClass}${storyPhotoClass}">
     <div class="brand">${usernameDisplay}</div>
     <div class="badge">${eyebrow}</div>
     <h1>${title.replace(/\s+IA\b/i, ' <strong>IA</strong>')}</h1>
@@ -4530,6 +4542,16 @@ async function main() {
     if (STORY_WIDTH !== 1080 || STORY_HEIGHT !== 1920 || STORY_SAFE_TOP !== 250 || STORY_SAFE_BOTTOM !== 500 || STORY_SAFE_HEIGHT !== 1170) {
       throw new Error('Arquitetura segura do Story foi alterada fora do padrao 250/1170/500.');
     }
+    const impactStoryStyle = styles.find((candidate) => candidate.name === 'impact-carousel');
+    const impactStoryProbe = impactStoryStyle ? anatexStoryHtml({
+      eyebrow: 'Trecho do livro',
+      title: 'O gestor de IA não substitui especialistas. Ele coordena.',
+      body: 'Como Ser Gestor do Claude Code, Capítulo 1, página 7.',
+      imagePath: 'docs/uploads/book-claude-briefing.png'
+    }, account, impactStoryStyle, { publishMode: 'feed-and-story' }) : '';
+    if (!impactStoryProbe.includes('has-story-photo') || !impactStoryProbe.includes('book-claude-briefing.png')) {
+      throw new Error('Story de campanha com imagem voltou ao layout apenas textual.');
+    }
     console.log(JSON.stringify({
       ok: true,
       account: account.account,
@@ -4548,6 +4570,7 @@ async function main() {
       ,finalSlideVariationGuard: 'ok'
       ,feedArchitectureGuard: '1080x1350-4:5'
       ,storySafeZoneGuard: '250-1170-500'
+      ,storyCampaignImageGuard: 'explicit-image-prominent'
       ,radarSourceImageGuard: 'og-image-https-with-safe-fallback'
       ,checkedRadarSources: EDITORIAL_SOURCES.length
     }, null, 2));

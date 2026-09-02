@@ -2401,3 +2401,12 @@ Conclusao de ativacao:
 - Causa comprovada da interrupcao: a ultima entrega falhou com `The account owner has disabled access to Instagram Direct Messaging.`. Nao e falha de palavra-chave, webhook ou tamanho da mensagem.
 - A sessao autenticada do Instagram confirmou que pedidos de contato estao em `Todos`, mas a versao web nao expoe o controle `Permitir acesso as mensagens` das ferramentas conectadas.
 - Pendencia externa: no aplicativo Instagram da conta, ativar `Configuracoes e atividade > Mensagens e respostas a stories > Controles de mensagem > Ferramentas conectadas > Permitir acesso as mensagens`; depois comentar `LIVRO` com outra conta para prova real.
+
+# 2026-09-02 16:16 BRT — Story da campanha passa a usar a imagem do post
+
+- A avaliacao do Story do carrossel `Dcy8DiAmLUq` confirmou que a arte 9:16 ignorava o `imagePath` da capa e, no modo `statement`, escondia todos os elementos visuais.
+- O Story agora reutiliza a imagem explicita da capa em um painel fotografico amplo de 936 x 480 px dentro da area segura, mantendo titulo, referencia do livro e CTA acima da foto.
+- O avatar e a nota secundaria sao ocultados quando existe a fotografia principal, evitando miniaturas concorrentes e sobreposicao.
+- Foi adicionada a trava `storyCampaignImageGuard: explicit-image-prominent` para impedir que campanhas com imagem retornem silenciosamente ao layout apenas textual.
+- Validacoes locais aprovadas: `node --check`, `git diff --check` e `npm run validate-copy` com 20 packs locais, 54 automaticos e 74 combinacoes.
+- Esta alteracao vale para os 18 posts pendentes; o Story ja publicado foi preservado. A prova de producao sera o proximo run completo, com permalink, ID do Feed/Reel e ID do Story.
