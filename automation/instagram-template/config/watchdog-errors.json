@@ -1,23 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-08-25:2:32913275692",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-08-25",
-    "slotIndex": 2,
-    "scheduledAt": "2026-08-25T12:00:00.000Z",
-    "failedAt": "2026-08-26T00:02:23.632Z",
-    "workflowRun": "32913275692",
-    "workflowName": "Instagram Watchdog Backup",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/32913275692",
-    "stage": "Graph POST /17841404470203300/media",
-    "error": "Graph POST /17841404470203300/media failed [400]: {\"error\":{\"message\":\"The caption was too long.\",\"type\":\"OAuthException\",\"code\":36004,\"error_subcode\":2207010,\"is_transient\":false,\"error_user_title\":\"Legenda muito longa\",\"error_user_msg\":\"Erro desconhecido\",\"fbtrace_id\":\"AtzDdXs1MWhy8xhAkK97cN7\"}}",
-    "solution": "Reduzir a legenda final antes de publicar, preservar a fonte oficial e rodar validar textos antes de recuperar o slot.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-08-25-210223.json",
-    "resolvedAt": "2026-08-28T22:44:41.008Z",
-    "resolvedRun": "33216450654"
-  },
-  {
     "key": "cliente-x:2026-08-25:2:32917785807",
     "status": "resolved",
     "account": "cliente-x",
@@ -898,5 +880,21 @@
     "failurePath": "automation/instagram-template/runs/failure-2026-09-01-162003.json",
     "resolvedAt": "2026-09-01T19:41:48.945Z",
     "resolvedRun": "33550749417"
+  },
+  {
+    "key": "cliente-x:2026-09-02:0:33618623217",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-09-02",
+    "slotIndex": 0,
+    "scheduledAt": "2026-09-02T09:30:00.000Z",
+    "failedAt": "2026-09-02T10:19:20.395Z",
+    "workflowRun": "33618623217",
+    "workflowName": "Instagram Watchdog Backup",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/33618623217",
+    "stage": "GitHub image hosting",
+    "error": "GitHub image hosting failed [422]: {\"message\":\"Update is not a fast forward\",\"documentation_url\":\"https://docs.github.com/rest/git/refs#update-a-reference\",\"status\":\"422\"}",
+    "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o token, conteúdo ou dependência indicada antes da próxima tentativa.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-09-02-071920.json"
   }
 ]
