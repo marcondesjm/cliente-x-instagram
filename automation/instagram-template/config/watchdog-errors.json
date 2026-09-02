@@ -1,23 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-08-25:2:32919550303",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-08-25",
-    "slotIndex": 2,
-    "scheduledAt": "2026-08-25T12:00:00.000Z",
-    "failedAt": "2026-08-26T01:36:25.078Z",
-    "workflowRun": "32919550303",
-    "workflowName": "Instagram Watchdog Backup",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/32919550303",
-    "stage": "unknown",
-    "error": "Story rejeitado: texto sobrepoe a foto.",
-    "solution": "Corrigir o texto do pack indicado no painel, rodar validar textos e salvar antes da próxima publicação.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-08-25-223624.json",
-    "resolvedAt": "2026-08-28T22:44:41.008Z",
-    "resolvedRun": "33216450654"
-  },
-  {
     "key": "cliente-x:2026-08-25:2:32923455978",
     "status": "resolved",
     "account": "cliente-x",
@@ -898,5 +880,21 @@
     "failurePath": "automation/instagram-template/runs/failure-2026-09-02-122602.json",
     "resolvedAt": "2026-09-02T16:33:47.979Z",
     "resolvedRun": "33655350166"
+  },
+  {
+    "key": "cliente-x:2026-09-02:0:33673971851",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-09-02",
+    "slotIndex": 0,
+    "scheduledAt": "2026-09-02T09:30:00.000Z",
+    "failedAt": "2026-09-02T19:36:05.979Z",
+    "workflowRun": "33673971851",
+    "workflowName": "Instagram Feed Cliente X",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/33673971851",
+    "stage": "GitHub image hosting",
+    "error": "GitHub image hosting failed [422]: {\"message\":\"Update is not a fast forward\",\"documentation_url\":\"https://docs.github.com/rest/git/refs#update-a-reference\",\"status\":\"422\"}",
+    "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o token, conteúdo ou dependência indicada antes da próxima tentativa.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-09-02-163605.json"
   }
 ]
