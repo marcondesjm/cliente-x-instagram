@@ -607,6 +607,8 @@ Resultado:
 
 ## Proximo passo recomendado
 
+- Capa dos proximos Reels corrigida em 2026-09-02 17:30 BRT: a foto deixa de ser miniatura isolada no alto; tres composicoes amplas passam a alternar por horario e o banco empresarial sobe de quatro para sete imagens. Confirmar visualmente o proximo Reel real antes de considerar a correcao encerrada.
+
 - Correcao enviada ao `origin/main` em 2026-09-02 17:24 BRT para contornar automaticamente o `422 Update is not a fast forward` na hospedagem GitHub: carrossel, Story e Reel passam a reler o HEAD e repetir somente essa colisao segura ate seis vezes. Validacoes de sintaxe, diff e copy aprovadas; falta apenas confirmar o comportamento no proximo run automatico real.
 
 - Direct: `LIVRO` esta cadastrado na automacao `50 Prompts de IA`, mas a Meta bloqueia o envio enquanto `Permitir acesso as mensagens` estiver desligado no aplicativo Instagram. Ativar essa chave e testar com comentario de outra conta.

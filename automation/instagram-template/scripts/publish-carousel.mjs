@@ -2021,7 +2021,10 @@ function sectorPhotoCssImage(cue = 'business', slideIndex = 1, renderContext = {
       'docs/uploads/sector-photos/operations-review.png',
       'docs/uploads/automation-cloud-evening.jpg',
       'docs/uploads/automation-leave-office.jpg',
-      'docs/uploads/sector-photos/finance.jpg'
+      'docs/uploads/sector-photos/finance.jpg',
+      'docs/uploads/impact-ai-approval-v1.png',
+      'docs/uploads/impact-ai-continuity-v1.png',
+      'docs/uploads/impact-ai-workflow-team-v1.png'
     ]
   };
   const options = photos[cue] || photos.business;
@@ -2130,11 +2133,15 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const baseMode = slideStyle.templateMode || 'paper';
   // A capa é a principal peça percebida no feed. Alternar também a composição
   // (e não somente a paleta) evita uma sequência de capas com a mesma cara.
-  // `poster` aproxima cartão de fonte e título em algumas capas longas; as
-  // duas composições abaixo foram mantidas por preservarem a área de leitura.
-  const coverModes = ['paper', 'split'];
+  // Capas automáticas precisam alternar estruturas realmente diferentes. O
+  // antigo par paper/split mantinha a fotografia como miniatura no alto e
+  // fazia Reels consecutivos parecerem a mesma peça.
+  const coverModes = ['native', 'visual', 'editorial'];
+  const coverModeSeed = daysSinceEpoch(renderContext.dateString || todaySaoPaulo())
+    + Number(renderContext.slotIndex || 0)
+    + Number(renderContext.creativeGeneration || 0);
   const mode = index === 1
-    ? coverModes[stableAvatarOffset(renderContext.variationSeed || slide.title || '') % coverModes.length]
+    ? coverModes[Math.abs(coverModeSeed) % coverModes.length]
     : baseMode;
   const visualCue = slide.visualCue || visualCueForAccount(account, `${slide.title || ''} ${slide.body || ''} ${slide.eyebrow || ''}`);
   const avatarImage = accountAvatarCssImage(account, index, visualCue, renderContext);

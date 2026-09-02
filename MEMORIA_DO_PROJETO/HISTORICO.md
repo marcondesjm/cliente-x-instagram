@@ -2455,3 +2455,12 @@ Conclusao de ativacao:
 - O painel passa a explicar essa colisao como temporaria e recuperavel, sem recomendar incorretamente a troca de token.
 - Validacoes locais aprovadas: `node --check`, `git diff --check` e `npm run validate-copy`, incluindo testes positivo e negativo da nova classificacao.
 - A alteracao nao disparou postagem adicional. O erro aberto do slot 9 permanece como registro da tentativa anterior e deve ser resolvido apenas por um run automatico real concluido com IDs e permalink.
+
+# 2026-09-02 17:30 BRT — Capa de Reel com fotografia integrada e maior rotacao
+
+- A avaliacao do Reel `https://www.instagram.com/reel/DczFk0kk8ma/` mostrou a fotografia como miniatura isolada no alto da capa e repeticao excessiva da mesma estrutura.
+- A causa era o gerador reduzir todas as variantes da identidade ao mesmo par de capas `paper/split` e usar somente quatro imagens empresariais.
+- As proximas capas passam a alternar, por horario, tres estruturas distintas: fotografia horizontal ampla, fotografia dominante e composicao editorial vertical.
+- O banco visual empresarial foi ampliado de quatro para sete imagens, incorporando cenas de aprovacao, continuidade e equipe em fluxo de IA.
+- Tres capas consecutivas foram renderizadas nos slots 9, 10 e 11; a alternancia estrutural foi confirmada sem republicar o Reel existente.
+- Validacoes locais: `node --check`, `git diff --check` e `npm run validate-copy` aprovados. A prova definitiva permanece o proximo Reel automatico real, com inspecao visual, permalink e IDs.
