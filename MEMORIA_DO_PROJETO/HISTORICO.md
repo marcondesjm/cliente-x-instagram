@@ -2358,3 +2358,9 @@ Conclusao de ativacao:
 - Validacoes aprovadas: `node --check`, `git diff --check`, `npm run validate-copy` (20 packs locais, 54 automaticos e 74 combinacoes) e renders reais das tres composicoes.
 - Renders revisados: `2026-09-02-153209-slot-11-render-only`, `2026-09-02-153251-slot-12-render-only` e `2026-09-02-153309-slot-13-render-only`.
 - Proximo item da campanha permanece agendado para 19:00 BRT; a mudanca nao altera os demais horarios existentes.
+
+## Complemento 15:43 BRT — Pesquisa oficial e novo visual
+
+- Pesquisa editorial consultou materiais oficiais da Anthropic e da OpenAI sobre contexto do projeto, supervisao humana, testes, fluxos de agentes e seguranca.
+- Foi criada uma oitava imagem original para representar supervisao humana de varios fluxos de IA, sem copiar fotografia externa, logotipo ou interface de marca.
+- A fila continua com um item publicado e 20 pendentes; o rodizio agora possui oito imagens e tres composicoes.

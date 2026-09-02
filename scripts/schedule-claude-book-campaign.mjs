@@ -14,7 +14,8 @@ const BOOK_VISUALS = [
   'docs/uploads/book-claude-security.png',
   'docs/uploads/book-claude-saas.png',
   'docs/uploads/book-claude-systems.png',
-  'docs/uploads/book-claude-consulting.png'
+  'docs/uploads/book-claude-consulting.png',
+  'docs/uploads/book-agent-supervision-v2.png'
 ];
 const BOOK_IMAGE_LAYOUTS = ['book-hero', 'book-split', 'book-editorial'];
 
