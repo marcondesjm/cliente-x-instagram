@@ -607,6 +607,8 @@ Resultado:
 
 ## Proximo passo recomendado
 
+- Direct: `LIVRO` esta cadastrado na automacao `50 Prompts de IA`, mas a Meta bloqueia o envio enquanto `Permitir acesso as mensagens` estiver desligado no aplicativo Instagram. Ativar essa chave e testar com comentario de outra conta.
+
 - Conferir visualmente o Reel `https://www.instagram.com/reel/Dcy6bJVAPuC/`, publicado com a nova capa lateral; IDs confirmados: Reel `18077182838342033` e Story `18063951035769508`.
 - A campanha do livro possui agora dois itens publicados e 19 pendentes.
 - Os 19 posts pendentes possuem imagem nos cinco slides, com oito visuais e tres composicoes em rodizio; o render completo foi aprovado antes da liberacao.

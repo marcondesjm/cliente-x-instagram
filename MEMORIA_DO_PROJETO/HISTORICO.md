@@ -2392,3 +2392,12 @@ Conclusao de ativacao:
 - Run `33670504478` concluido com sucesso; permalink `https://www.instagram.com/p/Dcy8DiAmLUq/`.
 - Carrossel ID `17884934352476762`; Story ID `18094862405434959`; publicado em `2026-09-02T19:00:53.101Z` (16:00 BRT).
 - Estado persistido como `published`; restam 18 posts pendentes na campanha.
+
+# 2026-09-02 16:10 BRT — Palavra LIVRO cadastrada no Direct dos 50 prompts
+
+- A automacao existente `Material 1` foi identificada como o envio dos 50 prompts e renomeada para `50 Prompts de IA`.
+- `LIVRO` e `livro` foram adicionados as palavras-chave da mesma automacao, preservando o link do Google Drive, a mensagem pronta e a resposta publica.
+- A correspondencia tolerante reconhece maiusculas, minusculas e acentos; mensagem expandida validada com 911 caracteres, abaixo do limite operacional de 950.
+- Causa comprovada da interrupcao: a ultima entrega falhou com `The account owner has disabled access to Instagram Direct Messaging.`. Nao e falha de palavra-chave, webhook ou tamanho da mensagem.
+- A sessao autenticada do Instagram confirmou que pedidos de contato estao em `Todos`, mas a versao web nao expoe o controle `Permitir acesso as mensagens` das ferramentas conectadas.
+- Pendencia externa: no aplicativo Instagram da conta, ativar `Configuracoes e atividade > Mensagens e respostas a stories > Controles de mensagem > Ferramentas conectadas > Permitir acesso as mensagens`; depois comentar `LIVRO` com outra conta para prova real.
