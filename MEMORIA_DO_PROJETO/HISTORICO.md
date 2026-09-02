@@ -2329,3 +2329,9 @@ Conclusão de produção:
 - Renders inspecionados: `2026-09-02-150558-slot-0-render-only`, `2026-09-02-150608-slot-1-render-only`, `2026-09-02-150615-slot-7-render-only` e render final corrigido `2026-09-02-150745-slot-0-render-only`.
 - No render final, capa, trecho, CTA e Story ficaram legiveis e sem sobreposicao; o selo final mostra `COMENTE LIVRO`.
 - Publicacao real: ainda nao executada neste checkpoint. Proximo passo: enviar a agenda ao `origin/main` e acompanhar o primeiro horario ate permalink, Feed/Reel ID e Story ID.
+
+Conclusao de ativacao:
+
+- Campanha, agenda e checkpoint enviados ao `origin/main`; estado remoto confirmado em `5f0f488`.
+- Nenhum deploy Vercel foi necessario, pois a alteracao atua no fluxo editorial e na fila persistida do GitHub Actions.
+- Primeira pauta agendada para 02/09/2026 16:00 BRT; a publicacao somente sera considerada comprovada depois do run final, historico persistido, permalink, ID do Feed/Reel e ID do Story.
