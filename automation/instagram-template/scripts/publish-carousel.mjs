@@ -2714,6 +2714,93 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
       min-height: 280px;
       padding-left: 96px;
     }
+    /* Impact cards must feel intentionally filled on a phone screen. Generic
+       statement/corner rules used to leave the middle half almost empty. */
+    .impact-carousel.role-value .headline,
+    .impact-carousel.role-proof .headline {
+      margin: 185px 0 0;
+      max-width: 930px;
+      font-size: 76px;
+      line-height: 1.01;
+      text-align: left;
+    }
+    .impact-carousel.role-proof .headline::before { display: none; }
+    .impact-carousel.role-value .note,
+    .impact-carousel.role-proof .note {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      left: 82px;
+      top: 680px;
+      width: 916px;
+      min-height: 330px;
+      padding: 46px 52px 46px 112px;
+      border-radius: 28px;
+      font-size: 31px;
+      line-height: 1.14;
+      box-shadow: 0 24px 64px rgba(0,0,0,.18);
+    }
+    .impact-carousel.role-value .panel,
+    .impact-carousel.role-proof .panel {
+      right: 92px;
+      top: 440px;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      transform: none;
+      z-index: 3;
+    }
+    .impact-carousel.role-cta .headline {
+      margin: 170px 0 0;
+      max-width: 900px;
+      font-size: 82px;
+      line-height: 1;
+      text-align: left;
+    }
+    .impact-carousel.role-cta .panel {
+      right: 86px;
+      top: 470px;
+      width: 270px;
+      height: 270px;
+      border-radius: 50%;
+      transform: none;
+      z-index: 3;
+    }
+    .impact-carousel.role-cta .note {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      left: 58px;
+      top: 650px;
+      width: 964px;
+      min-height: 420px;
+      padding: 48px 54px;
+      border-radius: 28px;
+      font-size: 31px;
+      line-height: 1.14;
+    }
+    .impact-carousel.role-cta .note .lead,
+    .impact-carousel.role-cta .note .emphasis,
+    .impact-carousel.role-cta .note .close {
+      display: block;
+      background: transparent;
+      color: #fff6ef;
+      padding: 0;
+      margin-top: 16px;
+    }
+    .impact-carousel.role-cta .note .lead { margin-top: 0; font-size: .9em; }
+    .impact-carousel.role-cta .note .emphasis { font-size: 1.1em; }
+    .impact-carousel.role-cta .save-cue {
+      bottom: 72px;
+      background: #fff6ef;
+      color: #111;
+    }
+    .impact-carousel.role-cta .progress { bottom: 150px; }
+    .impact-carousel.has-sector-photo .swipe-cue {
+      background: #111;
+      color: #fff;
+      border-color: #111;
+    }
     /* Reel cover: keep every essential element inside Instagram's visible crop.
        Supporting copy belongs to the following takes, not below the cover photo. */
     .reel-mode.role-hook .note { display: none; }

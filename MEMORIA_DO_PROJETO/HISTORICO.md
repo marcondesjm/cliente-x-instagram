@@ -2530,3 +2530,11 @@ Conclusao de ativacao:
 - Pauta usada: `NeoMME: O Novo Codificador Multimodal e Multilingue que Desafia Gigantes da IA`, fonte Nossa IA, com imagem editorial do proprio site.
 - O Story hospedado em `docs/generated/cliente-x/2026-09-03-161414-slot-9/story.jpg` foi inspecionado: fotografia grande, titulo completo, fonte visivel e sem corte ou sobreposicao.
 - O slot 9 esta persistido como publicado e nao ha alertas abertos. Somente o primeiro comentario falhou com `OAuthException #10` por falta de permissao; Reel e Story permanecem publicados e confirmados.
+
+# 2026-09-03 16:27 BRT — Cards internos preenchidos no impact-carousel
+
+- A publicacao do slot 9 revelou excesso de area vazia nos cards internos e no fechamento: titulos e explicacoes ficavam concentrados em blocos pequenos, apesar da tela 4:5 disponivel.
+- Cards de valor e prova agora usam titulo largo, painel explicativo de 916 px com alinhamento vertical central e avatar reposicionado como apoio, sem disputar espaco com o texto.
+- O fechamento ganhou painel de 964 px por 420 px, texto centralizado e sem a faixa branca estreita que fragmentava a frase; progresso e CTA permanecem dentro da area segura.
+- O convite para arrastar sobre capas com fotografia passou a usar contraste preto e branco, evitando texto claro sobre botao claro.
+- `node --check`, `git diff --check`, `validate-copy` e render completo `2026-09-03-162428-slot-10-render-only` aprovados. Os cinco cards foram inspecionados e nenhum post de teste foi publicado.

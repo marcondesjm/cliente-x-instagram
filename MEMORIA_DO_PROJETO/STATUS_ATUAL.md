@@ -700,3 +700,9 @@ Resultado:
 - Primeira pauta do Radar ampliado veio da Nossa IA e utilizou a imagem editorial do site em destaque.
 - Story real inspecionado sem corte ou sobreposicao; livro de slots atualizado e zero alertas abertos.
 - Primeiro comentario falhou isoladamente com Meta `OAuthException #10`; a publicacao principal e o Story foram concluídos.
+
+## Atualizacao 2026-09-03 16:27 BRT — preenchimento dos cards
+
+- Cards internos do `impact-carousel` foram reequilibrados para eliminar o grande vazio central visto no slot 9.
+- Titulos, paineis explicativos e CTA final agora ocupam proporcionalmente a tela 4:5, com texto centralizado verticalmente e sem faixa branca estreita.
+- Render `2026-09-03-162428-slot-10-render-only` aprovado nos cinco cards; sem colisao e sem publicacao de teste.
