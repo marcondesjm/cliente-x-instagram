@@ -2200,7 +2200,8 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const imageLayoutClass = isImpact && sectorPhotoImage && ['book-hero', 'book-split', 'book-editorial'].includes(slide.imageLayout)
     ? ` ${slide.imageLayout}`
     : '';
-  const swipeCue = index === 1 ? '<div class="swipe-cue">arraste para ver</div>' : '';
+  const isReelMode = renderContext.publishMode === 'reel-only' || renderContext.publishMode === 'reel-and-story';
+  const swipeCue = index === 1 && !isReelMode ? '<div class="swipe-cue">arraste para ver</div>' : '';
   const commentKeyword = `${title} ${body}`.match(/\bcomente\s+([\p{L}\p{N}_-]+)/iu)?.[1];
   const finalCue = commentKeyword ? `comente ${commentKeyword}` : /\bcomente\b/i.test(`${title} ${body}`) ? 'comente IA' : 'link na bio';
   const saveCue = index === total ? `<div class="save-cue">${finalCue}</div>` : index === 3 ? '<div class="save-cue">salve este passo</div>' : '';
@@ -2213,7 +2214,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     mode === 'split' ? 'layout-left' : index === 1 ? coverLayout : index % 3 === 2 ? 'layout-left' : index % 3 === 0 ? 'layout-corner' : 'layout-right',
     `mode-${mode}`,
     `role-${engagementRole}`,
-    renderContext.publishMode === 'reel-only' || renderContext.publishMode === 'reel-and-story' ? 'reel-mode' : '',
+    isReelMode ? 'reel-mode' : '',
     researchImage ? 'has-research-image' : '',
     isImpact ? 'impact-carousel' : '',
     headlineLengthClass,
@@ -4791,6 +4792,19 @@ async function main() {
     if (!impactStoryProbe.includes('has-story-photo') || !impactStoryProbe.includes('book-claude-briefing.png')) {
       throw new Error('Story de campanha com imagem voltou ao layout apenas textual.');
     }
+    const reelNavigationProbe = impactStoryStyle ? slideHtml({
+      eyebrow: 'VALE ENTENDER',
+      title: 'Uma pauta recente sobre inteligência artificial.',
+      body: 'O vídeo apresenta os pontos em sequência.'
+    }, 1, 5, account, impactStoryStyle, { publishMode: 'reel-and-story' }) : '';
+    const carouselNavigationProbe = impactStoryStyle ? slideHtml({
+      eyebrow: 'VALE ENTENDER',
+      title: 'Uma pauta recente sobre inteligência artificial.',
+      body: 'O carrossel apresenta os pontos em sequência.'
+    }, 1, 5, account, impactStoryStyle, { publishMode: 'feed-and-story' }) : '';
+    if (/arraste para ver/i.test(reelNavigationProbe) || !/arraste para ver/i.test(carouselNavigationProbe)) {
+      throw new Error('Indicador de arrastar precisa ficar restrito ao carrossel e ausente do Reel.');
+    }
     console.log(JSON.stringify({
       ok: true,
       account: account.account,
@@ -4808,6 +4822,7 @@ async function main() {
       ,articleContinuationGuard: 'ok'
       ,finalSlideVariationGuard: 'ok'
       ,feedArchitectureGuard: '1080x1350-4:5'
+      ,reelSwipeCueGuard: 'ok'
       ,storySafeZoneGuard: '250-1170-500'
       ,storyCampaignImageGuard: 'explicit-image-prominent'
       ,radarSourceImageGuard: 'og-image-https-with-safe-fallback'

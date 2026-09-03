@@ -2538,3 +2538,10 @@ Conclusao de ativacao:
 - O fechamento ganhou painel de 964 px por 420 px, texto centralizado e sem a faixa branca estreita que fragmentava a frase; progresso e CTA permanecem dentro da area segura.
 - O convite para arrastar sobre capas com fotografia passou a usar contraste preto e branco, evitando texto claro sobre botao claro.
 - `node --check`, `git diff --check`, `validate-copy` e render completo `2026-09-03-162428-slot-10-render-only` aprovados. Os cinco cards foram inspecionados e nenhum post de teste foi publicado.
+
+# 2026-09-03 16:33 BRT — Indicador de arrastar removido dos Reels
+
+- A capa do Reel do slot 9 exibiu indevidamente `ARRASTE PARA VER` porque o vídeo reutiliza os quadros renderizados do carrossel e o indicador era criado incondicionalmente no primeiro quadro.
+- O gerador agora omite esse texto nos modos `reel-only` e `reel-and-story`; o indicador permanece somente em publicações de carrossel.
+- `npm run validate-copy` aprovou 21 packs, 54 packs automáticos, 75 seleções automáticas e a nova trava `reelSwipeCueGuard`.
+- Correção preparada na branch `ops/record-slot8-20260903`, baseada no `origin/main` em `17a3878`; envio e comprovação no próximo Reel permanecem como próximos passos.

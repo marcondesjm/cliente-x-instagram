@@ -706,3 +706,9 @@ Resultado:
 - Cards internos do `impact-carousel` foram reequilibrados para eliminar o grande vazio central visto no slot 9.
 - Titulos, paineis explicativos e CTA final agora ocupam proporcionalmente a tela 4:5, com texto centralizado verticalmente e sem faixa branca estreita.
 - Render `2026-09-03-162428-slot-10-render-only` aprovado nos cinco cards; sem colisao e sem publicacao de teste.
+
+## Atualizacao 2026-09-03 16:33 BRT — Reel sem instrucao de carrossel
+
+- `ARRASTE PARA VER` deixa de ser renderizado em `reel-only` e `reel-and-story`, permanecendo apenas nos carrosseis.
+- A validação automatizada compara os dois modos e bloqueia regressão; `npm run validate-copy` aprovado.
+- Branch `ops/record-slot8-20260903`, base `17a3878`; falta enviar a correção e comprovar visualmente no próximo Reel real.
