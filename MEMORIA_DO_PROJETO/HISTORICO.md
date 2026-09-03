@@ -2560,4 +2560,4 @@ Conclusao de ativacao:
 - O MP4 real contém áudio AAC estéreo, média de `-16,8 dB` e pico de `-1,7 dB`; a rotação Beethoven-only selecionou o arranjo da Sinfonia nº 2 (`beethoven-02-vivace`).
 - O primeiro comentário falhou isoladamente com `OAuthException #10`; Reel e Story foram publicados normalmente.
 - O workflow manual marcou indevidamente o slot 10. A entrada foi removida de `published-slots.json` para manter a postagem automática das 17:40 pendente, e o formulário ganhou `mark_automatic_slot` para distinguir publicação extra de recuperação de slot.
-- Validações: run concluído com sucesso, histórico real persistido, MP4 auditado, JSON do livro de slots válido e `git diff --check` aprovado. Próximo passo: enviar a preservação do slot ao `origin/main` antes das 17:40.
+- Validações: run concluído com sucesso, histórico real persistido, MP4 auditado, JSON do livro de slots válido e `git diff --check` aprovado. Preservação do slot enviada ao `origin/main` em `5d23592`; próximo passo é comprovar o automático das 17:40.
