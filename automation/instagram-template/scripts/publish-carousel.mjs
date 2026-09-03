@@ -4197,12 +4197,13 @@ const REEL_SOUNDTRACKS = [
   { id: 'beethoven-08-brincante', work: 'Sinfonia nº 8', bpm: 120, classical: true, chords: [[53, 57, 60], [48, 52, 55], [55, 59, 62], [53, 57, 60]], melody: [77, 81, 84, 81, 79, 77, 76, 77] },
   { id: 'beethoven-09-alegria', work: 'Sinfonia nº 9 Coral', bpm: 100, classical: true, chords: [[50, 54, 57], [55, 59, 62], [57, 61, 64], [50, 54, 57]], melody: [66, 66, 67, 69, 69, 67, 66, 64, 62, 62, 64, 66] }
 ];
+const REEL_BEETHOVEN_SOUNDTRACKS = REEL_SOUNDTRACKS.filter((track) => track.classical && /^beethoven-\d{2}-/.test(track.id));
 
 function renderOriginalInstrumentalWav(runDir, durationSeconds, trackIndex) {
   const sampleRate = 48000;
   const channels = 2;
   const frames = Math.ceil(durationSeconds * sampleRate);
-  const track = REEL_SOUNDTRACKS[trackIndex % REEL_SOUNDTRACKS.length];
+  const track = REEL_BEETHOVEN_SOUNDTRACKS[trackIndex % REEL_BEETHOVEN_SOUNDTRACKS.length];
   const pcm = Buffer.alloc(frames * channels * 2);
   const secondsPerBeat = 60 / track.bpm;
   const midiFrequency = (note) => 440 * (2 ** ((note - 69) / 12));
@@ -4277,8 +4278,8 @@ function renderReelVideo(runDir, imagePaths) {
   const durationSeconds = (imagePaths.length * sceneSeconds) - ((imagePaths.length - 1) * transitionSeconds);
   const requestedTrackIndex = Number.parseInt(process.env.INSTAGRAM_REEL_SOUNDTRACK_INDEX || '', 10);
   const trackIndex = Number.isInteger(requestedTrackIndex) && requestedTrackIndex >= 0
-    ? requestedTrackIndex % REEL_SOUNDTRACKS.length
-    : stableAvatarOffset(imagePaths.join('|')) % REEL_SOUNDTRACKS.length;
+    ? requestedTrackIndex % REEL_BEETHOVEN_SOUNDTRACKS.length
+    : stableAvatarOffset(imagePaths.join('|')) % REEL_BEETHOVEN_SOUNDTRACKS.length;
   const audioTrack = renderOriginalInstrumentalWav(runDir, durationSeconds, trackIndex);
   const inputs = imagePaths.flatMap((imagePath) => ['-loop', '1', '-t', String(sceneSeconds), '-i', resolve(imagePath)]);
   const filters = imagePaths.map((_, index) => `[${index}:v]split=2[bg${index}][fg${index}];[bg${index}]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,gblur=sigma=32[blur${index}];[fg${index}]scale=1080:1350:force_original_aspect_ratio=decrease[front${index}];[blur${index}][front${index}]overlay=(W-w)/2:(H-h)/2,setsar=1,fps=30[v${index}]`).join(';');
@@ -4805,6 +4806,9 @@ async function main() {
     if (/arraste para ver/i.test(reelNavigationProbe) || !/arraste para ver/i.test(carouselNavigationProbe)) {
       throw new Error('Indicador de arrastar precisa ficar restrito ao carrossel e ausente do Reel.');
     }
+    if (REEL_BEETHOVEN_SOUNDTRACKS.length !== 9 || REEL_BEETHOVEN_SOUNDTRACKS.some((track) => !track.classical || !track.work)) {
+      throw new Error('Rotação dos Reels precisa conter exclusivamente as nove trilhas de Beethoven.');
+    }
     console.log(JSON.stringify({
       ok: true,
       account: account.account,
@@ -4823,6 +4827,7 @@ async function main() {
       ,finalSlideVariationGuard: 'ok'
       ,feedArchitectureGuard: '1080x1350-4:5'
       ,reelSwipeCueGuard: 'ok'
+      ,reelSoundtrackGuard: 'beethoven-only-9'
       ,storySafeZoneGuard: '250-1170-500'
       ,storyCampaignImageGuard: 'explicit-image-prominent'
       ,radarSourceImageGuard: 'og-image-https-with-safe-fallback'
