@@ -2551,4 +2551,4 @@ Conclusao de ativacao:
 - A auditoria do Reel do slot 9 confirmou áudio AAC estéreo presente, com média de `-17,2 dB` e pico de `-1,0 dB`; porém a rotação havia escolhido `futuro-leve`, uma das três trilhas genéricas.
 - A seleção de áudio dos Reels agora considera exclusivamente os nove arranjos próprios inspirados nas Sinfonias nº 1 a nº 9 de Beethoven, inclusive quando existe índice explícito de trilha.
 - `node --check`, `git diff --check` e `npm run validate-copy` aprovados; a nova trava `reelSoundtrackGuard` exige exatamente nove opções e todas classificadas como Beethoven.
-- Próximo passo: enviar ao `origin/main` e confirmar a trilha no próximo Reel real.
+- Correção enviada ao `origin/main` no commit `19f8b28`; falta confirmar a trilha no próximo Reel real.

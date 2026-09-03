@@ -717,4 +717,4 @@ Resultado:
 
 - O último Reel tinha áudio tecnicamente normal, mas recebeu a trilha genérica `futuro-leve` porque ela ainda participava da rotação de 12 opções.
 - A rotação passa a usar exclusivamente nove arranjos próprios inspirados nas Sinfonias nº 1 a nº 9 de Beethoven.
-- `reelSoundtrackGuard: beethoven-only-9`, `node --check` e `git diff --check` aprovados; falta envio e comprovação no próximo Reel real.
+- `reelSoundtrackGuard: beethoven-only-9`, `node --check` e `git diff --check` aprovados; correção enviada ao `origin/main` em `19f8b28` e falta comprovação no próximo Reel real.
