@@ -2598,3 +2598,11 @@ Conclusao de ativacao:
 - O coletor foi atualizado para incluir também `reels_skip_rate`, `reposts`, `follows` e `profile_visits`. A nota passa a recompensar conversão e repostagem e a penalizar taxa de abandono quando disponível.
 - Objetos antigos sem acesso permanecem documentados com `lastError` e não entram no modelo; uma mídia incompatível não interrompe as demais.
 - Modelo puro, sintaxe, `validate-copy`, JSON, YAML e `git diff --check` continuam aprovados. Falta enviar o ajuste de nomes e confirmar a próxima coleta.
+
+# 2026-09-03 17:15 BRT — Aprendizado protegido contra pouco alcance
+
+- O ajuste de métricas foi enviado em `e9c59f1`; a segunda coleta terminou com sucesso no run `33800885079` e persistiu `performance-insights.json` no commit automático `c8abd60`.
+- Estado real: 57 publicações acompanhadas, 23 com observações, dois modelos de fonte, três de tema e dois de formato.
+- Como várias observações iniciais têm alcance entre 1 e 7, o modelo ganhou confiança composta por número de amostras e alcance acumulado. Com pouco volume, a nota aprendida permanece próxima de 50 e não pune prematuramente uma fonte ou assunto.
+- A influência chega gradualmente a 100% somente após pelo menos cinco publicações e 200 contas alcançadas no agrupamento. A trava automatizada valida essa suavização.
+- Testes de score, confiança, sintaxe, `validate-copy`, YAML e diff aprovados. Falta enviar a proteção final e deixar as próximas coletas ampliarem a base.

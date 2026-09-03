@@ -121,26 +121,34 @@ function topicTokens(entry = {}) {
 function buildModels(samples = []) {
   const observations = samples.map((sample) => {
     const latest = [...(sample.observations || [])].sort((a, b) => b.windowHours - a.windowHours)[0];
-    return latest?.performance?.score == null ? null : { sample, score: latest.performance.score };
+    return latest?.performance?.score == null ? null : { sample, score: latest.performance.score, reach: Number(latest.metrics?.reach) || 0 };
   }).filter(Boolean);
   const aggregate = (pairs) => {
     const buckets = new Map();
-    for (const { key, score } of pairs) {
+    for (const { key, score, reach } of pairs) {
       if (!key) continue;
       const bucket = buckets.get(key) || [];
-      bucket.push(score);
+      bucket.push({ score, reach });
       buckets.set(key, bucket);
     }
     return Object.fromEntries([...buckets.entries()].map(([key, values]) => {
-      const average = values.reduce((sum, value) => sum + value, 0) / values.length;
-      const learned = 50 + ((average - 50) * (values.length / (values.length + 3)));
-      return [key, { samples: values.length, averageScore: Number(average.toFixed(2)), learnedScore: Number(learned.toFixed(2)) }];
+      const totalReach = values.reduce((sum, value) => sum + value.reach, 0);
+      const average = values.reduce((sum, value) => sum + value.score, 0) / values.length;
+      const confidence = Math.min(1, values.length / 5) * Math.min(1, totalReach / 200);
+      const learned = 50 + ((average - 50) * confidence);
+      return [key, {
+        samples: values.length,
+        totalReach,
+        confidence: Number(confidence.toFixed(4)),
+        averageScore: Number(average.toFixed(2)),
+        learnedScore: Number(learned.toFixed(2))
+      }];
     }));
   };
   return {
-    sources: aggregate(observations.map(({ sample, score }) => ({ key: String(sample.source || '').toLocaleLowerCase('pt-BR'), score }))),
-    topics: aggregate(observations.flatMap(({ sample, score }) => (sample.topics || []).map((key) => ({ key, score })))),
-    formats: aggregate(observations.map(({ sample, score }) => ({ key: sample.mediaProductType || sample.mediaType || 'unknown', score })))
+    sources: aggregate(observations.map(({ sample, score, reach }) => ({ key: String(sample.source || '').toLocaleLowerCase('pt-BR'), score, reach }))),
+    topics: aggregate(observations.flatMap(({ sample, score, reach }) => (sample.topics || []).map((key) => ({ key, score, reach })))),
+    formats: aggregate(observations.map(({ sample, score, reach }) => ({ key: sample.mediaProductType || sample.mediaType || 'unknown', score, reach })))
   };
 }
 
@@ -149,10 +157,10 @@ function validatePureLogic() {
   const weak = performanceScore({ reach: 1000, shares: 1, saved: 1, comments: 0, likes: 5, totalInteractions: 7 });
   if (!strong || !weak || strong.score <= weak.score || strong.rates.share !== 0.03) throw new Error('Performance score validation failed.');
   const models = buildModels([
-    { source: 'Fonte A', topics: ['dados'], mediaProductType: 'REELS', observations: [{ windowHours: 24, performance: strong }] },
-    { source: 'Fonte A', topics: ['dados'], mediaProductType: 'REELS', observations: [{ windowHours: 24, performance: weak }] }
+    { source: 'Fonte A', topics: ['dados'], mediaProductType: 'REELS', observations: [{ windowHours: 24, metrics: { reach: 1000 }, performance: strong }] },
+    { source: 'Fonte A', topics: ['dados'], mediaProductType: 'REELS', observations: [{ windowHours: 24, metrics: { reach: 1000 }, performance: weak }] }
   ]);
-  if (models.sources['fonte a']?.samples !== 2 || models.topics.dados?.samples !== 2) throw new Error('Learning model validation failed.');
+  if (models.sources['fonte a']?.samples !== 2 || models.sources['fonte a']?.confidence !== 0.4 || models.topics.dados?.samples !== 2) throw new Error('Learning model validation failed.');
   console.log(JSON.stringify({ ok: true, performanceScore: 'normalized-by-reach', windows: WINDOWS, modelShrinkage: 'enabled' }, null, 2));
 }
 

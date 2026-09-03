@@ -756,3 +756,10 @@ Resultado:
 - Métricas atuais descobertas na resposta real da Meta: `ig_reels_video_view_total_time`, `ig_reels_avg_watch_time`, `reels_skip_rate`, `reposts`, `follows` e `profile_visits`.
 - Coletor ajustado para retenção, abandono, repostagem e conversão. Mídias antigas sem acesso ficam fora do aprendizado sem derrubar o workflow.
 - Toda a suíte continua aprovada; falta enviar esse ajuste e conferir a próxima coleta.
+
+## Atualizacao 2026-09-03 17:15 BRT — confiança por amostra e alcance
+
+- Segunda coleta confirmada no run `33800885079`; commit automático `c8abd60`, com 57 mídias acompanhadas e 23 observadas.
+- Modelos atuais: duas fontes, três temas e dois formatos. Alcance inicial ainda baixo, entre 1 e 7 em várias observações.
+- Aprendizado agora combina quantidade de posts e alcance acumulado; permanece quase neutro até ter volume confiável e só atinge influência plena com cinco posts e alcance 200 por grupo.
+- Score, confiança, sintaxe, `validate-copy`, YAML e diff aprovados; falta enviar a proteção final.
