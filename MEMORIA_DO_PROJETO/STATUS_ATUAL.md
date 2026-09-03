@@ -740,3 +740,11 @@ Resultado:
 - Reel real auditado: 22,37 s, AAC estéreo 48 kHz, média `-16,7 dB`, pico `-1,6 dB` e trilha `beethoven-08-brincante` da Sinfonia nº 8.
 - Capa visualmente aprovada e sem `ARRASTE PARA VER`. Primeiro comentário falhou isoladamente com Meta `OAuthException #10`.
 - A publicação extra não marcou o slot 10; as 17:40 continuam pendentes no livro automático.
+
+## Atualizacao 2026-09-03 17:08 BRT — algoritmo aprende com resultados
+
+- Novo coletor em nuvem observa desempenho após 2 h, 24 h e 72 h e persiste `performance-insights.json` sem segredos.
+- Nota normalizada por alcance usa compartilhamentos, salvamentos, comentários, curtidas, interações e retenção quando a Meta disponibiliza; métricas incompatíveis são ignoradas individualmente.
+- Modelos por fonte, tema e formato usam suavização de amostra pequena. O ranking só aplica aprendizado com duas ou mais observações e limita o ajuste para não atropelar qualidade editorial.
+- Workflow `Instagram Performance Learning` roda a cada duas horas e no primeiro deploy. Travas de novidade, fonte e integridade factual continuam obrigatórias.
+- Testes de score, modelos, sintaxe, `validate-copy`, JSON, YAML e diff aprovados; falta enviar e confirmar a primeira coleta real.

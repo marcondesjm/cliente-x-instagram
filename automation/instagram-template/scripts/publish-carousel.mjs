@@ -14,6 +14,7 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const TEMPLATE_DIR = resolve(ROOT, 'automation', 'instagram-template');
 const DEFAULT_CONFIG_DIR = join(TEMPLATE_DIR, 'config');
 const RUNS_DIR = join(TEMPLATE_DIR, 'runs');
+const PERFORMANCE_INSIGHTS_PATH = join(DEFAULT_CONFIG_DIR, 'performance-insights.json');
 const FEED_WIDTH = 1080;
 const FEED_HEIGHT = 1350;
 const STORY_WIDTH = 1080;
@@ -4015,7 +4016,25 @@ function organicPotentialScore(pack = {}, dateString = todaySaoPaulo()) {
     else if (ageDays > 15) add(-7, 'pauta-antiga');
   }
 
-  return { score: Math.max(0, Math.min(100, score)), signals };
+  const performanceState = existsSync(PERFORMANCE_INSIGHTS_PATH)
+    ? readJson(PERFORMANCE_INSIGHTS_PATH)?.accounts?.[process.env.ACCOUNT || 'cliente-x']?.models || {}
+    : {};
+  const sourceKey = String(research.source || '').trim().toLocaleLowerCase('pt-BR');
+  const learnedSource = performanceState.sources?.[sourceKey];
+  if (learnedSource?.samples >= 2) {
+    const adjustment = Math.max(-6, Math.min(6, (Number(learnedSource.learnedScore) - 50) * 0.3));
+    if (Math.abs(adjustment) >= 0.5) add(adjustment, adjustment > 0 ? 'fonte-com-bom-historico' : 'fonte-com-baixo-historico');
+  }
+  const learnedTopics = Object.entries(performanceState.topics || {})
+    .filter(([topic, model]) => model?.samples >= 2 && searchable.includes(topic))
+    .map(([, model]) => Number(model.learnedScore) || 50);
+  if (learnedTopics.length) {
+    const average = learnedTopics.reduce((sum, value) => sum + value, 0) / learnedTopics.length;
+    const adjustment = Math.max(-6, Math.min(6, (average - 50) * 0.3));
+    if (Math.abs(adjustment) >= 0.5) add(adjustment, adjustment > 0 ? 'tema-com-bom-historico' : 'tema-com-baixo-historico');
+  }
+
+  return { score: Number(Math.max(0, Math.min(100, score)).toFixed(2)), signals };
 }
 
 function shortlistByOrganicPotential(candidates = [], dateString = '', limit = 3) {

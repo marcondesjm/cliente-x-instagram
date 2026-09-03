@@ -2579,3 +2579,13 @@ Conclusao de ativacao:
 - O MP4 real tem 22,37 segundos, áudio AAC estéreo a 48 kHz, média de `-16,7 dB` e pico de `-1,6 dB`; a rotação exclusiva escolheu `beethoven-08-brincante`, inspirada na Sinfonia nº 8.
 - A capa real foi inspecionada: título e fotografia ocupam bem o quadro, sem `ARRASTE PARA VER`. O primeiro comentário falhou isoladamente com `OAuthException #10`.
 - `mark_automatic_slot=false` funcionou: o run não adicionou o slot 10 ao livro, portanto a postagem automática das 17:40 continua pendente.
+
+# 2026-09-03 17:08 BRT — Aprendizado fechado por métricas reais
+
+- Criado `scripts/collect-instagram-performance.mjs` para consultar publicações recentes em janelas de aproximadamente 2 h, 24 h e 72 h, sem expor nem persistir o token Meta.
+- Cada métrica é consultada isoladamente para que indisponibilidade por formato não derrube a coleta. O modelo tenta alcance, salvamentos, compartilhamentos, interações totais, visualizações, tempo assistido e tempo médio, somando curtidas e comentários do objeto de mídia.
+- A nota de desempenho é normalizada por alcance e pondera compartilhamentos, salvamentos, comentários, curtidas, interações e retenção disponível. Pequenas amostras passam por suavização em direção ao neutro para evitar conclusões precipitadas.
+- `performance-insights.json` guarda até 120 publicações recentes, observações por janela e modelos agregados por fonte, tema e formato. O seletor de pauta usa bônus ou penalidade limitada por histórico somente depois de ao menos duas amostras.
+- O workflow `Instagram Performance Learning` roda na nuvem a cada duas horas e também no primeiro envio dos arquivos do coletor. Alterações no próprio arquivo de métricas não criam ciclo de execução.
+- As travas de pauta inédita, fonte alternada, fatos e URL oficial permanecem anteriores ao aprendizado; desempenho nunca autoriza repetição.
+- Validações aprovadas: modelo puro, sintaxe dos dois scripts, `validate-copy`, JSON, formatação YAML e `git diff --check`. Envio e primeira coleta real permanecem pendentes.
