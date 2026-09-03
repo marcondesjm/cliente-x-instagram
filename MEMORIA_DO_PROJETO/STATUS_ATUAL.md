@@ -684,3 +684,11 @@ Resultado:
 - Feed `17993741744830872`; Story `18151594885469699`; publicado as 15:08 BRT.
 - A colisao visual da tentativa `33788043842` foi corrigida no commit `3cc1272` e seu alerta esta resolvido. O vigia esta sem erros abertos.
 - Proximo slot automatico: slot 9, as 16:00 BRT, em modo Reel + Story.
+
+## Atualizacao 2026-09-03 15:25 BRT — Radar e visual de noticias
+
+- Radar ativo com 26 fontes cadastradas e busca ampliada para ate 160 candidatos recentes.
+- Coleta real validada: 107 pautas elegiveis, 12 fontes com resultados e 106 imagens editoriais disponiveis.
+- Noticias automaticas usam `impact-carousel` e priorizam a imagem principal do site na capa e no Story.
+- A protecao semantica bloqueia titulos que repetem a mesma frase/promessa trocando apenas o assunto inicial.
+- Render `2026-09-03-151914-slot-9-render-only` aprovado visualmente; nenhum post de teste foi publicado.

@@ -2513,3 +2513,12 @@ Conclusao de ativacao:
 - A segunda tentativa, run `33788473847`, publicou o slot 8 as 15:08 BRT: `https://www.instagram.com/p/Dc1a1vUILNI/`, Feed `17993741744830872` e Story `18151594885469699`.
 - O livro de slots registrou o slot 8 como publicado e o alerta da tentativa anterior foi resolvido; nao ha erros abertos no vigia.
 - A proxima postagem automatica e o slot 9, programado para 16:00 BRT, em modo Reel + Story.
+
+# 2026-09-03 15:25 BRT — Radar brasileiro amplo e formato editorial com imagem da materia
+
+- O Radar passou de 14 para 26 fontes cadastradas, com novos feeds em portugues de Canaltech, Tecnoblog, Hardware.com.br, Agencia Brasil, Exame, IT Forum, TI Inside, Startups, Mobile Time, Google Brasil, Microsoft Brasil e Nossa IA.
+- A coleta real passou de 31 para 107 pautas elegiveis em 30 dias; 12 fontes retornaram pauta util e 106 itens possuem imagem editorial HTTPS extraida do proprio site.
+- O limite de candidatos subiu para ate 160 na janela de 30 dias, reduzindo o risco de um unico portal esgotar o Radar nos 13 slots diarios.
+- A trava de repeticao agora detecta tambem frases longas compartilhadas e alta semelhanca entre titulos recentes. Variacoes superficiais como `SaaS com IA: 3 pontos...` e `Uso do Codex: 3 pontos...` sao bloqueadas.
+- Pautas do Radar passam a usar o formato `impact-carousel`, com a imagem principal da materia ocupando a area fotografica ampla da capa e do Story; a fonte continua identificada no cabecalho e no link da legenda.
+- Render completo aprovado em `2026-09-03-151914-slot-9-render-only`: cinco cards 1080x1350 e Story 1080x1920, sem colisao e sem publicacao durante o teste.

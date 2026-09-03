@@ -1627,7 +1627,7 @@ function radarResearchOptions(account = {}) {
     radar,
     options: {
       maxAgeDays: radar.maxAgeDays,
-      limit: 13,
+      limit: 80,
       sources: radar.sources,
       keywords: radar.keywords,
       excludeKeywords: radar.excludeKeywords,
@@ -1678,7 +1678,7 @@ async function researchRadarWithFallback(options = {}, minimumAgeDays = 7) {
     const result = await researchFreshEditorialPacks({
       ...options,
       maxAgeDays,
-      limit: maxAgeDays === 30 ? 40 : 26
+      limit: maxAgeDays === 30 ? 160 : 100
     });
     lastResult = { ...result, maxAgeDays };
     if (result.packs.length) return lastResult;
@@ -2187,16 +2187,16 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const explicitSlideImage = slide.imagePath
     ? fileCssImage(resolve(ROOT, String(slide.imagePath).replace(/^\/+/, '')))
     : '';
-  const useSectorPhoto = isImpact ? Boolean(explicitSlideImage) : engagementRole === 'hook' || engagementRole === 'proof';
   const researchSource = String(slide.researchSource || '').trim();
   const researchTitle = String(slide.researchDisplayTitle || slide.researchTitle || '').trim();
   const researchUrl = String(slide.researchUrl || '').trim();
   const researchImage = index === 1 ? fileCssImage(renderContext.researchSourceImagePath || '') : '';
+  const useSectorPhoto = isImpact ? Boolean(explicitSlideImage || researchImage) : engagementRole === 'hook' || engagementRole === 'proof';
   const sectorPhotoImage = explicitSlideImage || (useSectorPhoto ? sectorPhotoCssImage(visualCue, index, renderContext) : '');
   // Only replace the visual with the source card when the article image was
   // actually downloaded. Otherwise keep the safe photographic rotation.
   const showNewsContext = Boolean(useSectorPhoto && researchSource && researchImage);
-  const sectorPhotoClass = sectorPhotoImage ? ' has-sector-photo' : '';
+  const sectorPhotoClass = sectorPhotoImage || researchImage ? ' has-sector-photo' : '';
   const imageLayoutClass = isImpact && sectorPhotoImage && ['book-hero', 'book-split', 'book-editorial'].includes(slide.imageLayout)
     ? ` ${slide.imageLayout}`
     : '';
@@ -2645,6 +2645,18 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .impact-carousel.has-sector-photo .context-photo::after {
       background: linear-gradient(180deg, rgba(5,5,5,.02) 42%, rgba(5,5,5,.64) 100%);
     }
+    .impact-carousel.has-sector-photo.role-hook.has-research-image .news-context {
+      left: 58px;
+      right: 58px;
+      top: 430px;
+      width: auto;
+      height: 590px;
+      border-radius: 24px;
+    }
+    .impact-carousel.has-sector-photo.has-research-image .news-context span,
+    .impact-carousel.has-sector-photo.has-research-image .news-context strong,
+    .impact-carousel.has-sector-photo.has-research-image .news-context small,
+    .impact-carousel.has-sector-photo.has-research-image .news-context em { display: none; }
     .impact-carousel.has-sector-photo .headline {
       margin: 152px 0 0;
       max-width: 920px;
@@ -3315,12 +3327,13 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     ? fileCssImage(resolve(ROOT, String(slide.imagePath).replace(/^\/+/, '')))
     : '';
   const sectorPhotoImage = showNewsContext ? '' : (explicitStoryImage || sectorPhotoCssImage(visualCue));
-  const storyPhotoClass = explicitStoryImage ? ' has-story-photo' : '';
+  const storyPhotoClass = explicitStoryImage || researchImage ? ' has-story-photo' : '';
   const avatarBlock = showNewsContext
     ? ''
     : (avatarImage ? `<div class="avatar"></div>` : `<div class="panel"><span>IA</span></div>`);
   const usernameDisplay = accountUsernameDisplay(account);
-  const impactClass = String(style.name || '').startsWith('impact-carousel') ? ' impact-carousel' : '';
+  const isImpactStyle = String(style.name || '').startsWith('impact-carousel');
+  const impactClass = isImpactStyle ? ' impact-carousel' : '';
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -3439,7 +3452,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     <h1>${title.replace(/\s+IA\b/i, ' <strong>IA</strong>')}</h1>
     <p>${storyBody}</p>
     ${hasFeedContinuation ? `<div class="feed-cta">${feedContinuationText}</div>` : ''}
-    <div class="visual-card${showNewsContext ? ' news-context-story' : ''}"${showNewsContext ? ` style="display:block;left:auto;right:72px;top:auto;bottom:${STORY_SAFE_BOTTOM}px;width:390px;height:460px;"` : ''}>${showNewsContext ? `<span>FONTE OFICIAL</span><strong>${htmlText(researchSource)}</strong><small>${htmlText(researchTitle)}</small><small>Matéria identificada · link na legenda</small>` : ''}</div>
+    <div class="visual-card${showNewsContext ? ' news-context-story' : ''}"${showNewsContext && !isImpactStyle ? ` style="display:block;left:auto;right:72px;top:auto;bottom:${STORY_SAFE_BOTTOM}px;width:390px;height:460px;"` : ''}>${showNewsContext && !isImpactStyle ? `<span>FONTE OFICIAL</span><strong>${htmlText(researchSource)}</strong><small>${htmlText(researchTitle)}</small><small>Matéria identificada · link na legenda</small>` : ''}</div>
     ${avatarBlock}
     <div class="note">${account.footerText}</div>
     <footer>${account.brandName}</footer>
@@ -3795,6 +3808,29 @@ function findDuplicateCoverTitle(recentMedia = [], history = [], pack = {}) {
   }) || null;
 }
 
+function titleWordNgrams(value = '', size = 5) {
+  const words = normalizeContentFingerprint(value).split(' ').filter(Boolean);
+  if (words.length < size) return [];
+  return Array.from({ length: words.length - size + 1 }, (_, index) => words.slice(index, index + size).join(' '));
+}
+
+function findSemanticCoverTitle(history = [], pack = {}) {
+  const expected = normalizedCoverTitle(pack);
+  if (!expected) return null;
+  const expectedWords = new Set(expected.split(' ').filter((word) => word.length > 2));
+  const expectedNgrams = new Set(titleWordNgrams(expected));
+  return [...history].slice(-48).reverse().find((entry) => {
+    const actual = normalizeContentFingerprint(entry?.coverTitle || '');
+    if (!actual) return false;
+    const actualWords = new Set(actual.split(' ').filter((word) => word.length > 2));
+    const union = new Set([...expectedWords, ...actualWords]);
+    const common = [...expectedWords].filter((word) => actualWords.has(word)).length;
+    const jaccard = union.size ? common / union.size : 0;
+    const repeatedPhrase = titleWordNgrams(actual).some((ngram) => expectedNgrams.has(ngram));
+    return repeatedPhrase || (Math.min(expectedWords.size, actualWords.size) >= 4 && jaccard >= 0.72);
+  }) || null;
+}
+
 function findDuplicateSelection(pack, recentMedia = [], publicationHistory = []) {
   if (pack?.research?.sourceUrl) {
     // A pauta e a chamada de capa precisam ser novas. Fontes diferentes nao
@@ -3802,9 +3838,11 @@ function findDuplicateSelection(pack, recentMedia = [], publicationHistory = [])
     return findDuplicateResearchSource(publicationHistory, pack)
       || findConsecutiveResearchSource(publicationHistory, pack)
       || findDuplicateCoverTitle(recentMedia, publicationHistory, pack)
+      || findSemanticCoverTitle(publicationHistory, pack)
       || findDuplicatePack(publicationHistory, pack);
   }
   return findDuplicateCoverTitle(recentMedia, publicationHistory, pack)
+    || findSemanticCoverTitle(publicationHistory, pack)
     || findDuplicateCaption(recentMedia, pack.caption)
     || findDuplicatePack(publicationHistory, pack);
 }
@@ -4377,6 +4415,12 @@ async function main() {
     }])) {
       throw new Error('Data de edicao permitiu repetir titulo ou tema editorial no teste de historico.');
     }
+    const semanticTemplateProbe = findSemanticCoverTitle([{
+      coverTitle: 'SaaS com IA: 3 pontos para arrumar antes da IA.'
+    }], {
+      slides: [{ title: 'Uso do Codex: 3 pontos para arrumar antes da IA.' }]
+    });
+    if (!semanticTemplateProbe) throw new Error('Variacao superficial de titulo passou pela protecao semantica.');
     const sourceProbePack = {
       ...duplicateProbePack,
       research: { source: 'Fonte de teste', sourceUrl: 'https://example.com/noticia-nova' }
@@ -4774,7 +4818,7 @@ async function main() {
           const expandedResearch = await researchFreshEditorialPacks({
             ...radarOptions,
             maxAgeDays,
-            limit: maxAgeDays === 30 ? 40 : 26
+            limit: maxAgeDays === 30 ? 160 : 100
           });
           const expandedFresh = pickFreshPack(expandedResearch.packs, today, generationSlotIndex, recentMedia, publicationHistory);
           if (expandedFresh.pack) {
