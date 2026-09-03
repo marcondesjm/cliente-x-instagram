@@ -711,4 +711,4 @@ Resultado:
 
 - `ARRASTE PARA VER` deixa de ser renderizado em `reel-only` e `reel-and-story`, permanecendo apenas nos carrosseis.
 - A validação automatizada compara os dois modos e bloqueia regressão; `npm run validate-copy` aprovado.
-- Branch `ops/record-slot8-20260903`, base `17a3878`; falta enviar a correção e comprovar visualmente no próximo Reel real.
+- Correção enviada ao `origin/main` no commit `35c797e`, pela branch `ops/record-slot8-20260903`; falta comprovar visualmente no próximo Reel real.

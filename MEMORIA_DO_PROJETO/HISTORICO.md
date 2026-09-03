@@ -2544,4 +2544,4 @@ Conclusao de ativacao:
 - A capa do Reel do slot 9 exibiu indevidamente `ARRASTE PARA VER` porque o vídeo reutiliza os quadros renderizados do carrossel e o indicador era criado incondicionalmente no primeiro quadro.
 - O gerador agora omite esse texto nos modos `reel-only` e `reel-and-story`; o indicador permanece somente em publicações de carrossel.
 - `npm run validate-copy` aprovou 21 packs, 54 packs automáticos, 75 seleções automáticas e a nova trava `reelSwipeCueGuard`.
-- Correção preparada na branch `ops/record-slot8-20260903`, baseada no `origin/main` em `17a3878`; envio e comprovação no próximo Reel permanecem como próximos passos.
+- Correção enviada ao `origin/main` no commit `35c797e`, pela branch `ops/record-slot8-20260903`; falta apenas a comprovação visual no próximo Reel real.
