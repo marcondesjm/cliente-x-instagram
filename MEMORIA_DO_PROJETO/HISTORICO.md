@@ -1,5 +1,15 @@
 # Historico
 
+## 2026-09-03 17:39 BRT — Motor de crescimento e experimentos
+
+- O aprendizado passou a contar cada mídia uma única vez no modelo, usando a observação mais madura disponível entre 2 h, 24 h e 72 h; múltiplas coletas não inflam artificialmente o tamanho da amostra.
+- A pontuação passou a registrar retenção, visualizações por alcance e taxa de abandono quando essas métricas estiverem disponíveis na Meta.
+- Foram adicionados modelos por público (`vendas`, `RH`, `operações`, `tecnologia`, `gestão` e `empresários`) e por tipo de gancho (`pergunta`, `dado`, `alerta`, `novidade` e `afirmação`).
+- A seleção automática agora usa exploração controlada determinística: 70% aproveitamento dos melhores candidatos, 20% exploração e 10% experimento. Essa etapa ocorre somente depois das travas de fonte, qualidade, originalidade e repetição.
+- O dashboard ganhou amostra efetiva, cobertura de retenção, público, gancho, alcance semanal, interações semanais e comparação com a semana anterior.
+- Implementação: commit `1b4d18e` (`Scale Instagram performance experiments`), branch `ops/record-slot8-20260903`.
+- Validações aprovadas: sintaxe dos três módulos, modelo puro normalizado por alcance, `git diff --check` e `npm run validate-copy`; a validação confirmou 21 packs, 54 automáticos, 75 candidatos, 26 fontes e a nova trava `controlledExplorationGuard`.
+
 ## 2026-09-03 17:25 BRT — Aprendizado de desempenho no dashboard
 
 - Adicionado à aba `Visão geral` o painel `Aprendizado de desempenho`, com estado da execução na nuvem, quantidade de mídias acompanhadas, mídias observadas e total de observações.

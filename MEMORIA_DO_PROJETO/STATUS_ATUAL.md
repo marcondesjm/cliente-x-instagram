@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-09-03 17:25 BRT
+Atualizado em: 2026-09-03 17:39 BRT
 
 ## Regra permanente de checkpoint
 
@@ -10,6 +10,9 @@ Atualizado em: 2026-09-03 17:25 BRT
 
 ## Projeto ativo
 
+- Motor de crescimento implementado no commit `1b4d18e`: amostra efetiva por mídia, retenção, abandono, visualizações por alcance, segmentação de público, classificação de gancho e evolução semanal.
+- Seleção automática 70/20/10 ativa somente entre candidatos inéditos e aprovados: 70% aproveitamento, 20% exploração e 10% experimento. As 13 publicações BRT e todas as travas editoriais permanecem preservadas.
+- O dashboard passa a explicar a diferença entre coletas e posts independentes e exibe cobertura de retenção, alcance/interações semanais, público e gancho em destaque.
 - Dashboard: a aba `Visão geral` agora possui `Aprendizado de desempenho`, exibindo dados persistidos pela automação na nuvem por fonte, tema e formato, base observada, janelas de 2 h/24 h/72 h e última coleta.
 - Segurança: o endpoint privado fornece somente um resumo de `performance-insights.json`; não expõe token Meta, secrets nem mensagens internas completas.
 - Implementação registrada no commit `7cd2785`, checkout `cliente-x-instagram-modern-deploy-20260903`, branch `ops/record-slot8-20260903`. Validações de sintaxe, diff e copy aprovadas. Deploy `dpl_BYBkvenVHNiarMAQEJEd2iVSH4Vy` está `READY` e confirmado no domínio `cliente-x-instagram.vercel.app`.
