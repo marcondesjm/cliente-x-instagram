@@ -44,10 +44,10 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v5.54',
+  appVersion: 'v5.55',
   status: 'funcionando',
-  stableCommit: '9156514',
-  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/9156514',
+  stableCommit: '37a2de0',
+  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/37a2de0',
   description: 'Publica carrossel, Story e oito Reels diarios em português, com trilha musical original arranjada, transicoes, Radar oficial, agenda e vigia.'
 };
 const MAINTENANCE = {

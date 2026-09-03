@@ -675,3 +675,4 @@ Resultado:
 - Deployment de producao `dpl_AY4EMdPgB7PjMxDE8JWACs9eJou1` esta `READY`.
 - Alertas vencidos do slot 12 foram marcados como resolvidos; novos sucessos passam a encerrar automaticamente todos os erros antigos de credencial da mesma conta.
 - Capas de Reel nao exibem mais o cartao explicativo abaixo da foto; chamada, titulo, fotografia, progresso e CTA ficam na area segura. Correcao validada em render local sem republicacao automatica.
+- Versao operacional atual: `v5.55`, base funcional `37a2de0`. O indicador do painel e a API foram sincronizados; nao usar mais `v5.54` como versao atual.

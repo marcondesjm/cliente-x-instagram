@@ -2492,3 +2492,9 @@ Conclusao de ativacao:
 - A barra de progresso e o convite para avancar foram reposicionados para a area segura da capa.
 - O fallback de imagem da pauta foi corrigido para nao transformar caminho vazio em uma imagem invalida.
 - Render local `2026-09-03-143446-slot-7-render-only` concluido sem publicar; capa e Reel foram gerados para revisao visual.
+
+# 2026-09-03 14:45 BRT — Versao visivel sincronizada com a producao
+
+- O painel estava servindo o codigo corrigido, mas ainda exibia `v5.54` porque `ACTIVE_VERSION` e o texto inicial do cabecalho continuavam estaticos.
+- A versao operacional foi promovida para `v5.55`, com base funcional `37a2de0`, incluindo token longo, encerramento global dos alertas recuperados e capa de Reel na area segura.
+- A memoria do projeto foi atualizada junto com o codigo para impedir que o proximo deploy volte ao checkpoint antigo.
