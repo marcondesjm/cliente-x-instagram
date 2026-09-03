@@ -677,3 +677,10 @@ Resultado:
 - Capas de Reel nao exibem mais o cartao explicativo abaixo da foto; chamada, titulo, fotografia, progresso e CTA ficam na area segura. Correcao validada em render local sem republicacao automatica.
 - Versao operacional atual: `v5.55`, base funcional `37a2de0`. O indicador do painel e a API foram sincronizados; nao usar mais `v5.54` como versao atual.
 - Versao operacional preparada: `v5.56`. O botao `Forcar vigia` despacha diretamente o workflow backup, mostra retorno persistente na propria secao e mantem a trava do livro de slots contra duplicidade.
+
+## Atualizacao 2026-09-03 15:10 BRT — slot 8 publicado
+
+- Run `33788473847` concluido com publicacao real: `https://www.instagram.com/p/Dc1a1vUILNI/`.
+- Feed `17993741744830872`; Story `18151594885469699`; publicado as 15:08 BRT.
+- A colisao visual da tentativa `33788043842` foi corrigida no commit `3cc1272` e seu alerta esta resolvido. O vigia esta sem erros abertos.
+- Proximo slot automatico: slot 9, as 16:00 BRT, em modo Reel + Story.

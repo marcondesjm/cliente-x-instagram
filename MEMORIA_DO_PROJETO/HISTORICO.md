@@ -2505,3 +2505,11 @@ Conclusao de ativacao:
 - A `v5.56` adiciona `workflow_dispatch` ao `Instagram Watchdog Backup` e o painel passa a despachar esse workflow diretamente.
 - A confirmacao deixa de desaparecer silenciosamente: a secao do vigia mostra sucesso ou erro persistente e oferece link para acompanhar o GitHub Actions.
 - O livro de slots continua sendo consultado pelo backup, preservando a trava contra publicacao duplicada.
+
+# 2026-09-03 15:10 BRT — Slot 8 recuperado com publicacao real
+
+- O cron principal das 14:50 BRT atrasou; o vigia foi acionado e a primeira tentativa, run `33788043842`, parou antes da Meta porque a foto de contexto e o painel de avatar ocupavam a mesma area da capa.
+- Capas com foto de setor agora ocultam o painel de avatar redundante. A correcao foi validada em render local e enviada no commit `3cc1272`.
+- A segunda tentativa, run `33788473847`, publicou o slot 8 as 15:08 BRT: `https://www.instagram.com/p/Dc1a1vUILNI/`, Feed `17993741744830872` e Story `18151594885469699`.
+- O livro de slots registrou o slot 8 como publicado e o alerta da tentativa anterior foi resolvido; nao ha erros abertos no vigia.
+- A proxima postagem automatica e o slot 9, programado para 16:00 BRT, em modo Reel + Story.
