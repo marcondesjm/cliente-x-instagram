@@ -72,6 +72,11 @@ function solutionFor(errorText = '', stage = '') {
   return 'Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o token, conteúdo ou dependência indicada antes da próxima tentativa.';
 }
 
+function isCredentialError(entry = {}) {
+  const text = `${entry.stage || ''} ${entry.error || ''}`.toLowerCase();
+  return /oauth|access token|session has expired|code["':\s]+190|error_subcode["':\s]+463/.test(text);
+}
+
 const errors = readJson(ERRORS_PATH, []);
 const slotIndex = Number.parseInt(process.env.INSTAGRAM_TEMPLATE_SLOT_INDEX || '', 10);
 const slotDate = process.env.INSTAGRAM_TEMPLATE_SLOT_DATE || null;
@@ -89,7 +94,10 @@ if (status === 'resolved') {
     const sameSlot = entry.account === ACCOUNT &&
       (!slotDate || entry.date === slotDate || manualRecovery) &&
       (!Number.isInteger(slotIndex) || Number(entry.slotIndex) === slotIndex);
-    if (sameSlot && entry.status === 'open') {
+    // A completed publication proves that this account's credential is healthy.
+    // Credential failures affect every slot, so older dates must not stay open.
+    const recoveredCredential = entry.account === ACCOUNT && isCredentialError(entry);
+    if ((sameSlot || recoveredCredential) && entry.status === 'open') {
       entry.status = 'resolved';
       entry.resolvedAt = new Date().toISOString();
       entry.resolvedRun = workflowRun;

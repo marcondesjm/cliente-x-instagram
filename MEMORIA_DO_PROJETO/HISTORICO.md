@@ -2476,3 +2476,11 @@ Conclusao de ativacao:
 - Cache inicial persistido com 27 pautas pesquisadas em 02/09/2026. `node --check`, `git diff --check`, `validate-copy` e `render-only` aprovados; nenhuma publicacao adicional foi feita durante a validacao.
 - Uma segunda origem de cron pela Vercel foi avaliada e descartada antes do deploy: o plano Hobby permite apenas execucao diaria, insuficiente para recuperacao operacional. Nenhuma rota ou agenda Vercel dessa tentativa permaneceu no projeto.
 - Prova automatica apos o envio: o feed agendado `33692327772` iniciou sozinho as 19:50 BRT e terminou sem slot devido; sua conclusao acionou automaticamente o watchdog `33692370977`, evento `workflow_run`, concluido com sucesso no commit `30c9b3f`. Nao houve botao, novo commit de forca nem postagem fora de hora.
+
+# 2026-09-03 14:21 BRT — Token longo sincronizado e alerta antigo encerrado
+
+- O secret de publicacao `CLIENTE_X_INSTAGRAM_ACCESS_TOKEN` foi sincronizado no GitHub Actions e no ambiente Production do Vercel; o token separado de mensagens do Direct foi preservado.
+- O token longo foi validado diretamente na Graph API para `@marcondes.machado.oficial`, com HTTP 200, e tem validade informada pela Meta ate 02/11/2026.
+- Deployment Vercel `dpl_AY4EMdPgB7PjMxDE8JWACs9eJou1` concluido como `READY` e promovido ao dominio `cliente-x-instagram.vercel.app`.
+- Os dois alertas antigos do slot 12, runs `33702317280` e `33702764686`, foram encerrados com a prova posterior do run `33782983061`.
+- A rotina de status agora encerra automaticamente erros antigos de credencial da mesma conta quando uma publicacao posterior termina com sucesso, mesmo que data e slot sejam diferentes.

@@ -668,3 +668,9 @@ Resultado:
 - A aba `Lógica da postagem` ganhou uma faixa superior com todos os cinco botões principais, antes dos campos longos do perfil.
 - Atalhos: carrossel de impacto, Método IHC, Bottini, Radar e salvar perfil completo.
 - Layout responsivo em 5/2/1 colunas. Commit `1d6f1f2`; deploy `dpl_785ZvJbNbpArFJk9iRQ4vx85mc4J` em `READY`; sessão autenticada confirmou v5.54 e todos os cinco botões visíveis no topo.
+
+## Atualizacao 2026-09-03 14:21 BRT — token Meta e vigia
+
+- Token de publicacao Meta sincronizado no GitHub e no Vercel; Graph API confirmou HTTP 200 para `@marcondes.machado.oficial`.
+- Deployment de producao `dpl_AY4EMdPgB7PjMxDE8JWACs9eJou1` esta `READY`.
+- Alertas vencidos do slot 12 foram marcados como resolvidos; novos sucessos passam a encerrar automaticamente todos os erros antigos de credencial da mesma conta.
