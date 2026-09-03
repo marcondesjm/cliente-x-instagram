@@ -1899,7 +1899,9 @@ function localAssetCssImage(path = '') {
 }
 
 function fileCssImage(path = '') {
-  const source = isAbsolute(String(path || '')) ? String(path) : resolve(ROOT, String(path || '').replace(/^\/+/, ''));
+  const value = String(path || '').trim();
+  if (!value) return '';
+  const source = isAbsolute(value) ? value : resolve(ROOT, value.replace(/^\/+/, ''));
   if (!existsSync(source)) return '';
   return cssUrl(`file:///${source.replace(/\\/g, '/')}`);
 }
@@ -2189,9 +2191,11 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const researchSource = String(slide.researchSource || '').trim();
   const researchTitle = String(slide.researchDisplayTitle || slide.researchTitle || '').trim();
   const researchUrl = String(slide.researchUrl || '').trim();
-  const showNewsContext = Boolean(useSectorPhoto && researchSource);
   const researchImage = index === 1 ? fileCssImage(renderContext.researchSourceImagePath || '') : '';
   const sectorPhotoImage = explicitSlideImage || (useSectorPhoto ? sectorPhotoCssImage(visualCue, index, renderContext) : '');
+  // Only replace the visual with the source card when the article image was
+  // actually downloaded. Otherwise keep the safe photographic rotation.
+  const showNewsContext = Boolean(useSectorPhoto && researchSource && researchImage);
   const sectorPhotoClass = sectorPhotoImage ? ' has-sector-photo' : '';
   const imageLayoutClass = isImpact && sectorPhotoImage && ['book-hero', 'book-split', 'book-editorial'].includes(slide.imageLayout)
     ? ` ${slide.imageLayout}`
@@ -2209,6 +2213,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     mode === 'split' ? 'layout-left' : index === 1 ? coverLayout : index % 3 === 2 ? 'layout-left' : index % 3 === 0 ? 'layout-corner' : 'layout-right',
     `mode-${mode}`,
     `role-${engagementRole}`,
+    renderContext.publishMode === 'reel-only' || renderContext.publishMode === 'reel-and-story' ? 'reel-mode' : '',
     researchImage ? 'has-research-image' : '',
     isImpact ? 'impact-carousel' : '',
     headlineLengthClass,
@@ -2696,6 +2701,12 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
       min-height: 280px;
       padding-left: 96px;
     }
+    /* Reel cover: keep every essential element inside Instagram's visible crop.
+       Supporting copy belongs to the following takes, not below the cover photo. */
+    .reel-mode.role-hook .note { display: none; }
+    .reel-mode.role-hook .context-photo { top: 455px; height: 520px; }
+    .reel-mode.role-hook .progress { bottom: 190px; }
+    .reel-mode.role-hook .swipe-cue { bottom: 105px; }
     .bubble { display: none; position: absolute; right: 116px; bottom: 270px; width: 132px; height: 96px; border-radius: 34px; background: #f1d8c7; z-index: 3; }
     .bubble::before { content: "..."; position: absolute; inset: 0; display: grid; place-items: center; color: ${accent}; font-size: 58px; line-height: 0.5; font-weight: 900; letter-spacing: 5px; }
     .spark { position: absolute; color: ${accent}; opacity: 0.7; z-index: 2; font-size: 42px; font-weight: 900; }

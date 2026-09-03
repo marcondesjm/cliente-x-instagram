@@ -2484,3 +2484,11 @@ Conclusao de ativacao:
 - Deployment Vercel `dpl_AY4EMdPgB7PjMxDE8JWACs9eJou1` concluido como `READY` e promovido ao dominio `cliente-x-instagram.vercel.app`.
 - Os dois alertas antigos do slot 12, runs `33702317280` e `33702764686`, foram encerrados com a prova posterior do run `33782983061`.
 - A rotina de status agora encerra automaticamente erros antigos de credencial da mesma conta quando uma publicacao posterior termina com sucesso, mesmo que data e slot sejam diferentes.
+
+# 2026-09-03 14:35 BRT — Capa de Reel sem texto cortado
+
+- A capa do Reel `Dc1V0MGjGYU` foi inspecionada quadro a quadro e confirmou o cartao explicativo parcialmente fora da area visivel do Instagram.
+- Capas de Reel agora mostram apenas chamada, titulo e fotografia; o texto explicativo permanece nos takes seguintes.
+- A barra de progresso e o convite para avancar foram reposicionados para a area segura da capa.
+- O fallback de imagem da pauta foi corrigido para nao transformar caminho vazio em uma imagem invalida.
+- Render local `2026-09-03-143446-slot-7-render-only` concluido sem publicar; capa e Reel foram gerados para revisao visual.

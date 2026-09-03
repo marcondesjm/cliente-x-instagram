@@ -674,3 +674,4 @@ Resultado:
 - Token de publicacao Meta sincronizado no GitHub e no Vercel; Graph API confirmou HTTP 200 para `@marcondes.machado.oficial`.
 - Deployment de producao `dpl_AY4EMdPgB7PjMxDE8JWACs9eJou1` esta `READY`.
 - Alertas vencidos do slot 12 foram marcados como resolvidos; novos sucessos passam a encerrar automaticamente todos os erros antigos de credencial da mesma conta.
+- Capas de Reel nao exibem mais o cartao explicativo abaixo da foto; chamada, titulo, fotografia, progresso e CTA ficam na area segura. Correcao validada em render local sem republicacao automatica.
