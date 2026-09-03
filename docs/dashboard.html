@@ -1905,6 +1905,20 @@
           </div>
         </div>
 
+        <div class="panel" id="performanceLearningPanel">
+          <div class="panel-head">
+            <div>
+              <div class="section-label">Aprendizado de desempenho</div>
+              <h2>O que a automação está aprendendo</h2>
+            </div>
+            <span class="status-pill warn" id="performanceLearningStatus">Carregando</span>
+          </div>
+          <div class="capability-grid" id="performanceLearningGrid">
+            <div class="capability-card warn"><strong>Aguardando dados</strong><span>Consultando as coletas de 2 h, 24 h e 72 h.</span><div class="capability-status">Aguarde</div></div>
+          </div>
+          <div class="message" id="performanceLearningMessage">O modelo preserva novidade e integridade editorial mesmo quando encontra um tema com bom resultado.</div>
+        </div>
+
         <div class="panel">
           <div class="panel-head">
             <div>
@@ -2833,7 +2847,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     const DIRECT_HISTORY_PAGE_SIZE = 10;
 
     const DASHBOARD_GROUPS = {
-      overview: ['instagramShowcase', 'latestPostTitle'],
+      overview: ['instagramShowcase', 'latestPostTitle', 'performanceLearningPanel'],
       content: ['packSelect', 'directAutomationStatus'],
       'posting-logic': ['activeProfileStatus'],
       'direct-history': ['directHistoryPanel'],
@@ -4573,8 +4587,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             }
           });
           renderLatestPost(appState.privateMetrics);
+          renderPerformanceLearning(appState.privateMetrics?.performanceLearning);
         } catch (error) {
           appState.privateMetrics = { error: error.message };
+          renderPerformanceLearning(null, error.message);
         } finally {
           privateMetricsRequest = null;
         }
@@ -4620,6 +4636,39 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       renderShowcaseSlide();
       image.onerror = () => { image.style.display = 'none'; };
       showcaseImage.onerror = () => { showcaseImage.removeAttribute('src'); };
+    }
+
+    function renderPerformanceLearning(learning, requestError = '') {
+      const status = document.getElementById('performanceLearningStatus');
+      const grid = document.getElementById('performanceLearningGrid');
+      const message = document.getElementById('performanceLearningMessage');
+      if (!status || !grid || !message) return;
+
+      if (!learning?.available) {
+        status.textContent = 'Sem dados';
+        status.className = 'status-pill warn';
+        grid.innerHTML = `<div class="capability-card warn"><strong>Aprendizado aguardando coleta</strong><span>${escapeHtml(requestError || learning?.reason || 'Nenhum resultado foi persistido para esta conta.')}</span><div class="capability-status">Pendente</div></div>`;
+        return;
+      }
+
+      const best = (items, fallback) => items?.[0]?.name || fallback;
+      const card = (title, value, detail) => `
+        <div class="capability-card good">
+          <strong>${escapeHtml(title)}</strong>
+          <span>${escapeHtml(value)}</span>
+          <div class="capability-status">${escapeHtml(detail)}</div>
+        </div>`;
+      const updated = learning.updatedAt ? formatDateTime(learning.updatedAt) : 'horário não informado';
+      status.textContent = 'Ativo na nuvem';
+      status.className = 'status-pill good';
+      grid.innerHTML = [
+        card('Base acompanhada', `${formatNumber(learning.totalMedia)} mídias · ${formatNumber(learning.observedMedia)} com métricas`, `${formatNumber(learning.observationCount)} observações`),
+        card('Fonte em destaque', best(learning.models?.sources, 'Amostra em formação'), 'por desempenho normalizado'),
+        card('Tema em destaque', best(learning.models?.topics, 'Amostra em formação'), 'sem liberar repetição'),
+        card('Formato em destaque', best(learning.models?.formats, 'Amostra em formação'), 'alcance e confiança'),
+        card('Janelas de coleta', (learning.windowsHours || []).map((hours) => `${hours} h`).join(' · '), `atualizado ${updated}`)
+      ].join('');
+      message.textContent = `Última atualização: ${updated}. O ranking considera alcance, interações e confiança da amostra; novidade e integridade editorial continuam obrigatórias.`;
     }
 
     function renderShowcaseSlide() {

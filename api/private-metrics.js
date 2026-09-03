@@ -5,6 +5,7 @@ import { accountFromQuery, requireConfiguredAccount } from '../lib/accounts.js';
 
 const ROOT = process.cwd();
 const ACCOUNTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'accounts.json');
+const PERFORMANCE_INSIGHTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'performance-insights.json');
 const IG_BASE = 'https://graph.facebook.com/v23.0';
 
 function readJson(path) {
@@ -49,6 +50,43 @@ function growthFocus({ recentMedia = [], latestInsights = null } = {}) {
   return { signal: 'compartilhamentos', action: 'produzir conteudo util para uma pessoa enviar a colega, socio ou gestor' };
 }
 
+function summarizePerformanceLearning(accountKey) {
+  try {
+    const stored = readJson(PERFORMANCE_INSIGHTS_PATH);
+    const learning = stored?.accounts?.[accountKey];
+    if (!learning) return { available: false, reason: 'Ainda não há aprendizado salvo para esta conta.' };
+
+    const samples = Array.isArray(learning.samples) ? learning.samples : [];
+    const observedSamples = samples.filter((sample) => Array.isArray(sample.observations) && sample.observations.length > 0);
+    const summarizeModel = (model = {}) => Object.entries(model)
+      .map(([name, value]) => ({
+        name,
+        samples: Number(value?.samples) || 0,
+        reach: Number(value?.totalReach) || 0,
+        confidence: Number(value?.confidence) || 0,
+        score: Number(value?.learnedScore) || 50
+      }))
+      .sort((a, b) => b.score - a.score || b.confidence - a.confidence)
+      .slice(0, 3);
+
+    return {
+      available: true,
+      updatedAt: learning.updatedAt || stored.updatedAt || null,
+      totalMedia: samples.length,
+      observedMedia: observedSamples.length,
+      observationCount: observedSamples.reduce((total, sample) => total + sample.observations.length, 0),
+      windowsHours: [2, 24, 72],
+      models: {
+        sources: summarizeModel(learning.models?.sources),
+        topics: summarizeModel(learning.models?.topics),
+        formats: summarizeModel(learning.models?.formats)
+      }
+    };
+  } catch {
+    return { available: false, reason: 'O arquivo de aprendizado ainda não está disponível.' };
+  }
+}
+
 export default async function handler(req, res) {
   const session = requireAdmin(req, res);
   if (!session) return;
@@ -83,6 +121,7 @@ export default async function handler(req, res) {
     latestMedia: null,
     recentMediaSummary: null,
     growthFocus: null,
+    performanceLearning: summarizePerformanceLearning(accountKey),
     insights: null,
     checkedAt: new Date().toISOString()
   };
