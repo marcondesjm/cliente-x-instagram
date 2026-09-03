@@ -732,3 +732,11 @@ Resultado:
 - Conteúdo antigo, título longo, promoção e clickbait recebem penalidade; novidade semântica e rodízio de fontes continuam obrigatórios.
 - A seleção ocorre dentro da fonte equilibrada e conserva uma lista curta para manter variação humana, sem promessa artificial de viralização.
 - Nota e sinais são gravados somente nos artefatos técnicos. `organicPotentialGuard` e toda a suíte `validate-copy` aprovados; motor enviado ao `origin/main` em `052484a`.
+
+## Atualizacao 2026-09-03 17:00 BRT — ranking comprovado em publicação real
+
+- Run `33799323838`: `https://www.instagram.com/reel/Dc1ndzdggi2/`, Reel `18143386705559746`, Story `17900125953566762`, publicado às 16:59 BRT.
+- O ranking escolheu uma pauta recente da Nossa IA sobre receita do Azure e impacto financeiro da IA, com imagem editorial da matéria.
+- Reel real auditado: 22,37 s, AAC estéreo 48 kHz, média `-16,7 dB`, pico `-1,6 dB` e trilha `beethoven-08-brincante` da Sinfonia nº 8.
+- Capa visualmente aprovada e sem `ARRASTE PARA VER`. Primeiro comentário falhou isoladamente com Meta `OAuthException #10`.
+- A publicação extra não marcou o slot 10; as 17:40 continuam pendentes no livro automático.

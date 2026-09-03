@@ -2570,3 +2570,12 @@ Conclusao de ativacao:
 - O algoritmo não aparece na arte ou na legenda. Nota e sinais ficam registrados em `engagement-intelligence.json` e `daily-pack.json` para auditoria e futura comparação com alcance, salvamentos e compartilhamentos.
 - `node --check`, `git diff --check` e `npm run validate-copy` aprovados; `organicPotentialGuard: fresh-useful-specific-no-clickbait` confirmou que uma pauta recente, concreta e útil vence uma nota genérica antiga.
 - Motor enviado ao `origin/main` no commit `052484a`, pela branch `ops/record-slot8-20260903`; falta comprovação no próximo automático.
+
+# 2026-09-03 17:00 BRT — Primeira publicação real escolhida pelo ranking orgânico
+
+- Após confirmação do usuário, o workflow manual `33799323838` publicou um Reel + Story extra às 16:59 BRT usando o motor de potencial orgânico.
+- Pauta selecionada: `Microsoft Revela Receita do Azure e Altera Relatórios Financeiros para Refletir o Impacto da IA`, fonte Nossa IA, com imagem editorial da matéria.
+- Publicação comprovada em `https://www.instagram.com/reel/Dc1ndzdggi2/`, Reel `18143386705559746` e Story `17900125953566762`.
+- O MP4 real tem 22,37 segundos, áudio AAC estéreo a 48 kHz, média de `-16,7 dB` e pico de `-1,6 dB`; a rotação exclusiva escolheu `beethoven-08-brincante`, inspirada na Sinfonia nº 8.
+- A capa real foi inspecionada: título e fotografia ocupam bem o quadro, sem `ARRASTE PARA VER`. O primeiro comentário falhou isoladamente com `OAuthException #10`.
+- `mark_automatic_slot=false` funcionou: o run não adicionou o slot 10 ao livro, portanto a postagem automática das 17:40 continua pendente.
