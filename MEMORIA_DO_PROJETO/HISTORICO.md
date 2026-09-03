@@ -2522,3 +2522,11 @@ Conclusao de ativacao:
 - A trava de repeticao agora detecta tambem frases longas compartilhadas e alta semelhanca entre titulos recentes. Variacoes superficiais como `SaaS com IA: 3 pontos...` e `Uso do Codex: 3 pontos...` sao bloqueadas.
 - Pautas do Radar passam a usar o formato `impact-carousel`, com a imagem principal da materia ocupando a area fotografica ampla da capa e do Story; a fonte continua identificada no cabecalho e no link da legenda.
 - Render completo aprovado em `2026-09-03-151914-slot-9-render-only`: cinco cards 1080x1350 e Story 1080x1920, sem colisao e sem publicacao durante o teste.
+
+# 2026-09-03 16:18 BRT — Primeira publicacao real no novo formato do Radar
+
+- O slot 9 venceu as 16:00 BRT; o GitHub iniciou automaticamente o run `33795075492` as 16:12 e concluiu a publicacao as 16:15 BRT, sem disparo manual.
+- Reel publicado em `https://www.instagram.com/reel/Dc1ie2IIMzk/`, ID `17959746996078289`; Story ID `17987405637044763`.
+- Pauta usada: `NeoMME: O Novo Codificador Multimodal e Multilingue que Desafia Gigantes da IA`, fonte Nossa IA, com imagem editorial do proprio site.
+- O Story hospedado em `docs/generated/cliente-x/2026-09-03-161414-slot-9/story.jpg` foi inspecionado: fotografia grande, titulo completo, fonte visivel e sem corte ou sobreposicao.
+- O slot 9 esta persistido como publicado e nao ha alertas abertos. Somente o primeiro comentario falhou com `OAuthException #10` por falta de permissao; Reel e Story permanecem publicados e confirmados.

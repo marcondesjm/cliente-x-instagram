@@ -692,3 +692,11 @@ Resultado:
 - Noticias automaticas usam `impact-carousel` e priorizam a imagem principal do site na capa e no Story.
 - A protecao semantica bloqueia titulos que repetem a mesma frase/promessa trocando apenas o assunto inicial.
 - Render `2026-09-03-151914-slot-9-render-only` aprovado visualmente; nenhum post de teste foi publicado.
+
+## Atualizacao 2026-09-03 16:18 BRT — novo formato comprovado em producao
+
+- Slot 9 publicado automaticamente pelo run `33795075492`: `https://www.instagram.com/reel/Dc1ie2IIMzk/`.
+- Reel `17959746996078289`; Story `17987405637044763`; horario real 16:15 BRT.
+- Primeira pauta do Radar ampliado veio da Nossa IA e utilizou a imagem editorial do site em destaque.
+- Story real inspecionado sem corte ou sobreposicao; livro de slots atualizado e zero alertas abertos.
+- Primeiro comentario falhou isoladamente com Meta `OAuthException #10`; a publicacao principal e o Story foram concluídos.
