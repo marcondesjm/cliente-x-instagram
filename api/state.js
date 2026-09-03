@@ -44,7 +44,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'cliente-x-funcionando',
   label: 'Última versão funcionando',
-  appVersion: 'v5.55',
+  appVersion: 'v5.56',
   status: 'funcionando',
   stableCommit: '37a2de0',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/37a2de0',
@@ -1274,20 +1274,35 @@ async function forceInstagramWatchdog(session) {
     };
   }
 
-  const content = [
-    `force=${now}`,
-    'reason=dashboard-watchdog-force',
-    'target=instagram-feed-cliente-x'
-  ].join('\n');
-  await writeGithubFile(
-    FORCE_WATCHDOG_FILE_PATH,
-    Buffer.from(`${content}\n`, 'utf8').toString('base64'),
-    `Force Instagram watchdog ${now}`
-  );
+  let triggerMode = 'workflow_dispatch';
+  try {
+    await githubJson('actions/workflows/instagram-watchdog-backup.yml/dispatches', {
+      method: 'POST',
+      body: JSON.stringify({ ref: 'main' })
+    });
+  } catch (error) {
+    // Keep the established push trigger as a safety net for older PATs that
+    // can update repository contents but cannot dispatch Actions directly.
+    const content = [
+      `force=${now}`,
+      'reason=dashboard-watchdog-force-fallback',
+      'target=instagram-feed-cliente-x'
+    ].join('\n');
+    await writeGithubFile(
+      FORCE_WATCHDOG_FILE_PATH,
+      Buffer.from(`${content}\n`, 'utf8').toString('base64'),
+      `Force Instagram watchdog ${now}`
+    );
+    triggerMode = 'push_fallback';
+  }
   return {
     ok: true,
-    message: 'Vigia acionado. O GitHub Actions deve iniciar em alguns instantes.',
-    forcedAt: now
+    message: triggerMode === 'workflow_dispatch'
+      ? 'Vigia acionado diretamente. A execução já foi enviada ao GitHub Actions.'
+      : 'Vigia acionado pelo disparo de segurança. A execução já foi enviada ao GitHub Actions.',
+    forcedAt: now,
+    triggerMode,
+    runUrl: `https://github.com/${OWNER}/${REPO}/actions/workflows/instagram-watchdog-backup.yml`
   };
 }
 

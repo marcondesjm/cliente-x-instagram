@@ -1703,7 +1703,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v5.55</div>
+        <div class="header-version" id="headerVersion">Versão atual: v5.56</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -2201,6 +2201,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               <span class="status-pill good" id="watchdogStatus">Ativo</span>
             </div>
           </div>
+          <div class="message" id="watchdogActionMessage" role="status" aria-live="polite" hidden></div>
           <div class="checks" id="watchdogPanel">
             <div class="check">
               <span class="dot good"></span>
@@ -3593,7 +3594,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         {
           level: 'good',
           title: 'Forçar vigia',
-          body: 'Se o schedule do GitHub atrasar, o botão Forçar vigia atualiza o arquivo de disparo e coloca o workflow principal na fila por push.'
+          body: 'Se o schedule do GitHub atrasar, o botão envia diretamente o workflow backup para a fila. O livro de slots impede publicação duplicada.'
         },
         {
           level: 'good',
@@ -4517,10 +4518,16 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
 
     async function forceWatchdog(sourceButton = null, { automatic = false } = {}) {
       const button = sourceButton?.currentTarget || sourceButton || document.getElementById('forceWatchdog');
+      const actionMessage = document.getElementById('watchdogActionMessage');
       if (!button) return;
       const original = button.textContent;
       button.disabled = true;
       button.textContent = 'Acionando...';
+      if (actionMessage) {
+        actionMessage.hidden = false;
+        actionMessage.className = 'message';
+        actionMessage.textContent = 'Enviando o vigia diretamente ao GitHub Actions...';
+      }
       setMessage(automatic ? 'Erro encontrado. Tentando corrigir automaticamente...' : 'Acionando o vigia pelo GitHub...', 'warn');
       try {
         const payload = await api('/api/state', {
@@ -4531,9 +4538,18 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         appState.watchdogRecovery = { startedAt: new Date().toISOString(), automatic };
         updateHeaderHealth('checking', automatic ? 'Correção automática em andamento' : 'Vigia acionado', true);
         setMessage(payload.message || 'Vigia acionado. Aguarde o GitHub Actions iniciar.', 'good');
+        if (actionMessage) {
+          actionMessage.className = 'message good';
+          actionMessage.innerHTML = `${escapeHtml(payload.message || 'Vigia acionado.')}${payload.runUrl ? ` <a href="${escapeHtml(payload.runUrl)}" target="_blank" rel="noreferrer">Acompanhar no GitHub Actions</a>` : ''}`;
+        }
         return payload;
       } catch (error) {
         setMessage(`Falha ao acionar vigia: ${error.message}`, 'bad');
+        if (actionMessage) {
+          actionMessage.hidden = false;
+          actionMessage.className = 'message bad';
+          actionMessage.textContent = `Falha ao acionar vigia: ${error.message}`;
+        }
         throw error;
       } finally {
         button.disabled = false;

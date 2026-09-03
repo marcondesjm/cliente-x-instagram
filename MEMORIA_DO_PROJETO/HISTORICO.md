@@ -2498,3 +2498,10 @@ Conclusao de ativacao:
 - O painel estava servindo o codigo corrigido, mas ainda exibia `v5.54` porque `ACTIVE_VERSION` e o texto inicial do cabecalho continuavam estaticos.
 - A versao operacional foi promovida para `v5.55`, com base funcional `37a2de0`, incluindo token longo, encerramento global dos alertas recuperados e capa de Reel na area segura.
 - A memoria do projeto foi atualizada junto com o codigo para impedir que o proximo deploy volte ao checkpoint antigo.
+
+# 2026-09-03 14:55 BRT — Botao Forcar vigia ligado diretamente ao backup
+
+- O botao apenas alterava `.github/force-instagram-watchdog.txt` e dependia indiretamente do workflow principal acionado por push, apesar do rotulo indicar o vigia backup.
+- A `v5.56` adiciona `workflow_dispatch` ao `Instagram Watchdog Backup` e o painel passa a despachar esse workflow diretamente.
+- A confirmacao deixa de desaparecer silenciosamente: a secao do vigia mostra sucesso ou erro persistente e oferece link para acompanhar o GitHub Actions.
+- O livro de slots continua sendo consultado pelo backup, preservando a trava contra publicacao duplicada.

@@ -8,6 +8,7 @@ concurrency:
   cancel-in-progress: false
 
 on:
+  workflow_dispatch:
   schedule:
     # Rede de seguranca independente. Roda em minutos afastados do topo da
     # hora e recupera automaticamente o slot mais antigo ainda pendente.
