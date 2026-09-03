@@ -9,6 +9,8 @@
 - O dashboard ganhou amostra efetiva, cobertura de retenção, público, gancho, alcance semanal, interações semanais e comparação com a semana anterior.
 - Implementação: commit `1b4d18e` (`Scale Instagram performance experiments`), branch `ops/record-slot8-20260903`.
 - Validações aprovadas: sintaxe dos três módulos, modelo puro normalizado por alcance, `git diff --check` e `npm run validate-copy`; a validação confirmou 21 packs, 54 automáticos, 75 candidatos, 26 fontes e a nova trava `controlledExplorationGuard`.
+- Prova em nuvem: workflow `Instagram Performance Learning` run `33803568631` concluído com sucesso e estado persistido em `e773eb9`. O modelo real ficou com 57 mídias, 23 amostras efetivas, cinco públicos, quatro ganchos e alcance semanal 181.
+- Deploy de produção `dpl_34MJyHpbw65FTPWh4jXi2guGvoA9` concluído como `READY` e associado a `https://cliente-x-instagram.vercel.app`.
 
 ## 2026-09-03 17:25 BRT — Aprendizado de desempenho no dashboard
 
