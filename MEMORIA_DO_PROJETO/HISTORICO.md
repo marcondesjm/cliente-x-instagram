@@ -8,6 +8,7 @@
 - O texto deixa explícito que o ranking considera alcance, interações e confiança da amostra, sem liberar repetição nem remover as travas de novidade e integridade editorial.
 - Implementação: commit `7cd2785` (`Show performance learning in dashboard`) no checkout `cliente-x-instagram-modern-deploy-20260903`, branch `ops/record-slot8-20260903`.
 - Validações: `node --check api/private-metrics.js`, `git diff --check` e `npm run validate-copy` aprovados. O painel local abriu corretamente e permaneceu protegido por login; nenhuma credencial foi preenchida automaticamente.
+- Deploy de produção concluído e alias confirmado em `https://cliente-x-instagram.vercel.app`, deployment `dpl_BYBkvenVHNiarMAQEJEd2iVSH4Vy`, estado `READY`. A resposta pública foi verificada com HTTP 200 e contém `performanceLearningPanel` e o rótulo `Ativo na nuvem`.
 
 ## 2026-08-31 14:05 BRT
 
