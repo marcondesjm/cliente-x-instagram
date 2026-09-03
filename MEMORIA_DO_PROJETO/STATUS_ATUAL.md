@@ -731,4 +731,4 @@ Resultado:
 - Motor interno e invisível pontua pauta por recência, imagem, especificidade, utilidade empresarial, curiosidade, aderência ao perfil e densidade factual.
 - Conteúdo antigo, título longo, promoção e clickbait recebem penalidade; novidade semântica e rodízio de fontes continuam obrigatórios.
 - A seleção ocorre dentro da fonte equilibrada e conserva uma lista curta para manter variação humana, sem promessa artificial de viralização.
-- Nota e sinais são gravados somente nos artefatos técnicos. `organicPotentialGuard` e toda a suíte `validate-copy` aprovados; falta envio ao `origin/main`.
+- Nota e sinais são gravados somente nos artefatos técnicos. `organicPotentialGuard` e toda a suíte `validate-copy` aprovados; motor enviado ao `origin/main` em `052484a`.

@@ -2569,4 +2569,4 @@ Conclusao de ativacao:
 - Títulos excessivamente longos, pauta antiga, promoção e clickbait perdem pontos. As travas de fonte variada, novidade semântica, URL oficial e fatos completos continuam tendo prioridade sobre a nota.
 - O algoritmo não aparece na arte ou na legenda. Nota e sinais ficam registrados em `engagement-intelligence.json` e `daily-pack.json` para auditoria e futura comparação com alcance, salvamentos e compartilhamentos.
 - `node --check`, `git diff --check` e `npm run validate-copy` aprovados; `organicPotentialGuard: fresh-useful-specific-no-clickbait` confirmou que uma pauta recente, concreta e útil vence uma nota genérica antiga.
-- Branch `ops/record-slot8-20260903`, baseada no `origin/main` em `97918be`; envio e comprovação no próximo automático permanecem pendentes.
+- Motor enviado ao `origin/main` no commit `052484a`, pela branch `ops/record-slot8-20260903`; falta comprovação no próximo automático.
