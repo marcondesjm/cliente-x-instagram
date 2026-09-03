@@ -762,4 +762,4 @@ Resultado:
 - Segunda coleta confirmada no run `33800885079`; commit automático `c8abd60`, com 57 mídias acompanhadas e 23 observadas.
 - Modelos atuais: duas fontes, três temas e dois formatos. Alcance inicial ainda baixo, entre 1 e 7 em várias observações.
 - Aprendizado agora combina quantidade de posts e alcance acumulado; permanece quase neutro até ter volume confiável e só atinge influência plena com cinco posts e alcance 200 por grupo.
-- Score, confiança, sintaxe, `validate-copy`, YAML e diff aprovados; falta enviar a proteção final.
+- Score, confiança, sintaxe, `validate-copy`, YAML e diff aprovados; proteção final enviada ao `origin/main` em `571db26`.
