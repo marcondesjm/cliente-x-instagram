@@ -725,3 +725,10 @@ Resultado:
 - Trilha real: `beethoven-02-vivace`, inspirada na Sinfonia nº 2; MP4 com AAC estéreo, média `-16,8 dB` e pico `-1,7 dB`.
 - Pauta inédita da Exame sobre economia de tokens; somente o primeiro comentário falhou com Meta `OAuthException #10`.
 - A marcação acidental do slot 10 foi removida para preservar as 17:40. Novo input `mark_automatic_slot` separa postagem extra de recuperação automática; correção enviada ao `origin/main` em `5d23592`.
+
+## Atualizacao 2026-09-03 16:52 BRT — seleção por potencial orgânico
+
+- Motor interno e invisível pontua pauta por recência, imagem, especificidade, utilidade empresarial, curiosidade, aderência ao perfil e densidade factual.
+- Conteúdo antigo, título longo, promoção e clickbait recebem penalidade; novidade semântica e rodízio de fontes continuam obrigatórios.
+- A seleção ocorre dentro da fonte equilibrada e conserva uma lista curta para manter variação humana, sem promessa artificial de viralização.
+- Nota e sinais são gravados somente nos artefatos técnicos. `organicPotentialGuard` e toda a suíte `validate-copy` aprovados; falta envio ao `origin/main`.

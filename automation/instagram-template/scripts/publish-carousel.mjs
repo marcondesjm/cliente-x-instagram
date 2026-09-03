@@ -3982,6 +3982,51 @@ function balanceResearchPacksByHistory(packs = [], publicationHistory = [], date
   return balanced;
 }
 
+function organicPotentialScore(pack = {}, dateString = todaySaoPaulo()) {
+  const research = pack.research || {};
+  const title = String(research.sourceTitle || pack.slides?.[0]?.title || '').trim();
+  const caption = String(pack.caption || '').trim();
+  const facts = Array.isArray(research.sourceFacts) ? research.sourceFacts.filter(Boolean) : [];
+  const searchable = `${title}\n${caption}\n${facts.join('\n')}`.toLocaleLowerCase('pt-BR');
+  let score = 45;
+  const signals = [];
+  const add = (points, signal) => {
+    score += points;
+    signals.push(signal);
+  };
+
+  if (research.sourceImageUrl || pack.slides?.[0]?.imageUrl || pack.slides?.[0]?.imagePath) add(12, 'imagem-editorial');
+  if (title.length >= 38 && title.length <= 96) add(10, 'titulo-legivel');
+  else if (title.length > 125) add(-12, 'titulo-longo');
+  if (/\d|%|r\$|milh(?:ao|ão|oes|ões)|bilh(?:ao|ão|oes|ões)/iu.test(title)) add(7, 'dado-concreto');
+  if (/empresa|negocio|negócio|gestao|gestão|produtividade|custo|econom|vendas|cliente|trabalho|mercado/iu.test(searchable)) add(8, 'relevancia-empresarial');
+  if (/como|por que|segredo|erro|risco|muda|novo|primeiro|antes|depois|guia|passo|descubra/iu.test(title)) add(7, 'curiosidade-util');
+  if (/ia|inteligencia artificial|inteligência artificial|automacao|automação|agente|modelo|dados|token/iu.test(searchable)) add(6, 'aderencia-ao-perfil');
+  if (facts.length >= 3) add(7, 'densidade-factual');
+  if (facts.some((fact) => String(fact).length >= 150)) add(4, 'contexto-aprofundado');
+  if (/chocante|imperdivel|imperdível|voce nao vai acreditar|você não vai acreditar|matriculas abertas|matrículas abertas|pre-mba|pré-mba/iu.test(searchable)) add(-20, 'promocao-ou-clickbait');
+
+  const publishedAt = Date.parse(research.publishedAt || '');
+  const referenceAt = Date.parse(`${dateString}T23:59:59-03:00`);
+  if (Number.isFinite(publishedAt) && Number.isFinite(referenceAt)) {
+    const ageDays = Math.max(0, (referenceAt - publishedAt) / 86400000);
+    if (ageDays <= 1.5) add(10, 'pauta-recente');
+    else if (ageDays <= 3.5) add(6, 'pauta-atual');
+    else if (ageDays > 15) add(-7, 'pauta-antiga');
+  }
+
+  return { score: Math.max(0, Math.min(100, score)), signals };
+}
+
+function shortlistByOrganicPotential(candidates = [], dateString = '', limit = 3) {
+  const ranked = candidates.map((candidate) => ({
+    ...candidate,
+    organicPotential: organicPotentialScore(candidate.pack, dateString)
+  })).sort((left, right) => right.organicPotential.score - left.organicPotential.score || left.originalIndex - right.originalIndex);
+  const bestScore = ranked[0]?.organicPotential.score ?? 0;
+  return ranked.filter((candidate) => candidate.organicPotential.score >= bestScore - 8).slice(0, limit);
+}
+
 function pickFreshPack(packs, dateString, slotIndex, recentMedia = [], publicationHistory = [], chooseIndex = randomInt) {
   const candidates = balanceResearchPacksByHistory(packs, publicationHistory, dateString, slotIndex);
   const freshCandidates = candidates.filter(({ pack }) => !findDuplicateSelection(pack, recentMedia, publicationHistory));
@@ -4008,16 +4053,19 @@ function pickFreshPack(packs, dateString, slotIndex, recentMedia = [], publicati
     // publicacao preserva variedade sem transformar uma unica fonte em escolha fixa.
     const balancedPool = sourceGroups.filter((item) => item.count <= minimumCount + 1);
     const selectedSource = balancedPool[chooseIndex(balancedPool.length)];
-    const selected = selectedSource.queue[chooseIndex(selectedSource.queue.length)];
+    const shortlist = shortlistByOrganicPotential(selectedSource.queue, dateString);
+    const selected = shortlist[chooseIndex(shortlist.length)];
     return {
       pack: selected.pack,
       packIndex: selected.originalIndex,
+      organicPotential: selected.organicPotential,
       skippedDuplicates: candidates.length - freshCandidates.length
     };
   }
   if (freshCandidates.length) {
-    const selected = freshCandidates[chooseIndex(freshCandidates.length)];
-    return { pack: selected.pack, packIndex: selected.originalIndex, skippedDuplicates: candidates.length - freshCandidates.length };
+    const shortlist = shortlistByOrganicPotential(freshCandidates, dateString);
+    const selected = shortlist[chooseIndex(shortlist.length)];
+    return { pack: selected.pack, packIndex: selected.originalIndex, organicPotential: selected.organicPotential, skippedDuplicates: candidates.length - freshCandidates.length };
   }
   return {
     pack: null,
@@ -4543,6 +4591,33 @@ async function main() {
     if (randomSourceProbe.pack?.research?.source !== 'Fonte C') throw new Error('Sorteio entre fontes oficiais falhou no teste controlado.');
     const randomFirstSourceProbe = pickFreshPack(balancedProbePacks, today, slotIndex, [], [], () => 0);
     if (randomFirstSourceProbe.pack?.research?.source !== 'Fonte A') throw new Error('Sorteio nao percorre fontes oficiais elegiveis.');
+    const organicPotentialProbe = shortlistByOrganicPotential([
+      {
+        originalIndex: 0,
+        pack: {
+          research: { source: 'Fonte A', sourceTitle: 'Nota institucional semanal', publishedAt: '2026-07-01T10:00:00.000Z' },
+          slides: [{ title: 'Nota institucional semanal' }],
+          caption: 'Resumo geral sem aplicação prática.'
+        }
+      },
+      {
+        originalIndex: 1,
+        pack: {
+          research: {
+            source: 'Fonte A',
+            sourceTitle: 'Como reduzir 30% do custo de tokens de IA nas empresas',
+            sourceImageUrl: 'https://example.com/tokens.jpg',
+            publishedAt: `${today}T12:00:00-03:00`,
+            sourceFacts: ['Empresas mediram o consumo.', 'A gestão de tokens reduz custos.', 'O controle melhora a produtividade operacional com dados comparáveis.']
+          },
+          slides: [{ title: 'Como reduzir 30% do custo de tokens de IA nas empresas' }],
+          caption: 'Um passo prático para gestão de inteligência artificial.'
+        }
+      }
+    ], today);
+    if (organicPotentialProbe[0]?.originalIndex !== 1 || organicPotentialProbe[0]?.organicPotential?.score < 75) {
+      throw new Error('Motor de potencial orgânico não priorizou a pauta recente, concreta e útil.');
+    }
     const avatarProbeAccount = {
       avatarRotation: { enabled: true, urls: Array.from({ length: 7 }, (_, index) => `foto-${index + 1}`) }
     };
@@ -4828,6 +4903,7 @@ async function main() {
       ,feedArchitectureGuard: '1080x1350-4:5'
       ,reelSwipeCueGuard: 'ok'
       ,reelSoundtrackGuard: 'beethoven-only-9'
+      ,organicPotentialGuard: 'fresh-useful-specific-no-clickbait'
       ,storySafeZoneGuard: '250-1170-500'
       ,storyCampaignImageGuard: 'explicit-image-prominent'
       ,radarSourceImageGuard: 'og-image-https-with-safe-fallback'
@@ -5000,6 +5076,7 @@ async function main() {
   const runId = `${timestampSaoPaulo()}-slot-${slotIndex}${args.renderOnly ? '-render-only' : ''}`;
   const runDir = join(RUNS_DIR, account.account, runId);
   mkdirSync(runDir, { recursive: true });
+  const organicPotential = organicPotentialScore(pack, today);
   const methodAllowed = !dashboardPack && !scheduledPost;
   const enhancement = preparePackForPublication(pack, today, generationSlotIndex, account, publishMode, { allowIhc: methodAllowed });
   pack = enhancement.pack;
@@ -5048,9 +5125,9 @@ async function main() {
       throw new Error(`Conteudo repetido bloqueado: este tema ja foi publicado em ${duplicate.publishedAt || 'uma publicacao anterior'}. Escolha outro conteudo.`);
     }
   }
-  writeFileSync(join(runDir, 'engagement-intelligence.json'), JSON.stringify(enhancement.intelligence, null, 2), 'utf8');
+  writeFileSync(join(runDir, 'engagement-intelligence.json'), JSON.stringify({ ...enhancement.intelligence, organicPotential }, null, 2), 'utf8');
   writeFileSync(join(runDir, 'editorial-research.json'), JSON.stringify(editorialResearch, null, 2), 'utf8');
-  writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, creativeGeneration, creativeBatchRemaining, account: account.account, visualStyle: style.name, visualVariationSeed, visualSeedInput, avatarRotationStart, coverAvatar: Number.isInteger(avatarRotationStart) ? accountAvatarRotationUrls(account)[avatarRotationStart] || null : null, intelligence: enhancement.intelligence, ...pack }, null, 2), 'utf8');
+  writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, creativeGeneration, creativeBatchRemaining, account: account.account, visualStyle: style.name, visualVariationSeed, visualSeedInput, avatarRotationStart, coverAvatar: Number.isInteger(avatarRotationStart) ? accountAvatarRotationUrls(account)[avatarRotationStart] || null : null, intelligence: { ...enhancement.intelligence, organicPotential }, ...pack }, null, 2), 'utf8');
   writeFileSync(join(runDir, 'caption.txt'), pack.caption, 'utf8');
   const storyOnly = publishMode === 'story-only';
   const feedOnly = publishMode === 'feed-only';

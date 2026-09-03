@@ -2561,3 +2561,12 @@ Conclusao de ativacao:
 - O primeiro comentário falhou isoladamente com `OAuthException #10`; Reel e Story foram publicados normalmente.
 - O workflow manual marcou indevidamente o slot 10. A entrada foi removida de `published-slots.json` para manter a postagem automática das 17:40 pendente, e o formulário ganhou `mark_automatic_slot` para distinguir publicação extra de recuperação de slot.
 - Validações: run concluído com sucesso, histórico real persistido, MP4 auditado, JSON do livro de slots válido e `git diff --check` aprovado. Preservação do slot enviada ao `origin/main` em `5d23592`; próximo passo é comprovar o automático das 17:40.
+
+# 2026-09-03 16:52 BRT — Motor interno de potencial orgânico
+
+- A seleção automática deixou de sortear qualquer matéria dentro da fonte escolhida e passou a formar uma lista curta com as pautas de maior potencial orgânico.
+- A nota interna considera imagem editorial, título legível, números e dados concretos, relevância empresarial, curiosidade útil, aderência a IA, densidade factual e recência.
+- Títulos excessivamente longos, pauta antiga, promoção e clickbait perdem pontos. As travas de fonte variada, novidade semântica, URL oficial e fatos completos continuam tendo prioridade sobre a nota.
+- O algoritmo não aparece na arte ou na legenda. Nota e sinais ficam registrados em `engagement-intelligence.json` e `daily-pack.json` para auditoria e futura comparação com alcance, salvamentos e compartilhamentos.
+- `node --check`, `git diff --check` e `npm run validate-copy` aprovados; `organicPotentialGuard: fresh-useful-specific-no-clickbait` confirmou que uma pauta recente, concreta e útil vence uma nota genérica antiga.
+- Branch `ops/record-slot8-20260903`, baseada no `origin/main` em `97918be`; envio e comprovação no próximo automático permanecem pendentes.
