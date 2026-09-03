@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-09-02 15:15 BRT
+Atualizado em: 2026-09-03 17:25 BRT
 
 ## Regra permanente de checkpoint
 
@@ -10,6 +10,9 @@ Atualizado em: 2026-09-02 15:15 BRT
 
 ## Projeto ativo
 
+- Dashboard: a aba `Visão geral` agora possui `Aprendizado de desempenho`, exibindo dados persistidos pela automação na nuvem por fonte, tema e formato, base observada, janelas de 2 h/24 h/72 h e última coleta.
+- Segurança: o endpoint privado fornece somente um resumo de `performance-insights.json`; não expõe token Meta, secrets nem mensagens internas completas.
+- Implementação registrada no commit `7cd2785`, checkout `cliente-x-instagram-modern-deploy-20260903`, branch `ops/record-slot8-20260903`. Validações de sintaxe, diff e copy aprovadas; publicação remota é o próximo passo deste checkpoint.
 - Primeira publicacao real do livro confirmada no run `33665825418`: `https://www.instagram.com/p/Dcy2yCcIJ8P/`, carrossel ID `17897174445596019` e Story ID `17965005330177964`, publicados as 15:14 BRT. Primeiro comentario sem ID e sem erro.
 - Pauta publicada: `A IA ficou mais rápida. A gestão ficou mais importante.`, baseada no Prefacio, pagina 3. O item `livro-claude-code-20260902-01` esta persistido como `published`; zero erro aberto no vigia.
 - Campanha autoral do livro `Como Ser Gestor do Claude Code`, de Marcondes Jorge Machado, preparada na branch `feature/claude-book-editorial` sobre o `origin/main` atualizado.

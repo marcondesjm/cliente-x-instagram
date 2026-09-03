@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-09-03 17:25 BRT — Aprendizado de desempenho no dashboard
+
+- Adicionado à aba `Visão geral` o painel `Aprendizado de desempenho`, com estado da execução na nuvem, quantidade de mídias acompanhadas, mídias observadas e total de observações.
+- O painel apresenta os destaques aprendidos por fonte, tema e formato, além das janelas de coleta de 2 h, 24 h e 72 h e do horário da última atualização.
+- A API privada entrega apenas o resumo seguro de `performance-insights.json`; tokens, credenciais e erros internos das mídias não são enviados ao navegador.
+- O texto deixa explícito que o ranking considera alcance, interações e confiança da amostra, sem liberar repetição nem remover as travas de novidade e integridade editorial.
+- Implementação: commit `7cd2785` (`Show performance learning in dashboard`) no checkout `cliente-x-instagram-modern-deploy-20260903`, branch `ops/record-slot8-20260903`.
+- Validações: `node --check api/private-metrics.js`, `git diff --check` e `npm run validate-copy` aprovados. O painel local abriu corretamente e permaneceu protegido por login; nenhuma credencial foi preenchida automaticamente.
+
 ## 2026-08-31 14:05 BRT
 
 - Reduzido o aspecto padronizado dos textos automaticos. O Radar agora escolhe deterministicamente entre seis vozes editoriais, variando abertura, rotulos, transicao para a analise e a ordem dos cards centrais sem alterar os fatos nem a fonte.
