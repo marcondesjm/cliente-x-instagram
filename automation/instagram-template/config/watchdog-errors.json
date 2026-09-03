@@ -1,23 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-08-26:6:33020522157",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-08-26",
-    "slotIndex": 6,
-    "scheduledAt": "2026-08-26T16:50:00.000Z",
-    "failedAt": "2026-08-26T22:43:21.501Z",
-    "workflowRun": "33020522157",
-    "workflowName": "Instagram Feed Cliente X",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/33020522157",
-    "stage": "unknown",
-    "error": "Texto sem acento: use \"segurança\" no lugar de \"seguranca\".",
-    "solution": "Corrigir o texto do pack indicado no painel, rodar validar textos e salvar antes da próxima publicação.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-08-26-194321.json",
-    "resolvedAt": "2026-08-28T22:44:41.008Z",
-    "resolvedRun": "33216450654"
-  },
-  {
     "key": "cliente-x:2026-08-26:6:33028170276",
     "status": "resolved",
     "account": "cliente-x",
@@ -894,5 +876,21 @@
     "failurePath": "automation/instagram-template/runs/failure-2026-09-03-082825.json",
     "resolvedAt": "2026-09-03T13:54:10.075Z",
     "resolvedRun": "33763413303"
+  },
+  {
+    "key": "cliente-x:2026-09-03:2:33768521926",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-09-03",
+    "slotIndex": 2,
+    "scheduledAt": "2026-09-03T12:00:00.000Z",
+    "failedAt": "2026-09-03T14:44:50.172Z",
+    "workflowRun": "33768521926",
+    "workflowName": "Instagram Watchdog Backup",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/33768521926",
+    "stage": "Graph GET /17841404470203300",
+    "error": "Graph GET /17841404470203300 failed [400]: {\"error\":{\"message\":\"Error validating access token: Session has expired on Thursday, 03-Sep-26 07:00:00 PDT. The current time is Thursday, 03-Sep-26 07:44:49 PDT.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":463,\"fbtrace_id\":\"ANjGfrGDn3HgfbZArOKfyUT\"}}",
+    "solution": "Gerar novo token Meta/Instagram, atualizar o secret da conta no Vercel e no GitHub, depois rodar validar acessos no painel.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-09-03-114450.json"
   }
 ]
