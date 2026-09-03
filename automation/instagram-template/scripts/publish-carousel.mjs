@@ -2472,6 +2472,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
       line-height: 1.04;
     }
     .role-hook .panel { top: 520px; width: 410px; height: 280px; border-radius: 30px; transform: none; }
+    .role-hook.has-sector-photo .panel { display: none; }
     .role-hook.has-research-image .panel { display: none; }
     .role-hook.has-research-image .news-context { top: 520px; width: 410px; height: 280px; border-radius: 30px; }
     .layout-left.role-hook.has-research-image .news-context { left: 44px; right: auto; }
