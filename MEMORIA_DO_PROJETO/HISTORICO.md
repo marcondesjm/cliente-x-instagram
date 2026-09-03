@@ -2589,3 +2589,12 @@ Conclusao de ativacao:
 - O workflow `Instagram Performance Learning` roda na nuvem a cada duas horas e também no primeiro envio dos arquivos do coletor. Alterações no próprio arquivo de métricas não criam ciclo de execução.
 - As travas de pauta inédita, fonte alternada, fatos e URL oficial permanecem anteriores ao aprendizado; desempenho nunca autoriza repetição.
 - Validações aprovadas: modelo puro, sintaxe dos dois scripts, `validate-copy`, JSON, formatação YAML e `git diff --check`. Envio e primeira coleta real permanecem pendentes.
+
+# 2026-09-03 17:11 BRT — Primeira coleta real e ajuste às métricas atuais da Meta
+
+- Implementação enviada em `d0c22e3`; o novo workflow iniciou sozinho e concluiu com sucesso no run `33800597525`.
+- O commit automático `f7a659f` persistiu 57 publicações em `performance-insights.json`. A amostra de 2 h do carrossel `Dc1a1vUILNI` registrou alcance 2, sete visualizações e nenhuma interação até a coleta.
+- A consulta real mostrou que os nomes atuais de retenção são `ig_reels_video_view_total_time` e `ig_reels_avg_watch_time`, não os nomes genéricos inicialmente tentados.
+- O coletor foi atualizado para incluir também `reels_skip_rate`, `reposts`, `follows` e `profile_visits`. A nota passa a recompensar conversão e repostagem e a penalizar taxa de abandono quando disponível.
+- Objetos antigos sem acesso permanecem documentados com `lastError` e não entram no modelo; uma mídia incompatível não interrompe as demais.
+- Modelo puro, sintaxe, `validate-copy`, JSON, YAML e `git diff --check` continuam aprovados. Falta enviar o ajuste de nomes e confirmar a próxima coleta.

@@ -10,7 +10,19 @@ const HISTORY_PATH = join(CONFIG_DIR, 'publication-history.json');
 const PERFORMANCE_PATH = join(CONFIG_DIR, 'performance-insights.json');
 const IG_BASE = 'https://graph.facebook.com/v21.0';
 const WINDOWS = [2, 24, 72];
-const INSIGHT_METRICS = ['reach', 'saved', 'shares', 'total_interactions', 'views', 'watch_time', 'average_watch_time'];
+const INSIGHT_METRICS = [
+  'reach',
+  'saved',
+  'shares',
+  'total_interactions',
+  'views',
+  'ig_reels_video_view_total_time',
+  'ig_reels_avg_watch_time',
+  'reels_skip_rate',
+  'reposts',
+  'follows',
+  'profile_visits'
+];
 
 function readJson(path, fallback) {
   if (!existsSync(path)) return fallback;
@@ -37,6 +49,11 @@ function performanceScore(metrics = {}) {
   const commentRate = rate(metrics.comments, reach);
   const likeRate = rate(metrics.likes, reach);
   const interactionRate = rate(metrics.totalInteractions, reach);
+  const followRate = rate(metrics.follows, reach);
+  const repostRate = rate(metrics.reposts, reach);
+  const profileVisitRate = rate(metrics.profileVisits, reach);
+  const rawSkipRate = Number(metrics.skipRate);
+  const skipRate = Number.isFinite(rawSkipRate) ? clamp(rawSkipRate > 1 ? rawSkipRate / 100 : rawSkipRate, 0, 1) : null;
   const rawAverageWatchTime = Number(metrics.averageWatchTime) || 0;
   const averageWatchSeconds = rawAverageWatchTime > 1000 ? rawAverageWatchTime / 1000 : rawAverageWatchTime;
   const retention = averageWatchSeconds > 0
@@ -46,9 +63,13 @@ function performanceScore(metrics = {}) {
     Math.min(35, shareRate * 1750)
     + Math.min(20, saveRate * 1000)
     + Math.min(10, commentRate * 1000)
-    + Math.min(15, likeRate * 300)
-    + Math.min(10, interactionRate * 125)
+    + Math.min(12, likeRate * 240)
+    + Math.min(6, interactionRate * 75)
+    + Math.min(5, followRate * 1000)
+    + Math.min(3, repostRate * 750)
+    + Math.min(3, profileVisitRate * 300)
     + (retention === null ? 5 : retention * 10)
+    - (skipRate === null ? 0 : skipRate * 10)
   );
   return {
     score: Number(score.toFixed(2)),
@@ -57,7 +78,11 @@ function performanceScore(metrics = {}) {
       save: Number(saveRate.toFixed(5)),
       comment: Number(commentRate.toFixed(5)),
       like: Number(likeRate.toFixed(5)),
-      interaction: Number(interactionRate.toFixed(5))
+      interaction: Number(interactionRate.toFixed(5)),
+      follow: Number(followRate.toFixed(5)),
+      repost: Number(repostRate.toFixed(5)),
+      profileVisit: Number(profileVisitRate.toFixed(5)),
+      skip: skipRate === null ? null : Number(skipRate.toFixed(5))
     }
   };
 }
@@ -178,8 +203,12 @@ async function main() {
       shares: results.shares.value,
       totalInteractions: results.total_interactions.value,
       views: results.views.value,
-      watchTime: results.watch_time.value,
-      averageWatchTime: results.average_watch_time.value,
+      watchTime: results.ig_reels_video_view_total_time.value,
+      averageWatchTime: results.ig_reels_avg_watch_time.value,
+      skipRate: results.reels_skip_rate.value,
+      reposts: results.reposts.value,
+      follows: results.follows.value,
+      profileVisits: results.profile_visits.value,
       likes: Number(media.like_count) || 0,
       comments: Number(media.comments_count) || 0
     };

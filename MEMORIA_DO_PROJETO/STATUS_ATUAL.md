@@ -748,3 +748,11 @@ Resultado:
 - Modelos por fonte, tema e formato usam suavização de amostra pequena. O ranking só aplica aprendizado com duas ou mais observações e limita o ajuste para não atropelar qualidade editorial.
 - Workflow `Instagram Performance Learning` roda a cada duas horas e no primeiro deploy. Travas de novidade, fonte e integridade factual continuam obrigatórias.
 - Testes de score, modelos, sintaxe, `validate-copy`, JSON, YAML e diff aprovados; falta enviar e confirmar a primeira coleta real.
+
+## Atualizacao 2026-09-03 17:11 BRT — coleta real operacional
+
+- Workflow `Instagram Performance Learning` comprovado no run `33800597525`; commit automático `f7a659f` armazenou 57 publicações.
+- Primeira observação válida de 2 h registrada com alcance, visualizações e interações normalizadas.
+- Métricas atuais descobertas na resposta real da Meta: `ig_reels_video_view_total_time`, `ig_reels_avg_watch_time`, `reels_skip_rate`, `reposts`, `follows` e `profile_visits`.
+- Coletor ajustado para retenção, abandono, repostagem e conversão. Mídias antigas sem acesso ficam fora do aprendizado sem derrubar o workflow.
+- Toda a suíte continua aprovada; falta enviar esse ajuste e conferir a próxima coleta.
