@@ -58,6 +58,7 @@ function summarizePerformanceLearning(accountKey) {
 
     const samples = Array.isArray(learning.samples) ? learning.samples : [];
     const observedSamples = samples.filter((sample) => Array.isArray(sample.observations) && sample.observations.length > 0);
+    const matureObservations = observedSamples.map((sample) => [...sample.observations].sort((a, b) => b.windowHours - a.windowHours)[0]).filter(Boolean);
     const summarizeModel = (model = {}) => Object.entries(model)
       .map(([name, value]) => ({
         name,
@@ -75,11 +76,22 @@ function summarizePerformanceLearning(accountKey) {
       totalMedia: samples.length,
       observedMedia: observedSamples.length,
       observationCount: observedSamples.reduce((total, sample) => total + sample.observations.length, 0),
+      effectiveSamples: observedSamples.length,
+      retentionSamples: matureObservations.filter((item) => item.performance?.rates?.retention != null || item.performance?.rates?.skip != null).length,
       windowsHours: [2, 24, 72],
       models: {
         sources: summarizeModel(learning.models?.sources),
         topics: summarizeModel(learning.models?.topics),
-        formats: summarizeModel(learning.models?.formats)
+        formats: summarizeModel(learning.models?.formats),
+        audiences: summarizeModel(learning.models?.audiences),
+        hooks: summarizeModel(learning.models?.hooks)
+      },
+      weeklyGrowth: learning.weeklyGrowth || null,
+      safeguards: {
+        originality: true,
+        semanticDuplicates: true,
+        editorialIntegrity: true,
+        confidenceProtected: true
       }
     };
   } catch {

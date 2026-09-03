@@ -59,6 +59,9 @@ function performanceScore(metrics = {}) {
   const retention = averageWatchSeconds > 0
     ? clamp(averageWatchSeconds / 15, 0, 1)
     : null;
+  const viewsPerReach = reach > 0 && Number(metrics.views) > 0
+    ? clamp(Number(metrics.views) / reach, 0, 3)
+    : null;
   const score = clamp(
     Math.min(35, shareRate * 1750)
     + Math.min(20, saveRate * 1000)
@@ -82,7 +85,9 @@ function performanceScore(metrics = {}) {
       follow: Number(followRate.toFixed(5)),
       repost: Number(repostRate.toFixed(5)),
       profileVisit: Number(profileVisitRate.toFixed(5)),
-      skip: skipRate === null ? null : Number(skipRate.toFixed(5))
+      skip: skipRate === null ? null : Number(skipRate.toFixed(5)),
+      retention: retention === null ? null : Number(retention.toFixed(5)),
+      viewsPerReach: viewsPerReach === null ? null : Number(viewsPerReach.toFixed(5))
     }
   };
 }
@@ -118,6 +123,57 @@ function topicTokens(entry = {}) {
     .filter((token) => text.includes(token));
 }
 
+function audienceSegment(entry = {}) {
+  const text = `${entry.coverTitle || ''} ${entry.caption || ''} ${entry.research?.theme || ''}`.toLocaleLowerCase('pt-BR');
+  const segments = [
+    ['vendas', /venda|comercial|lead|cliente|crm/iu],
+    ['rh', /rh|recrut|talento|colaborador|equipe|pessoas/iu],
+    ['operações', /opera(?:ç|c)ão|processo|rotina|produtividade|automação/iu],
+    ['tecnologia', /código|software|api|modelo|token|dados|agente/iu],
+    ['gestão', /gestão|gestor|liderança|decisão|estratégia|negócio|empresa/iu]
+  ];
+  return segments.find(([, pattern]) => pattern.test(text))?.[0] || 'empresários';
+}
+
+function hookArchetype(entry = {}) {
+  const title = String(entry.coverTitle || '').trim();
+  if (/\?|como|por que/iu.test(title)) return 'pergunta';
+  if (/\d|%|r\$|milh(?:ão|ões)|bilh(?:ão|ões)/iu.test(title)) return 'dado';
+  if (/erro|risco|cuidado|antes|não faça|nao faca/iu.test(title)) return 'alerta';
+  if (/novo|mudou|lançou|chegou|agora/iu.test(title)) return 'novidade';
+  return 'afirmação';
+}
+
+function weeklyGrowth(samples = [], now = Date.now()) {
+  const summarize = (minimumAgeDays, maximumAgeDays) => {
+    const selected = samples.map((sample) => {
+      const ageDays = (now - Date.parse(sample.publishedAt)) / 86400000;
+      const latest = [...(sample.observations || [])].sort((a, b) => b.windowHours - a.windowHours)[0];
+      return ageDays >= minimumAgeDays && ageDays < maximumAgeDays && latest?.metrics ? latest.metrics : null;
+    }).filter(Boolean);
+    return selected.reduce((summary, metrics) => ({
+      posts: summary.posts + 1,
+      reach: summary.reach + (Number(metrics.reach) || 0),
+      interactions: summary.interactions + (Number(metrics.totalInteractions) || 0),
+      shares: summary.shares + (Number(metrics.shares) || 0),
+      saved: summary.saved + (Number(metrics.saved) || 0),
+      follows: summary.follows + (Number(metrics.follows) || 0)
+    }), { posts: 0, reach: 0, interactions: 0, shares: 0, saved: 0, follows: 0 });
+  };
+  const current = summarize(0, 7);
+  const previous = summarize(7, 14);
+  const change = (value, baseline) => baseline > 0 ? Number((((value - baseline) / baseline) * 100).toFixed(1)) : null;
+  return {
+    current,
+    previous,
+    change: {
+      reach: change(current.reach, previous.reach),
+      interactions: change(current.interactions, previous.interactions),
+      follows: change(current.follows, previous.follows)
+    }
+  };
+}
+
 function buildModels(samples = []) {
   const observations = samples.map((sample) => {
     const latest = [...(sample.observations || [])].sort((a, b) => b.windowHours - a.windowHours)[0];
@@ -148,7 +204,9 @@ function buildModels(samples = []) {
   return {
     sources: aggregate(observations.map(({ sample, score, reach }) => ({ key: String(sample.source || '').toLocaleLowerCase('pt-BR'), score, reach }))),
     topics: aggregate(observations.flatMap(({ sample, score, reach }) => (sample.topics || []).map((key) => ({ key, score, reach })))),
-    formats: aggregate(observations.map(({ sample, score, reach }) => ({ key: sample.mediaProductType || sample.mediaType || 'unknown', score, reach })))
+    formats: aggregate(observations.map(({ sample, score, reach }) => ({ key: sample.mediaProductType || sample.mediaType || 'unknown', score, reach }))),
+    audiences: aggregate(observations.map(({ sample, score, reach }) => ({ key: sample.audience || 'empresários', score, reach }))),
+    hooks: aggregate(observations.map(({ sample, score, reach }) => ({ key: sample.hook || 'afirmação', score, reach })))
   };
 }
 
@@ -157,10 +215,10 @@ function validatePureLogic() {
   const weak = performanceScore({ reach: 1000, shares: 1, saved: 1, comments: 0, likes: 5, totalInteractions: 7 });
   if (!strong || !weak || strong.score <= weak.score || strong.rates.share !== 0.03) throw new Error('Performance score validation failed.');
   const models = buildModels([
-    { source: 'Fonte A', topics: ['dados'], mediaProductType: 'REELS', observations: [{ windowHours: 24, metrics: { reach: 1000 }, performance: strong }] },
-    { source: 'Fonte A', topics: ['dados'], mediaProductType: 'REELS', observations: [{ windowHours: 24, metrics: { reach: 1000 }, performance: weak }] }
+    { source: 'Fonte A', topics: ['dados'], audience: 'gestão', hook: 'dado', mediaProductType: 'REELS', observations: [{ windowHours: 24, metrics: { reach: 1000 }, performance: strong }] },
+    { source: 'Fonte A', topics: ['dados'], audience: 'gestão', hook: 'dado', mediaProductType: 'REELS', observations: [{ windowHours: 24, metrics: { reach: 1000 }, performance: weak }] }
   ]);
-  if (models.sources['fonte a']?.samples !== 2 || models.sources['fonte a']?.confidence !== 0.4 || models.topics.dados?.samples !== 2) throw new Error('Learning model validation failed.');
+  if (models.sources['fonte a']?.samples !== 2 || models.sources['fonte a']?.confidence !== 0.4 || models.topics.dados?.samples !== 2 || models.audiences.gestão?.samples !== 2 || models.hooks.dado?.samples !== 2) throw new Error('Learning model validation failed.');
   console.log(JSON.stringify({ ok: true, performanceScore: 'normalized-by-reach', windows: WINDOWS, modelShrinkage: 'enabled' }, null, 2));
 }
 
@@ -189,6 +247,9 @@ async function main() {
       theme: entry.research?.theme || null,
       coverTitle: entry.coverTitle || null,
       topics: topicTokens(entry),
+      audience: audienceSegment(entry),
+      hook: hookArchetype(entry),
+      selectionMode: entry.selectionMode || null,
       observations: []
     };
     const dueWindow = WINDOWS.filter((windowHours) => ageHours >= windowHours && !sample.observations.some((item) => item.windowHours === windowHours)).at(-1);
@@ -236,7 +297,12 @@ async function main() {
   }
 
   accountState.samples = [...sampleMap.values()].sort((a, b) => Date.parse(a.publishedAt) - Date.parse(b.publishedAt)).slice(-120);
+  for (const sample of accountState.samples) {
+    sample.audience ||= audienceSegment(sample);
+    sample.hook ||= hookArchetype(sample);
+  }
   accountState.models = buildModels(accountState.samples);
+  accountState.weeklyGrowth = weeklyGrowth(accountState.samples, now);
   accountState.updatedAt = new Date().toISOString();
   state.version = 1;
   state.accounts[accountKey] = accountState;

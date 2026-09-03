@@ -3854,6 +3854,7 @@ function recordPublicationHistory(configDir, accountKey, pack, result) {
       firstCommentId: result.firstCommentId || null,
       firstCommentError: result.firstCommentError || null,
       permalink: result.permalink || null,
+      selectionMode: result.selectionMode || null,
       research: pack.research || null
     });
   }
@@ -4046,6 +4047,31 @@ function shortlistByOrganicPotential(candidates = [], dateString = '', limit = 3
   return ranked.filter((candidate) => candidate.organicPotential.score >= bestScore - 8).slice(0, limit);
 }
 
+function controlledExperimentMode(dateString = '', slotIndex = 0) {
+  const bucket = createHash('sha256').update(`${dateString}:${slotIndex}:organic-experiment-v1`).digest()[0] % 10;
+  if (bucket < 7) return 'exploit';
+  if (bucket < 9) return 'explore';
+  return 'experiment';
+}
+
+function selectWithControlledExploration(candidates = [], dateString = '', slotIndex = 0, chooseIndex = randomInt) {
+  const ranked = candidates.map((candidate) => ({
+    ...candidate,
+    organicPotential: organicPotentialScore(candidate.pack, dateString)
+  })).sort((left, right) => right.organicPotential.score - left.organicPotential.score || left.originalIndex - right.originalIndex);
+  const mode = controlledExperimentMode(dateString, slotIndex);
+  const bestScore = ranked[0]?.organicPotential.score ?? 0;
+  let pool = ranked.filter((candidate) => candidate.organicPotential.score >= bestScore - 8).slice(0, 3);
+  if (mode === 'explore') {
+    pool = ranked.filter((candidate) => candidate.organicPotential.score >= bestScore - 15).slice(1, 5);
+    if (!pool.length) pool = ranked.slice(0, 3);
+  } else if (mode === 'experiment') {
+    pool = ranked.slice(0, 6);
+  }
+  const selected = pool[chooseIndex(pool.length)];
+  return selected ? { ...selected, selectionMode: mode } : null;
+}
+
 function pickFreshPack(packs, dateString, slotIndex, recentMedia = [], publicationHistory = [], chooseIndex = randomInt) {
   const candidates = balanceResearchPacksByHistory(packs, publicationHistory, dateString, slotIndex);
   const freshCandidates = candidates.filter(({ pack }) => !findDuplicateSelection(pack, recentMedia, publicationHistory));
@@ -4072,19 +4098,18 @@ function pickFreshPack(packs, dateString, slotIndex, recentMedia = [], publicati
     // publicacao preserva variedade sem transformar uma unica fonte em escolha fixa.
     const balancedPool = sourceGroups.filter((item) => item.count <= minimumCount + 1);
     const selectedSource = balancedPool[chooseIndex(balancedPool.length)];
-    const shortlist = shortlistByOrganicPotential(selectedSource.queue, dateString);
-    const selected = shortlist[chooseIndex(shortlist.length)];
+    const selected = selectWithControlledExploration(selectedSource.queue, dateString, slotIndex, chooseIndex);
     return {
       pack: selected.pack,
       packIndex: selected.originalIndex,
       organicPotential: selected.organicPotential,
+      selectionMode: selected.selectionMode,
       skippedDuplicates: candidates.length - freshCandidates.length
     };
   }
   if (freshCandidates.length) {
-    const shortlist = shortlistByOrganicPotential(freshCandidates, dateString);
-    const selected = shortlist[chooseIndex(shortlist.length)];
-    return { pack: selected.pack, packIndex: selected.originalIndex, organicPotential: selected.organicPotential, skippedDuplicates: candidates.length - freshCandidates.length };
+    const selected = selectWithControlledExploration(freshCandidates, dateString, slotIndex, chooseIndex);
+    return { pack: selected.pack, packIndex: selected.originalIndex, organicPotential: selected.organicPotential, selectionMode: selected.selectionMode, skippedDuplicates: candidates.length - freshCandidates.length };
   }
   return {
     pack: null,
@@ -4637,6 +4662,12 @@ async function main() {
     if (organicPotentialProbe[0]?.originalIndex !== 1 || organicPotentialProbe[0]?.organicPotential?.score < 75) {
       throw new Error('Motor de potencial orgânico não priorizou a pauta recente, concreta e útil.');
     }
+    const experimentModes = Array.from({ length: 1000 }, (_, index) => controlledExperimentMode(`teste-${index}`, index % 13));
+    if (!experimentModes.includes('exploit') || !experimentModes.includes('explore') || !experimentModes.includes('experiment')) {
+      throw new Error('Exploração controlada 70/20/10 falhou no teste determinístico.');
+    }
+    const exploitShare = experimentModes.filter((mode) => mode === 'exploit').length / experimentModes.length;
+    if (exploitShare < 0.64 || exploitShare > 0.76) throw new Error('Distribuição de exploração controlada saiu da faixa segura.');
     const avatarProbeAccount = {
       avatarRotation: { enabled: true, urls: Array.from({ length: 7 }, (_, index) => `foto-${index + 1}`) }
     };
@@ -4923,6 +4954,7 @@ async function main() {
       ,reelSwipeCueGuard: 'ok'
       ,reelSoundtrackGuard: 'beethoven-only-9'
       ,organicPotentialGuard: 'fresh-useful-specific-no-clickbait'
+      ,controlledExplorationGuard: '70-20-10-after-quality-and-duplicate-gates'
       ,storySafeZoneGuard: '250-1170-500'
       ,storyCampaignImageGuard: 'explicit-image-prominent'
       ,radarSourceImageGuard: 'og-image-https-with-safe-fallback'
@@ -4939,6 +4971,7 @@ async function main() {
       ? `profile-${pickDailyIndex(automaticSelectionPacks, today, generationSlotIndex)}`
       : pickDailyIndex(automaticSelectionPacks, today, generationSlotIndex);
   let skippedDuplicates = 0;
+  let selectionMode = 'manual';
   let scheduledPost = null;
   let publishMode = process.env.INSTAGRAM_TEMPLATE_PUBLISH_MODE === 'story-only' || args.storyOnly
     ? 'story-only'
@@ -5051,6 +5084,7 @@ async function main() {
             }
             validatePack(fallbackFresh.pack);
             pack = fallbackFresh.pack;
+            selectionMode = fallbackFresh.selectionMode;
             packIndex = `editorial-reserve-${fallbackFresh.packIndex}`;
             skippedDuplicates = fresh.skippedDuplicates + reserveFresh.skippedDuplicates + fallbackFresh.skippedDuplicates;
             useResearchThisSlot = false;
@@ -5066,11 +5100,13 @@ async function main() {
             if (!fallbackFresh.pack) throw new Error('Conteudo automatico bloqueado: nenhuma pauta realmente inedita esta disponivel. Nenhum post repetido foi publicado.');
             validatePack(fallbackFresh.pack);
             pack = fallbackFresh.pack;
+            selectionMode = fallbackFresh.selectionMode;
             packIndex = `auto-unique-${fallbackFresh.packIndex}`;
             skippedDuplicates = fresh.skippedDuplicates + autoFresh.skippedDuplicates + fallbackFresh.skippedDuplicates;
             console.log(`Conteudo unico de emergencia selecionado porque ${automaticSelectionPacks.length} captions preferenciais e ${autoPacks.length} captions automaticas ja aparecem nas midias recentes.`);
           } else {
             pack = autoFresh.pack;
+            selectionMode = autoFresh.selectionMode;
             packIndex = `auto-${autoFresh.packIndex}`;
             skippedDuplicates = fresh.skippedDuplicates + autoFresh.skippedDuplicates;
             console.log(`Conteudo automatico selecionado porque ${automaticSelectionPacks.length} captions preferenciais ja aparecem nas midias recentes.`);
@@ -5079,6 +5115,7 @@ async function main() {
       }
       if (fresh.pack) {
         pack = fresh.pack;
+        selectionMode = fresh.selectionMode;
         packIndex = useResearchThisSlot ? `news-${fresh.packIndex}` : profilePacks.length ? `profile-${fresh.packIndex}` : fresh.packIndex;
         skippedDuplicates = fresh.skippedDuplicates;
       }
@@ -5144,7 +5181,7 @@ async function main() {
       throw new Error(`Conteudo repetido bloqueado: este tema ja foi publicado em ${duplicate.publishedAt || 'uma publicacao anterior'}. Escolha outro conteudo.`);
     }
   }
-  writeFileSync(join(runDir, 'engagement-intelligence.json'), JSON.stringify({ ...enhancement.intelligence, organicPotential }, null, 2), 'utf8');
+  writeFileSync(join(runDir, 'engagement-intelligence.json'), JSON.stringify({ ...enhancement.intelligence, organicPotential, selectionMode }, null, 2), 'utf8');
   writeFileSync(join(runDir, 'editorial-research.json'), JSON.stringify(editorialResearch, null, 2), 'utf8');
   writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, creativeGeneration, creativeBatchRemaining, account: account.account, visualStyle: style.name, visualVariationSeed, visualSeedInput, avatarRotationStart, coverAvatar: Number.isInteger(avatarRotationStart) ? accountAvatarRotationUrls(account)[avatarRotationStart] || null : null, intelligence: { ...enhancement.intelligence, organicPotential }, ...pack }, null, 2), 'utf8');
   writeFileSync(join(runDir, 'caption.txt'), pack.caption, 'utf8');
@@ -5260,6 +5297,7 @@ async function main() {
     slotIndex,
     packIndex,
     skippedDuplicates,
+    selectionMode,
     imagePaths,
     storyImagePath,
     imageUrls,
