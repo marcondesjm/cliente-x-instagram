@@ -2552,3 +2552,12 @@ Conclusao de ativacao:
 - A seleção de áudio dos Reels agora considera exclusivamente os nove arranjos próprios inspirados nas Sinfonias nº 1 a nº 9 de Beethoven, inclusive quando existe índice explícito de trilha.
 - `node --check`, `git diff --check` e `npm run validate-copy` aprovados; a nova trava `reelSoundtrackGuard` exige exatamente nove opções e todas classificadas como Beethoven.
 - Correção enviada ao `origin/main` no commit `19f8b28`; falta confirmar a trilha no próximo Reel real.
+
+# 2026-09-03 16:47 BRT — Reel extra publicado e slot 10 preservado
+
+- Após confirmação do usuário, o workflow manual `33797996650` publicou um Reel + Story extra às 16:45 BRT: `https://www.instagram.com/reel/Dc1l5OGlzpT/`, Reel `18035816840832046` e Story `18616966816059533`.
+- A pauta inédita veio da Exame: `O segredo dos tokens: como economizar no uso corporativo da inteligência artificial`.
+- O MP4 real contém áudio AAC estéreo, média de `-16,8 dB` e pico de `-1,7 dB`; a rotação Beethoven-only selecionou o arranjo da Sinfonia nº 2 (`beethoven-02-vivace`).
+- O primeiro comentário falhou isoladamente com `OAuthException #10`; Reel e Story foram publicados normalmente.
+- O workflow manual marcou indevidamente o slot 10. A entrada foi removida de `published-slots.json` para manter a postagem automática das 17:40 pendente, e o formulário ganhou `mark_automatic_slot` para distinguir publicação extra de recuperação de slot.
+- Validações: run concluído com sucesso, histórico real persistido, MP4 auditado, JSON do livro de slots válido e `git diff --check` aprovado. Próximo passo: enviar a preservação do slot ao `origin/main` antes das 17:40.

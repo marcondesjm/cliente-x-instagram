@@ -81,6 +81,14 @@ on:
         options:
           - "true"
           - "false"
+      mark_automatic_slot:
+        description: "Mark selected automatic slot as published"
+        required: true
+        default: "true"
+        type: choice
+        options:
+          - "true"
+          - "false"
       pack_json:
         description: "Optional pack JSON from dashboard"
         required: false
@@ -189,7 +197,7 @@ jobs:
           npm run instagram -- --account "$ACCOUNT" $ARGS
 
       - name: Mark automatic slot published
-        if: success() && env.DRY_RUN != 'true' && steps.scheduled_queue.outputs.has_due != 'true' && (steps.auto_slot.outputs.has_due == 'true' || (github.event_name == 'workflow_dispatch' && github.event.inputs.scheduled_only != 'true' && github.event.inputs.pack_json == ''))
+        if: success() && env.DRY_RUN != 'true' && steps.scheduled_queue.outputs.has_due != 'true' && (steps.auto_slot.outputs.has_due == 'true' || (github.event_name == 'workflow_dispatch' && github.event.inputs.mark_automatic_slot != 'false' && github.event.inputs.scheduled_only != 'true' && github.event.inputs.pack_json == ''))
         run: node scripts/mark-auto-slot-published.mjs
 
       - name: Resolve watchdog error

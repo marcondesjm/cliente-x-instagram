@@ -718,3 +718,10 @@ Resultado:
 - O último Reel tinha áudio tecnicamente normal, mas recebeu a trilha genérica `futuro-leve` porque ela ainda participava da rotação de 12 opções.
 - A rotação passa a usar exclusivamente nove arranjos próprios inspirados nas Sinfonias nº 1 a nº 9 de Beethoven.
 - `reelSoundtrackGuard: beethoven-only-9`, `node --check` e `git diff --check` aprovados; correção enviada ao `origin/main` em `19f8b28` e falta comprovação no próximo Reel real.
+
+## Atualizacao 2026-09-03 16:47 BRT — publicação extra comprovada
+
+- Run manual `33797996650`: `https://www.instagram.com/reel/Dc1l5OGlzpT/`, Reel `18035816840832046`, Story `18616966816059533`, publicado às 16:45 BRT.
+- Trilha real: `beethoven-02-vivace`, inspirada na Sinfonia nº 2; MP4 com AAC estéreo, média `-16,8 dB` e pico `-1,7 dB`.
+- Pauta inédita da Exame sobre economia de tokens; somente o primeiro comentário falhou com Meta `OAuthException #10`.
+- A marcação acidental do slot 10 foi removida para preservar as 17:40. Novo input `mark_automatic_slot` separa postagem extra de recuperação automática; falta enviar essa correção ao `origin/main`.
