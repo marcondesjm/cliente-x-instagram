@@ -2696,3 +2696,11 @@ Conclusao de ativacao:
 - Leitura remota real aprovada com HTTP 200 e estado `updatedAt=2026-09-04T20:00:34.546Z`, 71 mídias e 34 observadas. Sintaxe, JavaScript do painel, 75 seleções editoriais e diff aprovados.
 - Commit funcional `b917c17` e checkpoint `16abe42` enviados ao `origin/main`.
 - Deploy manual `dpl_CsVqECS1anq2isvG6Q6HcJHYfFpy` no projeto Vercel existente terminou em `READY`, sem conexão Git nem alteração de domínio. `https://cliente-x-instagram.vercel.app` respondeu HTTP 200 e confirmou v6.01, commit estável, atualização contínua, origem viva e estado `Evoluindo`; a API privada recusou corretamente acesso sem sessão com HTTP 401.
+
+# 2026-09-04 17:14 BRT — Reel passa a preencher o quadro vertical
+
+- A sombra acima e abaixo não vinha da imagem editorial: era criada pelo filtro que centralizava cada card 4:5 sobre uma cópia ampliada e desfocada dentro do Reel 9:16.
+- O render de Reel agora nasce em 1080 x 1920 e o FFmpeg recebe o quadro vertical completo, sem `gblur`, `overlay` ou moldura 4:5. O caminho de carrossel continua 1080 x 1350.
+- Composições de capa, conteúdo e CTA receberam posições verticais próprias para o canvas do Reel. A trava automatizada valida dimensões distintas e rejeita a volta das barras desfocadas.
+- O teste `2026-09-04-171417-slot-1-render-only` gerou cinco cenas e MP4 1080 x 1920, SAR 1:1, DAR 9:16, com trilha `beethoven-05-destino`. Capa, segundo card e fechamento foram inspecionados; não houve publicação.
+- `node --check`, `validate-copy` com 75 seleções, `reelFullFrameGuard` e `git diff --check` aprovados. Commit funcional `556db3c`; a comprovação externa fica para o próximo Reel automático real.

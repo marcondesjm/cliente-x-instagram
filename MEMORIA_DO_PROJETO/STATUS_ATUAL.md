@@ -822,3 +822,11 @@ Resultado:
 - O painel v6.01 identifica a origem dos dados e mostra `Evoluindo` quando acompanha o estado vivo. Teste real da origem remota confirmou HTTP 200, atualização `2026-09-04T20:00:34.546Z`, 71 mídias e 34 amostras observadas.
 - Sintaxe da API e do estado, JavaScript do dashboard, `validate-copy` com 75 seleções e `git diff --check` aprovados. Implementação funcional `b917c17` e checkpoint inicial `16abe42` enviados ao `origin/main`.
 - Deploy de produção `dpl_CsVqECS1anq2isvG6Q6HcJHYfFpy` concluído em `READY`. O domínio principal respondeu HTTP 200 com v6.01, commit estável `b917c17`, cartão de atualização contínua, origem viva e estado `Evoluindo`; `/api/private-metrics` permaneceu corretamente protegido com HTTP 401 sem sessão.
+
+## Atualizacao 2026-09-04 17:14 BRT — Reel nativo sem faixas desfocadas
+
+- O Reel era composto por cards 1080 x 1350 centralizados em 1080 x 1920; o FFmpeg ampliava e desfocava o próprio card para preencher o topo e a base, produzindo o efeito de sombra indicado pelo usuário.
+- Cards de `reel-only` e `reel-and-story` agora são renderizados nativamente em 1080 x 1920. Carrosséis permanecem em 1080 x 1350 e Stories mantêm suas zonas seguras.
+- O vídeo usa o quadro vertical diretamente, sem `gblur` nem sobreposição do card 4:5. A trava `reelFullFrameGuard: 1080x1920-native-no-blurred-bars` impede regressão.
+- Render sem publicação `2026-09-04-171417-slot-1-render-only` inspecionado na capa, card interno e fechamento. MP4 confirmado em 1080 x 1920, SAR 1:1 e DAR 9:16; sintaxe, 75 seleções editoriais e `git diff --check` aprovados.
+- Correção funcional `556db3c`; falta enviar ao `origin/main` e comprovar o enquadramento no próximo Reel automático real.
