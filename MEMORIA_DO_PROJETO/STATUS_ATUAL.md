@@ -14,6 +14,7 @@ Atualizado em: 2026-09-04 12:38 BRT
 - Correção preparada: tentar automaticamente a imagem WordPress original sem o sufixo de dimensão e manter fallback fotográfico para capas de impacto.
 - Render exato aprovado: `2026-09-04-123737-slot-0-render-only`, com imagem oficial do Project Zenith, título amplo e sem vazio central.
 - A mídia defeituosa foi excluída do aprendizado. Nenhuma republicação foi feita; repostar somente com autorização do usuário.
+- Correção em produção: `6578e21`; gatilho imediato das exclusões: `722571a`; run de aprendizado `33890850627` com sucesso e estado `296d0e8`. As mídias defeituosas `18060129533789175` e `18109419116466917` possuem zero amostra no modelo remoto.
 - Primeira comprovação automática após a correção: run `33879785141`, Reel `https://www.instagram.com/reel/Dc3huyfACsk/`, Reel ID `18147204064544355`, Story ID `18407241052082096`, estado persistido em `d1c8c89`.
 - Story real inspecionado: foto editorial da pauta presente, sem degradê substituto, sem sobreposição e dentro da área segura. O slot 2 foi recuperado pelo cron principal sem disparo manual.
 - Seleção do algoritmo: modo `experiment`, pauta inédita da Mobile Time sobre agentes de IA da Genesys no Brasil. O resultado entrará no aprendizado somente nas janelas maduras de 2 h, 24 h e 72 h.

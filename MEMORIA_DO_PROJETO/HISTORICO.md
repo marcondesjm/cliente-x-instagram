@@ -9,6 +9,8 @@
 - Render exato `2026-09-04-123737-slot-0-render-only` aprovado visualmente: título em largura útil, imagem oficial do Project Zenith em destaque, texto legível e sem colisão.
 - A mídia defeituosa `18060129533789175` foi incluída nas exclusões do aprendizado, evitando atribuir o efeito do layout quebrado ao tema, fonte ou formato.
 - Nenhuma republicação foi feita; aguardar autorização explícita para repostar.
+- Correção publicada no `origin/main` em `6578e21`; `722571a` passou a disparar o aprendizado também quando a lista de exclusões muda.
+- Workflow `Instagram Performance Learning` run `33890850627` concluído com sucesso; estado persistido em `296d0e8`, com 66 mídias acompanhadas e zero amostra para os dois Media IDs visuais defeituosos.
 
 ## 2026-09-04 10:47 BRT — Primeiro Story automático após a correção
 
