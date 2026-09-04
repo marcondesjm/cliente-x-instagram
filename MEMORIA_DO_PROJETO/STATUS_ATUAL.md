@@ -789,6 +789,13 @@ Resultado:
 - Aprendizado agora combina quantidade de posts e alcance acumulado; permanece quase neutro até ter volume confiável e só atinge influência plena com cinco posts e alcance 200 por grupo.
 - Score, confiança, sintaxe, `validate-copy`, YAML e diff aprovados; proteção final enviada ao `origin/main` em `571db26`.
 
+## Atualizacao 2026-09-04 16:00 BRT — recuperação FFmpeg do vigia corrigida
+
+- Branch de trabalho: `fix/watchdog-ffmpeg-queue-20260904`, criada sobre o `origin/main` de produção e enviada novamente ao `main` em `939556d`.
+- O backup agora instala e valida FFmpeg tanto para `scheduled_queue` quanto para `auto_slot`; a fila agendada também exporta data e horário para evitar novos registros `sem-data`/`unknown`.
+- Uma publicação bem-sucedida encerra falhas abertas de infraestrutura mesmo quando o run anterior não registrou o slot. O alerta do run `33901832291` está resolvido pelo run automático `33905655081`.
+- Sintaxe, JSON, `validate-copy` e `git diff --check` aprovados. O próximo disparo agendado do vigia deve ser observado sem intervenção manual para comprovar a execução do novo commit na nuvem.
+
 ## Atualizacao 2026-09-04 16:00 BRT — recuperação automática de FFmpeg no vigia
 
 - Base de produção confirmada em `0e6a96e`; trabalho isolado na branch `fix/watchdog-ffmpeg-queue-20260904`.

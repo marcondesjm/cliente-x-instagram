@@ -2670,5 +2670,6 @@ Conclusao de ativacao:
 - O `Instagram Watchdog Backup` agora instala e valida FFmpeg quando existe item devido em `scheduled_queue` ou `auto_slot`.
 - A fila agendada passa a exportar data e horário do item devido, evitando novos alertas `sem-data`/`unknown` nesse caminho.
 - Falhas compartilhadas de infraestrutura, como FFmpeg, Playwright e Chromium, passam a ser encerradas por uma publicação posterior bem-sucedida mesmo quando o run anterior não conseguiu registrar o slot.
-- O alerta órfão foi preservado no histórico e marcado como resolvido pelo run automático `33905655081`, que concluiu `Publish feed and story`; correção funcional no commit `0654103`.
-- Validações aprovadas: sintaxe dos scripts e do publicador, JSON, `validate-copy` com 21 packs manuais e 54 automáticos, e `git diff --check`. Envio ao `origin/main` é o próximo passo.
+- O alerta órfão foi preservado no histórico e marcado como resolvido pelo run automático `33905655081`, que concluiu `Publish feed and story`; correção funcional no commit `b0cf25d`.
+- Validações aprovadas: sintaxe dos scripts e do publicador, JSON, `validate-copy` com 21 packs manuais e 54 automáticos, e `git diff --check`.
+- Correção e checkpoint enviados ao `origin/main` em `939556d`; o arquivo remoto confirma a nova condição e o alerta resolvido. A confirmação de execução automática do novo commit permanece para o próximo disparo cronológico do vigia, sem `workflow_dispatch`.
