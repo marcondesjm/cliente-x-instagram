@@ -10,6 +10,8 @@
 - Foi corrigido também o limite de legenda antes da seleção do Radar. Packs acima de 2.100 caracteres são ajustados preservando título original, URL da fonte, CTA e hashtags, evitando que uma pauta inválida interrompa o horário automático inteiro.
 - Validações locais: sintaxe dos três scripts, `git diff --check`, teste puro do aprendizado e `npm run validate-copy` aprovados. `npm run render-only` voltou a concluir.
 - Render visual exato da pauta Dyson: `2026-09-04-095705-slot-0-render-only`; foto real do produto, título sem sobreposição e Story dentro da área segura. Nenhuma mídia foi republicada neste checkpoint.
+- Correção enviada ao `origin/main` no commit `01f4a30`. O workflow de nuvem `Instagram Performance Learning`, run `33875551975`, concluiu com sucesso e persistiu `performance-insights.json` em `007e4ef`.
+- Prova da proteção do aprendizado: estado remoto atualizado com 64 mídias acompanhadas e zero amostra para o Media ID defeituoso `18109419116466917`.
 
 ## 2026-09-03 17:39 BRT — Motor de crescimento e experimentos
 

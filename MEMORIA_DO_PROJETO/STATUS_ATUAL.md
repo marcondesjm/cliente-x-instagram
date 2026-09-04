@@ -17,7 +17,8 @@ Atualizado em: 2026-09-04 10:02 BRT
 - Media ID defeituoso `18109419116466917` excluído do aprendizado. O algoritmo continua aprendendo somente com amostras independentes de desempenho em 2 h, 24 h e 72 h; esta falha visual não influenciará os modelos.
 - Legendas do Radar passam pelo limite de 2.100 caracteres antes da validação do conjunto de candidatos, preservando título, fonte, CTA e hashtags.
 - Validações aprovadas: `node --check`, `git diff --check`, `node scripts/collect-instagram-performance.mjs --validate`, `npm run validate-copy` e `npm run render-only`.
-- Publicação/deploy ainda não realizados neste checkpoint. Nenhum post foi repetido. Próximo passo: enviar a correção ao `origin/main`, confirmar a execução em nuvem e inspecionar o primeiro Story automático posterior.
+- Correção enviada ao `origin/main` em `01f4a30`. O aprendizado em nuvem concluiu com sucesso no run `33875551975` e persistiu o estado em `007e4ef`: 64 mídias acompanhadas e nenhuma amostra do Media ID defeituoso `18109419116466917`.
+- Nenhum post foi repetido. Próximo passo: inspecionar o primeiro Story automático posterior à correção e exigir foto real, ausência de sobreposição, permalink e IDs.
 - Motor de crescimento implementado no commit `1b4d18e`: amostra efetiva por mídia, retenção, abandono, visualizações por alcance, segmentação de público, classificação de gancho e evolução semanal.
 - Seleção automática 70/20/10 ativa somente entre candidatos inéditos e aprovados: 70% aproveitamento, 20% exploração e 10% experimento. As 13 publicações BRT e todas as travas editoriais permanecem preservadas.
 - O dashboard passa a explicar a diferença entre coletas e posts independentes e exibe cobertura de retenção, alcance/interações semanais, público e gancho em destaque.
