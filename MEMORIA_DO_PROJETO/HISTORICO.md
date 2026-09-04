@@ -2662,3 +2662,13 @@ Conclusao de ativacao:
 - Como várias observações iniciais têm alcance entre 1 e 7, o modelo ganhou confiança composta por número de amostras e alcance acumulado. Com pouco volume, a nota aprendida permanece próxima de 50 e não pune prematuramente uma fonte ou assunto.
 - A influência chega gradualmente a 100% somente após pelo menos cinco publicações e 200 contas alcançadas no agrupamento. A trava automatizada valida essa suavização.
 - Testes de score, confiança, sintaxe, `validate-copy`, YAML e diff aprovados. Proteção final enviada ao `origin/main` em `571db26`; as próximas coletas ampliarão a base.
+
+# 2026-09-04 16:00 BRT — Vigia instala FFmpeg também para a fila editorial
+
+- Checkout de produção confirmado em `origin/main` no commit `0e6a96e`; a correção foi feita na branch `fix/watchdog-ffmpeg-queue-20260904`, sem usar o checkout antigo `modern-incident`.
+- A falha do run `33901832291` foi reproduzida pela lógica do workflow: `scheduled_queue` tinha item vencido, `auto_slot` foi pulado e, por isso, a instalação de FFmpeg também foi pulada antes de `Publish feed and story`.
+- O `Instagram Watchdog Backup` agora instala e valida FFmpeg quando existe item devido em `scheduled_queue` ou `auto_slot`.
+- A fila agendada passa a exportar data e horário do item devido, evitando novos alertas `sem-data`/`unknown` nesse caminho.
+- Falhas compartilhadas de infraestrutura, como FFmpeg, Playwright e Chromium, passam a ser encerradas por uma publicação posterior bem-sucedida mesmo quando o run anterior não conseguiu registrar o slot.
+- O alerta órfão foi preservado no histórico e marcado como resolvido pelo run automático `33905655081`, que concluiu `Publish feed and story`; correção funcional no commit `0654103`.
+- Validações aprovadas: sintaxe dos scripts e do publicador, JSON, `validate-copy` com 21 packs manuais e 54 automáticos, e `git diff --check`. Envio ao `origin/main` é o próximo passo.

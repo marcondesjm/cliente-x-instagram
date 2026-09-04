@@ -788,3 +788,11 @@ Resultado:
 - Modelos atuais: duas fontes, três temas e dois formatos. Alcance inicial ainda baixo, entre 1 e 7 em várias observações.
 - Aprendizado agora combina quantidade de posts e alcance acumulado; permanece quase neutro até ter volume confiável e só atinge influência plena com cinco posts e alcance 200 por grupo.
 - Score, confiança, sintaxe, `validate-copy`, YAML e diff aprovados; proteção final enviada ao `origin/main` em `571db26`.
+
+## Atualizacao 2026-09-04 16:00 BRT — recuperação automática de FFmpeg no vigia
+
+- Base de produção confirmada em `0e6a96e`; trabalho isolado na branch `fix/watchdog-ffmpeg-queue-20260904`.
+- O backup agora instala FFmpeg tanto para a fila editorial agendada quanto para o livro automático de slots, eliminando a condição que causou `spawnSync ffmpeg ENOENT` no run `33901832291`.
+- Itens da fila agendada exportam data e horário para que falhas futuras não apareçam como `slot 0unknown`.
+- Uma publicação bem-sucedida encerra alertas abertos de infraestrutura mesmo se eles estiverem sem metadados; o alerta existente foi marcado como resolvido pelo run `33905655081`.
+- Correção funcional: `0654103`. Sintaxe, JSON, `validate-copy` e `git diff --check` aprovados; falta enviar os commits ao `origin/main` e conferir o primeiro run remoto com a nova condição.
