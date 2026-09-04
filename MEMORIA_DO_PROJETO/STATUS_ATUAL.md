@@ -837,4 +837,6 @@ Resultado:
 - Cada publicação automática registra formato, faixa horária BRT, objetivo, sinal principal, modo 70/20/10, eixo controlado, razões da decisão, penalidade de fadiga e versão do modelo.
 - O baseline contextual combina formato, faixa horária e objetivo. Dados antigos recebem decaimento com meia-vida de 21 dias; fonte, tema e gancho muito recentes perdem pontos sem substituir as travas rígidas de novidade.
 - O painel ganhou contexto em destaque e visitas ao perfil. O modo permanece assistido e os critérios de autonomia continuam inalterados.
-- Validações aprovadas: modelo puro v1.1, cinco objetivos, baseline contextual, decaimento temporal, auditoria, fadiga, sintaxe, dashboard, 75 seleções editoriais e `git diff --check`. Commit funcional `b0a0b45`; envio, deploy e primeira coleta v1.1 permanecem pendentes.
+- Validações aprovadas: modelo puro v1.1, cinco objetivos, baseline contextual, decaimento temporal, auditoria, fadiga, sintaxe, dashboard, 75 seleções editoriais e `git diff --check`. Commit funcional `b0a0b45` e checkpoint `1b625c7` enviados ao `origin/main`.
+- Workflow automático `33916264377` concluiu todas as etapas e persistiu `df45fa2`: schema 3, modelo v1.1, 71 publicações contextualizadas, 36 observadas, confiança moderada e modo assistido.
+- Deploy `dpl_HwJdyEYHjo2bZpe6Q37Y3LzQ1ijB` em `READY`; o domínio principal confirmou contexto em destaque, visitas ao perfil, commit estável e descrição v1.1. Próxima prova: observar decisões e resultados das novas publicações contextualizadas.
