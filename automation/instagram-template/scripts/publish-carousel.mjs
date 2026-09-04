@@ -9,6 +9,7 @@ import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { buildBrandContext } from '../../../lib/brand-analysis.js';
 import { buildResearchPack, EDITORIAL_SOURCES, extractArticleFacts, extractEditorialImageUrl, factualSummary, isPredominantlyEnglish, isUsableEditorialFact, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
+import { summarizePerformanceLearning } from '../../../lib/performance-learning.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const TEMPLATE_DIR = resolve(ROOT, 'automation', 'instagram-template');
@@ -3885,6 +3886,7 @@ function recordPublicationHistory(configDir, accountKey, pack, result) {
       firstCommentError: result.firstCommentError || null,
       permalink: result.permalink || null,
       selectionMode: result.selectionMode || null,
+      learning: result.learningDecision || null,
       research: pack.research || null
     });
   }
@@ -4047,8 +4049,8 @@ function organicPotentialScore(pack = {}, dateString = todaySaoPaulo()) {
     else if (ageDays > 15) add(-7, 'pauta-antiga');
   }
 
-  const performanceState = existsSync(PERFORMANCE_INSIGHTS_PATH)
-    ? readJson(PERFORMANCE_INSIGHTS_PATH)?.accounts?.[process.env.ACCOUNT || 'cliente-x']?.models || {}
+  const performanceState = performanceLearningSnapshot().readiness.learningEnabled
+    ? performanceLearningSnapshot().models
     : {};
   const sourceKey = String(research.source || '').trim().toLocaleLowerCase('pt-BR');
   const learnedSource = performanceState.sources?.[sourceKey];
@@ -4066,6 +4068,21 @@ function organicPotentialScore(pack = {}, dateString = todaySaoPaulo()) {
   }
 
   return { score: Number(Math.max(0, Math.min(100, score)).toFixed(2)), signals };
+}
+
+let cachedPerformanceLearningSnapshot = null;
+
+function performanceLearningSnapshot() {
+  if (cachedPerformanceLearningSnapshot) return cachedPerformanceLearningSnapshot;
+  const stored = existsSync(PERFORMANCE_INSIGHTS_PATH)
+    ? readJson(PERFORMANCE_INSIGHTS_PATH)
+    : { accounts: {} };
+  const accountState = stored?.accounts?.[process.env.ACCOUNT || 'cliente-x'] || {};
+  cachedPerformanceLearningSnapshot = {
+    models: accountState.models || {},
+    readiness: summarizePerformanceLearning(accountState, stored?.updatedAt)
+  };
+  return cachedPerformanceLearningSnapshot;
 }
 
 function shortlistByOrganicPotential(candidates = [], dateString = '', limit = 3) {
@@ -5210,6 +5227,7 @@ async function main() {
     throw new Error('Radar bloqueado: o anexo visual precisa conter fonte, título real e link da matéria.');
   }
   validatePack(pack);
+  const learningDecision = performanceLearningSnapshot().readiness;
   const researchSourceImagePath = await downloadResearchSourceImage(pack, runDir);
   if (!args.renderOnly && !args.dryRun && (scheduledPost || dashboardPack || args.storyOnly)) {
     const duplicate = findDuplicatePack(publicationHistory, historyPack);
@@ -5217,9 +5235,9 @@ async function main() {
       throw new Error(`Conteudo repetido bloqueado: este tema ja foi publicado em ${duplicate.publishedAt || 'uma publicacao anterior'}. Escolha outro conteudo.`);
     }
   }
-  writeFileSync(join(runDir, 'engagement-intelligence.json'), JSON.stringify({ ...enhancement.intelligence, organicPotential, selectionMode }, null, 2), 'utf8');
+  writeFileSync(join(runDir, 'engagement-intelligence.json'), JSON.stringify({ ...enhancement.intelligence, organicPotential, selectionMode, learningDecision }, null, 2), 'utf8');
   writeFileSync(join(runDir, 'editorial-research.json'), JSON.stringify(editorialResearch, null, 2), 'utf8');
-  writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, creativeGeneration, creativeBatchRemaining, account: account.account, visualStyle: style.name, visualVariationSeed, visualSeedInput, avatarRotationStart, coverAvatar: Number.isInteger(avatarRotationStart) ? accountAvatarRotationUrls(account)[avatarRotationStart] || null : null, intelligence: { ...enhancement.intelligence, organicPotential }, ...pack }, null, 2), 'utf8');
+  writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, creativeGeneration, creativeBatchRemaining, account: account.account, visualStyle: style.name, visualVariationSeed, visualSeedInput, avatarRotationStart, coverAvatar: Number.isInteger(avatarRotationStart) ? accountAvatarRotationUrls(account)[avatarRotationStart] || null : null, intelligence: { ...enhancement.intelligence, organicPotential, learningDecision }, ...pack }, null, 2), 'utf8');
   writeFileSync(join(runDir, 'caption.txt'), pack.caption, 'utf8');
   const storyOnly = publishMode === 'story-only';
   const feedOnly = publishMode === 'feed-only';
@@ -5334,6 +5352,7 @@ async function main() {
     packIndex,
     skippedDuplicates,
     selectionMode,
+    learningDecision,
     imagePaths,
     storyImagePath,
     imageUrls,

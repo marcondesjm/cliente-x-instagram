@@ -2,6 +2,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { PERFORMANCE_LEARNING_MODEL_VERSION, summarizePerformanceLearning } from '../lib/performance-learning.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const CONFIG_DIR = join(ROOT, 'automation', 'instagram-template', 'config');
@@ -220,7 +221,27 @@ function validatePureLogic() {
     { source: 'Fonte A', topics: ['dados'], audience: 'gestão', hook: 'dado', mediaProductType: 'REELS', observations: [{ windowHours: 24, metrics: { reach: 1000 }, performance: weak }] }
   ]);
   if (models.sources['fonte a']?.samples !== 2 || models.sources['fonte a']?.confidence !== 0.4 || models.topics.dados?.samples !== 2 || models.audiences.gestão?.samples !== 2 || models.hooks.dado?.samples !== 2) throw new Error('Learning model validation failed.');
-  console.log(JSON.stringify({ ok: true, performanceScore: 'normalized-by-reach', windows: WINDOWS, modelShrinkage: 'enabled' }, null, 2));
+  const readiness = summarizePerformanceLearning({
+    updatedAt: new Date().toISOString(),
+    samples: Array.from({ length: 30 }, (_, index) => ({
+      selectionMode: index < 7 ? (index < 4 ? 'exploit' : index < 6 ? 'explore' : 'experiment') : null,
+      observations: [{ windowHours: 24, metrics: { reach: 10 }, performance: strong }]
+    }))
+  });
+  if (readiness.confidenceLevel !== 'initial' || readiness.operatingMode !== 'assisted-learning' || readiness.modelVersion !== PERFORMANCE_LEARNING_MODEL_VERSION) {
+    throw new Error('Learning readiness validation failed.');
+  }
+  const highReadiness = summarizePerformanceLearning({
+    updatedAt: new Date().toISOString(),
+    samples: Array.from({ length: 50 }, (_, index) => ({
+      selectionMode: index < 20 ? 'exploit' : index < 27 ? 'explore' : index < 30 ? 'experiment' : null,
+      observations: [{ windowHours: 72, metrics: { reach: 25 }, performance: strong }]
+    }))
+  });
+  if (highReadiness.confidenceLevel !== 'high' || !highReadiness.autonomousReady) throw new Error('High-confidence readiness validation failed.');
+  const stale = summarizePerformanceLearning({ updatedAt: '2020-01-01T00:00:00.000Z', samples: [] });
+  if (stale.learningEnabled || stale.operatingMode !== 'editorial-fallback') throw new Error('Stale learning fallback validation failed.');
+  console.log(JSON.stringify({ ok: true, performanceScore: 'normalized-by-reach', windows: WINDOWS, modelShrinkage: 'enabled', modelVersion: PERFORMANCE_LEARNING_MODEL_VERSION, staleFallback: 'editorial' }, null, 2));
 }
 
 async function main() {
@@ -310,7 +331,9 @@ async function main() {
   accountState.models = buildModels(accountState.samples);
   accountState.weeklyGrowth = weeklyGrowth(accountState.samples, now);
   accountState.updatedAt = new Date().toISOString();
-  state.version = 1;
+  accountState.readiness = summarizePerformanceLearning(accountState, accountState.updatedAt, now);
+  state.version = 2;
+  state.modelVersion = PERFORMANCE_LEARNING_MODEL_VERSION;
   state.accounts[accountKey] = accountState;
   state.updatedAt = accountState.updatedAt;
   writeJson(PERFORMANCE_PATH, state);

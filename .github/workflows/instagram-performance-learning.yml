@@ -15,6 +15,11 @@ on:
       - ".github/workflows/instagram-performance-learning.yml"
   schedule:
     - cron: "17 */2 * * *"
+  workflow_run:
+    workflows:
+      - Instagram Feed Cliente X
+    types:
+      - completed
   workflow_dispatch:
 
 jobs:

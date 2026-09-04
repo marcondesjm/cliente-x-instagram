@@ -42,13 +42,13 @@ const VERCEL_PROJECT_ID = process.env.VERCEL_PROJECT_ID || 'prj_AVyS8LGjVuhUOxkp
 const VERCEL_TEAM_ID = process.env.VERCEL_TEAM_ID || 'team_T4Th6hb1UxtrbtcWfLxlWNRQ';
 const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instagram';
 const ACTIVE_VERSION = {
-  name: 'cliente-x-funcionando',
-  label: 'Última versão funcionando',
-  appVersion: 'v5.56',
+  name: 'nerion-social-stable',
+  label: 'Versão estável',
+  appVersion: 'v6.0',
   status: 'funcionando',
-  stableCommit: '37a2de0',
-  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/37a2de0',
-  description: 'Publica carrossel, Story e oito Reels diarios em português, com trilha musical original arranjada, transicoes, Radar oficial, agenda e vigia.'
+  stableCommit: 'PENDING_V6_COMMIT',
+  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram',
+  description: 'Plataforma estável com publicação automática, Radar oficial, vigia em nuvem e aprendizado adaptativo assistido com confiança protegida.'
 };
 const MAINTENANCE = {
   githubToken: {

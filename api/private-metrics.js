@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { canAccessAccount, requireAdmin } from '../lib/auth.js';
 import { accountFromQuery, requireConfiguredAccount } from '../lib/accounts.js';
+import { summarizePerformanceLearning as computePerformanceReadiness } from '../lib/performance-learning.js';
 
 const ROOT = process.cwd();
 const ACCOUNTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'accounts.json');
@@ -59,6 +60,7 @@ function summarizePerformanceLearning(accountKey) {
     const samples = Array.isArray(learning.samples) ? learning.samples : [];
     const observedSamples = samples.filter((sample) => Array.isArray(sample.observations) && sample.observations.length > 0);
     const matureObservations = observedSamples.map((sample) => [...sample.observations].sort((a, b) => b.windowHours - a.windowHours)[0]).filter(Boolean);
+    const readiness = computePerformanceReadiness(learning, stored.updatedAt);
     const summarizeModel = (model = {}) => Object.entries(model)
       .map(([name, value]) => ({
         name,
@@ -79,6 +81,19 @@ function summarizePerformanceLearning(accountKey) {
       effectiveSamples: observedSamples.length,
       retentionSamples: matureObservations.filter((item) => item.performance?.rates?.retention != null || item.performance?.rates?.skip != null).length,
       windowsHours: [2, 24, 72],
+      readiness,
+      modelVersion: readiness.modelVersion,
+      productStage: readiness.productStage,
+      confidenceLevel: readiness.confidenceLevel,
+      freshness: readiness.freshness,
+      ageHours: readiness.ageHours,
+      operatingMode: readiness.operatingMode,
+      learningEnabled: readiness.learningEnabled,
+      autonomousReady: readiness.autonomousReady,
+      effectiveReach: readiness.effectiveReach,
+      controlledSamples: readiness.controlledSamples,
+      selectionModes: readiness.selectionModes,
+      criteria: readiness.criteria,
       models: {
         sources: summarizeModel(learning.models?.sources),
         topics: summarizeModel(learning.models?.topics),

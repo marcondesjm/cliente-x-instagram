@@ -1703,7 +1703,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v5.56</div>
+        <div class="header-version" id="headerVersion">Versão atual: v6.0</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -1908,8 +1908,8 @@
         <div class="panel" id="performanceLearningPanel">
           <div class="panel-head">
             <div>
-              <div class="section-label">Aprendizado de desempenho</div>
-              <h2>O que a automação está aprendendo</h2>
+              <div class="section-label">Aprendizado adaptativo · v1</div>
+              <h2>Decisões assistidas por desempenho</h2>
             </div>
             <span class="status-pill warn" id="performanceLearningStatus">Carregando</span>
           </div>
@@ -4653,16 +4653,24 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
 
       const best = (items, fallback) => items?.[0]?.name || fallback;
       const changeLabel = (value) => value == null ? 'base anterior insuficiente' : `${value > 0 ? '+' : ''}${value}% vs. semana anterior`;
-      const card = (title, value, detail) => `
-        <div class="capability-card good">
+      const card = (title, value, detail, tone = 'good') => `
+        <div class="capability-card ${tone}">
           <strong>${escapeHtml(title)}</strong>
           <span>${escapeHtml(value)}</span>
           <div class="capability-status">${escapeHtml(detail)}</div>
         </div>`;
       const updated = learning.updatedAt ? formatDateTime(learning.updatedAt) : 'horário não informado';
-      status.textContent = 'Ativo na nuvem';
-      status.className = 'status-pill good';
+      const confidenceLabels = { initial: 'inicial', moderate: 'moderada', high: 'alta' };
+      const confidence = confidenceLabels[learning.confidenceLevel] || 'inicial';
+      const stale = learning.freshness === 'stale' || learning.operatingMode === 'editorial-fallback';
+      const modes = learning.selectionModes || {};
+      status.textContent = stale ? 'Coleta atrasada · fallback seguro' : `Estável · confiança ${confidence}`;
+      status.className = `status-pill ${stale ? 'warn' : 'good'}`;
       grid.innerHTML = [
+        card('Versão do modelo', learning.modelVersion || 'nerion-adaptive-v1.0.0', 'plataforma v6.0 estável'),
+        card('Confiança atual', confidence, `${formatNumber(learning.effectiveSamples)} amostras · alcance ${formatNumber(learning.effectiveReach)}`, confidence === 'initial' ? 'warn' : 'good'),
+        card('Modo operacional', stale ? 'Fallback editorial' : 'Aprendizado assistido', stale ? 'peso aprendido temporariamente desligado' : 'peso limitado pela confiança', stale ? 'warn' : 'good'),
+        card('Testes controlados', `${formatNumber(modes.exploit)} / ${formatNumber(modes.explore)} / ${formatNumber(modes.experiment)}`, 'desempenho / exploração / experimento'),
         card('Base acompanhada', `${formatNumber(learning.totalMedia)} mídias · ${formatNumber(learning.observedMedia)} com métricas`, `${formatNumber(learning.observationCount)} observações`),
         card('Fonte em destaque', best(learning.models?.sources, 'Amostra em formação'), 'por desempenho normalizado'),
         card('Tema em destaque', best(learning.models?.topics, 'Amostra em formação'), 'sem liberar repetição'),
@@ -4674,7 +4682,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         card('Interações semanais', formatNumber(learning.weeklyGrowth?.current?.interactions || 0), changeLabel(learning.weeklyGrowth?.change?.interactions)),
         card('Janelas de coleta', (learning.windowsHours || []).map((hours) => `${hours} h`).join(' · '), `atualizado ${updated}`)
       ].join('');
-      message.textContent = `Última atualização: ${updated}. Cada mídia conta uma vez no modelo; as janelas atualizam sua maturidade. Seleção 70% desempenho, 20% exploração e 10% experimento, sempre após as travas de originalidade, novidade e integridade editorial.`;
+      message.textContent = stale
+        ? `Última atualização: ${updated}. A coleta ultrapassou a janela segura; a v6.0 desligou o peso aprendido e manteve a seleção editorial com originalidade, novidade e integridade.`
+        : `Última atualização: ${updated}. Modelo ${learning.modelVersion || 'adaptativo v1'} em aprendizado assistido, com confiança ${confidence}. Seleção 70% desempenho, 20% exploração e 10% experimento, sempre após as travas editoriais.`;
     }
 
     function renderShowcaseSlide() {
