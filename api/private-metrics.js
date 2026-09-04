@@ -132,7 +132,8 @@ async function summarizePerformanceLearning(accountKey) {
         topics: summarizeModel(learning.models?.topics),
         formats: summarizeModel(learning.models?.formats),
         audiences: summarizeModel(learning.models?.audiences),
-        hooks: summarizeModel(learning.models?.hooks)
+        hooks: summarizeModel(learning.models?.hooks),
+        contexts: summarizeModel(learning.models?.contexts)
       },
       weeklyGrowth: learning.weeklyGrowth || null,
       safeguards: {

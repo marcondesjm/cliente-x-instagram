@@ -4681,9 +4681,11 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         card('Formato em destaque', best(learning.models?.formats, 'Amostra em formação'), 'alcance e confiança'),
         card('Público em destaque', best(learning.models?.audiences, 'Amostra em formação'), 'segmentação automática'),
         card('Gancho em destaque', best(learning.models?.hooks, 'Amostra em formação'), 'teste editorial contínuo'),
+        card('Contexto em destaque', best(learning.models?.contexts, 'Amostra em formação'), 'formato · horário · objetivo'),
         card('Retenção disponível', `${formatNumber(learning.retentionSamples)} de ${formatNumber(learning.effectiveSamples)} posts`, 'tempo assistido e abandono'),
         card('Alcance semanal', formatNumber(learning.weeklyGrowth?.current?.reach || 0), changeLabel(learning.weeklyGrowth?.change?.reach)),
         card('Interações semanais', formatNumber(learning.weeklyGrowth?.current?.interactions || 0), changeLabel(learning.weeklyGrowth?.change?.interactions)),
+        card('Visitas ao perfil', formatNumber(learning.weeklyGrowth?.current?.profileVisits || 0), changeLabel(learning.weeklyGrowth?.change?.profileVisits)),
         card('Janelas de coleta', (learning.windowsHours || []).map((hours) => `${hours} h`).join(' · '), `atualizado ${updated}`)
       ].join('');
       message.textContent = stale

@@ -64,6 +64,13 @@ function performanceScore(metrics = {}) {
   const viewsPerReach = reach > 0 && Number(metrics.views) > 0
     ? clamp(Number(metrics.views) / reach, 0, 3)
     : null;
+  const objectiveScores = {
+    discovery: clamp((viewsPerReach === null ? 0 : viewsPerReach * 24) + (profileVisitRate * 2200) + (followRate * 4000)),
+    utility: clamp((saveRate * 2600) + (shareRate * 1800) + (repostRate * 1200)),
+    conversation: clamp((commentRate * 3000) + (shareRate * 900)),
+    conversion: clamp((followRate * 5000) + (profileVisitRate * 3000) + (commentRate * 1200)),
+    retention: clamp((retention === null ? 0 : retention * 75) + (skipRate === null ? 10 : (1 - skipRate) * 25))
+  };
   const score = clamp(
     Math.min(35, shareRate * 1750)
     + Math.min(20, saveRate * 1000)
@@ -90,8 +97,34 @@ function performanceScore(metrics = {}) {
       skip: skipRate === null ? null : Number(skipRate.toFixed(5)),
       retention: retention === null ? null : Number(retention.toFixed(5)),
       viewsPerReach: viewsPerReach === null ? null : Number(viewsPerReach.toFixed(5))
-    }
+    },
+    objectiveScores: Object.fromEntries(Object.entries(objectiveScores).map(([key, value]) => [key, Number(value.toFixed(2))]))
   };
+}
+
+function saoPauloHour(value) {
+  const date = new Date(value);
+  if (!Number.isFinite(date.getTime())) return null;
+  return Number(new Intl.DateTimeFormat('en-US', { timeZone: 'America/Sao_Paulo', hour: '2-digit', hourCycle: 'h23' }).format(date));
+}
+
+function daypartFor(value) {
+  const hour = saoPauloHour(value);
+  if (hour === null) return 'unknown';
+  if (hour < 10) return 'morning';
+  if (hour < 14) return 'midday';
+  if (hour < 18) return 'afternoon';
+  return 'evening';
+}
+
+function objectiveFor(entry = {}) {
+  const configured = String(entry.learningContext?.objective || '').trim();
+  if (configured) return configured;
+  const text = `${entry.coverTitle || ''} ${entry.caption || ''}`.toLocaleLowerCase('pt-BR');
+  if (/salve|checklist|passo a passo|guia/iu.test(text)) return 'utility';
+  if (/comente|qual |\?/iu.test(text)) return 'conversation';
+  if (/direct|perfil|consultoria|treinamento|me chame/iu.test(text)) return 'conversion';
+  return 'discovery';
 }
 
 async function graphGet(path, params, token) {
@@ -159,8 +192,9 @@ function weeklyGrowth(samples = [], now = Date.now()) {
       interactions: summary.interactions + (Number(metrics.totalInteractions) || 0),
       shares: summary.shares + (Number(metrics.shares) || 0),
       saved: summary.saved + (Number(metrics.saved) || 0),
-      follows: summary.follows + (Number(metrics.follows) || 0)
-    }), { posts: 0, reach: 0, interactions: 0, shares: 0, saved: 0, follows: 0 });
+      follows: summary.follows + (Number(metrics.follows) || 0),
+      profileVisits: summary.profileVisits + (Number(metrics.profileVisits) || 0)
+    }), { posts: 0, reach: 0, interactions: 0, shares: 0, saved: 0, follows: 0, profileVisits: 0 });
   };
   const current = summarize(0, 7);
   const previous = summarize(7, 14);
@@ -171,7 +205,8 @@ function weeklyGrowth(samples = [], now = Date.now()) {
     change: {
       reach: change(current.reach, previous.reach),
       interactions: change(current.interactions, previous.interactions),
-      follows: change(current.follows, previous.follows)
+      follows: change(current.follows, previous.follows),
+      profileVisits: change(current.profileVisits, previous.profileVisits)
     }
   };
 }
@@ -179,24 +214,29 @@ function weeklyGrowth(samples = [], now = Date.now()) {
 function buildModels(samples = []) {
   const observations = samples.map((sample) => {
     const latest = [...(sample.observations || [])].sort((a, b) => b.windowHours - a.windowHours)[0];
-    return latest?.performance?.score == null ? null : { sample, score: latest.performance.score, reach: Number(latest.metrics?.reach) || 0 };
+    if (latest?.performance?.score == null) return null;
+    const ageDays = Math.max(0, (Date.now() - Date.parse(sample.publishedAt || latest.collectedAt || '')) / 86400000);
+    const recencyWeight = Number.isFinite(ageDays) ? Math.pow(0.5, ageDays / 21) : 0.5;
+    return { sample, score: latest.performance.score, reach: Number(latest.metrics?.reach) || 0, recencyWeight, performance: latest.performance };
   }).filter(Boolean);
   const aggregate = (pairs) => {
     const buckets = new Map();
-    for (const { key, score, reach } of pairs) {
+    for (const { key, score, reach, recencyWeight = 1 } of pairs) {
       if (!key) continue;
       const bucket = buckets.get(key) || [];
-      bucket.push({ score, reach });
+      bucket.push({ score, reach, recencyWeight });
       buckets.set(key, bucket);
     }
     return Object.fromEntries([...buckets.entries()].map(([key, values]) => {
       const totalReach = values.reduce((sum, value) => sum + value.reach, 0);
-      const average = values.reduce((sum, value) => sum + value.score, 0) / values.length;
+      const totalWeight = values.reduce((sum, value) => sum + value.recencyWeight, 0) || 1;
+      const average = values.reduce((sum, value) => sum + (value.score * value.recencyWeight), 0) / totalWeight;
       const confidence = Math.min(1, values.length / 5) * Math.min(1, totalReach / 200);
       const learned = 50 + ((average - 50) * confidence);
       return [key, {
         samples: values.length,
         totalReach,
+        recencyWeight: Number(totalWeight.toFixed(3)),
         confidence: Number(confidence.toFixed(4)),
         averageScore: Number(average.toFixed(2)),
         learnedScore: Number(learned.toFixed(2))
@@ -204,11 +244,17 @@ function buildModels(samples = []) {
     }));
   };
   return {
-    sources: aggregate(observations.map(({ sample, score, reach }) => ({ key: String(sample.source || '').toLocaleLowerCase('pt-BR'), score, reach }))),
-    topics: aggregate(observations.flatMap(({ sample, score, reach }) => (sample.topics || []).map((key) => ({ key, score, reach })))),
-    formats: aggregate(observations.map(({ sample, score, reach }) => ({ key: sample.mediaProductType || sample.mediaType || 'unknown', score, reach }))),
-    audiences: aggregate(observations.map(({ sample, score, reach }) => ({ key: sample.audience || 'empresários', score, reach }))),
-    hooks: aggregate(observations.map(({ sample, score, reach }) => ({ key: sample.hook || 'afirmação', score, reach })))
+    sources: aggregate(observations.map(({ sample, score, reach, recencyWeight }) => ({ key: String(sample.source || '').toLocaleLowerCase('pt-BR'), score, reach, recencyWeight }))),
+    topics: aggregate(observations.flatMap(({ sample, score, reach, recencyWeight }) => (sample.topics || []).map((key) => ({ key, score, reach, recencyWeight })))),
+    formats: aggregate(observations.map(({ sample, score, reach, recencyWeight }) => ({ key: sample.mediaProductType || sample.mediaType || 'unknown', score, reach, recencyWeight }))),
+    audiences: aggregate(observations.map(({ sample, score, reach, recencyWeight }) => ({ key: sample.audience || 'empresários', score, reach, recencyWeight }))),
+    hooks: aggregate(observations.map(({ sample, score, reach, recencyWeight }) => ({ key: sample.hook || 'afirmação', score, reach, recencyWeight }))),
+    contexts: aggregate(observations.map(({ sample, score, reach, recencyWeight, performance }) => {
+      const format = sample.mediaProductType || sample.mediaType || 'unknown';
+      const objective = sample.learningContext?.objective || sample.objective || 'discovery';
+      const contextualScore = Number(performance?.objectiveScores?.[objective]);
+      return { key: `${format}|${sample.daypart || daypartFor(sample.publishedAt)}|${objective}`, score: Number.isFinite(contextualScore) ? contextualScore : score, reach, recencyWeight };
+    }))
   };
 }
 
@@ -217,10 +263,11 @@ function validatePureLogic() {
   const weak = performanceScore({ reach: 1000, shares: 1, saved: 1, comments: 0, likes: 5, totalInteractions: 7 });
   if (!strong || !weak || strong.score <= weak.score || strong.rates.share !== 0.03) throw new Error('Performance score validation failed.');
   const models = buildModels([
-    { source: 'Fonte A', topics: ['dados'], audience: 'gestão', hook: 'dado', mediaProductType: 'REELS', observations: [{ windowHours: 24, metrics: { reach: 1000 }, performance: strong }] },
-    { source: 'Fonte A', topics: ['dados'], audience: 'gestão', hook: 'dado', mediaProductType: 'REELS', observations: [{ windowHours: 24, metrics: { reach: 1000 }, performance: weak }] }
+    { publishedAt: new Date().toISOString(), source: 'Fonte A', topics: ['dados'], audience: 'gestão', hook: 'dado', mediaProductType: 'REELS', daypart: 'afternoon', objective: 'conversion', observations: [{ windowHours: 24, metrics: { reach: 1000 }, performance: strong }] },
+    { publishedAt: new Date().toISOString(), source: 'Fonte A', topics: ['dados'], audience: 'gestão', hook: 'dado', mediaProductType: 'REELS', daypart: 'afternoon', objective: 'conversion', observations: [{ windowHours: 24, metrics: { reach: 1000 }, performance: weak }] }
   ]);
-  if (models.sources['fonte a']?.samples !== 2 || models.sources['fonte a']?.confidence !== 0.4 || models.topics.dados?.samples !== 2 || models.audiences.gestão?.samples !== 2 || models.hooks.dado?.samples !== 2) throw new Error('Learning model validation failed.');
+  if (models.sources['fonte a']?.samples !== 2 || models.sources['fonte a']?.confidence !== 0.4 || models.topics.dados?.samples !== 2 || models.audiences.gestão?.samples !== 2 || models.hooks.dado?.samples !== 2 || models.contexts['REELS|afternoon|conversion']?.samples !== 2) throw new Error('Learning model validation failed.');
+  if (strong.objectiveScores.conversion <= weak.objectiveScores.conversion || strong.objectiveScores.utility <= weak.objectiveScores.utility) throw new Error('Objective-specific scoring validation failed.');
   const readiness = summarizePerformanceLearning({
     updatedAt: new Date().toISOString(),
     samples: Array.from({ length: 30 }, (_, index) => ({
@@ -241,7 +288,7 @@ function validatePureLogic() {
   if (highReadiness.confidenceLevel !== 'high' || !highReadiness.autonomousReady) throw new Error('High-confidence readiness validation failed.');
   const stale = summarizePerformanceLearning({ updatedAt: '2020-01-01T00:00:00.000Z', samples: [] });
   if (stale.learningEnabled || stale.operatingMode !== 'editorial-fallback') throw new Error('Stale learning fallback validation failed.');
-  console.log(JSON.stringify({ ok: true, performanceScore: 'normalized-by-reach', windows: WINDOWS, modelShrinkage: 'enabled', modelVersion: PERFORMANCE_LEARNING_MODEL_VERSION, staleFallback: 'editorial' }, null, 2));
+  console.log(JSON.stringify({ ok: true, performanceScore: 'normalized-by-reach', objectiveScores: 'discovery-utility-conversation-conversion-retention', windows: WINDOWS, modelShrinkage: 'enabled-with-21-day-decay', contextualBaseline: 'format-daypart-objective', modelVersion: PERFORMANCE_LEARNING_MODEL_VERSION, staleFallback: 'editorial' }, null, 2));
 }
 
 async function main() {
@@ -274,6 +321,9 @@ async function main() {
       audience: audienceSegment(entry),
       hook: hookArchetype(entry),
       selectionMode: entry.selectionMode || null,
+      learningContext: entry.learningContext || null,
+      objective: objectiveFor(entry),
+      daypart: daypartFor(entry.publishedAt),
       observations: []
     };
     const dueWindow = WINDOWS.filter((windowHours) => ageHours >= windowHours && !sample.observations.some((item) => item.windowHours === windowHours)).at(-1);
@@ -327,12 +377,14 @@ async function main() {
   for (const sample of accountState.samples) {
     sample.audience ||= audienceSegment(sample);
     sample.hook ||= hookArchetype(sample);
+    sample.objective ||= objectiveFor(sample);
+    sample.daypart ||= daypartFor(sample.publishedAt);
   }
   accountState.models = buildModels(accountState.samples);
   accountState.weeklyGrowth = weeklyGrowth(accountState.samples, now);
   accountState.updatedAt = new Date().toISOString();
   accountState.readiness = summarizePerformanceLearning(accountState, accountState.updatedAt, now);
-  state.version = 2;
+  state.version = 3;
   state.modelVersion = PERFORMANCE_LEARNING_MODEL_VERSION;
   state.accounts[accountKey] = accountState;
   state.updatedAt = accountState.updatedAt;

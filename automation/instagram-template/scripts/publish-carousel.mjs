@@ -3901,6 +3901,7 @@ function recordPublicationHistory(configDir, accountKey, pack, result) {
       permalink: result.permalink || null,
       selectionMode: result.selectionMode || null,
       learning: result.learningDecision || null,
+      learningContext: result.learningContext || null,
       research: pack.research || null
     });
   }
@@ -4030,7 +4031,61 @@ function balanceResearchPacksByHistory(packs = [], publicationHistory = [], date
   return balanced;
 }
 
-function organicPotentialScore(pack = {}, dateString = todaySaoPaulo()) {
+function learningObjective(primarySignal = '') {
+  if (/salvamento|compartilhamento/iu.test(primarySignal)) return 'utility';
+  if (/comentario|comentário/iu.test(primarySignal)) return 'conversation';
+  if (/direct|perfil|seguidor|conversao|conversão/iu.test(primarySignal)) return 'conversion';
+  return 'discovery';
+}
+
+function learningDaypart(slotTime = '') {
+  const hour = Number.parseInt(String(slotTime).match(/(?:^|T)(\d{2}):/)?.[1] || '', 10);
+  if (!Number.isInteger(hour)) return 'unknown';
+  if (hour < 10) return 'morning';
+  if (hour < 14) return 'midday';
+  if (hour < 18) return 'afternoon';
+  return 'evening';
+}
+
+function publicationFormat(publishMode = '') {
+  return String(publishMode).startsWith('reel') ? 'REELS' : 'FEED';
+}
+
+function learningTopicTokens(entry = {}) {
+  const text = `${entry.coverTitle || entry?.slides?.[0]?.title || ''} ${entry.research?.theme || ''}`.toLocaleLowerCase('pt-BR');
+  return ['automação', 'agente', 'dados', 'gestão', 'produtividade', 'vendas', 'cliente', 'custo', 'token', 'modelo', 'empresa', 'mercado', 'segurança']
+    .filter((token) => text.includes(token));
+}
+
+function learningHookArchetype(entry = {}) {
+  const title = String(entry.coverTitle || entry?.slides?.[0]?.title || '').trim();
+  if (/\?|como|por que/iu.test(title)) return 'pergunta';
+  if (/\d|%|r\$|milh(?:ão|ões)|bilh(?:ão|ões)/iu.test(title)) return 'dado';
+  if (/erro|risco|cuidado|antes|não faça|nao faca/iu.test(title)) return 'alerta';
+  if (/novo|mudou|lançou|chegou|agora/iu.test(title)) return 'novidade';
+  return 'afirmação';
+}
+
+function contentFatigue(pack = {}, publicationHistory = []) {
+  const recent = publicationHistory.slice(-18).reverse();
+  const source = String(pack?.research?.source || '').trim().toLocaleLowerCase('pt-BR');
+  const topics = new Set(learningTopicTokens(pack));
+  const hook = learningHookArchetype(pack);
+  let penalty = 0;
+  const reasons = [];
+  recent.forEach((entry, index) => {
+    const recency = Math.max(0.2, 1 - (index / 20));
+    if (source && String(entry?.research?.source || '').trim().toLocaleLowerCase('pt-BR') === source) penalty += 1.2 * recency;
+    const previousTopics = learningTopicTokens(entry);
+    if (previousTopics.some((topic) => topics.has(topic))) penalty += 0.65 * recency;
+    if (learningHookArchetype(entry) === hook) penalty += 0.35 * recency;
+  });
+  const bounded = Number(Math.min(9, penalty).toFixed(2));
+  if (bounded >= 1) reasons.push('fadiga-editorial-recente');
+  return { penalty: bounded, reasons };
+}
+
+function organicPotentialScore(pack = {}, dateString = todaySaoPaulo(), publicationHistory = [], learningContext = {}) {
   const research = pack.research || {};
   const title = String(research.sourceTitle || pack.slides?.[0]?.title || '').trim();
   const caption = String(pack.caption || '').trim();
@@ -4053,6 +4108,9 @@ function organicPotentialScore(pack = {}, dateString = todaySaoPaulo()) {
   if (facts.length >= 3) add(7, 'densidade-factual');
   if (facts.some((fact) => String(fact).length >= 150)) add(4, 'contexto-aprofundado');
   if (/chocante|imperdivel|imperdível|voce nao vai acreditar|você não vai acreditar|matriculas abertas|matrículas abertas|pre-mba|pré-mba/iu.test(searchable)) add(-20, 'promocao-ou-clickbait');
+
+  const fatigue = contentFatigue(pack, publicationHistory);
+  if (fatigue.penalty) add(-fatigue.penalty, ...fatigue.reasons);
 
   const publishedAt = Date.parse(research.publishedAt || '');
   const referenceAt = Date.parse(`${dateString}T23:59:59-03:00`);
@@ -4081,7 +4139,14 @@ function organicPotentialScore(pack = {}, dateString = todaySaoPaulo()) {
     if (Math.abs(adjustment) >= 0.5) add(adjustment, adjustment > 0 ? 'tema-com-bom-historico' : 'tema-com-baixo-historico');
   }
 
-  return { score: Number(Math.max(0, Math.min(100, score)).toFixed(2)), signals };
+  const contextKey = [learningContext.format, learningContext.daypart, learningContext.objective].filter(Boolean).join('|');
+  const learnedContext = performanceState.contexts?.[contextKey];
+  if (learnedContext?.samples >= 2) {
+    const adjustment = Math.max(-5, Math.min(5, (Number(learnedContext.learnedScore) - 50) * 0.25));
+    if (Math.abs(adjustment) >= 0.5) add(adjustment, adjustment > 0 ? 'contexto-com-bom-historico' : 'contexto-com-baixo-historico');
+  }
+
+  return { score: Number(Math.max(0, Math.min(100, score)).toFixed(2)), signals, fatiguePenalty: fatigue.penalty, contextKey: contextKey || null };
 }
 
 let cachedPerformanceLearningSnapshot = null;
@@ -4115,10 +4180,10 @@ function controlledExperimentMode(dateString = '', slotIndex = 0) {
   return 'experiment';
 }
 
-function selectWithControlledExploration(candidates = [], dateString = '', slotIndex = 0, chooseIndex = randomInt) {
+function selectWithControlledExploration(candidates = [], dateString = '', slotIndex = 0, chooseIndex = randomInt, publicationHistory = [], learningContext = {}) {
   const ranked = candidates.map((candidate) => ({
     ...candidate,
-    organicPotential: organicPotentialScore(candidate.pack, dateString)
+    organicPotential: organicPotentialScore(candidate.pack, dateString, publicationHistory, learningContext)
   })).sort((left, right) => right.organicPotential.score - left.organicPotential.score || left.originalIndex - right.originalIndex);
   const mode = controlledExperimentMode(dateString, slotIndex);
   const bestScore = ranked[0]?.organicPotential.score ?? 0;
@@ -4130,10 +4195,11 @@ function selectWithControlledExploration(candidates = [], dateString = '', slotI
     pool = ranked.slice(0, 6);
   }
   const selected = pool[chooseIndex(pool.length)];
-  return selected ? { ...selected, selectionMode: mode } : null;
+  const experimentAxis = mode === 'experiment' ? 'topic-angle' : mode === 'explore' ? 'candidate-novelty' : 'performance';
+  return selected ? { ...selected, selectionMode: mode, experimentAxis } : null;
 }
 
-function pickFreshPack(packs, dateString, slotIndex, recentMedia = [], publicationHistory = [], chooseIndex = randomInt) {
+function pickFreshPack(packs, dateString, slotIndex, recentMedia = [], publicationHistory = [], chooseIndex = randomInt, learningContext = {}) {
   const candidates = balanceResearchPacksByHistory(packs, publicationHistory, dateString, slotIndex);
   const freshCandidates = candidates.filter(({ pack }) => !findDuplicateSelection(pack, recentMedia, publicationHistory));
   const researchCandidates = freshCandidates.filter(({ pack }) => pack?.research?.source);
@@ -4159,18 +4225,19 @@ function pickFreshPack(packs, dateString, slotIndex, recentMedia = [], publicati
     // publicacao preserva variedade sem transformar uma unica fonte em escolha fixa.
     const balancedPool = sourceGroups.filter((item) => item.count <= minimumCount + 1);
     const selectedSource = balancedPool[chooseIndex(balancedPool.length)];
-    const selected = selectWithControlledExploration(selectedSource.queue, dateString, slotIndex, chooseIndex);
+    const selected = selectWithControlledExploration(selectedSource.queue, dateString, slotIndex, chooseIndex, publicationHistory, learningContext);
     return {
       pack: selected.pack,
       packIndex: selected.originalIndex,
       organicPotential: selected.organicPotential,
       selectionMode: selected.selectionMode,
+      experimentAxis: selected.experimentAxis,
       skippedDuplicates: candidates.length - freshCandidates.length
     };
   }
   if (freshCandidates.length) {
-    const selected = selectWithControlledExploration(freshCandidates, dateString, slotIndex, chooseIndex);
-    return { pack: selected.pack, packIndex: selected.originalIndex, organicPotential: selected.organicPotential, selectionMode: selected.selectionMode, skippedDuplicates: candidates.length - freshCandidates.length };
+    const selected = selectWithControlledExploration(freshCandidates, dateString, slotIndex, chooseIndex, publicationHistory, learningContext);
+    return { pack: selected.pack, packIndex: selected.originalIndex, organicPotential: selected.organicPotential, selectionMode: selected.selectionMode, experimentAxis: selected.experimentAxis, skippedDuplicates: candidates.length - freshCandidates.length };
   }
   return {
     pack: null,
@@ -4733,6 +4800,17 @@ async function main() {
     if (organicPotentialProbe[0]?.originalIndex !== 1 || organicPotentialProbe[0]?.organicPotential?.score < 75) {
       throw new Error('Motor de potencial orgânico não priorizou a pauta recente, concreta e útil.');
     }
+    const fatiguePack = organicPotentialProbe[0].pack;
+    const fatigueHistory = Array.from({ length: 6 }, (_, index) => ({
+      publishedAt: `${today}T${String(10 + index).padStart(2, '0')}:00:00-03:00`,
+      coverTitle: fatiguePack.slides[0].title,
+      research: { source: fatiguePack.research.source, theme: 'gestão de tokens e dados' }
+    }));
+    const freshScore = organicPotentialScore(fatiguePack, today, [], { format: 'REELS', daypart: 'afternoon', objective: 'utility' });
+    const fatiguedScore = organicPotentialScore(fatiguePack, today, fatigueHistory, { format: 'REELS', daypart: 'afternoon', objective: 'utility' });
+    if (fatiguedScore.score >= freshScore.score || fatiguedScore.fatiguePenalty < 1 || fatiguedScore.contextKey !== 'REELS|afternoon|utility') {
+      throw new Error('Controle de fadiga ou contexto auditável falhou no teste.');
+    }
     const experimentModes = Array.from({ length: 1000 }, (_, index) => controlledExperimentMode(`teste-${index}`, index % 13));
     if (!experimentModes.includes('exploit') || !experimentModes.includes('explore') || !experimentModes.includes('experiment')) {
       throw new Error('Exploração controlada 70/20/10 falhou no teste determinístico.');
@@ -5033,6 +5111,8 @@ async function main() {
       ,reelFullFrameGuard: '1080x1920-native-no-blurred-bars'
       ,reelSoundtrackGuard: 'beethoven-only-9'
       ,organicPotentialGuard: 'fresh-useful-specific-no-clickbait'
+      ,learningContextGuard: 'format-daypart-objective-with-audit-reasons'
+      ,editorialFatigueGuard: 'recent-source-topic-hook-decay'
       ,controlledExplorationGuard: '70-20-10-after-quality-and-duplicate-gates'
       ,storySafeZoneGuard: '250-1170-500'
       ,storyCampaignImageGuard: 'explicit-image-prominent'
@@ -5051,6 +5131,7 @@ async function main() {
       : pickDailyIndex(automaticSelectionPacks, today, generationSlotIndex);
   let skippedDuplicates = 0;
   let selectionMode = 'manual';
+  let experimentAxis = 'manual';
   let scheduledPost = null;
   let publishMode = process.env.INSTAGRAM_TEMPLATE_PUBLISH_MODE === 'story-only' || args.storyOnly
     ? 'story-only'
@@ -5105,6 +5186,16 @@ async function main() {
     }
   }
 
+  const selectionSlotCron = (account.scheduleUtc || [])[generationSlotIndex] || '';
+  const selectionSlotTime = scheduledPost?.scheduledFor || (selectionSlotCron ? cronToBrtTime(selectionSlotCron) : '');
+  const selectionDiscovery = organicDiscoveryStrategy(today, generationSlotIndex);
+  const selectionLearningContext = {
+    format: publicationFormat(publishMode),
+    daypart: learningDaypart(selectionSlotTime),
+    objective: learningObjective(selectionDiscovery.primarySignal),
+    primarySignal: selectionDiscovery.primarySignal
+  };
+
   const token = env[account.accessTokenEnv];
   const userId = env[account.userIdEnv];
   const imgbbKey = env[account.imgbbKeyEnv];
@@ -5125,7 +5216,7 @@ async function main() {
 
     if (!scheduledPost && !dashboardPack && !args.storyOnly) {
       const recentMedia = await fetchRecentMedia(userId, token);
-      let fresh = pickFreshPack(automaticSelectionPacks, today, generationSlotIndex, recentMedia, publicationHistory);
+      let fresh = pickFreshPack(automaticSelectionPacks, today, generationSlotIndex, recentMedia, publicationHistory, randomInt, selectionLearningContext);
       if (!fresh.pack && radar.enabled) {
         const currentWindow = Number(editorialResearch.maxAgeDays) || 7;
         for (const maxAgeDays of [15, 30].filter((days) => days > currentWindow)) {
@@ -5134,7 +5225,7 @@ async function main() {
             maxAgeDays,
             limit: maxAgeDays === 30 ? 160 : 100
           });
-          const expandedFresh = pickFreshPack(expandedResearch.packs, today, generationSlotIndex, recentMedia, publicationHistory);
+          const expandedFresh = pickFreshPack(expandedResearch.packs, today, generationSlotIndex, recentMedia, publicationHistory, randomInt, selectionLearningContext);
           if (expandedFresh.pack) {
             editorialResearch = { ...expandedResearch, maxAgeDays };
             automaticSelectionPacks = expandedResearch.packs;
@@ -5148,7 +5239,7 @@ async function main() {
       }
       if (!fresh.pack) {
         if (radar.enabled) {
-          const reserveFresh = pickFreshPack(baseSelectionPacks, today, generationSlotIndex, recentMedia, publicationHistory);
+          const reserveFresh = pickFreshPack(baseSelectionPacks, today, generationSlotIndex, recentMedia, publicationHistory, randomInt, selectionLearningContext);
           if (reserveFresh.pack) {
             fresh = reserveFresh;
             automaticSelectionPacks = baseSelectionPacks;
@@ -5157,7 +5248,7 @@ async function main() {
             console.log(`Radar editorial: fontes oficiais esgotadas; reserva editorial propria e inedita selecionada sem inventar fonte jornalistica.`);
           } else {
             const fallbackPacks = Array.from({ length: creativeBatchSize }, (_, offset) => buildLastResortPack(today, generationSlotIndex + offset));
-            const fallbackFresh = pickFreshPack(fallbackPacks, today, generationSlotIndex, recentMedia, publicationHistory);
+            const fallbackFresh = pickFreshPack(fallbackPacks, today, generationSlotIndex, recentMedia, publicationHistory, randomInt, selectionLearningContext);
             if (!fallbackFresh.pack) {
               throw new Error('Reserva editorial bloqueada: nenhuma pauta realmente inedita esta disponivel. Nenhum post repetido foi publicado.');
             }
@@ -5172,10 +5263,10 @@ async function main() {
           }
         }
         if (!radar.enabled) {
-          const autoFresh = pickFreshPack(autoPacks, today, generationSlotIndex, recentMedia, publicationHistory);
+          const autoFresh = pickFreshPack(autoPacks, today, generationSlotIndex, recentMedia, publicationHistory, randomInt, selectionLearningContext);
           if (!autoFresh.pack) {
             const fallbackPacks = Array.from({ length: creativeBatchSize }, (_, offset) => buildLastResortPack(today, generationSlotIndex + offset));
-            const fallbackFresh = pickFreshPack(fallbackPacks, today, generationSlotIndex, recentMedia, publicationHistory);
+            const fallbackFresh = pickFreshPack(fallbackPacks, today, generationSlotIndex, recentMedia, publicationHistory, randomInt, selectionLearningContext);
             if (!fallbackFresh.pack) throw new Error('Conteudo automatico bloqueado: nenhuma pauta realmente inedita esta disponivel. Nenhum post repetido foi publicado.');
             validatePack(fallbackFresh.pack);
             pack = fallbackFresh.pack;
@@ -5211,7 +5302,10 @@ async function main() {
   const runId = `${timestampSaoPaulo()}-slot-${slotIndex}${args.renderOnly ? '-render-only' : ''}`;
   const runDir = join(RUNS_DIR, account.account, runId);
   mkdirSync(runDir, { recursive: true });
-  const organicPotential = organicPotentialScore(pack, today);
+  experimentAxis = selectionMode === 'experiment'
+    ? 'topic-angle'
+    : selectionMode === 'explore' ? 'candidate-novelty' : selectionMode === 'exploit' ? 'performance' : 'manual';
+  const organicPotential = organicPotentialScore(pack, today, publicationHistory, selectionLearningContext);
   const methodAllowed = !dashboardPack && !scheduledPost;
   const enhancement = preparePackForPublication(pack, today, generationSlotIndex, account, publishMode, { allowIhc: methodAllowed });
   pack = enhancement.pack;
@@ -5254,6 +5348,15 @@ async function main() {
   }
   validatePack(pack);
   const learningDecision = performanceLearningSnapshot().readiness;
+  const learningContext = {
+    ...selectionLearningContext,
+    selectionMode,
+    experimentAxis,
+    contextKey: [selectionLearningContext.format, selectionLearningContext.daypart, selectionLearningContext.objective].join('|'),
+    decisionReasons: organicPotential.signals,
+    fatiguePenalty: organicPotential.fatiguePenalty,
+    modelVersion: learningDecision.modelVersion
+  };
   const researchSourceImagePath = await downloadResearchSourceImage(pack, runDir);
   if (!args.renderOnly && !args.dryRun && (scheduledPost || dashboardPack || args.storyOnly)) {
     const duplicate = findDuplicatePack(publicationHistory, historyPack);
@@ -5261,9 +5364,9 @@ async function main() {
       throw new Error(`Conteudo repetido bloqueado: este tema ja foi publicado em ${duplicate.publishedAt || 'uma publicacao anterior'}. Escolha outro conteudo.`);
     }
   }
-  writeFileSync(join(runDir, 'engagement-intelligence.json'), JSON.stringify({ ...enhancement.intelligence, organicPotential, selectionMode, learningDecision }, null, 2), 'utf8');
+  writeFileSync(join(runDir, 'engagement-intelligence.json'), JSON.stringify({ ...enhancement.intelligence, organicPotential, selectionMode, learningDecision, learningContext }, null, 2), 'utf8');
   writeFileSync(join(runDir, 'editorial-research.json'), JSON.stringify(editorialResearch, null, 2), 'utf8');
-  writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, creativeGeneration, creativeBatchRemaining, account: account.account, visualStyle: style.name, visualVariationSeed, visualSeedInput, avatarRotationStart, coverAvatar: Number.isInteger(avatarRotationStart) ? accountAvatarRotationUrls(account)[avatarRotationStart] || null : null, intelligence: { ...enhancement.intelligence, organicPotential, learningDecision }, ...pack }, null, 2), 'utf8');
+  writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, creativeGeneration, creativeBatchRemaining, account: account.account, visualStyle: style.name, visualVariationSeed, visualSeedInput, avatarRotationStart, coverAvatar: Number.isInteger(avatarRotationStart) ? accountAvatarRotationUrls(account)[avatarRotationStart] || null : null, intelligence: { ...enhancement.intelligence, organicPotential, learningDecision, learningContext }, ...pack }, null, 2), 'utf8');
   writeFileSync(join(runDir, 'caption.txt'), pack.caption, 'utf8');
   const storyOnly = publishMode === 'story-only';
   const feedOnly = publishMode === 'feed-only';
@@ -5379,6 +5482,7 @@ async function main() {
     skippedDuplicates,
     selectionMode,
     learningDecision,
+    learningContext,
     imagePaths,
     storyImagePath,
     imageUrls,
