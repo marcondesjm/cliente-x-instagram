@@ -2228,6 +2228,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     ? ` ${slide.imageLayout}`
     : '';
   const isReelMode = renderContext.publishMode === 'reel-only' || renderContext.publishMode === 'reel-and-story';
+  const outputHeight = isReelMode ? STORY_HEIGHT : FEED_HEIGHT;
   const swipeCue = index === 1 && !isReelMode ? '<div class="swipe-cue">arraste para ver</div>' : '';
   const commentKeyword = `${title} ${body}`.match(/\bcomente\s+([\p{L}\p{N}_-]+)/iu)?.[1];
   const finalCue = commentKeyword ? `comente ${commentKeyword}` : /\bcomente\b/i.test(`${title} ${body}`) ? 'comente IA' : 'link na bio';
@@ -2274,10 +2275,10 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   <meta charset="UTF-8">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { width: ${FEED_WIDTH}px; height: ${FEED_HEIGHT}px; overflow: hidden; font-family: Arial, Helvetica, sans-serif; background: ${slideStyle.bgTop}; color: ${slideStyle.text}; }
+    body { width: ${FEED_WIDTH}px; height: ${outputHeight}px; overflow: hidden; font-family: Arial, Helvetica, sans-serif; background: ${slideStyle.bgTop}; color: ${slideStyle.text}; }
     main {
       width: ${FEED_WIDTH}px;
-      height: ${FEED_HEIGHT}px;
+      height: ${outputHeight}px;
       padding: 42px 58px 58px;
       position: relative;
       background:
@@ -2831,10 +2832,18 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     }
     /* Reel cover: keep every essential element inside Instagram's visible crop.
        Supporting copy belongs to the following takes, not below the cover photo. */
+    .reel-mode { padding-bottom: 96px; }
+    .reel-mode .progress { bottom: 174px; }
+    .reel-mode footer { bottom: 92px; }
     .reel-mode.role-hook .note { display: none; }
-    .reel-mode.role-hook .context-photo { top: 455px; height: 520px; }
-    .reel-mode.role-hook .progress { bottom: 190px; }
+    .reel-mode.role-hook .context-photo { top: 455px; height: 1000px; }
+    .reel-mode.role-hook .panel { top: 1060px; height: 420px; }
     .reel-mode.role-hook .swipe-cue { bottom: 105px; }
+    .reel-mode.role-value .note,
+    .reel-mode.role-proof .note { top: 940px; min-height: 420px; }
+    .reel-mode.role-value .panel,
+    .reel-mode.role-proof .panel { height: 580px; }
+    .reel-mode.role-cta .note { top: 820px; min-height: 570px; }
     .bubble { display: none; position: absolute; right: 116px; bottom: 270px; width: 132px; height: 96px; border-radius: 34px; background: #f1d8c7; z-index: 3; }
     .bubble::before { content: "..."; position: absolute; inset: 0; display: grid; place-items: center; color: ${accent}; font-size: 58px; line-height: 0.5; font-weight: 900; letter-spacing: 5px; }
     .spark { position: absolute; color: ${accent}; opacity: 0.7; z-index: 2; font-size: 42px; font-weight: 900; }
@@ -3206,16 +3215,18 @@ function slideHtml(slide, index, total, account, style, renderContext = {}) {
     ? '<div class="signal"><span></span><span></span><span></span></div>'
     : '';
   const usernameDisplay = accountUsernameDisplay(account);
+  const isReelMode = renderContext.publishMode === 'reel-only' || renderContext.publishMode === 'reel-and-story';
+  const outputHeight = isReelMode ? STORY_HEIGHT : FEED_HEIGHT;
   return `<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { width: ${FEED_WIDTH}px; height: ${FEED_HEIGHT}px; overflow: hidden; font-family: Arial, Helvetica, sans-serif; background: ${slideStyle.bgTop}; color: ${slideStyle.text}; }
+    body { width: ${FEED_WIDTH}px; height: ${outputHeight}px; overflow: hidden; font-family: Arial, Helvetica, sans-serif; background: ${slideStyle.bgTop}; color: ${slideStyle.text}; }
     main {
       width: ${FEED_WIDTH}px;
-      height: ${FEED_HEIGHT}px;
+      height: ${outputHeight}px;
       padding: 62px 70px 58px;
       display: flex;
       flex-direction: column;
@@ -3257,7 +3268,7 @@ function slideHtml(slide, index, total, account, style, renderContext = {}) {
   </style>
 </head>
 <body>
-  <main>
+  <main class="${isReelMode ? 'reel-mode' : ''}">
     ${rail}
     ${signal}
     <section class="top">
@@ -3280,7 +3291,9 @@ function slideHtml(slide, index, total, account, style, renderContext = {}) {
 
 async function renderSlides(runDir, slides, account, style, renderContext = {}) {
   const browser = await launchChromium();
-  const page = await browser.newPage({ viewport: { width: FEED_WIDTH, height: FEED_HEIGHT }, deviceScaleFactor: 1 });
+  const isReelMode = renderContext.publishMode === 'reel-only' || renderContext.publishMode === 'reel-and-story';
+  const outputHeight = isReelMode ? STORY_HEIGHT : FEED_HEIGHT;
+  const page = await browser.newPage({ viewport: { width: FEED_WIDTH, height: outputHeight }, deviceScaleFactor: 1 });
   const imagePaths = [];
   for (let index = 0; index < slides.length; index += 1) {
     let slide = slides[index];
@@ -3347,11 +3360,12 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
           corrected += 1;
         }
       }
+      const canvasSafeBottom = document.body.clientHeight > 1350 ? document.body.clientHeight - 260 : 1120;
       const safeBottomFor = (rect) => {
         const overlapsNoteHorizontally = noteRect
           && rect.right > noteRect.left
           && rect.left < noteRect.right;
-        return Math.floor(Math.min(overlapsNoteHorizontally ? noteRect.top - 28 : 1120, 1120));
+        return Math.floor(Math.min(overlapsNoteHorizontally ? noteRect.top - 28 : canvasSafeBottom, canvasSafeBottom));
       };
       for (const visual of visuals) {
         const rect = visual.getBoundingClientRect();
@@ -4421,7 +4435,7 @@ function renderReelVideo(runDir, imagePaths) {
     : stableAvatarOffset(imagePaths.join('|')) % REEL_BEETHOVEN_SOUNDTRACKS.length;
   const audioTrack = renderOriginalInstrumentalWav(runDir, durationSeconds, trackIndex);
   const inputs = imagePaths.flatMap((imagePath) => ['-loop', '1', '-t', String(sceneSeconds), '-i', resolve(imagePath)]);
-  const filters = imagePaths.map((_, index) => `[${index}:v]split=2[bg${index}][fg${index}];[bg${index}]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,gblur=sigma=32[blur${index}];[fg${index}]scale=1080:1350:force_original_aspect_ratio=decrease[front${index}];[blur${index}][front${index}]overlay=(W-w)/2:(H-h)/2,setsar=1,fps=30[v${index}]`).join(';');
+  const filters = imagePaths.map((_, index) => reelSceneFilter(index)).join(';');
   const transitionNames = ['fade', 'slideleft', 'smoothleft', 'circleopen'];
   const transitionSeed = stableAvatarOffset(imagePaths.join('|'));
   const transitionParts = [];
@@ -4462,6 +4476,10 @@ function renderReelVideo(runDir, imagePaths) {
     transitions: imagePaths.slice(1).map((_, index) => transitionNames[(transitionSeed + index) % transitionNames.length])
   }, null, 2), 'utf8');
   return { reelPath, audioTrack: audioTrack.id };
+}
+
+function reelSceneFilter(index) {
+  return `[${index}:v]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,setsar=1,fps=30[v${index}]`;
 }
 
 async function createReel(userId, token, videoUrl, caption) {
@@ -4984,6 +5002,13 @@ async function main() {
     if (/arraste para ver/i.test(reelNavigationProbe) || !/arraste para ver/i.test(carouselNavigationProbe)) {
       throw new Error('Indicador de arrastar precisa ficar restrito ao carrossel e ausente do Reel.');
     }
+    if (!reelNavigationProbe.includes('height: 1920px') || !carouselNavigationProbe.includes('height: 1350px')) {
+      throw new Error('Reel deve ser renderizado nativamente em 1080 x 1920 sem alterar o carrossel 4:5.');
+    }
+    const reelFullFrameProbe = reelSceneFilter(0);
+    if (!reelFullFrameProbe.includes('scale=1080:1920') || reelFullFrameProbe.includes('gblur') || reelFullFrameProbe.includes('overlay=')) {
+      throw new Error('Reel voltou a usar cartão 4:5 sobre fundo desfocado.');
+    }
     if (REEL_BEETHOVEN_SOUNDTRACKS.length !== 9 || REEL_BEETHOVEN_SOUNDTRACKS.some((track) => !track.classical || !track.work)) {
       throw new Error('Rotação dos Reels precisa conter exclusivamente as nove trilhas de Beethoven.');
     }
@@ -5005,6 +5030,7 @@ async function main() {
       ,finalSlideVariationGuard: 'ok'
       ,feedArchitectureGuard: '1080x1350-4:5'
       ,reelSwipeCueGuard: 'ok'
+      ,reelFullFrameGuard: '1080x1920-native-no-blurred-bars'
       ,reelSoundtrackGuard: 'beethoven-only-9'
       ,organicPotentialGuard: 'fresh-useful-specific-no-clickbait'
       ,controlledExplorationGuard: '70-20-10-after-quality-and-duplicate-gates'
