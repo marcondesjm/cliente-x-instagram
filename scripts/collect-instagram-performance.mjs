@@ -8,6 +8,7 @@ const CONFIG_DIR = join(ROOT, 'automation', 'instagram-template', 'config');
 const ACCOUNTS_PATH = join(CONFIG_DIR, 'accounts.json');
 const HISTORY_PATH = join(CONFIG_DIR, 'publication-history.json');
 const PERFORMANCE_PATH = join(CONFIG_DIR, 'performance-insights.json');
+const EXCLUSIONS_PATH = join(CONFIG_DIR, 'performance-learning-exclusions.json');
 const IG_BASE = 'https://graph.facebook.com/v21.0';
 const WINDOWS = [2, 24, 72];
 const INSIGHT_METRICS = [
@@ -234,9 +235,11 @@ async function main() {
   const state = readJson(PERFORMANCE_PATH, { version: 1, accounts: {} });
   const accountState = state.accounts[accountKey] || { samples: [], models: {} };
   const sampleMap = new Map(accountState.samples.map((sample) => [String(sample.mediaId), sample]));
+  const exclusions = new Set((readJson(EXCLUSIONS_PATH, {})[accountKey] || []).map((item) => String(item.mediaId || item)));
+  for (const mediaId of exclusions) sampleMap.delete(mediaId);
   const now = Date.now();
 
-  for (const entry of history.filter((item) => item.mediaId && item.publishedAt).slice(-60)) {
+  for (const entry of history.filter((item) => item.mediaId && item.publishedAt && !exclusions.has(String(item.mediaId))).slice(-60)) {
     const ageHours = (now - Date.parse(entry.publishedAt)) / 3600000;
     if (ageHours < 1.5 || ageHours > 24 * 10) continue;
     const sample = sampleMap.get(String(entry.mediaId)) || {
@@ -296,7 +299,10 @@ async function main() {
     sampleMap.set(sample.mediaId, sample);
   }
 
-  accountState.samples = [...sampleMap.values()].sort((a, b) => Date.parse(a.publishedAt) - Date.parse(b.publishedAt)).slice(-120);
+  accountState.samples = [...sampleMap.values()]
+    .filter((sample) => !exclusions.has(String(sample.mediaId)))
+    .sort((a, b) => Date.parse(a.publishedAt) - Date.parse(b.publishedAt))
+    .slice(-120);
   for (const sample of accountState.samples) {
     sample.audience ||= audienceSegment(sample);
     sample.hook ||= hookArchetype(sample);

@@ -1007,9 +1007,19 @@ function fitInstagramCaption(caption = '', pack = {}) {
     if (room >= 80) fittedBody.push(compactSentence(block, room));
     break;
   }
-  const fitted = [...fittedBody, ...requiredBlocks].filter(Boolean).join('\n\n');
+  let fitted = [...fittedBody, ...requiredBlocks].filter(Boolean).join('\n\n');
+  // Fontes com títulos longos e CTAs obrigatórios podem deixar a estimativa
+  // inicial alguns caracteres acima do teto. Reduza apenas o último bloco
+  // editorial; título, URL, CTA e hashtags permanecem intactos.
+  while (fitted.length > INSTAGRAM_CAPTION_MAX_LENGTH && fittedBody.length) {
+    const last = fittedBody.pop();
+    const excess = fitted.length - INSTAGRAM_CAPTION_MAX_LENGTH;
+    const reducedLength = Math.max(0, last.length - excess - 4);
+    if (reducedLength >= 80) fittedBody.push(compactSentence(last, reducedLength));
+    fitted = [...fittedBody, ...requiredBlocks].filter(Boolean).join('\n\n');
+  }
   if (fitted.length > INSTAGRAM_CAPTION_MAX_LENGTH) {
-    throw new Error(`Legenda excede o limite seguro do Instagram (${fitted.length}/${INSTAGRAM_CAPTION_MAX_LENGTH}).`);
+    throw new Error(`Legenda excede o limite seguro do Instagram (${fitted.length}/${INSTAGRAM_CAPTION_MAX_LENGTH}; blocos obrigatorios: ${requiredBlocks.map((block) => block.length).join(',')}).`);
   }
   return fitted;
 }
@@ -3415,8 +3425,12 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
   const explicitStoryImage = slide.imagePath
     ? fileCssImage(resolve(ROOT, String(slide.imagePath).replace(/^\/+/, '')))
     : '';
-  const sectorPhotoImage = showNewsContext ? '' : (explicitStoryImage || sectorPhotoCssImage(visualCue));
-  const storyPhotoClass = explicitStoryImage || researchImage ? ' has-story-photo' : '';
+  // A URL editorial pode existir no feed e ainda apontar para vídeo/embed ou
+  // falhar no download. Nesse caso o Story precisa manter uma fotografia real
+  // do rodízio, nunca um retângulo degradê tratado como imagem.
+  const fallbackStoryImage = explicitStoryImage || sectorPhotoCssImage(visualCue, 0, renderContext);
+  const storyVisualImage = researchImage || fallbackStoryImage;
+  const storyPhotoClass = storyVisualImage ? ' has-story-photo' : '';
   const avatarBlock = showNewsContext
     ? ''
     : (avatarImage ? `<div class="avatar"></div>` : `<div class="panel"><span>IA</span></div>`);
@@ -3472,8 +3486,8 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     .panel span { color: rgba(167,86,61,0.18); font-size: 124px; font-weight: 900; }
     .note { position: absolute; left: 72px; bottom: ${STORY_SAFE_BOTTOM + 20}px; z-index: 2; width: 600px; padding: 28px 36px; border-radius: 28px; background: rgba(255,250,246,0.78); border: 2px solid rgba(167,86,61,0.18); color: #211915; font-size: 31px; line-height: 1.18; font-weight: 900; }
     footer { position: absolute; left: 72px; bottom: ${STORY_SAFE_BOTTOM + 4}px; color: ${accent}; font-size: 30px; font-weight: 900; z-index: 2; }
-    .visual-card { display: none; position: absolute; left: 72px; right: 72px; top: 820px; height: 610px; border-radius: 24px; background: ${sectorPhotoImage || slideStyle.bgBottom} center / cover no-repeat; }
-    .visual-card.news-context-story { display: none; padding: 56px; background-image: ${researchImage ? `linear-gradient(180deg, rgba(9,20,31,.14), rgba(9,20,31,.92)), ${researchImage}` : `linear-gradient(135deg, #132238, ${accent})`}; background-position: center; background-size: cover; color: #fffaf7; }
+    .visual-card { display: none; position: absolute; left: 72px; right: 72px; top: 820px; height: 610px; border-radius: 24px; background: ${storyVisualImage || slideStyle.bgBottom} center / cover no-repeat; }
+    .visual-card.news-context-story { display: none; padding: 56px; background-image: ${storyVisualImage ? `linear-gradient(180deg, rgba(9,20,31,.08), rgba(9,20,31,.38)), ${storyVisualImage}` : 'none'}; background-position: center; background-size: cover; color: #fffaf7; }
     .news-context-story span, .news-context-story strong, .news-context-story small { display: block; position: relative; z-index: 1; }
     .news-context-story span { font-size: 26px; font-weight: 900; letter-spacing: .12em; }
     .news-context-story strong { margin-top: 26px; font-size: 78px; line-height: .95; }
@@ -3634,7 +3648,8 @@ async function renderStory(runDir, pack, account, style, renderContext = {}) {
   await page.goto(`file://${htmlPath.replace(/\\/g, '/')}`);
   const storyLayout = await page.evaluate(({ safeTop, safeBottom, storyHeight, storyWidth }) => {
     const copyBlocks = [...document.querySelectorAll('h1, p, .feed-cta')].filter((element) => getComputedStyle(element).display !== 'none');
-    const image = document.querySelector('.avatar');
+    const image = [...document.querySelectorAll('.visual-card, .avatar')]
+      .find((element) => getComputedStyle(element).display !== 'none');
     const imageVisible = Boolean(image && getComputedStyle(image).display !== 'none');
     const intersects = (copyRect, imageRect) => !(
       copyRect.right <= imageRect.left
@@ -3704,7 +3719,7 @@ async function renderStory(runDir, pack, account, style, renderContext = {}) {
       const imageRect = image.getBoundingClientRect();
       return `${label}@${Math.round(copyRect.left)},${Math.round(copyRect.top)},${Math.round(copyRect.right)},${Math.round(copyRect.bottom)}->foto@${Math.round(imageRect.left)},${Math.round(imageRect.top)},${Math.round(imageRect.right)},${Math.round(imageRect.bottom)}`;
     });
-    const safeElements = [...document.querySelectorAll('.brand, .badge, h1, p, .feed-cta, .avatar, .note, footer')]
+    const safeElements = [...document.querySelectorAll('.brand, .badge, h1, p, .feed-cta, .visual-card, .avatar, .note, footer')]
       .filter((element) => getComputedStyle(element).display !== 'none');
     const outsideSafeArea = safeElements
       .map((element) => {
@@ -3712,7 +3727,7 @@ async function renderStory(runDir, pack, account, style, renderContext = {}) {
         // A borda/arredondamento da foto pode ultrapassar alguns pixels por
         // causa do recorte e da rasterizacao do Chromium. Isso nao compromete
         // a area segura; textos continuam com a tolerancia estrita.
-        const tolerance = element.classList.contains('avatar') ? 12 : 2;
+        const tolerance = element.classList.contains('avatar') || element.classList.contains('visual-card') ? 12 : 2;
         const outside = rect.left < 48 - tolerance
           || rect.right > storyWidth - 48 + tolerance
           || rect.top < safeTop - tolerance
@@ -4557,6 +4572,12 @@ async function main() {
   let automaticSelectionPacks = useResearchThisSlot
     ? editorialResearch.packs
     : baseSelectionPacks;
+  if (useResearchThisSlot) {
+    automaticSelectionPacks = automaticSelectionPacks.map((candidate) => ({
+      ...candidate,
+      caption: fitInstagramCaption(candidate.caption, candidate)
+    }));
+  }
   if (useResearchThisSlot) console.log('Radar editorial configurado priorizado para este horário automático.');
   validatePacks(autoPacks);
   validatePacks(automaticSelectionPacks);

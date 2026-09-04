@@ -1,5 +1,16 @@
 # Historico
 
+## 2026-09-04 10:02 BRT — Story com foto real e aprendizado protegido
+
+- Incidente confirmado na publicação `https://www.instagram.com/p/Dc3Y7WUoAlp/`: o JPEG do Story já havia sido gerado com um degradê no lugar da foto e o bloco visual atravessava o título. Media ID `18109419116466917`; Story ID `17971763588942304`.
+- Causa 1: o feed do Tecnoblog forneceu `youtube.com/embed/...` como se fosse imagem. A coleta agora rejeita URLs de vídeo/player e volta a extrair a imagem editorial real da página; para a pauta da Dyson, a imagem válida passou a ser `files.tecnoblog.net/.../tf2pig0n5gg.jpg`.
+- Causa 2: a checagem geométrica do Story observava somente `.avatar`, ignorando `.visual-card`. A proteção agora inclui a fotografia editorial, aplica autocorreção quando necessário e bloqueia qualquer colisão remanescente.
+- O Story não aceita mais um degradê como substituto silencioso: usa a imagem da matéria ou uma fotografia local válida, com área relevante e dentro da zona segura.
+- A mídia defeituosa foi incluída em `performance-learning-exclusions.json`; o coletor remove e ignora seu Media ID para que alcance, retenção ou abandono desse layout quebrado não contaminem os modelos de fonte, tema, formato, público e gancho.
+- Foi corrigido também o limite de legenda antes da seleção do Radar. Packs acima de 2.100 caracteres são ajustados preservando título original, URL da fonte, CTA e hashtags, evitando que uma pauta inválida interrompa o horário automático inteiro.
+- Validações locais: sintaxe dos três scripts, `git diff --check`, teste puro do aprendizado e `npm run validate-copy` aprovados. `npm run render-only` voltou a concluir.
+- Render visual exato da pauta Dyson: `2026-09-04-095705-slot-0-render-only`; foto real do produto, título sem sobreposição e Story dentro da área segura. Nenhuma mídia foi republicada neste checkpoint.
+
 ## 2026-09-03 17:39 BRT — Motor de crescimento e experimentos
 
 - O aprendizado passou a contar cada mídia uma única vez no modelo, usando a observação mais madura disponível entre 2 h, 24 h e 72 h; múltiplas coletas não inflam artificialmente o tamanho da amostra.
