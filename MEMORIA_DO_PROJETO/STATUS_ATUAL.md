@@ -829,4 +829,4 @@ Resultado:
 - Cards de `reel-only` e `reel-and-story` agora são renderizados nativamente em 1080 x 1920. Carrosséis permanecem em 1080 x 1350 e Stories mantêm suas zonas seguras.
 - O vídeo usa o quadro vertical diretamente, sem `gblur` nem sobreposição do card 4:5. A trava `reelFullFrameGuard: 1080x1920-native-no-blurred-bars` impede regressão.
 - Render sem publicação `2026-09-04-171417-slot-1-render-only` inspecionado na capa, card interno e fechamento. MP4 confirmado em 1080 x 1920, SAR 1:1 e DAR 9:16; sintaxe, 75 seleções editoriais e `git diff --check` aprovados.
-- Correção funcional `556db3c`; falta enviar ao `origin/main` e comprovar o enquadramento no próximo Reel automático real.
+- Correção funcional `556db3c` e checkpoint `46311a8` enviados ao `origin/main`; falta comprovar o enquadramento no próximo Reel automático real.

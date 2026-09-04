@@ -2703,4 +2703,4 @@ Conclusao de ativacao:
 - O render de Reel agora nasce em 1080 x 1920 e o FFmpeg recebe o quadro vertical completo, sem `gblur`, `overlay` ou moldura 4:5. O caminho de carrossel continua 1080 x 1350.
 - Composições de capa, conteúdo e CTA receberam posições verticais próprias para o canvas do Reel. A trava automatizada valida dimensões distintas e rejeita a volta das barras desfocadas.
 - O teste `2026-09-04-171417-slot-1-render-only` gerou cinco cenas e MP4 1080 x 1920, SAR 1:1, DAR 9:16, com trilha `beethoven-05-destino`. Capa, segundo card e fechamento foram inspecionados; não houve publicação.
-- `node --check`, `validate-copy` com 75 seleções, `reelFullFrameGuard` e `git diff --check` aprovados. Commit funcional `556db3c`; a comprovação externa fica para o próximo Reel automático real.
+- `node --check`, `validate-copy` com 75 seleções, `reelFullFrameGuard` e `git diff --check` aprovados. Commit funcional `556db3c` e checkpoint `46311a8` enviados ao `origin/main`; a comprovação externa fica para o próximo Reel automático real.
