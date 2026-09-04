@@ -2683,4 +2683,6 @@ Conclusao de ativacao:
 - Cada nova publicação registra versão, confiança e modo operacional do aprendizado no resultado técnico e no histórico persistido.
 - O workflow de aprendizado continua a cada duas horas e também é acionado após o workflow principal, contornando disparos cronológicos perdidos sem depender do computador.
 - O painel diferencia plataforma estável de confiança do aprendizado, mostra atraso, fallback, alcance efetivo e cobertura dos três modos.
-- Validações aprovadas: modelo puro incluindo confiança alta e fallback vencido, sintaxe de todos os scripts/API, JavaScript do dashboard, `validate-copy` com 75 packs e `git diff --check`. Commit funcional: `7a83fa5`; envio, deploy e prova pública ainda pendentes neste checkpoint.
+- Validações aprovadas: modelo puro incluindo confiança alta e fallback vencido, sintaxe de todos os scripts/API, JavaScript do dashboard, `validate-copy` com 75 packs e `git diff --check`. Commit funcional `7a83fa5` e checkpoint `0d11ab7` enviados ao `origin/main`.
+- Deploy de produção `dpl_BaZNSUVyo7TJHKL7KQWwuUSkxqZ9` concluído em `READY`, preservando o projeto e o domínio existentes; HTML público respondeu HTTP 200 e confirmou `Versão atual: v6.0`, `Aprendizado adaptativo · v1` e `Decisões assistidas por desempenho`.
+- A primeira coleta automática da v6.0 persistiu o commit `b54b4ca`: schema 2, 71 mídias, 34 amostras efetivas, alcance 228, dez testes controlados e confiança `moderate`. O modo atual é `assisted-learning`; autonomia permanece bloqueada.

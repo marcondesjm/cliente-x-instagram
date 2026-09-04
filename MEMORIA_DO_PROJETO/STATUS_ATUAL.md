@@ -806,9 +806,10 @@ Resultado:
 
 ## Atualizacao 2026-09-04 16:58 BRT — Nerion Social v6.0 estável
 
-- Versão preparada: `v6.0`, rótulo `Versão estável`, modelo `nerion-adaptive-v1.0.0`; commit funcional `7a83fa5` na branch `feat/v6-stable-learning`.
+- Versão em produção: `v6.0`, rótulo `Versão estável`, modelo `nerion-adaptive-v1.0.0`; commit funcional `7a83fa5`, checkpoint `0d11ab7` e estado automático `b54b4ca` no `origin/main`.
 - Estado do aprendizado: assistido e protegido por confiança; a autonomia só é liberada com 50 amostras efetivas, alcance 1.000, 30 testes controlados e cobertura mínima de `exploit`, `explore` e `experiment`.
 - Coleta com mais de cinco horas ativa `editorial-fallback`: o histórico vencido deixa de influenciar o ranking, mas originalidade, qualidade, fontes e antirrepetição continuam obrigatórios.
 - Cada publicação futura registra a versão e a decisão do modelo. O painel mostra confiança, frescor, alcance efetivo, testes controlados e fallback.
 - O workflow também reage à conclusão de `Instagram Feed Cliente X`, além do cron de duas horas, para recuperar coletas perdidas automaticamente na nuvem.
-- Validações locais aprovadas; falta enviar ao `origin/main`, executar o deploy no projeto Vercel existente e confirmar `v6.0` publicamente.
+- Validações locais aprovadas. Deploy `dpl_BaZNSUVyo7TJHKL7KQWwuUSkxqZ9` em `READY`; domínio principal respondeu HTTP 200 e confirmou a v6.0 e o painel adaptativo.
+- Primeira coleta v6.0 concluída automaticamente: 71 mídias, 34 amostras efetivas, alcance 228, dez testes controlados, confiança moderada e modo assistido. Autonomia ainda não liberada; próximo passo é acumular alcance 1.000, 50 amostras e cobertura mínima dos três modos.
