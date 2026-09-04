@@ -2694,4 +2694,5 @@ Conclusao de ativacao:
 - Falha de rede ou indisponibilidade do GitHub aciona automaticamente o arquivo local do deploy. A interface distingue `Atualização contínua` de `Snapshot do deploy`, evitando apresentar um dado antigo como se fosse atual.
 - A arquitetura continua cloud-first e não conecta o projeto Vercel ao Git. O workflow de coleta permanece responsável por evoluir a base; o dashboard agora reflete essa evolução sem exigir novo deploy.
 - Leitura remota real aprovada com HTTP 200 e estado `updatedAt=2026-09-04T20:00:34.546Z`, 71 mídias e 34 observadas. Sintaxe, JavaScript do painel, 75 seleções editoriais e diff aprovados.
-- Commit funcional `b917c17`; envio, deploy manual no projeto existente e verificação pública permanecem pendentes neste ponto do checkpoint.
+- Commit funcional `b917c17` e checkpoint `16abe42` enviados ao `origin/main`.
+- Deploy manual `dpl_CsVqECS1anq2isvG6Q6HcJHYfFpy` no projeto Vercel existente terminou em `READY`, sem conexão Git nem alteração de domínio. `https://cliente-x-instagram.vercel.app` respondeu HTTP 200 e confirmou v6.01, commit estável, atualização contínua, origem viva e estado `Evoluindo`; a API privada recusou corretamente acesso sem sessão com HTTP 401.

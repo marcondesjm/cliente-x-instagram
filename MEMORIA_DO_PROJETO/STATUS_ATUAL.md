@@ -820,4 +820,5 @@ Resultado:
 - A API privada deixou de depender apenas do `performance-insights.json` empacotado no deploy e agora consulta, sem cache, o estado mais recente persistido pela automação no `origin/main`.
 - Se o GitHub estiver temporariamente indisponível, o painel usa o snapshot do deploy como contingência e sinaliza essa condição, sem interromper a automação nem desativar as travas editoriais.
 - O painel v6.01 identifica a origem dos dados e mostra `Evoluindo` quando acompanha o estado vivo. Teste real da origem remota confirmou HTTP 200, atualização `2026-09-04T20:00:34.546Z`, 71 mídias e 34 amostras observadas.
-- Sintaxe da API e do estado, JavaScript do dashboard, `validate-copy` com 75 seleções e `git diff --check` aprovados. Implementação funcional: `b917c17`; falta enviar, publicar e comprovar a v6.01 em produção.
+- Sintaxe da API e do estado, JavaScript do dashboard, `validate-copy` com 75 seleções e `git diff --check` aprovados. Implementação funcional `b917c17` e checkpoint inicial `16abe42` enviados ao `origin/main`.
+- Deploy de produção `dpl_CsVqECS1anq2isvG6Q6HcJHYfFpy` concluído em `READY`. O domínio principal respondeu HTTP 200 com v6.01, commit estável `b917c17`, cartão de atualização contínua, origem viva e estado `Evoluindo`; `/api/private-metrics` permaneceu corretamente protegido com HTTP 401 sem sessão.
