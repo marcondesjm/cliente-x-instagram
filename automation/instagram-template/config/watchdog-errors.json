@@ -1,23 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-08-27:1:33114738770",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-08-27",
-    "slotIndex": 1,
-    "scheduledAt": "2026-08-27T11:10:00.000Z",
-    "failedAt": "2026-08-27T20:44:58.194Z",
-    "workflowRun": "33114738770",
-    "workflowName": "Instagram Watchdog Backup",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/33114738770",
-    "stage": "unknown",
-    "error": "Radar ativo: nenhuma pauta oficial dos ultimos 30 dias e nao repetida esta disponivel para este horario. Nenhum post foi publicado.",
-    "solution": "Buscar uma pauta oficial inedita nas fontes configuradas ou ampliar/revisar fontes do Radar antes de recuperar o slot. Nao renovar token para este caso.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-08-27-174458.json",
-    "resolvedAt": "2026-08-28T22:44:41.008Z",
-    "resolvedRun": "33216450654"
-  },
-  {
     "key": "cliente-x:2026-08-27:1:33127960743",
     "status": "resolved",
     "account": "cliente-x",
@@ -898,5 +880,21 @@
     "failurePath": "automation/instagram-template/runs/failure-2026-09-03-150249.json",
     "resolvedAt": "2026-09-03T18:08:16.075Z",
     "resolvedRun": "33788473847"
+  },
+  {
+    "key": "cliente-x:sem-data:0:33901832291",
+    "status": "open",
+    "account": "cliente-x",
+    "date": null,
+    "slotIndex": 0,
+    "scheduledAt": null,
+    "failedAt": "2026-09-04T17:42:31.024Z",
+    "workflowRun": "33901832291",
+    "workflowName": "Instagram Watchdog Backup",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/33901832291",
+    "stage": "unknown",
+    "error": "FFmpeg indisponivel para gerar Reel: spawnSync ffmpeg ENOENT",
+    "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o token, conteúdo ou dependência indicada antes da próxima tentativa.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-09-04-144230.json"
   }
 ]
