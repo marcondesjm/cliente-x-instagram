@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-09-04 10:02 BRT
+Atualizado em: 2026-09-04 10:47 BRT
 
 ## Regra permanente de checkpoint
 
@@ -10,6 +10,10 @@ Atualizado em: 2026-09-04 10:02 BRT
 
 ## Projeto ativo
 
+- Primeira comprovação automática após a correção: run `33879785141`, Reel `https://www.instagram.com/reel/Dc3huyfACsk/`, Reel ID `18147204064544355`, Story ID `18407241052082096`, estado persistido em `d1c8c89`.
+- Story real inspecionado: foto editorial da pauta presente, sem degradê substituto, sem sobreposição e dentro da área segura. O slot 2 foi recuperado pelo cron principal sem disparo manual.
+- Seleção do algoritmo: modo `experiment`, pauta inédita da Mobile Time sobre agentes de IA da Genesys no Brasil. O resultado entrará no aprendizado somente nas janelas maduras de 2 h, 24 h e 72 h.
+- Primeiro comentário com `OAuthException #10`, isolado; não invalida Reel nem Story.
 - Correção visual preparada na branch limpa `fix/story-photo-overlap-20260904`, criada a partir do `origin/main` em `bb3e359`.
 - Story defeituoso confirmado em `Dc3Y7WUoAlp`: imagem editorial inválida do tipo YouTube embed virou degradê e `.visual-card` não participava da trava de colisão.
 - Correção: rejeição de URLs de vídeo como imagem, nova extração da foto real da matéria, fallback fotográfico válido e checagem de colisão/área segura incluindo `.visual-card`.

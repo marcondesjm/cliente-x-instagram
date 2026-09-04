@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-09-04 10:47 BRT — Primeiro Story automático após a correção
+
+- O slot automático 2, previsto para 09:00 BRT, permaneceu pendente até o cron principal iniciar sozinho às 10:44:56 BRT; nenhuma intervenção manual ou `workflow_dispatch` foi usada.
+- Run `33879785141`, executado sobre o commit corrigido `6800b10`, concluiu com `success` e marcou o slot como publicado em `published-slots.json`.
+- Publicação: `https://www.instagram.com/reel/Dc3huyfACsk/`; Reel ID `18147204064544355`; Story ID `18407241052082096`; persistência em `d1c8c89`.
+- Pauta inédita: `Genesys espera adoção rápida de seus agentes de IA no Brasil`, fonte Mobile Time, seleção controlada em modo `experiment`.
+- O Story hospedado em `docs/generated/cliente-x/2026-09-04-104610-slot-2/story.jpg` foi inspecionado visualmente: foto editorial presente, título totalmente separado da imagem e elementos dentro da área segura.
+- O primeiro comentário falhou isoladamente com Meta `OAuthException #10`; Reel e Story foram publicados normalmente e não devem ser classificados como falha da publicação principal.
+
 ## 2026-09-04 10:02 BRT — Story com foto real e aprendizado protegido
 
 - Incidente confirmado na publicação `https://www.instagram.com/p/Dc3Y7WUoAlp/`: o JPEG do Story já havia sido gerado com um degradê no lugar da foto e o bloco visual atravessava o título. Media ID `18109419116466917`; Story ID `17971763588942304`.
