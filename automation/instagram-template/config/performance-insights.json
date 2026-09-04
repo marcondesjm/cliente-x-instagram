@@ -3191,7 +3191,50 @@
           "audience": "operações",
           "hook": "afirmação",
           "selectionMode": "experiment",
-          "observations": []
+          "observations": [
+            {
+              "windowHours": 2,
+              "collectedAt": "2026-09-04T16:23:01.319Z",
+              "ageHours": 2.59,
+              "metrics": {
+                "reach": 3,
+                "saved": 0,
+                "shares": 0,
+                "totalInteractions": 0,
+                "views": 5,
+                "watchTime": 56821,
+                "averageWatchTime": 9470,
+                "skipRate": 0,
+                "reposts": 0,
+                "follows": null,
+                "profileVisits": null,
+                "likes": 0,
+                "comments": 0
+              },
+              "performance": {
+                "score": 6.31,
+                "rates": {
+                  "share": 0,
+                  "save": 0,
+                  "comment": 0,
+                  "like": 0,
+                  "interaction": 0,
+                  "follow": 0,
+                  "repost": 0,
+                  "profileVisit": 0,
+                  "skip": 0,
+                  "retention": 0.63133,
+                  "viewsPerReach": 1.66667
+                }
+              },
+              "unavailableMetrics": {
+                "follows": "(#100) The Media Insights API does not support the follows metric for this media product type.",
+                "profile_visits": "(#100) The Media Insights API does not support the profile_visits metric for this media product type."
+              }
+            }
+          ],
+          "mediaType": "VIDEO",
+          "mediaProductType": "REELS"
         }
       ],
       "models": {
@@ -3244,29 +3287,36 @@
             "confidence": 0.004,
             "averageScore": 1.61,
             "learnedScore": 49.81
+          },
+          "mobile time": {
+            "samples": 1,
+            "totalReach": 3,
+            "confidence": 0.003,
+            "averageScore": 6.31,
+            "learnedScore": 49.87
           }
         },
         "topics": {
           "automação": {
-            "samples": 17,
-            "totalReach": 81,
-            "confidence": 0.405,
-            "averageScore": 3.51,
-            "learnedScore": 31.17
+            "samples": 18,
+            "totalReach": 84,
+            "confidence": 0.42,
+            "averageScore": 3.66,
+            "learnedScore": 30.54
           },
           "empresa": {
-            "samples": 17,
-            "totalReach": 81,
-            "confidence": 0.405,
-            "averageScore": 3.51,
-            "learnedScore": 31.17
+            "samples": 18,
+            "totalReach": 84,
+            "confidence": 0.42,
+            "averageScore": 3.66,
+            "learnedScore": 30.54
           },
           "agente": {
-            "samples": 1,
-            "totalReach": 6,
-            "confidence": 0.006,
-            "averageScore": 5,
-            "learnedScore": 49.73
+            "samples": 2,
+            "totalReach": 9,
+            "confidence": 0.018,
+            "averageScore": 5.65,
+            "learnedScore": 49.2
           },
           "token": {
             "samples": 1,
@@ -3285,11 +3335,11 @@
             "learnedScore": 27.11
           },
           "REELS": {
-            "samples": 7,
-            "totalReach": 100,
-            "confidence": 0.5,
-            "averageScore": 0.66,
-            "learnedScore": 25.33
+            "samples": 8,
+            "totalReach": 103,
+            "confidence": 0.515,
+            "averageScore": 1.37,
+            "learnedScore": 24.96
           }
         },
         "audiences": {
@@ -3308,11 +3358,11 @@
             "learnedScore": 49.82
           },
           "operações": {
-            "samples": 7,
-            "totalReach": 19,
-            "confidence": 0.095,
-            "averageScore": 1.86,
-            "learnedScore": 45.43
+            "samples": 8,
+            "totalReach": 22,
+            "confidence": 0.11,
+            "averageScore": 2.42,
+            "learnedScore": 44.77
           },
           "tecnologia": {
             "samples": 2,
@@ -3345,11 +3395,11 @@
             "learnedScore": 48.55
           },
           "afirmação": {
-            "samples": 15,
-            "totalReach": 77,
-            "confidence": 0.385,
-            "averageScore": 6.98,
-            "learnedScore": 33.44
+            "samples": 16,
+            "totalReach": 80,
+            "confidence": 0.4,
+            "averageScore": 6.93,
+            "learnedScore": 32.77
           },
           "dado": {
             "samples": 6,
@@ -3367,11 +3417,11 @@
           }
         }
       },
-      "updatedAt": "2026-09-04T15:41:15.552Z",
+      "updatedAt": "2026-09-04T16:23:01.320Z",
       "weeklyGrowth": {
         "current": {
-          "posts": 30,
-          "reach": 208,
+          "posts": 31,
+          "reach": 211,
           "interactions": 6,
           "shares": 0,
           "saved": 1,
@@ -3393,5 +3443,5 @@
       }
     }
   },
-  "updatedAt": "2026-09-04T15:41:15.552Z"
+  "updatedAt": "2026-09-04T16:23:01.320Z"
 }
