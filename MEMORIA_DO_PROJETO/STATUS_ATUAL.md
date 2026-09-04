@@ -813,3 +813,11 @@ Resultado:
 - O workflow também reage à conclusão de `Instagram Feed Cliente X`, além do cron de duas horas, para recuperar coletas perdidas automaticamente na nuvem.
 - Validações locais aprovadas. Deploy `dpl_BaZNSUVyo7TJHKL7KQWwuUSkxqZ9` em `READY`; domínio principal respondeu HTTP 200 e confirmou a v6.0 e o painel adaptativo.
 - Primeira coleta v6.0 concluída automaticamente: 71 mídias, 34 amostras efetivas, alcance 228, dez testes controlados, confiança moderada e modo assistido. Autonomia ainda não liberada; próximo passo é acumular alcance 1.000, 50 amostras e cobertura mínima dos três modos.
+
+## Atualizacao 2026-09-04 17:08 BRT — aprendizado contínuo no painel v6.01
+
+- Checkout alinhado à produção confirmado em `72c3954`, na branch `feat/v6-stable-learning`; o checkout antigo `modern-incident` não foi usado.
+- A API privada deixou de depender apenas do `performance-insights.json` empacotado no deploy e agora consulta, sem cache, o estado mais recente persistido pela automação no `origin/main`.
+- Se o GitHub estiver temporariamente indisponível, o painel usa o snapshot do deploy como contingência e sinaliza essa condição, sem interromper a automação nem desativar as travas editoriais.
+- O painel v6.01 identifica a origem dos dados e mostra `Evoluindo` quando acompanha o estado vivo. Teste real da origem remota confirmou HTTP 200, atualização `2026-09-04T20:00:34.546Z`, 71 mídias e 34 amostras observadas.
+- Sintaxe da API e do estado, JavaScript do dashboard, `validate-copy` com 75 seleções e `git diff --check` aprovados. Implementação funcional: `b917c17`; falta enviar, publicar e comprovar a v6.01 em produção.

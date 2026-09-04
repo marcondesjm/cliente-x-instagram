@@ -2686,3 +2686,12 @@ Conclusao de ativacao:
 - Validações aprovadas: modelo puro incluindo confiança alta e fallback vencido, sintaxe de todos os scripts/API, JavaScript do dashboard, `validate-copy` com 75 packs e `git diff --check`. Commit funcional `7a83fa5` e checkpoint `0d11ab7` enviados ao `origin/main`.
 - Deploy de produção `dpl_BaZNSUVyo7TJHKL7KQWwuUSkxqZ9` concluído em `READY`, preservando o projeto e o domínio existentes; HTML público respondeu HTTP 200 e confirmou `Versão atual: v6.0`, `Aprendizado adaptativo · v1` e `Decisões assistidas por desempenho`.
 - A primeira coleta automática da v6.0 persistiu o commit `b54b4ca`: schema 2, 71 mídias, 34 amostras efetivas, alcance 228, dez testes controlados e confiança `moderate`. O modo atual é `assisted-learning`; autonomia permanece bloqueada.
+
+# 2026-09-04 17:08 BRT — Painel acompanha continuamente o aprendizado
+
+- O painel v6.0 mostrava o arquivo de métricas incluído no último deploy, por isso permanecia em 66 mídias e 31 amostras mesmo após a automação persistir 71 mídias e 34 amostras no GitHub.
+- Na v6.01, `/api/private-metrics` busca a cada consulta o `performance-insights.json` mais recente do branch `main`, com cache desativado e limite de oito segundos.
+- Falha de rede ou indisponibilidade do GitHub aciona automaticamente o arquivo local do deploy. A interface distingue `Atualização contínua` de `Snapshot do deploy`, evitando apresentar um dado antigo como se fosse atual.
+- A arquitetura continua cloud-first e não conecta o projeto Vercel ao Git. O workflow de coleta permanece responsável por evoluir a base; o dashboard agora reflete essa evolução sem exigir novo deploy.
+- Leitura remota real aprovada com HTTP 200 e estado `updatedAt=2026-09-04T20:00:34.546Z`, 71 mídias e 34 observadas. Sintaxe, JavaScript do painel, 75 seleções editoriais e diff aprovados.
+- Commit funcional `b917c17`; envio, deploy manual no projeto existente e verificação pública permanecem pendentes neste ponto do checkpoint.
