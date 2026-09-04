@@ -2951,7 +2951,50 @@
           "audience": "rh",
           "hook": "afirmação",
           "selectionMode": "explore",
-          "observations": []
+          "observations": [
+            {
+              "windowHours": 2,
+              "collectedAt": "2026-09-04T12:59:30.066Z",
+              "ageHours": 3.24,
+              "metrics": {
+                "reach": 4,
+                "saved": 0,
+                "shares": 0,
+                "totalInteractions": 0,
+                "views": 5,
+                "watchTime": 68294,
+                "averageWatchTime": 13658,
+                "skipRate": 75,
+                "reposts": 0,
+                "follows": null,
+                "profileVisits": null,
+                "likes": 0,
+                "comments": 0
+              },
+              "performance": {
+                "score": 1.61,
+                "rates": {
+                  "share": 0,
+                  "save": 0,
+                  "comment": 0,
+                  "like": 0,
+                  "interaction": 0,
+                  "follow": 0,
+                  "repost": 0,
+                  "profileVisit": 0,
+                  "skip": 0.75,
+                  "retention": 0.91053,
+                  "viewsPerReach": 1.25
+                }
+              },
+              "unavailableMetrics": {
+                "follows": "(#100) The Media Insights API does not support the follows metric for this media product type.",
+                "profile_visits": "(#100) The Media Insights API does not support the profile_visits metric for this media product type."
+              }
+            }
+          ],
+          "mediaType": "VIDEO",
+          "mediaProductType": "REELS"
         }
       ],
       "models": {
@@ -2997,22 +3040,29 @@
             "confidence": 0.007,
             "averageScore": 5,
             "learnedScore": 49.69
+          },
+          "startups": {
+            "samples": 1,
+            "totalReach": 4,
+            "confidence": 0.004,
+            "averageScore": 1.61,
+            "learnedScore": 49.81
           }
         },
         "topics": {
           "automação": {
-            "samples": 16,
-            "totalReach": 75,
-            "confidence": 0.375,
-            "averageScore": 3.63,
-            "learnedScore": 32.61
+            "samples": 17,
+            "totalReach": 79,
+            "confidence": 0.395,
+            "averageScore": 3.51,
+            "learnedScore": 31.64
           },
           "empresa": {
-            "samples": 16,
-            "totalReach": 75,
-            "confidence": 0.375,
-            "averageScore": 3.63,
-            "learnedScore": 32.61
+            "samples": 17,
+            "totalReach": 79,
+            "confidence": 0.395,
+            "averageScore": 3.51,
+            "learnedScore": 31.64
           },
           "agente": {
             "samples": 1,
@@ -3038,11 +3088,11 @@
             "learnedScore": 28.65
           },
           "REELS": {
-            "samples": 6,
-            "totalReach": 96,
-            "confidence": 0.48,
-            "averageScore": 0.51,
-            "learnedScore": 26.24
+            "samples": 7,
+            "totalReach": 100,
+            "confidence": 0.5,
+            "averageScore": 0.66,
+            "learnedScore": 25.33
           }
         },
         "audiences": {
@@ -3080,6 +3130,13 @@
             "confidence": 0.002,
             "averageScore": 5,
             "learnedScore": 49.91
+          },
+          "rh": {
+            "samples": 1,
+            "totalReach": 4,
+            "confidence": 0.004,
+            "averageScore": 1.61,
+            "learnedScore": 49.81
           }
         },
         "hooks": {
@@ -3091,11 +3148,11 @@
             "learnedScore": 48.55
           },
           "afirmação": {
-            "samples": 14,
-            "totalReach": 71,
-            "confidence": 0.355,
-            "averageScore": 7.36,
-            "learnedScore": 34.86
+            "samples": 15,
+            "totalReach": 75,
+            "confidence": 0.375,
+            "averageScore": 6.98,
+            "learnedScore": 33.87
           },
           "dado": {
             "samples": 6,
@@ -3113,11 +3170,11 @@
           }
         }
       },
-      "updatedAt": "2026-09-04T11:19:59.094Z",
+      "updatedAt": "2026-09-04T12:59:30.067Z",
       "weeklyGrowth": {
         "current": {
-          "posts": 28,
-          "reach": 197,
+          "posts": 29,
+          "reach": 201,
           "interactions": 6,
           "shares": 0,
           "saved": 1,
@@ -3139,5 +3196,5 @@
       }
     }
   },
-  "updatedAt": "2026-09-04T11:19:59.094Z"
+  "updatedAt": "2026-09-04T12:59:30.067Z"
 }
