@@ -44,11 +44,11 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'nerion-social-stable',
   label: 'Versão estável',
-  appVersion: 'v6.0',
+  appVersion: 'v6.01',
   status: 'funcionando',
   stableCommit: '7a83fa5',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/7a83fa5',
-  description: 'Plataforma estável com publicação automática, Radar oficial, vigia em nuvem e aprendizado adaptativo assistido com confiança protegida.'
+  description: 'Plataforma estável com publicação automática, Radar oficial, vigia em nuvem e aprendizado adaptativo atualizado continuamente pelo estado persistido na nuvem.'
 };
 const MAINTENANCE = {
   githubToken: {

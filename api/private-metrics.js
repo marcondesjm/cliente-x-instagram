@@ -7,6 +7,7 @@ import { summarizePerformanceLearning as computePerformanceReadiness } from '../
 const ROOT = process.cwd();
 const ACCOUNTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'accounts.json');
 const PERFORMANCE_INSIGHTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'performance-insights.json');
+const PERFORMANCE_INSIGHTS_LIVE_URL = 'https://raw.githubusercontent.com/marcondesjm/cliente-x-instagram/main/automation/instagram-template/config/performance-insights.json';
 const IG_BASE = 'https://graph.facebook.com/v23.0';
 
 function readJson(path) {
@@ -51,9 +52,38 @@ function growthFocus({ recentMedia = [], latestInsights = null } = {}) {
   return { signal: 'compartilhamentos', action: 'produzir conteudo util para uma pessoa enviar a colega, socio ou gestor' };
 }
 
-function summarizePerformanceLearning(accountKey) {
+async function loadPerformanceInsights() {
   try {
-    const stored = readJson(PERFORMANCE_INSIGHTS_PATH);
+    const url = new URL(PERFORMANCE_INSIGHTS_LIVE_URL);
+    url.searchParams.set('v', Date.now().toString());
+    const response = await fetch(url, {
+      cache: 'no-store',
+      headers: {
+        accept: 'application/json',
+        'cache-control': 'no-cache'
+      },
+      signal: AbortSignal.timeout(8000)
+    });
+    if (!response.ok) throw new Error(`GitHub raw ${response.status}`);
+    return {
+      stored: await response.json(),
+      dataSource: 'github-main',
+      live: true,
+      fallbackReason: null
+    };
+  } catch (error) {
+    return {
+      stored: readJson(PERFORMANCE_INSIGHTS_PATH),
+      dataSource: 'deployment-fallback',
+      live: false,
+      fallbackReason: error instanceof Error ? error.message : 'Falha ao consultar o estado remoto.'
+    };
+  }
+}
+
+async function summarizePerformanceLearning(accountKey) {
+  try {
+    const { stored, dataSource, live, fallbackReason } = await loadPerformanceInsights();
     const learning = stored?.accounts?.[accountKey];
     if (!learning) return { available: false, reason: 'Ainda não há aprendizado salvo para esta conta.' };
 
@@ -74,6 +104,9 @@ function summarizePerformanceLearning(accountKey) {
 
     return {
       available: true,
+      dataSource,
+      live,
+      fallbackReason,
       updatedAt: learning.updatedAt || stored.updatedAt || null,
       totalMedia: samples.length,
       observedMedia: observedSamples.length,
@@ -148,7 +181,7 @@ export default async function handler(req, res) {
     latestMedia: null,
     recentMediaSummary: null,
     growthFocus: null,
-    performanceLearning: summarizePerformanceLearning(accountKey),
+    performanceLearning: await summarizePerformanceLearning(accountKey),
     insights: null,
     checkedAt: new Date().toISOString()
   };

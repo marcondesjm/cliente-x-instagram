@@ -1703,7 +1703,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v6.0</div>
+        <div class="header-version" id="headerVersion">Versão atual: v6.01</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -4663,11 +4663,15 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const confidenceLabels = { initial: 'inicial', moderate: 'moderada', high: 'alta' };
       const confidence = confidenceLabels[learning.confidenceLevel] || 'inicial';
       const stale = learning.freshness === 'stale' || learning.operatingMode === 'editorial-fallback';
+      const liveData = learning.dataSource === 'github-main' && learning.live !== false;
       const modes = learning.selectionModes || {};
-      status.textContent = stale ? 'Coleta atrasada · fallback seguro' : `Estável · confiança ${confidence}`;
-      status.className = `status-pill ${stale ? 'warn' : 'good'}`;
+      status.textContent = stale
+        ? 'Coleta atrasada · fallback seguro'
+        : liveData ? `Evoluindo · confiança ${confidence}` : `Snapshot · confiança ${confidence}`;
+      status.className = `status-pill ${stale || !liveData ? 'warn' : 'good'}`;
       grid.innerHTML = [
-        card('Versão do modelo', learning.modelVersion || 'nerion-adaptive-v1.0.0', 'plataforma v6.0 estável'),
+        card('Versão do modelo', learning.modelVersion || 'nerion-adaptive-v1.0.0', 'plataforma v6.01 estável'),
+        card('Atualização dos dados', liveData ? 'Contínua' : 'Snapshot do deploy', liveData ? 'estado vivo do GitHub main' : 'contingência temporária', liveData ? 'good' : 'warn'),
         card('Confiança atual', confidence, `${formatNumber(learning.effectiveSamples)} amostras · alcance ${formatNumber(learning.effectiveReach)}`, confidence === 'initial' ? 'warn' : 'good'),
         card('Modo operacional', stale ? 'Fallback editorial' : 'Aprendizado assistido', stale ? 'peso aprendido temporariamente desligado' : 'peso limitado pela confiança', stale ? 'warn' : 'good'),
         card('Testes controlados', `${formatNumber(modes.exploit)} / ${formatNumber(modes.explore)} / ${formatNumber(modes.experiment)}`, 'desempenho / exploração / experimento'),
@@ -4683,8 +4687,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         card('Janelas de coleta', (learning.windowsHours || []).map((hours) => `${hours} h`).join(' · '), `atualizado ${updated}`)
       ].join('');
       message.textContent = stale
-        ? `Última atualização: ${updated}. A coleta ultrapassou a janela segura; a v6.0 desligou o peso aprendido e manteve a seleção editorial com originalidade, novidade e integridade.`
-        : `Última atualização: ${updated}. Modelo ${learning.modelVersion || 'adaptativo v1'} em aprendizado assistido, com confiança ${confidence}. Seleção 70% desempenho, 20% exploração e 10% experimento, sempre após as travas editoriais.`;
+        ? `Última atualização: ${updated}. A coleta ultrapassou a janela segura; a v6.01 desligou o peso aprendido e manteve a seleção editorial com originalidade, novidade e integridade.`
+        : liveData
+          ? `Última atualização: ${updated}. O painel acompanha continuamente o estado persistido pela automação. Modelo ${learning.modelVersion || 'adaptativo v1'} com confiança ${confidence}; seleção 70% desempenho, 20% exploração e 10% experimento, sempre após as travas editoriais.`
+          : `Última atualização disponível no deploy: ${updated}. A consulta ao estado vivo está temporariamente indisponível; o painel mantém este snapshot sem interromper a automação.`;
     }
 
     function renderShowcaseSlide() {
