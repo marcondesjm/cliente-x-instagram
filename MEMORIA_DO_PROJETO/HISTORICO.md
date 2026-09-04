@@ -1,5 +1,15 @@
 # Historico
 
+## 2026-09-04 12:38 BRT — Capa vazia do carrossel Microsoft corrigida
+
+- Incidente confirmado na publicação `https://www.instagram.com/p/Dc3qOE0HPqm/`: a capa `Microsoft revela Windows 11 para rodar IA pesada direto no PC` saiu com o título espremido à direita e um grande vazio no lugar da imagem. Media ID `18060129533789175`; Story ID `18442477072122465`.
+- Causa: o feed do Tecnoblog forneceu a miniatura `projectzenith2-340x191.webp`, válida como WebP mas com apenas 7.820 bytes. A proteção de qualidade rejeitou o arquivo; porém, o modo editorial do `impact-carousel` permaneceu ativo sem fotografia.
+- A rotina agora reconhece sufixos de miniatura WordPress e tenta primeiro a imagem original. `projectzenith2.webp` respondeu HTTP 200 com 130.538 bytes.
+- Se a imagem editorial ainda estiver indisponível, a capa de impacto passa a usar uma fotografia válida do rodízio em vez de deixar o espaço vazio.
+- Render exato `2026-09-04-123737-slot-0-render-only` aprovado visualmente: título em largura útil, imagem oficial do Project Zenith em destaque, texto legível e sem colisão.
+- A mídia defeituosa `18060129533789175` foi incluída nas exclusões do aprendizado, evitando atribuir o efeito do layout quebrado ao tema, fonte ou formato.
+- Nenhuma republicação foi feita; aguardar autorização explícita para repostar.
+
 ## 2026-09-04 10:47 BRT — Primeiro Story automático após a correção
 
 - O slot automático 2, previsto para 09:00 BRT, permaneceu pendente até o cron principal iniciar sozinho às 10:44:56 BRT; nenhuma intervenção manual ou `workflow_dispatch` foi usada.

@@ -1920,29 +1920,42 @@ function fileCssImage(path = '') {
 async function downloadResearchSourceImage(pack = {}, runDir = '') {
   const sourceImageUrl = String(pack?.research?.sourceImageUrl || '').trim();
   if (!/^https:\/\//i.test(sourceImageUrl)) return null;
+  // WordPress costuma anunciar no feed uma miniatura como `-340x191.webp`.
+  // Ela pode ficar abaixo do limite de qualidade embora o original esteja no
+  // mesmo endereço. Tente a versão original antes de aceitar a miniatura.
+  const originalImageUrl = sourceImageUrl.replace(/-\d{2,4}x\d{2,4}(?=\.[a-z0-9]+(?:\?|$))/i, '');
+  const candidates = [...new Set([originalImageUrl, sourceImageUrl])];
   try {
-    const response = await fetchWithContext(sourceImageUrl, {
-      headers: {
-        accept: 'image/avif,image/webp,image/png,image/jpeg',
-        'user-agent': 'Mozilla/5.0 Cliente-X-Radar/1.0'
-      },
-      redirect: 'follow'
-    }, 'radar-source-image');
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const contentType = String(response.headers.get('content-type') || '').split(';')[0].toLowerCase();
     const extensions = new Map([
       ['image/jpeg', '.jpg'],
       ['image/png', '.png'],
       ['image/webp', '.webp'],
       ['image/avif', '.avif']
     ]);
-    if (!extensions.has(contentType)) throw new Error(`tipo ${contentType || 'desconhecido'} nao aceito`);
-    const bytes = Buffer.from(await response.arrayBuffer());
-    if (bytes.length < 20000) throw new Error(`arquivo pequeno demais (${bytes.length} bytes)`);
-    if (bytes.length > 12000000) throw new Error(`arquivo grande demais (${bytes.length} bytes)`);
-    const destination = join(runDir, `radar-source-image${extensions.get(contentType)}`);
-    writeFileSync(destination, bytes);
-    return destination;
+    let lastError = null;
+    for (const candidateUrl of candidates) {
+      try {
+        const response = await fetchWithContext(candidateUrl, {
+          headers: {
+            accept: 'image/avif,image/webp,image/png,image/jpeg',
+            'user-agent': 'Mozilla/5.0 Cliente-X-Radar/1.0'
+          },
+          redirect: 'follow'
+        }, 'radar-source-image');
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const contentType = String(response.headers.get('content-type') || '').split(';')[0].toLowerCase();
+        if (!extensions.has(contentType)) throw new Error(`tipo ${contentType || 'desconhecido'} nao aceito`);
+        const bytes = Buffer.from(await response.arrayBuffer());
+        if (bytes.length < 20000) throw new Error(`arquivo pequeno demais (${bytes.length} bytes)`);
+        if (bytes.length > 12000000) throw new Error(`arquivo grande demais (${bytes.length} bytes)`);
+        const destination = join(runDir, `radar-source-image${extensions.get(contentType)}`);
+        writeFileSync(destination, bytes);
+        return destination;
+      } catch (error) {
+        lastError = error;
+      }
+    }
+    throw lastError || new Error('imagem indisponivel');
   } catch (error) {
     console.warn(`Imagem da materia indisponivel; usando rodizio visual seguro: ${error instanceof Error ? error.message : String(error)}`);
     return null;
@@ -2202,7 +2215,9 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const researchTitle = String(slide.researchDisplayTitle || slide.researchTitle || '').trim();
   const researchUrl = String(slide.researchUrl || '').trim();
   const researchImage = index === 1 ? fileCssImage(renderContext.researchSourceImagePath || '') : '';
-  const useSectorPhoto = isImpact ? Boolean(explicitSlideImage || researchImage) : engagementRole === 'hook' || engagementRole === 'proof';
+  const useSectorPhoto = isImpact
+    ? Boolean(explicitSlideImage || researchImage || engagementRole === 'hook')
+    : engagementRole === 'hook' || engagementRole === 'proof';
   const sectorPhotoImage = explicitSlideImage || (useSectorPhoto ? sectorPhotoCssImage(visualCue, index, renderContext) : '');
   // Only replace the visual with the source card when the article image was
   // actually downloaded. Otherwise keep the safe photographic rotation.
