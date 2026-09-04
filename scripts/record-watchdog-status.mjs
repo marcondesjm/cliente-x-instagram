@@ -42,6 +42,9 @@ function latestFailure() {
 
 function solutionFor(errorText = '', stage = '') {
   const text = `${stage} ${errorText}`.toLowerCase();
+  if (/ffmpeg|spawnsync\s+ffmpeg\s+enoent/.test(text)) {
+    return 'O vigia deve instalar e validar o FFmpeg para qualquer fila pendente antes de gerar Reel; a proxima publicacao bem-sucedida encerra este alerta automaticamente.';
+  }
   if (/caption too long|caption was too long|legenda muito longa|36004|2207010/.test(text)) {
     return 'Reduzir a legenda final antes de publicar, preservar a fonte oficial e rodar validar textos antes de recuperar o slot.';
   }
@@ -77,6 +80,11 @@ function isCredentialError(entry = {}) {
   return /oauth|access token|session has expired|code["':\s]+190|error_subcode["':\s]+463/.test(text);
 }
 
+function isInfrastructureError(entry = {}) {
+  const text = `${entry.stage || ''} ${entry.error || ''}`.toLowerCase();
+  return /ffmpeg|spawnsync\s+ffmpeg\s+enoent|playwright|chromium/.test(text);
+}
+
 const errors = readJson(ERRORS_PATH, []);
 const slotIndex = Number.parseInt(process.env.INSTAGRAM_TEMPLATE_SLOT_INDEX || '', 10);
 const slotDate = process.env.INSTAGRAM_TEMPLATE_SLOT_DATE || null;
@@ -97,7 +105,11 @@ if (status === 'resolved') {
     // A completed publication proves that this account's credential is healthy.
     // Credential failures affect every slot, so older dates must not stay open.
     const recoveredCredential = entry.account === ACCOUNT && isCredentialError(entry);
-    if ((sameSlot || recoveredCredential) && entry.status === 'open') {
+    // It also proves that a shared runtime dependency is available again. These
+    // failures can be recorded without slot metadata, so do not leave them open
+    // merely because date/slot could not be identified in the failed run.
+    const recoveredInfrastructure = entry.account === ACCOUNT && isInfrastructureError(entry);
+    if ((sameSlot || recoveredCredential || recoveredInfrastructure) && entry.status === 'open') {
       entry.status = 'resolved';
       entry.resolvedAt = new Date().toISOString();
       entry.resolvedRun = workflowRun;

@@ -55,6 +55,17 @@ function dueWeeklyProgram() {
 
 const weeklyDue = dueWeeklyProgram();
 
+if (process.env.GITHUB_ENV && (due || weeklyDue)) {
+  const fs = await import('node:fs');
+  const nowLocal = saoPauloParts();
+  const scheduledAt = due
+    ? new Date(due.scheduledFor).toISOString()
+    : new Date(`${nowLocal.year}-${nowLocal.month}-${nowLocal.day}T${weeklyDue.time}:00-03:00`).toISOString();
+  const local = saoPauloParts(new Date(scheduledAt));
+  fs.appendFileSync(process.env.GITHUB_ENV, `INSTAGRAM_TEMPLATE_SLOT_DATE=${local.year}-${local.month}-${local.day}\n`, 'utf8');
+  fs.appendFileSync(process.env.GITHUB_ENV, `INSTAGRAM_TEMPLATE_SCHEDULED_AT=${scheduledAt}\n`, 'utf8');
+}
+
 if (process.env.GITHUB_OUTPUT) {
   const fs = await import('node:fs');
   fs.appendFileSync(process.env.GITHUB_OUTPUT, `has_due=${due || weeklyDue ? 'true' : 'false'}\n`, 'utf8');

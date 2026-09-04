@@ -79,7 +79,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Install FFmpeg for automatic Reels
-        if: steps.auto_slot.outputs.has_due == 'true'
+        if: steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
         run: |
           sudo apt-get update
           sudo apt-get install -y ffmpeg
