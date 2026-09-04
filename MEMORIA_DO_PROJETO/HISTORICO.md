@@ -2704,3 +2704,12 @@ Conclusao de ativacao:
 - Composições de capa, conteúdo e CTA receberam posições verticais próprias para o canvas do Reel. A trava automatizada valida dimensões distintas e rejeita a volta das barras desfocadas.
 - O teste `2026-09-04-171417-slot-1-render-only` gerou cinco cenas e MP4 1080 x 1920, SAR 1:1, DAR 9:16, com trilha `beethoven-05-destino`. Capa, segundo card e fechamento foram inspecionados; não houve publicação.
 - `node --check`, `validate-copy` com 75 seleções, `reelFullFrameGuard` e `git diff --check` aprovados. Commit funcional `556db3c` e checkpoint `46311a8` enviados ao `origin/main`; a comprovação externa fica para o próximo Reel automático real.
+
+# 2026-09-04 17:30 BRT — Nerion Adaptive v1.1 contextual e auditável
+
+- A v1.0 comparava fonte, tema, formato, público e gancho por uma nota geral. A v1.1 acrescenta notas separadas para descoberta, utilidade, conversa, conversão e retenção.
+- O coletor passa a agregar `REELS|FEED × morning|midday|afternoon|evening × objetivo`, evitando comparar diretamente formatos, horários e intenções diferentes.
+- O histórico novo grava o contexto completo da escolha, o eixo de experimento e as razões que alteraram a nota. Em `experiment`, o eixo é `topic-angle`; em `explore`, `candidate-novelty`; em `exploit`, `performance`.
+- Modelos usam decaimento temporal com meia-vida de 21 dias. Uma penalidade limitada de fadiga observa as 18 publicações recentes por fonte, tema e arquétipo de gancho; bloqueios semânticos e de fonte continuam soberanos.
+- O painel passa a exibir o melhor contexto e visitas ao perfil. A autonomia não foi antecipada: confiança alta ainda exige 50 amostras, alcance 1.000, 30 testes e cobertura mínima dos três modos.
+- Validações locais aprovadas para os cinco objetivos, contexto, decaimento, fadiga, distribuição 70/20/10, 75 seleções, sintaxe, dashboard e diff. Commit funcional `b0a0b45`; primeira coleta real e produção ainda pendentes neste checkpoint.

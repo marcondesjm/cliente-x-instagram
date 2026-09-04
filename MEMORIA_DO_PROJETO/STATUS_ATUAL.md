@@ -830,3 +830,11 @@ Resultado:
 - O vídeo usa o quadro vertical diretamente, sem `gblur` nem sobreposição do card 4:5. A trava `reelFullFrameGuard: 1080x1920-native-no-blurred-bars` impede regressão.
 - Render sem publicação `2026-09-04-171417-slot-1-render-only` inspecionado na capa, card interno e fechamento. MP4 confirmado em 1080 x 1920, SAR 1:1 e DAR 9:16; sintaxe, 75 seleções editoriais e `git diff --check` aprovados.
 - Correção funcional `556db3c` e checkpoint `46311a8` enviados ao `origin/main`; falta comprovar o enquadramento no próximo Reel automático real.
+
+## Atualizacao 2026-09-04 17:30 BRT — aprendizado adaptativo v1.1
+
+- O modelo `nerion-adaptive-v1.1.0` passa a calcular resultados específicos para descoberta, utilidade, conversa, conversão e retenção; visitas ao perfil e seguidores ganham peso próprio para não confundir curtida com resultado comercial.
+- Cada publicação automática registra formato, faixa horária BRT, objetivo, sinal principal, modo 70/20/10, eixo controlado, razões da decisão, penalidade de fadiga e versão do modelo.
+- O baseline contextual combina formato, faixa horária e objetivo. Dados antigos recebem decaimento com meia-vida de 21 dias; fonte, tema e gancho muito recentes perdem pontos sem substituir as travas rígidas de novidade.
+- O painel ganhou contexto em destaque e visitas ao perfil. O modo permanece assistido e os critérios de autonomia continuam inalterados.
+- Validações aprovadas: modelo puro v1.1, cinco objetivos, baseline contextual, decaimento temporal, auditoria, fadiga, sintaxe, dashboard, 75 seleções editoriais e `git diff --check`. Commit funcional `b0a0b45`; envio, deploy e primeira coleta v1.1 permanecem pendentes.

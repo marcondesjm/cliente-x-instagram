@@ -46,9 +46,9 @@ const ACTIVE_VERSION = {
   label: 'Versão estável',
   appVersion: 'v6.01',
   status: 'funcionando',
-  stableCommit: 'b917c17',
-  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/b917c17',
-  description: 'Plataforma estável com publicação automática, Radar oficial, vigia em nuvem e aprendizado adaptativo atualizado continuamente pelo estado persistido na nuvem.'
+  stableCommit: 'b0a0b45',
+  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/b0a0b45',
+  description: 'Plataforma estável com publicação automática, Radar oficial, vigia em nuvem e aprendizado adaptativo v1.1 por contexto, objetivo e fadiga editorial.'
 };
 const MAINTENANCE = {
   githubToken: {
