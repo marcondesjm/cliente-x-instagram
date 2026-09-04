@@ -2673,3 +2673,14 @@ Conclusao de ativacao:
 - O alerta órfão foi preservado no histórico e marcado como resolvido pelo run automático `33905655081`, que concluiu `Publish feed and story`; correção funcional no commit `b0cf25d`.
 - Validações aprovadas: sintaxe dos scripts e do publicador, JSON, `validate-copy` com 21 packs manuais e 54 automáticos, e `git diff --check`.
 - Correção e checkpoint enviados ao `origin/main` em `939556d`; o arquivo remoto confirma a nova condição e o alerta resolvido. A confirmação de execução automática do novo commit permanece para o próximo disparo cronológico do vigia, sem `workflow_dispatch`.
+
+# 2026-09-04 16:58 BRT — Nerion Social v6.0 com aprendizado adaptativo estável
+
+- Checkout de produção confirmado em `fdb6a61`; implementação isolada na branch `feat/v6-stable-learning`.
+- A plataforma foi promovida visualmente para `v6.0` e `Versão estável`; o motor é identificado como `nerion-adaptive-v1.0.0` e permanece assistido até atingir confiança estatística alta.
+- Um estado compartilhado de prontidão agora calcula frescor, amostras efetivas, alcance, cobertura `exploit/explore/experiment`, confiança inicial/moderada/alta e critérios de autonomia.
+- Se a coleta ultrapassar cinco horas, o publicador desliga o peso aprendido e mantém automaticamente a seleção editorial protegida por qualidade, fonte, novidade e antirrepetição.
+- Cada nova publicação registra versão, confiança e modo operacional do aprendizado no resultado técnico e no histórico persistido.
+- O workflow de aprendizado continua a cada duas horas e também é acionado após o workflow principal, contornando disparos cronológicos perdidos sem depender do computador.
+- O painel diferencia plataforma estável de confiança do aprendizado, mostra atraso, fallback, alcance efetivo e cobertura dos três modos.
+- Validações aprovadas: modelo puro incluindo confiança alta e fallback vencido, sintaxe de todos os scripts/API, JavaScript do dashboard, `validate-copy` com 75 packs e `git diff --check`. Commit funcional: `7a83fa5`; envio, deploy e prova pública ainda pendentes neste checkpoint.

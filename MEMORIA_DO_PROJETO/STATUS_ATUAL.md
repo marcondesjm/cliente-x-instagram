@@ -802,4 +802,13 @@ Resultado:
 - O backup agora instala FFmpeg tanto para a fila editorial agendada quanto para o livro automático de slots, eliminando a condição que causou `spawnSync ffmpeg ENOENT` no run `33901832291`.
 - Itens da fila agendada exportam data e horário para que falhas futuras não apareçam como `slot 0unknown`.
 - Uma publicação bem-sucedida encerra alertas abertos de infraestrutura mesmo se eles estiverem sem metadados; o alerta existente foi marcado como resolvido pelo run `33905655081`.
-- Correção funcional: `0654103`. Sintaxe, JSON, `validate-copy` e `git diff --check` aprovados; falta enviar os commits ao `origin/main` e conferir o primeiro run remoto com a nova condição.
+- Correção funcional enviada como `b0cf25d` e consolidada no `origin/main` em `fdb6a61`. O run automático `33912573012` carregou o código corrigido com sucesso; não havia item devido e, corretamente, não publicou.
+
+## Atualizacao 2026-09-04 16:58 BRT — Nerion Social v6.0 estável
+
+- Versão preparada: `v6.0`, rótulo `Versão estável`, modelo `nerion-adaptive-v1.0.0`; commit funcional `7a83fa5` na branch `feat/v6-stable-learning`.
+- Estado do aprendizado: assistido e protegido por confiança; a autonomia só é liberada com 50 amostras efetivas, alcance 1.000, 30 testes controlados e cobertura mínima de `exploit`, `explore` e `experiment`.
+- Coleta com mais de cinco horas ativa `editorial-fallback`: o histórico vencido deixa de influenciar o ranking, mas originalidade, qualidade, fontes e antirrepetição continuam obrigatórios.
+- Cada publicação futura registra a versão e a decisão do modelo. O painel mostra confiança, frescor, alcance efetivo, testes controlados e fallback.
+- O workflow também reage à conclusão de `Instagram Feed Cliente X`, além do cron de duas horas, para recuperar coletas perdidas automaticamente na nuvem.
+- Validações locais aprovadas; falta enviar ao `origin/main`, executar o deploy no projeto Vercel existente e confirmar `v6.0` publicamente.
