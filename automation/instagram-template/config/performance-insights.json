@@ -3348,6 +3348,53 @@
                 "follows": "(#100) The Media Insights API does not support the follows metric for this media product type.",
                 "profile_visits": "(#100) The Media Insights API does not support the profile_visits metric for this media product type."
               }
+            },
+            {
+              "windowHours": 24,
+              "collectedAt": "2026-09-04T21:25:28.257Z",
+              "ageHours": 24.02,
+              "metrics": {
+                "reach": 1,
+                "saved": 0,
+                "shares": 0,
+                "totalInteractions": 0,
+                "views": 9,
+                "watchTime": 16270,
+                "averageWatchTime": 8135,
+                "skipRate": 20,
+                "reposts": 0,
+                "follows": null,
+                "profileVisits": null,
+                "likes": 0,
+                "comments": 0
+              },
+              "performance": {
+                "score": 3.42,
+                "rates": {
+                  "share": 0,
+                  "save": 0,
+                  "comment": 0,
+                  "like": 0,
+                  "interaction": 0,
+                  "follow": 0,
+                  "repost": 0,
+                  "profileVisit": 0,
+                  "skip": 0.2,
+                  "retention": 0.54233,
+                  "viewsPerReach": 3
+                },
+                "objectiveScores": {
+                  "discovery": 72,
+                  "utility": 0,
+                  "conversation": 0,
+                  "conversion": 0,
+                  "retention": 60.67
+                }
+              },
+              "unavailableMetrics": {
+                "follows": "(#100) The Media Insights API does not support the follows metric for this media product type.",
+                "profile_visits": "(#100) The Media Insights API does not support the profile_visits metric for this media product type."
+              }
             }
           ],
           "mediaType": "VIDEO",
@@ -3998,23 +4045,73 @@
           "learningContext": null,
           "objective": "discovery",
           "daypart": "afternoon",
-          "observations": []
+          "observations": [
+            {
+              "windowHours": 2,
+              "collectedAt": "2026-09-04T21:25:28.977Z",
+              "ageHours": 2.24,
+              "metrics": {
+                "reach": 4,
+                "saved": 0,
+                "shares": 0,
+                "totalInteractions": 0,
+                "views": 9,
+                "watchTime": 156860,
+                "averageWatchTime": 26143,
+                "skipRate": 75,
+                "reposts": 0,
+                "follows": null,
+                "profileVisits": null,
+                "likes": 0,
+                "comments": 0
+              },
+              "performance": {
+                "score": 2.5,
+                "rates": {
+                  "share": 0,
+                  "save": 0,
+                  "comment": 0,
+                  "like": 0,
+                  "interaction": 0,
+                  "follow": 0,
+                  "repost": 0,
+                  "profileVisit": 0,
+                  "skip": 0.75,
+                  "retention": 1,
+                  "viewsPerReach": 2.25
+                },
+                "objectiveScores": {
+                  "discovery": 54,
+                  "utility": 0,
+                  "conversation": 0,
+                  "conversion": 0,
+                  "retention": 81.25
+                }
+              },
+              "unavailableMetrics": {
+                "follows": "(#100) The Media Insights API does not support the follows metric for this media product type.",
+                "profile_visits": "(#100) The Media Insights API does not support the profile_visits metric for this media product type."
+              }
+            }
+          ],
+          "mediaType": "VIDEO",
+          "mediaProductType": "REELS"
         }
       ],
       "models": {
         "sources": {
           "olhar digital": {
-            "samples": 4,
-            "totalReach": 15,
-            "recencyWeight": 3.667,
-            "confidence": 0.06,
-            "averageScore": 5,
-            "learnedScore": 47.3
+            "samples": 5,
+            "totalReach": 19,
+            "recencyWeight": 4.661,
+            "confidence": 0.095,
+            "averageScore": 4.47,
+            "learnedScore": 45.67
           },
           "g1 tecnologia": {
             "samples": 7,
             "totalReach": 54,
-            "recencyWeight": 6.433,
+            "recencyWeight": 6.427,
             "confidence": 0.27,
             "averageScore": 4.51,
             "learnedScore": 37.72
@@ -4022,7 +4119,7 @@
           "exame": {
             "samples": 2,
             "totalReach": 4,
-            "recencyWeight": 1.96,
+            "recencyWeight": 1.958,
             "confidence": 0.008,
             "averageScore": 3.38,
             "learnedScore": 49.63
@@ -4030,7 +4127,7 @@
           "nossa ia": {
             "samples": 2,
             "totalReach": 6,
-            "recencyWeight": 1.963,
+            "recencyWeight": 1.961,
             "confidence": 0.012,
             "averageScore": 0.48,
             "learnedScore": 49.41
@@ -4038,15 +4135,15 @@
           "canaltech": {
             "samples": 2,
             "totalReach": 5,
-            "recencyWeight": 1.942,
+            "recencyWeight": 1.94,
             "confidence": 0.01,
-            "averageScore": 0,
-            "learnedScore": 49.5
+            "averageScore": 1.71,
+            "learnedScore": 49.52
           },
           "tecnoblog": {
             "samples": 1,
             "totalReach": 7,
-            "recencyWeight": 0.97,
+            "recencyWeight": 0.969,
             "confidence": 0.007,
             "averageScore": 5,
             "learnedScore": 49.69
@@ -4054,7 +4151,7 @@
           "startups": {
             "samples": 1,
             "totalReach": 4,
-            "recencyWeight": 0.985,
+            "recencyWeight": 0.984,
             "confidence": 0.004,
             "averageScore": 1.61,
             "learnedScore": 49.81
@@ -4070,7 +4167,7 @@
           "hardware.com.br": {
             "samples": 1,
             "totalReach": 4,
-            "recencyWeight": 0.997,
+            "recencyWeight": 0.996,
             "confidence": 0.004,
             "averageScore": 5,
             "learnedScore": 49.82
@@ -4078,25 +4175,25 @@
         },
         "topics": {
           "automação": {
-            "samples": 23,
-            "totalReach": 106,
-            "recencyWeight": 21.723,
-            "confidence": 0.53,
-            "averageScore": 3.68,
-            "learnedScore": 25.45
+            "samples": 24,
+            "totalReach": 110,
+            "recencyWeight": 22.701,
+            "confidence": 0.55,
+            "averageScore": 3.77,
+            "learnedScore": 24.58
           },
           "empresa": {
-            "samples": 23,
-            "totalReach": 106,
-            "recencyWeight": 21.723,
-            "confidence": 0.53,
-            "averageScore": 3.68,
-            "learnedScore": 25.45
+            "samples": 24,
+            "totalReach": 110,
+            "recencyWeight": 22.701,
+            "confidence": 0.55,
+            "averageScore": 3.77,
+            "learnedScore": 24.58
           },
           "agente": {
             "samples": 2,
             "totalReach": 9,
-            "recencyWeight": 1.893,
+            "recencyWeight": 1.892,
             "confidence": 0.018,
             "averageScore": 5.69,
             "learnedScore": 49.2
@@ -4104,7 +4201,7 @@
           "token": {
             "samples": 1,
             "totalReach": 1,
-            "recencyWeight": 0.966,
+            "recencyWeight": 0.965,
             "confidence": 0.001,
             "averageScore": 0,
             "learnedScore": 49.95
@@ -4114,25 +4211,25 @@
           "FEED": {
             "samples": 25,
             "totalReach": 123,
-            "recencyWeight": 23.153,
+            "recencyWeight": 23.133,
             "confidence": 0.615,
             "averageScore": 7.42,
             "learnedScore": 23.81
           },
           "REELS": {
-            "samples": 11,
-            "totalReach": 113,
-            "recencyWeight": 10.595,
-            "confidence": 0.565,
-            "averageScore": 1.88,
-            "learnedScore": 22.81
+            "samples": 12,
+            "totalReach": 117,
+            "recencyWeight": 11.582,
+            "confidence": 0.585,
+            "averageScore": 2.22,
+            "learnedScore": 22.05
           }
         },
         "audiences": {
           "empresários": {
             "samples": 18,
             "totalReach": 174,
-            "recencyWeight": 16.482,
+            "recencyWeight": 16.468,
             "confidence": 0.87,
             "averageScore": 8.14,
             "learnedScore": 13.58
@@ -4146,17 +4243,17 @@
             "learnedScore": 49.82
           },
           "operações": {
-            "samples": 13,
-            "totalReach": 41,
-            "recencyWeight": 12.629,
-            "confidence": 0.205,
-            "averageScore": 3,
-            "learnedScore": 40.36
+            "samples": 14,
+            "totalReach": 45,
+            "recencyWeight": 13.614,
+            "confidence": 0.225,
+            "averageScore": 3.2,
+            "learnedScore": 39.47
           },
           "tecnologia": {
             "samples": 2,
             "totalReach": 11,
-            "recencyWeight": 1.841,
+            "recencyWeight": 1.839,
             "confidence": 0.022,
             "averageScore": 5,
             "learnedScore": 49.01
@@ -4164,7 +4261,7 @@
           "gestão": {
             "samples": 1,
             "totalReach": 2,
-            "recencyWeight": 0.934,
+            "recencyWeight": 0.933,
             "confidence": 0.002,
             "averageScore": 5,
             "learnedScore": 49.91
@@ -4172,7 +4269,7 @@
           "rh": {
             "samples": 1,
             "totalReach": 4,
-            "recencyWeight": 0.985,
+            "recencyWeight": 0.984,
             "confidence": 0.004,
             "averageScore": 1.61,
             "learnedScore": 49.81
@@ -4180,17 +4277,17 @@
         },
         "hooks": {
           "pergunta": {
-            "samples": 4,
-            "totalReach": 13,
-            "recencyWeight": 3.775,
-            "confidence": 0.052,
-            "averageScore": 1.36,
-            "learnedScore": 47.47
+            "samples": 5,
+            "totalReach": 17,
+            "recencyWeight": 4.769,
+            "confidence": 0.085,
+            "averageScore": 1.6,
+            "learnedScore": 45.89
           },
           "afirmação": {
             "samples": 16,
             "totalReach": 85,
-            "recencyWeight": 14.811,
+            "recencyWeight": 14.798,
             "confidence": 0.425,
             "averageScore": 6.94,
             "learnedScore": 31.7
@@ -4198,15 +4295,15 @@
           "dado": {
             "samples": 10,
             "totalReach": 34,
-            "recencyWeight": 9.583,
+            "recencyWeight": 9.575,
             "confidence": 0.17,
-            "averageScore": 4.34,
-            "learnedScore": 42.24
+            "averageScore": 4.69,
+            "learnedScore": 42.3
           },
           "alerta": {
             "samples": 6,
             "totalReach": 104,
-            "recencyWeight": 5.579,
+            "recencyWeight": 5.574,
             "confidence": 0.52,
             "averageScore": 7.56,
             "learnedScore": 27.93
@@ -4216,7 +4313,7 @@
           "FEED|midday|discovery": {
             "samples": 9,
             "totalReach": 43,
-            "recencyWeight": 8.309,
+            "recencyWeight": 8.302,
             "confidence": 0.215,
             "averageScore": 5,
             "learnedScore": 40.33
@@ -4224,7 +4321,7 @@
           "FEED|morning|discovery": {
             "samples": 2,
             "totalReach": 6,
-            "recencyWeight": 1.853,
+            "recencyWeight": 1.852,
             "confidence": 0.012,
             "averageScore": 5,
             "learnedScore": 49.46
@@ -4232,7 +4329,7 @@
           "FEED|evening|discovery": {
             "samples": 6,
             "totalReach": 47,
-            "recencyWeight": 5.485,
+            "recencyWeight": 5.48,
             "confidence": 0.235,
             "averageScore": 5,
             "learnedScore": 39.42
@@ -4240,31 +4337,31 @@
           "REELS|evening|discovery": {
             "samples": 3,
             "totalReach": 89,
-            "recencyWeight": 2.727,
+            "recencyWeight": 2.724,
             "confidence": 0.267,
-            "averageScore": 0.98,
-            "learnedScore": 36.91
+            "averageScore": 26.55,
+            "learnedScore": 43.74
           },
           "FEED|afternoon|discovery": {
             "samples": 8,
             "totalReach": 27,
-            "recencyWeight": 7.505,
+            "recencyWeight": 7.499,
             "confidence": 0.135,
             "averageScore": 24.67,
             "learnedScore": 46.58
           },
           "REELS|afternoon|discovery": {
-            "samples": 3,
-            "totalReach": 7,
-            "recencyWeight": 2.929,
-            "confidence": 0.021,
-            "averageScore": 0.63,
-            "learnedScore": 48.96
+            "samples": 4,
+            "totalReach": 11,
+            "recencyWeight": 3.923,
+            "confidence": 0.044,
+            "averageScore": 14.19,
+            "learnedScore": 48.42
           },
           "REELS|evening|conversation": {
             "samples": 1,
             "totalReach": 4,
-            "recencyWeight": 0.974,
+            "recencyWeight": 0.973,
             "confidence": 0.004,
             "averageScore": 0,
             "learnedScore": 49.8
@@ -4272,7 +4369,7 @@
           "REELS|morning|discovery": {
             "samples": 1,
             "totalReach": 4,
-            "recencyWeight": 0.985,
+            "recencyWeight": 0.984,
             "confidence": 0.004,
             "averageScore": 1.61,
             "learnedScore": 49.81
@@ -4280,7 +4377,7 @@
           "REELS|midday|discovery": {
             "samples": 2,
             "totalReach": 6,
-            "recencyWeight": 1.984,
+            "recencyWeight": 1.983,
             "confidence": 0.012,
             "averageScore": 6.49,
             "learnedScore": 49.48
@@ -4288,18 +4385,18 @@
           "REELS|afternoon|conversation": {
             "samples": 1,
             "totalReach": 3,
-            "recencyWeight": 0.996,
+            "recencyWeight": 0.995,
             "confidence": 0.003,
             "averageScore": 0,
             "learnedScore": 49.85
           }
         }
       },
-      "updatedAt": "2026-09-04T20:47:03.693Z",
+      "updatedAt": "2026-09-04T21:25:28.979Z",
       "weeklyGrowth": {
         "current": {
-          "posts": 36,
-          "reach": 236,
+          "posts": 37,
+          "reach": 240,
           "interactions": 6,
           "shares": 0,
           "saved": 1,
@@ -4325,11 +4422,11 @@
       "readiness": {
         "modelVersion": "nerion-adaptive-v1.1.0",
         "productStage": "stable",
-        "updatedAt": "2026-09-04T20:47:03.693Z",
+        "updatedAt": "2026-09-04T21:25:28.979Z",
         "ageHours": 0,
         "freshness": "current",
-        "effectiveSamples": 36,
-        "effectiveReach": 236,
+        "effectiveSamples": 37,
+        "effectiveReach": 240,
         "controlledSamples": 11,
         "selectionModes": {
           "exploit": 5,
@@ -4360,6 +4457,6 @@
       }
     }
   },
-  "updatedAt": "2026-09-04T20:47:03.693Z",
+  "updatedAt": "2026-09-04T21:25:28.979Z",
   "modelVersion": "nerion-adaptive-v1.1.0"
 }
