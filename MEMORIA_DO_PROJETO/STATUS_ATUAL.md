@@ -24,6 +24,9 @@ Atualizado em: 2026-09-05 14:40 BRT
 - O carrossel de recuperação usa URLs hospedadas no GitHub pelo próprio run; o timeout observado no `i.ibb.co` não bloqueia mais esse caminho.
 - Slot 4 recuperado pelo run automático `33983609919`: carrossel `https://www.instagram.com/p/Dc6m2IHmlZz/`, Feed ID `18018870773718810`, Story ID `18096657224062384` e ledger publicado às 15h29 BRT. Alertas do slot encerrados.
 - Primeiro comentário falhou separadamente com `OAuthException #10`; isso não invalida o Feed nem o Story. O histórico agora registra formato efetivamente publicado e o fallback aplicado.
+- QA visual identificou que o Reel publicado usou cards tipográficos sem fotografias, enquanto o Story tinha imagem. Reels de impacto agora exigem foto em todos os quadros e o layout `statement` não pode ocultá-la.
+- Render `2026-09-05-153807-slot-4-render-only` aprovado visualmente: cinco de cinco quadros com fotografias distintas e sem sobreposição. Media ID defeituoso `18018870773718810` excluído do aprendizado.
+- A mídia já publicada permanece intacta; apagar e republicar exige autorização específica do usuário.
 - Alertas abertos receberam orientação corrigida. O slot 4 permanece pendente até prova automática completa em histórico, permalink, Feed/Reel ID e Story ID.
 - Validações locais aprovadas: sintaxe dos três scripts, assertions da classificação, `git diff --check` e `npm run validate-copy` com 75 packs.
 

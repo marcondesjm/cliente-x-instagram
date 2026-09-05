@@ -2219,9 +2219,10 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const researchSource = String(slide.researchSource || '').trim();
   const researchTitle = String(slide.researchDisplayTitle || slide.researchTitle || '').trim();
   const researchUrl = String(slide.researchUrl || '').trim();
+  const isReelMode = renderContext.publishMode === 'reel-only' || renderContext.publishMode === 'reel-and-story';
   const researchImage = index === 1 ? fileCssImage(renderContext.researchSourceImagePath || '') : '';
   const useSectorPhoto = isImpact
-    ? Boolean(explicitSlideImage || researchImage || engagementRole === 'hook')
+    ? Boolean(explicitSlideImage || researchImage || isReelMode || engagementRole === 'hook')
     : engagementRole === 'hook' || engagementRole === 'proof';
   const sectorPhotoImage = explicitSlideImage || (useSectorPhoto ? sectorPhotoCssImage(visualCue, index, renderContext) : '');
   // Only replace the visual with the source card when the article image was
@@ -2231,7 +2232,6 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const imageLayoutClass = isImpact && sectorPhotoImage && ['book-hero', 'book-split', 'book-editorial'].includes(slide.imageLayout)
     ? ` ${slide.imageLayout}`
     : '';
-  const isReelMode = renderContext.publishMode === 'reel-only' || renderContext.publishMode === 'reel-and-story';
   const outputHeight = isReelMode ? STORY_HEIGHT : FEED_HEIGHT;
   const swipeCue = index === 1 && !isReelMode ? '<div class="swipe-cue">arraste para ver</div>' : '';
   const commentKeyword = `${title} ${body}`.match(/\bcomente\s+([\p{L}\p{N}_-]+)/iu)?.[1];
@@ -2860,7 +2860,14 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .reel-mode footer { bottom: 92px; }
     .reel-mode.role-hook .note { display: none; }
     .reel-mode.role-hook .context-photo { top: 455px; height: 1000px; }
-    .impact-carousel.reel-mode.has-sector-photo.role-hook .context-photo { height: 1120px; }
+    .impact-carousel.reel-mode.has-sector-photo.role-hook .context-photo {
+      left: 540px;
+      right: 58px;
+      top: 650px;
+      width: auto;
+      height: 900px;
+    }
+    .impact-carousel.reel-mode.has-sector-photo .context-photo { display: block; }
     .impact-carousel.reel-mode.has-sector-photo.book-split.role-hook .context-photo {
       top: 255px;
       height: 1320px;
@@ -2899,10 +2906,19 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .reel-mode.role-hook .panel { top: 1060px; height: 420px; }
     .reel-mode.role-hook .swipe-cue { bottom: 105px; }
     .reel-mode.role-value .note,
-    .reel-mode.role-proof .note { top: 940px; min-height: 420px; }
+    .reel-mode.role-proof .note { top: 1240px; min-height: 380px; }
     .reel-mode.role-value .panel,
     .reel-mode.role-proof .panel { height: 580px; }
-    .reel-mode.role-cta .note { top: 820px; min-height: 570px; }
+    .impact-carousel.reel-mode.has-sector-photo.role-value .context-photo,
+    .impact-carousel.reel-mode.has-sector-photo.role-proof .context-photo {
+      top: 700px;
+      height: 500px;
+    }
+    .impact-carousel.reel-mode.has-sector-photo.role-cta .context-photo {
+      top: 620px;
+      height: 430px;
+    }
+    .reel-mode.role-cta .note { top: 1080px; min-height: 520px; }
     .bubble { display: none; position: absolute; right: 116px; bottom: 270px; width: 132px; height: 96px; border-radius: 34px; background: #f1d8c7; z-index: 3; }
     .bubble::before { content: "..."; position: absolute; inset: 0; display: grid; place-items: center; color: ${accent}; font-size: 58px; line-height: 0.5; font-weight: 900; letter-spacing: 5px; }
     .spark { position: absolute; color: ${accent}; opacity: 0.7; z-index: 2; font-size: 42px; font-weight: 900; }
@@ -3441,13 +3457,17 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
         const safeTop = Math.ceil(headlineRect.bottom + 34);
         const safeBottom = safeBottomFor(rect);
         const safeHeight = safeBottom - safeTop;
-        const preserveCoverPhoto = visual.classList.contains('panel') && document.querySelector('main')?.classList.contains('role-hook');
-        const minimumHeight = preserveCoverPhoto ? 280 : 150;
+        const main = document.querySelector('main');
+        const preserveCoverPhoto = main?.classList.contains('role-hook')
+          && (visual.classList.contains('panel') || visual.classList.contains('context-photo'));
+        const preserveReelPhoto = main?.classList.contains('reel-mode') && visual.classList.contains('context-photo');
+        const preservePhoto = preserveCoverPhoto || preserveReelPhoto;
+        const minimumHeight = preservePhoto ? 280 : 150;
         if (safeHeight >= minimumHeight) {
           visual.style.top = `${safeTop}px`;
           visual.style.height = `${Math.max(minimumHeight, Math.min(Math.round(rect.height), safeHeight))}px`;
           corrected += 1;
-        } else if (!preserveCoverPhoto) {
+        } else if (!preservePhoto) {
           // Em slides internos a foto e apoio visual. Se um titulo factual
           // longo ocupar a area disponivel, preservar a leitura e ocultar o
           // apoio e melhor do que bloquear toda a publicacao.

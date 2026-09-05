@@ -10,6 +10,10 @@
 - Prova final automática: run `33983609919`, slot 4 marcado como publicado em `2026-09-05T18:29:23.902Z`, carrossel `https://www.instagram.com/p/Dc6m2IHmlZz/`, Feed ID `18018870773718810` e Story ID `18096657224062384`.
 - Todos os alertas abertos do slot 4 foram resolvidos pelo run `33983609919`. O primeiro comentário continuou isoladamente bloqueado por `OAuthException #10`; Feed e Story permanecem válidos.
 - O histórico passa a persistir `publishedFormat` e `publicationFallback`, deixando auditável quando um Reel recusado pela Meta foi recuperado como carrossel.
+- Inspeção visual posterior do arquivo realmente enviado mostrou que os cinco quadros do Reel eram quase inteiramente tipográficos, embora o Story tivesse fotografia. A causa era dupla: o modo de impacto só habilitava fotografia em alguns papéis e o layout `statement` ocultava `.context-photo`.
+- Correção preparada para exigir fotografia em todos os quadros de Reels de impacto, com rotação visual por slide, e para impedir que o modo `statement` esconda a foto nesse formato. A publicação existente não será apagada/republicada sem autorização específica.
+- Render de prova `2026-09-05-153807-slot-4-render-only` inspecionado nos cinco quadros: capa com a fotografia oficial e quatro fotos distintas nos cards seguintes, sem colisão com título ou texto.
+- A mídia defeituosa `18018870773718810` foi adicionada a `performance-learning-exclusions.json`; seu alcance e engajamento não devem ensinar o modelo visual.
 - Os alertas abertos do incidente receberam a orientação corrigida. O slot continua pendente até a automação comprovar permalink, Feed/Reel ID, Story ID e histórico persistido.
 - Checkout limpo `cliente-x-instagram-modern-meta-publish-fix-20260905`, branch `fix/meta-publish-2207085`, criado sobre `origin/main` `7eaad1eb`. Validações aprovadas: `node --check`, assertions da classificação, `git diff --check` e `npm run validate-copy` com 75 packs.
 
