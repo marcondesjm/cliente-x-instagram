@@ -2749,3 +2749,12 @@ Conclusao de ativacao:
 - A capa 9:16 com fotografia passa a exibir o texto de apoio na coluna livre, eliminando o vazio percebido abaixo do título sem invadir a imagem.
 - O post exato `livro-claude-code-20260902-11` foi renderizado sem publicação em Reel + Story e Feed + Story. Capa, slide 5 e Story foram inspecionados; toda a frase “Comente LIVRO e diga qual tema você quer ver” e o crédito estão legíveis.
 - Sintaxe, `validate-copy` com 75 seleções e `git diff --check` aprovados. Correção enviada ao `origin/main` em `8f119331`.
+
+# 2026-09-05 10:31 BRT — equilíbrio editorial entre notícias e livro nos Stories
+
+- Checkout de produção confirmado em `cfab20ea`, branch `fix/story-lower-balance-20260905`, alinhado ao `origin/main`; o checkout antigo `modern-incident` não foi usado.
+- A automação passa a inserir um Story autoral do livro somente depois de cinco Stories de notícias desde a última inserção autoral, sem substituir ou alterar o Feed/Reel de notícia do mesmo horário.
+- A escolha percorre os 21 conteúdos autorais já configurados e prioriza um título ainda não usado; depois de esgotar a coleção, mantém uma rotação determinística.
+- O histórico passa a persistir separadamente a impressão digital, o tipo e o título do Story, preservando a auditoria quando Feed/Reel e Story usam conteúdos diferentes.
+- A regra não atua em publicações manuais, itens agendados, `story-only`, `feed-only` ou `reel-only`; nenhuma mídia foi publicada nesta etapa.
+- `node --check`, `npm run validate-copy` com 75 seleções e 21 Stories autorais, e `git diff --check` aprovados. A suíte comprovou que quatro notícias não antecipam o livro, cinco notícias ativam a inserção e um Story autoral reinicia o intervalo.

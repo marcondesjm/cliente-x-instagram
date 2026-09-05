@@ -858,3 +858,11 @@ Resultado:
 - Commit `8f119331` no `origin/main` corrige texto branco sobre cartão branco no último slide e usa a área livre da capa vertical para mostrar o apoio editorial.
 - Render exato aprovado em `2026-09-05-101333-slot-0-render-only` (Reel + Story) e `2026-09-05-101443-slot-0-render-only` (Feed + Story), sem republicação.
 - O Facebook mostra 323 grupos vinculados ao perfil. Os grupos editorialmente aderentes encontrados incluem Comunidade Anthropic Claude Brasil e CLAUDE CODE BRASIL; nenhuma publicação em grupo foi enviada sem seleção explícita do destino.
+
+# Atualizacao 2026-09-05 10:31 BRT — Stories equilibram notícias e conteúdo autoral
+
+- Branch de trabalho `fix/story-lower-balance-20260905`, baseada no `origin/main` `cfab20ea`.
+- Próximos Stories automáticos mantêm as notícias como fluxo principal e inserem um conteúdo do livro após cada cinco Stories noticiosos, sem mexer no Feed/Reel correspondente.
+- Existem 21 Stories autorais configurados; títulos ainda não usados têm prioridade e o histórico registra separadamente o conteúdo efetivamente publicado no Story.
+- Validações aprovadas: sintaxe, 75 seleções editoriais, 21 candidatos autorais, intervalo mínimo de cinco notícias, reinício após livro e `git diff --check`.
+- Nenhuma publicação foi feita. Próxima prova operacional: observar a primeira ativação natural da regra e exigir o Story ID persistido; o permalink e o ID do Feed/Reel continuam pertencendo à notícia do horário.

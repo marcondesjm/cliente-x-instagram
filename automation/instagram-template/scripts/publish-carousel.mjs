@@ -3941,15 +3941,46 @@ function readPublicationHistory(configDir, accountKey) {
   return Array.isArray(history?.[accountKey]) ? history[accountKey] : [];
 }
 
+function bookStoryPacks(configDir, accountKey) {
+  const { group } = loadScheduledPosts(configDir, accountKey);
+  return (group.posts || [])
+    .map((post) => post?.pack)
+    .filter((pack) => pack?.authoredBook && Array.isArray(pack.slides) && pack.slides.length);
+}
+
+function pickBookStoryAfterNews(history = [], candidates = [], newsInterval = 5) {
+  if (!candidates.length) return null;
+  const bookTitles = new Set(candidates.map((pack) => normalizedCoverTitle(pack)).filter(Boolean));
+  let newsStories = 0;
+  for (const entry of [...history].reverse()) {
+    const entryTitle = normalizeContentFingerprint(entry.storyCoverTitle || entry.coverTitle || '');
+    const isBookStory = entry.storyContentKind === 'book' || bookTitles.has(entryTitle);
+    if (isBookStory && entry.storyMediaId) break;
+    if (entry.storyMediaId && entry.research?.sourceUrl) newsStories += 1;
+  }
+  if (newsStories < newsInterval) return null;
+
+  const usedBookTitles = new Set(history
+    .filter((entry) => entry.storyContentKind === 'book' || bookTitles.has(normalizeContentFingerprint(entry.storyCoverTitle || entry.coverTitle || '')))
+    .map((entry) => normalizeContentFingerprint(entry.storyCoverTitle || entry.coverTitle || ''))
+    .filter(Boolean));
+  return candidates.find((pack) => !usedBookTitles.has(normalizedCoverTitle(pack)))
+    || candidates[Math.floor(newsStories / newsInterval) % candidates.length];
+}
+
 function recordPublicationHistory(configDir, accountKey, pack, result) {
   const path = publicationHistoryPath(configDir);
   const history = existsSync(path) ? readJson(path) : {};
   const entries = Array.isArray(history[accountKey]) ? history[accountKey] : [];
   const fingerprint = packContentFingerprint(pack);
+  const storyPack = result.storyHistoryPack || pack;
+  const storyFingerprint = packContentFingerprint(storyPack);
   if (!entries.some((entry) => entry.feedFingerprint === fingerprint || entry.storyFingerprint === fingerprint)) {
     entries.push({
       feedFingerprint: result.storyOnly ? null : fingerprint,
-      storyFingerprint: fingerprint,
+      storyFingerprint,
+      storyContentKind: result.storyContentKind || (storyPack.authoredBook ? 'book' : (storyPack.research?.sourceUrl ? 'news' : 'editorial')),
+      storyCoverTitle: String(storyPack?.slides?.[0]?.title || '').trim() || null,
       captionFingerprint: createHash('sha256').update(normalizeCaption(pack.caption || '')).digest('hex'),
       coverTitle: String(pack?.slides?.[0]?.title || '').trim() || null,
       coverAvatar: result.coverAvatar || null,
@@ -4773,6 +4804,19 @@ async function main() {
     );
     if (githubInvalidProbe.retryable) throw new Error('Erro permanente 422 do GitHub foi marcado para repeticao indevida.');
     const duplicateProbePack = automaticSelectionPacks[0];
+    const configuredBookStoryPacks = bookStoryPacks(args.configDir, account.account);
+    if (!configuredBookStoryPacks.length) throw new Error('Rodízio editorial não encontrou Stories autorais do livro na fila configurada.');
+    const bookRotationProbe = { authoredBook: { title: 'Livro' }, slides: [{ title: 'Trecho inédito', body: 'Aplicação prática.' }], caption: 'Trecho autoral.' };
+    const fiveNewsProbe = Array.from({ length: 5 }, (_, index) => ({
+      storyMediaId: `story-${index}`,
+      coverTitle: `Notícia ${index}`,
+      research: { sourceUrl: `https://example.com/news-${index}` }
+    }));
+    if (pickBookStoryAfterNews(fiveNewsProbe.slice(0, 4), [bookRotationProbe])) throw new Error('Rodízio do livro antecipou o Story antes de cinco notícias.');
+    if (pickBookStoryAfterNews(fiveNewsProbe, [bookRotationProbe]) !== bookRotationProbe) throw new Error('Rodízio do livro não selecionou Story após cinco notícias.');
+    if (pickBookStoryAfterNews([...fiveNewsProbe, { storyMediaId: 'book-story', storyContentKind: 'book', storyCoverTitle: 'Trecho inédito' }], [bookRotationProbe])) {
+      throw new Error('Rodízio do livro repetiu Story sem acumular outras cinco notícias.');
+    }
     const duplicateProbe = pickFreshPack([duplicateProbePack], today, slotIndex, [], [{
       feedFingerprint: packContentFingerprint(duplicateProbePack),
       storyFingerprint: packContentFingerprint(duplicateProbePack)
@@ -5161,6 +5205,8 @@ async function main() {
       checkedAutoPacks: autoPacks.length,
       checkedAutomaticSelectionPacks: automaticSelectionPacks.length,
       duplicateHistoryGuard: 'ok',
+      storyEditorialBalanceGuard: 'five-news-then-one-authored-book',
+      checkedBookStoryPacks: configuredBookStoryPacks.length,
       sourceBalanceGuard: 'ok',
       avatarRotationGuard: 'ok',
       checkedAvatarRotation: avatarProbeCovers.length,
@@ -5422,6 +5468,28 @@ async function main() {
     modelVersion: learningDecision.modelVersion
   };
   const researchSourceImagePath = await downloadResearchSourceImage(pack, runDir);
+  const storyOnly = publishMode === 'story-only';
+  const feedOnly = publishMode === 'feed-only';
+  const reelOnly = publishMode === 'reel-only';
+  const reelAndStory = publishMode === 'reel-and-story';
+  const reelMode = reelOnly || reelAndStory;
+  const rotatedBookStoryPack = (!scheduledPost && !dashboardPack && !args.storyOnly && !feedOnly && !reelOnly)
+    ? pickBookStoryAfterNews(publicationHistory, bookStoryPacks(args.configDir, account.account), 5)
+    : null;
+  const storyPack = rotatedBookStoryPack
+    ? preparePackForPublication(JSON.parse(JSON.stringify(rotatedBookStoryPack)), today, generationSlotIndex, account, 'story-only', { allowIhc: false }).pack
+    : pack;
+  const storyVisualAccount = storyPack.visualDirection
+    ? { ...account, contentProfile: { ...account.contentProfile, visualDirection: storyPack.visualDirection } }
+    : account;
+  const storyStyle = rotatedBookStoryPack
+    ? styleWithBrandPalette(
+      pickVisualStyle(styles, storyVisualAccount, today, generationSlotIndex + 1),
+      account,
+      { dateString: today, slotIndex: generationSlotIndex + 1, variationSeed: stableAvatarOffset(storyPack.slides?.[0]?.title || 'book-story') }
+    )
+    : style;
+  if (rotatedBookStoryPack) console.log(`Rodízio editorial: após cinco Stories de notícias, Story do livro selecionado: ${storyPack.slides?.[0]?.title || 'trecho autoral'}.`);
   if (!args.renderOnly && !args.dryRun && (scheduledPost || dashboardPack || args.storyOnly)) {
     const duplicate = findDuplicatePack(publicationHistory, historyPack);
     if (duplicate) {
@@ -5432,11 +5500,6 @@ async function main() {
   writeFileSync(join(runDir, 'editorial-research.json'), JSON.stringify(editorialResearch, null, 2), 'utf8');
   writeFileSync(join(runDir, 'daily-pack.json'), JSON.stringify({ date: today, slotIndex, packIndex, skippedDuplicates, creativeGeneration, creativeBatchRemaining, account: account.account, visualStyle: style.name, visualVariationSeed, visualSeedInput, avatarRotationStart, coverAvatar: Number.isInteger(avatarRotationStart) ? accountAvatarRotationUrls(account)[avatarRotationStart] || null : null, intelligence: { ...enhancement.intelligence, organicPotential, learningDecision, learningContext }, ...pack }, null, 2), 'utf8');
   writeFileSync(join(runDir, 'caption.txt'), pack.caption, 'utf8');
-  const storyOnly = publishMode === 'story-only';
-  const feedOnly = publishMode === 'feed-only';
-  const reelOnly = publishMode === 'reel-only';
-  const reelAndStory = publishMode === 'reel-and-story';
-  const reelMode = reelOnly || reelAndStory;
   const slotCron = (account.scheduleUtc || [])[slotIndex] || '';
   const renderContext = {
     dateString: today,
@@ -5452,7 +5515,7 @@ async function main() {
   };
   const imagePaths = storyOnly ? [] : await renderSlides(runDir, pack.slides, account, style, renderContext);
   const customStoryImage = String(pack.storyImageUrl || pack.storyImagePath || '').trim();
-  const storyImagePath = (feedOnly || reelOnly) ? null : (customStoryImage || await renderStory(runDir, pack, account, style, renderContext));
+  const storyImagePath = (feedOnly || reelOnly) ? null : (customStoryImage || await renderStory(runDir, storyPack, account, storyStyle, { ...renderContext, publishMode: rotatedBookStoryPack ? 'story-only' : publishMode }));
   const reelRender = reelMode ? renderReelVideo(runDir, imagePaths) : null;
   const reelVideoPath = reelRender?.reelPath || null;
   const reelAudioTrack = reelRender?.audioTrack || null;
@@ -5551,6 +5614,8 @@ async function main() {
     storyImagePath,
     imageUrls,
     storyImageUrl,
+    storyContentKind: storyPack.authoredBook ? 'book' : (storyPack.research?.sourceUrl ? 'news' : 'editorial'),
+    storyCoverTitle: String(storyPack?.slides?.[0]?.title || '').trim() || null,
     reelVideoPath,
     reelVideoUrl,
     reelAudioTrack,
@@ -5597,7 +5662,7 @@ async function main() {
     firstCommentId: firstComment?.id || null,
     firstCommentError
   };
-  recordPublicationHistory(args.configDir, account.account, historyPack, result);
+  recordPublicationHistory(args.configDir, account.account, historyPack, { ...result, storyHistoryPack: storyPack });
   if (scheduledPost) {
     const scheduledPatch = {
       status: 'published',
