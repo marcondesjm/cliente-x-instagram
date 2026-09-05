@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-09-05 09:39 BRT
+Atualizado em: 2026-09-05 09:44 BRT
 
 ## Regra permanente de checkpoint
 
@@ -10,6 +10,8 @@ Atualizado em: 2026-09-05 09:39 BRT
 
 ## Projeto ativo
 
+- Carrossel do livro `Dc4azkPIC2q` corrigido localmente em `f5c0dd7`: palavras longas não quebram no meio no layout editorial, `SALVE ESTE PASSO` não cobre mais o cartão e os selos possuem contraste preto/branco explícito.
+- Reprodução exata aprovada no render `2026-09-05-094407-slot-0-render-only`; slides 1 e 3 inspecionados visualmente, com barra de progresso livre. Nenhuma republicação foi feita.
 - Story com vazio inferior corrigido na branch limpa `fix/story-lower-balance-20260905`, criada sobre `origin/main` em `b9202a6`.
 - A fotografia dos Stories de impacto agora ocupa 720 px e pode avançar somente como elemento visual pela faixa inferior; título, data, CTA e assinatura mantêm a área segura estrita.
 - Render `2026-09-05-093827-slot-0-render-only` aprovado visualmente, sem colisão e com composição inferior preenchida. Validações `node --check`, `git diff --check`, `npm run validate-copy` e `npm run render-only` aprovadas.

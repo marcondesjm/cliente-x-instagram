@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-09-05 09:44 BRT — Legibilidade do carrossel do livro corrigida
+
+- Revisão da publicação `https://www.instagram.com/p/Dc4azkPIC2q/`, Media ID `17935225437363953` e Story ID `18111891713115170`, confirmou três falhas: `Documentação` podia ser quebrada no meio, `SALVE ESTE PASSO` cobria o texto do terceiro card e o selo podia combinar texto quase branco com fundo branco.
+- Correção `f5c0dd7`: a coluna editorial ganhou largura e fonte ajustadas, sem quebra interna de palavras; o selo do layout `book-split` foi movido para a coluna direita; todos os selos intermediários do estilo de impacto usam contraste preto/branco com borda visível.
+- O cartão de apoio do `book-split` subiu 30 px para não encostar na barra de progresso.
+- O pack exato `livro-claude-code-20260902-09` foi reproduzido no render `2026-09-05-094407-slot-0-render-only`. Os slides 1 e 3 foram inspecionados visualmente: palavra inteira, texto completo, selo separado e contraste legível.
+- Validações aprovadas: `node --check`, `git diff --check`, `npm run validate-copy` e render completo dos cinco cards mais Story.
+- Nenhuma republicação foi feita; aguardar autorização específica caso o usuário queira substituir a publicação já existente.
+
 ## 2026-09-05 09:39 BRT — Rodapé vazio do Story corrigido
 
 - Incidente confirmado na publicação `https://www.instagram.com/reel/Dc5sDRIiNe3/`: o Story ID `17901301998575796`, com a pauta `China lança plano para apoiar 10 mil novas empresas de inteligência artificial`, concentrava título e fotografia no alto e deixava uma faixa inferior visualmente vazia.
