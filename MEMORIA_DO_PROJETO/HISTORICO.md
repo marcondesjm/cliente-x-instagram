@@ -2759,3 +2759,11 @@ Conclusao de ativacao:
 - A regra não atua em publicações manuais, itens agendados, `story-only`, `feed-only` ou `reel-only`; nenhuma mídia foi publicada nesta etapa.
 - `node --check`, `npm run validate-copy` com 75 seleções e 21 Stories autorais, e `git diff --check` aprovados. A suíte comprovou que quatro notícias não antecipam o livro, cinco notícias ativam a inserção e um Story autoral reinicia o intervalo.
 - Correção funcional enviada ao `origin/main` no commit `05410252`.
+
+# 2026-09-05 10:38 BRT — amostra autoral publicada a pedido
+
+- O usuário autorizou uma publicação imediata para inspeção. O item já aprovado `livro-claude-code-20260902-12` foi antecipado na fila e acionado pelo caminho automático em nuvem, sem publicação local.
+- Commit de fila `4f5f7444`; GitHub Actions run `33969336338` concluiu com `success`, incluindo a etapa `Publish feed and story` e persistência do estado.
+- Publicação: `Prompt profissional não é frase solta.`; permalink `https://www.instagram.com/p/Dc6Fdv9oNO_/`; Feed `18117859415286922`; Story `17960957823207557`; horário persistido `2026-09-05T13:37:49.325Z` (`10:37 BRT`).
+- O item ficou com `status: published` em `scheduled-posts.json` e a prova completa entrou em `publication-history.json`; imagens hospedadas no commit `86d98292` e estado no commit `46197367`.
+- O Story real hospedado foi inspecionado em 1080 x 1920: título completo, CTA legível, fotografia proeminente e sem corte ou colisão. Não havia primeiro comentário configurado e não ocorreu erro de comentário.

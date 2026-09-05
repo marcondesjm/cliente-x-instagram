@@ -867,3 +867,10 @@ Resultado:
 - Validações aprovadas: sintaxe, 75 seleções editoriais, 21 candidatos autorais, intervalo mínimo de cinco notícias, reinício após livro e `git diff --check`.
 - Nenhuma publicação foi feita. Próxima prova operacional: observar a primeira ativação natural da regra e exigir o Story ID persistido; o permalink e o ID do Feed/Reel continuam pertencendo à notícia do horário.
 - Implementação funcional disponível no `origin/main` em `05410252`.
+
+# Atualizacao 2026-09-05 10:38 BRT — publicação autoral comprovada
+
+- Run automático `33969336338` publicou `Prompt profissional não é frase solta.` às 10:37 BRT.
+- Permalink: `https://www.instagram.com/p/Dc6Fdv9oNO_/`; Feed `18117859415286922`; Story `17960957823207557`.
+- `scheduled-posts.json` e `publication-history.json` estão persistidos no remoto; Story 9:16 inspecionado com texto, CTA e fotografia aprovados.
+- Não houve erro de primeiro comentário; o conteúdo não tinha comentário inicial configurado.
