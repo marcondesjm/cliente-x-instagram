@@ -1,11 +1,18 @@
 # Status Atual
 
-Atualizado em: 2026-09-05 09:44 BRT
+Atualizado em: 2026-09-05 11:23 BRT
 
 ## Regra permanente de checkpoint
 
 - Toda atualizacao concluida deve ser registrada automaticamente em `HISTORICO.md` e refletida em `STATUS_ATUAL.md`.
 - O usuario nao precisa pedir novamente para gravar a memoria do projeto.
+
+## Landing — correção visual pronta para envio
+
+- Checkout correto: `cliente-x-instagram-modern-story-balance-20260905`, branch `fix/story-lower-balance-20260905`, baseada no `origin/main` `648c17ef`.
+- `docs/plataforma.html` remove blur das animações de entrada, mantém o conteúdo visível com movimento reduzido e contém o carrossel para não criar rolagem horizontal no celular.
+- Validação Playwright em 1440 px e 390 px: zero erros de console, largura do documento igual ao viewport e ações da hero visíveis.
+- O Instagram continua `@marcondes.machado.oficial`; o ativo não rastreado da capa do Facebook foi preservado e não integra esta mudança.
 - O checkpoint deve acompanhar a alteracao no Git e no remoto, quando aplicavel, antes do encerramento da tarefa.
 
 ## Projeto ativo

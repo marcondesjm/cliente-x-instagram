@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-09-05 11:23 BRT — Landing sem blur preso e sem rolagem lateral
+
+- A correção foi portada do checkout histórico `cliente-x-instagram-modern-incident` para o checkout alinhado à produção `cliente-x-instagram-modern-story-balance-20260905`, branch `fix/story-lower-balance-20260905`, em `origin/main` `648c17ef`.
+- `docs/plataforma.html` não usa mais filtro de blur nas entradas da hero e das seções; a animação mantém apenas opacidade e deslocamento leve.
+- O modo de movimento reduzido força hero e blocos revelados a permanecerem visíveis.
+- O carrossel da plataforma agora contém layout e pintura, limita cada slide a 100% e o documento bloqueia overflow horizontal.
+- Playwright validou a landing em 1440 px e 390 px, sem erros de console, com largura do documento igual ao viewport e ações da hero plenamente visíveis.
+- O Instagram permanece `@marcondes.machado.oficial`; nenhuma alteração foi feita no arquivo não rastreado `docs/uploads/facebook-cover-marcondes-ai-v1.png`.
+
 ## 2026-09-05 09:44 BRT — Legibilidade do carrossel do livro corrigida
 
 - Revisão da publicação `https://www.instagram.com/p/Dc4azkPIC2q/`, Media ID `17935225437363953` e Story ID `18111891713115170`, confirmou três falhas: `Documentação` podia ser quebrada no meio, `SALVE ESTE PASSO` cobria o texto do terceiro card e o selo podia combinar texto quase branco com fundo branco.
