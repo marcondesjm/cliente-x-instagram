@@ -5676,7 +5676,13 @@ async function main() {
         publicationFallback = 'reel-confirmed-after-ambiguous-meta-error';
       } else {
         console.warn('A Meta manteve o erro 2207085 no Reel e nenhuma publicacao equivalente apareceu no perfil; recuperando o slot como carrossel.');
-        ({ carousel, childIds, imageUrls } = await createCarouselFromImages(userId, token, publishImagePaths, imgbbKey, pack.caption));
+        const fallbackImageUrls = feedImagesAreLocal
+          ? await hostRenderedImagesOnGitHub(imagePaths, account.account, `${runId}-reel-fallback`)
+          : publishImagePaths;
+        if (!fallbackImageUrls?.length || fallbackImageUrls.length !== imagePaths.length) {
+          throw new Error('Fallback do Reel exige todas as imagens hospedadas no GitHub antes de criar o carrossel.');
+        }
+        ({ carousel, childIds, imageUrls } = await createCarouselFromImages(userId, token, fallbackImageUrls, imgbbKey, pack.caption));
         media = await publishMediaContainer(userId, carousel.id, token);
         effectiveReelMode = false;
         publicationFallback = 'reel-to-carousel-after-2207085';
