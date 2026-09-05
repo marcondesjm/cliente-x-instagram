@@ -2776,3 +2776,11 @@ Conclusao de ativacao:
 - Causa técnica: o publicador atual executa somente os endpoints de criação e publicação do Instagram. Não existe etapa, token ou persistência de Facebook no workflow; a conexão entre contas, sozinha, não constitui prova de crossposting para mídia publicada pela API.
 - Publicação automatizada direta é suportada para uma Página do Facebook administrada, mediante Page ID, Page access token e permissões próprias. O destino atual inspecionado é o perfil profissional pessoal de Marcondes Machado, não uma Página configurada no projeto; nenhuma permissão foi alterada.
 - Sintaxe, `validate-copy` com 75 seleções e `git diff --check` aprovados. Nenhuma mídia foi republicada.
+
+# 2026-09-05 10:51 BRT — Página marcondes_j_machado reativada
+
+- Com autorização explícita do usuário, a Página desativada `marcondes_j_machado` foi reativada diretamente no Facebook.
+- Prova visual: o Facebook exibiu `Sua Página foi atualizada!` e abriu a Página ativa, categoria `Figura pública`, com 0 seguidores e nenhum post disponível.
+- Identificadores observados: perfil da Página `100069682068055` e ativo de Página `107481254737860`.
+- A Página foi apenas reativada. O Instagram ainda não foi conectado a ela, nenhuma permissão/API foi configurada e nenhum conteúdo foi publicado.
+- A Página `Eletro e Casa Shop` não foi alterada.

@@ -881,3 +881,10 @@ Resultado:
 - Render exato `2026-09-05-104247-slot-0-render-only` aprovado sem publicação ou repostagem.
 - O Facebook foi verificado no perfil real e o post novo não aparece. O workflow atual publica apenas no Instagram e não possui publicação direta para Facebook.
 - Para automação suportada e auditável no Facebook, falta configurar uma Página administrada com credenciais e permissões próprias; nenhuma configuração da Meta foi alterada nesta etapa.
+
+# Atualizacao 2026-09-05 10:51 BRT — Página pessoal reativada
+
+- `marcondes_j_machado` está novamente ativa no Facebook como Página de figura pública.
+- Estado inicial confirmado: 0 seguidores e nenhum post; Página aberta no navegador para conferência.
+- Ainda falta revisar nome/identidade, conectar o Instagram e autorizar o caminho de publicação da Página antes de qualquer teste real.
+- Nenhum conteúdo foi publicado e a Página `Eletro e Casa Shop` permaneceu intacta.
