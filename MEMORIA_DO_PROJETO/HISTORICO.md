@@ -8,6 +8,7 @@
 - O pack exato `livro-claude-code-20260902-09` foi reproduzido no render `2026-09-05-094407-slot-0-render-only`. Os slides 1 e 3 foram inspecionados visualmente: palavra inteira, texto completo, selo separado e contraste legível.
 - Validações aprovadas: `node --check`, `git diff --check`, `npm run validate-copy` e render completo dos cinco cards mais Story.
 - Nenhuma republicação foi feita; aguardar autorização específica caso o usuário queira substituir a publicação já existente.
+- Correções visuais e checkpoints sincronizados com `origin/main` até `62c23cb`.
 
 ## 2026-09-05 09:39 BRT — Rodapé vazio do Story corrigido
 
@@ -16,7 +17,7 @@
 - Correção `5ed5a5c`: título, data, CTA e assinatura continuam dentro da área segura; somente a fotografia pode avançar 280 px na faixa decorativa inferior. O painel fotográfico passou de 480 para 720 px e ganhou distância suficiente do CTA para não acionar a redução automática.
 - Validações aprovadas: `node --check`, `git diff --check`, `npm run validate-copy` (21 packs locais, 54 automáticos e 75 combinações) e `npm run render-only`.
 - Render `2026-09-05-093827-slot-0-render-only` inspecionado visualmente: foto ampla até o bloco inferior, CTA legível, nenhuma colisão e apenas a margem final destinada à interface do Instagram.
-- Nenhuma republicação foi feita. A correção vale para os próximos Stories automáticos após envio ao `origin/main`.
+- Nenhuma republicação foi feita. A correção foi enviada ao `origin/main` e vale para os próximos Stories automáticos.
 
 ## 2026-09-04 12:38 BRT — Capa vazia do carrossel Microsoft corrigida
 
