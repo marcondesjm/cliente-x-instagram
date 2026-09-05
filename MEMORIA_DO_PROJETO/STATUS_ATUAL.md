@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-09-04 12:38 BRT
+Atualizado em: 2026-09-05 09:39 BRT
 
 ## Regra permanente de checkpoint
 
@@ -10,6 +10,10 @@ Atualizado em: 2026-09-04 12:38 BRT
 
 ## Projeto ativo
 
+- Story com vazio inferior corrigido na branch limpa `fix/story-lower-balance-20260905`, criada sobre `origin/main` em `b9202a6`.
+- A fotografia dos Stories de impacto agora ocupa 720 px e pode avançar somente como elemento visual pela faixa inferior; título, data, CTA e assinatura mantêm a área segura estrita.
+- Render `2026-09-05-093827-slot-0-render-only` aprovado visualmente, sem colisão e com composição inferior preenchida. Validações `node --check`, `git diff --check`, `npm run validate-copy` e `npm run render-only` aprovadas.
+- Correção funcional em `bbb87a5`. Nenhuma republicação foi feita; o próximo Story automático será a prova em produção após sincronização com `origin/main`.
 - Capa defeituosa confirmada em `Dc3qOE0HPqm`, Media ID `18060129533789175`: miniatura WordPress de 7.820 bytes foi rejeitada e o layout permaneceu sem fotografia.
 - Correção preparada: tentar automaticamente a imagem WordPress original sem o sufixo de dimensão e manter fallback fotográfico para capas de impacto.
 - Render exato aprovado: `2026-09-04-123737-slot-0-render-only`, com imagem oficial do Project Zenith, título amplo e sem vazio central.

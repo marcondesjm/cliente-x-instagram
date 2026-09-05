@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-09-05 09:39 BRT — Rodapé vazio do Story corrigido
+
+- Incidente confirmado na publicação `https://www.instagram.com/reel/Dc5sDRIiNe3/`: o Story ID `17901301998575796`, com a pauta `China lança plano para apoiar 10 mil novas empresas de inteligência artificial`, concentrava título e fotografia no alto e deixava uma faixa inferior visualmente vazia.
+- Causa: a fotografia terminava em `y=1410` para respeitar os 500 px reservados aos controles do Instagram. Essa proteção é necessária para textos, mas excessiva para uma imagem puramente visual.
+- Correção `bbb87a5`: título, data, CTA e assinatura continuam dentro da área segura; somente a fotografia pode avançar 280 px na faixa decorativa inferior. O painel fotográfico passou de 480 para 720 px e ganhou distância suficiente do CTA para não acionar a redução automática.
+- Validações aprovadas: `node --check`, `git diff --check`, `npm run validate-copy` (21 packs locais, 54 automáticos e 75 combinações) e `npm run render-only`.
+- Render `2026-09-05-093827-slot-0-render-only` inspecionado visualmente: foto ampla até o bloco inferior, CTA legível, nenhuma colisão e apenas a margem final destinada à interface do Instagram.
+- Nenhuma republicação foi feita. A correção vale para os próximos Stories automáticos após envio ao `origin/main`.
+
 ## 2026-09-04 12:38 BRT — Capa vazia do carrossel Microsoft corrigida
 
 - Incidente confirmado na publicação `https://www.instagram.com/p/Dc3qOE0HPqm/`: a capa `Microsoft revela Windows 11 para rodar IA pesada direto no PC` saiu com o título espremido à direita e um grande vazio no lugar da imagem. Media ID `18060129533789175`; Story ID `18442477072122465`.
