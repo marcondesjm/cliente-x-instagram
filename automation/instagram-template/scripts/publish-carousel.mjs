@@ -2878,14 +2878,34 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     }
     .impact-carousel.has-research-image.role-value .context-photo,
     .impact-carousel.has-research-image.role-proof .context-photo {
-      top: 510px;
-      height: 170px;
-      border-radius: 18px;
+      top: 470px;
+      height: 500px;
+      border-radius: 20px;
     }
     .impact-carousel.has-research-image.role-value .note,
     .impact-carousel.has-research-image.role-proof .note {
-      top: 710px;
-      min-height: 300px;
+      top: 995px;
+      min-height: 180px;
+      padding: 24px 10px 24px 0;
+      border: 0;
+      border-top: 3px solid ${accent};
+      border-radius: 0;
+      background: transparent;
+      color: ${slideStyle.text};
+      box-shadow: none;
+    }
+    .impact-carousel.has-research-image.role-value .note::before,
+    .impact-carousel.has-research-image.role-proof .note::before { display: none; }
+    .impact-carousel.has-research-image.role-value .note .lead,
+    .impact-carousel.has-research-image.role-value .note .emphasis,
+    .impact-carousel.has-research-image.role-value .note .close,
+    .impact-carousel.has-research-image.role-proof .note .lead,
+    .impact-carousel.has-research-image.role-proof .note .emphasis,
+    .impact-carousel.has-research-image.role-proof .note .close {
+      min-height: 0;
+      padding: 0;
+      background: transparent;
+      color: ${slideStyle.text};
     }
     .impact-carousel.role-value .panel,
     .impact-carousel.role-proof .panel {
@@ -2971,11 +2991,12 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .reel-mode.role-hook .note { display: none; }
     .reel-mode.role-hook .context-photo { top: 455px; height: 1000px; }
     .impact-carousel.reel-mode.has-sector-photo.role-hook .context-photo {
-      left: 540px;
+      left: 58px;
       right: 58px;
-      top: 650px;
+      top: 610px;
       width: auto;
-      height: 900px;
+      height: 930px;
+      border-radius: 24px;
     }
     .impact-carousel.reel-mode.has-sector-photo .context-photo { display: block; }
     .impact-carousel.reel-mode.has-sector-photo.book-split.role-hook .context-photo {
@@ -2989,18 +3010,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     /* No quadro 9:16, a coluna à esquerda da foto precisa explicar a promessa
        da capa. Mantemos o corpo curto visível em vez de deixar metade vazia. */
     .impact-carousel.reel-mode.has-sector-photo.role-hook .note {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      left: 58px;
-      top: 690px;
-      width: 440px;
-      min-height: 300px;
-      padding: 34px 38px;
-      background: rgba(255,255,255,.94);
-      color: #111;
-      font-size: 29px;
-      line-height: 1.12;
+      display: none;
     }
     .impact-carousel.reel-mode.has-sector-photo.role-hook .note::before { display: none; }
     .impact-carousel.reel-mode.has-sector-photo.role-hook .note .lead,
@@ -3021,8 +3031,20 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .reel-mode.role-proof .panel { height: 580px; }
     .impact-carousel.reel-mode.has-sector-photo.role-value .context-photo,
     .impact-carousel.reel-mode.has-sector-photo.role-proof .context-photo {
-      top: 700px;
-      height: 500px;
+      top: 540px;
+      height: 640px;
+    }
+    .impact-carousel.reel-mode.has-sector-photo.role-value .note,
+    .impact-carousel.reel-mode.has-sector-photo.role-proof .note {
+      top: 1210px;
+      min-height: 300px;
+      padding: 28px 10px 28px 0;
+      border: 0;
+      border-top: 3px solid ${accent};
+      border-radius: 0;
+      background: transparent;
+      color: ${slideStyle.text};
+      box-shadow: none;
     }
     .impact-carousel.reel-mode.has-sector-photo.role-cta .context-photo {
       top: 620px;
@@ -3629,6 +3651,16 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
   }
   await browser.close();
   return imagePaths;
+}
+
+function carouselFallbackRenderContext(renderContext = {}) {
+  return {
+    ...renderContext,
+    // Nunca reaproveite quadros 9:16 de Reel em um carrossel 4:5. Isso era a
+    // causa direta do vazio excessivo e dos pequenos cartoes sobre a foto.
+    publishMode: 'feed-and-story',
+    reelFallback: true
+  };
 }
 
 function anatexStoryHtml(slide, account, style, renderContext = {}) {
@@ -5389,6 +5421,18 @@ async function main() {
     if (!reelNavigationProbe.includes('height: 1920px') || !carouselNavigationProbe.includes('height: 1350px')) {
       throw new Error('Reel deve ser renderizado nativamente em 1080 x 1920 sem alterar o carrossel 4:5.');
     }
+    const fallbackContextProbe = carouselFallbackRenderContext({ publishMode: 'reel-and-story' });
+    const fallbackNavigationProbe = impactStoryStyle ? slideHtml({
+      eyebrow: 'VALE ENTENDER',
+      title: 'Uma pauta recente sobre inteligência artificial.',
+      body: 'O fallback apresenta os pontos no formato correto do Feed.'
+    }, 1, 5, account, impactStoryStyle, fallbackContextProbe) : '';
+    if (fallbackContextProbe.publishMode !== 'feed-and-story' || !fallbackNavigationProbe.includes('height: 1350px')) {
+      throw new Error('Fallback do Reel precisa renderizar um novo carrossel 4:5, nunca reutilizar quadros 9:16.');
+    }
+    if (!fallbackNavigationProbe.includes('height: 500px') || !reelNavigationProbe.includes('height: 930px')) {
+      throw new Error('Fotografia editorial precisa permanecer dominante no carrossel e no Reel.');
+    }
     const editorialFramingSlide = {
       eyebrow: 'CONTEXTO',
       title: 'Imagem editorial precisa aparecer inteira.',
@@ -5878,10 +5922,21 @@ async function main() {
         publicationFallback = 'reel-confirmed-after-ambiguous-meta-error';
       } else {
         console.warn('A Meta manteve o erro 2207085 no Reel e nenhuma publicacao equivalente apareceu no perfil; recuperando o slot como carrossel.');
-        const fallbackImageUrls = feedImagesAreLocal
-          ? await hostRenderedImagesOnGitHub(imagePaths, account.account, `${runId}-reel-fallback`)
-          : publishImagePaths;
-        if (!fallbackImageUrls?.length || fallbackImageUrls.length !== imagePaths.length) {
+        const carouselFallbackDir = join(runDir, 'carousel-fallback');
+        mkdirSync(carouselFallbackDir, { recursive: true });
+        const carouselFallbackImages = await renderSlides(
+          carouselFallbackDir,
+          pack.slides,
+          account,
+          style,
+          carouselFallbackRenderContext(renderContext)
+        );
+        const fallbackImageUrls = await hostRenderedImagesOnGitHub(
+          carouselFallbackImages,
+          account.account,
+          `${runId}-reel-fallback`
+        );
+        if (!fallbackImageUrls?.length || fallbackImageUrls.length !== carouselFallbackImages.length) {
           throw new Error('Fallback do Reel exige todas as imagens hospedadas no GitHub antes de criar o carrossel.');
         }
         ({ carousel, childIds, imageUrls } = await createCarouselFromImages(userId, token, fallbackImageUrls, imgbbKey, pack.caption));
