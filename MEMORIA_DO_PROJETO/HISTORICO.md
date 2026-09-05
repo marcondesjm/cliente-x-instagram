@@ -2839,3 +2839,11 @@ Conclusao de ativacao:
 - Se não existirem imagens editoriais inéditas suficientes para todos os slides, o post é interrompido antes da API do Instagram; não há retorno silencioso ao acervo local.
 - Render sem publicação `2026-09-05-154731-slot-4-render-only` inspecionado: cinco cartões, cinco fotografias distintas e nenhuma colisão de texto. Sintaxe, `validate-copy` com 75 seleções e `git diff --check` aprovados.
 - A publicação anterior não foi apagada nem republicada.
+
+# 2026-09-05 15:54 BRT — entidades HTML removidas do texto editorial
+
+- Confirmado o defeito visual em frases como `H&aacute;`, `g&aacute;s`, `n&atilde;o` e `intelig&ecirc;ncia`: eram entidades HTML escapadas pela fonte e não erros ortográficos do texto original.
+- O coletor agora decodifica acentos, cedilha, aspas tipográficas, travessões e entidades numéricas, inclusive quando chegam codificadas duas vezes.
+- O cache editorial antigo também é higienizado ao ser lido. Uma nova trava interrompe a publicação se qualquer entidade HTML ainda permanecer na legenda, nos slides, no título ou nos fatos da matéria.
+- O teste exato converte `H&aacute; seis anos... g&aacute;s... n&atilde;o... intelig&#234;ncia` em `Há seis anos... gás... não... inteligência`; sintaxe, 75 seleções editoriais e `git diff --check` aprovados.
+- Nenhuma mídia foi apagada, editada ou republicada nesta correção.

@@ -914,3 +914,9 @@ Resultado:
 - Cada cartão pesquisado pelo Radar exige uma foto editorial inédita vinda das matérias sobre IA; fotos genéricas locais não são mais usadas nesse fluxo.
 - A trava compara URL e hash do arquivo, registra a proveniência visual no run e no histórico e bloqueia a publicação se faltar uma imagem diferente para qualquer slide.
 - Render `2026-09-05-154731-slot-4-render-only` aprovado visualmente com cinco imagens distintas. Nenhuma mídia foi publicada ou republicada nesta correção.
+
+# Atualizacao 2026-09-05 15:54 BRT — acentuação HTML corrigida
+
+- O Radar passa a converter entidades como `H&aacute;`, `g&aacute;s`, `n&atilde;o`, `&ccedil;` e códigos numéricos para caracteres portugueses normais antes de montar o conteúdo.
+- O cache anterior recebe a mesma correção ao ser carregado e a validação bloqueia qualquer texto que ainda contenha entidade HTML.
+- Teste de regressão com a frase reportada, sintaxe, `validate-copy` e `git diff --check` aprovados. Nenhuma publicação foi refeita.

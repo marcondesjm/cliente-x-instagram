@@ -8,7 +8,7 @@ import { basename, dirname, extname, isAbsolute, join, resolve } from 'node:path
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { buildBrandContext } from '../../../lib/brand-analysis.js';
-import { buildResearchPack, EDITORIAL_SOURCES, extractArticleFacts, extractEditorialImageUrl, factualSummary, isPredominantlyEnglish, isUsableEditorialFact, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
+import { buildResearchPack, decodeEditorialEntities, EDITORIAL_SOURCES, extractArticleFacts, extractEditorialImageUrl, factualSummary, isPredominantlyEnglish, isUsableEditorialFact, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
 import { summarizePerformanceLearning } from '../../../lib/performance-learning.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
@@ -1665,13 +1665,22 @@ function readRadarCache(configDir, accountKey, maxAgeHours = 48) {
   const researchedAt = Date.parse(cache.researchedAt || '');
   if (!Number.isFinite(researchedAt) || Date.now() - researchedAt > maxAgeHours * 60 * 60 * 1000) return null;
   return {
-    packs: cache.packs,
+    packs: cache.packs.map((pack) => decodeEditorialValue(pack)),
     items: [],
     failures: [],
     researchedAt: cache.researchedAt,
     maxAgeDays: cache.maxAgeDays,
     fromCache: true
   };
+}
+
+function decodeEditorialValue(value) {
+  if (typeof value === 'string') return decodeEditorialEntities(value);
+  if (Array.isArray(value)) return value.map((item) => decodeEditorialValue(item));
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, decodeEditorialValue(item)]));
+  }
+  return value;
 }
 
 function writeRadarCache(configDir, accountKey, result = {}) {
@@ -1738,6 +1747,11 @@ function assertNoMojibake(text) {
   const markers = ['Ãƒ', 'Ã‚', 'Ã¢', 'ï¿½'];
   const found = markers.find((marker) => text.includes(marker));
   if (found) throw new Error(`Texto contem mojibake (${found}). Corrija antes de publicar.`);
+}
+
+function assertNoHtmlEntities(text) {
+  const entity = String(text || '').match(/&(?:#\d+|#x[0-9a-f]+|[a-z][a-z0-9]+);/i)?.[0];
+  if (entity) throw new Error(`Texto contém entidade HTML não decodificada (${entity}). Corrija antes de publicar.`);
 }
 
 function stripHashtagLines(text) {
@@ -3189,6 +3203,7 @@ function pickVisualStyle(styles, account, dateString, slotIndex) {
 
 function validatePack(pack) {
   assertNoMojibake(pack.caption);
+  assertNoHtmlEntities(pack.caption);
   assertPortugueseAccents(pack.caption);
   if (String(pack.caption || '').length > INSTAGRAM_CAPTION_MAX_LENGTH) {
     throw new Error(`Legenda excede o limite seguro do Instagram (${String(pack.caption || '').length}/${INSTAGRAM_CAPTION_MAX_LENGTH}).`);
@@ -3198,6 +3213,7 @@ function validatePack(pack) {
     const hasImage = Boolean(slide.imagePath || slide.imageUrl);
     const text = `${slide.eyebrow}\n${slide.title}\n${slide.body}`;
     assertNoMojibake(text);
+    assertNoHtmlEntities(text);
     assertPortugueseAccents(text);
     if (!hasImage && (!slide.eyebrow || !slide.title || !slide.body)) {
       throw new Error('Slides sem imagem precisam de banner, titulo e descricao.');
@@ -3223,6 +3239,7 @@ function validatePack(pack) {
       throw new Error('Radar bloqueado: o fato da matéria não pode ser um rótulo repetindo o título.');
     }
     const sourceFacts = Array.isArray(pack.research.sourceFacts) ? pack.research.sourceFacts : [sourceFact];
+    assertNoHtmlEntities(`${sourceTitle}\n${sourceFact}\n${sourceFacts.join('\n')}`);
     if (sourceFacts.some((fact) => isPredominantlyEnglish(fact))) {
       throw new Error('Radar bloqueado: o conteúdo principal da matéria ainda está em inglês.');
     }
@@ -5175,6 +5192,13 @@ async function main() {
     });
     if (!/Dario Amodei/i.test(realSummaryProbe) || /O post apareceu/i.test(realSummaryProbe)) {
       throw new Error('Extração do contexto factual da matéria falhou.');
+    }
+    const htmlEntityProbe = factualSummary({
+      title: 'Infraestrutura de IA cresce com novos data centers',
+      summary: 'H&aacute; seis anos, a empresa queimava g&aacute;s natural que as petroleiras n&atilde;o conseguiam vender. Hoje, atua na infraestrutura de intelig&#234;ncia artificial.'
+    });
+    if (htmlEntityProbe !== 'Há seis anos, a empresa queimava gás natural que as petroleiras não conseguiam vender. Hoje, atua na infraestrutura de inteligência artificial.' || /&(?:#\d+|#x[0-9a-f]+|[a-z][a-z0-9]+);/i.test(htmlEntityProbe)) {
+      throw new Error(`Decodificação de entidades HTML do Radar falhou: ${htmlEntityProbe}`);
     }
     const articleFactsProbe = extractArticleFacts(`
       <p>O logotipo da OpenAI é visto em um telefone celular em frente à tela inicial do ChatGPT — Foto: AP/Michael Dwyer, Arquivo</p>
