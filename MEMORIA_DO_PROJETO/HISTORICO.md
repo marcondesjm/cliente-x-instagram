@@ -3,7 +3,7 @@
 ## 2026-09-05 09:44 BRT — Legibilidade do carrossel do livro corrigida
 
 - Revisão da publicação `https://www.instagram.com/p/Dc4azkPIC2q/`, Media ID `17935225437363953` e Story ID `18111891713115170`, confirmou três falhas: `Documentação` podia ser quebrada no meio, `SALVE ESTE PASSO` cobria o texto do terceiro card e o selo podia combinar texto quase branco com fundo branco.
-- Correção `f5c0dd7`: a coluna editorial ganhou largura e fonte ajustadas, sem quebra interna de palavras; o selo do layout `book-split` foi movido para a coluna direita; todos os selos intermediários do estilo de impacto usam contraste preto/branco com borda visível.
+- Correção `a346e4f`: a coluna editorial ganhou largura e fonte ajustadas, sem quebra interna de palavras; o selo do layout `book-split` foi movido para a coluna direita; todos os selos intermediários do estilo de impacto usam contraste preto/branco com borda visível.
 - O cartão de apoio do `book-split` subiu 30 px para não encostar na barra de progresso.
 - O pack exato `livro-claude-code-20260902-09` foi reproduzido no render `2026-09-05-094407-slot-0-render-only`. Os slides 1 e 3 foram inspecionados visualmente: palavra inteira, texto completo, selo separado e contraste legível.
 - Validações aprovadas: `node --check`, `git diff --check`, `npm run validate-copy` e render completo dos cinco cards mais Story.
@@ -13,7 +13,7 @@
 
 - Incidente confirmado na publicação `https://www.instagram.com/reel/Dc5sDRIiNe3/`: o Story ID `17901301998575796`, com a pauta `China lança plano para apoiar 10 mil novas empresas de inteligência artificial`, concentrava título e fotografia no alto e deixava uma faixa inferior visualmente vazia.
 - Causa: a fotografia terminava em `y=1410` para respeitar os 500 px reservados aos controles do Instagram. Essa proteção é necessária para textos, mas excessiva para uma imagem puramente visual.
-- Correção `bbb87a5`: título, data, CTA e assinatura continuam dentro da área segura; somente a fotografia pode avançar 280 px na faixa decorativa inferior. O painel fotográfico passou de 480 para 720 px e ganhou distância suficiente do CTA para não acionar a redução automática.
+- Correção `5ed5a5c`: título, data, CTA e assinatura continuam dentro da área segura; somente a fotografia pode avançar 280 px na faixa decorativa inferior. O painel fotográfico passou de 480 para 720 px e ganhou distância suficiente do CTA para não acionar a redução automática.
 - Validações aprovadas: `node --check`, `git diff --check`, `npm run validate-copy` (21 packs locais, 54 automáticos e 75 combinações) e `npm run render-only`.
 - Render `2026-09-05-093827-slot-0-render-only` inspecionado visualmente: foto ampla até o bloco inferior, CTA legível, nenhuma colisão e apenas a margem final destinada à interface do Instagram.
 - Nenhuma republicação foi feita. A correção vale para os próximos Stories automáticos após envio ao `origin/main`.
