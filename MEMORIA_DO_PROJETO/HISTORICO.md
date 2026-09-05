@@ -2734,3 +2734,12 @@ Conclusao de ativacao:
 - Validações locais aprovadas para os cinco objetivos, contexto, decaimento, fadiga, distribuição 70/20/10, 75 seleções, sintaxe, dashboard e diff. Commit funcional `b0a0b45` e checkpoint `1b625c7` enviados ao `origin/main`.
 - O push iniciou automaticamente o workflow `33916264377`, concluído com sucesso inclusive em validação, coleta e persistência. O commit automático `df45fa2` gravou schema 3, `nerion-adaptive-v1.1.0`, 71 amostras contextualizadas e 36 observadas.
 - Os contextos iniciais já separam Feed/Reels, quatro faixas horárias e objetivos; confiança continua `moderate`, modo `assisted-learning`. Deploy `dpl_HwJdyEYHjo2bZpe6Q37Y3LzQ1ijB` em `READY`; domínio principal confirmou os novos cartões e o estado público v1.1.
+# 2026-09-05 10:09 BRT — Reel do livro comprovado e agenda multi-conta modernizada
+
+- O item autoral `livro-claude-code-20260902-11` foi antecipado para uma prova real pelo caminho automático do vigia, sem `workflow_dispatch` e sem publicação local.
+- A publicação “Ambiente local não é ambiente publicado.” foi persistida às 10:03 BRT: Reel `17906748327503939`, Story `18033045212654103`, permalink `https://www.instagram.com/reel/Dc6BfBFAg4Z/`; comentário inicial sem erro.
+- A capa vertical do Reel usa a correção de preenchimento enviada em `17828c46`; o render exato anterior confirmou foto ocupando o quadro, texto íntegro, CTA separado e contraste legível.
+- A programação de amanhã ganhou cartões mais amplos, resumo por formato, filtros de Todos/Reels/Feed/Manuais, legenda resumida e fonte compacta.
+- O cadastro de empresas ganhou a etapa “Confirmar a conexão”, com teste somente leitura que valida usuário, tipo profissional, quantidade de mídias e permissão `instagram_content_publish`, sem expor token nem criar post.
+- Sintaxe da API e do JavaScript do dashboard, `validate-copy` com 75 seleções e `git diff --check` aprovados. Implementação enviada ao `origin/main` em `817772d1`.
+- O perfil do Facebook foi conferido após a publicação: o novo Reel ainda não estava visível na aba de Reels. O compartilhamento no Facebook permanece não comprovado e não é tratado como sucesso.

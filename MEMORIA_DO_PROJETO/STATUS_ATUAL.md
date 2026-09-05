@@ -846,3 +846,10 @@ Resultado:
 - Validações aprovadas: modelo puro v1.1, cinco objetivos, baseline contextual, decaimento temporal, auditoria, fadiga, sintaxe, dashboard, 75 seleções editoriais e `git diff --check`. Commit funcional `b0a0b45` e checkpoint `1b625c7` enviados ao `origin/main`.
 - Workflow automático `33916264377` concluiu todas as etapas e persistiu `df45fa2`: schema 3, modelo v1.1, 71 publicações contextualizadas, 36 observadas, confiança moderada e modo assistido.
 - Deploy `dpl_HwJdyEYHjo2bZpe6Q37Y3LzQ1ijB` em `READY`; o domínio principal confirmou contexto em destaque, visitas ao perfil, commit estável e descrição v1.1. Próxima prova: observar decisões e resultados das novas publicações contextualizadas.
+# Atualizacao 2026-09-05 10:09 BRT — publicação visual comprovada e painel multi-conta mais eficiente
+
+- `origin/main` contém a correção de capa vertical (`17828c46`) e a agenda modernizada com teste seguro de conexão (`817772d1`).
+- Prova Instagram: “Ambiente local não é ambiente publicado.”, Reel `17906748327503939`, Story `18033045212654103`, permalink `https://www.instagram.com/reel/Dc6BfBFAg4Z/`, publicado automaticamente às 10:03 BRT e persistido em `publication-history.json`.
+- O painel mostra resumo e filtros na previsão de amanhã, reduz a densidade visual dos cartões e preserva os 13 horários BRT.
+- Novas contas continuam sendo criadas por convite OAuth mascarado. Depois da conexão, o botão “Testar conta selecionada” faz verificação somente leitura e não publica conteúdo.
+- Facebook: conta vinculada e compartilhamento automático de posts/Stories estavam ativos, porém o Reel novo ainda não apareceu na aba de Reels na verificação das 10:09 BRT. Publicação no Facebook segue pendente de prova.
