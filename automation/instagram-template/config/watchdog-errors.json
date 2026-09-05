@@ -1,23 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-08-28:0:33214757578",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-08-28",
-    "slotIndex": 0,
-    "scheduledAt": "2026-08-28T09:30:00.000Z",
-    "failedAt": "2026-08-28T21:58:06.410Z",
-    "workflowRun": "33214757578",
-    "workflowName": "Instagram Feed Cliente X",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/33214757578",
-    "stage": "unknown",
-    "error": "Story rejeitado: texto sobrepoe a foto.",
-    "solution": "Corrigir o texto do pack indicado no painel, rodar validar textos e salvar antes da próxima publicação.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-08-28-185806.json",
-    "resolvedAt": "2026-08-28T22:09:18.184Z",
-    "resolvedRun": "33215506981"
-  },
-  {
     "key": "cliente-x:2026-08-28:2:33224350959",
     "status": "resolved",
     "account": "cliente-x",
@@ -892,5 +874,21 @@
     "error": "Graph POST /17841404470203300/media_publish failed [400]: {\"error\":{\"message\":\"Fatal\",\"type\":\"OAuthException\",\"code\":-1,\"error_subcode\":2207085,\"is_transient\":false,\"error_user_title\":\"Erro interno gen\\u00e9rico\",\"error_user_msg\":\"Ocorreu um erro interno do servidor. Tente novamente mais tarde.\",\"fbtrace_id\":\"ADwZP6hlniOeYyJI9kngHrO\"}}",
     "solution": "Gerar novo token Meta/Instagram, atualizar o secret da conta no Vercel e no GitHub, depois rodar validar acessos no painel.",
     "failurePath": "automation/instagram-template/runs/failure-2026-09-05-132857.json"
+  },
+  {
+    "key": "cliente-x:2026-09-05:4:33977881613",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-09-05",
+    "slotIndex": 4,
+    "scheduledAt": "2026-09-05T15:10:00.000Z",
+    "failedAt": "2026-09-05T16:32:24.725Z",
+    "workflowRun": "33977881613",
+    "workflowName": "Instagram Watchdog Backup",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/33977881613",
+    "stage": "Graph POST /17841404470203300/media_publish",
+    "error": "Graph POST /17841404470203300/media_publish failed [400]: {\"error\":{\"message\":\"Fatal\",\"type\":\"OAuthException\",\"code\":-1,\"error_subcode\":2207085,\"is_transient\":false,\"error_user_title\":\"Erro interno gen\\u00e9rico\",\"error_user_msg\":\"Ocorreu um erro interno do servidor. Tente novamente mais tarde.\",\"fbtrace_id\":\"AecYcpRWriiI97Cq7Y5W_z1\"}}",
+    "solution": "Gerar novo token Meta/Instagram, atualizar o secret da conta no Vercel e no GitHub, depois rodar validar acessos no painel.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-09-05-133224.json"
   }
 ]
