@@ -23,6 +23,10 @@ const STORY_HEIGHT = 1920;
 const STORY_SAFE_TOP = 250;
 const STORY_SAFE_BOTTOM = 500;
 const STORY_SAFE_HEIGHT = STORY_HEIGHT - STORY_SAFE_TOP - STORY_SAFE_BOTTOM;
+// Fotos podem ocupar a faixa decorativa inferior, onde nenhum texto essencial
+// deve entrar. Isso evita um rodape visualmente vazio sem disputar espaco com
+// os controles do Instagram.
+const STORY_PHOTO_BOTTOM_ALLOWANCE = 280;
 const FORBIDDEN_GENERIC_RESEARCH_COVERS = [
   /sua equipe vive ocupada.*tarefas importantes não andam/i,
   /trabalho repetido ocupa o tempo que deveria ir para o cliente/i,
@@ -3568,7 +3572,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     .impact-carousel h1 { color: ${slideStyle.text}; }
     .impact-carousel p { color: ${slideStyle.muted}; }
     .impact-carousel .feed-cta { background: ${accent}; color: #fff; }
-    .impact-carousel.has-story-photo .visual-card { display: block; left: 72px; right: 72px; top: 930px; height: 480px; border-radius: 30px; background-position: center; box-shadow: 0 28px 72px rgba(0,0,0,.28); }
+    .impact-carousel.has-story-photo .visual-card { display: block; left: 72px; right: 72px; top: 980px; height: 720px; border-radius: 30px; background-position: center; box-shadow: 0 28px 72px rgba(0,0,0,.28); }
     .impact-carousel.has-story-photo .avatar, .impact-carousel.has-story-photo .panel, .impact-carousel.has-story-photo .note { display: none; }
     .impact-carousel.has-story-photo footer { bottom: ${STORY_SAFE_BOTTOM + 26}px; }
     .impact-carousel.has-story-photo.mode-statement .badge { margin-top: 62px; text-align: left; }
@@ -3676,7 +3680,7 @@ async function renderStory(runDir, pack, account, style, renderContext = {}) {
   const imagePath = join(runDir, 'story.jpg');
   writeFileSync(htmlPath, html, 'utf8');
   await page.goto(`file://${htmlPath.replace(/\\/g, '/')}`);
-  const storyLayout = await page.evaluate(({ safeTop, safeBottom, storyHeight, storyWidth }) => {
+  const storyLayout = await page.evaluate(({ safeTop, safeBottom, storyHeight, storyWidth, photoBottomAllowance }) => {
     const copyBlocks = [...document.querySelectorAll('h1, p, .feed-cta')].filter((element) => getComputedStyle(element).display !== 'none');
     const image = [...document.querySelectorAll('.visual-card, .avatar')]
       .find((element) => getComputedStyle(element).display !== 'none');
@@ -3757,16 +3761,18 @@ async function renderStory(runDir, pack, account, style, renderContext = {}) {
         // A borda/arredondamento da foto pode ultrapassar alguns pixels por
         // causa do recorte e da rasterizacao do Chromium. Isso nao compromete
         // a area segura; textos continuam com a tolerancia estrita.
-        const tolerance = element.classList.contains('avatar') || element.classList.contains('visual-card') ? 12 : 2;
+        const isPhoto = element.classList.contains('avatar') || element.classList.contains('visual-card');
+        const tolerance = isPhoto ? 12 : 2;
+        const allowedBottom = safeBottomEdge + (isPhoto ? photoBottomAllowance : 0);
         const outside = rect.left < 48 - tolerance
           || rect.right > storyWidth - 48 + tolerance
           || rect.top < safeTop - tolerance
-          || rect.bottom > safeBottomEdge + tolerance;
+          || rect.bottom > allowedBottom + tolerance;
         return outside ? `${element.className || element.tagName.toLowerCase()}@${Math.round(rect.left)},${Math.round(rect.top)},${Math.round(rect.right)},${Math.round(rect.bottom)}` : '';
       })
       .filter(Boolean);
     return { overlap: remainingCollisions.length > 0, collisions: remainingCollisions, corrected, outsideSafeArea };
-  }, { safeTop: STORY_SAFE_TOP, safeBottom: STORY_SAFE_BOTTOM, storyHeight: STORY_HEIGHT, storyWidth: STORY_WIDTH });
+  }, { safeTop: STORY_SAFE_TOP, safeBottom: STORY_SAFE_BOTTOM, storyHeight: STORY_HEIGHT, storyWidth: STORY_WIDTH, photoBottomAllowance: STORY_PHOTO_BOTTOM_ALLOWANCE });
   if (storyLayout.corrected) {
     writeFileSync(htmlPath, await page.content(), 'utf8');
     console.log(`Story ajustado automaticamente em ${storyLayout.corrected} correcao(oes) de layout.`);
@@ -5066,6 +5072,9 @@ async function main() {
     }, account, impactStoryStyle, { publishMode: 'feed-and-story' }) : '';
     if (!impactStoryProbe.includes('has-story-photo') || !impactStoryProbe.includes('book-claude-briefing.png')) {
       throw new Error('Story de campanha com imagem voltou ao layout apenas textual.');
+    }
+    if (!impactStoryProbe.includes('height: 720px')) {
+      throw new Error('Story com foto voltou a deixar vazio excessivo no rodape.');
     }
     const reelNavigationProbe = impactStoryStyle ? slideHtml({
       eyebrow: 'VALE ENTENDER',
