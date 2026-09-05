@@ -20,6 +20,7 @@ Atualizado em: 2026-09-05 14:40 BRT
 
 - Correção do slot 4 preparada sobre `origin/main` `7eaad1eb`: `OAuthException` code `-1` / subcode `2207085` é erro interno de `media_publish`, não prova de token vencido.
 - Renovação de token fica reservada a code `190`, subcode `463` ou mensagem explícita de expiração. Para `2207085`, o publicador revalida o contêiner e repete com espera progressiva de 15 s e 30 s.
+- Se o Reel continuar recusado, a automação consulta as mídias recentes para evitar duplicação e recupera o mesmo conteúdo como carrossel somente quando confirma que o Reel não apareceu.
 - Alertas abertos receberam orientação corrigida. O slot 4 permanece pendente até prova automática completa em histórico, permalink, Feed/Reel ID e Story ID.
 - Validações locais aprovadas: sintaxe dos três scripts, assertions da classificação, `git diff --check` e `npm run validate-copy` com 75 packs.
 

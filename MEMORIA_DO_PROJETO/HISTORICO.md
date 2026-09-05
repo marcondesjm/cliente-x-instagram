@@ -5,6 +5,7 @@
 - O alerta do slot 4 foi confirmado em produção com `OAuthException` code `-1`, subcode `2207085` e mensagem de erro interno genérico da Meta; esse retorno não comprova expiração do token.
 - O Vigia agora recomenda renovação somente para sinais explícitos de credencial, como code `190`, subcode `463` ou `Session has expired`.
 - O publicador passou a tratar `2207085` como falha recuperável específica de `media_publish`, revalidar o contêiner antes de cada tentativa e aguardar 15 s e 30 s entre as novas tentativas.
+- Como a Meta manteve `2207085` em contêineres de Reel válidos, o fluxo agora consulta o perfil para impedir duplicação e, quando a mídia realmente não apareceu, recupera o mesmo conteúdo como carrossel no próprio caminho automático.
 - Os alertas abertos do incidente receberam a orientação corrigida. O slot continua pendente até a automação comprovar permalink, Feed/Reel ID, Story ID e histórico persistido.
 - Checkout limpo `cliente-x-instagram-modern-meta-publish-fix-20260905`, branch `fix/meta-publish-2207085`, criado sobre `origin/main` `7eaad1eb`. Validações aprovadas: `node --check`, assertions da classificação, `git diff --check` e `npm run validate-copy` com 75 packs.
 

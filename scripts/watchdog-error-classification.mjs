@@ -15,7 +15,7 @@ export function isMetaCredentialError(errorText = '', stage = '') {
 export function solutionForWatchdogError(errorText = '', stage = '') {
   const text = `${stage} ${errorText}`.toLowerCase();
   if (isMetaInternalPublishError(errorText, stage)) {
-    return 'A Meta apresentou erro interno ao concluir a publicacao. O vigia deve validar o container e o acesso, aguardar com intervalo progressivo e recuperar o slot automaticamente; renovar o token somente se a validacao retornar erro 190/463.';
+    return 'A Meta apresentou erro interno ao concluir o Reel. O vigia valida o container, confirma que a midia nao apareceu no perfil e recupera o mesmo conteudo como carrossel; renovar o token somente se a validacao retornar erro 190/463.';
   }
   if (/ffmpeg|spawnsync\s+ffmpeg\s+enoent/.test(text)) {
     return 'O vigia deve instalar e validar o FFmpeg para qualquer fila pendente antes de gerar Reel; a proxima publicacao bem-sucedida encerra este alerta automaticamente.';

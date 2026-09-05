@@ -4682,6 +4682,26 @@ async function createCarouselChildFromImage(userId, token, imagePath, apiKey) {
   }, MEDIA_URL_RETRY_ATTEMPTS);
 }
 
+async function createCarouselFromImages(userId, token, imagePaths, apiKey, caption) {
+  const children = [];
+  const imageUrls = [];
+  for (const imagePath of imagePaths) {
+    const result = await createCarouselChildFromImage(userId, token, imagePath, apiKey);
+    children.push(result.child);
+    imageUrls.push(result.imageUrl);
+  }
+  const childIds = children.map((child) => child.id);
+  await Promise.all(childIds.map((childId) => pollContainer(childId, token)));
+  const carousel = await graphPost(`/${userId}/media`, {
+    media_type: 'CAROUSEL',
+    children: childIds.join(','),
+    caption,
+    access_token: token
+  });
+  await pollContainer(carousel.id, token);
+  return { carousel, childIds, imageUrls };
+}
+
 async function pollContainer(containerId, token) {
   const deadline = Date.now() + 90_000;
   while (Date.now() < deadline) {
@@ -5601,21 +5621,7 @@ async function main() {
     if (!reelVideoUrl) throw new Error('A publicacao de Reel exige hospedagem publica do video no GitHub Actions.');
     reel = await createReel(userId, token, reelVideoUrl, pack.caption);
   } else if (!storyOnly) {
-    const children = [];
-    for (const imagePath of publishImagePaths) {
-      const result = await createCarouselChildFromImage(userId, token, imagePath, imgbbKey);
-      children.push(result.child);
-      imageUrls.push(result.imageUrl);
-    }
-    childIds = children.map((child) => child.id);
-    await Promise.all(childIds.map((childId) => pollContainer(childId, token)));
-    carousel = await graphPost(`/${userId}/media`, {
-      media_type: 'CAROUSEL',
-      children: childIds.join(','),
-      caption: pack.caption,
-      access_token: token
-    });
-    await pollContainer(carousel.id, token);
+    ({ carousel, childIds, imageUrls } = await createCarouselFromImages(userId, token, publishImagePaths, imgbbKey, pack.caption));
   }
   if (!feedOnly && !reelOnly) ({ story, imageUrl: storyImageUrl } = await createStoryFromImage(userId, token, publishStoryImagePath, imgbbKey));
 
@@ -5654,9 +5660,29 @@ async function main() {
   };
   let media = null;
   let details = null;
+  let effectiveReelMode = reelMode;
+  let publicationFallback = null;
   if (!storyOnly) {
-    media = await publishMediaContainer(userId, reelMode ? reel.id : carousel.id, token);
-    details = await graphGet(`/${media.id}`, { fields: 'id,permalink,timestamp', access_token: token });
+    try {
+      media = await publishMediaContainer(userId, reelMode ? reel.id : carousel.id, token);
+    } catch (error) {
+      if (!reelMode || error.graphSubcode !== 2207085) throw error;
+
+      const recentDuplicate = findDuplicateCaption(await fetchRecentMedia(userId, token), pack.caption);
+      if (recentDuplicate) {
+        console.warn(`A Meta retornou 2207085, mas a publicacao ${recentDuplicate.id} ja aparece no perfil; o fallback foi cancelado para evitar duplicacao.`);
+        media = { id: recentDuplicate.id };
+        details = recentDuplicate;
+        publicationFallback = 'reel-confirmed-after-ambiguous-meta-error';
+      } else {
+        console.warn('A Meta manteve o erro 2207085 no Reel e nenhuma publicacao equivalente apareceu no perfil; recuperando o slot como carrossel.');
+        ({ carousel, childIds, imageUrls } = await createCarouselFromImages(userId, token, publishImagePaths, imgbbKey, pack.caption));
+        media = await publishMediaContainer(userId, carousel.id, token);
+        effectiveReelMode = false;
+        publicationFallback = 'reel-to-carousel-after-2207085';
+      }
+    }
+    details ||= await graphGet(`/${media.id}`, { fields: 'id,permalink,timestamp', access_token: token });
   }
   let storyMedia = null;
   let storyDetails = null;
@@ -5679,6 +5705,11 @@ async function main() {
   }
   const result = {
     ...baseResult,
+    reelMode: effectiveReelMode,
+    publicationFallback,
+    childIds,
+    imageUrls,
+    carouselId: carousel?.id || null,
     mediaId: media?.id,
     ...(details || {}),
     storyMediaId: storyMedia?.id || null,
