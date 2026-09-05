@@ -2803,3 +2803,13 @@ Conclusao de ativacao:
 - Identificadores observados: perfil da Página `100069682068055` e ativo de Página `107481254737860`.
 - A Página foi apenas reativada. O Instagram ainda não foi conectado a ela, nenhuma permissão/API foi configurada e nenhum conteúdo foi publicado.
 - A Página `Eletro e Casa Shop` não foi alterada.
+
+# 2026-09-05 12:16 BRT — painel sincronizado, slot 11:50 comprovado e espelhado no Facebook
+
+- O painel v6.02 deixou de apresentar a pesquisa momentânea do Radar como conteúdo confirmado: horários futuros agora informam que a pauta será escolhida no disparo e não exibem anexo fictício; horários concluídos usam `published-slots.json` e `publication-history.json`, com título real e permalink.
+- Correção enviada ao `origin/main` nos commits `817cd935` e `d0a510cd`; deploy Vercel de produção `dpl_AHSPURKbGH9mhwQQiJp5pkVS51H7` ficou `READY` e o alias `https://cliente-x-instagram.vercel.app` respondeu com a v6.02.
+- O slot 3 de 11:50 foi executado automaticamente pelo GitHub Actions run `33973832554` e persistido às `12:10 BRT`, sem disparo manual.
+- Publicação Instagram: `Wikipédia perdeu acessos após resumos de IA do Google, diz estudo`; permalink `https://www.instagram.com/p/Dc6QCWQiLeH/`; Feed `17970850242134953`; Story `18111695108107588`.
+- Capa e Story hospedados em `docs/generated/cliente-x/2026-09-05-120858-slot-3/` foram inspecionados em tamanho original: imagem significativa, título legível e composição 9:16 preenchida.
+- O primeiro comentário falhou separadamente com OAuth `#10`; Feed e Story permaneceram publicados e comprovados.
+- Com autorização explícita, a mesma pauta e legenda foram publicadas na Página `Marcondes Machado` no Facebook, com cartão de link da fonte Tecnoblog: `https://www.facebook.com/Marcondes.Jorge.Machado/posts/pfbid023MFWvRRUoVP4LZWVYyAzDASAgnNwo7s7YFW8kSVkvrp3tjMt8t4r35JoCCYeZocAl`.
