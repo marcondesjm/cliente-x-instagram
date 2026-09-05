@@ -4003,6 +4003,8 @@ function recordPublicationHistory(configDir, accountKey, pack, result) {
       firstCommentId: result.firstCommentId || null,
       firstCommentError: result.firstCommentError || null,
       permalink: result.permalink || null,
+      publishedFormat: result.storyOnly ? null : (result.reelMode ? 'REEL' : 'CAROUSEL'),
+      publicationFallback: result.publicationFallback || null,
       selectionMode: result.selectionMode || null,
       learning: result.learningDecision || null,
       learningContext: result.learningContext || null,
