@@ -1,6 +1,6 @@
 # Status Atual
 
-Atualizado em: 2026-09-05 11:35 BRT
+Atualizado em: 2026-09-05 14:40 BRT
 
 ## Regra permanente de checkpoint
 
@@ -17,6 +17,11 @@ Atualizado em: 2026-09-05 11:35 BRT
 - O checkpoint deve acompanhar a alteracao no Git e no remoto, quando aplicavel, antes do encerramento da tarefa.
 
 ## Projeto ativo
+
+- Correção do slot 4 preparada sobre `origin/main` `7eaad1eb`: `OAuthException` code `-1` / subcode `2207085` é erro interno de `media_publish`, não prova de token vencido.
+- Renovação de token fica reservada a code `190`, subcode `463` ou mensagem explícita de expiração. Para `2207085`, o publicador revalida o contêiner e repete com espera progressiva de 15 s e 30 s.
+- Alertas abertos receberam orientação corrigida. O slot 4 permanece pendente até prova automática completa em histórico, permalink, Feed/Reel ID e Story ID.
+- Validações locais aprovadas: sintaxe dos três scripts, assertions da classificação, `git diff --check` e `npm run validate-copy` com 75 packs.
 
 - Carrossel do livro `Dc4azkPIC2q` corrigido em `a346e4f`: palavras longas não quebram no meio no layout editorial, `SALVE ESTE PASSO` não cobre mais o cartão e os selos possuem contraste preto/branco explícito.
 - Reprodução exata aprovada no render `2026-09-05-094407-slot-0-render-only`; slides 1 e 3 inspecionados visualmente, com barra de progresso livre. Nenhuma republicação foi feita.

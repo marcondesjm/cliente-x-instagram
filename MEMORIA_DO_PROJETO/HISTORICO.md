@@ -1,5 +1,13 @@
 # Historico
 
+## 2026-09-05 14:40 BRT — Erro interno `media_publish` separado de token vencido
+
+- O alerta do slot 4 foi confirmado em produção com `OAuthException` code `-1`, subcode `2207085` e mensagem de erro interno genérico da Meta; esse retorno não comprova expiração do token.
+- O Vigia agora recomenda renovação somente para sinais explícitos de credencial, como code `190`, subcode `463` ou `Session has expired`.
+- O publicador passou a tratar `2207085` como falha recuperável específica de `media_publish`, revalidar o contêiner antes de cada tentativa e aguardar 15 s e 30 s entre as novas tentativas.
+- Os alertas abertos do incidente receberam a orientação corrigida. O slot continua pendente até a automação comprovar permalink, Feed/Reel ID, Story ID e histórico persistido.
+- Checkout limpo `cliente-x-instagram-modern-meta-publish-fix-20260905`, branch `fix/meta-publish-2207085`, criado sobre `origin/main` `7eaad1eb`. Validações aprovadas: `node --check`, assertions da classificação, `git diff --check` e `npm run validate-copy` com 75 packs.
+
 ## 2026-09-05 11:35 BRT — Serviços, landing e primeiro post do Facebook concluídos
 
 - A Página `Marcondes Machado` recebeu dez especialidades completas, todas com descrição: consultoria de IA, automação de atendimento e vendas, criação de conteúdo com IA, automação de processos, treinamento, agentes e integrações, estratégia comercial, gestão de conteúdo, implantação da Nerion Social e análise de resultados.

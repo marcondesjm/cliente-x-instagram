@@ -3198,6 +3198,10 @@ function createHttpError(label, status, body) {
   const graphMediaDownloadRejected = graphError
     && graphError.code === 9004
     && graphError.error_subcode === 2207052;
+  const graphInternalPublishError = graphError
+    && label.includes('/media_publish')
+    && graphError.code === -1
+    && graphError.error_subcode === 2207085;
   const githubRefRace = label.startsWith('GitHub ')
     && status === 422
     && /update is not a fast forward/i.test(String(payload?.message || body));
@@ -3207,8 +3211,12 @@ function createHttpError(label, status, body) {
   error.retryable = RETRYABLE_STATUS.has(status)
     || Boolean(graphMediaTimeout)
     || Boolean(graphMediaDownloadRejected)
+    || Boolean(graphInternalPublishError)
     || githubRefRace;
   error.mediaUrlRejected = Boolean(graphMediaDownloadRejected);
+  error.graphCode = graphError?.code ?? null;
+  error.graphSubcode = graphError?.error_subcode ?? null;
+  error.retryAfterMs = graphInternalPublishError ? 15_000 : 0;
   return error;
 }
 
@@ -3227,7 +3235,8 @@ async function withRetry(label, operation, attempts = RETRY_ATTEMPTS) {
       const canRetry = error.retryable && attempt < maxAttempts;
       if (!canRetry) break;
 
-      const delay = retryDelay(attempt);
+      const errorDelay = (Number(error.retryAfterMs) || 0) * (2 ** (attempt - 1));
+      const delay = Math.max(retryDelay(attempt), errorDelay);
       console.warn(`${label} falhou na tentativa ${attempt}/${maxAttempts}; tentando de novo em ${Math.round(delay / 1000)}s. ${error.message}`);
       await sleep(delay);
     }
@@ -3856,7 +3865,7 @@ async function graphGet(path, params = {}) {
   });
 }
 
-async function graphPost(path, params = {}) {
+async function graphPost(path, params = {}, attempts = RETRY_ATTEMPTS) {
   const label = `Graph POST ${path}`;
   return withRetry(label, async () => {
     const url = new URL(`${IG_BASE}${path}`);
@@ -3865,7 +3874,7 @@ async function graphPost(path, params = {}) {
     const text = await res.text();
     if (!res.ok) throw createHttpError(label, res.status, text);
     return text ? JSON.parse(text) : {};
-  });
+  }, attempts);
 }
 
 function normalizeCaption(text = '') {
@@ -4682,6 +4691,18 @@ async function pollContainer(containerId, token) {
     await new Promise((resolveTimeout) => setTimeout(resolveTimeout, 3000));
   }
   throw new Error(`Container ${containerId} timed out.`);
+}
+
+async function publishMediaContainer(userId, containerId, token) {
+  return withRetry(`Graph POST /${userId}/media_publish`, async () => {
+    // Revalida o mesmo container antes de cada tentativa. Assim um erro interno
+    // da Meta nao e confundido com token vencido nem publica um container falho.
+    await pollContainer(containerId, token);
+    return graphPost(`/${userId}/media_publish`, {
+      creation_id: containerId,
+      access_token: token
+    }, 1);
+  });
 }
 
 async function createStory(userId, token, imageUrl) {
@@ -5634,13 +5655,13 @@ async function main() {
   let media = null;
   let details = null;
   if (!storyOnly) {
-    media = await graphPost(`/${userId}/media_publish`, { creation_id: reelMode ? reel.id : carousel.id, access_token: token });
+    media = await publishMediaContainer(userId, reelMode ? reel.id : carousel.id, token);
     details = await graphGet(`/${media.id}`, { fields: 'id,permalink,timestamp', access_token: token });
   }
   let storyMedia = null;
   let storyDetails = null;
   if (!feedOnly && !reelOnly) {
-    storyMedia = await graphPost(`/${userId}/media_publish`, { creation_id: story.id, access_token: token });
+    storyMedia = await publishMediaContainer(userId, story.id, token);
     storyDetails = await graphGet(`/${storyMedia.id}`, { fields: 'id,timestamp', access_token: token });
   }
   let firstComment = null;
