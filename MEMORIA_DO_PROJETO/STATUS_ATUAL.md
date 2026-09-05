@@ -920,3 +920,9 @@ Resultado:
 - O Radar passa a converter entidades como `H&aacute;`, `g&aacute;s`, `n&atilde;o`, `&ccedil;` e códigos numéricos para caracteres portugueses normais antes de montar o conteúdo.
 - O cache anterior recebe a mesma correção ao ser carregado e a validação bloqueia qualquer texto que ainda contenha entidade HTML.
 - Teste de regressão com a frase reportada, sintaxe, `validate-copy` e `git diff --check` aprovados. Nenhuma publicação foi refeita.
+
+# Atualizacao 2026-09-05 15:56 BRT — post Magalu Cloud com falha visual auditado
+
+- `Dc6oFhHlDuB` foi publicado antes da trava visual: Feed `18147144790553771`, Story `18109069519887173`, run `33984588888`.
+- Os arquivos reais comprovam quatro cartões sem fotografia editorial e um cartão com foto genérica; o post foi excluído do aprendizado de desempenho.
+- A correção `eb1a2a63` já impede o mesmo resultado nas próximas pautas. O conteúdo existente permanece no perfil até haver autorização para removê-lo e publicar uma versão nova.

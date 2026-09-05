@@ -2847,3 +2847,11 @@ Conclusao de ativacao:
 - O cache editorial antigo também é higienizado ao ser lido. Uma nova trava interrompe a publicação se qualquer entidade HTML ainda permanecer na legenda, nos slides, no título ou nos fatos da matéria.
 - O teste exato converte `H&aacute; seis anos... g&aacute;s... n&atilde;o... intelig&#234;ncia` em `Há seis anos... gás... não... inteligência`; sintaxe, 75 seleções editoriais e `git diff --check` aprovados.
 - Nenhuma mídia foi apagada, editada ou republicada nesta correção.
+
+# 2026-09-05 15:56 BRT — carrossel Magalu Cloud confirmado sem anexos visuais
+
+- O permalink `https://www.instagram.com/p/Dc6oFhHlDuB/` corresponde ao carrossel `18147144790553771`, Story `18109069519887173`, publicado às 15:40 BRT pelo run automático `33984588888` após fallback de Reel para carrossel.
+- A inspeção dos cinco arquivos hospedados em `2026-09-05-153803-slot-6-reel-fallback` confirmou a reclamação: capa e cartões 2, 3 e 5 sem fotografia editorial; o cartão 4 contém apenas uma foto genérica local.
+- A publicação ocorreu cerca de dez minutos antes do commit `eb1a2a63`, que passou a exigir uma fotografia editorial inédita em cada slide e bloquear a postagem se a quantidade for insuficiente.
+- O media ID defeituoso foi incluído em `performance-learning-exclusions.json` para não ensinar ao modelo que esse layout vazio é um resultado visual aceitável.
+- O post existente não foi apagado nem republicado; substituir as imagens exige remover e publicar uma nova mídia, ação pendente de autorização explícita.
