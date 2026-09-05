@@ -1752,7 +1752,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v6.02</div>
+        <div class="header-version" id="headerVersion">Versão atual: v6.03</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -1990,7 +1990,7 @@
           <div class="panel-head" style="margin-bottom: 10px;">
             <div>
               <div class="section-label" id="tomorrowPreviewDate">Amanhã</div>
-              <h2>Todos os posts de amanhã</h2>
+              <h2>Agenda automática de amanhã</h2>
             </div>
             <span class="status-pill" id="tomorrowPreviewStatus">Carregando</span>
           </div>
@@ -4739,7 +4739,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         : liveData ? `Evoluindo · confiança ${confidence}` : `Snapshot · confiança ${confidence}`;
       status.className = `status-pill ${stale || !liveData ? 'warn' : 'good'}`;
       grid.innerHTML = [
-        card('Versão do modelo', learning.modelVersion || 'nerion-adaptive-v1.0.0', 'plataforma v6.02 estável'),
+        card('Versão do modelo', learning.modelVersion || 'nerion-adaptive-v1.0.0', 'plataforma v6.03 estável'),
         card('Atualização dos dados', liveData ? 'Contínua' : 'Snapshot do deploy', liveData ? 'estado vivo do GitHub main' : 'contingência temporária', liveData ? 'good' : 'warn'),
         card('Confiança atual', confidence, `${formatNumber(learning.effectiveSamples)} amostras · alcance ${formatNumber(learning.effectiveReach)}`, confidence === 'initial' ? 'warn' : 'good'),
         card('Modo operacional', stale ? 'Fallback editorial' : 'Aprendizado assistido', stale ? 'peso aprendido temporariamente desligado' : 'peso limitado pela confiança', stale ? 'warn' : 'good'),
@@ -4758,7 +4758,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         card('Janelas de coleta', (learning.windowsHours || []).map((hours) => `${hours} h`).join(' · '), `atualizado ${updated}`)
       ].join('');
       message.textContent = stale
-        ? `Última atualização: ${updated}. A coleta ultrapassou a janela segura; a v6.02 desligou o peso aprendido e manteve a seleção editorial com originalidade, novidade e integridade.`
+        ? `Última atualização: ${updated}. A coleta ultrapassou a janela segura; a v6.03 desligou o peso aprendido e manteve a seleção editorial com originalidade, novidade e integridade.`
         : liveData
           ? `Última atualização: ${updated}. O painel acompanha continuamente o estado persistido pela automação. Modelo ${learning.modelVersion || 'adaptativo v1'} com confiança ${confidence}; seleção 70% desempenho, 20% exploração e 10% experimento, sempre após as travas editoriais.`
           : `Última atualização disponível no deploy: ${updated}. A consulta ao estado vivo está temporariamente indisponível; o painel mantém este snapshot sem interromper a automação.`;
@@ -6370,21 +6370,36 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.querySelectorAll('[data-plan-filter]').forEach((button) => {
         button.classList.toggle('active', button.dataset.planFilter === filter);
       });
-      const filteredItems = items.filter((item) => {
+      const selectedItems = items.filter((item) => {
         if (filter === 'manual') return item.type === 'manual';
         if (filter === 'reel' || filter === 'feed') return String(item.mode || '').toLowerCase().includes(filter);
         return true;
       });
+      const automaticItems = selectedItems.filter((item) => item.type === 'automatic');
+      const filteredItems = selectedItems.filter((item) => item.type !== 'automatic');
       const note = document.getElementById('tomorrowFilterNote');
-      if (note) note.textContent = filteredItems.length === items.length
-        ? 'Visão completa da programação'
-        : `${filteredItems.length} de ${items.length} posts exibidos`;
-      if (!filteredItems.length) {
+      if (note) note.textContent = selectedItems.length === items.length
+        ? 'Horários confirmados; pautas escolhidas somente no disparo'
+        : `${selectedItems.length} de ${items.length} horários exibidos`;
+      if (!filteredItems.length && !automaticItems.length) {
         list.innerHTML = '<div class="empty">Nenhum post corresponde a este filtro.</div>';
         return;
       }
 
-      list.innerHTML = filteredItems.map((item) => {
+      const automaticSummary = automaticItems.length ? `
+        <article class="plan-card">
+          <div class="plan-top">
+            <div class="plan-time">${automaticItems.length} horários</div>
+            <span class="status-pill good">Automático</span>
+          </div>
+          <div class="plan-title">Pautas escolhidas no momento da publicação</div>
+          <div class="plan-caption">O Radar verifica novidade, fonte e repetição no disparo. O painel não replica títulos de hoje como se fossem uma previsão confirmada de amanhã.</div>
+          <div class="plan-actions">
+            <div class="run-meta">${escapeHtml(automaticItems.map((item) => item.time).join(' · '))}</div>
+          </div>
+        </article>
+      ` : '';
+      list.innerHTML = automaticSummary + filteredItems.map((item) => {
         const typeLabel = item.type === 'manual' ? 'Manual' : item.type === 'program' ? 'Programa' : 'Automático';
         const typeClass = item.type === 'automatic' ? 'good' : 'warn';
         const slot = item.type === 'program'

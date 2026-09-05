@@ -5,6 +5,7 @@ import { extname, join, resolve } from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { analyzeBrandDocument } from '../lib/brand-analysis.js';
+import { synchronizeDailyPlan } from '../api/state.js';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const DOCS_DIR = join(ROOT, 'docs');
@@ -14,6 +15,8 @@ const ACCOUNTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', '
 const SCHEDULED_POSTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'scheduled-posts.json');
 const WEEKLY_PROGRAMS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'weekly-programs.json');
 const WATCHDOG_ERRORS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'watchdog-errors.json');
+const PUBLISHED_SLOTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'published-slots.json');
+const PUBLICATION_HISTORY_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'publication-history.json');
 const WORKFLOW_PATH = join(ROOT, '.github', 'workflows', 'instagram-feed-cliente-x.yml');
 const README_PATH = join(ROOT, 'README.md');
 const RUNS_DIR = join(ROOT, 'automation', 'instagram-template', 'runs');
@@ -474,6 +477,9 @@ function getState() {
     plan = dailyPlan(scheduleBrt, packs, scheduledPosts);
   }
   plan = mergeProgramItems(plan, weeklyPrograms);
+  const publishedSlots = existsSync(PUBLISHED_SLOTS_PATH) ? readJson(PUBLISHED_SLOTS_PATH) : [];
+  const publicationHistory = existsSync(PUBLICATION_HISTORY_PATH) ? readJson(PUBLICATION_HISTORY_PATH) : {};
+  plan = synchronizeDailyPlan(plan, publishedSlots, publicationHistory, account?.account || ACCOUNT, todaySaoPaulo());
   const tomorrowDate = tomorrowSaoPaulo();
   let tomorrowPlan = [];
   try {
@@ -481,7 +487,8 @@ function getState() {
   } catch {
     tomorrowPlan = dailyPlan(scheduleBrt, packs, scheduledPosts, tomorrowDate);
   }
-  tomorrowPlan = mergeProgramItems(tomorrowPlan, weeklyPrograms, tomorrowDate).slice(0, 3);
+  tomorrowPlan = mergeProgramItems(tomorrowPlan, weeklyPrograms, tomorrowDate);
+  tomorrowPlan = synchronizeDailyPlan(tomorrowPlan, publishedSlots, publicationHistory, account?.account || ACCOUNT, tomorrowDate);
   const latestResultFile = latestFiles(join(RUNS_DIR, ACCOUNT), (path) => path.endsWith('result.json'), 30)
     .find((file) => {
       const result = readJson(file.path);

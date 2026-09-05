@@ -48,11 +48,11 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'nerion-social-stable',
   label: 'Versão estável',
-  appVersion: 'v6.02',
+  appVersion: 'v6.03',
   status: 'funcionando',
   stableCommit: 'b0a0b45',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/b0a0b45',
-  description: 'Plataforma estável com publicação automática, Radar oficial, vigia em nuvem e aprendizado adaptativo v1.1 por contexto, objetivo e fadiga editorial.'
+  description: 'Plataforma estável com agenda sincronizada, Radar oficial, vigia em nuvem e aprendizado adaptativo v1.2 com evidência de distribuição.'
 };
 const MAINTENANCE = {
   githubToken: {
@@ -662,12 +662,42 @@ async function publisherDailyPlan(accountKey = 'cliente-x', dateString = todaySa
   return Array.isArray(payload.dailyPlan) ? payload.dailyPlan : [];
 }
 
-function synchronizeDailyPlan(plan = [], publishedSlots = [], publicationHistory = {}, accountKey = 'cliente-x', dateString = todaySaoPaulo()) {
+export function synchronizeDailyPlan(plan = [], publishedSlots = [], publicationHistory = {}, accountKey = 'cliente-x', dateString = todaySaoPaulo()) {
   const slots = (Array.isArray(publishedSlots) ? publishedSlots : [])
-    .filter((item) => item.account === accountKey && item.date === dateString && item.status === 'published');
+    .filter((item) => item.account === accountKey && item.date === dateString && item.status === 'published')
+    .sort((left, right) => Number(left.slotIndex) - Number(right.slotIndex));
   const history = Array.isArray(publicationHistory?.[accountKey])
     ? publicationHistory[accountKey]
     : (Array.isArray(publicationHistory?.entries) ? publicationHistory.entries : []);
+  const datedHistory = history
+    .filter((entry) => entry.selectionMode !== 'manual')
+    .filter((entry) => {
+      if (entry.slotDate) return entry.slotDate === dateString;
+      return brtDateAndTime(entry.publishedAt).date === dateString;
+    });
+  const usedPublications = new Set();
+  const publicationKey = (entry = {}, fallback = '') => String(entry.mediaId || entry.storyMediaId || entry.permalink || fallback);
+
+  const publicationForSlot = (slot) => {
+    const exact = datedHistory.find((entry) => (
+      entry.slotDate === dateString &&
+      Number(entry.slotIndex) === Number(slot.slotIndex) &&
+      !usedPublications.has(publicationKey(entry))
+    ));
+    if (exact) {
+      usedPublications.add(publicationKey(exact));
+      return exact;
+    }
+
+    const publishedAt = Date.parse(slot.publishedAt || '');
+    const available = datedHistory
+      .map((entry, index) => ({ entry, key: publicationKey(entry, `history-${index}`) }))
+      .filter(({ key }) => !usedPublications.has(key))
+      .sort((left, right) => Math.abs(Date.parse(left.entry.publishedAt || '') - publishedAt) - Math.abs(Date.parse(right.entry.publishedAt || '') - publishedAt));
+    const selected = available[0];
+    if (selected) usedPublications.add(selected.key);
+    return selected?.entry || null;
+  };
 
   return plan.map((item) => {
     if (item.type !== 'automatic') return item;
@@ -681,10 +711,7 @@ function synchronizeDailyPlan(plan = [], publishedSlots = [], publicationHistory
         slides: [], sourceUrl: '', source: '', packIndex: null
       };
     }
-    const publishedAt = Date.parse(slot.publishedAt || '');
-    const publication = history
-      .filter((entry) => entry.selectionMode !== 'manual' && Date.parse(entry.publishedAt || '') >= Date.parse(`${dateString}T00:00:00-03:00`))
-      .sort((a, b) => Math.abs(Date.parse(a.publishedAt || '') - publishedAt) - Math.abs(Date.parse(b.publishedAt || '') - publishedAt))[0];
+    const publication = publicationForSlot(slot);
     return {
       ...item,
       status: 'published',
@@ -2832,6 +2859,13 @@ export default async function handler(req, res) {
   }
   tomorrowPlan = mergeProgramItems(tomorrowPlan, weeklyPrograms, tomorrowDate);
   const radarConfig = radarConfigForAccount(account);
+  const tomorrowRadarWorking = radarConfig.enabled
+    && tomorrowPlan.some((item) => item.type === 'automatic')
+    && tomorrowPlan.filter((item) => item.type === 'automatic').every((item) => String(item.packIndex || '').startsWith('news-'));
+  // O Radar escolhe a pauta definitiva somente no disparo. Sincronizar a
+  // data futura remove títulos provisórios que reapareciam deslocados do dia
+  // atual e evita apresentar previsão editorial como conteúdo confirmado.
+  tomorrowPlan = synchronizeDailyPlan(tomorrowPlan, publishedSlots, publicationHistory, accountKey, tomorrowDate);
 
   res.setHeader('cache-control', 'no-store');
   res.status(200).json({
@@ -2867,8 +2901,8 @@ export default async function handler(req, res) {
       reviewedAt: new Date().toISOString()
     },
     editorialRadar: {
-      status: radarConfig.enabled && tomorrowPlan.length > 0 && tomorrowPlan.every((item) => String(item.packIndex || '').startsWith('news-')) ? 'working' : 'fallback',
-      label: radarConfig.enabled && tomorrowPlan.length > 0 && tomorrowPlan.every((item) => String(item.packIndex || '').startsWith('news-')) ? 'Radar funcionando' : (radarConfig.enabled ? 'Radar em modo de reserva' : 'Radar desativado para esta conta'),
+      status: tomorrowRadarWorking ? 'working' : 'fallback',
+      label: tomorrowRadarWorking ? 'Radar funcionando' : (radarConfig.enabled ? 'Radar em modo de reserva' : 'Radar desativado para esta conta'),
       maxAgeDays: radarConfig.maxAgeDays,
       sources: radarConfig.sources,
       keywords: radarConfig.keywords,
