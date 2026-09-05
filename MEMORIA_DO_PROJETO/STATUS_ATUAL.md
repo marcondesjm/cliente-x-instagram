@@ -874,3 +874,10 @@ Resultado:
 - Permalink: `https://www.instagram.com/p/Dc6Fdv9oNO_/`; Feed `18117859415286922`; Story `17960957823207557`.
 - `scheduled-posts.json` e `publication-history.json` estão persistidos no remoto; Story 9:16 inspecionado com texto, CTA e fotografia aprovados.
 - Não houve erro de primeiro comentário; o conteúdo não tinha comentário inicial configurado.
+
+# Atualizacao 2026-09-05 10:43 BRT — nome fora da foto; Facebook ainda não integrado
+
+- Stories com fotografia deixam de repetir `Marcondes Machado` sobre a imagem; o identificador do perfil permanece no topo.
+- Render exato `2026-09-05-104247-slot-0-render-only` aprovado sem publicação ou repostagem.
+- O Facebook foi verificado no perfil real e o post novo não aparece. O workflow atual publica apenas no Instagram e não possui publicação direta para Facebook.
+- Para automação suportada e auditável no Facebook, falta configurar uma Página administrada com credenciais e permissões próprias; nenhuma configuração da Meta foi alterada nesta etapa.

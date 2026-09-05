@@ -3629,7 +3629,10 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     .impact-carousel .feed-cta { background: ${accent}; color: #fff; }
     .impact-carousel.has-story-photo .visual-card { display: block; left: 72px; right: 72px; top: 980px; height: 720px; border-radius: 30px; background-position: center; box-shadow: 0 28px 72px rgba(0,0,0,.28); }
     .impact-carousel.has-story-photo .avatar, .impact-carousel.has-story-photo .panel, .impact-carousel.has-story-photo .note { display: none; }
-    .impact-carousel.has-story-photo footer { bottom: ${STORY_SAFE_BOTTOM + 26}px; }
+    /* The handle already identifies the account at the top. Repeating the
+       personal name over the lower photograph looks like an accidental
+       watermark and competes with the editorial image. */
+    .impact-carousel.has-story-photo footer { display: none; }
     .impact-carousel.has-story-photo.mode-statement .badge { margin-top: 62px; text-align: left; }
     .impact-carousel.has-story-photo.mode-statement h1 { margin: 52px 0 0; max-width: 900px; font-size: 68px; text-align: left; }
     .impact-carousel.has-story-photo.mode-statement h1::before { width: 84px; height: 9px; margin: 0 0 34px; }

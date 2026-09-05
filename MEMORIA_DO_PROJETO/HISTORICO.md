@@ -2767,3 +2767,12 @@ Conclusao de ativacao:
 - Publicação: `Prompt profissional não é frase solta.`; permalink `https://www.instagram.com/p/Dc6Fdv9oNO_/`; Feed `18117859415286922`; Story `17960957823207557`; horário persistido `2026-09-05T13:37:49.325Z` (`10:37 BRT`).
 - O item ficou com `status: published` em `scheduled-posts.json` e a prova completa entrou em `publication-history.json`; imagens hospedadas no commit `86d98292` e estado no commit `46197367`.
 - O Story real hospedado foi inspecionado em 1080 x 1920: título completo, CTA legível, fotografia proeminente e sem corte ou colisão. Não havia primeiro comentário configurado e não ocorreu erro de comentário.
+
+# 2026-09-05 10:43 BRT — assinatura removida da fotografia e Facebook diagnosticado
+
+- A assinatura `Marcondes Machado` aparecia sobre a parte inferior da fotografia no Story porque o rodapé permanecia visível quando o layout usava uma imagem grande. Como o perfil já aparece no topo como `@marcondes.machado.oficial`, a repetição foi removida dos Stories com fotografia.
+- Render exato sem publicação `2026-09-05-104247-slot-0-render-only` aprovado: título, trecho, CTA e fotografia preservados; nenhum nome aparece dentro da imagem.
+- O perfil real do Facebook foi inspecionado e continuava mostrando como publicações mais recentes conteúdos de julho; o post de 10:37 BRT não foi compartilhado para lá.
+- Causa técnica: o publicador atual executa somente os endpoints de criação e publicação do Instagram. Não existe etapa, token ou persistência de Facebook no workflow; a conexão entre contas, sozinha, não constitui prova de crossposting para mídia publicada pela API.
+- Publicação automatizada direta é suportada para uma Página do Facebook administrada, mediante Page ID, Page access token e permissões próprias. O destino atual inspecionado é o perfil profissional pessoal de Marcondes Machado, não uma Página configurada no projeto; nenhuma permissão foi alterada.
+- Sintaxe, `validate-copy` com 75 seleções e `git diff --check` aprovados. Nenhuma mídia foi republicada.
