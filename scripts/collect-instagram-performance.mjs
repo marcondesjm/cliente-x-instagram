@@ -43,9 +43,32 @@ function rate(value, reach) {
   return reach > 0 ? Number(value || 0) / reach : 0;
 }
 
+const DISTRIBUTION_THRESHOLDS = {
+  lowViews: 20,
+  healthyViews: 40,
+  healthyReach: 25
+};
+
+function distributionEvidence(metrics = {}) {
+  const views = Math.max(0, Number(metrics.views) || 0);
+  const reach = Math.max(0, Number(metrics.reach) || 0);
+  const confidence = clamp(Math.max(
+    views / DISTRIBUTION_THRESHOLDS.healthyViews,
+    reach / DISTRIBUTION_THRESHOLDS.healthyReach
+  ), 0, 1);
+  return {
+    views,
+    reach,
+    confidence: Number(confidence.toFixed(5)),
+    low: views > 0 && views < DISTRIBUTION_THRESHOLDS.lowViews,
+    band: views <= 0 ? 'unknown' : views < DISTRIBUTION_THRESHOLDS.lowViews ? 'critical' : views < DISTRIBUTION_THRESHOLDS.healthyViews ? 'limited' : 'healthy'
+  };
+}
+
 function performanceScore(metrics = {}) {
   const reach = Number(metrics.reach) || 0;
   if (!reach) return null;
+  const distribution = distributionEvidence(metrics);
   const shareRate = rate(metrics.shares, reach);
   const saveRate = rate(metrics.saved, reach);
   const commentRate = rate(metrics.comments, reach);
@@ -64,14 +87,15 @@ function performanceScore(metrics = {}) {
   const viewsPerReach = reach > 0 && Number(metrics.views) > 0
     ? clamp(Number(metrics.views) / reach, 0, 3)
     : null;
+  const evidenceMultiplier = 0.25 + (distribution.confidence * 0.75);
   const objectiveScores = {
-    discovery: clamp((viewsPerReach === null ? 0 : viewsPerReach * 24) + (profileVisitRate * 2200) + (followRate * 4000)),
-    utility: clamp((saveRate * 2600) + (shareRate * 1800) + (repostRate * 1200)),
-    conversation: clamp((commentRate * 3000) + (shareRate * 900)),
-    conversion: clamp((followRate * 5000) + (profileVisitRate * 3000) + (commentRate * 1200)),
+    discovery: clamp((((viewsPerReach === null ? 0 : viewsPerReach * 24) + (profileVisitRate * 2200) + (followRate * 4000)) * evidenceMultiplier) + (distribution.confidence * 20)),
+    utility: clamp(((saveRate * 2600) + (shareRate * 1800) + (repostRate * 1200)) * evidenceMultiplier),
+    conversation: clamp(((commentRate * 3000) + (shareRate * 900)) * evidenceMultiplier),
+    conversion: clamp(((followRate * 5000) + (profileVisitRate * 3000) + (commentRate * 1200)) * evidenceMultiplier),
     retention: clamp((retention === null ? 0 : retention * 75) + (skipRate === null ? 10 : (1 - skipRate) * 25))
   };
-  const score = clamp(
+  const engagementScore = clamp(
     Math.min(35, shareRate * 1750)
     + Math.min(20, saveRate * 1000)
     + Math.min(10, commentRate * 1000)
@@ -83,7 +107,12 @@ function performanceScore(metrics = {}) {
     + (retention === null ? 5 : retention * 10)
     - (skipRate === null ? 0 : skipRate * 10)
   );
+  const score = clamp(
+    (engagementScore * (0.35 + (distribution.confidence * 0.65)))
+    + (distribution.confidence * 15)
+  );
   return {
+    modelVersion: PERFORMANCE_LEARNING_MODEL_VERSION,
     score: Number(score.toFixed(2)),
     rates: {
       share: Number(shareRate.toFixed(5)),
@@ -98,7 +127,8 @@ function performanceScore(metrics = {}) {
       retention: retention === null ? null : Number(retention.toFixed(5)),
       viewsPerReach: viewsPerReach === null ? null : Number(viewsPerReach.toFixed(5))
     },
-    objectiveScores: Object.fromEntries(Object.entries(objectiveScores).map(([key, value]) => [key, Number(value.toFixed(2))]))
+    objectiveScores: Object.fromEntries(Object.entries(objectiveScores).map(([key, value]) => [key, Number(value.toFixed(2))])),
+    distribution
   };
 }
 
@@ -217,25 +247,43 @@ function buildModels(samples = []) {
     if (latest?.performance?.score == null) return null;
     const ageDays = Math.max(0, (Date.now() - Date.parse(sample.publishedAt || latest.collectedAt || '')) / 86400000);
     const recencyWeight = Number.isFinite(ageDays) ? Math.pow(0.5, ageDays / 21) : 0.5;
-    return { sample, score: latest.performance.score, reach: Number(latest.metrics?.reach) || 0, recencyWeight, performance: latest.performance };
+    return {
+      sample,
+      score: latest.performance.score,
+      reach: Number(latest.metrics?.reach) || 0,
+      views: Number(latest.metrics?.views) || 0,
+      windowHours: Number(latest.windowHours) || 0,
+      lowDistribution: Boolean(latest.performance?.distribution?.low),
+      recencyWeight,
+      performance: latest.performance
+    };
   }).filter(Boolean);
   const aggregate = (pairs) => {
     const buckets = new Map();
-    for (const { key, score, reach, recencyWeight = 1 } of pairs) {
+    for (const { key, score, reach, views = 0, windowHours = 0, lowDistribution = false, recencyWeight = 1 } of pairs) {
       if (!key) continue;
       const bucket = buckets.get(key) || [];
-      bucket.push({ score, reach, recencyWeight });
+      bucket.push({ score, reach, views, windowHours, lowDistribution, recencyWeight });
       buckets.set(key, bucket);
     }
     return Object.fromEntries([...buckets.entries()].map(([key, values]) => {
       const totalReach = values.reduce((sum, value) => sum + value.reach, 0);
       const totalWeight = values.reduce((sum, value) => sum + value.recencyWeight, 0) || 1;
       const average = values.reduce((sum, value) => sum + (value.score * value.recencyWeight), 0) / totalWeight;
-      const confidence = Math.min(1, values.length / 5) * Math.min(1, totalReach / 200);
+      const matureSamples = values.filter((value) => value.windowHours >= 24).length;
+      const lowDistributionSamples = values.filter((value) => value.windowHours >= 24 && value.lowDistribution).length;
+      const reachConfidence = Math.min(1, values.length / 5) * Math.min(1, totalReach / 200);
+      // Repetidos testes maduros com distribuição crítica são evidência real,
+      // mesmo quando o alcance acumulado ainda é pequeno. Uma única amostra
+      // continua insuficiente para empurrar o modelo longe do neutro.
+      const failureConfidence = matureSamples >= 2 ? Math.min(0.6, lowDistributionSamples / 5) : 0;
+      const confidence = Math.max(reachConfidence, failureConfidence);
       const learned = 50 + ((average - 50) * confidence);
       return [key, {
         samples: values.length,
         totalReach,
+        matureSamples,
+        lowDistributionSamples,
         recencyWeight: Number(totalWeight.toFixed(3)),
         confidence: Number(confidence.toFixed(4)),
         averageScore: Number(average.toFixed(2)),
@@ -244,16 +292,16 @@ function buildModels(samples = []) {
     }));
   };
   return {
-    sources: aggregate(observations.map(({ sample, score, reach, recencyWeight }) => ({ key: String(sample.source || '').toLocaleLowerCase('pt-BR'), score, reach, recencyWeight }))),
-    topics: aggregate(observations.flatMap(({ sample, score, reach, recencyWeight }) => (sample.topics || []).map((key) => ({ key, score, reach, recencyWeight })))),
-    formats: aggregate(observations.map(({ sample, score, reach, recencyWeight }) => ({ key: sample.mediaProductType || sample.mediaType || 'unknown', score, reach, recencyWeight }))),
-    audiences: aggregate(observations.map(({ sample, score, reach, recencyWeight }) => ({ key: sample.audience || 'empresários', score, reach, recencyWeight }))),
-    hooks: aggregate(observations.map(({ sample, score, reach, recencyWeight }) => ({ key: sample.hook || 'afirmação', score, reach, recencyWeight }))),
-    contexts: aggregate(observations.map(({ sample, score, reach, recencyWeight, performance }) => {
+    sources: aggregate(observations.map(({ sample, ...evidence }) => ({ key: String(sample.source || '').toLocaleLowerCase('pt-BR'), ...evidence }))),
+    topics: aggregate(observations.flatMap(({ sample, ...evidence }) => (sample.topics || []).map((key) => ({ key, ...evidence })))),
+    formats: aggregate(observations.map(({ sample, ...evidence }) => ({ key: sample.mediaProductType || sample.mediaType || 'unknown', ...evidence }))),
+    audiences: aggregate(observations.map(({ sample, ...evidence }) => ({ key: sample.audience || 'empresários', ...evidence }))),
+    hooks: aggregate(observations.map(({ sample, ...evidence }) => ({ key: sample.hook || 'afirmação', ...evidence }))),
+    contexts: aggregate(observations.map(({ sample, performance, ...evidence }) => {
       const format = sample.mediaProductType || sample.mediaType || 'unknown';
       const objective = sample.learningContext?.objective || sample.objective || 'discovery';
       const contextualScore = Number(performance?.objectiveScores?.[objective]);
-      return { key: `${format}|${sample.daypart || daypartFor(sample.publishedAt)}|${objective}`, score: Number.isFinite(contextualScore) ? contextualScore : score, reach, recencyWeight };
+      return { key: `${format}|${sample.daypart || daypartFor(sample.publishedAt)}|${objective}`, ...evidence, score: Number.isFinite(contextualScore) ? contextualScore : evidence.score };
     }))
   };
 }
@@ -261,7 +309,10 @@ function buildModels(samples = []) {
 function validatePureLogic() {
   const strong = performanceScore({ reach: 1000, shares: 30, saved: 25, comments: 12, likes: 80, totalInteractions: 147 });
   const weak = performanceScore({ reach: 1000, shares: 1, saved: 1, comments: 0, likes: 5, totalInteractions: 7 });
+  const criticalDistribution = performanceScore({ reach: 2, views: 4, shares: 0, saved: 0, comments: 0, likes: 0, totalInteractions: 0 });
+  const limitedDistribution = performanceScore({ reach: 10, views: 20, shares: 0, saved: 0, comments: 0, likes: 0, totalInteractions: 0 });
   if (!strong || !weak || strong.score <= weak.score || strong.rates.share !== 0.03) throw new Error('Performance score validation failed.');
+  if (!criticalDistribution?.distribution?.low || criticalDistribution.distribution.band !== 'critical' || limitedDistribution.score <= criticalDistribution.score) throw new Error('Absolute distribution validation failed.');
   const models = buildModels([
     { publishedAt: new Date().toISOString(), source: 'Fonte A', topics: ['dados'], audience: 'gestão', hook: 'dado', mediaProductType: 'REELS', daypart: 'afternoon', objective: 'conversion', observations: [{ windowHours: 24, metrics: { reach: 1000 }, performance: strong }] },
     { publishedAt: new Date().toISOString(), source: 'Fonte A', topics: ['dados'], audience: 'gestão', hook: 'dado', mediaProductType: 'REELS', daypart: 'afternoon', objective: 'conversion', observations: [{ windowHours: 24, metrics: { reach: 1000 }, performance: weak }] }
@@ -288,7 +339,17 @@ function validatePureLogic() {
   if (highReadiness.confidenceLevel !== 'high' || !highReadiness.autonomousReady) throw new Error('High-confidence readiness validation failed.');
   const stale = summarizePerformanceLearning({ updatedAt: '2020-01-01T00:00:00.000Z', samples: [] });
   if (stale.learningEnabled || stale.operatingMode !== 'editorial-fallback') throw new Error('Stale learning fallback validation failed.');
-  console.log(JSON.stringify({ ok: true, performanceScore: 'normalized-by-reach', objectiveScores: 'discovery-utility-conversation-conversion-retention', windows: WINDOWS, modelShrinkage: 'enabled-with-21-day-decay', contextualBaseline: 'format-daypart-objective', modelVersion: PERFORMANCE_LEARNING_MODEL_VERSION, staleFallback: 'editorial' }, null, 2));
+  const repeatedLowDistribution = buildModels(Array.from({ length: 3 }, (_, index) => ({
+    publishedAt: new Date().toISOString(),
+    source: 'Fonte crítica',
+    mediaProductType: 'REELS',
+    daypart: 'afternoon',
+    objective: 'discovery',
+    observations: [{ windowHours: 24, metrics: { reach: 2 + index, views: 4 + index }, performance: performanceScore({ reach: 2 + index, views: 4 + index }) }]
+  })));
+  const repeatedLowContext = repeatedLowDistribution.contexts['REELS|afternoon|discovery'];
+  if (repeatedLowContext?.lowDistributionSamples !== 3 || repeatedLowContext.learnedScore >= 45) throw new Error('Repeated low distribution must reduce the learned context score.');
+  console.log(JSON.stringify({ ok: true, performanceScore: 'reach-normalized-with-absolute-distribution', distributionThresholds: DISTRIBUTION_THRESHOLDS, objectiveScores: 'discovery-utility-conversation-conversion-retention', windows: WINDOWS, modelShrinkage: 'enabled-with-21-day-decay-and-repeated-failure-evidence', contextualBaseline: 'format-daypart-objective', modelVersion: PERFORMANCE_LEARNING_MODEL_VERSION, staleFallback: 'editorial' }, null, 2));
 }
 
 async function main() {
@@ -379,6 +440,12 @@ async function main() {
     sample.hook ||= hookArchetype(sample);
     sample.objective ||= objectiveFor(sample);
     sample.daypart ||= daypartFor(sample.publishedAt);
+    // Migra observações persistidas para a fórmula vigente. Sem isso, um
+    // contexto ruim continuaria carregando indefinidamente a nota da versão
+    // anterior até receber uma nova janela de coleta.
+    for (const observation of sample.observations || []) {
+      observation.performance = performanceScore(observation.metrics || {});
+    }
   }
   accountState.models = buildModels(accountState.samples);
   accountState.weeklyGrowth = weeklyGrowth(accountState.samples, now);
