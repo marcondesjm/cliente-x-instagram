@@ -2797,10 +2797,12 @@ export default async function handler(req, res) {
   let publishedSlots = [];
   let publicationHistory = { entries: [] };
   try {
-    [publishedSlots, publicationHistory] = await Promise.all([
+    const [publishedSlotsFile, publicationHistoryFile] = await Promise.all([
       readGithubConfig(PUBLISHED_SLOTS_FILE_PATH),
       readGithubConfig(PUBLICATION_HISTORY_FILE_PATH)
     ]);
+    publishedSlots = publishedSlotsFile.data;
+    publicationHistory = publicationHistoryFile.data;
   } catch {
     publishedSlots = readJson(PUBLISHED_SLOTS_PATH);
     publicationHistory = readJson(PUBLICATION_HISTORY_PATH);
