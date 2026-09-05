@@ -1752,7 +1752,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v6.01</div>
+        <div class="header-version" id="headerVersion">Versão atual: v6.02</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -4739,7 +4739,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         : liveData ? `Evoluindo · confiança ${confidence}` : `Snapshot · confiança ${confidence}`;
       status.className = `status-pill ${stale || !liveData ? 'warn' : 'good'}`;
       grid.innerHTML = [
-        card('Versão do modelo', learning.modelVersion || 'nerion-adaptive-v1.0.0', 'plataforma v6.01 estável'),
+        card('Versão do modelo', learning.modelVersion || 'nerion-adaptive-v1.0.0', 'plataforma v6.02 estável'),
         card('Atualização dos dados', liveData ? 'Contínua' : 'Snapshot do deploy', liveData ? 'estado vivo do GitHub main' : 'contingência temporária', liveData ? 'good' : 'warn'),
         card('Confiança atual', confidence, `${formatNumber(learning.effectiveSamples)} amostras · alcance ${formatNumber(learning.effectiveReach)}`, confidence === 'initial' ? 'warn' : 'good'),
         card('Modo operacional', stale ? 'Fallback editorial' : 'Aprendizado assistido', stale ? 'peso aprendido temporariamente desligado' : 'peso limitado pela confiança', stale ? 'warn' : 'good'),
@@ -4758,7 +4758,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         card('Janelas de coleta', (learning.windowsHours || []).map((hours) => `${hours} h`).join(' · '), `atualizado ${updated}`)
       ].join('');
       message.textContent = stale
-        ? `Última atualização: ${updated}. A coleta ultrapassou a janela segura; a v6.01 desligou o peso aprendido e manteve a seleção editorial com originalidade, novidade e integridade.`
+        ? `Última atualização: ${updated}. A coleta ultrapassou a janela segura; a v6.02 desligou o peso aprendido e manteve a seleção editorial com originalidade, novidade e integridade.`
         : liveData
           ? `Última atualização: ${updated}. O painel acompanha continuamente o estado persistido pela automação. Modelo ${learning.modelVersion || 'adaptativo v1'} com confiança ${confidence}; seleção 70% desempenho, 20% exploração e 10% experimento, sempre após as travas editoriais.`
           : `Última atualização disponível no deploy: ${updated}. A consulta ao estado vivo está temporariamente indisponível; o painel mantém este snapshot sem interromper a automação.`;
@@ -6288,8 +6288,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           : `${items.length} automáticos`;
       status.className = `status-pill ${manualCount || programCount ? 'warn' : 'good'}`;
       list.innerHTML = items.map((item) => {
-        const typeLabel = item.type === 'manual' ? 'Manual' : item.type === 'program' ? 'Programa' : 'Automático';
-        const typeClass = item.type === 'automatic' ? 'good' : 'warn';
+        const isPublished = item.status === 'published';
+        const isAwaitingSelection = item.status === 'awaiting-selection';
+        const typeLabel = isPublished ? 'Publicado' : item.type === 'manual' ? 'Manual' : item.type === 'program' ? 'Programa' : 'Automático';
+        const typeClass = isPublished ? 'good' : (item.type === 'automatic' ? 'good' : 'warn');
         const slot = item.type === 'manual'
           ? `fila ${item.postId || ''}`.trim()
           : item.type === 'program'
@@ -6306,7 +6308,11 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <div class="plan-caption">${escapeHtml(item.caption || 'Legenda será montada pelo gerador automático.')}</div>
             <div class="plan-actions">
               <div class="run-meta">${escapeHtml(slot)} · ${escapeHtml(item.mode || 'feed + story')}</div>
-              ${item.type === 'program'
+              ${isPublished && item.permalink
+                ? `<a class="button" href="${escapeHtml(item.permalink)}" target="_blank" rel="noreferrer">Abrir publicação</a>`
+                : isAwaitingSelection
+                ? '<span class="run-meta">Sem anexo antes do disparo</span>'
+                : item.type === 'program'
                 ? `<button type="button" data-preview-program="${escapeHtml(item.programId || item.slotIndex)}">Ver prévia</button>`
                 : canRender
                 ? `<button type="button" data-render-plan-slot="${escapeHtml(item.slotIndex)}">Ver arte</button>`

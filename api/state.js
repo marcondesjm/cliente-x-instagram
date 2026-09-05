@@ -26,6 +26,8 @@ const WEEKLY_PROGRAMS_PATH = join(ROOT, 'automation', 'instagram-template', 'con
 const WATCHDOG_ERRORS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'watchdog-errors.json');
 const DIRECT_AUTOMATIONS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'direct-automations.json');
 const BIO_PAGE_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'bio-page.json');
+const PUBLICATION_HISTORY_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'publication-history.json');
+const PUBLISHED_SLOTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'published-slots.json');
 const OWNER = 'marcondesjm';
 const REPO = 'cliente-x-instagram';
 const ACCOUNTS_FILE_PATH = 'automation/instagram-template/config/accounts.json';
@@ -35,6 +37,8 @@ const WEEKLY_PROGRAMS_FILE_PATH = 'automation/instagram-template/config/weekly-p
 const WATCHDOG_ERRORS_FILE_PATH = 'automation/instagram-template/config/watchdog-errors.json';
 const DIRECT_AUTOMATIONS_FILE_PATH = 'automation/instagram-template/config/direct-automations.json';
 const BIO_PAGE_FILE_PATH = 'automation/instagram-template/config/bio-page.json';
+const PUBLICATION_HISTORY_FILE_PATH = 'automation/instagram-template/config/publication-history.json';
+const PUBLISHED_SLOTS_FILE_PATH = 'automation/instagram-template/config/published-slots.json';
 const DIRECT_DELIVERY_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
 const FORCE_WATCHDOG_FILE_PATH = '.github/force-instagram-watchdog.txt';
 const WATCHDOG_RECOVERY_REQUEST_FILE_PATH = 'automation/instagram-template/config/watchdog-recovery-request.json';
@@ -44,7 +48,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'nerion-social-stable',
   label: 'Versão estável',
-  appVersion: 'v6.01',
+  appVersion: 'v6.02',
   status: 'funcionando',
   stableCommit: 'b0a0b45',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/b0a0b45',
@@ -656,6 +660,44 @@ async function publisherDailyPlan(accountKey = 'cliente-x', dateString = todaySa
   }
   const payload = JSON.parse(result.stdout);
   return Array.isArray(payload.dailyPlan) ? payload.dailyPlan : [];
+}
+
+function synchronizeDailyPlan(plan = [], publishedSlots = [], publicationHistory = {}, accountKey = 'cliente-x', dateString = todaySaoPaulo()) {
+  const slots = (Array.isArray(publishedSlots) ? publishedSlots : [])
+    .filter((item) => item.account === accountKey && item.date === dateString && item.status === 'published');
+  const history = Array.isArray(publicationHistory?.[accountKey])
+    ? publicationHistory[accountKey]
+    : (Array.isArray(publicationHistory?.entries) ? publicationHistory.entries : []);
+
+  return plan.map((item) => {
+    if (item.type !== 'automatic') return item;
+    const slot = slots.find((entry) => Number(entry.slotIndex) === Number(item.slotIndex));
+    if (!slot) {
+      return {
+        ...item,
+        status: 'awaiting-selection',
+        title: 'Pauta será escolhida pelo Radar no momento da publicação',
+        caption: 'Sem anexo definitivo até o disparo automático. Depois de publicado, este cartão exibirá o conteúdo real.',
+        slides: [], sourceUrl: '', source: '', packIndex: null
+      };
+    }
+    const publishedAt = Date.parse(slot.publishedAt || '');
+    const publication = history
+      .filter((entry) => entry.selectionMode !== 'manual' && Date.parse(entry.publishedAt || '') >= Date.parse(`${dateString}T00:00:00-03:00`))
+      .sort((a, b) => Math.abs(Date.parse(a.publishedAt || '') - publishedAt) - Math.abs(Date.parse(b.publishedAt || '') - publishedAt))[0];
+    return {
+      ...item,
+      status: 'published',
+      title: publication?.coverTitle || 'Publicado automaticamente',
+      caption: publication?.caption || 'Publicação confirmada no histórico da automação.',
+      slides: [], packIndex: null,
+      publishedAt: slot.publishedAt,
+      workflowRun: slot.workflowRun,
+      permalink: publication?.permalink || '',
+      mediaId: publication?.mediaId || '',
+      storyMediaId: publication?.storyMediaId || ''
+    };
+  });
 }
 
 function maskSecret(value = '') {
@@ -2752,6 +2794,17 @@ export default async function handler(req, res) {
   const bioPage = await readBioPage();
   const directAutomationGroups = await readDirectAutomationGroups();
   const watchdogErrors = await readWatchdogErrors();
+  let publishedSlots = [];
+  let publicationHistory = { entries: [] };
+  try {
+    [publishedSlots, publicationHistory] = await Promise.all([
+      readGithubConfig(PUBLISHED_SLOTS_FILE_PATH),
+      readGithubConfig(PUBLICATION_HISTORY_FILE_PATH)
+    ]);
+  } catch {
+    publishedSlots = readJson(PUBLISHED_SLOTS_PATH);
+    publicationHistory = readJson(PUBLICATION_HISTORY_PATH);
+  }
   const scheduledGroup = scheduledGroups.find((item) => item.account === accountKey);
   const weeklyProgramGroup = weeklyProgramGroups.find((item) => item.account === accountKey);
   const directAutomationGroup = directAutomationGroups.find((item) => item.account === accountKey);
@@ -2767,6 +2820,7 @@ export default async function handler(req, res) {
   }
   if (!plan.length) plan = dailyPlan(scheduleBrt, packs, scheduledPosts);
   plan = mergeProgramItems(plan, weeklyPrograms);
+  plan = synchronizeDailyPlan(plan, publishedSlots, publicationHistory, accountKey, todaySaoPaulo());
   const tomorrowDate = tomorrowSaoPaulo();
   let tomorrowPlan = [];
   try {
