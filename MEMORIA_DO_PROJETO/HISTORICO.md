@@ -2830,3 +2830,12 @@ Conclusao de ativacao:
 - Capa e Story hospedados em `docs/generated/cliente-x/2026-09-05-120858-slot-3/` foram inspecionados em tamanho original: imagem significativa, título legível e composição 9:16 preenchida.
 - O primeiro comentário falhou separadamente com OAuth `#10`; Feed e Story permaneceram publicados e comprovados.
 - Com autorização explícita, a mesma pauta e legenda foram publicadas na Página `Marcondes Machado` no Facebook, com cartão de link da fonte Tecnoblog: `https://www.facebook.com/Marcondes.Jorge.Machado/posts/pfbid023MFWvRRUoVP4LZWVYyAzDASAgnNwo7s7YFW8kSVkvrp3tjMt8t4r35JoCCYeZocAl`.
+
+# 2026-09-05 15:50 BRT — imagens editoriais inéditas em todos os cartões do Radar
+
+- O Radar deixou de completar publicações pesquisadas com fotografias genéricas locais: cada slide agora exige uma imagem obtida das matérias encontradas nas fontes editoriais de IA.
+- A seleção bloqueia URLs já registradas no histórico e também compara o SHA-256 do arquivo, impedindo repetição da mesma fotografia por outra URL ou variação de tamanho.
+- A origem visual passa a ser auditável em `visual-sources.json` no run e em `publication-history.json`, com fonte, matéria, URL da imagem e hash.
+- Se não existirem imagens editoriais inéditas suficientes para todos os slides, o post é interrompido antes da API do Instagram; não há retorno silencioso ao acervo local.
+- Render sem publicação `2026-09-05-154731-slot-4-render-only` inspecionado: cinco cartões, cinco fotografias distintas e nenhuma colisão de texto. Sintaxe, `validate-copy` com 75 seleções e `git diff --check` aprovados.
+- A publicação anterior não foi apagada nem republicada.

@@ -1922,8 +1922,17 @@ function fileCssImage(path = '') {
   return cssUrl(`file:///${source.replace(/\\/g, '/')}`);
 }
 
-async function downloadResearchSourceImage(pack = {}, runDir = '') {
-  const sourceImageUrl = String(pack?.research?.sourceImageUrl || '').trim();
+function normalizedEditorialImageUrl(value = '') {
+  try {
+    const url = new URL(String(value || '').trim());
+    url.hash = '';
+    return url.toString();
+  } catch {
+    return '';
+  }
+}
+
+async function downloadEditorialImage(sourceImageUrl = '', runDir = '', fileStem = 'radar-source-image') {
   if (!/^https:\/\//i.test(sourceImageUrl)) return null;
   // WordPress costuma anunciar no feed uma miniatura como `-340x191.webp`.
   // Ela pode ficar abaixo do limite de qualidade embora o original esteja no
@@ -1953,18 +1962,62 @@ async function downloadResearchSourceImage(pack = {}, runDir = '') {
         const bytes = Buffer.from(await response.arrayBuffer());
         if (bytes.length < 20000) throw new Error(`arquivo pequeno demais (${bytes.length} bytes)`);
         if (bytes.length > 12000000) throw new Error(`arquivo grande demais (${bytes.length} bytes)`);
-        const destination = join(runDir, `radar-source-image${extensions.get(contentType)}`);
+        const destination = join(runDir, `${fileStem}${extensions.get(contentType)}`);
         writeFileSync(destination, bytes);
-        return destination;
+        return {
+          path: destination,
+          imageUrl: candidateUrl,
+          imageHash: createHash('sha256').update(bytes).digest('hex')
+        };
       } catch (error) {
         lastError = error;
       }
     }
     throw lastError || new Error('imagem indisponivel');
   } catch (error) {
-    console.warn(`Imagem da materia indisponivel; usando rodizio visual seguro: ${error instanceof Error ? error.message : String(error)}`);
+    console.warn(`Imagem editorial indisponivel (${sourceImageUrl}): ${error instanceof Error ? error.message : String(error)}`);
     return null;
   }
+}
+
+async function downloadResearchSlideImages(pack = {}, editorialPacks = [], publicationHistory = [], runDir = '') {
+  const slideCount = Array.isArray(pack.slides) ? pack.slides.length : 0;
+  if (!pack?.research?.sourceUrl || !slideCount) return [];
+  const priorUrls = new Set();
+  const priorHashes = new Set();
+  for (const entry of publicationHistory) {
+    const legacyUrl = normalizedEditorialImageUrl(entry?.research?.sourceImageUrl);
+    if (legacyUrl) priorUrls.add(legacyUrl);
+    for (const visual of entry?.visualSources || []) {
+      const visualUrl = normalizedEditorialImageUrl(visual?.imageUrl);
+      if (visualUrl) priorUrls.add(visualUrl);
+      if (visual?.imageHash) priorHashes.add(String(visual.imageHash));
+    }
+  }
+  const candidates = [pack, ...editorialPacks]
+    .map((candidate) => ({
+      source: String(candidate?.research?.source || '').trim(),
+      sourceUrl: String(candidate?.research?.sourceUrl || '').trim(),
+      sourceTitle: String(candidate?.research?.sourceTitle || '').trim(),
+      imageUrl: normalizedEditorialImageUrl(candidate?.research?.sourceImageUrl)
+    }))
+    .filter((candidate) => candidate.sourceUrl && candidate.imageUrl);
+  const selected = [];
+  const currentUrls = new Set();
+  const currentHashes = new Set();
+  for (const candidate of candidates) {
+    if (selected.length >= slideCount) break;
+    if (priorUrls.has(candidate.imageUrl) || currentUrls.has(candidate.imageUrl)) continue;
+    const downloaded = await downloadEditorialImage(candidate.imageUrl, runDir, `radar-slide-${String(selected.length + 1).padStart(2, '0')}`);
+    if (!downloaded || priorHashes.has(downloaded.imageHash) || currentHashes.has(downloaded.imageHash)) continue;
+    currentUrls.add(candidate.imageUrl);
+    currentHashes.add(downloaded.imageHash);
+    selected.push({ ...candidate, ...downloaded });
+  }
+  if (selected.length !== slideCount) {
+    throw new Error(`Radar bloqueado: foram encontradas apenas ${selected.length} imagens editoriais inéditas para ${slideCount} slides. Nenhuma foto local ou repetida será usada.`);
+  }
+  return selected;
 }
 
 function isPrivateNetworkAddress(address = '') {
@@ -2220,14 +2273,14 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const researchTitle = String(slide.researchDisplayTitle || slide.researchTitle || '').trim();
   const researchUrl = String(slide.researchUrl || '').trim();
   const isReelMode = renderContext.publishMode === 'reel-only' || renderContext.publishMode === 'reel-and-story';
-  const researchImage = index === 1 ? fileCssImage(renderContext.researchSourceImagePath || '') : '';
+  const researchImage = fileCssImage(renderContext.researchSlideImagePaths?.[index - 1] || renderContext.researchSourceImagePath || '');
   const useSectorPhoto = isImpact
     ? Boolean(explicitSlideImage || researchImage || isReelMode || engagementRole === 'hook')
     : engagementRole === 'hook' || engagementRole === 'proof';
-  const sectorPhotoImage = explicitSlideImage || (useSectorPhoto ? sectorPhotoCssImage(visualCue, index, renderContext) : '');
+  const sectorPhotoImage = explicitSlideImage || researchImage || (useSectorPhoto ? sectorPhotoCssImage(visualCue, index, renderContext) : '');
   // Only replace the visual with the source card when the article image was
   // actually downloaded. Otherwise keep the safe photographic rotation.
-  const showNewsContext = Boolean(useSectorPhoto && researchSource && researchImage);
+  const showNewsContext = Boolean(index === 1 && useSectorPhoto && researchSource && researchImage);
   const sectorPhotoClass = sectorPhotoImage || researchImage ? ' has-sector-photo' : '';
   const imageLayoutClass = isImpact && sectorPhotoImage && ['book-hero', 'book-split', 'book-editorial'].includes(slide.imageLayout)
     ? ` ${slide.imageLayout}`
@@ -2780,6 +2833,23 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
       line-height: 1.14;
       box-shadow: 0 24px 64px rgba(0,0,0,.18);
     }
+    .impact-carousel.has-research-image.role-value .headline,
+    .impact-carousel.has-research-image.role-proof .headline {
+      margin-top: 160px;
+      font-size: 58px;
+      line-height: 1;
+    }
+    .impact-carousel.has-research-image.role-value .context-photo,
+    .impact-carousel.has-research-image.role-proof .context-photo {
+      top: 510px;
+      height: 170px;
+      border-radius: 18px;
+    }
+    .impact-carousel.has-research-image.role-value .note,
+    .impact-carousel.has-research-image.role-proof .note {
+      top: 710px;
+      min-height: 300px;
+    }
     .impact-carousel.role-value .panel,
     .impact-carousel.role-proof .panel {
       right: 92px;
@@ -2819,6 +2889,9 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
       font-size: 31px;
       line-height: 1.14;
     }
+    .impact-carousel.has-research-image.role-cta .headline { margin-top: 150px; font-size: 68px; }
+    .impact-carousel.has-research-image.role-cta .context-photo { top: 500px; height: 160px; border-radius: 18px; }
+    .impact-carousel.has-research-image.role-cta .note { top: 690px; min-height: 370px; }
     .impact-carousel.role-cta .note .lead,
     .impact-carousel.role-cta .note .emphasis,
     .impact-carousel.role-cta .note .close {
@@ -3461,7 +3534,8 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
         const preserveCoverPhoto = main?.classList.contains('role-hook')
           && (visual.classList.contains('panel') || visual.classList.contains('context-photo'));
         const preserveReelPhoto = main?.classList.contains('reel-mode') && visual.classList.contains('context-photo');
-        const preservePhoto = preserveCoverPhoto || preserveReelPhoto;
+        const preserveResearchPhoto = main?.classList.contains('has-research-image') && visual.classList.contains('context-photo');
+        const preservePhoto = preserveCoverPhoto || preserveReelPhoto || preserveResearchPhoto;
         const minimumHeight = preservePhoto ? 280 : 150;
         if (safeHeight >= minimumHeight) {
           visual.style.top = `${safeTop}px`;
@@ -4025,6 +4099,7 @@ function recordPublicationHistory(configDir, accountKey, pack, result) {
       permalink: result.permalink || null,
       publishedFormat: result.storyOnly ? null : (result.reelMode ? 'REEL' : 'CAROUSEL'),
       publicationFallback: result.publicationFallback || null,
+      visualSources: Array.isArray(result.visualSources) ? result.visualSources : [],
       selectionMode: result.selectionMode || null,
       learning: result.learningDecision || null,
       learningContext: result.learningContext || null,
@@ -5533,7 +5608,20 @@ async function main() {
     fatiguePenalty: organicPotential.fatiguePenalty,
     modelVersion: learningDecision.modelVersion
   };
-  const researchSourceImagePath = await downloadResearchSourceImage(pack, runDir);
+  const researchVisualSources = await downloadResearchSlideImages(
+    pack,
+    editorialResearch.packs,
+    publicationHistory,
+    runDir
+  );
+  const researchSlideImagePaths = researchVisualSources.map((visual) => visual.path);
+  const researchSourceImagePath = researchSlideImagePaths[0] || null;
+  if (researchVisualSources.length) {
+    writeFileSync(join(runDir, 'visual-sources.json'), JSON.stringify(researchVisualSources.map(({ path, ...visual }) => ({
+      ...visual,
+      localFile: basename(path)
+    })), null, 2), 'utf8');
+  }
   const storyOnly = publishMode === 'story-only';
   const feedOnly = publishMode === 'feed-only';
   const reelOnly = publishMode === 'reel-only';
@@ -5576,6 +5664,8 @@ async function main() {
     variationSeed: visualSeedInput,
     avatarRotationStart,
     researchSourceImagePath,
+    researchSlideImagePaths,
+    researchVisualSources,
     scheduledFor: scheduledPost?.scheduledFor || '',
     publishMode
   };
@@ -5587,7 +5677,7 @@ async function main() {
   const reelAudioTrack = reelRender?.audioTrack || null;
 
   if (args.renderOnly) {
-    console.log(JSON.stringify({ ok: true, renderOnly: true, account: account.account, runDir, visualStyle: style.name, slotIndex, packIndex, publishMode, avatarRotationStart, coverAvatar: Number.isInteger(avatarRotationStart) ? accountAvatarRotationUrls(account)[avatarRotationStart] || null : null, imagePaths, storyImagePath, reelVideoPath, reelAudioTrack }, null, 2));
+    console.log(JSON.stringify({ ok: true, renderOnly: true, account: account.account, runDir, visualStyle: style.name, slotIndex, packIndex, publishMode, avatarRotationStart, coverAvatar: Number.isInteger(avatarRotationStart) ? accountAvatarRotationUrls(account)[avatarRotationStart] || null : null, visualSources: researchVisualSources.map(({ path: _path, ...visual }) => visual), imagePaths, storyImagePath, reelVideoPath, reelAudioTrack }, null, 2));
     return;
   }
 
@@ -5662,6 +5752,7 @@ async function main() {
     selectionMode,
     learningDecision,
     learningContext,
+    visualSources: researchVisualSources.map(({ path: _path, ...visual }) => visual),
     imagePaths,
     storyImagePath,
     imageUrls,

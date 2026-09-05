@@ -908,3 +908,9 @@ Resultado:
 - Estado inicial confirmado: 0 seguidores e nenhum post; Página aberta no navegador para conferência.
 - Ainda falta revisar nome/identidade, conectar o Instagram e autorizar o caminho de publicação da Página antes de qualquer teste real.
 - Nenhum conteúdo foi publicado e a Página `Eletro e Casa Shop` permaneceu intacta.
+
+# Atualizacao 2026-09-05 15:50 BRT — Radar sem repetição de imagens
+
+- Cada cartão pesquisado pelo Radar exige uma foto editorial inédita vinda das matérias sobre IA; fotos genéricas locais não são mais usadas nesse fluxo.
+- A trava compara URL e hash do arquivo, registra a proveniência visual no run e no histórico e bloqueia a publicação se faltar uma imagem diferente para qualquer slide.
+- Render `2026-09-05-154731-slot-4-render-only` aprovado visualmente com cinco imagens distintas. Nenhuma mídia foi publicada ou republicada nesta correção.
