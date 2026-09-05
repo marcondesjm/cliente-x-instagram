@@ -2743,3 +2743,9 @@ Conclusao de ativacao:
 - O cadastro de empresas ganhou a etapa “Confirmar a conexão”, com teste somente leitura que valida usuário, tipo profissional, quantidade de mídias e permissão `instagram_content_publish`, sem expor token nem criar post.
 - Sintaxe da API e do JavaScript do dashboard, `validate-copy` com 75 seleções e `git diff --check` aprovados. Implementação enviada ao `origin/main` em `817772d1`.
 - O perfil do Facebook foi conferido após a publicação: o novo Reel ainda não estava visível na aba de Reels. O compartilhamento no Facebook permanece não comprovado e não é tratado como sucesso.
+# 2026-09-05 10:15 BRT — contraste do fechamento e preenchimento da capa vertical
+
+- A regra genérica de CTA estava sobrescrevendo o texto escuro do cartão branco no slide final do livro; lead, ênfase e crédito agora usam preto explícito quando há fotografia.
+- A capa 9:16 com fotografia passa a exibir o texto de apoio na coluna livre, eliminando o vazio percebido abaixo do título sem invadir a imagem.
+- O post exato `livro-claude-code-20260902-11` foi renderizado sem publicação em Reel + Story e Feed + Story. Capa, slide 5 e Story foram inspecionados; toda a frase “Comente LIVRO e diga qual tema você quer ver” e o crédito estão legíveis.
+- Sintaxe, `validate-copy` com 75 seleções e `git diff --check` aprovados. Correção enviada ao `origin/main` em `8f119331`.

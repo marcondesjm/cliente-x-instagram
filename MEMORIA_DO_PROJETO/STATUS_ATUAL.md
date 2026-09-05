@@ -853,3 +853,8 @@ Resultado:
 - O painel mostra resumo e filtros na previsão de amanhã, reduz a densidade visual dos cartões e preserva os 13 horários BRT.
 - Novas contas continuam sendo criadas por convite OAuth mascarado. Depois da conexão, o botão “Testar conta selecionada” faz verificação somente leitura e não publica conteúdo.
 - Facebook: conta vinculada e compartilhamento automático de posts/Stories estavam ativos, porém o Reel novo ainda não apareceu na aba de Reels na verificação das 10:09 BRT. Publicação no Facebook segue pendente de prova.
+# Atualizacao 2026-09-05 10:15 BRT — correção visual do livro pronta
+
+- Commit `8f119331` no `origin/main` corrige texto branco sobre cartão branco no último slide e usa a área livre da capa vertical para mostrar o apoio editorial.
+- Render exato aprovado em `2026-09-05-101333-slot-0-render-only` (Reel + Story) e `2026-09-05-101443-slot-0-render-only` (Feed + Story), sem republicação.
+- O Facebook mostra 323 grupos vinculados ao perfil. Os grupos editorialmente aderentes encontrados incluem Comunidade Anthropic Claude Brasil e CLAUDE CODE BRASIL; nenhuma publicação em grupo foi enviada sem seleção explícita do destino.
