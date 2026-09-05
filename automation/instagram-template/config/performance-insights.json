@@ -3308,6 +3308,32 @@
                 "ig_reels_avg_watch_time": "(#100) The Media Insights API does not support the ig_reels_avg_watch_time metric for this media product type.",
                 "reels_skip_rate": "(#100) The Media Insights API does not support the reels_skip_rate metric for this media product type."
               }
+            },
+            {
+              "windowHours": 72,
+              "collectedAt": "2026-09-05T20:21:02.839Z",
+              "ageHours": 72.51,
+              "metrics": {
+                "reach": 0,
+                "saved": 0,
+                "shares": 0,
+                "totalInteractions": 0,
+                "views": 12,
+                "watchTime": null,
+                "averageWatchTime": null,
+                "skipRate": null,
+                "reposts": 0,
+                "follows": 0,
+                "profileVisits": 0,
+                "likes": 0,
+                "comments": 3
+              },
+              "performance": null,
+              "unavailableMetrics": {
+                "ig_reels_video_view_total_time": "(#100) The Media Insights API does not support the ig_reels_video_view_total_time metric for this media product type.",
+                "ig_reels_avg_watch_time": "(#100) The Media Insights API does not support the ig_reels_avg_watch_time metric for this media product type.",
+                "reels_skip_rate": "(#100) The Media Insights API does not support the reels_skip_rate metric for this media product type."
+              }
             }
           ],
           "mediaType": "CAROUSEL_ALBUM",
@@ -6722,6 +6748,129 @@
           ],
           "mediaType": "CAROUSEL_ALBUM",
           "mediaProductType": "FEED"
+        },
+        {
+          "mediaId": "18157279372496821",
+          "permalink": "https://www.instagram.com/p/Dc6nqVzm8EQ/",
+          "publishedAt": "2026-09-05T18:36:37.638Z",
+          "source": "G1 Tecnologia",
+          "theme": "automação com IA para empresas",
+          "coverTitle": "OpenAI admite invasão de site alemão por agentes de IA e promete mais transparência",
+          "topics": [
+            "automação",
+            "agente",
+            "empresa"
+          ],
+          "audience": "operações",
+          "hook": "afirmação",
+          "selectionMode": "exploit",
+          "learningContext": {
+            "format": "FEED",
+            "daypart": "midday",
+            "objective": "utility",
+            "primarySignal": "compartilhamentos",
+            "selectionMode": "exploit",
+            "experimentAxis": "performance",
+            "contextKey": "FEED|midday|utility",
+            "decisionReasons": [
+              "imagem-editorial",
+              "titulo-legivel",
+              "relevancia-empresarial",
+              "aderencia-ao-perfil",
+              "densidade-factual",
+              "contexto-aprofundado",
+              "fadiga-editorial-recente",
+              "pauta-recente",
+              "fonte-com-baixo-historico",
+              "tema-com-baixo-historico"
+            ],
+            "fatiguePenalty": 6.87,
+            "modelVersion": "nerion-adaptive-v1.1.0"
+          },
+          "objective": "utility",
+          "daypart": "afternoon",
+          "observations": []
+        },
+        {
+          "mediaId": "18137007367720275",
+          "permalink": "https://www.instagram.com/p/Dc6okRMFDPN/",
+          "publishedAt": "2026-09-05T18:44:23.212Z",
+          "source": "Tecnoblog",
+          "theme": "automação com IA para empresas",
+          "coverTitle": "IA da China apontou milhares de bugs no Linux",
+          "topics": [
+            "automação",
+            "empresa"
+          ],
+          "audience": "operações",
+          "hook": "afirmação",
+          "selectionMode": "exploit",
+          "learningContext": {
+            "format": "REELS",
+            "daypart": "afternoon",
+            "objective": "conversation",
+            "primarySignal": "comentarios",
+            "selectionMode": "exploit",
+            "experimentAxis": "performance",
+            "contextKey": "REELS|afternoon|conversation",
+            "decisionReasons": [
+              "imagem-editorial",
+              "titulo-legivel",
+              "relevancia-empresarial",
+              "aderencia-ao-perfil",
+              "densidade-factual",
+              "contexto-aprofundado",
+              "fadiga-editorial-recente",
+              "pauta-atual",
+              "tema-com-baixo-historico"
+            ],
+            "fatiguePenalty": 7.97,
+            "modelVersion": "nerion-adaptive-v1.1.0"
+          },
+          "objective": "conversation",
+          "daypart": "afternoon",
+          "observations": []
+        },
+        {
+          "mediaId": "18075665543392221",
+          "permalink": "https://www.instagram.com/p/Dc6o9_EmObr/",
+          "publishedAt": "2026-09-05T18:48:03.324Z",
+          "source": "Startups",
+          "theme": "automação com IA para empresas",
+          "coverTitle": "Conheça a startup que pivotou do gás natural para IA e agora vale US$ 30B",
+          "topics": [
+            "automação",
+            "empresa"
+          ],
+          "audience": "operações",
+          "hook": "dado",
+          "selectionMode": "experiment",
+          "learningContext": {
+            "format": "FEED",
+            "daypart": "afternoon",
+            "objective": "utility",
+            "primarySignal": "salvamentos",
+            "selectionMode": "experiment",
+            "experimentAxis": "topic-angle",
+            "contextKey": "FEED|afternoon|utility",
+            "decisionReasons": [
+              "imagem-editorial",
+              "titulo-legivel",
+              "dado-concreto",
+              "relevancia-empresarial",
+              "aderencia-ao-perfil",
+              "densidade-factual",
+              "contexto-aprofundado",
+              "fadiga-editorial-recente",
+              "pauta-recente",
+              "tema-com-baixo-historico"
+            ],
+            "fatiguePenalty": 6.87,
+            "modelVersion": "nerion-adaptive-v1.1.0"
+          },
+          "objective": "utility",
+          "daypart": "afternoon",
+          "observations": []
         }
       ],
       "models": {
@@ -6731,7 +6880,7 @@
             "totalReach": 8,
             "matureSamples": 2,
             "lowDistributionSamples": 2,
-            "recencyWeight": 1.685,
+            "recencyWeight": 1.684,
             "confidence": 0.4,
             "averageScore": 5.35,
             "learnedScore": 32.14
@@ -6741,7 +6890,7 @@
             "totalReach": 51,
             "matureSamples": 6,
             "lowDistributionSamples": 4,
-            "recencyWeight": 5.268,
+            "recencyWeight": 5.263,
             "confidence": 0.6,
             "averageScore": 8.6,
             "learnedScore": 25.16
@@ -6751,7 +6900,7 @@
             "totalReach": 4,
             "matureSamples": 1,
             "lowDistributionSamples": 1,
-            "recencyWeight": 1.923,
+            "recencyWeight": 1.921,
             "confidence": 0.008,
             "averageScore": 2.39,
             "learnedScore": 49.62
@@ -6761,7 +6910,7 @@
             "totalReach": 12,
             "matureSamples": 1,
             "lowDistributionSamples": 1,
-            "recencyWeight": 1.908,
+            "recencyWeight": 1.906,
             "confidence": 0.024,
             "averageScore": 7.23,
             "learnedScore": 48.97
@@ -6771,7 +6920,7 @@
             "totalReach": 5,
             "matureSamples": 1,
             "lowDistributionSamples": 1,
-            "recencyWeight": 1.882,
+            "recencyWeight": 1.88,
             "confidence": 0.01,
             "averageScore": 3.85,
             "learnedScore": 49.54
@@ -6781,7 +6930,7 @@
             "totalReach": 8,
             "matureSamples": 1,
             "lowDistributionSamples": 0,
-            "recencyWeight": 0.94,
+            "recencyWeight": 0.939,
             "confidence": 0.008,
             "averageScore": 14.07,
             "learnedScore": 49.71
@@ -6791,7 +6940,7 @@
             "totalReach": 11,
             "matureSamples": 1,
             "lowDistributionSamples": 1,
-            "recencyWeight": 1.923,
+            "recencyWeight": 1.922,
             "confidence": 0.022,
             "averageScore": 3.28,
             "learnedScore": 48.97
@@ -6801,7 +6950,7 @@
             "totalReach": 19,
             "matureSamples": 1,
             "lowDistributionSamples": 1,
-            "recencyWeight": 1.934,
+            "recencyWeight": 1.933,
             "confidence": 0.038,
             "averageScore": 5.82,
             "learnedScore": 48.32
@@ -6813,7 +6962,7 @@
             "totalReach": 122,
             "matureSamples": 16,
             "lowDistributionSamples": 13,
-            "recencyWeight": 19.223,
+            "recencyWeight": 19.207,
             "confidence": 0.61,
             "averageScore": 6.18,
             "learnedScore": 23.27
@@ -6823,7 +6972,7 @@
             "totalReach": 122,
             "matureSamples": 16,
             "lowDistributionSamples": 13,
-            "recencyWeight": 19.223,
+            "recencyWeight": 19.207,
             "confidence": 0.61,
             "averageScore": 6.18,
             "learnedScore": 23.27
@@ -6833,7 +6982,7 @@
             "totalReach": 23,
             "matureSamples": 2,
             "lowDistributionSamples": 2,
-            "recencyWeight": 1.835,
+            "recencyWeight": 1.833,
             "confidence": 0.4,
             "averageScore": 9.87,
             "learnedScore": 33.95
@@ -6843,7 +6992,7 @@
             "totalReach": 1,
             "matureSamples": 1,
             "lowDistributionSamples": 1,
-            "recencyWeight": 0.936,
+            "recencyWeight": 0.935,
             "confidence": 0.001,
             "averageScore": 1.5,
             "learnedScore": 49.95
@@ -6851,21 +7000,21 @@
         },
         "formats": {
           "FEED": {
-            "samples": 21,
-            "totalReach": 118,
-            "matureSamples": 19,
-            "lowDistributionSamples": 16,
-            "recencyWeight": 18.833,
+            "samples": 20,
+            "totalReach": 116,
+            "matureSamples": 18,
+            "lowDistributionSamples": 15,
+            "recencyWeight": 17.912,
             "confidence": 0.6,
-            "averageScore": 8.12,
-            "learnedScore": 24.87
+            "averageScore": 7.8,
+            "learnedScore": 24.68
           },
           "REELS": {
             "samples": 11,
             "totalReach": 130,
             "matureSamples": 7,
             "lowDistributionSamples": 6,
-            "recencyWeight": 10.303,
+            "recencyWeight": 10.294,
             "confidence": 0.65,
             "averageScore": 4.49,
             "learnedScore": 20.42
@@ -6873,21 +7022,21 @@
         },
         "audiences": {
           "empresários": {
-            "samples": 16,
-            "totalReach": 170,
-            "matureSamples": 15,
-            "lowDistributionSamples": 12,
-            "recencyWeight": 14.231,
-            "confidence": 0.85,
-            "averageScore": 8.1,
-            "learnedScore": 14.39
+            "samples": 15,
+            "totalReach": 168,
+            "matureSamples": 14,
+            "lowDistributionSamples": 11,
+            "recencyWeight": 13.314,
+            "confidence": 0.84,
+            "averageScore": 7.67,
+            "learnedScore": 14.44
           },
           "vendas": {
             "samples": 1,
             "totalReach": 4,
             "matureSamples": 1,
             "lowDistributionSamples": 1,
-            "recencyWeight": 0.85,
+            "recencyWeight": 0.849,
             "confidence": 0.004,
             "averageScore": 7.22,
             "learnedScore": 49.83
@@ -6897,7 +7046,7 @@
             "totalReach": 54,
             "matureSamples": 7,
             "lowDistributionSamples": 6,
-            "recencyWeight": 11.316,
+            "recencyWeight": 11.306,
             "confidence": 0.6,
             "averageScore": 5.24,
             "learnedScore": 23.15
@@ -6907,7 +7056,7 @@
             "totalReach": 11,
             "matureSamples": 2,
             "lowDistributionSamples": 2,
-            "recencyWeight": 1.784,
+            "recencyWeight": 1.782,
             "confidence": 0.4,
             "averageScore": 7.42,
             "learnedScore": 32.97
@@ -6929,7 +7078,7 @@
             "totalReach": 19,
             "matureSamples": 2,
             "lowDistributionSamples": 2,
-            "recencyWeight": 3.664,
+            "recencyWeight": 3.661,
             "confidence": 0.4,
             "averageScore": 5.85,
             "learnedScore": 32.34
@@ -6939,7 +7088,7 @@
             "totalReach": 103,
             "matureSamples": 14,
             "lowDistributionSamples": 11,
-            "recencyWeight": 13.515,
+            "recencyWeight": 13.504,
             "confidence": 0.6,
             "averageScore": 7.4,
             "learnedScore": 24.44
@@ -6949,20 +7098,20 @@
             "totalReach": 19,
             "matureSamples": 4,
             "lowDistributionSamples": 4,
-            "recencyWeight": 5.58,
+            "recencyWeight": 5.575,
             "confidence": 0.6,
             "averageScore": 5.06,
             "learnedScore": 23.04
           },
           "alerta": {
-            "samples": 7,
-            "totalReach": 107,
-            "matureSamples": 6,
-            "lowDistributionSamples": 5,
-            "recencyWeight": 6.376,
+            "samples": 6,
+            "totalReach": 105,
+            "matureSamples": 5,
+            "lowDistributionSamples": 4,
+            "recencyWeight": 5.466,
             "confidence": 0.6,
-            "averageScore": 7.78,
-            "learnedScore": 24.67
+            "averageScore": 6.66,
+            "learnedScore": 24
           }
         },
         "contexts": {
@@ -6971,7 +7120,7 @@
             "totalReach": 35,
             "matureSamples": 7,
             "lowDistributionSamples": 6,
-            "recencyWeight": 6.189,
+            "recencyWeight": 6.184,
             "confidence": 0.6,
             "averageScore": 26.6,
             "learnedScore": 35.96
@@ -6981,7 +7130,7 @@
             "totalReach": 6,
             "matureSamples": 2,
             "lowDistributionSamples": 2,
-            "recencyWeight": 1.796,
+            "recencyWeight": 1.794,
             "confidence": 0.4,
             "averageScore": 18.62,
             "learnedScore": 37.45
@@ -6991,7 +7140,7 @@
             "totalReach": 48,
             "matureSamples": 6,
             "lowDistributionSamples": 4,
-            "recencyWeight": 5.315,
+            "recencyWeight": 5.31,
             "confidence": 0.6,
             "averageScore": 42.15,
             "learnedScore": 45.29
@@ -7001,27 +7150,27 @@
             "totalReach": 89,
             "matureSamples": 3,
             "lowDistributionSamples": 2,
-            "recencyWeight": 2.642,
+            "recencyWeight": 2.64,
             "confidence": 0.4,
             "averageScore": 32.45,
             "learnedScore": 42.98
           },
           "FEED|afternoon|discovery": {
-            "samples": 4,
-            "totalReach": 17,
-            "matureSamples": 4,
-            "lowDistributionSamples": 4,
-            "recencyWeight": 3.592,
+            "samples": 3,
+            "totalReach": 15,
+            "matureSamples": 3,
+            "lowDistributionSamples": 3,
+            "recencyWeight": 2.683,
             "confidence": 0.6,
-            "averageScore": 44.64,
-            "learnedScore": 46.78
+            "averageScore": 47.38,
+            "learnedScore": 48.43
           },
           "REELS|afternoon|discovery": {
             "samples": 2,
             "totalReach": 4,
             "matureSamples": 2,
             "lowDistributionSamples": 2,
-            "recencyWeight": 1.873,
+            "recencyWeight": 1.871,
             "confidence": 0.4,
             "averageScore": 20.82,
             "learnedScore": 38.33
@@ -7031,7 +7180,7 @@
             "totalReach": 6,
             "matureSamples": 0,
             "lowDistributionSamples": 0,
-            "recencyWeight": 1.918,
+            "recencyWeight": 1.917,
             "confidence": 0.012,
             "averageScore": 0,
             "learnedScore": 49.4
@@ -7051,7 +7200,7 @@
             "totalReach": 17,
             "matureSamples": 1,
             "lowDistributionSamples": 1,
-            "recencyWeight": 0.96,
+            "recencyWeight": 0.959,
             "confidence": 0.017,
             "averageScore": 33.99,
             "learnedScore": 49.73
@@ -7061,7 +7210,7 @@
             "totalReach": 2,
             "matureSamples": 0,
             "lowDistributionSamples": 0,
-            "recencyWeight": 0.969,
+            "recencyWeight": 0.968,
             "confidence": 0.002,
             "averageScore": 0,
             "learnedScore": 49.9
@@ -7071,7 +7220,7 @@
             "totalReach": 3,
             "matureSamples": 0,
             "lowDistributionSamples": 0,
-            "recencyWeight": 0.971,
+            "recencyWeight": 0.97,
             "confidence": 0.003,
             "averageScore": 0,
             "learnedScore": 49.85
@@ -7081,7 +7230,7 @@
             "totalReach": 9,
             "matureSamples": 0,
             "lowDistributionSamples": 0,
-            "recencyWeight": 0.971,
+            "recencyWeight": 0.97,
             "confidence": 0.009,
             "averageScore": 100,
             "learnedScore": 50.45
@@ -7091,19 +7240,19 @@
             "totalReach": 3,
             "matureSamples": 0,
             "lowDistributionSamples": 0,
-            "recencyWeight": 0.987,
+            "recencyWeight": 0.986,
             "confidence": 0.003,
             "averageScore": 0,
             "learnedScore": 49.85
           }
         }
       },
-      "updatedAt": "2026-09-05T19:43:50.956Z",
+      "updatedAt": "2026-09-05T20:21:04.467Z",
       "weeklyGrowth": {
         "current": {
           "posts": 48,
-          "reach": 248,
-          "interactions": 4,
+          "reach": 246,
+          "interactions": 1,
           "shares": 1,
           "saved": 0,
           "follows": 0,
@@ -7128,16 +7277,16 @@
       "readiness": {
         "modelVersion": "nerion-adaptive-v1.2.0",
         "productStage": "stable",
-        "updatedAt": "2026-09-05T19:43:50.956Z",
+        "updatedAt": "2026-09-05T20:21:04.467Z",
         "ageHours": 0,
         "freshness": "current",
         "effectiveSamples": 42,
         "effectiveReach": 279,
-        "controlledSamples": 18,
+        "controlledSamples": 21,
         "selectionModes": {
-          "exploit": 9,
+          "exploit": 11,
           "explore": 4,
-          "experiment": 5
+          "experiment": 6
         },
         "confidenceLevel": "moderate",
         "autonomousReady": false,
@@ -7163,6 +7312,6 @@
       }
     }
   },
-  "updatedAt": "2026-09-05T19:43:50.956Z",
+  "updatedAt": "2026-09-05T20:21:04.467Z",
   "modelVersion": "nerion-adaptive-v1.2.0"
 }
