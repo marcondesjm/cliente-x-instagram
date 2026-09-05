@@ -2724,9 +2724,14 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     }
     .impact-carousel.has-sector-photo.book-split .note {
       left: 70px;
-      top: 820px;
+      top: 790px;
       width: 450px;
       min-height: 225px;
+    }
+    .impact-carousel.has-sector-photo.book-split .save-cue {
+      left: 570px;
+      right: 58px;
+      width: fit-content;
     }
     .impact-carousel.has-sector-photo.book-editorial .context-photo {
       left: 58px;
@@ -2736,9 +2741,11 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
       height: 735px;
     }
     .impact-carousel.has-sector-photo.book-editorial .headline {
-      margin: 178px 0 0 590px;
-      max-width: 390px;
-      font-size: 58px;
+      margin: 178px 0 0 620px;
+      max-width: 402px;
+      font-size: 54px;
+      word-break: normal;
+      overflow-wrap: normal;
     }
     .impact-carousel.has-sector-photo.book-editorial .note {
       left: 655px;
@@ -2833,6 +2840,11 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
       background: #111;
       color: #fff;
       border-color: #111;
+    }
+    .impact-carousel .save-cue {
+      background: #111;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,.22);
     }
     /* Reel cover: keep every essential element inside Instagram's visible crop.
        Supporting copy belongs to the following takes, not below the cover photo. */
