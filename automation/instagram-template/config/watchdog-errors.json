@@ -1,23 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-08-29:2:33260096504",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-08-29",
-    "slotIndex": 2,
-    "scheduledAt": "2026-08-29T12:00:00.000Z",
-    "failedAt": "2026-08-29T15:23:59.487Z",
-    "workflowRun": "33260096504",
-    "workflowName": "Instagram Feed Cliente X",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/33260096504",
-    "stage": "unknown",
-    "error": "Radar ativo: nenhuma pauta oficial dos ultimos 30 dias e nao repetida esta disponivel para este horario. Nenhum post foi publicado.",
-    "solution": "Buscar uma pauta oficial inedita nas fontes configuradas ou ampliar/revisar fontes do Radar antes de recuperar o slot. Nao renovar token para este caso.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-08-29-122359.json",
-    "resolvedAt": "2026-08-29T15:28:17.555Z",
-    "resolvedRun": "33260221670"
-  },
-  {
     "key": "cliente-x:2026-08-29:0:33262178330",
     "status": "resolved",
     "account": "cliente-x",
@@ -872,5 +854,21 @@
     "error": "Graph POST /17841404470203300/media_publish failed [400]: {\"error\":{\"message\":\"Fatal\",\"type\":\"OAuthException\",\"code\":-1,\"error_subcode\":2207085,\"is_transient\":false,\"error_user_title\":\"Erro interno gen\\u00e9rico\",\"error_user_msg\":\"Ocorreu um erro interno do servidor. Tente novamente mais tarde.\",\"fbtrace_id\":\"A5uyhh3ttDYAj_YiDHNKzIN\"}}",
     "solution": "A Meta apresentou erro interno ao concluir o Reel. O vigia valida o container, confirma que a midia nao apareceu no perfil e recupera o mesmo conteudo como carrossel; renovar o token somente se a validacao retornar erro 190/463.",
     "failurePath": "automation/instagram-template/runs/failure-2026-09-05-150644.json"
+  },
+  {
+    "key": "cliente-x:2026-09-05:4:33983348849",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-09-05",
+    "slotIndex": 4,
+    "scheduledAt": "2026-09-05T15:10:00.000Z",
+    "failedAt": "2026-09-05T18:21:28.849Z",
+    "workflowRun": "33983348849",
+    "workflowName": "Instagram Watchdog Backup",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/33983348849",
+    "stage": "Media URL check",
+    "error": "Media URL check request failed (UND_ERR_CONNECT_TIMEOUT: Connect Timeout Error (attempted address: i.ibb.co:443, timeout: 10000ms))",
+    "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o conteúdo ou dependência indicada antes da próxima tentativa.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-09-05-152128.json"
   }
 ]
