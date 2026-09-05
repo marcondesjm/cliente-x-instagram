@@ -1,23 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-08-29:1:33257949631",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-08-29",
-    "slotIndex": 1,
-    "scheduledAt": "2026-08-29T11:10:00.000Z",
-    "failedAt": "2026-08-29T14:35:25.628Z",
-    "workflowRun": "33257949631",
-    "workflowName": "Instagram Feed Cliente X",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/33257949631",
-    "stage": "unknown",
-    "error": "Radar ativo: nenhuma pauta oficial dos ultimos 30 dias e nao repetida esta disponivel para este horario. Nenhum post foi publicado.",
-    "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o token, conteúdo ou dependência indicada antes da próxima tentativa.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-08-29-113525.json",
-    "resolvedAt": "2026-08-29T14:37:52.983Z",
-    "resolvedRun": "33258039686"
-  },
-  {
     "key": "cliente-x:2026-08-29:2:33260096504",
     "status": "resolved",
     "account": "cliente-x",
@@ -874,5 +856,21 @@
     "error": "page.screenshot: Protocol error (Page.captureScreenshot): Unable to capture screenshot\nCall log:\n  - taking page screenshot\n  - waiting for fonts to load...\n  - fonts loaded\n",
     "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o conteúdo ou dependência indicada antes da próxima tentativa.",
     "failurePath": "automation/instagram-template/runs/failure-2026-09-05-150323.json"
+  },
+  {
+    "key": "cliente-x:2026-09-05:4:33982861779",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-09-05",
+    "slotIndex": 4,
+    "scheduledAt": "2026-09-05T15:10:00.000Z",
+    "failedAt": "2026-09-05T18:06:44.771Z",
+    "workflowRun": "33982861779",
+    "workflowName": "Instagram Watchdog Backup",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/33982861779",
+    "stage": "Graph POST /17841404470203300/media_publish",
+    "error": "Graph POST /17841404470203300/media_publish failed [400]: {\"error\":{\"message\":\"Fatal\",\"type\":\"OAuthException\",\"code\":-1,\"error_subcode\":2207085,\"is_transient\":false,\"error_user_title\":\"Erro interno gen\\u00e9rico\",\"error_user_msg\":\"Ocorreu um erro interno do servidor. Tente novamente mais tarde.\",\"fbtrace_id\":\"A5uyhh3ttDYAj_YiDHNKzIN\"}}",
+    "solution": "A Meta apresentou erro interno ao concluir a publicacao. O vigia deve validar o container e o acesso, aguardar com intervalo progressivo e recuperar o slot automaticamente; renovar o token somente se a validacao retornar erro 190/463.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-09-05-150644.json"
   }
 ]
