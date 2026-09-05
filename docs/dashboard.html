@@ -736,9 +736,42 @@
 
     .daily-plan {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 14px;
     }
+
+    .plan-overview {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 0 0 12px;
+    }
+
+    .plan-metric {
+      display: grid;
+      gap: 3px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: linear-gradient(145deg, #fff, #f4f8f5);
+    }
+
+    .plan-metric strong { font-size: 20px; line-height: 1; }
+    .plan-metric span { color: var(--muted); font-size: 11px; font-weight: 800; }
+
+    .plan-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 0 0 12px;
+    }
+
+    .plan-filters { display: flex; gap: 7px; flex-wrap: wrap; }
+    .plan-filter { min-height: 34px; padding: 7px 11px; border-radius: 999px; font-size: 12px; }
+    .plan-filter.active { color: #fff; border-color: var(--text); background: var(--text); }
+    .plan-toolbar-note { color: var(--muted); font-size: 11px; font-weight: 750; }
 
     .news-radar {
       margin: 0 0 12px;
@@ -875,13 +908,18 @@
 
     .plan-card {
       display: grid;
-      gap: 8px;
-      padding: 12px;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 10px;
+      padding: 16px;
       border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fbfdfc;
+      border-radius: 16px;
+      background: linear-gradient(160deg, #fff 0%, #f8fbf9 100%);
       min-width: 0;
+      box-shadow: 0 8px 24px rgba(21, 49, 36, .06);
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
     }
+
+    .plan-card:hover { transform: translateY(-2px); border-color: #b8d6c5; box-shadow: 0 12px 30px rgba(21,49,36,.1); }
 
     .plan-top {
       display: flex;
@@ -891,13 +929,13 @@
     }
 
     .plan-time {
-      font-size: 17px;
+      font-size: 20px;
       font-weight: 900;
     }
 
     .plan-title {
-      font-size: 14px;
-      line-height: 1.2;
+      font-size: 15px;
+      line-height: 1.25;
       font-weight: 900;
       overflow-wrap: anywhere;
     }
@@ -908,7 +946,14 @@
       line-height: 1.35;
       font-weight: 700;
       overflow-wrap: anywhere;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
+
+    .plan-source-row { min-height: 24px; }
+    .plan-source-row .source-reference { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
     .plan-actions {
       display: flex;
@@ -923,6 +968,9 @@
       padding: 7px 10px;
       font-size: 12px;
     }
+
+    .account-test-box { border-color: #b7dfc7; background: linear-gradient(145deg, #f7fff9, #edf9f2); }
+    .account-test-details { display: grid; gap: 5px; margin-top: 8px; color: var(--muted); font-size: 12px; font-weight: 750; }
 
     .plan-preview {
       display: none;
@@ -1616,6 +1664,7 @@
       .preview { grid-template-columns: 1fr; }
       .preview img { width: min(260px, 100%); }
       .plan-preview { grid-template-columns: 1fr; }
+      .plan-overview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .plan-preview img { width: min(420px, 100%); }
       .two-fields, .editor-actions, .queue-actions, .queue-row, .image-tools, .briefing-controls, .program-grid, .weekly-banner-tools { grid-template-columns: 1fr; }
       .bio-add-button-panel { align-items: stretch; flex-direction: column; }
@@ -1951,6 +2000,16 @@
               <span id="newsRadarButtonLabel">Verificando Radar de Notícias</span>
             </button>
             <div class="news-radar-details" id="newsRadarDetails" hidden></div>
+          </div>
+          <div class="plan-overview" id="tomorrowOverview"></div>
+          <div class="plan-toolbar">
+            <div class="plan-filters" id="tomorrowFilters" aria-label="Filtrar posts de amanhã">
+              <button class="plan-filter active" type="button" data-plan-filter="all">Todos</button>
+              <button class="plan-filter" type="button" data-plan-filter="reel">Reels</button>
+              <button class="plan-filter" type="button" data-plan-filter="feed">Feed</button>
+              <button class="plan-filter" type="button" data-plan-filter="manual">Manuais</button>
+            </div>
+            <span class="plan-toolbar-note" id="tomorrowFilterNote">Visão completa da programação</span>
           </div>
           <div class="daily-plan" id="tomorrowPreview"></div>
           <div class="plan-preview" id="dailyPlanPreview">
@@ -2739,6 +2798,15 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               </div>
               <div class="access-result" id="onboardingInviteResult">Status: aguardando geração do convite.</div>
             </div>
+            <div class="form-section-title"><span>5</span>Confirmar a conexão</div>
+            <div class="document-box account-test-box">
+              <strong>Teste seguro do Instagram</strong>
+              <span>Confirma a conta, o tipo profissional e a permissão de publicação. Nenhum post será criado.</span>
+              <div class="briefing-actions">
+                <button class="primary" type="button" id="testInstagramAccount">Testar conta selecionada</button>
+              </div>
+              <div class="access-result" id="instagramAccountTestResult">Depois que o cliente concluir o convite, execute este teste.</div>
+            </div>
           </div>
         </div>
 
@@ -2836,6 +2904,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       sessionRole: null,
       selectedAccount: 'cliente-x',
       account: null,
+      tomorrowFilter: 'all',
       officialPreviewRequests: {},
       showcaseSlides: [],
       showcaseSlideIndex: 0
@@ -6266,6 +6335,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const dateLabel = document.getElementById('tomorrowPreviewDate');
       const preview = appState.tomorrowPreview || {};
       const items = preview.items || [];
+      const filter = appState.tomorrowFilter || 'all';
       renderNewsRadar();
       if (dateLabel) dateLabel.textContent = `Amanhã · ${formatDateLabel(preview.date)}`;
 
@@ -6280,7 +6350,35 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const reviewedTime = reviewedAt && !Number.isNaN(reviewedAt.getTime()) ? ` · atualizado ${brtFormatter.format(reviewedAt)}` : '';
       status.textContent = `${items.length} previstos${reviewedTime}`;
       status.className = 'status-pill good';
-      list.innerHTML = items.map((item) => {
+      const reelCount = items.filter((item) => String(item.mode || '').toLowerCase().includes('reel')).length;
+      const feedCount = items.filter((item) => String(item.mode || '').toLowerCase().includes('feed')).length;
+      const manualCount = items.filter((item) => item.type === 'manual').length;
+      const overview = document.getElementById('tomorrowOverview');
+      if (overview) overview.innerHTML = [
+        [items.length, 'posts previstos'],
+        [reelCount, 'Reels + Story'],
+        [feedCount, 'Feed + Story'],
+        [manualCount, 'itens manuais']
+      ].map(([value, label]) => `<div class="plan-metric"><strong>${value}</strong><span>${label}</span></div>`).join('');
+
+      document.querySelectorAll('[data-plan-filter]').forEach((button) => {
+        button.classList.toggle('active', button.dataset.planFilter === filter);
+      });
+      const filteredItems = items.filter((item) => {
+        if (filter === 'manual') return item.type === 'manual';
+        if (filter === 'reel' || filter === 'feed') return String(item.mode || '').toLowerCase().includes(filter);
+        return true;
+      });
+      const note = document.getElementById('tomorrowFilterNote');
+      if (note) note.textContent = filteredItems.length === items.length
+        ? 'Visão completa da programação'
+        : `${filteredItems.length} de ${items.length} posts exibidos`;
+      if (!filteredItems.length) {
+        list.innerHTML = '<div class="empty">Nenhum post corresponde a este filtro.</div>';
+        return;
+      }
+
+      list.innerHTML = filteredItems.map((item) => {
         const typeLabel = item.type === 'manual' ? 'Manual' : item.type === 'program' ? 'Programa' : 'Automático';
         const typeClass = item.type === 'automatic' ? 'good' : 'warn';
         const slot = item.type === 'program'
@@ -6294,9 +6392,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             </div>
             <div class="plan-title">${escapeHtml(item.title || 'Conteúdo previsto')}</div>
             <div class="plan-caption">${escapeHtml(item.caption || 'Legenda será montada pelo gerador automático.')}</div>
-            ${item.sourceUrl && /^https:\/\//i.test(item.sourceUrl)
-              ? `<a class="source-reference" href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noopener noreferrer">Fonte oficial: ${escapeHtml(item.source || 'abrir publicação original')} ↗</a>`
-              : ''}
+            <div class="plan-source-row">${item.sourceUrl && /^https:\/\//i.test(item.sourceUrl)
+              ? `<a class="source-reference" href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noopener noreferrer">Fonte: ${escapeHtml(item.source || 'publicação original')} ↗</a>`
+              : '<span class="run-meta">Conteúdo editorial da conta</span>'}</div>
             <div class="plan-actions">
               <div class="run-meta">${escapeHtml(slot)} · ${escapeHtml(item.mode || 'feed + story')}</div>
               ${item.type === 'program'
@@ -7149,6 +7247,33 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       }
     }
 
+    async function testInstagramAccount() {
+      const button = document.getElementById('testInstagramAccount');
+      const result = document.getElementById('instagramAccountTestResult');
+      if (!appState.selectedAccount) { result.textContent = 'Selecione uma conta primeiro.'; return; }
+      const original = button.textContent;
+      button.disabled = true;
+      button.textContent = 'Testando conexão...';
+      result.textContent = 'Consultando a Meta sem publicar conteúdo...';
+      try {
+        const payload = await api('/api/state', {
+          method: 'POST',
+          body: JSON.stringify({ action: 'test-instagram-account', account: appState.selectedAccount })
+        });
+        const permission = payload.publishingPermission === false
+          ? 'Permissão de publicação ausente'
+          : payload.publishingPermission === true
+            ? 'Permissão de publicação confirmada'
+            : 'Permissão será confirmada na primeira publicação';
+        result.innerHTML = `<strong>Conexão aprovada</strong><div class="account-test-details"><span>@${escapeHtml(payload.username || payload.instagramUserId)}</span><span>${escapeHtml(payload.accountType || 'Conta profissional')} · ${escapeHtml(String(payload.mediaCount ?? '—'))} mídias</span><span>${escapeHtml(permission)}</span></div>`;
+      } catch (error) {
+        result.textContent = `Teste não aprovado: ${error.message}`;
+      } finally {
+        button.disabled = false;
+        button.textContent = original;
+      }
+    }
+
     async function runOperationalCheck() {
       const button = document.getElementById('runHealthCheck');
       const repeatButton = document.getElementById('repeatHealthCheck');
@@ -7375,6 +7500,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('createAccount').addEventListener('click', createAccount);
       document.getElementById('copyOnboardingInvite').addEventListener('click', copyOnboardingInvite);
       document.getElementById('renewOnboardingInvite').addEventListener('click', renewOnboardingInvite);
+      document.getElementById('testInstagramAccount').addEventListener('click', testInstagramAccount);
+      document.getElementById('tomorrowFilters').addEventListener('click', (event) => {
+        const button = event.target.closest('[data-plan-filter]');
+        if (!button) return;
+        appState.tomorrowFilter = button.dataset.planFilter || 'all';
+        renderTomorrowPreview();
+      });
       document.getElementById('uploadBrandDocument').addEventListener('click', uploadBrandDocument);
       document.getElementById('uploadActiveAvatars').addEventListener('click', uploadActiveAvatars);
       document.getElementById('fillBrandBriefing').addEventListener('click', () => fillBrandBriefingTemplate({ force: true }));

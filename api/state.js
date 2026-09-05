@@ -1408,6 +1408,52 @@ async function addAccountToPanelUser(email, accountKey) {
   return users.map((item) => ({ email: item.email, role: item.role || 'user', accounts: item.accounts || [] }));
 }
 
+async function testInstagramAccountConnection(account = {}) {
+  const accessToken = String(process.env[account.accessTokenEnv] || '').trim();
+  const userId = String(process.env[account.userIdEnv] || '').trim();
+  if (!accessToken || !userId) {
+    throw userError('A conta ainda não tem token e ID do Instagram configurados. Conclua o convite de ativação primeiro.', 409);
+  }
+
+  const profileResponse = await fetch(`https://graph.facebook.com/v22.0/${encodeURIComponent(userId)}?fields=id,username,account_type,media_count&access_token=${encodeURIComponent(accessToken)}`);
+  const profile = await profileResponse.json().catch(() => ({}));
+  if (!profileResponse.ok || profile.error) {
+    throw userError(profile.error?.message || `Meta recusou a conexão: HTTP ${profileResponse.status}.`, profileResponse.status);
+  }
+
+  const expectedUsername = String(account.expectedUsername || '').replace(/^@/, '').trim().toLowerCase();
+  const connectedUsername = String(profile.username || '').replace(/^@/, '').trim();
+  if (expectedUsername && connectedUsername.toLowerCase() !== expectedUsername) {
+    throw userError(`A credencial pertence a @${connectedUsername || profile.id}, mas esta conta espera @${expectedUsername}.`, 409);
+  }
+
+  let publishingPermission = null;
+  try {
+    const permissionsResponse = await fetch(`https://graph.facebook.com/v22.0/me/permissions?access_token=${encodeURIComponent(accessToken)}`);
+    const permissions = await permissionsResponse.json().catch(() => ({}));
+    if (permissionsResponse.ok && Array.isArray(permissions.data)) {
+      const permission = permissions.data.find((item) => item.permission === 'instagram_content_publish');
+      publishingPermission = permission ? permission.status === 'granted' : null;
+    }
+  } catch {
+    publishingPermission = null;
+  }
+
+  return {
+    ok: true,
+    account: account.account,
+    instagramUserId: String(profile.id || userId),
+    username: connectedUsername || null,
+    accountType: profile.account_type || null,
+    mediaCount: Number.isFinite(Number(profile.media_count)) ? Number(profile.media_count) : null,
+    publishingPermission,
+    checkedAt: new Date().toISOString(),
+    message: publishingPermission === false
+      ? `Conta @${connectedUsername || profile.id} conectada, mas sem permissão instagram_content_publish.`
+      : `Conta @${connectedUsername || profile.id} conectada e pronta para o teste visual sem publicação.`
+  };
+}
+
 async function createAccountConfig(body = {}, session = null, req = null) {
   const accountKey = normalizeAccountKey(body.account);
   const expectedUsername = String(body.expectedUsername || '').replace(/^@/, '').trim();
@@ -2390,6 +2436,15 @@ export default async function handler(req, res) {
       }
       if (body.action === 'create-account') {
         const result = await createAccountConfig(body, session, req);
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json(result);
+        return;
+      }
+      if (body.action === 'test-instagram-account') {
+        const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
+        const account = requireConfiguredAccount(accounts, String(body.account || ''));
+        if (!canAccessAccount(session, account)) throw userError('Seu usuário não pode testar esta conta.', 403);
+        const result = await testInstagramAccountConnection(account);
         res.setHeader('cache-control', 'no-store');
         res.status(200).json(result);
         return;
