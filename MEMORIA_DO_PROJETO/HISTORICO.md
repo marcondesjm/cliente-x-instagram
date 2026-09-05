@@ -2758,3 +2758,4 @@ Conclusao de ativacao:
 - O histórico passa a persistir separadamente a impressão digital, o tipo e o título do Story, preservando a auditoria quando Feed/Reel e Story usam conteúdos diferentes.
 - A regra não atua em publicações manuais, itens agendados, `story-only`, `feed-only` ou `reel-only`; nenhuma mídia foi publicada nesta etapa.
 - `node --check`, `npm run validate-copy` com 75 seleções e 21 Stories autorais, e `git diff --check` aprovados. A suíte comprovou que quatro notícias não antecipam o livro, cinco notícias ativam a inserção e um Story autoral reinicia o intervalo.
+- Correção funcional enviada ao `origin/main` no commit `05410252`.

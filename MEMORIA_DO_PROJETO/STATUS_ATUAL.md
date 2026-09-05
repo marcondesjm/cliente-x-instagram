@@ -866,3 +866,4 @@ Resultado:
 - Existem 21 Stories autorais configurados; títulos ainda não usados têm prioridade e o histórico registra separadamente o conteúdo efetivamente publicado no Story.
 - Validações aprovadas: sintaxe, 75 seleções editoriais, 21 candidatos autorais, intervalo mínimo de cinco notícias, reinício após livro e `git diff --check`.
 - Nenhuma publicação foi feita. Próxima prova operacional: observar a primeira ativação natural da regra e exigir o Story ID persistido; o permalink e o ID do Feed/Reel continuam pertencendo à notícia do horário.
+- Implementação funcional disponível no `origin/main` em `05410252`.
