@@ -145,6 +145,10 @@ jobs:
         if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
         run: npm run instagram -- --account "$ACCOUNT" --validate-copy
 
+      - name: Validate cloud visual agent
+        if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
+        run: node scripts/validate-visual-agent.mjs
+
       - name: Install Playwright Chromium
         if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
         run: npx playwright install --with-deps chromium

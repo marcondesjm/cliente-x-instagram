@@ -2855,3 +2855,15 @@ Conclusao de ativacao:
 - A publicação ocorreu cerca de dez minutos antes do commit `eb1a2a63`, que passou a exigir uma fotografia editorial inédita em cada slide e bloquear a postagem se a quantidade for insuficiente.
 - O media ID defeituoso foi incluído em `performance-learning-exclusions.json` para não ensinar ao modelo que esse layout vazio é um resultado visual aceitável.
 - O post existente não foi apagado nem republicado; substituir as imagens exige remover e publicar uma nova mídia, ação pendente de autorização explícita.
+
+# 2026-09-05 17:50 BRT — Agente Visual em nuvem e correção de imagens sem relação com a pauta
+
+- A prova do slot 10, run `33989616250`, confirmou o algoritmo v1.2, mas expôs o reaproveitamento incorreto de quadros 9:16 no fallback de carrossel. Publicação: `https://www.instagram.com/p/Dc6ziUhCUdM/`, Feed `18071851835727747`, Story `18082908059497157`.
+- O commit `311f8d9e` passou a renderizar novamente o fallback em 1080x1350, ampliou a fotografia e removeu o cartão lateral da capa do Reel.
+- A prova do slot 11, run `33990643430`, confirmou o fallback 4:5: `https://www.instagram.com/p/Dc613j-Hb24/`, Feed `18090398927175449`, Story `17993232135031088`.
+- A inspeção desse segundo post revelou outro defeito: a antiga exigência de cinco imagens inéditas completava os slides com fotografias de outras matérias, incluindo jogo e cachorro sem relação com a pauta.
+- Foi criado o `Nerion Visual Cloud` v1.0.0 dentro do GitHub Actions. O agente aceita somente imagem cuja `sourceUrl` corresponda à matéria selecionada e registra sua decisão em `visual-agent.json` e `publication-history.json`.
+- Política vigente: fotografia comprovada na capa e no Story; slides internos tipográficos quando não há outras imagens da mesma matéria. A imagem da própria matéria pode ser reutilizada quando for a única opção pertinente, com `reusedRelevantImage` auditável.
+- O workflow ganhou a etapa `Validate cloud visual agent`. O teste puro aprovou a imagem correta e rejeitou uma imagem de outra matéria.
+- Render sem publicação `2026-09-05-174816-slot-12-render-only` inspecionado: capa e Story usam a fotografia do drone ligada à matéria do G1; slides internos não contêm fotografias alheias.
+- Sintaxe, agente visual, `validate-copy` com 75 seleções, Feed 4:5, Reel 9:16, Story seguro e `git diff --check` aprovados.

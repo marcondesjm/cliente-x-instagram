@@ -926,3 +926,14 @@ Resultado:
 - `Dc6oFhHlDuB` foi publicado antes da trava visual: Feed `18147144790553771`, Story `18109069519887173`, run `33984588888`.
 - Os arquivos reais comprovam quatro cartões sem fotografia editorial e um cartão com foto genérica; o post foi excluído do aprendizado de desempenho.
 - A correção `eb1a2a63` já impede o mesmo resultado nas próximas pautas. O conteúdo existente permanece no perfil até haver autorização para removê-lo e publicar uma versão nova.
+
+# Atualizacao 2026-09-05 17:50 BRT — Nerion Visual Cloud ativo
+
+- Agente em nuvem: `Nerion Visual Cloud` v1.0.0, integrado ao workflow principal e ao publicador.
+- Somente imagens vinculadas à URL da pauta selecionada podem entrar na arte; fotografias de outras notícias estão proibidas.
+- Capa e Story priorizam a foto real da matéria. Sem múltiplas imagens comprovadas, os cartões internos ficam tipográficos.
+- O fallback de Reel `2207085` cria um carrossel novo em 1080x1350; quadros 9:16 não são mais publicados como Feed.
+- Cada publicação registra versão, política, decisões por slide, fonte, URL, hash e eventual `reusedRelevantImage`.
+- Provas preservadas: `Dc6ziUhCUdM` (Feed `18071851835727747`, Story `18082908059497157`) e `Dc613j-Hb24` (Feed `18090398927175449`, Story `17993232135031088`). A segunda revelou imagens sem relação e não é exemplo visual aprovado.
+- Render aprovado sem publicação: `2026-09-05-174816-slot-12-render-only`, com foto pertinente na capa/Story e slides internos sem imagens cruzadas.
+- Próxima prova real deve exigir `visualAgent` no histórico, permalink, Feed/Reel ID e Story ID; workflow verde isolado não basta.

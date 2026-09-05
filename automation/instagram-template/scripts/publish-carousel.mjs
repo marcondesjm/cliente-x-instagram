@@ -10,6 +10,7 @@ import { spawnSync } from 'node:child_process';
 import { buildBrandContext } from '../../../lib/brand-analysis.js';
 import { buildResearchPack, decodeEditorialEntities, EDITORIAL_SOURCES, extractArticleFacts, extractEditorialImageUrl, factualSummary, isPredominantlyEnglish, isUsableEditorialFact, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
 import { summarizePerformanceLearning } from '../../../lib/performance-learning.js';
+import { assertVisualAgentPlan, buildVisualAgentPlan, CLOUD_VISUAL_AGENT_VERSION } from '../../../lib/visual-agent.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const TEMPLATE_DIR = resolve(ROOT, 'automation', 'instagram-template');
@@ -2008,7 +2009,10 @@ async function downloadResearchSlideImages(pack = {}, editorialPacks = [], publi
       if (visual?.imageHash) priorHashes.add(String(visual.imageHash));
     }
   }
-  const candidates = [pack, ...editorialPacks]
+  // O agente visual aceita somente ativos ligados à pauta selecionada. Usar
+  // imagens de outras matérias para completar cartões gerava associações
+  // falsas (jogos, animais ou pessoas sem relação com o texto).
+  const candidates = [pack]
     .map((candidate) => ({
       source: String(candidate?.research?.source || '').trim(),
       sourceUrl: String(candidate?.research?.sourceUrl || '').trim(),
@@ -2020,17 +2024,19 @@ async function downloadResearchSlideImages(pack = {}, editorialPacks = [], publi
   const currentUrls = new Set();
   const currentHashes = new Set();
   for (const candidate of candidates) {
-    if (selected.length >= slideCount) break;
-    if (priorUrls.has(candidate.imageUrl) || currentUrls.has(candidate.imageUrl)) continue;
+    if (selected.length >= 1) break;
+    if (currentUrls.has(candidate.imageUrl)) continue;
     const downloaded = await downloadEditorialImage(candidate.imageUrl, runDir, `radar-slide-${String(selected.length + 1).padStart(2, '0')}`);
-    if (!downloaded || priorHashes.has(downloaded.imageHash) || currentHashes.has(downloaded.imageHash)) continue;
+    if (!downloaded || currentHashes.has(downloaded.imageHash)) continue;
     currentUrls.add(candidate.imageUrl);
     currentHashes.add(downloaded.imageHash);
-    selected.push({ ...candidate, ...downloaded });
+    selected.push({
+      ...candidate,
+      ...downloaded,
+      reusedRelevantImage: priorUrls.has(candidate.imageUrl) || priorHashes.has(downloaded.imageHash)
+    });
   }
-  if (selected.length !== slideCount) {
-    throw new Error(`Radar bloqueado: foram encontradas apenas ${selected.length} imagens editoriais inéditas para ${slideCount} slides. Nenhuma foto local ou repetida será usada.`);
-  }
+  if (selected.length !== 1) console.warn('Agente Visual: imagem própria indisponível ou repetida; usando composição tipográfica, sem foto aleatória.');
   return selected;
 }
 
@@ -2287,9 +2293,9 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const researchTitle = String(slide.researchDisplayTitle || slide.researchTitle || '').trim();
   const researchUrl = String(slide.researchUrl || '').trim();
   const isReelMode = renderContext.publishMode === 'reel-only' || renderContext.publishMode === 'reel-and-story';
-  const researchImage = fileCssImage(renderContext.researchSlideImagePaths?.[index - 1] || renderContext.researchSourceImagePath || '');
+  const researchImage = fileCssImage(renderContext.researchSlideImagePaths?.[index - 1] || '');
   const useSectorPhoto = isImpact
-    ? Boolean(explicitSlideImage || researchImage || isReelMode || engagementRole === 'hook')
+    ? Boolean(explicitSlideImage || researchImage || (engagementRole === 'hook' && !researchSource))
     : engagementRole === 'hook' || engagementRole === 'proof';
   const sectorPhotoImage = explicitSlideImage || researchImage || (useSectorPhoto ? sectorPhotoCssImage(visualCue, index, renderContext) : '');
   // Only replace the visual with the source card when the article image was
@@ -3025,8 +3031,8 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .impact-carousel.reel-mode.has-sector-photo.role-hook .note .lead { margin-top: 0; color: ${accent}; }
     .reel-mode.role-hook .panel { top: 1060px; height: 420px; }
     .reel-mode.role-hook .swipe-cue { bottom: 105px; }
-    .reel-mode.role-value .note,
-    .reel-mode.role-proof .note { top: 1240px; min-height: 380px; }
+    .reel-mode.has-sector-photo.role-value .note,
+    .reel-mode.has-sector-photo.role-proof .note { top: 1240px; min-height: 380px; }
     .reel-mode.role-value .panel,
     .reel-mode.role-proof .panel { height: 580px; }
     .impact-carousel.reel-mode.has-sector-photo.role-value .context-photo,
@@ -3692,7 +3698,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
   // A URL editorial pode existir no feed e ainda apontar para vídeo/embed ou
   // falhar no download. Nesse caso o Story precisa manter uma fotografia real
   // do rodízio, nunca um retângulo degradê tratado como imagem.
-  const fallbackStoryImage = explicitStoryImage || sectorPhotoCssImage(visualCue, 0, renderContext);
+  const fallbackStoryImage = explicitStoryImage || (researchSource ? '' : sectorPhotoCssImage(visualCue, 0, renderContext));
   const storyVisualImage = researchImage || fallbackStoryImage;
   const storyPhotoClass = storyVisualImage ? ' has-story-photo' : '';
   const researchPhotoClass = researchImage ? ' has-research-photo' : '';
@@ -4182,6 +4188,7 @@ function recordPublicationHistory(configDir, accountKey, pack, result) {
       publishedFormat: result.storyOnly ? null : (result.reelMode ? 'REEL' : 'CAROUSEL'),
       publicationFallback: result.publicationFallback || null,
       visualSources: Array.isArray(result.visualSources) ? result.visualSources : [],
+      visualAgent: result.visualAgent || null,
       selectionMode: result.selectionMode || null,
       learning: result.learningDecision || null,
       learningContext: result.learningContext || null,
@@ -5741,8 +5748,11 @@ async function main() {
     publicationHistory,
     runDir
   );
-  const researchSlideImagePaths = researchVisualSources.map((visual) => visual.path);
+  const visualAgent = assertVisualAgentPlan(pack, buildVisualAgentPlan(pack, researchVisualSources));
+  const researchSlideImagePaths = visualAgent.slideImagePaths;
   const researchSourceImagePath = researchSlideImagePaths[0] || null;
+  writeFileSync(join(runDir, 'visual-agent.json'), JSON.stringify(visualAgent, null, 2), 'utf8');
+  console.log(`Agente Visual ${CLOUD_VISUAL_AGENT_VERSION}: ${visualAgent.status}; ${visualAgent.approvedVisuals} imagem da pauta aprovada; slides internos tipográficos.`);
   if (researchVisualSources.length) {
     writeFileSync(join(runDir, 'visual-sources.json'), JSON.stringify(researchVisualSources.map(({ path, ...visual }) => ({
       ...visual,
@@ -5796,6 +5806,7 @@ async function main() {
     researchSourceImagePath,
     researchSlideImagePaths,
     researchVisualSources,
+    visualAgent,
     scheduledFor: scheduledPost?.scheduledFor || '',
     publishMode
   };
@@ -5886,6 +5897,7 @@ async function main() {
     learningDecision,
     learningContext,
     visualSources: researchVisualSources.map(({ path: _path, ...visual }) => visual),
+    visualAgent,
     imagePaths,
     storyImagePath,
     imageUrls,
