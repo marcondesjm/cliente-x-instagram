@@ -2853,6 +2853,15 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .reel-mode footer { bottom: 92px; }
     .reel-mode.role-hook .note { display: none; }
     .reel-mode.role-hook .context-photo { top: 455px; height: 1000px; }
+    .impact-carousel.reel-mode.has-sector-photo.role-hook .context-photo { height: 1120px; }
+    .impact-carousel.reel-mode.has-sector-photo.book-split.role-hook .context-photo {
+      top: 255px;
+      height: 1320px;
+    }
+    .impact-carousel.reel-mode.has-sector-photo.book-editorial.role-hook .context-photo {
+      top: 330px;
+      height: 1230px;
+    }
     .reel-mode.role-hook .panel { top: 1060px; height: 420px; }
     .reel-mode.role-hook .swipe-cue { bottom: 105px; }
     .reel-mode.role-value .note,
