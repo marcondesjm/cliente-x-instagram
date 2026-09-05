@@ -2734,13 +2734,36 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
       right: 58px;
       top: 430px;
       width: auto;
-      height: 590px;
+      height: 445px;
       border: 0;
       border-radius: 24px;
       transform: none;
       opacity: 1;
       background-position: center;
       box-shadow: 0 28px 72px rgba(0,0,0,.30);
+    }
+    /* Imagens de matérias são evidência editorial, não textura decorativa.
+       Preserve o quadro inteiro; o fundo neutro absorve diferenças de proporção
+       sem ampliar, cortar ou inventar uma extensão da fotografia. */
+    .impact-carousel.has-research-image .context-photo {
+      background-color: #080d12;
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    .impact-carousel.has-research-image .news-context.has-source-image {
+      background-size: 100% 100%, contain;
+      background-repeat: no-repeat;
+    }
+    .impact-carousel.has-research-image.role-hook.headline-long .headline {
+      max-width: 930px;
+      font-size: 50px;
+      line-height: 1.01;
+    }
+    .impact-carousel.has-research-image.role-hook.headline-very-long .headline {
+      max-width: 940px;
+      font-size: 44px;
+      line-height: 1.02;
     }
     .impact-carousel.has-sector-photo .context-photo::after {
       background: linear-gradient(180deg, rgba(5,5,5,.02) 42%, rgba(5,5,5,.64) 100%);
@@ -2750,7 +2773,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
       right: 58px;
       top: 430px;
       width: auto;
-      height: 590px;
+      height: 445px;
       border-radius: 24px;
     }
     .impact-carousel.has-sector-photo.has-research-image .news-context span,
@@ -2765,10 +2788,10 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     }
     .impact-carousel.has-sector-photo .note {
       left: 82px;
-      top: 920px;
-      width: 720px;
+      top: 900px;
+      width: 916px;
       min-height: 210px;
-      padding: 30px 34px 30px 104px;
+      padding: 30px 40px;
       background: rgba(255,255,255,.94);
       color: #111;
       box-shadow: 0 22px 54px rgba(0,0,0,.22);
@@ -3640,6 +3663,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
   const fallbackStoryImage = explicitStoryImage || sectorPhotoCssImage(visualCue, 0, renderContext);
   const storyVisualImage = researchImage || fallbackStoryImage;
   const storyPhotoClass = storyVisualImage ? ' has-story-photo' : '';
+  const researchPhotoClass = researchImage ? ' has-research-photo' : '';
   const avatarBlock = showNewsContext
     ? ''
     : (avatarImage ? `<div class="avatar"></div>` : `<div class="panel"><span>IA</span></div>`);
@@ -3748,6 +3772,11 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     .impact-carousel p { color: ${slideStyle.muted}; }
     .impact-carousel .feed-cta { background: ${accent}; color: #fff; }
     .impact-carousel.has-story-photo .visual-card { display: block; left: 72px; right: 72px; top: 980px; height: 720px; border-radius: 30px; background-position: center; box-shadow: 0 28px 72px rgba(0,0,0,.28); }
+    .impact-carousel.has-research-photo .visual-card {
+      background-color: #080d12;
+      background-size: 100% 100%, contain;
+      background-repeat: no-repeat;
+    }
     .impact-carousel.has-story-photo .avatar, .impact-carousel.has-story-photo .panel, .impact-carousel.has-story-photo .note { display: none; }
     /* The handle already identifies the account at the top. Repeating the
        personal name over the lower photograph looks like an accidental
@@ -3761,7 +3790,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
   </style>
 </head>
 <body>
-  <main class="mode-${mode}${titleClass}${impactClass}${storyPhotoClass}">
+  <main class="mode-${mode}${titleClass}${impactClass}${storyPhotoClass}${researchPhotoClass}">
     <div class="brand">${usernameDisplay}</div>
     <div class="badge">${eyebrow}</div>
     <h1>${title.replace(/\s+IA\b/i, ' <strong>IA</strong>')}</h1>
@@ -5356,6 +5385,31 @@ async function main() {
     if (!reelNavigationProbe.includes('height: 1920px') || !carouselNavigationProbe.includes('height: 1350px')) {
       throw new Error('Reel deve ser renderizado nativamente em 1080 x 1920 sem alterar o carrossel 4:5.');
     }
+    const editorialFramingSlide = {
+      eyebrow: 'CONTEXTO',
+      title: 'Imagem editorial precisa aparecer inteira.',
+      body: 'O enquadramento preserva a informação visual da matéria.',
+      researchSource: 'Fonte oficial',
+      researchTitle: 'Título original da matéria',
+      researchDisplayTitle: 'Título original da matéria',
+      researchUrl: 'https://example.com/materia'
+    };
+    const editorialFramingImage = join(ROOT, 'docs', 'uploads', 'book-claude-briefing.png');
+    const editorialFramingProbe = impactStoryStyle ? slideHtml(editorialFramingSlide, 1, 5, account, impactStoryStyle, {
+      publishMode: 'reel-and-story',
+      researchSlideImagePaths: [editorialFramingImage],
+      researchSourceImagePath: editorialFramingImage
+    }) : '';
+    const editorialStoryFramingProbe = impactStoryStyle ? anatexStoryHtml(editorialFramingSlide, account, impactStoryStyle, {
+      publishMode: 'reel-and-story',
+      researchSourceImagePath: editorialFramingImage
+    }) : '';
+    if (!editorialFramingProbe.includes('background-size: 100% 100%, contain') || !editorialStoryFramingProbe.includes('has-research-photo') || !editorialStoryFramingProbe.includes('background-size: 100% 100%, contain')) {
+      throw new Error('Imagem editorial voltou a usar recorte em vez de enquadramento integral.');
+    }
+    if (!editorialFramingProbe.includes('height: 445px') || !editorialFramingProbe.includes('top: 900px')) {
+      throw new Error('Imagem editorial e cartao de texto voltaram a ficar sobrepostos.');
+    }
     const reelFullFrameProbe = reelSceneFilter(0);
     if (!reelFullFrameProbe.includes('scale=1080:1920') || reelFullFrameProbe.includes('gblur') || reelFullFrameProbe.includes('overlay=')) {
       throw new Error('Reel voltou a usar cartão 4:5 sobre fundo desfocado.');
@@ -5392,6 +5446,7 @@ async function main() {
       ,storySafeZoneGuard: '250-1170-500'
       ,storyCampaignImageGuard: 'explicit-image-prominent'
       ,radarSourceImageGuard: 'og-image-https-with-safe-fallback'
+      ,editorialImageFramingGuard: 'contain-no-crop-feed-reel-story'
       ,checkedRadarSources: EDITORIAL_SOURCES.length
     }, null, 2));
     return;
