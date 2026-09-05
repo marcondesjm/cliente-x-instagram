@@ -1,18 +1,19 @@
 # Status Atual
 
-Atualizado em: 2026-09-05 11:23 BRT
+Atualizado em: 2026-09-05 11:35 BRT
 
 ## Regra permanente de checkpoint
 
 - Toda atualizacao concluida deve ser registrada automaticamente em `HISTORICO.md` e refletida em `STATUS_ATUAL.md`.
 - O usuario nao precisa pedir novamente para gravar a memoria do projeto.
 
-## Landing — correção visual pronta para envio
+## Landing e Página do Facebook — concluídas
 
-- Checkout correto: `cliente-x-instagram-modern-story-balance-20260905`, branch `fix/story-lower-balance-20260905`, baseada no `origin/main` `648c17ef`.
-- `docs/plataforma.html` remove blur das animações de entrada, mantém o conteúdo visível com movimento reduzido e contém o carrossel para não criar rolagem horizontal no celular.
-- Validação Playwright em 1440 px e 390 px: zero erros de console, largura do documento igual ao viewport e ações da hero visíveis.
-- O Instagram continua `@marcondes.machado.oficial`; o ativo não rastreado da capa do Facebook foi preservado e não integra esta mudança.
+- Landing implantada manualmente a partir do commit `9fb9a08a`; deployment `4FEdFqKMPexwGdjyvheJ38reDN1K` em `READY` e alias principal preservado em `https://cliente-x-instagram.vercel.app`.
+- Prova pública: HTTP 200, contenção móvel nova presente e filtro antigo de blur ausente.
+- A Página `Marcondes Machado` exibe dez especialidades preenchidas e salvas na seção Serviços.
+- Primeiro post público da Página confirmado em `https://www.facebook.com/Marcondes.Jorge.Machado/posts/1391150076551048`, com cartão para a Página Bio.
+- O Instagram continua `@marcondes.machado.oficial`; nenhuma configuração de domínio ou integração Git foi alterada.
 - O checkpoint deve acompanhar a alteracao no Git e no remoto, quando aplicavel, antes do encerramento da tarefa.
 
 ## Projeto ativo

@@ -1,5 +1,15 @@
 # Historico
 
+## 2026-09-05 11:35 BRT — Serviços, landing e primeiro post do Facebook concluídos
+
+- A Página `Marcondes Machado` recebeu dez especialidades completas, todas com descrição: consultoria de IA, automação de atendimento e vendas, criação de conteúdo com IA, automação de processos, treinamento, agentes e integrações, estratégia comercial, gestão de conteúdo, implantação da Nerion Social e análise de resultados.
+- O Facebook confirmou o salvamento e passou a exibir as dez especialidades na seção Serviços.
+- O CLI oficial da Vercel foi autenticado pelo fluxo de dispositivo e o commit `9fb9a08a` foi implantado manualmente no projeto existente, sem conectar Git nem alterar o domínio.
+- Deployment `4FEdFqKMPexwGdjyvheJ38reDN1K`, URL de produção `https://cliente-x-instagram-r71gcaj1o-marcondes-machados-projects.vercel.app`, estado final `READY` e alias `https://cliente-x-instagram.vercel.app`.
+- Prova pública da landing: HTTP 200, regra `contain: layout paint` presente e o antigo `filter: blur(7px)` ausente.
+- Primeiro post público da Página publicado com apresentação do trabalho em IA e automação e cartão para `https://cliente-x-instagram.vercel.app/bio`.
+- Permalink confirmado: `https://www.facebook.com/Marcondes.Jorge.Machado/posts/1391150076551048`.
+
 ## 2026-09-05 11:23 BRT — Landing sem blur preso e sem rolagem lateral
 
 - A correção foi portada do checkout histórico `cliente-x-instagram-modern-incident` para o checkout alinhado à produção `cliente-x-instagram-modern-story-balance-20260905`, branch `fix/story-lower-balance-20260905`, em `origin/main` `648c17ef`.
