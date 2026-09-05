@@ -2830,6 +2830,13 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     }
     .impact-carousel.role-cta .note .lead { margin-top: 0; font-size: .9em; }
     .impact-carousel.role-cta .note .emphasis { font-size: 1.1em; }
+    /* A fotografia usa um cartão branco no fechamento. As regras genéricas de
+       CTA vinham depois e recolocavam texto quase branco sobre esse fundo. */
+    .impact-carousel.has-sector-photo.role-cta .note .lead,
+    .impact-carousel.has-sector-photo.role-cta .note .emphasis,
+    .impact-carousel.has-sector-photo.role-cta .note .close {
+      color: #111;
+    }
     .impact-carousel.role-cta .save-cue {
       bottom: 72px;
       background: #fff6ef;
@@ -2862,6 +2869,33 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
       top: 330px;
       height: 1230px;
     }
+    /* No quadro 9:16, a coluna à esquerda da foto precisa explicar a promessa
+       da capa. Mantemos o corpo curto visível em vez de deixar metade vazia. */
+    .impact-carousel.reel-mode.has-sector-photo.role-hook .note {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      left: 58px;
+      top: 690px;
+      width: 440px;
+      min-height: 300px;
+      padding: 34px 38px;
+      background: rgba(255,255,255,.94);
+      color: #111;
+      font-size: 29px;
+      line-height: 1.12;
+    }
+    .impact-carousel.reel-mode.has-sector-photo.role-hook .note::before { display: none; }
+    .impact-carousel.reel-mode.has-sector-photo.role-hook .note .lead,
+    .impact-carousel.reel-mode.has-sector-photo.role-hook .note .emphasis,
+    .impact-carousel.reel-mode.has-sector-photo.role-hook .note .close {
+      color: #111;
+      background: transparent;
+      min-height: 0;
+      margin-top: 7px;
+      padding: 0;
+    }
+    .impact-carousel.reel-mode.has-sector-photo.role-hook .note .lead { margin-top: 0; color: ${accent}; }
     .reel-mode.role-hook .panel { top: 1060px; height: 420px; }
     .reel-mode.role-hook .swipe-cue { bottom: 105px; }
     .reel-mode.role-value .note,
