@@ -4728,6 +4728,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           <span>${escapeHtml(value)}</span>
           <div class="capability-status">${escapeHtml(detail)}</div>
         </div>`;
+      const followers = learning.followerGrowth || {};
+      const displayMetric = value => value == null ? 'Não disponível' : formatNumber(value);
       const updated = learning.updatedAt ? formatDateTime(learning.updatedAt) : 'horário não informado';
       const confidenceLabels = { initial: 'inicial', moderate: 'moderada', high: 'alta' };
       const confidence = confidenceLabels[learning.confidenceLevel] || 'inicial';
@@ -4739,6 +4741,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         : liveData ? `Evoluindo · confiança ${confidence}` : `Snapshot · confiança ${confidence}`;
       status.className = `status-pill ${stale || !liveData ? 'warn' : 'good'}`;
       grid.innerHTML = [
+        card('Seguidores do perfil', displayMetric(followers.followers), followers.collectedAt ? `Coleta: ${formatDateTime(followers.collectedAt)}${followers.status === 'unavailable' ? ' · atualização indisponível' : ''}` : 'Aguardando primeira coleta', followers.status === 'available' ? 'good' : 'warn'),
+        card('Saldo observado no dia', displayMetric(followers.dailyDelta), followers.comparisonFrom ? `Desde ${formatDateTime(followers.comparisonFrom)} · saldo parcial do perfil` : 'Aguardando coletas em dias consecutivos', 'warn'),
+        card('Visitas ao perfil da conta', displayMetric(followers.profileVisits?.value), followers.profileVisits?.date ? `Dia ${followers.profileVisits.date} · quando fornecido pela Meta` : 'Métrica opcional', 'warn'),
+        card('Série de automação prática', `${formatNumber(learning.seriesPerformance?.observedPosts || 0)} posts com coleta`, '14 episódios · sequência às 16h BRT · seguidores só com atribuição da Meta'),
         card('Versão do modelo', learning.modelVersion || 'nerion-adaptive-v1.0.0', 'plataforma v6.03 estável'),
         card('Atualização dos dados', liveData ? 'Contínua' : 'Snapshot do deploy', liveData ? 'estado vivo do GitHub main' : 'contingência temporária', liveData ? 'good' : 'warn'),
         card('Confiança atual', confidence, `${formatNumber(learning.effectiveSamples)} amostras · alcance ${formatNumber(learning.effectiveReach)}`, confidence === 'initial' ? 'warn' : 'good'),

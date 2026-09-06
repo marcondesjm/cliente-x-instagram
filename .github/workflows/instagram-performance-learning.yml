@@ -12,6 +12,9 @@ on:
     paths:
       - "scripts/collect-instagram-performance.mjs"
       - "lib/performance-learning.js"
+      - "lib/follower-growth.js"
+      - "lib/follower-series.js"
+      - "scripts/validate-follower-growth.mjs"
       - "scripts/validate-retention-learning.mjs"
       - "automation/instagram-template/config/performance-learning-exclusions.json"
       - ".github/workflows/instagram-performance-learning.yml"
@@ -48,6 +51,7 @@ jobs:
         run: |
           node scripts/collect-instagram-performance.mjs --validate
           node scripts/validate-retention-learning.mjs
+          node scripts/validate-follower-growth.mjs
 
       - name: Collect Instagram performance
         run: node scripts/collect-instagram-performance.mjs

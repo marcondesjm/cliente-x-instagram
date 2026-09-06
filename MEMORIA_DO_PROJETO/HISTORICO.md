@@ -1,5 +1,10 @@
 # Historico
 
+## 2026-09-06 — motivo para seguir na série editorial
+
+- Uniformizado o convite do último card e da legenda: “Siga para acompanhar aplicações práticas de IA no seu negócio.”
+- Aplicação nos 14 episódios da série em desenvolvimento no checkout followers; mudança local, sem publicação em produção.
+
 ## 2026-09-05 22:29 BRT — Publicação comemorativa auditada e novas travas editoriais
 
 - A publicação extra autorizada foi executada pelo caminho automático em nuvem, com seleção 70/20/10, sem consumir novamente os 13 slots.
@@ -2958,3 +2963,10 @@ Conclusao de ativacao:
 - Regressões de unidades, duração, dados ausentes, amostra pequena, maturação, IDs duplicados e ajuste exclusivo de Reel passaram. Coletor --validate e validate-copy (75 seleções) passaram.
 - Ensaio com histórico atual encontrou somente uma amostra elegível no grupo alerta; ajuste inativo por insuficiência de evidência. Nenhum ganho de visualizações foi comprovado.
 - Produção verificada: código bab83eb2; run automático de aprendizado 34061868181 concluído; estado v1.4.0 persistido em e36661d9 às 18:42 BRT. Modelo de retenção permanece neutro por apenas uma amostra elegível. Deployment dpl_9k36Wci5B7VDicqidB9ZdNHyLbYu READY, alias cliente-x-instagram.vercel.app. Crescimento de views ainda depende de avaliação posterior.
+
+## 2026-09-06 — Série aprovada e antecipação autorizada
+
+- Série de 14 episódios com CTA exato aprovado; Reel + Story no slot 9, 16:00 BRT (checagem 16:07), mantendo os 13 horários.
+- Usuário autorizou antecipar somente episódio 1 hoje por execução cloud explícita sem marcar slot automático. Publicação e IDs ainda pendentes neste checkpoint.
+- Próximo episódio passa a ser o primeiro ainda sem mediaId no histórico: prioridade da fila e falhas não descartam capítulos; conclusão pode ultrapassar o fim inicialmente planejado. Após antecipação, episódio 2 será elegível amanhã às 16h.
+- Foto pertinente de revisão operacional na capa/Story; cards internos e CTA tipográficos sem fotos genéricas. Render Reel + Story isolado 2026-09-06-190147-slot-9-render-only aprovado visualmente; validações de conteúdo, seguidores, sequência e sintaxe aprovadas.

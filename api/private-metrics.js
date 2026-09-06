@@ -136,6 +136,8 @@ async function summarizePerformanceLearning(accountKey) {
         contexts: summarizeModel(learning.models?.contexts)
       },
       weeklyGrowth: learning.weeklyGrowth || null,
+      followerGrowth: learning.followerGrowthSummary || null,
+      seriesPerformance: learning.seriesPerformance || null,
       safeguards: {
         originality: true,
         semanticDuplicates: true,

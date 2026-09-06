@@ -1,3 +1,9 @@
+## 2026-09-06 — convite para seguir na série editorial (local)
+
+- Texto escolhido pelo usuário: “Siga para acompanhar aplicações práticas de IA no seu negócio.”
+- Aplicado ao último card dos 14 episódios, consistente com o convite já presente nas legendas.
+- Alteração local na série em desenvolvimento; ainda não publicada em produção.
+
 ## 2026-09-06 — retenção e distribuição v1.4.0
 
 - Pedido do usuário: trabalhar no algoritmo de “descongelamento”. Tratado como melhoria de distribuição e retenção; nenhuma evidência de bloqueio da conta foi constatada ou alegada.
@@ -1016,3 +1022,10 @@ Resultado:
 - Provas preservadas: `Dc6ziUhCUdM` (Feed `18071851835727747`, Story `18082908059497157`) e `Dc613j-Hb24` (Feed `18090398927175449`, Story `17993232135031088`). A segunda revelou imagens sem relação e não é exemplo visual aprovado.
 - Render aprovado sem publicação: `2026-09-05-174816-slot-12-render-only`, com foto pertinente na capa/Story e slides internos sem imagens cruzadas.
 - Próxima prova real deve exigir `visualAgent` no histórico, permalink, Feed/Reel ID e Story ID; workflow verde isolado não basta.
+
+## 2026-09-06 — Série aprovada e antecipação autorizada
+
+- Série de 14 episódios com CTA exato aprovado; Reel + Story no slot 9, 16:00 BRT (checagem 16:07), mantendo os 13 horários.
+- Usuário autorizou antecipar somente episódio 1 hoje por execução cloud explícita sem marcar slot automático. Publicação e IDs ainda pendentes neste checkpoint.
+- Próximo episódio passa a ser o primeiro ainda sem mediaId no histórico: prioridade da fila e falhas não descartam capítulos; conclusão pode ultrapassar o fim inicialmente planejado. Após antecipação, episódio 2 será elegível amanhã às 16h.
+- Foto pertinente de revisão operacional na capa/Story; cards internos e CTA tipográficos sem fotos genéricas. Render Reel + Story isolado 2026-09-06-190147-slot-9-render-only aprovado visualmente; validações de conteúdo, seguidores, sequência e sintaxe aprovadas.

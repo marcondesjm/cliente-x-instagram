@@ -1,0 +1,36 @@
+import assert from 'node:assert/strict';
+import { brtDate, upsertFollowerSnapshot, followerSummary, seriesPerformance } from '../lib/follower-growth.js';
+import { SERIES, seriesForSlot, seriesPacks } from '../lib/follower-series.js';
+assert.equal(brtDate('2026-09-07T02:59:00Z'), '2026-09-06');
+let state = upsertFollowerSnapshot({}, 100, '2026-09-06T20:00:00Z');
+assert.equal(followerSummary(state).dailyDelta, null);
+state = upsertFollowerSnapshot(state, 102, '2026-09-06T22:00:00Z');
+assert.equal(state.days.length, 1);
+assert.equal(state.days[0].firstFollowers, 100);
+state = upsertFollowerSnapshot(state, 101, '2026-09-07T20:00:00Z');
+assert.equal(followerSummary(state).dailyDelta, -1);
+state = upsertFollowerSnapshot(state, 101, '2026-09-08T20:00:00Z');
+assert.equal(followerSummary(state).dailyDelta, 0);
+state = upsertFollowerSnapshot(state, 104, '2026-09-10T20:00:00Z');
+assert.equal(followerSummary(state).dailyDelta, null);
+assert.throws(() => upsertFollowerSnapshot(state, null));
+assert.throws(() => upsertFollowerSnapshot(state, -1));
+assert.equal(seriesPacks().length, 14);
+assert.equal(new Set(seriesPacks().map(p=>p.slides[0].title)).size,14);
+for (let i=0;i<14;i++) {
+ const date=brtDate(Date.parse('2026-09-07T16:00:00-03:00')+i*86400000);
+ assert.equal(seriesForSlot('cliente-x',date,9,Array.from({length:i},(_,n)=>({mediaId:String(n+1),editorialSeries:{id:SERIES.id,episode:n+1}}))).editorialSeries.episode,i+1);
+ assert.equal(seriesForSlot('cliente-x',date,8),null);
+ assert.equal(seriesForSlot('other',date,9),null);
+}
+assert.equal(seriesForSlot('cliente-x','2026-09-06',9),null);
+assert.equal(seriesForSlot('cliente-x','2026-09-21',9).editorialSeries.episode,1);
+assert.equal(seriesForSlot('cliente-x','2026-09-21',9,seriesPacks().map(p=>({mediaId:String(p.editorialSeries.episode),editorialSeries:p.editorialSeries}))),null);
+assert.equal(seriesForSlot('cliente-x','2026-09-07',9,[{mediaId:'done',editorialSeries:{id:SERIES.id,episode:1}}]).editorialSeries.episode,2);
+const samples = [{mediaId:'1',editorialSeries:{id:SERIES.id},mediaProductType:'REELS',observations:[{windowHours:24,ageHours:25,metrics:{views:10,follows:null}}]}];
+let report=seriesPerformance([...samples,...samples],SERIES.id);
+assert.equal(report.observedPosts,1);
+assert.equal(report.windows.find(w=>w.windowHours===24&&w.format==='REELS').follows.total,null);
+samples[0].observations[0].metrics.follows=0;
+assert.equal(seriesPerformance(samples,SERIES.id).windows.find(w=>w.windowHours===24&&w.format==='REELS').follows.total,0);
+console.log('Follower growth: BRT, baseline, signed balance, missing days, missing metrics, 14 dates, slot boundaries and attribution passed.');

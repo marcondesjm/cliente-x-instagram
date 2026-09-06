@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { chromium } from 'playwright';
+import { seriesForSlot, seriesPacks } from '../../../lib/follower-series.js';
 import { normalizeContentFingerprint, packContentFingerprint, availableBookStoryPacks } from '../../../lib/scheduled-content-guard.js';
 import { createHash, randomInt } from 'node:crypto';
 import { lookup } from 'node:dns/promises';
@@ -1237,6 +1238,7 @@ function applyBottiniVoice(enhancement, account = {}) {
 }
 
 function preparePackForPublication(pack, dateString, slotIndex, account = {}, publishMode = 'feed-and-story', options = {}) {
+  if (pack.editorialSeries) return { pack: JSON.parse(JSON.stringify(pack)), intelligence: { enabled: true, strategy: 'serie-autoral-aprovada', sourceCopyPreserved: true } };
   let enhancement;
   if (options.allowIhc !== false && isIhcHanahEnabled(account)) {
     const ihcPack = applyIhcHanahMethod(pack, account, dateString, slotIndex, publishMode);
@@ -2300,7 +2302,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const useSectorPhoto = isImpact
     ? Boolean(explicitSlideImage || researchImage || isReelMode || (engagementRole === 'hook' && !researchSource))
     : engagementRole === 'hook' || engagementRole === 'proof';
-  const sectorPhotoImage = explicitSlideImage || researchImage || (useSectorPhoto ? sectorPhotoCssImage(visualCue, index, renderContext) : '');
+  const sectorPhotoImage = explicitSlideImage || researchImage || (useSectorPhoto && !slide.typographicOnly ? sectorPhotoCssImage(visualCue, index, renderContext) : '');
   // Only replace the visual with the source card when the article image was
   // actually downloaded. Otherwise keep the safe photographic rotation.
   const showNewsContext = Boolean(index === 1 && useSectorPhoto && researchSource && researchImage);
@@ -4182,6 +4184,7 @@ function recordPublicationHistory(configDir, accountKey, pack, result) {
       selectionMode: result.selectionMode || null,
       learning: result.learningDecision || null,
       learningContext: result.learningContext || null,
+      editorialSeries: pack.editorialSeries || null,
       research: pack.research || null
     });
   }
@@ -5031,6 +5034,7 @@ async function main() {
   validatePacks(autoPacks);
   validatePacks(automaticSelectionPacks);
   if (args.validateCopy) {
+    validatePacks(seriesPacks());
     const githubRaceProbe = createHttpError(
       'GitHub image hosting',
       422,
@@ -5582,7 +5586,7 @@ async function main() {
     packIndex = `dashboard-${slotIndex}`;
   }
 
-  if (!args.renderOnly) {
+  if (!args.renderOnly && !dashboardPack) {
     scheduledPost = dueScheduledPost(args.configDir, account.account).post;
     if (!scheduledPost) scheduledPost = dueWeeklyProgramPost(args.configDir, account.account, account).post;
     if (scheduledPost) {
@@ -5609,6 +5613,18 @@ async function main() {
         message: 'Nenhum post agendado pendente para publicar agora.'
       }, null, 2));
       return;
+    }
+  }
+
+  let seriesSelection = null;
+  if (process.env.INSTAGRAM_TEMPLATE_AUTOMATIC_RUN === 'true' && !scheduledPost && !dashboardPack && !args.storyOnly && !args.scheduledOnly) {
+    const candidate = seriesForSlot(account.account, process.env.INSTAGRAM_TEMPLATE_SLOT_DATE || today, slotIndex, publicationHistory);
+    if (candidate && !findDuplicateSelection(candidate, [], publicationHistory)) {
+      seriesSelection = candidate;
+      pack = candidate;
+      packIndex = `series-${candidate.editorialSeries.episode}`;
+      selectionMode = 'series-test';
+      console.log(`Série autoral: episódio ${candidate.editorialSeries.episode}/14 no slot existente ${slotIndex}.`);
     }
   }
 
@@ -5640,7 +5656,7 @@ async function main() {
       throw new Error(`Conta errada: esperado ${account.expectedUsername}, retornou ${igAccount.username}.`);
     }
 
-    if (!scheduledPost && !dashboardPack && !args.storyOnly) {
+    if (!scheduledPost && !dashboardPack && !seriesSelection && !args.storyOnly) {
       const recentMedia = await fetchRecentMedia(userId, token);
       let fresh = pickFreshPack(automaticSelectionPacks, today, generationSlotIndex, recentMedia, publicationHistory, randomInt, selectionLearningContext);
       if (!fresh.pack && radar.enabled) {
@@ -5721,7 +5737,7 @@ async function main() {
   // O Radar continua obrigado a preservar a fonte oficial. Um pack editorial
   // enviado explicitamente pelo painel e conteudo proprio da marca, nao uma
   // pauta pesquisada, portanto nao deve ser bloqueado por essa exigencia.
-  if (!args.renderOnly && !args.dryRun && radar.enabled && !dashboardPack && !scheduledPost && !usedEditorialReserveThisSlot && !pack?.research?.sourceUrl) {
+  if (!args.renderOnly && !args.dryRun && radar.enabled && !dashboardPack && !scheduledPost && !seriesSelection && !usedEditorialReserveThisSlot && !pack?.research?.sourceUrl) {
     throw new Error('Radar ativo: a pauta selecionada nao possui uma fonte oficial registrada. Nenhum post foi publicado.');
   }
 
@@ -5732,7 +5748,7 @@ async function main() {
     ? 'topic-angle'
     : selectionMode === 'explore' ? 'candidate-novelty' : selectionMode === 'exploit' ? 'performance' : 'manual';
   const organicPotential = organicPotentialScore(pack, today, publicationHistory, selectionLearningContext);
-  const methodAllowed = !dashboardPack && !scheduledPost;
+  const methodAllowed = !dashboardPack && !scheduledPost && !seriesSelection;
   const enhancement = preparePackForPublication(pack, today, generationSlotIndex, account, publishMode, { allowIhc: methodAllowed });
   pack = enhancement.pack;
   pack.caption = fitInstagramCaption(pack.caption, pack);
@@ -5805,7 +5821,7 @@ async function main() {
   const reelOnly = publishMode === 'reel-only';
   const reelAndStory = publishMode === 'reel-and-story';
   const reelMode = reelOnly || reelAndStory;
-  const rotatedBookStoryPack = (!scheduledPost && !dashboardPack && !args.storyOnly && !feedOnly && !reelOnly)
+  const rotatedBookStoryPack = (!scheduledPost && !dashboardPack && !seriesSelection && !args.storyOnly && !feedOnly && !reelOnly)
     ? pickBookStoryAfterNews(publicationHistory, availableBookStoryPacks(loadScheduledPosts(args.configDir, account.account).group.posts), 5)
     : null;
   const storyPack = rotatedBookStoryPack
@@ -5822,7 +5838,7 @@ async function main() {
     )
     : style;
   if (rotatedBookStoryPack) console.log(`Rodízio editorial: após cinco Stories de notícias, Story do livro selecionado: ${storyPack.slides?.[0]?.title || 'trecho autoral'}.`);
-  if (!args.renderOnly && !args.dryRun && (scheduledPost || dashboardPack || args.storyOnly)) {
+  if (!args.renderOnly && !args.dryRun && (scheduledPost || dashboardPack || seriesSelection || args.storyOnly)) {
     const duplicate = findDuplicatePack(publicationHistory, historyPack);
     if (duplicate) {
       throw Object.assign(new Error(`Conteudo repetido bloqueado: este tema ja foi publicado em ${duplicate.publishedAt || 'uma publicacao anterior'}. Escolha outro conteudo.`), { stage: 'content-selection' });

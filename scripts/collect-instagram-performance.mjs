@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { brtDate, upsertFollowerSnapshot, followerSummary, seriesPerformance } from '../lib/follower-growth.js';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -452,6 +453,26 @@ async function main() {
   for (const mediaId of exclusions) sampleMap.delete(mediaId);
   const now = Date.now();
 
+  // Account follower balance is independent of post-level attribution.
+  try {
+    const profile = await graphGet(`/${process.env[account.userIdEnv]}`, { fields: 'id,username,followers_count' }, token);
+    if (profile.username !== account.expectedUsername) throw new Error('Conta retornada difere do perfil configurado.');
+    accountState.followerGrowth = upsertFollowerSnapshot(accountState.followerGrowth, profile.followers_count, new Date(now).toISOString());
+  } catch (error) {
+    accountState.followerGrowth = { ...accountState.followerGrowth, status: 'unavailable', lastAttemptAt: new Date(now).toISOString(), lastError: String(error.message) };
+  }
+  const yesterday = brtDate(now - 86400000);
+  if (accountState.followerGrowth.profileVisits?.date !== yesterday) {
+    const since = Math.floor(Date.parse(`${yesterday}T00:00:00-03:00`) / 1000);
+    try {
+      const payload = await graphGet(`/${process.env[account.userIdEnv]}/insights`, { metric: 'profile_views', period: 'day', metric_type: 'total_value', since, until: since + 86400 }, token);
+      const value = insightValue(payload, 'profile_views');
+      accountState.followerGrowth.profileVisits = { date: yesterday, value, status: value === null ? 'unavailable' : 'available', since, until: since + 86400 };
+    } catch (error) {
+      accountState.followerGrowth.profileVisits = { date: yesterday, value: null, status: 'unavailable', error: String(error.message), since, until: since + 86400 };
+    }
+  }
+
   for (const entry of history.filter((item) => item.mediaId && item.publishedAt && !exclusions.has(String(item.mediaId))).slice(-60)) {
     const ageHours = (now - Date.parse(entry.publishedAt)) / 3600000;
     if (ageHours < 1.5 || ageHours > 24 * 10) continue;
@@ -459,6 +480,7 @@ async function main() {
       mediaId: String(entry.mediaId),
       permalink: entry.permalink || null,
       publishedAt: entry.publishedAt,
+      editorialSeries: entry.editorialSeries || null,
       source: entry.research?.source || null,
       theme: entry.research?.theme || null,
       coverTitle: entry.coverTitle || null,
@@ -472,6 +494,7 @@ async function main() {
       durationSeconds: entry.reelDurationSeconds || null,
       observations: []
     };
+    sample.editorialSeries = entry.editorialSeries || sample.editorialSeries || null;
     sample.durationSeconds = entry.reelDurationSeconds || sample.durationSeconds || null;
     const dueWindow = WINDOWS.filter((windowHours) => ageHours >= windowHours && !sample.observations.some((item) => item.windowHours === windowHours)).at(-1);
     const lastCollected = Date.parse(sample.latestObservation?.collectedAt || sample.observations.at(-1)?.collectedAt || '');
@@ -558,6 +581,8 @@ async function main() {
       sample.latestObservation.performance = performanceScore(sample.latestObservation.metrics);
     }
   }
+  accountState.followerGrowthSummary = followerSummary(accountState.followerGrowth);
+  accountState.seriesPerformance = seriesPerformance(accountState.samples, 'empresa-automatica-14dias-v1');
   accountState.models = buildModels(accountState.samples);
   accountState.weeklyGrowth = weeklyGrowth(accountState.samples, now);
   accountState.updatedAt = new Date().toISOString();
