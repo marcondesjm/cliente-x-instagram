@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { chromium } from 'playwright';
+import { normalizeContentFingerprint, packContentFingerprint, availableBookStoryPacks } from '../../../lib/scheduled-content-guard.js';
 import { createHash, randomInt } from 'node:crypto';
 import { lookup } from 'node:dns/promises';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -4108,28 +4109,6 @@ function findDuplicateCaption(media, caption) {
   });
 }
 
-function normalizeContentFingerprint(value = '') {
-  return String(value || '')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(/https?:\/\/\S+/g, ' ')
-    .replace(/#\S+/g, ' ')
-    .replace(/\b(?:serie pratica|edicao operacional|slot|run)\b[^\n.]*/g, ' ')
-    .replace(/[^a-z0-9]+/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-function packContentFingerprint(pack = {}) {
-  const content = (pack.slides || []).map((slide) => ({
-    eyebrow: normalizeContentFingerprint(slide.eyebrow),
-    title: normalizeContentFingerprint(slide.title),
-    body: normalizeContentFingerprint(slide.body)
-  }));
-  return createHash('sha256').update(JSON.stringify(content)).digest('hex');
-}
-
 function publicationHistoryPath(configDir) {
   return join(configDir, 'publication-history.json');
 }
@@ -5823,7 +5802,7 @@ async function main() {
   const reelAndStory = publishMode === 'reel-and-story';
   const reelMode = reelOnly || reelAndStory;
   const rotatedBookStoryPack = (!scheduledPost && !dashboardPack && !args.storyOnly && !feedOnly && !reelOnly)
-    ? pickBookStoryAfterNews(publicationHistory, bookStoryPacks(args.configDir, account.account), 5)
+    ? pickBookStoryAfterNews(publicationHistory, availableBookStoryPacks(loadScheduledPosts(args.configDir, account.account).group.posts), 5)
     : null;
   const storyPack = rotatedBookStoryPack
     ? preparePackForPublication(JSON.parse(JSON.stringify(rotatedBookStoryPack)), today, generationSlotIndex, account, 'story-only', { allowIhc: false }).pack
@@ -5842,7 +5821,7 @@ async function main() {
   if (!args.renderOnly && !args.dryRun && (scheduledPost || dashboardPack || args.storyOnly)) {
     const duplicate = findDuplicatePack(publicationHistory, historyPack);
     if (duplicate) {
-      throw new Error(`Conteudo repetido bloqueado: este tema ja foi publicado em ${duplicate.publishedAt || 'uma publicacao anterior'}. Escolha outro conteudo.`);
+      throw Object.assign(new Error(`Conteudo repetido bloqueado: este tema ja foi publicado em ${duplicate.publishedAt || 'uma publicacao anterior'}. Escolha outro conteudo.`), { stage: 'content-selection' });
     }
   }
   writeFileSync(join(runDir, 'engagement-intelligence.json'), JSON.stringify({ ...enhancement.intelligence, organicPotential, selectionMode, learningDecision, learningContext }, null, 2), 'utf8');

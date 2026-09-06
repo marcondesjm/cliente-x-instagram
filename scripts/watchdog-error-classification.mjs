@@ -1,3 +1,5 @@
+import { isDuplicateContentError } from '../lib/scheduled-content-guard.js';
+
 export function isMetaInternalPublishError(errorText = '', stage = '') {
   const text = `${stage} ${errorText}`.toLowerCase();
   return /media_publish/.test(text)
@@ -14,6 +16,9 @@ export function isMetaCredentialError(errorText = '', stage = '') {
 
 export function solutionForWatchdogError(errorText = '', stage = '') {
   const text = `${stage} ${errorText}`.toLowerCase();
+  if (isDuplicateContentError(errorText)) {
+    return 'A fila verifica o historico, registra o conteudo ja utilizado e segue para a proxima pauta elegivel sem republicar. Conteudos agendados ficam reservados fora do rodizio de Stories.';
+  }
   if (isMetaInternalPublishError(errorText, stage)) {
     return 'A Meta apresentou erro interno ao concluir o Reel. O vigia valida o container, confirma que a midia nao apareceu no perfil e recupera o mesmo conteudo como carrossel; renovar o token somente se a validacao retornar erro 190/463.';
   }

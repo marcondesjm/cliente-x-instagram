@@ -2936,3 +2936,14 @@ Conclusao de ativacao:
 - Envio e persistência cloud serão conferidos após o push.
 
 - Confirmação cloud v1.3.0: código 71c13c61; run 34059331710; persistência aa0f5188; 61 publicações comparáveis; aprendizado assistido habilitado em 2026-09-06 17:53 BRT. Resultado de audiência futura ainda não medido.
+
+## Correção 2026-09-06 18:30 BRT — fila e rodízio sem colisão
+
+- Base confirmada em origin/main 294b434e; branch fix/watchdog-duplicate-20260906, worktree cliente-x-instagram-modern-duplicate-fix-20260906.
+- Run 34048561762 falhou em Publish feed and story: o Story 18100281905263544 do run 34045432363 já havia usado o trecho agendado 14 às 16:28:26Z. O trecho 13 sofreu a mesma colisão com Story 18489215359128882.
+- Rodízio 5 notícias / 1 livro passa a usar apenas packs de agendamentos publicados, reservando os pendentes e os que falharam. Política existente de rotação de Stories já publicados preservada.
+- Antes de selecionar a fila, o fluxo compara fingerprint e título com publicações comprovadas por IDs. Agendamentos vencidos já utilizados recebem skipped_duplicate, com prova anterior; não recebem status published nem marcam slot automático.
+- Os dois alertas antigos foram reconciliados com os respectivos agendamentos e provas. Alertas novos de fila usam scheduledPostId em vez do slot fictício 0; duplicidade tem classificação e orientação próprias.
+- Validação: teste de regressão com a colisão real, reserva de futuros, fila inédita, isolamento de conta/alerta, idempotência, sintaxe e validate-copy (75 seleções). Nenhuma mídia apagada ou republicada; 13 horários preservados.
+- Envio remoto e execução automática posterior serão verificados após o push.
+

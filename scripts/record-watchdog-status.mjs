@@ -51,7 +51,8 @@ function isInfrastructureError(entry = {}) {
 }
 
 const errors = readJson(ERRORS_PATH, []);
-const slotIndex = Number.parseInt(process.env.INSTAGRAM_TEMPLATE_SLOT_INDEX || '', 10);
+const scheduledPostId = process.env.INSTAGRAM_TEMPLATE_SCHEDULED_POST_ID || null;
+const slotIndex = scheduledPostId ? NaN : Number.parseInt(process.env.INSTAGRAM_TEMPLATE_SLOT_INDEX || '', 10);
 const slotDate = process.env.INSTAGRAM_TEMPLATE_SLOT_DATE || null;
 const scheduledAt = process.env.INSTAGRAM_TEMPLATE_SCHEDULED_AT || null;
 const workflowRun = process.env.GITHUB_RUN_ID || null;
@@ -65,6 +66,7 @@ if (status === 'resolved') {
   const manualRecovery = process.env.GITHUB_EVENT_NAME === 'workflow_dispatch';
   for (const entry of errors) {
     const sameSlot = entry.account === ACCOUNT &&
+      (scheduledPostId ? entry.scheduledPostId === scheduledPostId : !entry.scheduledPostId) &&
       (!slotDate || entry.date === slotDate || manualRecovery) &&
       (!Number.isInteger(slotIndex) || Number(entry.slotIndex) === slotIndex);
     // A completed publication proves that this account's credential is healthy.
@@ -103,6 +105,7 @@ const entry = {
   date: slotDate,
   slotIndex: Number.isInteger(slotIndex) ? slotIndex : null,
   scheduledAt,
+  scheduledPostId,
   failedAt: new Date().toISOString(),
   workflowRun,
   workflowName,

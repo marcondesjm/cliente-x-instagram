@@ -119,7 +119,7 @@ jobs:
         run: node scripts/record-watchdog-status.mjs --status=failed
 
       - name: Persist schedule state
-        if: always() && (steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true')
+        if: always() && (steps.scheduled_queue.outputs.state_changed == 'true' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true')
         shell: bash
         run: |
           git config user.name "github-actions[bot]"

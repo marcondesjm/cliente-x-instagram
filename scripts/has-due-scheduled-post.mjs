@@ -1,7 +1,9 @@
 #!/usr/bin/env node
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import { reconcileScheduledDuplicates } from '../lib/scheduled-content-guard.js';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const ACCOUNT = process.env.ACCOUNT || process.env.INSTAGRAM_TEMPLATE_ACCOUNT || 'cliente-x';
@@ -14,6 +16,19 @@ function readJson(path) {
 
 const groups = existsSync(QUEUE_PATH) ? readJson(QUEUE_PATH) : [];
 const group = groups.find((item) => item.account === ACCOUNT);
+const historyPath = join(ROOT, 'automation/instagram-template/config/publication-history.json');
+const errorsPath = join(ROOT, 'automation/instagram-template/config/watchdog-errors.json');
+const history = existsSync(historyPath) ? readJson(historyPath)[ACCOUNT] || [] : [];
+const errors = existsSync(errorsPath) ? readJson(errorsPath) : [];
+const changed = process.env.DRY_RUN !== 'true' && reconcileScheduledDuplicates(group?.posts || [], history, errors, ACCOUNT);
+if (changed) {
+  writeFileSync(QUEUE_PATH, `${JSON.stringify(groups, null, 2)}\n`);
+  writeFileSync(errorsPath, `${JSON.stringify(errors, null, 2)}\n`);
+}
+if (process.env.GITHUB_OUTPUT) {
+  const fs = await import('node:fs');
+  fs.appendFileSync(process.env.GITHUB_OUTPUT, `state_changed=${changed ? 'true' : 'false'}\n`);
+}
 const due = (group?.posts || [])
   .filter((post) => post.status === 'pending' && Date.parse(post.scheduledFor) <= Date.now())
   .sort((a, b) => Date.parse(a.scheduledFor) - Date.parse(b.scheduledFor))[0];
@@ -57,6 +72,7 @@ const weeklyDue = dueWeeklyProgram();
 
 if (process.env.GITHUB_ENV && (due || weeklyDue)) {
   const fs = await import('node:fs');
+  fs.appendFileSync(process.env.GITHUB_ENV, `INSTAGRAM_TEMPLATE_SCHEDULED_POST_ID=${due?.id || weeklyDue?.id || ''}\n`, 'utf8');
   const nowLocal = saoPauloParts();
   const scheduledAt = due
     ? new Date(due.scheduledFor).toISOString()

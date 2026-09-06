@@ -7120,7 +7120,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const watchdogCheck = openWatchdogError
         ? {
           level: 'bad',
-          title: `Vigia com erro no slot ${openWatchdogError.slotIndex ?? '--'}`,
+          title: openWatchdogError.scheduledPostId ? 'Vigia com erro em post agendado' : `Vigia com erro no slot ${openWatchdogError.slotIndex ?? '--'}`,
           body: `${openWatchdogError.stage || 'etapa desconhecida'}: ${openWatchdogError.error || 'erro sem detalhe'}. Solução: ${openWatchdogError.solution || 'abrir o run do GitHub Actions e corrigir a etapa indicada.'}`,
           errorActions: true,
           runUrl: openWatchdogError.runUrl || ''
