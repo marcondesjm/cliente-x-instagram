@@ -2297,7 +2297,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const isReelMode = renderContext.publishMode === 'reel-only' || renderContext.publishMode === 'reel-and-story';
   const researchImage = fileCssImage(renderContext.researchSlideImagePaths?.[index - 1] || '');
   const useSectorPhoto = isImpact
-    ? Boolean(explicitSlideImage || researchImage || (engagementRole === 'hook' && !researchSource))
+    ? Boolean(explicitSlideImage || researchImage || isReelMode || (engagementRole === 'hook' && !researchSource))
     : engagementRole === 'hook' || engagementRole === 'proof';
   const sectorPhotoImage = explicitSlideImage || researchImage || (useSectorPhoto ? sectorPhotoCssImage(visualCue, index, renderContext) : '');
   // Only replace the visual with the source card when the article image was
@@ -3000,6 +3000,10 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .reel-mode { padding-bottom: 96px; }
     .reel-mode .progress { bottom: 174px; }
     .reel-mode footer { bottom: 92px; }
+    /* Reel usa fotografia editorial/contextual como elemento visual. A foto
+       pessoal fica somente no pequeno identificador do perfil e nunca volta
+       como selo ou cartão sobreposto ao conteúdo. */
+    .reel-mode .panel { display: none; }
     .reel-mode.role-hook .note { display: none; }
     .reel-mode.role-hook .context-photo { top: 455px; height: 1000px; }
     .impact-carousel.reel-mode.has-sector-photo.role-hook .context-photo {
@@ -3046,8 +3050,8 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
       top: 540px;
       height: 640px;
     }
-    .impact-carousel.reel-mode.has-sector-photo.role-value .note,
-    .impact-carousel.reel-mode.has-sector-photo.role-proof .note {
+    .impact-carousel.reel-mode.has-research-image.has-sector-photo.role-value .note,
+    .impact-carousel.reel-mode.has-research-image.has-sector-photo.role-proof .note {
       top: 1210px;
       min-height: 300px;
       padding: 28px 10px 28px 0;
@@ -5443,6 +5447,17 @@ async function main() {
     }
     if (!reelNavigationProbe.includes('height: 1920px') || !carouselNavigationProbe.includes('height: 1350px')) {
       throw new Error('Reel deve ser renderizado nativamente em 1080 x 1920 sem alterar o carrossel 4:5.');
+    }
+    const reelInternalPhotoProbe = impactStoryStyle ? slideHtml({
+      eyebrow: 'NA PRATICA',
+      title: 'A aplicação encontra espaço na empresa.',
+      body: 'A imagem contextualiza o uso sem cobrir a explicação.',
+      researchSource: 'Fonte oficial',
+      researchUrl: 'https://example.com/materia'
+    }, 3, 5, account, impactStoryStyle, { publishMode: 'reel-and-story' }) : '';
+    if (!/role-value[^"']*reel-mode[^"']*impact-carousel[^"']*has-sector-photo/.test(reelInternalPhotoProbe)
+      || !reelInternalPhotoProbe.includes('.reel-mode .panel { display: none; }')) {
+      throw new Error('Quadro interno do Reel voltou a ficar sem fotografia ou a sobrepor o avatar pessoal.');
     }
     const fallbackContextProbe = carouselFallbackRenderContext({ publishMode: 'reel-and-story' });
     const fallbackNavigationProbe = impactStoryStyle ? slideHtml({
