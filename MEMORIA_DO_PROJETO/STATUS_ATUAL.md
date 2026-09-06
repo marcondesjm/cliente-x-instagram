@@ -6,7 +6,7 @@
 - Antes de selecionar a fila, o fluxo compara fingerprint e título com publicações comprovadas por IDs. Agendamentos vencidos já utilizados recebem skipped_duplicate, com prova anterior; não recebem status published nem marcam slot automático.
 - Os dois alertas antigos foram reconciliados com os respectivos agendamentos e provas. Alertas novos de fila usam scheduledPostId em vez do slot fictício 0; duplicidade tem classificação e orientação próprias.
 - Validação: teste de regressão com a colisão real, reserva de futuros, fila inédita, isolamento de conta/alerta, idempotência, sintaxe e validate-copy (75 seleções). Nenhuma mídia apagada ou republicada; 13 horários preservados.
-- Envio remoto e execução automática posterior serão verificados após o push.
+- Produção confirmada: correção 80c4e175 em origin/main; deployment Vercel dpl_BcCXE52XEaK2uAZwFCoPBnr6F5BH READY no alias principal. API pública confirmou zero alertas abertos e dois agendamentos/alertas reconciliados; HTML servido contém a identificação de erro por post agendado. Nenhuma publicação posterior à correção foi observada nesta verificação.
 
 ## Atualização 2026-09-06 — aprendizado de distribuição v1.3.0
 
