@@ -2946,3 +2946,15 @@ Conclusao de ativacao:
 - Os dois alertas antigos foram reconciliados com os respectivos agendamentos e provas. Alertas novos de fila usam scheduledPostId em vez do slot fictício 0; duplicidade tem classificação e orientação próprias.
 - Validação: teste de regressão com a colisão real, reserva de futuros, fila inédita, isolamento de conta/alerta, idempotência, sintaxe e validate-copy (75 seleções). Nenhuma mídia apagada ou republicada; 13 horários preservados.
 - Produção confirmada: correção 80c4e175 em origin/main; deployment Vercel dpl_BcCXE52XEaK2uAZwFCoPBnr6F5BH READY no alias principal. API pública confirmou zero alertas abertos e dois agendamentos/alertas reconciliados; HTML servido contém a identificação de erro por post agendado. Nenhuma publicação posterior à correção foi observada nesta verificação.
+
+## 2026-09-06 — retenção e distribuição v1.4.0
+
+- Pedido do usuário: trabalhar no algoritmo de “descongelamento”. Tratado como melhoria de distribuição e retenção; nenhuma evidência de bloqueio da conta foi constatada ou alegada.
+- Base origin/main 4777c761; worktree cliente-x-instagram-modern-retention-20260906; branch feat/retention-learning-20260906.
+- Corrigido cálculo que inferia milissegundos pelo tamanho do valor e assumia 15 segundos para todo vídeo. Tempo médio bruto convertido de ms; taxa de pulos tratada em porcentagem, inclusive valores entre 0 e 1. Sem duração registrada, retenção relativa fica null. Zero medido continua zero.
+- Renderização passa a persistir a duração calculada do Reel no resultado/histórico; coletor a utiliza nas próximas observações. Histórico sem duração não recebe duração inventada. Migração recalcula janelas e latestObservation.
+- Novo ajuste por tipo de abertura somente em REELS, limitado a +/-3 pontos, após pelo menos 3 mídias únicas maduras de 24/72h, alcance de 20 por mídia e 100 acumulado. Janela de 42 dias, decaimento de 21 dias; coletas tardias excluídas. Estes limites são escolhas conservadoras do nosso modelo, não regras do Instagram.
+- Preservados os 13 horários, aprendizado assistido, exploração 70/20/10 e travas de originalidade, fonte, fatos, imagem e repetição. Abertura com abandono consistente perde prioridade; com retenção consistente ganha prioridade quando elegível.
+- Regressões de unidades, duração, dados ausentes, amostra pequena, maturação, IDs duplicados e ajuste exclusivo de Reel passaram. Coletor --validate e validate-copy (75 seleções) passaram.
+- Ensaio com histórico atual encontrou somente uma amostra elegível no grupo alerta; ajuste inativo por insuficiência de evidência. Nenhum ganho de visualizações foi comprovado.
+- Envio e execução cloud serão verificados após o push.

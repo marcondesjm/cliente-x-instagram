@@ -2,7 +2,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { PERFORMANCE_LEARNING_MODEL_VERSION, relativeViewEvidence, summarizePerformanceLearning } from '../lib/performance-learning.js';
+import { PERFORMANCE_LEARNING_MODEL_VERSION, relativeViewEvidence, reelRetentionMetrics, retentionHookModels, summarizePerformanceLearning } from '../lib/performance-learning.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const CONFIG_DIR = join(ROOT, 'automation', 'instagram-template', 'config');
@@ -111,13 +111,7 @@ function performanceScore(metrics = {}) {
   const followRate = rate(metrics.follows, reach);
   const repostRate = rate(metrics.reposts, reach);
   const profileVisitRate = rate(metrics.profileVisits, reach);
-  const rawSkipRate = metrics.skipRate == null ? NaN : Number(metrics.skipRate);
-  const skipRate = Number.isFinite(rawSkipRate) ? clamp(rawSkipRate > 1 ? rawSkipRate / 100 : rawSkipRate, 0, 1) : null;
-  const rawAverageWatchTime = Number(metrics.averageWatchTime) || 0;
-  const averageWatchSeconds = rawAverageWatchTime > 1000 ? rawAverageWatchTime / 1000 : rawAverageWatchTime;
-  const retention = averageWatchSeconds > 0
-    ? clamp(averageWatchSeconds / 15, 0, 1)
-    : null;
+  const { skip: skipRate, retention, score: retentionScore } = reelRetentionMetrics(metrics);
   const viewsPerReach = reach > 0 && Number(metrics.views) > 0
     ? clamp(Number(metrics.views) / reach, 0, 3)
     : null;
@@ -127,7 +121,7 @@ function performanceScore(metrics = {}) {
     utility: clamp(((saveRate * 2600) + (shareRate * 1800) + (repostRate * 1200)) * evidenceMultiplier),
     conversation: clamp(((commentRate * 3000) + (shareRate * 900)) * evidenceMultiplier),
     conversion: clamp(((followRate * 5000) + (profileVisitRate * 3000) + (commentRate * 1200)) * evidenceMultiplier),
-    retention: clamp((retention === null ? 0 : retention * 75) + (skipRate === null ? 10 : (1 - skipRate) * 25))
+    retention: retentionScore
   };
   const engagementScore = clamp(
     Math.min(35, shareRate * 1750)
@@ -161,7 +155,7 @@ function performanceScore(metrics = {}) {
       retention: retention === null ? null : Number(retention.toFixed(5)),
       viewsPerReach: viewsPerReach === null ? null : Number(viewsPerReach.toFixed(5))
     },
-    objectiveScores: Object.fromEntries(Object.entries(objectiveScores).map(([key, value]) => [key, Number(value.toFixed(2))])),
+    objectiveScores: Object.fromEntries(Object.entries(objectiveScores).map(([key, value]) => [key, value === null ? null : Number(value.toFixed(2))])),
     distribution
   };
 }
@@ -339,6 +333,7 @@ function buildModels(samples = []) {
     return relative ? [{ sample, ...evidence, score: relative.score, reach: Number(metrics?.reach) || 0, views: Number(metrics?.views) || 0, windowHours: relative.windowHours, lowDistribution: false }] : [];
   });
   return {
+    retention: { method: 'mature-reels-hook-v1', hooks: retentionHookModels(samples) },
     discovery: {
       method: 'same-format-window-median-v1',
       evidence: relativeViews,
@@ -354,7 +349,8 @@ function buildModels(samples = []) {
     contexts: aggregate(observations.map(({ sample, performance, ...evidence }) => {
       const format = sample.mediaProductType || sample.mediaType || 'unknown';
       const objective = sample.learningContext?.objective || sample.objective || 'discovery';
-      const contextualScore = Number(performance?.objectiveScores?.[objective]);
+      const rawContextualScore = performance?.objectiveScores?.[objective];
+      const contextualScore = rawContextualScore == null ? NaN : Number(rawContextualScore);
       return { key: `${format}|${sample.daypart || daypartFor(sample.publishedAt)}|${objective}`, ...evidence, score: Number.isFinite(contextualScore) ? contextualScore : evidence.score };
     }))
   };
@@ -473,8 +469,10 @@ async function main() {
       learningContext: entry.learningContext || null,
       objective: objectiveFor(entry),
       daypart: daypartFor(entry.publishedAt),
+      durationSeconds: entry.reelDurationSeconds || null,
       observations: []
     };
+    sample.durationSeconds = entry.reelDurationSeconds || sample.durationSeconds || null;
     const dueWindow = WINDOWS.filter((windowHours) => ageHours >= windowHours && !sample.observations.some((item) => item.windowHours === windowHours)).at(-1);
     const lastCollected = Date.parse(sample.latestObservation?.collectedAt || sample.observations.at(-1)?.collectedAt || '');
     const refreshDue = ageHours >= 2 && ageHours <= 72
@@ -499,6 +497,7 @@ async function main() {
       totalInteractions: results.total_interactions.value,
       views: results.views.value,
       watchTime: results.ig_reels_video_view_total_time.value,
+      durationSeconds: sample.durationSeconds,
       averageWatchTime: results.ig_reels_avg_watch_time.value,
       skipRate: results.reels_skip_rate.value,
       reposts: results.reposts.value,
@@ -549,7 +548,14 @@ async function main() {
     // contexto ruim continuaria carregando indefinidamente a nota da versão
     // anterior até receber uma nova janela de coleta.
     for (const observation of sample.observations || []) {
+      observation.metrics.durationSeconds = sample.durationSeconds || null;
       observation.performance = performanceScore(observation.metrics || {});
+    }
+  }
+  for (const sample of accountState.samples) {
+    if (sample.latestObservation) {
+      sample.latestObservation.metrics.durationSeconds = sample.durationSeconds || null;
+      sample.latestObservation.performance = performanceScore(sample.latestObservation.metrics);
     }
   }
   accountState.models = buildModels(accountState.samples);

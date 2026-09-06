@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { buildBrandContext } from '../../../lib/brand-analysis.js';
 import { buildResearchPack, decodeEditorialEntities, EDITORIAL_SOURCES, extractArticleFacts, extractEditorialImageUrl, factualSummary, isPredominantlyEnglish, isUsableEditorialFact, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
-import { summarizePerformanceLearning } from '../../../lib/performance-learning.js';
+import { summarizePerformanceLearning, retentionHookAdjustment } from '../../../lib/performance-learning.js';
 import { assertVisualAgentPlan, buildVisualAgentPlan, CLOUD_VISUAL_AGENT_VERSION } from '../../../lib/visual-agent.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
@@ -4174,6 +4174,7 @@ function recordPublicationHistory(configDir, accountKey, pack, result) {
       firstCommentId: result.firstCommentId || null,
       firstCommentError: result.firstCommentError || null,
       permalink: result.permalink || null,
+      reelDurationSeconds: result.reelMode ? result.reelDurationSeconds || null : null,
       publishedFormat: result.storyOnly ? null : (result.reelMode ? 'REEL' : 'CAROUSEL'),
       publicationFallback: result.publicationFallback || null,
       visualSources: Array.isArray(result.visualSources) ? result.visualSources : [],
@@ -4427,6 +4428,9 @@ function organicPotentialScore(pack = {}, dateString = todaySaoPaulo(), publicat
     const adjustment = Math.max(-5, Math.min(5, (Number(learnedContext.learnedScore) - 50) * 0.25));
     if (Math.abs(adjustment) >= 0.5) add(adjustment, adjustment > 0 ? 'contexto-com-bom-historico' : 'contexto-com-baixo-historico');
   }
+
+  const retentionAdjustment = retentionHookAdjustment(performanceState.retention?.hooks?.[learningHookArchetype(pack)], learningContext.format);
+  if (Math.abs(retentionAdjustment) >= 0.25) add(retentionAdjustment, retentionAdjustment > 0 ? 'abertura-com-retencao-consistente' : 'abertura-com-abandono-consistente');
 
   const discovery = performanceState.discovery || {};
   const relativeModels = [
@@ -4838,7 +4842,7 @@ function renderReelVideo(runDir, imagePaths) {
     transitionSeconds,
     transitions: imagePaths.slice(1).map((_, index) => transitionNames[(transitionSeed + index) % transitionNames.length])
   }, null, 2), 'utf8');
-  return { reelPath, audioTrack: audioTrack.id };
+  return { reelPath, audioTrack: audioTrack.id, durationSeconds };
 }
 
 function reelSceneFilter(index) {
@@ -5943,6 +5947,7 @@ async function main() {
     storyCoverTitle: String(storyPack?.slides?.[0]?.title || '').trim() || null,
     reelVideoPath,
     reelVideoUrl,
+    reelDurationSeconds: reelMode ? reelRender?.durationSeconds || null : null,
     reelAudioTrack,
     avatarRotationStart,
     coverAvatar: Number.isInteger(avatarRotationStart)

@@ -12,6 +12,7 @@ on:
     paths:
       - "scripts/collect-instagram-performance.mjs"
       - "lib/performance-learning.js"
+      - "scripts/validate-retention-learning.mjs"
       - "automation/instagram-template/config/performance-learning-exclusions.json"
       - ".github/workflows/instagram-performance-learning.yml"
   schedule:
@@ -44,7 +45,9 @@ jobs:
           node-version: "22"
 
       - name: Validate learning model
-        run: node scripts/collect-instagram-performance.mjs --validate
+        run: |
+          node scripts/collect-instagram-performance.mjs --validate
+          node scripts/validate-retention-learning.mjs
 
       - name: Collect Instagram performance
         run: node scripts/collect-instagram-performance.mjs
