@@ -7,6 +7,7 @@ Atualizado em: 2026-09-05 22:49 BRT
 - O usuário confirmou que `https://www.instagram.com/p/Dc613j-Hb24/` chegou a **40 visualizações**, novo marco acima das 39 registradas anteriormente.
 - A coleta automática já havia observado 32 visualizações na janela de 2 h, mas a Meta retornou alcance zero e a versão anterior descartava a nota de desempenho.
 - O `nerion-adaptive-v1.2.1` passa a aproveitar visualizações e interações absolutas de forma conservadora quando o alcance estiver indisponível; nenhuma taxa por alcance é inventada.
+- Prova em nuvem: o coletor persistiu o estado no commit `fe8a571d`; a observação de 32 visualizações passou de `performance: null` para nota 51 no modo `views-only-with-absolute-interactions`.
 - A mídia será reavaliada nas janelas de 24 h e 72 h. Um único resultado não libera repetição de pauta, texto ou imagem e o aprendizado continua assistido.
 - O marco serve como evidência de distribuição; as ressalvas visuais já documentadas continuam separadas e não se tornam padrão editorial.
 

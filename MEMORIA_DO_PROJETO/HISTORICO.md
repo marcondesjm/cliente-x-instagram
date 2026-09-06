@@ -2923,3 +2923,4 @@ Conclusao de ativacao:
 - Quarenta visualizações formam a faixa saudável inicial de distribuição, mas a influência continua reduzida, passa pela maturação de 2 h, 24 h e 72 h e não concede autonomia ao algoritmo.
 - O sinal de desempenho não apaga a auditoria visual da mídia: tema, horário e gancho podem ser avaliados, mas imagens inadequadas ou texto defeituoso não viram referência editorial.
 - Validações aprovadas: sintaxe, teste puro do coletor com cenário `reach: 0/views: 40`, 75 seleções editoriais e `git diff --check`.
+- A execução automática em nuvem concluiu e persistiu a migração no commit `fe8a571d`: a amostra de 2 h desta mídia, com 32 visualizações e alcance indisponível, passou a ter nota conservadora 51 em vez de `null`.
