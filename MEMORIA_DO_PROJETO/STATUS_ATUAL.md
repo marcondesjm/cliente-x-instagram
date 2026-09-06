@@ -1,5 +1,13 @@
 # Status Atual
 
+## Atualização 2026-09-05 22:18 BRT — texto factual completo
+
+- Próximos cards internos do Radar usam frases factuais completas, sem cortes terminados em `...`.
+- A fonte principal foi reduzida e agora escala conforme o comprimento da frase: 62 px, 54 px ou 48 px.
+- Render `2026-09-05-221505-slot-12-render-only` inspecionado com a pauta Mobile Time: cards 2 e 3 legíveis, completos e sem colisões.
+- A matéria integral e a atribuição permanecem na legenda; a compactação não pode inventar complemento factual.
+- Validações locais aprovadas. Nenhuma publicação existente foi alterada ou republicada.
+
 Atualizado em: 2026-09-05 14:40 BRT
 
 ## Regra permanente de checkpoint

@@ -2856,10 +2856,14 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .impact-carousel.role-proof .headline {
       margin: 185px 0 0;
       max-width: 930px;
-      font-size: 76px;
-      line-height: 1.01;
+      font-size: 62px;
+      line-height: 1.05;
       text-align: left;
     }
+    .impact-carousel.role-value.headline-long .headline,
+    .impact-carousel.role-proof.headline-long .headline { font-size: 54px; line-height: 1.06; }
+    .impact-carousel.role-value.headline-very-long .headline,
+    .impact-carousel.role-proof.headline-very-long .headline { font-size: 48px; line-height: 1.08; }
     .impact-carousel.role-proof .headline::before { display: none; }
     .impact-carousel.role-value .note,
     .impact-carousel.role-proof .note {
@@ -5289,6 +5293,9 @@ async function main() {
     const continuedSlideCopy = continuedResearchProbe.slides.map((slide) => `${slide.title}\n${slide.body}`).join('\n');
     if (articleFactsProbe.length < 3 || !continuedSlideCopy.includes(articleFactsProbe[1].slice(0, 48)) || !continuedResearchProbe.caption.includes(articleFactsProbe[2])) {
       throw new Error('Continuidade factual entre matéria, slide 3 e legenda falhou.');
+    }
+    if (continuedResearchProbe.slides.slice(1, 4).some((slide) => /\.\.\.$/.test(String(slide.title || '').trim()))) {
+      throw new Error('Card factual do Radar terminou com frase truncada em reticências.');
     }
     if (articleFactsProbe.some((fact) => /Foto:|Michael Dwyer|logotipo da OpenAI/i.test(fact))) {
       throw new Error('Legenda ou crédito de imagem foi aceito como fato da matéria.');

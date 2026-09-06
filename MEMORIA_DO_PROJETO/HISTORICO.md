@@ -1,5 +1,14 @@
 # Historico
 
+## 2026-09-05 22:18 BRT — Frases completas e tipografia equilibrada no Radar
+
+- Os cards factuais do Radar deixaram de cortar o texto em 80 caracteres e terminar com reticências sem sentido.
+- O resumo agora procura o fim de uma oração factual, fecha a frase corretamente e mantém o conteúdo integral e a fonte na legenda.
+- A tipografia dos cards internos foi reduzida de 76 px para 62 px, com escalas de 54 px e 48 px para frases longas e muito longas.
+- Render exato da pauta Mobile Time em `2026-09-05-221505-slot-12-render-only`: “Ribeiro foi questionado sobre a repercussão no mercado após o lançamento do Meta Business Agent.” e “Nesse cenário, cabe à Meta fornecer a infraestrutura do WhatsApp, com capacidade de ser fluida e escalável.” aparecem completas, sem reticências e sem colisão.
+- Sintaxe, `validate-copy` com 75 seleções, trava contra títulos factuais terminados em reticências e `git diff --check` aprovados.
+- Nenhuma mídia foi apagada, editada ou republicada; a correção vale para as próximas publicações.
+
 ## 2026-09-05 14:40 BRT — Erro interno `media_publish` separado de token vencido
 
 - O alerta do slot 4 foi confirmado em produção com `OAuthException` code `-1`, subcode `2207085` e mensagem de erro interno genérico da Meta; esse retorno não comprova expiração do token.
