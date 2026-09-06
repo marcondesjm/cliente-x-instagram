@@ -8,7 +8,7 @@
 - Preservados os 13 horários, aprendizado assistido, exploração 70/20/10 e travas de originalidade, fonte, fatos, imagem e repetição. Abertura com abandono consistente perde prioridade; com retenção consistente ganha prioridade quando elegível.
 - Regressões de unidades, duração, dados ausentes, amostra pequena, maturação, IDs duplicados e ajuste exclusivo de Reel passaram. Coletor --validate e validate-copy (75 seleções) passaram.
 - Ensaio com histórico atual encontrou somente uma amostra elegível no grupo alerta; ajuste inativo por insuficiência de evidência. Nenhum ganho de visualizações foi comprovado.
-- Envio e execução cloud serão verificados após o push.
+- Produção verificada: código bab83eb2; run automático de aprendizado 34061868181 concluído; estado v1.4.0 persistido em e36661d9 às 18:42 BRT. Modelo de retenção permanece neutro por apenas uma amostra elegível. Deployment dpl_9k36Wci5B7VDicqidB9ZdNHyLbYu READY, alias cliente-x-instagram.vercel.app. Crescimento de views ainda depende de avaliação posterior.
 
 ## Correção 2026-09-06 18:30 BRT — fila e rodízio sem colisão
 
