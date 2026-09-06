@@ -79,8 +79,11 @@ function performanceScore(metrics = {}) {
     const shares = Math.max(0, Number(metrics.shares) || 0);
     const saved = Math.max(0, Number(metrics.saved) || 0);
     const interactionBonus = Math.min(20, (likes * 1.5) + (comments * 3) + (shares * 4) + (saved * 4));
-    const score = clamp(15 + (distribution.confidence * 45) + interactionBonus);
-    const discovery = clamp(20 + (distribution.confidence * 55) + Math.min(15, likes * 1.5));
+    // Continua distinguindo crescimento acima de 40 views, sem tratar views
+    // como pessoas únicas nem deixar uma publicação dominar o aprendizado.
+    const growthBonus = Math.min(10, Math.max(0, Math.log2(distribution.views / 40) * 5));
+    const score = clamp(15 + (distribution.confidence * 45) + interactionBonus + growthBonus);
+    const discovery = clamp(20 + (distribution.confidence * 55) + Math.min(15, likes * 1.5) + growthBonus);
     return {
       modelVersion: PERFORMANCE_LEARNING_MODEL_VERSION,
       evidenceMode: 'views-only-with-absolute-interactions',
@@ -304,15 +307,22 @@ function buildModels(samples = []) {
       const matureSamples = values.filter((value) => value.windowHours >= 24).length;
       const lowDistributionSamples = values.filter((value) => value.windowHours >= 24 && value.lowDistribution).length;
       const reachConfidence = Math.min(1, values.length / 5) * Math.min(1, totalReach / 200);
+      const viewsOnly = values.filter((value) => !value.reach && value.views > 0 && value.windowHours >= 24);
+      const totalViewsOnly = viewsOnly.reduce((sum, value) => sum + value.views, 0);
+      const viewsConfidence = viewsOnly.length >= 3
+        ? Math.min(0.3, (viewsOnly.length / 10) * Math.min(1, totalViewsOnly / 400))
+        : 0;
       // Repetidos testes maduros com distribuição crítica são evidência real,
       // mesmo quando o alcance acumulado ainda é pequeno. Uma única amostra
       // continua insuficiente para empurrar o modelo longe do neutro.
       const failureConfidence = matureSamples >= 2 ? Math.min(0.6, lowDistributionSamples / 5) : 0;
-      const confidence = Math.max(reachConfidence, failureConfidence);
+      const confidence = Math.max(reachConfidence, failureConfidence, viewsConfidence);
       const learned = 50 + ((average - 50) * confidence);
       return [key, {
         samples: values.length,
         totalReach,
+        viewsOnlySamples: viewsOnly.length,
+        viewsConfidence: Number(viewsConfidence.toFixed(4)),
         matureSamples,
         lowDistributionSamples,
         recencyWeight: Number(totalWeight.toFixed(3)),
@@ -347,6 +357,17 @@ function validatePureLogic() {
   if (!strong || !weak || strong.score <= weak.score || strong.rates.share !== 0.03) throw new Error('Performance score validation failed.');
   if (!criticalDistribution?.distribution?.low || criticalDistribution.distribution.band !== 'critical' || limitedDistribution.score <= criticalDistribution.score) throw new Error('Absolute distribution validation failed.');
   if (viewsOnlyHealthy?.evidenceMode !== 'views-only-with-absolute-interactions' || viewsOnlyHealthy.score < 60 || viewsOnlyHealthy.distribution.band !== 'healthy' || viewsOnlyMissing !== null) throw new Error('Views-only distribution learning failed.');
+  if (performanceScore({ views: 52 }).score <= performanceScore({ views: 43 }).score
+    || performanceScore({ views: 1000000 }).score > 70) throw new Error('Views growth must improve the score with a bounded bonus.');
+  const viewsSamples = Array.from({ length: 5 }, () => ({
+    publishedAt: new Date().toISOString(), source: 'Views sem alcance',
+    observations: [{ windowHours: 24, metrics: { reach: 0, views: 52 }, performance: performanceScore({ reach: 0, views: 52 }) }]
+  }));
+  const viewsModel = buildModels(viewsSamples).sources['views sem alcance'];
+  const singleViewsModel = buildModels(viewsSamples.slice(0, 1)).sources['views sem alcance'];
+  if (viewsModel.learnedScore <= 50 || viewsModel.confidence > 0.3 || singleViewsModel.confidence !== 0) {
+    throw new Error('Mature views-only evidence needs multiple posts and conservative confidence.');
+  }
   const models = buildModels([
     { publishedAt: new Date().toISOString(), source: 'Fonte A', topics: ['dados'], audience: 'gestão', hook: 'dado', mediaProductType: 'REELS', daypart: 'afternoon', objective: 'conversion', observations: [{ windowHours: 24, metrics: { reach: 1000 }, performance: strong }] },
     { publishedAt: new Date().toISOString(), source: 'Fonte A', topics: ['dados'], audience: 'gestão', hook: 'dado', mediaProductType: 'REELS', daypart: 'afternoon', objective: 'conversion', observations: [{ windowHours: 24, metrics: { reach: 1000 }, performance: weak }] }
@@ -422,7 +443,10 @@ async function main() {
       observations: []
     };
     const dueWindow = WINDOWS.filter((windowHours) => ageHours >= windowHours && !sample.observations.some((item) => item.windowHours === windowHours)).at(-1);
-    if (!dueWindow) {
+    const lastCollected = Date.parse(sample.latestObservation?.collectedAt || sample.observations.at(-1)?.collectedAt || '');
+    const refreshDue = ageHours >= 2 && ageHours <= 72
+      && (!Number.isFinite(lastCollected) || now - lastCollected >= 2 * 3600000);
+    if (!dueWindow && !refreshDue) {
       sampleMap.set(sample.mediaId, sample);
       continue;
     }
@@ -453,14 +477,28 @@ async function main() {
     sample.mediaType = media.media_type || null;
     sample.mediaProductType = media.media_product_type || null;
     sample.permalink = media.permalink || sample.permalink;
-    sample.observations.push({
-      windowHours: dueWindow,
+    const observation = {
+      windowHours: dueWindow || null,
       collectedAt: new Date().toISOString(),
       ageHours: Number(ageHours.toFixed(2)),
       metrics,
       performance: performanceScore(metrics),
       unavailableMetrics: Object.fromEntries(Object.entries(results).filter(([, result]) => result.error).map(([metric, result]) => [metric, result.error]))
-    });
+    };
+    // Acompanhamento entre marcos não substitui as amostras de 2/24/72h.
+    // Assim o mesmo post não vira várias evidências independentes no ranking.
+    const previous = sample.latestObservation || sample.observations.at(-1);
+    const previousViews = previous?.metrics?.views;
+    sample.viewGrowth = previousViews != null && metrics.views != null ? {
+      from: previous.collectedAt,
+      to: observation.collectedAt,
+      previousViews,
+      currentViews: metrics.views,
+      delta: metrics.views - previousViews,
+      percent: previousViews > 0 ? Number(((metrics.views - previousViews) / previousViews * 100).toFixed(2)) : null
+    } : null;
+    sample.latestObservation = observation;
+    if (dueWindow) sample.observations.push(observation);
     delete sample.lastError;
     sampleMap.set(sample.mediaId, sample);
   }
