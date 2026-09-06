@@ -2914,3 +2914,12 @@ Conclusao de ativacao:
 - O workflow principal está programado para iniciar a checagem às **06:37 BRT**, sete minutos após o horário editorial, consultando o livro de slots antes de publicar para evitar duplicidade.
 - O watchdog continua ativo nos minutos 14, 29, 44 e 59 de cada hora e pode recuperar automaticamente um slot pendente.
 - A pauta não foi pré-fixada: o Radar selecionará no disparo um conteúdo aprovado pelas travas de IA, integridade factual, novidade e qualidade visual.
+
+# 2026-09-05 22:49 BRT — 40 visualizações e evolução para o Nerion v1.2.1
+
+- O usuário confirmou que o carrossel `https://www.instagram.com/p/Dc613j-Hb24/`, Feed `18090398927175449`, alcançou **40 visualizações**, superando as 39 registradas no checkpoint anterior.
+- O estado remoto já continha uma observação de 2 h com 32 visualizações, porém `reach: 0`; por isso o cálculo anterior produzia `performance: null` e não aproveitava o sinal de distribuição.
+- O motor `nerion-adaptive-v1.2.1` agora calcula uma evidência conservadora baseada em visualizações e interações absolutas quando a Meta não fornece alcance. Taxas de curtidas, comentários, compartilhamentos ou salvamentos por alcance permanecem nulas nesse cenário.
+- Quarenta visualizações formam a faixa saudável inicial de distribuição, mas a influência continua reduzida, passa pela maturação de 2 h, 24 h e 72 h e não concede autonomia ao algoritmo.
+- O sinal de desempenho não apaga a auditoria visual da mídia: tema, horário e gancho podem ser avaliados, mas imagens inadequadas ou texto defeituoso não viram referência editorial.
+- Validações aprovadas: sintaxe, teste puro do coletor com cenário `reach: 0/views: 40`, 75 seleções editoriais e `git diff --check`.

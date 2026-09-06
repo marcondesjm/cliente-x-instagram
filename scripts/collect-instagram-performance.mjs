@@ -67,8 +67,39 @@ function distributionEvidence(metrics = {}) {
 
 function performanceScore(metrics = {}) {
   const reach = Number(metrics.reach) || 0;
-  if (!reach) return null;
   const distribution = distributionEvidence(metrics);
+  // Em alguns carrosséis a Meta entrega `views`, curtidas e comentários, mas
+  // mantém `reach` em zero. Descartar toda a observação fazia um marco real de
+  // distribuição desaparecer do aprendizado. Sem alcance não calculamos
+  // taxas: usamos somente sinais absolutos, com teto e peso conservadores.
+  if (!reach) {
+    if (!distribution.views) return null;
+    const likes = Math.max(0, Number(metrics.likes) || 0);
+    const comments = Math.max(0, Number(metrics.comments) || 0);
+    const shares = Math.max(0, Number(metrics.shares) || 0);
+    const saved = Math.max(0, Number(metrics.saved) || 0);
+    const interactionBonus = Math.min(20, (likes * 1.5) + (comments * 3) + (shares * 4) + (saved * 4));
+    const score = clamp(15 + (distribution.confidence * 45) + interactionBonus);
+    const discovery = clamp(20 + (distribution.confidence * 55) + Math.min(15, likes * 1.5));
+    return {
+      modelVersion: PERFORMANCE_LEARNING_MODEL_VERSION,
+      evidenceMode: 'views-only-with-absolute-interactions',
+      score: Number(score.toFixed(2)),
+      rates: {
+        share: null, save: null, comment: null, like: null, interaction: null,
+        follow: null, repost: null, profileVisit: null, skip: null,
+        retention: null, viewsPerReach: null
+      },
+      objectiveScores: {
+        discovery: Number(discovery.toFixed(2)),
+        utility: Number(Math.min(40, (saved * 8) + (shares * 5)).toFixed(2)),
+        conversation: Number(Math.min(40, (comments * 8) + (shares * 4)).toFixed(2)),
+        conversion: 0,
+        retention: 0
+      },
+      distribution
+    };
+  }
   const shareRate = rate(metrics.shares, reach);
   const saveRate = rate(metrics.saved, reach);
   const commentRate = rate(metrics.comments, reach);
@@ -311,8 +342,11 @@ function validatePureLogic() {
   const weak = performanceScore({ reach: 1000, shares: 1, saved: 1, comments: 0, likes: 5, totalInteractions: 7 });
   const criticalDistribution = performanceScore({ reach: 2, views: 4, shares: 0, saved: 0, comments: 0, likes: 0, totalInteractions: 0 });
   const limitedDistribution = performanceScore({ reach: 10, views: 20, shares: 0, saved: 0, comments: 0, likes: 0, totalInteractions: 0 });
+  const viewsOnlyHealthy = performanceScore({ reach: 0, views: 40, shares: 0, saved: 0, comments: 0, likes: 0, totalInteractions: 0 });
+  const viewsOnlyMissing = performanceScore({ reach: 0, views: 0 });
   if (!strong || !weak || strong.score <= weak.score || strong.rates.share !== 0.03) throw new Error('Performance score validation failed.');
   if (!criticalDistribution?.distribution?.low || criticalDistribution.distribution.band !== 'critical' || limitedDistribution.score <= criticalDistribution.score) throw new Error('Absolute distribution validation failed.');
+  if (viewsOnlyHealthy?.evidenceMode !== 'views-only-with-absolute-interactions' || viewsOnlyHealthy.score < 60 || viewsOnlyHealthy.distribution.band !== 'healthy' || viewsOnlyMissing !== null) throw new Error('Views-only distribution learning failed.');
   const models = buildModels([
     { publishedAt: new Date().toISOString(), source: 'Fonte A', topics: ['dados'], audience: 'gestão', hook: 'dado', mediaProductType: 'REELS', daypart: 'afternoon', objective: 'conversion', observations: [{ windowHours: 24, metrics: { reach: 1000 }, performance: strong }] },
     { publishedAt: new Date().toISOString(), source: 'Fonte A', topics: ['dados'], audience: 'gestão', hook: 'dado', mediaProductType: 'REELS', daypart: 'afternoon', objective: 'conversion', observations: [{ windowHours: 24, metrics: { reach: 1000 }, performance: weak }] }
@@ -349,7 +383,7 @@ function validatePureLogic() {
   })));
   const repeatedLowContext = repeatedLowDistribution.contexts['REELS|afternoon|discovery'];
   if (repeatedLowContext?.lowDistributionSamples !== 3 || repeatedLowContext.learnedScore >= 45) throw new Error('Repeated low distribution must reduce the learned context score.');
-  console.log(JSON.stringify({ ok: true, performanceScore: 'reach-normalized-with-absolute-distribution', distributionThresholds: DISTRIBUTION_THRESHOLDS, objectiveScores: 'discovery-utility-conversation-conversion-retention', windows: WINDOWS, modelShrinkage: 'enabled-with-21-day-decay-and-repeated-failure-evidence', contextualBaseline: 'format-daypart-objective', modelVersion: PERFORMANCE_LEARNING_MODEL_VERSION, staleFallback: 'editorial' }, null, 2));
+  console.log(JSON.stringify({ ok: true, performanceScore: 'reach-normalized-or-conservative-views-only', distributionThresholds: DISTRIBUTION_THRESHOLDS, objectiveScores: 'discovery-utility-conversation-conversion-retention', windows: WINDOWS, modelShrinkage: 'enabled-with-21-day-decay-and-repeated-failure-evidence', contextualBaseline: 'format-daypart-objective', modelVersion: PERFORMANCE_LEARNING_MODEL_VERSION, staleFallback: 'editorial' }, null, 2));
 }
 
 async function main() {
