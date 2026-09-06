@@ -1,6 +1,15 @@
 # Status Atual
 
-Atualizado em: 2026-09-05 22:32 BRT
+Atualizado em: 2026-09-05 22:44 BRT
+
+## Atualização 2026-09-05 22:44 BRT — nova publicação de IA auditada
+
+- Run automático `34004317650`: `https://www.instagram.com/p/Dc7YMtwiG6U/`, Feed `18112294880603563`, Story `18489215359128882`, publicado às 22:40 BRT.
+- O Radar escolheu corretamente a pauta da Exame `Nova IA identifica sinais de doenças cardíacas em menos de 2 segundos`, em modo `exploit` do `nerion-adaptive-v1.2.0`; a confiança continua moderada e o aprendizado assistido.
+- O Reel encontrou o erro interno Meta `2207085` e foi recuperado automaticamente como carrossel. O primeiro comentário falhou separadamente com OAuth `#10`, sem invalidar Feed ou Story.
+- A inspeção dos cinco cards confirmou imagem pertinente e textos legíveis, mas reprovou o card 2: um crédito fotográfico entrou no fato, terminou como `(Imagem gerada.` e a fonte apareceu duplicada.
+- O Feed permanece publicado e não deve ser apagado sem autorização. O Media ID foi excluído do aprendizado; a extração agora remove créditos fotográficos finais e a composição não duplica frases curtas.
+- O Story autoral `Sete elementos de um prompt profissional.` foi inserido pela regra de equilíbrio após cinco Stories de notícias; a arte 9:16 está preenchida, legível e sem colisões.
 
 ## Atualização 2026-09-05 22:29 BRT — publicação comemorativa e auditoria
 

@@ -900,7 +900,9 @@ function splitCreativeDescription(text = '') {
   if (!rest && closeWords.length && emphasisWords.length && emphasisWords.at(-1).length <= 2) {
     closeWords.unshift(emphasisWords.pop());
   }
-  const emphasis = emphasisWords.length ? emphasisWords.join(' ') : first;
+  // Não repita uma frase curta nos dois spans. Isso duplicava, por exemplo,
+  // "Fonte: Exame." dentro do cartão de atribuição.
+  const emphasis = emphasisWords.length ? emphasisWords.join(' ') : '';
   // A arte precisa de uma ideia completa, não de um parágrafo comprimido.
   // A explicação inteira continua na legenda; no cartão fica somente o
   // fechamento da primeira frase, que é legível em fonte grande no celular.
@@ -5281,6 +5283,7 @@ async function main() {
     }
     const articleFactsProbe = extractArticleFacts(`
       <p>O logotipo da OpenAI é visto em um telefone celular em frente à tela inicial do ChatGPT — Foto: AP/Michael Dwyer, Arquivo</p>
+      <p>Doenças cardíacas: uma ferramenta de IA analisa eletrocardiogramas e identifica sinais importantes (Imagem gerada por IA/EXAME/Exame)</p>
       <p>A percepção do público sobre inteligência artificial virou o centro de um debate no setor de tecnologia.</p>
       <p>Amodei afirmou que busca equilibrar os riscos reais e as oportunidades criadas pela tecnologia.</p>
       <p>A rejeição, segundo o executivo, decorre de uma crise de confiança acumulada ao longo de décadas.</p>
@@ -5302,6 +5305,9 @@ async function main() {
     }
     if (articleFactsProbe.some((fact) => /Foto:|Michael Dwyer|logotipo da OpenAI/i.test(fact))) {
       throw new Error('Legenda ou crédito de imagem foi aceito como fato da matéria.');
+    }
+    if (articleFactsProbe.some((fact) => /Imagem gerada|EXAME\/Exame/i.test(fact))) {
+      throw new Error('Crédito de imagem entre parênteses foi aceito como fato da matéria.');
     }
     if (isUsableEditorialFact('A empresa anunciou uma operação comercial no Brasil, mas os detalhes ainda serão...')) {
       throw new Error('Resumo factual truncado foi aceito pelo Radar.');

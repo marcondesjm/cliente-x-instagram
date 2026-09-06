@@ -2896,3 +2896,14 @@ Conclusao de ativacao:
 - O workflow ganhou a etapa `Validate cloud visual agent`. O teste puro aprovou a imagem correta e rejeitou uma imagem de outra matéria.
 - Render sem publicação `2026-09-05-174816-slot-12-render-only` inspecionado: capa e Story usam a fotografia do drone ligada à matéria do G1; slides internos não contêm fotografias alheias.
 - Sintaxe, agente visual, `validate-copy` com 75 seleções, Feed 4:5, Reel 9:16, Story seguro e `git diff --check` aprovados.
+
+# 2026-09-05 22:44 BRT — nova publicação de IA, prova visual e trava de crédito fotográfico
+
+- A nova execução autorizada seguiu o algoritmo automático no run `34004317650` e publicou a pauta da Exame `Nova IA identifica sinais de doenças cardíacas em menos de 2 segundos` às 22:40 BRT.
+- Provas persistidas: permalink `https://www.instagram.com/p/Dc7YMtwiG6U/`, Feed `18112294880603563` e Story `18489215359128882`.
+- A seleção foi `exploit` no modelo `nerion-adaptive-v1.2.0`, ainda com confiança moderada, aprendizado assistido e sem autonomia editorial.
+- O erro interno Meta `2207085` no Reel foi recuperado automaticamente como carrossel. O comentário inicial falhou isoladamente com OAuth `#10`; Feed e Story foram publicados normalmente.
+- Os cinco cards e o Story hospedados foram inspecionados no tamanho original. A pauta, a capa e a imagem são pertinentes a IA e doenças cardíacas; o Story autoral `Sete elementos de um prompt profissional.` está legível, preenchido e sem colisões.
+- A auditoria reprovou o card 2 porque o primeiro parágrafo da Exame trazia um crédito fotográfico final, que virou o fragmento `(Imagem gerada.`, e porque `Fonte: Exame.` foi repetido na composição visual.
+- O Feed existente não foi removido. O Media ID `18112294880603563` foi excluído do aprendizado, a extração passou a retirar créditos de foto entre parênteses e frases curtas deixaram de ser repetidas nos spans do cartão.
+- `node --check`, `npm run validate-copy` com 75 seleções e `git diff --check` aprovados após a correção.
