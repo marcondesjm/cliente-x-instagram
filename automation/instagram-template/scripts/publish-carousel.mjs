@@ -5192,6 +5192,9 @@ async function main() {
     if (matchesConfiguredEditorialIntent('Governo pode comprar luvas de choque para agentes de imigração', radarKeywords)) {
       throw new Error('Filtro semantico do Radar confundiu agentes de imigracao com agentes de IA.');
     }
+    if (matchesConfiguredEditorialIntent('The Last of Us Part 3 vem aí: estúdio trabalha em múltiplos jogos', radarKeywords)) {
+      throw new Error('Filtro semantico do Radar confundiu a palavra acentuada "aí" com a sigla inglesa AI.');
+    }
     if (!matchesConfiguredEditorialIntent('Empresas adotam agentes de IA para automatizar tarefas', radarKeywords)) {
       throw new Error('Filtro semantico do Radar rejeitou uma pauta valida sobre agentes de IA.');
     }

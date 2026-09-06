@@ -1,5 +1,17 @@
 # Historico
 
+## 2026-09-05 22:29 BRT — Publicação comemorativa auditada e novas travas editoriais
+
+- A publicação extra autorizada foi executada pelo caminho automático em nuvem, com seleção 70/20/10, sem consumir novamente os 13 slots.
+- A primeira tentativa, run `34003559662`, falhou antes de criar mídia porque o gatilho extraordinário por `push` não instalava FFmpeg para o Reel automático. A condição foi corrigida no commit `bccffc60`.
+- O run de recuperação `34003725690` concluiu `Publish feed and story` e persistiu a publicação `https://www.instagram.com/p/Dc7W2jYFNmI/`: Feed `17943988341302275`, Story `18108098993601068`, às 22:28 BRT.
+- O algoritmo operou em modo `exploit`, objetivo `utility`, modelo `nerion-adaptive-v1.2.0`; o `Nerion Visual Cloud` aprovou somente a imagem vinculada à matéria.
+- A inspeção visual identificou que a pauta sobre `The Last of Us Part 3` não é aderente a IA para empresas e que o card 2 terminou com o fragmento `não apenas a.`. A mídia foi excluída do aprendizado para não ensinar esse resultado.
+- Causa da pauta indevida: a busca normalizava `aí` para `ai` e confundia a palavra em português com a sigla inglesa `AI`. Tokens de duas letras agora preservam acentos.
+- A compactação factual passou a reconhecer também travessões como fim de oração, evitando encerrar uma frase no meio de construções como `não apenas...`.
+- Validações aprovadas: sintaxe, 75 seleções editoriais, regressão `aí` versus `AI`, trava semântica e `git diff --check`.
+- O post existente não foi apagado nem republicado; qualquer substituição depende de autorização explícita.
+
 ## 2026-09-05 22:17 BRT — Primeiro post acima da barreira de 20 visualizações
 
 - O usuário confirmou visualmente 39 visualizações no carrossel `https://www.instagram.com/p/Dc613j-Hb24/`, quase o dobro da barreira anterior de 20 visualizações.

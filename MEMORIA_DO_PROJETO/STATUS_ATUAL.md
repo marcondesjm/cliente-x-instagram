@@ -1,5 +1,13 @@
 # Status Atual
 
+## Atualização 2026-09-05 22:29 BRT — publicação comemorativa e auditoria
+
+- Run automático final `34003725690`: permalink `https://www.instagram.com/p/Dc7W2jYFNmI/`, Feed `17943988341302275`, Story `18108098993601068`.
+- A primeira tentativa revelou e corrigiu a ausência de FFmpeg no gatilho automático extraordinário por `push`.
+- O post final foi publicado, mas a revisão reprovou a pauta de jogo fora do foco empresarial e o fragmento textual `não apenas a.`; a mídia foi excluída do aprendizado.
+- Novas travas impedem confundir `aí` com a sigla `AI` e usam travessões como limite seguro de oração factual.
+- O post permanece no perfil. Não apagar nem republicar sem autorização explícita.
+
 ## Marco de desempenho — 2026-09-05 22:17 BRT
 
 - O carrossel `Dc613j-Hb24` alcançou 39 visualizações, conforme confirmação visual do usuário, superando pela primeira vez a barreira observada de 20.
