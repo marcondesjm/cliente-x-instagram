@@ -4424,6 +4424,9 @@ function organicPotentialScore(pack = {}, dateString = todaySaoPaulo(), publicat
   const performanceState = performanceLearningSnapshot().readiness.learningEnabled
     ? performanceLearningSnapshot().models
     : {};
+  // Reserve headroom for measured performance; strong editorial candidates
+  // previously saturated at 100 and lost their ranking differences.
+  score = score <= 75 ? score : 75 + (score - 75) * 0.35;
   const sourceKey = String(research.source || '').trim().toLocaleLowerCase('pt-BR');
   const learnedSource = performanceState.sources?.[sourceKey];
   if (learnedSource?.samples >= 2) {
@@ -4444,6 +4447,18 @@ function organicPotentialScore(pack = {}, dateString = todaySaoPaulo(), publicat
   if (learnedContext?.samples >= 2) {
     const adjustment = Math.max(-5, Math.min(5, (Number(learnedContext.learnedScore) - 50) * 0.25));
     if (Math.abs(adjustment) >= 0.5) add(adjustment, adjustment > 0 ? 'contexto-com-bom-historico' : 'contexto-com-baixo-historico');
+  }
+
+  const discovery = performanceState.discovery || {};
+  const relativeModels = [
+    discovery.sources?.[sourceKey],
+    discovery.hooks?.[learningHookArchetype(pack)],
+    ...learningTopicTokens(pack).map(topic => discovery.topics?.[topic])
+  ].filter(model => model?.matureSamples >= 3 && Number.isFinite(model.learnedScore));
+  if (relativeModels.length) {
+    const average = relativeModels.reduce((sum, model) => sum + model.learnedScore, 0) / relativeModels.length;
+    const adjustment = Math.max(-4, Math.min(4, (average - 50) * 0.4));
+    if (Math.abs(adjustment) >= 0.25) add(adjustment, adjustment > 0 ? 'views-acima-de-pares-comparaveis' : 'views-abaixo-de-pares-comparaveis');
   }
 
   return { score: Number(Math.max(0, Math.min(100, score)).toFixed(2)), signals, fatiguePenalty: fatigue.penalty, contextKey: contextKey || null };
@@ -4494,7 +4509,9 @@ function selectWithControlledExploration(candidates = [], dateString = '', slotI
   } else if (mode === 'experiment') {
     pool = ranked.slice(0, 6);
   }
-  const selected = pool[chooseIndex(pool.length)];
+  if (mode === 'exploit') pool = ranked.filter(candidate => candidate.organicPotential.score === bestScore);
+  if (mode === 'experiment') pool = pool.filter(candidate => candidate.organicPotential.score >= bestScore - 15);
+  const selected = pool.length ? pool[chooseIndex(pool.length)] : null;
   const experimentAxis = mode === 'experiment' ? 'topic-angle' : mode === 'explore' ? 'candidate-novelty' : 'performance';
   return selected ? { ...selected, selectionMode: mode, experimentAxis } : null;
 }
@@ -5146,6 +5163,16 @@ async function main() {
       throw new Error('Motor de potencial orgânico não priorizou a pauta recente, concreta e útil.');
     }
     const fatiguePack = organicPotentialProbe[0].pack;
+    const richerPack = structuredClone(fatiguePack);
+    richerPack.research.sourceFacts.push('Contexto factual adicional para a decisão empresarial. '.repeat(4));
+    if (organicPotentialScore(richerPack, today).score <= organicPotentialScore(fatiguePack, today).score) {
+      throw new Error('Candidatas fortes perderam diferenciação no teto da nota.');
+    }
+    const exploitSlot = Array.from({ length: 100 }, (_, i) => i).find(i => controlledExperimentMode(today, i) === 'exploit');
+    const bestProbe = selectWithControlledExploration([
+      { originalIndex: 0, pack: richerPack }, { originalIndex: 1, pack: fatiguePack }
+    ], today, exploitSlot, length => length - 1);
+    if (bestProbe?.originalIndex !== 0) throw new Error('Exploit deixou de escolher a maior nota.');
     const fatigueHistory = Array.from({ length: 6 }, (_, index) => ({
       publishedAt: `${today}T${String(10 + index).padStart(2, '0')}:00:00-03:00`,
       coverTitle: fatiguePack.slides[0].title,

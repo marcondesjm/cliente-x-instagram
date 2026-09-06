@@ -2,7 +2,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { PERFORMANCE_LEARNING_MODEL_VERSION, summarizePerformanceLearning } from '../lib/performance-learning.js';
+import { PERFORMANCE_LEARNING_MODEL_VERSION, relativeViewEvidence, summarizePerformanceLearning } from '../lib/performance-learning.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const CONFIG_DIR = join(ROOT, 'automation', 'instagram-template', 'config');
@@ -111,7 +111,7 @@ function performanceScore(metrics = {}) {
   const followRate = rate(metrics.follows, reach);
   const repostRate = rate(metrics.reposts, reach);
   const profileVisitRate = rate(metrics.profileVisits, reach);
-  const rawSkipRate = Number(metrics.skipRate);
+  const rawSkipRate = metrics.skipRate == null ? NaN : Number(metrics.skipRate);
   const skipRate = Number.isFinite(rawSkipRate) ? clamp(rawSkipRate > 1 ? rawSkipRate / 100 : rawSkipRate, 0, 1) : null;
   const rawAverageWatchTime = Number(metrics.averageWatchTime) || 0;
   const averageWatchSeconds = rawAverageWatchTime > 1000 ? rawAverageWatchTime / 1000 : rawAverageWatchTime;
@@ -276,6 +276,7 @@ function weeklyGrowth(samples = [], now = Date.now()) {
 }
 
 function buildModels(samples = []) {
+  const relativeViews = relativeViewEvidence(samples);
   const observations = samples.map((sample) => {
     const latest = [...(sample.observations || [])].sort((a, b) => b.windowHours - a.windowHours)[0];
     if (latest?.performance?.score == null) return null;
@@ -332,7 +333,19 @@ function buildModels(samples = []) {
       }];
     }));
   };
+  const discoveryObservations = observations.flatMap(({ sample, ...evidence }) => {
+    const relative = relativeViews[String(sample.mediaId)];
+    const metrics = sample.observations.find(o => o.windowHours === relative?.windowHours)?.metrics;
+    return relative ? [{ sample, ...evidence, score: relative.score, reach: Number(metrics?.reach) || 0, views: Number(metrics?.views) || 0, windowHours: relative.windowHours, lowDistribution: false }] : [];
+  });
   return {
+    discovery: {
+      method: 'same-format-window-median-v1',
+      evidence: relativeViews,
+      sources: aggregate(discoveryObservations.map(({ sample, ...evidence }) => ({ key: String(sample.source || '').trim().toLocaleLowerCase('pt-BR'), ...evidence }))),
+      topics: aggregate(discoveryObservations.flatMap(({ sample, ...evidence }) => (sample.topics || []).map(key => ({ key, ...evidence })))),
+      hooks: aggregate(discoveryObservations.map(({ sample, ...evidence }) => ({ key: sample.hook, ...evidence })))
+    },
     sources: aggregate(observations.map(({ sample, ...evidence }) => ({ key: String(sample.source || '').toLocaleLowerCase('pt-BR'), ...evidence }))),
     topics: aggregate(observations.flatMap(({ sample, ...evidence }) => (sample.topics || []).map((key) => ({ key, ...evidence })))),
     formats: aggregate(observations.map(({ sample, ...evidence }) => ({ key: sample.mediaProductType || sample.mediaType || 'unknown', ...evidence }))),
@@ -348,6 +361,26 @@ function buildModels(samples = []) {
 }
 
 function validatePureLogic() {
+  const now = Date.now();
+  const peers = Array.from({ length: 8 }, (_, index) => ({
+    mediaId: `peer-${index}`, publishedAt: new Date(now - 4 * 86400000).toISOString(),
+    mediaProductType: 'FEED', source: 'Fonte teste', hook: 'dado', topics: ['dados'],
+    observations: [{ windowHours: 24, ageHours: 25, metrics: { views: index === 0 ? 80 : 20, reach: 0 } }]
+  }));
+  const evidence = relativeViewEvidence(peers, now);
+  if (evidence['peer-0']?.medianViews !== 20 || evidence['peer-0'].score <= 50 || evidence['peer-0'].peers !== 7) throw new Error('Comparable views baseline failed.');
+  const duplicateEvidence = relativeViewEvidence([...peers, peers[0]], now);
+  if (duplicateEvidence['peer-0'].peers !== 7) throw new Error('Duplicate publications inflated learning.');
+  if (Object.keys(relativeViewEvidence(peers.slice(0, 5), now)).length) throw new Error('Sparse views must remain neutral.');
+  const late = peers.map(s => ({ ...s, observations: s.observations.map(o => ({ ...o, ageHours: 60 })) }));
+  if (Object.keys(relativeViewEvidence(late, now)).length) throw new Error('Late collection entered an early cohort.');
+  const otherFormat = peers.map(s => ({ ...s, mediaId: `reel-${s.mediaId}`, mediaProductType: 'REELS', observations: s.observations.map(o => ({ ...o, metrics: { views: 10000 } })) }));
+  if (relativeViewEvidence([...peers, ...otherFormat], now)['peer-0'].medianViews !== 20) throw new Error('Format cohorts were mixed.');
+  const early = peers.map(s => ({ ...s, observations: s.observations.map(o => ({ ...o, windowHours: 2, ageHours: 3 })) }));
+  if (relativeViewEvidence(early, now)['peer-0'].score >= evidence['peer-0'].score) throw new Error('Early evidence was not discounted.');
+  const matureModels = buildModels(peers.map(s => ({ ...s, observations: s.observations.map(o => ({ ...o, performance: performanceScore(o.metrics) })) })));
+  if (matureModels.discovery.sources['fonte teste']?.matureSamples !== 8) throw new Error('Discovery model did not reach candidate selection.');
+  if (performanceScore({ reach: 100, views: 100, skipRate: null }).rates.skip !== null) throw new Error('Missing skip rate became a measured zero.');
   const strong = performanceScore({ reach: 1000, shares: 30, saved: 25, comments: 12, likes: 80, totalInteractions: 147 });
   const weak = performanceScore({ reach: 1000, shares: 1, saved: 1, comments: 0, likes: 5, totalInteractions: 7 });
   const criticalDistribution = performanceScore({ reach: 2, views: 4, shares: 0, saved: 0, comments: 0, likes: 0, totalInteractions: 0 });

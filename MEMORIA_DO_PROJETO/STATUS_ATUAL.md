@@ -1,3 +1,13 @@
+## Atualização 2026-09-06 — aprendizado de distribuição v1.3.0
+
+- Base de produção confirmada em `origin/main` (`b145a618`), com execução cloud usando esse estado; trabalho isolado em `feat/discovery-learning-20260906`.
+- Novo sinal compara views com a mediana de outras publicações do mesmo formato e janela (2/24/72 h), em até 42 dias. Exige cinco pares, elimina IDs duplicados e descarta coletas atrasadas para aquela janela. Sinal de 2 h tem apenas 25% do peso.
+- Fontes, temas e tipos de abertura só recebem o novo ajuste na seleção após três amostras maduras; ajuste limitado a quatro pontos e subordinado às travas editoriais e à validade da coleta.
+- Notas editoriais altas passam a reservar espaço para o aprendizado. Exploit escolhe a maior nota, sorteando somente empates; exploração 70/20/10 permanece e experimentos têm limite de distância para a melhor pauta.
+- Métrica de abandono indisponível permanece null, sem ser interpretada como abandono zero.
+- Validação: coletor `--validate`, `npm run validate-copy` (75 packs) e `git diff --check`. Histórico local: 98 amostras, 60 comparáveis, 48 maduras. Esses números são cobertura de dados, não previsão de alcance.
+- Mantidos os 13 horários e as exclusões de aprendizado. Nenhuma mídia existente alterada; resultado em views ainda depende das futuras publicações.
+- Envio e persistência cloud serão conferidos após o push.
 # Status Atual
 
 Atualizado em: 2026-09-05 22:49 BRT
