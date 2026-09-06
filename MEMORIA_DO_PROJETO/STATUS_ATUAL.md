@@ -1,5 +1,7 @@
 # Status Atual
 
+Atualizado em: 2026-09-05 22:32 BRT
+
 ## Atualização 2026-09-05 22:29 BRT — publicação comemorativa e auditoria
 
 - Run automático final `34003725690`: permalink `https://www.instagram.com/p/Dc7W2jYFNmI/`, Feed `17943988341302275`, Story `18108098993601068`.
@@ -21,8 +23,6 @@
 - Render `2026-09-05-221505-slot-12-render-only` inspecionado com a pauta Mobile Time: cards 2 e 3 legíveis, completos e sem colisões.
 - A matéria integral e a atribuição permanecem na legenda; a compactação não pode inventar complemento factual.
 - Validações locais aprovadas. Nenhuma publicação existente foi alterada ou republicada.
-
-Atualizado em: 2026-09-05 14:40 BRT
 
 ## Regra permanente de checkpoint
 
