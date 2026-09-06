@@ -1,6 +1,13 @@
 # Status Atual
 
-Atualizado em: 2026-09-05 22:44 BRT
+Atualizado em: 2026-09-05 22:46 BRT
+
+## Próxima postagem automática — 2026-09-06
+
+- Primeiro slot editorial de amanhã: **06:30 BRT**.
+- A checagem principal do GitHub Actions começa às **06:37 BRT**, sete minutos depois do slot, e só publica se o livro de slots ainda indicar que a postagem está pendente.
+- O watchdog executa nos minutos 14, 29, 44 e 59 e pode recuperar automaticamente o slot caso a execução principal não conclua.
+- A agenda permanece com 13 horários diários; o conteúdo será escolhido pelo Radar no momento do disparo e deverá passar pelas travas editoriais vigentes.
 
 ## Atualização 2026-09-05 22:44 BRT — nova publicação de IA auditada
 

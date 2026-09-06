@@ -2907,3 +2907,10 @@ Conclusao de ativacao:
 - A auditoria reprovou o card 2 porque o primeiro parágrafo da Exame trazia um crédito fotográfico final, que virou o fragmento `(Imagem gerada.`, e porque `Fonte: Exame.` foi repetido na composição visual.
 - O Feed existente não foi removido. O Media ID `18112294880603563` foi excluído do aprendizado, a extração passou a retirar créditos de foto entre parênteses e frases curtas deixaram de ser repetidas nos spans do cartão.
 - `node --check`, `npm run validate-copy` com 75 seleções e `git diff --check` aprovados após a correção.
+
+# 2026-09-05 22:46 BRT — próximo horário automático confirmado
+
+- A agenda vigente em produção mantém 13 slots diários. O primeiro slot de amanhã, domingo 06/09/2026, é **06:30 BRT**.
+- O workflow principal está programado para iniciar a checagem às **06:37 BRT**, sete minutos após o horário editorial, consultando o livro de slots antes de publicar para evitar duplicidade.
+- O watchdog continua ativo nos minutos 14, 29, 44 e 59 de cada hora e pode recuperar automaticamente um slot pendente.
+- A pauta não foi pré-fixada: o Radar selecionará no disparo um conteúdo aprovado pelas travas de IA, integridade factual, novidade e qualidade visual.
