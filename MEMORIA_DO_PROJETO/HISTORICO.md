@@ -1,5 +1,13 @@
 # Historico
 
+## 2026-09-05 22:17 BRT — Primeiro post acima da barreira de 20 visualizações
+
+- O usuário confirmou visualmente 39 visualizações no carrossel `https://www.instagram.com/p/Dc613j-Hb24/`, quase o dobro da barreira anterior de 20 visualizações.
+- Publicação correspondente: Feed `18090398927175449`, Story `17993232135031088`, GitHub Actions run `33990643430`.
+- Pauta: `Musk tenta barrar lei contra nudes falsos feitos por IA, mas juiz mantém proibição`, com fonte G1 Tecnologia.
+- O marco é um sinal positivo para pauta atual, título direto, imagem editorial e contexto factual, mas uma única publicação não libera autonomia nem comprova causalidade.
+- O aprendizado deve continuar auditando alcance, salvamentos, compartilhamentos, comentários e visitas ao perfil nas janelas de 2 h, 24 h e 72 h.
+
 ## 2026-09-05 22:18 BRT — Frases completas e tipografia equilibrada no Radar
 
 - Os cards factuais do Radar deixaram de cortar o texto em 80 caracteres e terminar com reticências sem sentido.

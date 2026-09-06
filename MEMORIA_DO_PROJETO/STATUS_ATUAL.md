@@ -1,5 +1,11 @@
 # Status Atual
 
+## Marco de desempenho — 2026-09-05 22:17 BRT
+
+- O carrossel `Dc613j-Hb24` alcançou 39 visualizações, conforme confirmação visual do usuário, superando pela primeira vez a barreira observada de 20.
+- Feed `18090398927175449`; Story `17993232135031088`; run `33990643430`.
+- Tratar como sinal promissor, não como conclusão isolada. Manter aprendizado assistido e comparar os demais indicadores nas coletas de 2 h, 24 h e 72 h.
+
 ## Atualização 2026-09-05 22:18 BRT — texto factual completo
 
 - Próximos cards internos do Radar usam frases factuais completas, sem cortes terminados em `...`.
