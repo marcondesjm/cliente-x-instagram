@@ -2935,3 +2935,4 @@ Conclusao de ativacao:
 - Mantidos os 13 horários e as exclusões de aprendizado. Nenhuma mídia existente alterada; resultado em views ainda depende das futuras publicações.
 - Envio e persistência cloud serão conferidos após o push.
 
+- Confirmação cloud v1.3.0: código 71c13c61; run 34059331710; persistência aa0f5188; 61 publicações comparáveis; aprendizado assistido habilitado em 2026-09-06 17:53 BRT. Resultado de audiência futura ainda não medido.

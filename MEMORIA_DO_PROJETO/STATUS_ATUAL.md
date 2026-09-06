@@ -7,7 +7,7 @@
 - Métrica de abandono indisponível permanece null, sem ser interpretada como abandono zero.
 - Validação: coletor `--validate`, `npm run validate-copy` (75 packs) e `git diff --check`. Histórico local: 98 amostras, 60 comparáveis, 48 maduras. Esses números são cobertura de dados, não previsão de alcance.
 - Mantidos os 13 horários e as exclusões de aprendizado. Nenhuma mídia existente alterada; resultado em views ainda depende das futuras publicações.
-- Envio e persistência cloud serão conferidos após o push.
+- Produção confirmada: código `71c13c61`, coleta automática `34059331710` concluída e estado persistido em `aa0f5188`, às 17:53 BRT. JSON remoto confirma `nerion-adaptive-v1.3.0`, 61 publicações comparáveis, aprendizado habilitado e confiança moderada. Aumento de visualizações ainda não foi medido.
 # Status Atual
 
 Atualizado em: 2026-09-05 22:49 BRT
