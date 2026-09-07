@@ -1,23 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-08-29:3:33264752489",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-08-29",
-    "slotIndex": 3,
-    "scheduledAt": "2026-08-29T14:50:00.000Z",
-    "failedAt": "2026-08-29T17:07:20.908Z",
-    "workflowRun": "33264752489",
-    "workflowName": "Instagram Watchdog Backup",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/33264752489",
-    "stage": "unknown",
-    "error": "Radar ativo: nenhuma pauta oficial dos ultimos 30 dias e nao repetida esta disponivel para este horario. Nenhum post foi publicado.",
-    "solution": "Buscar uma pauta oficial inedita nas fontes configuradas ou ampliar/revisar fontes do Radar antes de recuperar o slot. Nao renovar token para este caso.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-08-29-140720.json",
-    "resolvedAt": "2026-08-29T17:20:53.614Z",
-    "resolvedRun": "33265322525"
-  },
-  {
     "key": "cliente-x:2026-08-29:3:33266704232",
     "status": "resolved",
     "account": "cliente-x",
@@ -912,5 +894,22 @@
       "storyMediaId": "18100281905263544",
       "permalink": "https://www.instagram.com/p/Dc89y9kjyS5/"
     }
+  },
+  {
+    "key": "cliente-x:2026-09-07:8:34151464063",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-09-07",
+    "slotIndex": 8,
+    "scheduledAt": "2026-09-07T17:50:00.000Z",
+    "scheduledPostId": null,
+    "failedAt": "2026-09-07T18:25:25.401Z",
+    "workflowRun": "34151464063",
+    "workflowName": "Instagram Watchdog Backup",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/34151464063",
+    "stage": "unknown",
+    "error": "Texto contém entidade HTML não decodificada (&uuml;). Corrija antes de publicar.",
+    "solution": "Corrigir o texto do pack indicado no painel, rodar validar textos e salvar antes da próxima publicação.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-09-07-152525.json"
   }
 ]
