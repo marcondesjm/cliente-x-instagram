@@ -1,8 +1,16 @@
-## 2026-09-06 — convite para seguir na série editorial (local)
+## 2026-09-07 11:06 BRT — retomada e revisão da série
+
+- Referência remota conferida por fetch: origin/main c542e4d3; checkout followers, branch feat/follower-growth-series-20260906, atualizado por fast-forward. Arquivo de QA local preexistente preservado.
+- Série de 14 episódios já integrada ao remoto em 63c9d8a5. Primeiro episódio: “Seu orçamento precisa começar do zero?”. Slot editorial 9 às 16:00 BRT, checagem principal às 16:07, a partir de 07/09. Nenhum episódio ainda consta no histórico consultado.
+- Validação scripts/validate-follower-growth.mjs passou; arquivos testados idênticos a origin/main. Cobertura: datas BRT, 14 episódios, limites de slot, recuperação de episódios faltantes, contagem e atribuição de seguidores.
+- Coleta persistida às 09:36 BRT: nerion-adaptive-v1.4.0; seguidores 2.398 às 09:35, contra 2.399 na coleta de 06/09. Saldo da conta -1, sem atribuição a posts. Visitas ao perfil em 06/09: 10.
+- Slots 0, 1 e 2 de hoje constam publicados no ledger, com atraso. Último: 10:58 BRT, run 34130077202, Reel 18089248472184821, Story 17986934532058082, https://www.instagram.com/reel/Dc_RXPyisZQ/.
+- Esta revisão confirmou código e estado persistido no GitHub; não incluiu inspeção visual da mídia nem nova verificação do deploy Vercel. Próxima evidência necessária: publicação automática do episódio 1 e avaliação visual, seguida das janelas de 2/24/72 h.
+## 2026-09-06 — convite para seguir na série editorial (registro histórico)
 
 - Texto escolhido pelo usuário: “Siga para acompanhar aplicações práticas de IA no seu negócio.”
 - Aplicado ao último card dos 14 episódios, consistente com o convite já presente nas legendas.
-- Alteração local na série em desenvolvimento; ainda não publicada em produção.
+- Situação no momento deste registro: alteração local. Atualização de 07/09 acima confirma integração ao remoto; publicação do primeiro episódio ainda pendente.
 
 ## 2026-09-06 — retenção e distribuição v1.4.0
 
