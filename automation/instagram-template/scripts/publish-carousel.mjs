@@ -2885,6 +2885,14 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
       line-height: 1.14;
       box-shadow: 0 24px 64px rgba(0,0,0,.18);
     }
+    /* Keep the support card below the photograph on internal Feed slides.
+       The generic value/proof rules above used to move it over the image. */
+    .impact-carousel.has-sector-photo:not(.reel-mode).role-value .note,
+    .impact-carousel.has-sector-photo:not(.reel-mode).role-proof .note {
+      top: 900px;
+      min-height: 210px;
+      padding: 30px 40px;
+    }
     .impact-carousel.has-research-image.role-value .headline,
     .impact-carousel.has-research-image.role-proof .headline {
       margin-top: 160px;
@@ -3554,12 +3562,12 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
     const htmlPath = join(runDir, `slide-${String(index + 1).padStart(2, '0')}.html`);
     writeFileSync(htmlPath, html, 'utf8');
     await page.goto(`file://${htmlPath.replace(/\\/g, '/')}`);
+    await page.evaluate(() => document.fonts.ready);
     const overlapCheck = await page.evaluate(() => {
       const headline = document.querySelector('.headline');
       const note = document.querySelector('.note');
       if (!headline) return { corrected: 0, collisions: [] };
       const headlineRect = headline.getBoundingClientRect();
-      const noteRect = note?.getBoundingClientRect();
       const visuals = [...document.querySelectorAll('.panel, .context-photo')].filter((element) => {
         const style = getComputedStyle(element);
         return style.display !== 'none' && style.visibility !== 'hidden' && Number(style.opacity) > 0;
@@ -3600,6 +3608,7 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
       }
       const canvasSafeBottom = document.body.clientHeight > 1350 ? document.body.clientHeight - 260 : 1120;
       const safeBottomFor = (rect) => {
+        const noteRect = note && getComputedStyle(note).display !== 'none' ? note.getBoundingClientRect() : null;
         const overlapsNoteHorizontally = noteRect
           && rect.right > noteRect.left
           && rect.left < noteRect.right;
@@ -3631,6 +3640,19 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
         }
       }
       const visibleVisuals = visuals.filter((visual) => getComputedStyle(visual).display !== 'none');
+      // Check the whole text card, including its background, against photos.
+      // This also protects short titles, which never enter the title repair.
+      for (const visual of visibleVisuals) {
+        if (!note || getComputedStyle(note).display === 'none') continue;
+        const rect = visual.getBoundingClientRect();
+        const noteRect = note.getBoundingClientRect();
+        if (!intersects(rect, noteRect)) continue;
+        const availableHeight = Math.floor(noteRect.top - 28 - rect.top);
+        if (availableHeight >= 150) {
+          visual.style.height = `${availableHeight}px`;
+          corrected += 1;
+        }
+      }
       for (let firstIndex = 0; firstIndex < visibleVisuals.length; firstIndex += 1) {
         for (let secondIndex = firstIndex + 1; secondIndex < visibleVisuals.length; secondIndex += 1) {
           const first = visibleVisuals[firstIndex];
@@ -3651,6 +3673,13 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
         .filter((visual) => getComputedStyle(visual).display !== 'none' && intersectsHeadline(visual.getBoundingClientRect()))
         .map((visual) => visual.className);
       if (headlineIntersectsNote()) collisions.push('headline x note');
+      if (note && getComputedStyle(note).display !== 'none') {
+        for (const visual of visibleVisuals) {
+          if (intersects(visual.getBoundingClientRect(), note.getBoundingClientRect())) {
+            collisions.push(`${visual.className} x note`);
+          }
+        }
+      }
       for (let firstIndex = 0; firstIndex < visibleVisuals.length; firstIndex += 1) {
         for (let secondIndex = firstIndex + 1; secondIndex < visibleVisuals.length; secondIndex += 1) {
           const firstRect = visibleVisuals[firstIndex].getBoundingClientRect();
@@ -3663,7 +3692,7 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
       return { corrected, collisions };
     });
     if (overlapCheck.collisions.length) {
-      throw new Error(`Slide ${index + 1} rejeitado: imagem sobrepoe o titulo (${overlapCheck.collisions.join(', ')}).`);
+      throw new Error(`Slide ${index + 1} rejeitado: sobreposicao entre imagem e blocos de conteudo (${overlapCheck.collisions.join(', ')}).`);
     }
     await page.screenshot({ path: imagePath, type: 'jpeg', quality: 94, fullPage: false });
     imagePaths.push(imagePath);

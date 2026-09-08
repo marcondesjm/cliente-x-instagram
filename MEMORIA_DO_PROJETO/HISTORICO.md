@@ -2995,3 +2995,11 @@ Conclusao de ativacao:
 - Run 34229571001 concluído: livro-claude-code-20260902-18 publicado às 10:04 BRT; Feed 18071464916720037, Story 18123239998842942, https://www.instagram.com/p/DdBwCuDDBBU/. Fila marcada published; histórico persistido; Story real do artefato inspecionado visualmente. Primeiro comentário sem ID e sem erro registrado.
 - Watchdog iniciou automaticamente via workflow_run e concluiu run 34229755437: outro agendamento do livro publicado às 10:06 BRT; Feed 18408767569080919, Story 18149885944547971, https://www.instagram.com/p/DdBwU1THcfG/. Histórico em 9e87cf1f comprova continuidade da fila.
 - Ambos eram agendamentos: Mark automatic slot published foi corretamente ignorado. Os 13 horários permanecem configurados; recuperação dos slots Radar e próximo disparo por cron ainda não comprovados. Alertas antigos associados aos slots não foram apagados ou declarados resolvidos sem publicação correspondente.
+
+## 2026-09-08 10:34 BRT — cartão de texto sobre a fotografia
+
+- Capturas do usuário revelaram sobreposição nos slides internos dos livros publicados às 10:04 e 10:06. A inspeção anterior de capa/Story não cobriu esse defeito nos slides internos.
+- Causa: regras genéricas role-value/role-proof recolocavam .note em top 680 sobre a fotografia; a guarda verificava título e imagens, mas não foto x cartão de texto.
+- Corrigido CSS dos cards internos Feed e adicionada guarda geométrica foto x cartão inteiro, com ajuste da altura disponível e bloqueio se persistir colisão. Medição aguarda as fontes carregarem.
+- Base origin/main e7480add. Sintaxe, validate-copy e render dos dois packs completos passaram; slides internos 2 e 4 inspecionados. Evidências locais: 2026-09-08-103234-slot-0-render-only e 2026-09-08-103320-slot-0-render-only.
+- Correção para próximas renderizações. Posts existentes não foram apagados ou republicados. Nova publicação com esta alteração ainda não verificada.
