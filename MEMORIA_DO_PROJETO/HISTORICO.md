@@ -3011,3 +3011,10 @@ Conclusao de ativacao:
 - Histórico e published-slots persistidos em 41c6965c. Artefato 10059270296 baixado; cinco slides e Story reais inspecionados: sem sobreposição foto/texto. Capa com imagem da matéria, interiores tipográficos e avatar separado do cartão.
 - Primeiro comentário falhou com Meta code 10 (Application does not have permission for this action). Feed/Story estão publicados; comentário não confirmado.
 - Esta amostra confirma publicação real com a correção visual. Os slides internos desta notícia são tipográficos; não substitui uma futura verificação de post do livro com fotos internas.
+
+## 2026-09-08 — padrão visual aprovado pelo usuário
+
+- Aprovação explícita: "ficou bom grave isso pra nao precisar alterar mais".
+- Referência aprovada: https://www.instagram.com/p/DdB1elelG1b/, run 34234414987, correção f60afe40, cinco slides e Story verificados. Arquivos: docs/generated/cliente-x/2026-09-08-105115-slot-1/.
+- Preservar composição, cores, espaçamento e separação entre foto e cartão de texto. Não redesenhar ou fazer alterações visuais espontâneas; alterar o visual somente por solicitação do usuário. Correções operacionais devem manter o padrão aprovado e as guardas de colisão.
+- Aprovação registrada também na memória persistente do assistente. Nenhuma alteração de layout ou publicação foi feita neste registro.
