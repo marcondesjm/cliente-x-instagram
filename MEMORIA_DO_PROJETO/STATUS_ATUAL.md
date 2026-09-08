@@ -1045,3 +1045,10 @@ Resultado:
 - Decodificação ampliada com entities 8.1.0; pautas Radar inválidas são rejeitadas individualmente, com fonte e erro registrados, antes da seleção. Travas de fatos, origem e duplicidade mantidas.
 - Regressões de entidades, cache e isolamento passaram; sintaxe, validate-copy (75 seleções) e dry-run --scheduled-only aprovados. Ensaio selecionou livro-claude-code-20260902-18 e renderizou Feed/Story sem publicar.
 - Publicação automática posterior à correção ainda pendente de verificação; não considerar o ensaio prova de recuperação.
+
+### Verificação de produção — 08/09/2026 10:07 BRT
+
+- Correção 963fa3e9 publicada em main. Gatilho de recuperação existente acionado por push e1042993, sem workflow_dispatch; não confundir esse início com disparo cron.
+- Run 34229571001 concluído: livro-claude-code-20260902-18 publicado às 10:04 BRT; Feed 18071464916720037, Story 18123239998842942, https://www.instagram.com/p/DdBwCuDDBBU/. Fila marcada published; histórico persistido; Story real do artefato inspecionado visualmente. Primeiro comentário sem ID e sem erro registrado.
+- Watchdog iniciou automaticamente via workflow_run e concluiu run 34229755437: outro agendamento do livro publicado às 10:06 BRT; Feed 18408767569080919, Story 18149885944547971, https://www.instagram.com/p/DdBwU1THcfG/. Histórico em 9e87cf1f comprova continuidade da fila.
+- Ambos eram agendamentos: Mark automatic slot published foi corretamente ignorado. Os 13 horários permanecem configurados; recuperação dos slots Radar e próximo disparo por cron ainda não comprovados. Alertas antigos associados aos slots não foram apagados ou declarados resolvidos sem publicação correspondente.
