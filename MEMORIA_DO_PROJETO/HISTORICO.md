@@ -3003,3 +3003,11 @@ Conclusao de ativacao:
 - Corrigido CSS dos cards internos Feed e adicionada guarda geométrica foto x cartão inteiro, com ajuste da altura disponível e bloqueio se persistir colisão. Medição aguarda as fontes carregarem.
 - Base origin/main e7480add. Sintaxe, validate-copy e render dos dois packs completos passaram; slides internos 2 e 4 inspecionados. Evidências locais: 2026-09-08-103234-slot-0-render-only e 2026-09-08-103320-slot-0-render-only.
 - Correção para próximas renderizações. Posts existentes não foram apagados ou republicados. Nova publicação com esta alteração ainda não verificada.
+
+## 2026-09-08 10:54 BRT — próxima publicação automática monitorada
+
+- Run 34234414987, Instagram Feed Cliente X, evento schedule, SHA f60afe40. Sem disparo manual. Publish feed and story, Mark automatic slot published e Persist schedule state concluídos com sucesso.
+- Slot editorial 1 das 08:10 BRT recuperado às 10:51:55 BRT. Feed 18104779481263467; Story 18111981737083305; https://www.instagram.com/p/DdB1elelG1b/.
+- Histórico e published-slots persistidos em 41c6965c. Artefato 10059270296 baixado; cinco slides e Story reais inspecionados: sem sobreposição foto/texto. Capa com imagem da matéria, interiores tipográficos e avatar separado do cartão.
+- Primeiro comentário falhou com Meta code 10 (Application does not have permission for this action). Feed/Story estão publicados; comentário não confirmado.
+- Esta amostra confirma publicação real com a correção visual. Os slides internos desta notícia são tipográficos; não substitui uma futura verificação de post do livro com fotos internas.
