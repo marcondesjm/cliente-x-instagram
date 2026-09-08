@@ -10,7 +10,7 @@ import { basename, dirname, extname, isAbsolute, join, resolve } from 'node:path
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { buildBrandContext } from '../../../lib/brand-analysis.js';
-import { buildResearchPack, decodeEditorialEntities, EDITORIAL_SOURCES, extractArticleFacts, extractEditorialImageUrl, factualSummary, isPredominantlyEnglish, isUsableEditorialFact, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
+import { buildResearchPack, decodeEditorialEntities, filterValidEditorialPacks, EDITORIAL_SOURCES, extractArticleFacts, extractEditorialImageUrl, factualSummary, isPredominantlyEnglish, isUsableEditorialFact, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
 import { summarizePerformanceLearning, retentionHookAdjustment } from '../../../lib/performance-learning.js';
 import { assertVisualAgentPlan, buildVisualAgentPlan, CLOUD_VISUAL_AGENT_VERSION } from '../../../lib/visual-agent.js';
 
@@ -5018,6 +5018,20 @@ async function main() {
       }
     }
   }
+  // Validate candidates independently: an unrelated malformed news item must
+  // not abort a scheduled book post or prevent selection of other valid news.
+  editorialResearch.packs = filterValidEditorialPacks(
+    editorialResearch.packs.map((candidate) => {
+      const decoded = decodeEditorialValue(candidate);
+      return { ...decoded, caption: fitInstagramCaption(decoded.caption, decoded) };
+    }),
+    validatePack,
+    (candidate, error) => {
+      const rejection = { sourceUrl: candidate.research?.sourceUrl || null, error: error.message };
+      editorialResearch.failures.push(rejection);
+      console.warn(`Pauta Radar rejeitada: ${JSON.stringify(rejection)}`);
+    }
+  );
   const baseSelectionPacks = profilePacks.length ? mergePacks(profilePacks, packs) : packs;
   let useResearchThisSlot = radar.enabled && editorialResearch.packs.length > 0;
   let usedEditorialReserveThisSlot = false;

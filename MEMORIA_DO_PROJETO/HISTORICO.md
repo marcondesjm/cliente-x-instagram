@@ -2980,3 +2980,11 @@ Conclusao de ativacao:
 - Usuário autorizou antecipar somente episódio 1 hoje por execução cloud explícita sem marcar slot automático. Publicação e IDs ainda pendentes neste checkpoint.
 - Próximo episódio passa a ser o primeiro ainda sem mediaId no histórico: prioridade da fila e falhas não descartam capítulos; conclusão pode ultrapassar o fim inicialmente planejado. Após antecipação, episódio 2 será elegível amanhã às 16h.
 - Foto pertinente de revisão operacional na capa/Story; cards internos e CTA tipográficos sem fotos genéricas. Render Reel + Story isolado 2026-09-06-190147-slot-9-render-only aprovado visualmente; validações de conteúdo, seguidores, sequência e sintaxe aprovadas.
+
+## 2026-09-08 — correção do bloqueio HTML no Radar
+
+- Base de produção 2d020c59; worktree cliente-x-instagram-html-fix-20260908; branch fix/radar-html-queue-20260908.
+- Falhas desde 07/09 15:25 BRT: entidade &uuml; em pauta Radar abortava a validação global antes de selecionar o agendamento do livro. Última falha consultada: run 34220963006.
+- Decodificação ampliada com entities 8.1.0; pautas Radar inválidas são rejeitadas individualmente, com fonte e erro registrados, antes da seleção. Travas de fatos, origem e duplicidade mantidas.
+- Regressões de entidades, cache e isolamento passaram; sintaxe, validate-copy (75 seleções) e dry-run --scheduled-only aprovados. Ensaio selecionou livro-claude-code-20260902-18 e renderizou Feed/Story sem publicar.
+- Publicação automática posterior à correção ainda pendente de verificação; não considerar o ensaio prova de recuperação.
