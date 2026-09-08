@@ -12403,6 +12403,164 @@
       },
       "editorialSeries": null,
       "research": null
+    },
+    {
+      "feedFingerprint": "ad7e4b8db8252fa62f6188d674b5aa1f89f1b796e0f0bd13bb2ecb37da237273",
+      "storyFingerprint": "ad7e4b8db8252fa62f6188d674b5aa1f89f1b796e0f0bd13bb2ecb37da237273",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Elon Musk ganha documentário de 4 horas com versão do bilionário criada por IA",
+      "captionFingerprint": "8f3b998e16f8e53b19e297052f0c6d4d0021d5f5214775a64618186de92f3144",
+      "coverTitle": "Elon Musk ganha documentário de 4 horas com versão do bilionário criada por IA",
+      "coverAvatar": "docs/uploads/avatar-marcondes-lounge.png",
+      "avatarRotationStart": 3,
+      "publishedAt": "2026-09-08T18:15:27.214Z",
+      "slotDate": "2026-09-08",
+      "slotIndex": 6,
+      "scheduledAt": "2026-09-08T16:50:00.000Z",
+      "workflowRun": "34261602966",
+      "mediaId": "18098563769576080",
+      "storyMediaId": "17928455847408575",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18098563769576080/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AAfcHG28brsXiPgvlYqHG8l\"}}",
+      "permalink": "https://www.instagram.com/reel/DdCTlvDjcEH/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "G1 Tecnologia",
+          "sourceUrl": "https://g1.globo.com/tecnologia/noticia/2026/09/08/musk-documentario-de-4-horas.ghtml",
+          "sourceTitle": "Elon Musk ganha documentário de 4 horas com versão do bilionário criada por IA",
+          "imageUrl": "https://s2-g1.glbimg.com/U6ccT0f35SEutH9NjSP6qYb5L30=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/D/V/ZmdH17Quek62r3bmNpiw/ap26022572302228.jpg",
+          "imageHash": "58210c2ddb7b39594746bd506cac6753b1473db621df9c93d508bec8d880ad45",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.0.0",
+        "status": "approved",
+        "policy": "article-image-on-cover-typographic-supporting-slides",
+        "sourceUrl": "https://g1.globo.com/tecnologia/noticia/2026/09/08/musk-documentario-de-4-horas.ghtml",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-08-151421-slot-6/radar-slide-01.avif",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "verified-article-image",
+            "reason": "image source URL matches the selected article"
+          },
+          {
+            "slide": 2,
+            "mode": "typographic",
+            "reason": "no unrelated or unverifiable image is allowed"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic",
+            "reason": "no unrelated or unverifiable image is allowed"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic",
+            "reason": "no unrelated or unverifiable image is allowed"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic",
+            "reason": "no unrelated or unverifiable image is allowed"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-08T16:39:30.924Z",
+        "ageHours": 1.58,
+        "freshness": "current",
+        "effectiveSamples": 85,
+        "effectiveReach": 627,
+        "controlledSamples": 49,
+        "selectionModes": {
+          "exploit": 29,
+          "explore": 10,
+          "experiment": 10
+        },
+        "confidenceLevel": "moderate",
+        "autonomousReady": false,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "midday",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|midday|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "dado-concreto",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 6.23,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "research": {
+        "id": "6edf77bda871",
+        "source": "G1 Tecnologia",
+        "sourceUrl": "https://g1.globo.com/tecnologia/noticia/2026/09/08/musk-documentario-de-4-horas.ghtml",
+        "sourceTitle": "Elon Musk ganha documentário de 4 horas com versão do bilionário criada por IA",
+        "sourceImageUrl": "https://s2-g1.glbimg.com/U6ccT0f35SEutH9NjSP6qYb5L30=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/D/V/ZmdH17Quek62r3bmNpiw/ap26022572302228.jpg",
+        "publishedAt": "2026-09-08T14:58:13.000Z",
+        "researchedAt": "2026-09-08T18:14:16.212Z",
+        "theme": "automação com IA para empresas",
+        "sourceFact": "Elon Musk ganha documentário de 4 horas com versão do bilionário criada por IA Um documentário de quase quatro horas sobre Elon Musk estreou nesta terça-feira (8) no Festival de Cinema de Veneza sem a participação do bilionário, que não aparece no filme. Dirigido pelo americano Alex Gibney, “Musk” usa inteligência artificial para recriar uma versão do empresário e acompanha sua trajetória da tecnologia à política. 🗒️ Tem alguma sugestão de reportagem? \"Ele é possivelmente o maior inventor vivo. Ele é um fascista.\"",
+        "sourceFacts": [
+          "Um documentário de quase quatro horas sobre Elon Musk estreou nesta terça-feira (8) no Festival de Cinema de Veneza sem a participação do bilionário, que não aparece no filme. Dirigido pelo americano Alex Gibney, “Musk” usa inteligência artificial para recriar uma versão do empresário e acompanha sua trajetória da tecnologia à política.",
+          "O filme também aborda a aproximação de Musk com Donald Trump e o papel que o bilionário passou a desempenhar na política americana.",
+          "O trailer de 48 segundos alterna imagens de naves espaciais e dispositivos astronáuticos com depoimentos que refletem a polarização em torno de Musk. \"Ele é possivelmente o maior inventor vivo. Ele é o Homem de Ferro da vida real. Ele é um dos maiores construtores de todos os tempos\", diz uma das falas.",
+          "Em seguida, o tom muda : \"Ele é o maior capitalista da história. Ele é caótico, aleatório, caprichoso, manifestamente cruel e egoísta. Ele é um fascista. \" O vídeo termina com a frase \"Elon é uma bomba\", enquanto uma nave espacial explode em chamas.",
+          "O diretor afirmou que o projeto mudou de escala à medida que Musk ampliou sua participação na política. Gibney disse que começou a trabalhar no documentário em 2023 e, inicialmente, imaginava produzir um filme mais curto."
+        ],
+        "editorialVariant": 0
+      }
     }
   ]
 }
