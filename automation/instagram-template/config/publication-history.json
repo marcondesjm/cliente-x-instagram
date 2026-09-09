@@ -14526,6 +14526,167 @@
         ],
         "editorialVariant": 0
       }
+    },
+    {
+      "feedFingerprint": "ba0591ef6960062308fd0f2c81488a2984fed455cff8cb42af44cfb326ab9ee3",
+      "storyFingerprint": "ba0591ef6960062308fd0f2c81488a2984fed455cff8cb42af44cfb326ab9ee3",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Alerta na Anthropic: Pesquisador estima risco superior a 10% de extinção humana pela IA até 2030",
+      "captionFingerprint": "afece1d3eaa7bd8567b4c1d2a30e385323d58050487926e8feca8c3c2d552a37",
+      "coverTitle": "Alerta na Anthropic: Pesquisador estima risco superior a 10% de extinção humana pela IA até 2030",
+      "coverAvatar": "docs/uploads/avatar-marcondes-meeting-tablet.png",
+      "avatarRotationStart": 1,
+      "publishedAt": "2026-09-09T17:02:53.980Z",
+      "slotDate": "2026-09-09",
+      "slotIndex": 6,
+      "scheduledAt": "2026-09-09T16:50:00.000Z",
+      "workflowRun": "34380181747",
+      "mediaId": "18342680950267238",
+      "storyMediaId": "18115056859994247",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18342680950267238/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AfgrKgPV7CHKPQs4PxPqJl6\"}}",
+      "permalink": "https://www.instagram.com/reel/DdEwFa3CtAb/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Nossa IA",
+          "sourceUrl": "https://nossa.ia.br/noticia/alerta-na-anthropic-pesquisador-estima-risco-superior-a-10-de-extincao-humana-pela-ia-ate-2030/",
+          "sourceTitle": "Alerta na Anthropic: Pesquisador estima risco superior a 10% de extinção humana pela IA até 2030",
+          "imageUrl": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STK269_ANTHROPIC_2_A-1.jpg?quality=90&strip=all&crop=0,0,100,100",
+          "imageHash": "fac742404afaf4ec7bf1b189f945b1650538054f246b6bbf2d56e76f66eeb603",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.0.0",
+        "status": "approved",
+        "policy": "article-image-on-cover-typographic-supporting-slides",
+        "sourceUrl": "https://nossa.ia.br/noticia/alerta-na-anthropic-pesquisador-estima-risco-superior-a-10-de-extincao-humana-pela-ia-ate-2030/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-09-140131-slot-6/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "verified-article-image",
+            "reason": "image source URL matches the selected article"
+          },
+          {
+            "slide": 2,
+            "mode": "typographic",
+            "reason": "no unrelated or unverifiable image is allowed"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic",
+            "reason": "no unrelated or unverifiable image is allowed"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic",
+            "reason": "no unrelated or unverifiable image is allowed"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic",
+            "reason": "no unrelated or unverifiable image is allowed"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-09T16:40:01.206Z",
+        "ageHours": 0.36,
+        "freshness": "current",
+        "effectiveSamples": 91,
+        "effectiveReach": 639,
+        "controlledSamples": 62,
+        "selectionModes": {
+          "exploit": 40,
+          "explore": 11,
+          "experiment": 11
+        },
+        "confidenceLevel": "moderate",
+        "autonomousReady": false,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "midday",
+        "objective": "conversion",
+        "primarySignal": "alcance de nao seguidores",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|midday|conversion",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "curiosidade-util",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 7.38,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "research": {
+        "id": "0968629995cd",
+        "source": "Nossa IA",
+        "sourceUrl": "https://nossa.ia.br/noticia/alerta-na-anthropic-pesquisador-estima-risco-superior-a-10-de-extincao-humana-pela-ia-ate-2030/",
+        "sourceTitle": "Alerta na Anthropic: Pesquisador estima risco superior a 10% de extinção humana pela IA até 2030",
+        "sourceImageUrl": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STK269_ANTHROPIC_2_A-1.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "publishedAt": "2026-09-09T11:01:35.000Z",
+        "researchedAt": "2026-09-09T17:01:22.601Z",
+        "theme": "automação com IA para empresas",
+        "sourceFact": "Demissão de pesquisador da Anthropic e declarações alarmantes sobre superinteligência e segurança colocam laboratórios de IA sob forte escrutínio ético.",
+        "sourceFacts": [
+          "Demissão de pesquisador da Anthropic e declarações alarmantes sobre superinteligência e segurança colocam laboratórios de IA sob forte escrutínio ético.",
+          "O cenário de desenvolvimento de Inteligência Artificial sofreu um novo abalo ético e institucional após declarações contundentes de pesquisadores do alto escalão da Anthropic. Um especialista em segurança da empresa afirmou publicamente que existe uma probabilidade superior a 10% de que sistemas de IA avancem a ponto de “aniquilar a humanidade” antes do final desta década. O alerta veio à tona logo após a demissão pública de Jacob Coxon, ex-pesquisador que treinou LLMs tanto na Anthropic quanto na OpenAI.",
+          "Coxon utilizou sua conta na rede social X para justificar sua saída, acusando os principais laboratórios da indústria de adotarem uma postura negligente em relação à segurança. Segundo o ex-pesquisador, a corrida desenfreada rumo a superinteligências capazes de autoaperfeiçoamento coloca em risco a sobrevivência humana, transformando avanços em GPUs e infraestrutura de larga escala em uma roleta-russa tecnológica.",
+          "O cerne da discussão técnica reside na transição acelerada entre os modelos atuais focados em tarefas e o desenvolvimento de sistemas de autoaperfeiçoamento ( self-improving superintelligence ). Embora a infraestrutura baseada em clusters massivos de GPUs e TPUs permita ganhos exponenciais de raciocínio e fine-tuning, o controle sobre as capacidades emergentes dessas arquiteturas permanece opaco.",
+          "Os críticos apontam que os benchmarks tradicionais de LLMs medem apenas a proficiência em tarefas específicas, falhando em mapear riscos sistêmicos de desalinhamento de objetivos. À medida que os laboratórios aumentam o investimento computacional para aproximar os modelos de uma autonomia cognitiva generalizada, os protocolos de alinhamento ético e restrições de segurança acabam sendo atenuados para manter a competitividade comercial."
+        ],
+        "editorialVariant": 4
+      }
     }
   ]
 }
