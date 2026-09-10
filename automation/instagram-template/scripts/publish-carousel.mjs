@@ -2053,7 +2053,7 @@ async function downloadResearchSlideImages(pack = {}, editorialPacks = [], publi
     if (selected.length >= requiredCount) break;
   }
   } finally { await photoBrowser.close(); }
-  if (selected.length < requiredCount) console.warn(`Agente Visual: ${selected.length}/${requiredCount} fotos distintas encontradas; publicação bloqueada por imagens insuficientes.`);
+  if (selected.length < requiredCount) console.warn(`Agente Visual: ${selected.length}/${requiredCount} fotos distintas encontradas; cobertura parcial, cartões restantes serão tipográficos se houver foto válida para a capa.`);
   return selected;
 }
 
@@ -3589,7 +3589,8 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
     const photoUrls = await page.evaluate(() => [...document.querySelectorAll('.context-photo')]
       .filter(element => getComputedStyle(element).display !== 'none' && element.getBoundingClientRect().width > 0)
       .flatMap(element => [...getComputedStyle(element).backgroundImage.matchAll(/url\(["']?(.*?)["']?\)/g)].map(match => match[1])));
-    if (String(style.name || '').startsWith('impact-carousel') && !photoUrls.length) {
+    const typographicResearchCard = Boolean(slide.researchSource && index > 0);
+    if (String(style.name || '').startsWith('impact-carousel') && !photoUrls.length && !typographicResearchCard) {
       await browser.close();
       throw new Error(`Slide ${index + 1} rejeitado: falta uma fotografia distinta.`);
     }
@@ -5842,8 +5843,9 @@ async function main() {
   if (pack?.research?.sourceUrl && !dashboardPack && !scheduledPost && !seriesSelection) {
     const rejectedSources = new Set();
     const visualAttempts = [];
-    // Select another fresh article when the first one cannot supply every photo.
-    // Keep the original requirements and never replace explicit or scheduled content.
+    let bestVisualCandidate = null;
+    // Evaluate fresh articles and keep the one with the most usable photos.
+    // A real cover is mandatory; remaining cards may use the approved typographic layout.
     for (let attempt = 0; attempt < 8; attempt += 1) {
       const probe = preparePackForPublication(pack, today, generationSlotIndex, account, publishMode, { allowIhc: true }).pack;
       const visualProbe = publishMode === 'story-only' ? { ...probe, slides: probe.slides.slice(0, 1) } : probe;
@@ -5853,13 +5855,12 @@ async function main() {
       const plan = buildVisualAgentPlan(visualProbe, sources);
       visualAttempts.push({ sourceUrl: probe.research.sourceUrl, status: plan.status, required: visualProbe.slides.length, approved: plan.approvedVisuals });
       writeFileSync(join(runDir, 'visual-selection.json'), JSON.stringify(visualAttempts, null, 2), 'utf8');
-      if (plan.status === 'approved') {
-        assertVisualAgentPlan(visualProbe, plan);
-        preparedVisualSources = sources;
-        break;
+      if (plan.approvedVisuals > (bestVisualCandidate?.plan.approvedVisuals || 0)) {
+        bestVisualCandidate = { pack, packIndex, selectionMode, skippedDuplicates, sources, plan };
       }
+      if (plan.approvedVisuals >= visualProbe.slides.length) break;
       rejectedSources.add(pack.research.sourceUrl);
-      console.log(`Radar visual: pauta rejeitada com ${plan.approvedVisuals}/${visualProbe.slides.length} fotos distintas; buscando outra fonte inédita.`);
+      console.log(`Radar visual: pauta possui ${plan.approvedVisuals}/${visualProbe.slides.length} fotos distintas; buscando uma fonte inédita com cobertura visual melhor.`);
       if (attempt === 7) break;
       const candidates = automaticSelectionPacks.filter(candidate => candidate.research?.sourceUrl && !rejectedSources.has(candidate.research.sourceUrl));
       const next = pickFreshPack(candidates, today, generationSlotIndex, recentSelectionMedia, publicationHistory, randomInt, selectionLearningContext);
@@ -5869,7 +5870,10 @@ async function main() {
       selectionMode = next.selectionMode;
       skippedDuplicates = next.skippedDuplicates;
     }
-    if (!preparedVisualSources) throw new Error('Radar visual: nenhuma das pautas inéditas avaliadas possui fotos distintas suficientes. Publicação bloqueada; consulte visual-selection.json.');
+    if (!bestVisualCandidate) throw new Error('Radar visual: nenhuma das pautas inéditas avaliadas possui foto real disponível para capa e Story. Publicação bloqueada; consulte visual-selection.json.');
+    ({ pack, packIndex, selectionMode, skippedDuplicates } = bestVisualCandidate);
+    preparedVisualSources = bestVisualCandidate.sources;
+    console.log(`Radar visual: melhor pauta selecionada com ${bestVisualCandidate.plan.approvedVisuals}/${bestVisualCandidate.plan.slideCount} fotos distintas; cartões restantes serão tipográficos.`);
   }
   experimentAxis = selectionMode === 'experiment'
     ? 'topic-angle'

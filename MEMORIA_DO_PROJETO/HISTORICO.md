@@ -3027,3 +3027,11 @@ Conclusao de ativacao:
 - Sintaxe, validate-copy (75 seleções), validate-visual-agent, validate-image-fallbacks e teste controlado de alternativa aprovada/agendamento preservado/esgotamento passaram.
 - Dry-run real 2026-09-10-162051-slot-0 percorreu oito pautas, com uma ou duas fotos por pauta para cinco cartões, e bloqueou corretamente. Não é prova de recuperação nem publicação.
 - Próximo passo: acompanhar execução automática com a correção; exigir histórico, slot, permalink, Feed/Reel ID, Story ID e inspeção visual. Escassez de fotos suficientes permanece pendente.
+
+## 2026-09-10 17:22 BRT — bloqueio por cinco fotos corrigido
+- Monitoramento confirmou falhas reais nos runs 34521839910, 34522811586, 34522817623, 34523189175, 34524403955, 34524581733 e 34525227503. Todos preservaram o slot 6 e falharam porque nenhuma pauta fornecia cinco fotos distintas.
+- Nerion Visual Cloud v1.1.1 exige foto real, pertinente e inédita na capa/Story. Fotos adicionais só entram quando distintas; cartões internos sem outra foto comprovada usam o layout tipográfico aprovado.
+- O Radar avalia até oito pautas e escolhe a que tiver a melhor cobertura visual, sem repetir imagens, reduzir o carrossel ou misturar fotos de matérias diferentes.
+- Dry-run real 2026-09-10-171855-slot-0: oito pautas avaliadas; pauta do IT Forum escolhida com uma foto válida; cinco cards e Story gerados. Capa, card tipográfico 2/5 e Story inspecionados sem sobreposição e mantendo o padrão aprovado.
+- Validações: sintaxe, validate-copy (75 seleções), validate-visual-agent, validate-image-fallbacks e diff. Nenhuma publicação foi feita neste teste.
+- Próximo passo: enviar para main e acompanhar a primeira execução automática até histórico persistido, permalink, Feed/Reel ID e Story ID.
