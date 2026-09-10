@@ -1075,3 +1075,10 @@ Resultado:
 - Referência aprovada: https://www.instagram.com/p/DdB1elelG1b/, run 34234414987, correção f60afe40, cinco slides e Story verificados. Arquivos: docs/generated/cliente-x/2026-09-08-105115-slot-1/.
 - Preservar composição, cores, espaçamento e separação entre foto e cartão de texto. Não redesenhar ou fazer alterações visuais espontâneas; alterar o visual somente por solicitação do usuário. Correções operacionais devem manter o padrão aprovado e as guardas de colisão.
 - Aprovação registrada também na memória persistente do assistente. Nenhuma alteração de layout ou publicação foi feita neste registro.
+
+## 2026-09-10 — Story sem foto e rodapé sobreposto
+- Caso comprovado no histórico: AirPods, https://www.instagram.com/p/DdHQjLRDMGP/, visualSources vazio e approvedVisuals=0.
+- A imagem da fonte respondeu HTTP 200, mas tem 13.568 bytes, abaixo do mínimo de 20 KB. As tentativas de original sem o sufixo de miniatura retornaram 404.
+- Proteção anterior 8dda9356 bloqueia capa editorial ausente/reutilizada. Story agora verifica carregamento real da foto no navegador e inclui nota/rodapé na checagem de colisões; assinatura inferior removida do layout impact-carousel.
+- Validação: validate-copy (75 seleções), validate-visual-agent, sintaxe e diff; renderStory real com a miniatura exclusivamente para QA do layout, inspecionado visualmente; foto ausente/corrompida rejeitada. Prévia em automation/instagram-template/runs/story-photo-qa/story.jpg. Miniatura não aprovada para publicação.
+- Nenhuma exclusão ou republicação. Resultado de próxima publicação automática ainda não verificado.

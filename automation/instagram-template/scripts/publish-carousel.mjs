@@ -3861,7 +3861,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     /* The handle already identifies the account at the top. Repeating the
        personal name over the lower photograph looks like an accidental
        watermark and competes with the editorial image. */
-    .impact-carousel.has-story-photo footer { display: none; }
+    .impact-carousel footer { display: none; }
     .impact-carousel.has-story-photo.mode-statement .badge { margin-top: 62px; text-align: left; }
     .impact-carousel.has-story-photo.mode-statement h1 { margin: 52px 0 0; max-width: 900px; font-size: 68px; text-align: left; }
     .impact-carousel.has-story-photo.mode-statement h1::before { width: 84px; height: 9px; margin: 0 0 34px; }
@@ -3967,8 +3967,25 @@ async function renderStory(runDir, pack, account, style, renderContext = {}) {
   const imagePath = join(runDir, 'story.jpg');
   writeFileSync(htmlPath, html, 'utf8');
   await page.goto(`file://${htmlPath.replace(/\\/g, '/')}`);
+  const photoReady = await page.evaluate(async () => {
+    const main = document.querySelector('main');
+    if (!main.classList.contains('has-story-photo')) return !main.querySelector('.news-context-story');
+    const card = main.querySelector('.visual-card');
+    const urls = [...getComputedStyle(card).backgroundImage.matchAll(/url\(["']?(.*?)["']?\)/g)].map((match) => match[1]);
+    if (!urls.length || getComputedStyle(card).display === 'none') return false;
+    return (await Promise.all(urls.map((url) => new Promise((resolve) => {
+      const image = new Image();
+      image.onload = () => resolve(image.naturalWidth > 0 && image.naturalHeight > 0);
+      image.onerror = () => resolve(false);
+      image.src = url;
+    })))).every(Boolean);
+  });
+  if (!photoReady) {
+    await browser.close();
+    throw new Error('Story rejeitado: a foto editorial não carregou.');
+  }
   const storyLayout = await page.evaluate(({ safeTop, safeBottom, storyHeight, storyWidth, photoBottomAllowance }) => {
-    const copyBlocks = [...document.querySelectorAll('h1, p, .feed-cta')].filter((element) => getComputedStyle(element).display !== 'none');
+    const copyBlocks = [...document.querySelectorAll('h1, p, .feed-cta, .note, footer')].filter((element) => getComputedStyle(element).display !== 'none');
     const image = [...document.querySelectorAll('.visual-card, .avatar')]
       .find((element) => getComputedStyle(element).display !== 'none');
     const imageVisible = Boolean(image && getComputedStyle(image).display !== 'none');
