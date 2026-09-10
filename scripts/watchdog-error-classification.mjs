@@ -43,6 +43,9 @@ export function solutionForWatchdogError(errorText = '', stage = '') {
   if (/imgbb|upload/.test(text)) {
     return 'Validar ou trocar IMGBB_API_KEY no painel, salvar no Vercel/GitHub Secrets e redeployar se necessário.';
   }
+  if (/fotografia|fotos distintas|agente visual/.test(text)) {
+    return 'Verificar as imagens e o plano visual do pack: manter foto na capa, impedir fotos repetidas e respeitar os cartões internos explicitamente tipográficos. O vigia recupera o slot após a correção visual.';
+  }
   if (/mojibake|acento|validate copy|caption|texto|slide/.test(text)) {
     return 'Corrigir o texto do pack indicado no painel, rodar validar textos e salvar antes da próxima publicação.';
   }

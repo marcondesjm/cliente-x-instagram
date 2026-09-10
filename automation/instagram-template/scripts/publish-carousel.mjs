@@ -3613,8 +3613,8 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
     const photoUrls = await page.evaluate(() => [...document.querySelectorAll('.context-photo')]
       .filter(element => getComputedStyle(element).display !== 'none' && element.getBoundingClientRect().width > 0)
       .flatMap(element => [...getComputedStyle(element).backgroundImage.matchAll(/url\(["']?(.*?)["']?\)/g)].map(match => match[1])));
-    const typographicResearchCard = Boolean(slide.researchSource && index > 0);
-    if (String(style.name || '').startsWith('impact-carousel') && !photoUrls.length && !typographicResearchCard) {
+    const typographicCard = index > 0 && Boolean(slide.researchSource || slide.typographicOnly === true);
+    if (String(style.name || '').startsWith('impact-carousel') && !photoUrls.length && !typographicCard) {
       await browser.close();
       throw new Error(`Slide ${index + 1} rejeitado: falta uma fotografia distinta.`);
     }

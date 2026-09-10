@@ -1131,3 +1131,10 @@ Resultado:
 - Cores, tipografia, título, progressão, avatares e padrão aprovado foram preservados. Nenhum texto factual novo ou fotografia genérica foi acrescentado.
 - Validação de sintaxe, validate-copy com 75 seleções e diff passaram. Render 2026-09-10-175019-slot-7-render-only gerou Reel completo; quadros 3, 4 e 5 foram inspecionados em 1080x1920 sem colisão e com a área inferior preenchida.
 - Correção vale para próximas renderizações. O Reel existente não foi apagado nem republicado.
+
+## 2026-09-10 19:03 BRT — slot 9 e cartões tipográficos da série
+- Run 34534761003 falhou em Publish feed and story; slot 9 não consumido. Base origin/main fe4ec9f8, worktree photo-fix, branch fix/photo-quality-20260910.
+- Causa: guarda nova aceitava cartão interno sem foto somente com researchSource; série autoral usa typographicOnly=true. Renderer agora respeita essa marcação apenas após a capa. Mantidas guardas de capa, fotos distintas e colisão; nenhum layout alterado.
+- Classificação do vigia agora distingue falhas de fotografia de erros de texto.
+- Sintaxe, validate-copy (75 seleções), validate-visual-agent, validate-follower-growth e diff passaram. Render automático local do slot 9 selecionou episódio 4 e concluiu cinco slides, Reel e Story; slide 2 e Story inspecionados sem colisão. Evidência: runs/cliente-x/2026-09-10-190126-slot-9-render-only.
+- Publicação real e encerramento do alerta ainda pendentes; acompanhar recuperação automática após envio.
