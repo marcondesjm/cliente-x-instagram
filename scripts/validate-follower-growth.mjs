@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { brtDate, upsertFollowerSnapshot, followerSummary, seriesPerformance } from '../lib/follower-growth.js';
 import { SERIES, seriesForSlot, seriesPacks } from '../lib/follower-series.js';
 assert.equal(brtDate('2026-09-07T02:59:00Z'), '2026-09-06');
@@ -16,6 +18,12 @@ assert.equal(followerSummary(state).dailyDelta, null);
 assert.throws(() => upsertFollowerSnapshot(state, null));
 assert.throws(() => upsertFollowerSnapshot(state, -1));
 assert.equal(seriesPacks().length, 14);
+const futureCovers = seriesPacks().slice(4).map(pack => pack.slides[0].imagePath);
+assert.equal(new Set(futureCovers).size, 10, 'Upcoming episodes must have distinct cover paths');
+const coverHashes = futureCovers.map(path => createHash('sha256').update(readFileSync(new URL(`../${path}`, import.meta.url))).digest('hex'));
+assert.equal(new Set(coverHashes).size, 10, 'Upcoming episodes must not reuse identical photo bytes');
+const historicalCoverHash = createHash('sha256').update(readFileSync(new URL('../docs/uploads/sector-photos/operations-review.png', import.meta.url))).digest('hex');
+assert.ok(!coverHashes.includes(historicalCoverHash), 'Upcoming photos must differ from the historical cover');
 assert.equal(new Set(seriesPacks().map(p=>p.slides[0].title)).size,14);
 for (let i=0;i<14;i++) {
  const date=brtDate(Date.parse('2026-09-07T16:00:00-03:00')+i*86400000);

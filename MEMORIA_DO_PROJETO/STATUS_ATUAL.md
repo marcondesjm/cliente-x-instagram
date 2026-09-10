@@ -1144,3 +1144,11 @@ Resultado:
 - Episódio 4 publicado às 19:05:53 BRT: Reel 18108358226362779, Story 18106991546034941, https://www.instagram.com/reel/DdH3ju4jD2I/.
 - Estado persistido em 1075eea0: slot 9 published e alerta 34534761003 resolved pelo run 34535460397. Primeiro comentário sem ID e sem erro registrado; não confirmado.
 - Story real e cinco quadros do Reel hospedado em docs/generated/cliente-x/2026-09-10-190452-slot-9 inspecionados sem sobreposição. Foto de capa preservada e cartões internos tipográficos renderizados. Nenhum post existente excluído ou republicado.
+
+## 2026-09-10 19:22 BRT — imagens próprias por episódio futuro da série
+- Pedido autorizado: variar fotografias conforme o tema mantendo layout. Base origin/main 62ce233d, worktree photo-fix, branch fix/photo-quality-20260910.
+- Episódios 1-4 confirmados no histórico e preservados. Episódios 5-14 agora têm dez fotografias ilustrativas distintas, geradas com image_gen integrado, em docs/uploads/follower-series; prompts e proveniência em prompts.json.
+- Cenas: relatório, base de respostas, propostas, pedidos, onboarding, email, arquivos, pós-venda, procedimentos e avaliação da automação. Capa e Story do mesmo episódio compartilham a imagem temática; interiores tipográficos e layout mantidos.
+- validate-follower-growth verifica existência, caminhos e SHA256 distintos das dez imagens, incluindo não reuso da foto antiga. Sintaxe, validate-copy (75 seleções) e diff passaram.
+- Dez imagens inspecionadas. Ensaio automático com SLOT_DATE=2026-09-11 selecionou episódio 5 e gerou cinco slides, Reel e Story. Capa e Story inspecionados sem colisão: runs/cliente-x/2026-09-10-191757-slot-9-render-only.
+- Alteração preparada para próximas publicações; nenhuma publicação antecipada, exclusão ou republicação. Prova de postagem com a nova foto depende da execução futura do slot 9.
