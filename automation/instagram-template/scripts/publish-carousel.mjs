@@ -3086,6 +3086,30 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
       color: ${slideStyle.text};
       box-shadow: none;
     }
+    /* Internal research scenes without another verified photo use the approved
+       typographic card. Make that card occupy the lower field intentionally
+       instead of leaving half of the 9:16 frame visually empty. */
+    .impact-carousel.reel-mode:not(.has-sector-photo).role-value .note,
+    .impact-carousel.reel-mode:not(.has-sector-photo).role-proof .note {
+      top: 700px;
+      min-height: 720px;
+      padding: 68px 76px 68px 132px;
+      border-left: 12px solid ${accent};
+      font-size: 36px;
+      line-height: 1.2;
+      background: linear-gradient(145deg, rgba(255,250,246,.96), rgba(255,250,246,.82));
+    }
+    .impact-carousel.reel-mode:not(.has-sector-photo).role-value .note::before,
+    .impact-carousel.reel-mode:not(.has-sector-photo).role-proof .note::before {
+      left: 44px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .impact-carousel.reel-mode:not(.has-sector-photo).role-cta .note {
+      top: 650px;
+      min-height: 760px;
+      padding: 72px 76px;
+    }
     .impact-carousel.reel-mode.has-sector-photo.role-cta .context-photo {
       top: 620px;
       height: 430px;
@@ -5554,6 +5578,12 @@ async function main() {
     }
     if (!reelNavigationProbe.includes('height: 1920px') || !carouselNavigationProbe.includes('height: 1350px')) {
       throw new Error('Reel deve ser renderizado nativamente em 1080 x 1920 sem alterar o carrossel 4:5.');
+    }
+    if (!reelNavigationProbe.includes('.impact-carousel.reel-mode:not(.has-sector-photo).role-value .note')
+      || !reelNavigationProbe.includes('min-height: 720px')
+      || !reelNavigationProbe.includes('.impact-carousel.reel-mode:not(.has-sector-photo).role-cta .note')
+      || !reelNavigationProbe.includes('min-height: 760px')) {
+      throw new Error('Cartão tipográfico do Reel voltou a deixar a metade inferior vazia.');
     }
     const reelInternalPhotoProbe = impactStoryStyle ? slideHtml({
       eyebrow: 'NA PRATICA',

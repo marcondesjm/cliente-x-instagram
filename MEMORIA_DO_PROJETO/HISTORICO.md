@@ -3045,3 +3045,10 @@ Conclusao de ativacao:
 - Primeiro comentário falhou separadamente com Meta OAuthException code 10 por falta de permissão. Feed/Reel e Story permanecem publicados.
 - Erro anterior 34525227503 marcado como resolved pelo run 34527660625. Próximo passo: enviar a deduplicação de derivados para main e acompanhar nova amostra visual automática.
 - Deduplicação de derivados enviada para `origin/main` no commit de código a69cb958. Próximo passo vigente: acompanhar a próxima amostra automática; não apagar nem republicar o Reel já publicado.
+
+## 2026-09-10 17:53 BRT — área inferior dos cards tipográficos preenchida
+- Usuário apontou vazio excessivo abaixo do cartão no Reel do Olhar Digital, publicado pelo run 34525227503 em https://www.instagram.com/reel/DdHuTYIjlqr/.
+- Alteração visual explicitamente autorizada: cards internos tipográficos 9:16 passam a ocupar 720 px na metade inferior, com texto maior, faixa lateral da marca e alinhamento vertical; CTA final ocupa 760 px.
+- Cores, tipografia, título, progressão, avatares e padrão aprovado foram preservados. Nenhum texto factual novo ou fotografia genérica foi acrescentado.
+- Validação de sintaxe, validate-copy com 75 seleções e diff passaram. Render 2026-09-10-175019-slot-7-render-only gerou Reel completo; quadros 3, 4 e 5 foram inspecionados em 1080x1920 sem colisão e com a área inferior preenchida.
+- Correção vale para próximas renderizações. O Reel existente não foi apagado nem republicado.
