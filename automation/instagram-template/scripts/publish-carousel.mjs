@@ -2041,7 +2041,7 @@ async function downloadResearchSlideImages(pack = {}, editorialPacks = [], publi
       reusedRelevantImage: priorUrls.has(candidate.imageUrl) || priorHashes.has(downloaded.imageHash)
     });
   }
-  if (selected.length !== 1) console.warn('Agente Visual: imagem própria indisponível ou repetida; usando composição tipográfica, sem foto aleatória.');
+  if (selected.length !== 1) console.warn('Agente Visual: imagem própria indisponível; a publicação será bloqueada na validação visual.');
   return selected;
 }
 
@@ -2302,7 +2302,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const useSectorPhoto = isImpact
     ? Boolean(explicitSlideImage || researchImage || isReelMode || (engagementRole === 'hook' && !researchSource))
     : engagementRole === 'hook' || engagementRole === 'proof';
-  const sectorPhotoImage = explicitSlideImage || researchImage || (useSectorPhoto && !slide.typographicOnly ? sectorPhotoCssImage(visualCue, index, renderContext) : '');
+  const sectorPhotoImage = explicitSlideImage || researchImage || (useSectorPhoto && !researchSource && !slide.typographicOnly ? sectorPhotoCssImage(visualCue, index, renderContext) : '');
   // Only replace the visual with the source card when the article image was
   // actually downloaded. Otherwise keep the safe photographic rotation.
   const showNewsContext = Boolean(index === 1 && useSectorPhoto && researchSource && researchImage);

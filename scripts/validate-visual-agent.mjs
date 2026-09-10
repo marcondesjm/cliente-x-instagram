@@ -1,3 +1,4 @@
+import assert from 'node:assert/strict';
 import { assertVisualAgentPlan, buildVisualAgentPlan, CLOUD_VISUAL_AGENT_VERSION } from '../lib/visual-agent.js';
 
 const pack = {
@@ -21,4 +22,10 @@ if (plan.slideImagePaths[0] !== '/tmp/source.jpg' || plan.slideImagePaths.slice(
   throw new Error('Agente Visual tentou preencher slides internos com imagens sem vínculo comprovado.');
 }
 
+for (const sources of [[], [{ sourceUrl: pack.research.sourceUrl, path: '/tmp/repeated.jpg', imageHash: 'old', reusedRelevantImage: true }], [{ sourceUrl: 'https://example.com/unrelated', path: '/tmp/other.jpg', imageHash: 'other' }]]) {
+  const blocked = buildVisualAgentPlan(pack, sources);
+  assert.equal(blocked.status, 'blocked');
+  assert.throws(() => assertVisualAgentPlan(pack, blocked), /foto da matéria/);
+}
+assert.doesNotThrow(() => assertVisualAgentPlan({ slides: [{}] }, buildVisualAgentPlan({ slides: [{}] })));
 console.log(JSON.stringify({ ok: true, agent: plan.agent, version: CLOUD_VISUAL_AGENT_VERSION, policy: plan.policy }, null, 2));
