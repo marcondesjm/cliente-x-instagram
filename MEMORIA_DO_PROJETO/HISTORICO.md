@@ -3018,3 +3018,12 @@ Conclusao de ativacao:
 - Referência aprovada: https://www.instagram.com/p/DdB1elelG1b/, run 34234414987, correção f60afe40, cinco slides e Story verificados. Arquivos: docs/generated/cliente-x/2026-09-08-105115-slot-1/.
 - Preservar composição, cores, espaçamento e separação entre foto e cartão de texto. Não redesenhar ou fazer alterações visuais espontâneas; alterar o visual somente por solicitação do usuário. Correções operacionais devem manter o padrão aprovado e as guardas de colisão.
 - Aprovação registrada também na memória persistente do assistente. Nenhuma alteração de layout ou publicação foi feita neste registro.
+
+## 2026-09-10 16:24 BRT — seleção alternativa após bloqueio visual
+- Retomada no worktree cliente-x-instagram-photo-fix-20260910, branch fix/photo-quality-20260910, base origin/main af981b36; checkout incident é histórico.
+- Produção: runs 34517955312 e 34518111324 falharam no slot 6 (13:50 BRT) por fotos distintas insuficientes; nenhuma recuperação comprovada.
+- Seleção Radar agora avalia até oito fontes inéditas pela mesma seleção com guardas de duplicidade e aprendizagem. Uma pauta sem fotos suficientes é rejeitada e outra é avaliada antes da renderização. Agendamentos, conteúdo do painel e série explícita são preservados.
+- Auditoria visual-selection.json registra fonte, quantidade necessária/encontrada e decisão; imagens ficam em subpastas por candidato. Nenhuma redução de cartões, repetição de fotos ou mudança de layout.
+- Sintaxe, validate-copy (75 seleções), validate-visual-agent, validate-image-fallbacks e teste controlado de alternativa aprovada/agendamento preservado/esgotamento passaram.
+- Dry-run real 2026-09-10-162051-slot-0 percorreu oito pautas, com uma ou duas fotos por pauta para cinco cartões, e bloqueou corretamente. Não é prova de recuperação nem publicação.
+- Próximo passo: acompanhar execução automática com a correção; exigir histórico, slot, permalink, Feed/Reel ID, Story ID e inspeção visual. Escassez de fotos suficientes permanece pendente.

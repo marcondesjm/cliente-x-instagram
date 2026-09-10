@@ -6,7 +6,7 @@ import { createHash, randomInt } from 'node:crypto';
 import { lookup } from 'node:dns/promises';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { isIP } from 'node:net';
-import { basename, dirname, extname, isAbsolute, join, resolve } from 'node:path';
+import { basename, dirname, extname, isAbsolute, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { buildBrandContext } from '../../../lib/brand-analysis.js';
@@ -5731,6 +5731,7 @@ async function main() {
   };
 
   const token = env[account.accessTokenEnv];
+  let recentSelectionMedia = [];
   const userId = env[account.userIdEnv];
   const imgbbKey = env[account.imgbbKeyEnv];
   if (!args.renderOnly && !args.dryRun) {
@@ -5750,6 +5751,7 @@ async function main() {
 
     if (!scheduledPost && !dashboardPack && !seriesSelection && !args.storyOnly) {
       const recentMedia = await fetchRecentMedia(userId, token);
+      recentSelectionMedia = recentMedia;
       let fresh = pickFreshPack(automaticSelectionPacks, today, generationSlotIndex, recentMedia, publicationHistory, randomInt, selectionLearningContext);
       if (!fresh.pack && radar.enabled) {
         const currentWindow = Number(editorialResearch.maxAgeDays) || 7;
@@ -5836,6 +5838,39 @@ async function main() {
   const runId = `${timestampSaoPaulo()}-slot-${slotIndex}${args.renderOnly ? '-render-only' : ''}`;
   const runDir = join(RUNS_DIR, account.account, runId);
   mkdirSync(runDir, { recursive: true });
+  let preparedVisualSources = null;
+  if (pack?.research?.sourceUrl && !dashboardPack && !scheduledPost && !seriesSelection) {
+    const rejectedSources = new Set();
+    const visualAttempts = [];
+    // Select another fresh article when the first one cannot supply every photo.
+    // Keep the original requirements and never replace explicit or scheduled content.
+    for (let attempt = 0; attempt < 8; attempt += 1) {
+      const probe = preparePackForPublication(pack, today, generationSlotIndex, account, publishMode, { allowIhc: true }).pack;
+      const visualProbe = publishMode === 'story-only' ? { ...probe, slides: probe.slides.slice(0, 1) } : probe;
+      const candidateDir = join(runDir, `visual-candidate-${attempt + 1}`);
+      mkdirSync(candidateDir, { recursive: true });
+      const sources = await downloadResearchSlideImages(probe, editorialResearch.packs, publicationHistory, candidateDir, visualProbe.slides.length);
+      const plan = buildVisualAgentPlan(visualProbe, sources);
+      visualAttempts.push({ sourceUrl: probe.research.sourceUrl, status: plan.status, required: visualProbe.slides.length, approved: plan.approvedVisuals });
+      writeFileSync(join(runDir, 'visual-selection.json'), JSON.stringify(visualAttempts, null, 2), 'utf8');
+      if (plan.status === 'approved') {
+        assertVisualAgentPlan(visualProbe, plan);
+        preparedVisualSources = sources;
+        break;
+      }
+      rejectedSources.add(pack.research.sourceUrl);
+      console.log(`Radar visual: pauta rejeitada com ${plan.approvedVisuals}/${visualProbe.slides.length} fotos distintas; buscando outra fonte inédita.`);
+      if (attempt === 7) break;
+      const candidates = automaticSelectionPacks.filter(candidate => candidate.research?.sourceUrl && !rejectedSources.has(candidate.research.sourceUrl));
+      const next = pickFreshPack(candidates, today, generationSlotIndex, recentSelectionMedia, publicationHistory, randomInt, selectionLearningContext);
+      if (!next.pack) break;
+      pack = next.pack;
+      packIndex = `news-visual-${next.packIndex}`;
+      selectionMode = next.selectionMode;
+      skippedDuplicates = next.skippedDuplicates;
+    }
+    if (!preparedVisualSources) throw new Error('Radar visual: nenhuma das pautas inéditas avaliadas possui fotos distintas suficientes. Publicação bloqueada; consulte visual-selection.json.');
+  }
   experimentAxis = selectionMode === 'experiment'
     ? 'topic-angle'
     : selectionMode === 'explore' ? 'candidate-novelty' : selectionMode === 'exploit' ? 'performance' : 'manual';
@@ -5891,7 +5926,7 @@ async function main() {
     fatiguePenalty: organicPotential.fatiguePenalty,
     modelVersion: learningDecision.modelVersion
   };
-  const researchVisualSources = await downloadResearchSlideImages(
+  const researchVisualSources = preparedVisualSources ?? await downloadResearchSlideImages(
     pack,
     editorialResearch.packs,
     publicationHistory,
@@ -5907,7 +5942,7 @@ async function main() {
   if (researchVisualSources.length) {
     writeFileSync(join(runDir, 'visual-sources.json'), JSON.stringify(researchVisualSources.map(({ path, ...visual }) => ({
       ...visual,
-      localFile: basename(path)
+      localFile: relative(runDir, path).replaceAll('\\', '/')
     })), null, 2), 'utf8');
   }
   const storyOnly = publishMode === 'story-only';

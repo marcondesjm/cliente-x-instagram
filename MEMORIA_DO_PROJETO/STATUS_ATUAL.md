@@ -1097,3 +1097,12 @@ Resultado:
 - Renderização também verifica repetição visual de fotografias explícitas/locais, incluindo livros, antes de gerar carrossel/Reel. Faltando foto no layout impact-carousel, bloqueia. Busca automática externa está vinculada às pautas do Radar; conteúdo autoral sem matéria exige ativo apropriado.
 - Teste real AirPods: 3 fotos distintas encontradas; versões redimensionadas descartadas e pacote de 5 bloqueado. Dois cartões e duas cenas renderizados e inspecionados; duplicação intencional rejeitada. Ajustados tamanho da foto final no Feed, contraste do selo e colisão da nota final no Reel.
 - Passaram validate-copy (75 seleções), validate-image-fallbacks, validate-visual-agent, sintaxe e diff. Não houve publicação ou exclusão; confirmação visual em produção permanece pendente.
+
+## 2026-09-10 16:24 BRT — seleção alternativa após bloqueio visual
+- Retomada no worktree cliente-x-instagram-photo-fix-20260910, branch fix/photo-quality-20260910, base origin/main af981b36; checkout incident é histórico.
+- Produção: runs 34517955312 e 34518111324 falharam no slot 6 (13:50 BRT) por fotos distintas insuficientes; nenhuma recuperação comprovada.
+- Seleção Radar agora avalia até oito fontes inéditas pela mesma seleção com guardas de duplicidade e aprendizagem. Uma pauta sem fotos suficientes é rejeitada e outra é avaliada antes da renderização. Agendamentos, conteúdo do painel e série explícita são preservados.
+- Auditoria visual-selection.json registra fonte, quantidade necessária/encontrada e decisão; imagens ficam em subpastas por candidato. Nenhuma redução de cartões, repetição de fotos ou mudança de layout.
+- Sintaxe, validate-copy (75 seleções), validate-visual-agent, validate-image-fallbacks e teste controlado de alternativa aprovada/agendamento preservado/esgotamento passaram.
+- Dry-run real 2026-09-10-162051-slot-0 percorreu oito pautas, com uma ou duas fotos por pauta para cinco cartões, e bloqueou corretamente. Não é prova de recuperação nem publicação.
+- Próximo passo: acompanhar execução automática com a correção; exigir histórico, slot, permalink, Feed/Reel ID, Story ID e inspeção visual. Escassez de fotos suficientes permanece pendente.
