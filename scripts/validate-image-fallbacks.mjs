@@ -32,6 +32,10 @@ assert.ok(!sameEditorialEvent(event, { ...event, sourceTitle: event.sourceTitle.
 assert.ok(!sameEditorialEvent(event, { ...event, publishedAt: '2025-09-09' }));
 assert.ok(!sameEditorialEvent(event, { ...event, sourceTitle: 'IA transforma empresas e negócios' }));
 assert.equal(photoIdentity('https://example.com/photo.jpg.small_2x.jpg'),photoIdentity('https://example.com/photo.jpg.large.jpg'));
+assert.equal(
+  photoIdentity('https://example.com/Apple-iPhone-18-Pro-color-lineup-260909.jpg'),
+  photoIdentity('https://example.com/Apple-iPhone-18-Pro-color-lineup-260909-1280x640.jpg.webp')
+);
 assert.ok(similarPhoto('01'.repeat(128), '01'.repeat(128)));
 assert.ok(!similarPhoto('01'.repeat(128), '10'.repeat(128)));
 assert.deepEqual(articlePhotoUrls('<main><img alt="AirPods 5" src="/airpods-5.jpg"><img alt="logo" src="/logo.png"></main>', 'https://example.com/article', 'AirPods 5 chegam ao Brasil'), ['https://example.com/airpods-5.jpg']);

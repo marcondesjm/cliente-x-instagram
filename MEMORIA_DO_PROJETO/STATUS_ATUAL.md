@@ -1114,3 +1114,12 @@ Resultado:
 - Dry-run real 2026-09-10-171855-slot-0: oito pautas avaliadas; pauta do IT Forum escolhida com uma foto válida; cinco cards e Story gerados. Capa, card tipográfico 2/5 e Story inspecionados sem sobreposição e mantendo o padrão aprovado.
 - Validações: sintaxe, validate-copy (75 seleções), validate-visual-agent, validate-image-fallbacks e diff. Nenhuma publicação foi feita neste teste.
 - Próximo passo: enviar para main e acompanhar a primeira execução automática até histórico persistido, permalink, Feed/Reel ID e Story ID.
+
+## 2026-09-10 17:44 BRT — recuperação automática comprovada
+- Correção v1.1.1 publicada em main pelo commit 0d5283a6. O run automático 34527660625 recuperou o slot 6 sem workflow_dispatch.
+- Slot persistido como published às 17:42 BRT. Reel 18114211153790240; Story 18175609840435856; permalink https://www.instagram.com/reel/DdHt-ywDDti/.
+- Pauta: Mobile Time, `Apple apresenta iPhone 18 Pro e Max com Siri AI reformulada`. Histórico registrou o plano visual, fonte, hashes e três cartões tipográficos.
+- Story e seis quadros do Reel hospedado foram inspecionados. Composição e separação de texto/foto estão corretas; uma transição intermediária contém o crossfade esperado e o quadro final fica limpo.
+- A inspeção revelou que as duas fotos aceitas eram a mesma imagem em URL original e derivada `-1280x640.jpg.webp`. O post existente foi preservado. `photoIdentity` agora colapsa dimensões e extensões de conversão para impedir esse reuso nas próximas publicações; regressão adicionada.
+- Primeiro comentário falhou separadamente com Meta OAuthException code 10 por falta de permissão. Feed/Reel e Story permanecem publicados.
+- Erro anterior 34525227503 marcado como resolved pelo run 34527660625. Próximo passo: enviar a deduplicação de derivados para main e acompanhar nova amostra visual automática.
