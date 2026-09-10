@@ -1088,3 +1088,12 @@ Resultado:
 - Registra imageSourcePageUrl, imageCredit e imageEvidence em visualSources. Rejeita URL/hash já publicados e continua procurando alternativa. Não usa correspondência genérica de palavras para trocar modelos ou eventos.
 - Teste real: imagem Apple de 37.030 bytes baixada; Story renderizado e inspecionado em automation/instagram-template/runs/official-image-qa/story.jpg. Reuso rejeitado no segundo teste. Nenhuma republicação realizada.
 - Checks: validate-copy, validate-image-fallbacks, validate-visual-agent, node --check e git diff --check. Novas matérias precisam de vínculo verificado para alternativa externa; tentativa na própria página é geral.
+
+## 2026-09-10 — Busca automática e fotografias distintas por cartão/cena
+- Pedido: procurar imagens em outros portais e impedir repetição em Stories, carrosséis e Reels.
+- Busca ampliada às páginas de cobertura relacionada presentes nos packs pesquisados pelo Radar (até 8), com filtros conservadores de título, números/modelos e data de até 72 horas. Mantém alternativas oficiais verificadas e explora fotos identificadas no corpo das matérias. A correspondência textual é heurística, não uma aprovação semântica humana.
+- Carrossel/Reel editorial exige uma foto distinta por cartão/cena; Story-only exige uma. Bloqueia quantidade insuficiente. Stories usam o histórico editorial de fotos; o Story que acompanha o Feed ainda usa a foto da capa da mesma publicação.
+- Compara URL normalizada, SHA256 e assinatura visual dHash (256 bits, limiar conservador de 48). Guarda novas assinaturas no histórico visual. Histórico antigo sem assinatura ainda conta com URL/hash; a comparação visual histórica passa a valer nas novas entradas.
+- Renderização também verifica repetição visual de fotografias explícitas/locais, incluindo livros, antes de gerar carrossel/Reel. Faltando foto no layout impact-carousel, bloqueia. Busca automática externa está vinculada às pautas do Radar; conteúdo autoral sem matéria exige ativo apropriado.
+- Teste real AirPods: 3 fotos distintas encontradas; versões redimensionadas descartadas e pacote de 5 bloqueado. Dois cartões e duas cenas renderizados e inspecionados; duplicação intencional rejeitada. Ajustados tamanho da foto final no Feed, contraste do selo e colisão da nota final no Reel.
+- Passaram validate-copy (75 seleções), validate-image-fallbacks, validate-visual-agent, sintaxe e diff. Não houve publicação ou exclusão; confirmação visual em produção permanece pendente.

@@ -14,6 +14,7 @@ import { buildResearchPack, decodeEditorialEntities, filterValidEditorialPacks, 
 import { summarizePerformanceLearning, retentionHookAdjustment } from '../../../lib/performance-learning.js';
 import { assertVisualAgentPlan, buildVisualAgentPlan, CLOUD_VISUAL_AGENT_VERSION } from '../../../lib/visual-agent.js';
 import { editorialImageCandidates } from '../../../lib/editorial-image-fallbacks.js';
+import { photoSignature, similarPhoto, photoIdentity } from '../../../lib/photo-uniqueness.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const TEMPLATE_DIR = resolve(ROOT, 'automation', 'instagram-template');
@@ -2001,18 +2002,20 @@ async function downloadEditorialImage(sourceImageUrl = '', runDir = '', fileStem
   }
 }
 
-async function downloadResearchSlideImages(pack = {}, editorialPacks = [], publicationHistory = [], runDir = '') {
+async function downloadResearchSlideImages(pack = {}, editorialPacks = [], publicationHistory = [], runDir = '', requiredCount = pack.slides?.length || 0) {
   const slideCount = Array.isArray(pack.slides) ? pack.slides.length : 0;
   if (!pack?.research?.sourceUrl || !slideCount) return [];
   const priorUrls = new Set();
   const priorHashes = new Set();
+  const priorPerceptualHashes = [];
   for (const entry of publicationHistory) {
     const legacyUrl = normalizedEditorialImageUrl(entry?.research?.sourceImageUrl);
-    if (legacyUrl) priorUrls.add(legacyUrl);
+    if (legacyUrl) priorUrls.add(photoIdentity(legacyUrl));
     for (const visual of entry?.visualSources || []) {
       const visualUrl = normalizedEditorialImageUrl(visual?.imageUrl);
-      if (visualUrl) priorUrls.add(visualUrl);
+      if (visualUrl) priorUrls.add(photoIdentity(visualUrl));
       if (visual?.imageHash) priorHashes.add(String(visual.imageHash));
+      if (visual?.perceptualHash) priorPerceptualHashes.push(visual.perceptualHash);
     }
   }
   // O agente visual aceita somente ativos ligados à pauta selecionada. Usar
@@ -2021,7 +2024,10 @@ async function downloadResearchSlideImages(pack = {}, editorialPacks = [], publi
   const selected = [];
   const currentUrls = new Set();
   const currentHashes = new Set();
-  for await (const alternative of editorialImageCandidates(pack.research)) {
+  const photoBrowser = await launchChromium();
+  const photoPage = await photoBrowser.newPage();
+  try {
+  for await (const alternative of editorialImageCandidates(pack.research, fetch, editorialPacks)) {
     const candidate = {
       source: pack.research.source,
       sourceUrl: pack.research.sourceUrl,
@@ -2029,19 +2035,25 @@ async function downloadResearchSlideImages(pack = {}, editorialPacks = [], publi
       ...alternative,
       imageUrl: normalizedEditorialImageUrl(alternative.imageUrl)
     };
-    if (!candidate.imageUrl || currentUrls.has(candidate.imageUrl) || priorUrls.has(candidate.imageUrl)) continue;
-    currentUrls.add(candidate.imageUrl);
+    if (!candidate.imageUrl || currentUrls.has(photoIdentity(candidate.imageUrl)) || priorUrls.has(photoIdentity(candidate.imageUrl))) continue;
     const downloaded = await downloadEditorialImage(candidate.imageUrl, runDir, `radar-slide-${String(selected.length + 1).padStart(2, '0')}`);
-    if (!downloaded || currentHashes.has(downloaded.imageHash) || priorHashes.has(downloaded.imageHash) || priorUrls.has(downloaded.imageUrl)) continue;
+    if (!downloaded || currentHashes.has(downloaded.imageHash) || priorHashes.has(downloaded.imageHash) || priorUrls.has(photoIdentity(downloaded.imageUrl))) continue;
+    let perceptualHash;
+    try { perceptualHash = await photoSignature(photoPage, downloaded.path); }
+    catch (error) { console.warn(`Foto rejeitada: ${error.message}`); continue; }
+    if ([...priorPerceptualHashes, ...selected.map(visual => visual.perceptualHash)].some(hash => similarPhoto(hash, perceptualHash))) continue;
     currentHashes.add(downloaded.imageHash);
+    currentUrls.add(photoIdentity(candidate.imageUrl));
     selected.push({
       ...candidate,
       ...downloaded,
+      perceptualHash,
       reusedRelevantImage: priorUrls.has(candidate.imageUrl) || priorHashes.has(downloaded.imageHash)
     });
-    break;
+    if (selected.length >= requiredCount) break;
   }
-  if (selected.length !== 1) console.warn('Agente Visual: imagem própria indisponível; a publicação será bloqueada na validação visual.');
+  } finally { await photoBrowser.close(); }
+  if (selected.length < requiredCount) console.warn(`Agente Visual: ${selected.length}/${requiredCount} fotos distintas encontradas; publicação bloqueada por imagens insuficientes.`);
   return selected;
 }
 
@@ -2970,8 +2982,9 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
       line-height: 1.14;
     }
     .impact-carousel.has-research-image.role-cta .headline { margin-top: 150px; font-size: 68px; }
-    .impact-carousel.has-research-image.role-cta .context-photo { top: 500px; height: 160px; border-radius: 18px; }
-    .impact-carousel.has-research-image.role-cta .note { top: 690px; min-height: 370px; }
+    .impact-carousel.has-research-image.role-cta .context-photo { top: 430px; height: 340px; border-radius: 18px; }
+    .impact-carousel.has-research-image.role-cta .note { top: 800px; min-height: 300px; }
+    .impact-carousel.role-cta .badge { background: ${accent}; color: #fff; }
     .impact-carousel.role-cta .note .lead,
     .impact-carousel.role-cta .note .emphasis,
     .impact-carousel.role-cta .note .close {
@@ -3077,7 +3090,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
       top: 620px;
       height: 430px;
     }
-    .reel-mode.role-cta .note { top: 1080px; min-height: 520px; }
+    .impact-carousel.reel-mode.has-sector-photo.role-cta .note { top: 1080px; min-height: 520px; }
     .bubble { display: none; position: absolute; right: 116px; bottom: 270px; width: 132px; height: 96px; border-radius: 34px; background: #f1d8c7; z-index: 3; }
     .bubble::before { content: "..."; position: absolute; inset: 0; display: grid; place-items: center; color: ${accent}; font-size: 58px; line-height: 0.5; font-weight: 900; letter-spacing: 5px; }
     .spark { position: absolute; color: ${accent}; opacity: 0.7; z-index: 2; font-size: 42px; font-weight: 900; }
@@ -3541,6 +3554,16 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
   const outputHeight = isReelMode ? STORY_HEIGHT : FEED_HEIGHT;
   const page = await browser.newPage({ viewport: { width: FEED_WIDTH, height: outputHeight }, deviceScaleFactor: 1 });
   const imagePaths = [];
+  const photoPage = await browser.newPage();
+  const seenPhotos = [];
+  const assertDistinctPhoto = async (path, index) => {
+    const signature = await photoSignature(photoPage, path);
+    if (seenPhotos.some(prior => similarPhoto(prior, signature))) {
+      await browser.close();
+      throw new Error(`Slide ${index + 1} rejeitado: fotografia repetida ou visualmente semelhante a outro cartão/cena.`);
+    }
+    seenPhotos.push(signature);
+  };
   for (let index = 0; index < slides.length; index += 1) {
     let slide = slides[index];
     const imagePath = join(runDir, `slide-${String(index + 1).padStart(2, '0')}.jpg`);
@@ -3551,6 +3574,7 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
     if (slide.imagePath && !String(style.name || '').startsWith('impact-carousel')) {
       const source = resolve(ROOT, String(slide.imagePath).replace(/^\/+/, ''));
       if (!existsSync(source)) throw new Error(`Imagem do slide ${index + 1} nao encontrada: ${slide.imagePath}`);
+      await assertDistinctPhoto(source, index);
       const customImagePath = join(runDir, `slide-${String(index + 1).padStart(2, '0')}${extname(source).toLowerCase() || '.jpg'}`);
       copyFileSync(source, customImagePath);
       imagePaths.push(customImagePath);
@@ -3562,6 +3586,14 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
     const htmlPath = join(runDir, `slide-${String(index + 1).padStart(2, '0')}.html`);
     writeFileSync(htmlPath, html, 'utf8');
     await page.goto(`file://${htmlPath.replace(/\\/g, '/')}`);
+    const photoUrls = await page.evaluate(() => [...document.querySelectorAll('.context-photo')]
+      .filter(element => getComputedStyle(element).display !== 'none' && element.getBoundingClientRect().width > 0)
+      .flatMap(element => [...getComputedStyle(element).backgroundImage.matchAll(/url\(["']?(.*?)["']?\)/g)].map(match => match[1])));
+    if (String(style.name || '').startsWith('impact-carousel') && !photoUrls.length) {
+      await browser.close();
+      throw new Error(`Slide ${index + 1} rejeitado: falta uma fotografia distinta.`);
+    }
+    for (const photoUrl of new Set(photoUrls)) await assertDistinctPhoto(photoUrl, index);
     await page.evaluate(() => document.fonts.ready);
     const overlapCheck = await page.evaluate(() => {
       const headline = document.querySelector('.headline');
@@ -5863,13 +5895,15 @@ async function main() {
     pack,
     editorialResearch.packs,
     publicationHistory,
-    runDir
+    runDir,
+    publishMode === 'story-only' ? 1 : pack.slides.length
   );
-  const visualAgent = assertVisualAgentPlan(pack, buildVisualAgentPlan(pack, researchVisualSources));
+  const visualPack = publishMode === 'story-only' ? { ...pack, slides: pack.slides.slice(0, 1) } : pack;
+  const visualAgent = assertVisualAgentPlan(visualPack, buildVisualAgentPlan(visualPack, researchVisualSources));
   const researchSlideImagePaths = visualAgent.slideImagePaths;
   const researchSourceImagePath = researchSlideImagePaths[0] || null;
   writeFileSync(join(runDir, 'visual-agent.json'), JSON.stringify(visualAgent, null, 2), 'utf8');
-  console.log(`Agente Visual ${CLOUD_VISUAL_AGENT_VERSION}: ${visualAgent.status}; ${visualAgent.approvedVisuals} imagem da pauta aprovada; slides internos tipográficos.`);
+  console.log(`Agente Visual ${CLOUD_VISUAL_AGENT_VERSION}: ${visualAgent.status}; ${visualAgent.approvedVisuals} fotos distintas aprovadas.`);
   if (researchVisualSources.length) {
     writeFileSync(join(runDir, 'visual-sources.json'), JSON.stringify(researchVisualSources.map(({ path, ...visual }) => ({
       ...visual,

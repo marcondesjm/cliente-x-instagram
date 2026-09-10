@@ -1,31 +1,10 @@
 import assert from 'node:assert/strict';
-import { assertVisualAgentPlan, buildVisualAgentPlan, CLOUD_VISUAL_AGENT_VERSION } from '../lib/visual-agent.js';
-
-const pack = {
-  research: { sourceUrl: 'https://example.com/pauta-principal' },
-  slides: Array.from({ length: 5 }, () => ({}))
-};
-const plan = assertVisualAgentPlan(pack, buildVisualAgentPlan(pack, [{
-  sourceUrl: 'https://example.com/pauta-principal',
-  path: '/tmp/source.jpg',
-  imageHash: 'verified'
-}, {
-  sourceUrl: 'https://example.com/outra-materia',
-  path: '/tmp/unrelated.jpg',
-  imageHash: 'unrelated'
-}]));
-
-if (plan.approvedVisuals !== 1 || plan.rejectedVisuals !== 1) {
-  throw new Error('Agente Visual não separou a imagem pertinente da imagem de outra matéria.');
+import { assertVisualAgentPlan, buildVisualAgentPlan } from '../lib/visual-agent.js';
+const pack = { research: { sourceUrl: 'https://example.com/article' }, slides: [{}, {}, {}] };
+const sources = Array.from({length:3},(_,i)=>({sourceUrl:pack.research.sourceUrl,path:`/photo-${i}.jpg`,imageHash:`hash-${i}`,imageUrl:`https://example.com/${i}.jpg`}));
+assert.equal(assertVisualAgentPlan(pack,buildVisualAgentPlan(pack,sources)).approvedVisuals,3);
+for (const photos of [[],sources.slice(0,1),[sources[0],sources[0],sources[2]],sources.map(s=>({...s,reusedRelevantImage:true})),sources.map(s=>({...s,sourceUrl:'https://example.com/unrelated'}))]) {
+  assert.throws(()=>assertVisualAgentPlan(pack,buildVisualAgentPlan(pack,photos)),/foto da matéria/);
 }
-if (plan.slideImagePaths[0] !== '/tmp/source.jpg' || plan.slideImagePaths.slice(1).some(Boolean)) {
-  throw new Error('Agente Visual tentou preencher slides internos com imagens sem vínculo comprovado.');
-}
-
-for (const sources of [[], [{ sourceUrl: pack.research.sourceUrl, path: '/tmp/repeated.jpg', imageHash: 'old', reusedRelevantImage: true }], [{ sourceUrl: 'https://example.com/unrelated', path: '/tmp/other.jpg', imageHash: 'other' }]]) {
-  const blocked = buildVisualAgentPlan(pack, sources);
-  assert.equal(blocked.status, 'blocked');
-  assert.throws(() => assertVisualAgentPlan(pack, blocked), /foto da matéria/);
-}
-assert.doesNotThrow(() => assertVisualAgentPlan({ slides: [{}] }, buildVisualAgentPlan({ slides: [{}] })));
-console.log(JSON.stringify({ ok: true, agent: plan.agent, version: CLOUD_VISUAL_AGENT_VERSION, policy: plan.policy }, null, 2));
+assert.doesNotThrow(()=>assertVisualAgentPlan({slides:[{}]},buildVisualAgentPlan({slides:[{}]})));
+console.log('Visual plan: unique photos accepted; missing, repeated, unrelated and historical photos blocked.');
