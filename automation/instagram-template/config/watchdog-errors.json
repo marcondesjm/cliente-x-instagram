@@ -1,23 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-09-05:4:33980852410",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-09-05",
-    "slotIndex": 4,
-    "scheduledAt": "2026-09-05T15:10:00.000Z",
-    "failedAt": "2026-09-05T17:26:34.225Z",
-    "workflowRun": "33980852410",
-    "workflowName": "Instagram Watchdog Backup",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/33980852410",
-    "stage": "Graph POST /17841404470203300/media_publish",
-    "error": "Graph POST /17841404470203300/media_publish failed [400]: {\"error\":{\"message\":\"Fatal\",\"type\":\"OAuthException\",\"code\":-1,\"error_subcode\":2207085,\"is_transient\":false,\"error_user_title\":\"Erro interno gen\\u00e9rico\",\"error_user_msg\":\"Ocorreu um erro interno do servidor. Tente novamente mais tarde.\",\"fbtrace_id\":\"AU4YPOF381oh_4xLqKkbvMU\"}}",
-    "solution": "A Meta apresentou erro interno ao concluir o Reel. O vigia valida o container, confirma que a midia nao apareceu no perfil e recupera o mesmo conteudo como carrossel; renovar o token somente se a validacao retornar erro 190/463.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-09-05-142634.json",
-    "resolvedAt": "2026-09-05T18:29:23.956Z",
-    "resolvedRun": "33983609919"
-  },
-  {
     "key": "cliente-x:2026-09-05:4:33982441811",
     "status": "resolved",
     "account": "cliente-x",
@@ -907,5 +889,22 @@
     "error": "Agente Visual bloqueou a publicação: cada cartão/cena precisa de uma foto da matéria distinta, disponível e não repetida.",
     "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o conteúdo ou dependência indicada antes da próxima tentativa.",
     "failurePath": "automation/instagram-template/runs/failure-2026-09-10-153139.json"
+  },
+  {
+    "key": "cliente-x:2026-09-10:6:34514897137",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-09-10",
+    "slotIndex": 6,
+    "scheduledAt": "2026-09-10T16:50:00.000Z",
+    "scheduledPostId": null,
+    "failedAt": "2026-09-10T18:33:02.707Z",
+    "workflowRun": "34514897137",
+    "workflowName": "Instagram Watchdog Backup",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/34514897137",
+    "stage": "unknown",
+    "error": "Agente Visual bloqueou a publicação: cada cartão/cena precisa de uma foto da matéria distinta, disponível e não repetida.",
+    "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o conteúdo ou dependência indicada antes da próxima tentativa.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-09-10-153302.json"
   }
 ]
