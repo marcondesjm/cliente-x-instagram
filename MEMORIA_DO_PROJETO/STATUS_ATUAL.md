@@ -1123,3 +1123,4 @@ Resultado:
 - A inspeção revelou que as duas fotos aceitas eram a mesma imagem em URL original e derivada `-1280x640.jpg.webp`. O post existente foi preservado. `photoIdentity` agora colapsa dimensões e extensões de conversão para impedir esse reuso nas próximas publicações; regressão adicionada.
 - Primeiro comentário falhou separadamente com Meta OAuthException code 10 por falta de permissão. Feed/Reel e Story permanecem publicados.
 - Erro anterior 34525227503 marcado como resolved pelo run 34527660625. Próximo passo: enviar a deduplicação de derivados para main e acompanhar nova amostra visual automática.
+- Deduplicação de derivados enviada para `origin/main` no commit de código a69cb958. Próximo passo vigente: acompanhar a próxima amostra automática; não apagar nem republicar o Reel já publicado.
