@@ -3059,3 +3059,9 @@ Conclusao de ativacao:
 - Classificação do vigia agora distingue falhas de fotografia de erros de texto.
 - Sintaxe, validate-copy (75 seleções), validate-visual-agent, validate-follower-growth e diff passaram. Render automático local do slot 9 selecionou episódio 4 e concluiu cinco slides, Reel e Story; slide 2 e Story inspecionados sem colisão. Evidência: runs/cliente-x/2026-09-10-190126-slot-9-render-only.
 - Publicação real e encerramento do alerta ainda pendentes; acompanhar recuperação automática após envio.
+
+### Recuperação comprovada — 10/09/2026 19:07 BRT
+- Correção 42030e3a em main; gatilho existente por push 5f98b9a8 iniciou run 34535460397, concluído com sucesso. Não foi disparo cron nem workflow_dispatch.
+- Episódio 4 publicado às 19:05:53 BRT: Reel 18108358226362779, Story 18106991546034941, https://www.instagram.com/reel/DdH3ju4jD2I/.
+- Estado persistido em 1075eea0: slot 9 published e alerta 34534761003 resolved pelo run 34535460397. Primeiro comentário sem ID e sem erro registrado; não confirmado.
+- Story real e cinco quadros do Reel hospedado em docs/generated/cliente-x/2026-09-10-190452-slot-9 inspecionados sem sobreposição. Foto de capa preservada e cartões internos tipográficos renderizados. Nenhum post existente excluído ou republicado.
