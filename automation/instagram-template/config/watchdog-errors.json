@@ -1,30 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-09-06:0:34035064461",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-09-06",
-    "slotIndex": null,
-    "scheduledAt": "2026-09-06T11:10:00.000Z",
-    "failedAt": "2026-09-06T13:07:33.245Z",
-    "workflowRun": "34035064461",
-    "workflowName": "Instagram Feed Cliente X",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/34035064461",
-    "stage": "content-selection",
-    "error": "Conteudo repetido bloqueado: este tema ja foi publicado em 2026-09-06T01:40:47.267Z. Escolha outro conteudo.",
-    "solution": "Conteudo ja utilizado; fila liberada sem republicar.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-09-06-100733.json",
-    "scheduledPostId": "livro-claude-code-20260902-13",
-    "resolvedAt": "2026-09-06T21:29:20.988Z",
-    "resolution": "scheduled-duplicate-skipped",
-    "duplicatePublication": {
-      "publishedAt": "2026-09-06T01:40:47.267Z",
-      "mediaId": "18112294880603563",
-      "storyMediaId": "18489215359128882",
-      "permalink": "https://www.instagram.com/p/Dc7YMtwiG6U/"
-    }
-  },
-  {
     "key": "cliente-x:2026-09-06:0:34048561762",
     "status": "resolved",
     "account": "cliente-x",
@@ -902,5 +877,22 @@
     "error": "Agente Visual bloqueou a publicação: cada cartão/cena precisa de uma foto da matéria distinta, disponível e não repetida.",
     "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o conteúdo ou dependência indicada antes da próxima tentativa.",
     "failurePath": "automation/instagram-template/runs/failure-2026-09-10-162146.json"
+  },
+  {
+    "key": "cliente-x:2026-09-10:6:34521839910",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-09-10",
+    "slotIndex": 6,
+    "scheduledAt": "2026-09-10T16:50:00.000Z",
+    "scheduledPostId": null,
+    "failedAt": "2026-09-10T19:42:27.896Z",
+    "workflowRun": "34521839910",
+    "workflowName": "Instagram Watchdog Backup",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/34521839910",
+    "stage": "unknown",
+    "error": "Radar visual: nenhuma das pautas inéditas avaliadas possui fotos distintas suficientes. Publicação bloqueada; consulte visual-selection.json.",
+    "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o conteúdo ou dependência indicada antes da próxima tentativa.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-09-10-164227.json"
   }
 ]
