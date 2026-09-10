@@ -1082,3 +1082,9 @@ Resultado:
 - Proteção anterior 8dda9356 bloqueia capa editorial ausente/reutilizada. Story agora verifica carregamento real da foto no navegador e inclui nota/rodapé na checagem de colisões; assinatura inferior removida do layout impact-carousel.
 - Validação: validate-copy (75 seleções), validate-visual-agent, sintaxe e diff; renderStory real com a miniatura exclusivamente para QA do layout, inspecionado visualmente; foto ausente/corrompida rejeitada. Prévia em automation/instagram-template/runs/story-photo-qa/story.jpg. Miniatura não aprovada para publicação.
 - Nenhuma exclusão ou republicação. Resultado de próxima publicação automática ainda não verificado.
+
+## 2026-09-10 — Recuperação de foto por fonte alternativa verificada
+- Fluxo tenta imagem do feed, imagem principal da página original e alternativa externa previamente vinculada à matéria. Primeiro vínculo verificado: Tecnoblog AirPods 5 -> anúncio oficial Apple de 09/09/2026.
+- Registra imageSourcePageUrl, imageCredit e imageEvidence em visualSources. Rejeita URL/hash já publicados e continua procurando alternativa. Não usa correspondência genérica de palavras para trocar modelos ou eventos.
+- Teste real: imagem Apple de 37.030 bytes baixada; Story renderizado e inspecionado em automation/instagram-template/runs/official-image-qa/story.jpg. Reuso rejeitado no segundo teste. Nenhuma republicação realizada.
+- Checks: validate-copy, validate-image-fallbacks, validate-visual-agent, node --check e git diff --check. Novas matérias precisam de vínculo verificado para alternativa externa; tentativa na própria página é geral.

@@ -13,6 +13,7 @@ import { buildBrandContext } from '../../../lib/brand-analysis.js';
 import { buildResearchPack, decodeEditorialEntities, filterValidEditorialPacks, EDITORIAL_SOURCES, extractArticleFacts, extractEditorialImageUrl, factualSummary, isPredominantlyEnglish, isUsableEditorialFact, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
 import { summarizePerformanceLearning, retentionHookAdjustment } from '../../../lib/performance-learning.js';
 import { assertVisualAgentPlan, buildVisualAgentPlan, CLOUD_VISUAL_AGENT_VERSION } from '../../../lib/visual-agent.js';
+import { editorialImageCandidates } from '../../../lib/editorial-image-fallbacks.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const TEMPLATE_DIR = resolve(ROOT, 'automation', 'instagram-template');
@@ -2017,29 +2018,28 @@ async function downloadResearchSlideImages(pack = {}, editorialPacks = [], publi
   // O agente visual aceita somente ativos ligados à pauta selecionada. Usar
   // imagens de outras matérias para completar cartões gerava associações
   // falsas (jogos, animais ou pessoas sem relação com o texto).
-  const candidates = [pack]
-    .map((candidate) => ({
-      source: String(candidate?.research?.source || '').trim(),
-      sourceUrl: String(candidate?.research?.sourceUrl || '').trim(),
-      sourceTitle: String(candidate?.research?.sourceTitle || '').trim(),
-      imageUrl: normalizedEditorialImageUrl(candidate?.research?.sourceImageUrl)
-    }))
-    .filter((candidate) => candidate.sourceUrl && candidate.imageUrl);
   const selected = [];
   const currentUrls = new Set();
   const currentHashes = new Set();
-  for (const candidate of candidates) {
-    if (selected.length >= 1) break;
-    if (currentUrls.has(candidate.imageUrl)) continue;
-    const downloaded = await downloadEditorialImage(candidate.imageUrl, runDir, `radar-slide-${String(selected.length + 1).padStart(2, '0')}`);
-    if (!downloaded || currentHashes.has(downloaded.imageHash)) continue;
+  for await (const alternative of editorialImageCandidates(pack.research)) {
+    const candidate = {
+      source: pack.research.source,
+      sourceUrl: pack.research.sourceUrl,
+      sourceTitle: pack.research.sourceTitle,
+      ...alternative,
+      imageUrl: normalizedEditorialImageUrl(alternative.imageUrl)
+    };
+    if (!candidate.imageUrl || currentUrls.has(candidate.imageUrl) || priorUrls.has(candidate.imageUrl)) continue;
     currentUrls.add(candidate.imageUrl);
+    const downloaded = await downloadEditorialImage(candidate.imageUrl, runDir, `radar-slide-${String(selected.length + 1).padStart(2, '0')}`);
+    if (!downloaded || currentHashes.has(downloaded.imageHash) || priorHashes.has(downloaded.imageHash) || priorUrls.has(downloaded.imageUrl)) continue;
     currentHashes.add(downloaded.imageHash);
     selected.push({
       ...candidate,
       ...downloaded,
       reusedRelevantImage: priorUrls.has(candidate.imageUrl) || priorHashes.has(downloaded.imageHash)
     });
+    break;
   }
   if (selected.length !== 1) console.warn('Agente Visual: imagem própria indisponível; a publicação será bloqueada na validação visual.');
   return selected;
