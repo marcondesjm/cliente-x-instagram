@@ -17673,6 +17673,166 @@
         ],
         "editorialVariant": 3
       }
+    },
+    {
+      "feedFingerprint": "a8960087f8e6dac3d5301575838bc951e6787534b5a7bfa4e61db8553dbab05c",
+      "storyFingerprint": "a8960087f8e6dac3d5301575838bc951e6787534b5a7bfa4e61db8553dbab05c",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Reconstruindo o AUTOMATIC1111 com Gradio Workflow: Uma Nova Era para a Geração de Imagens",
+      "captionFingerprint": "3f38c2fc01127c69bb526fad4fe2116356173358006a68e9ed95038ded8ac77e",
+      "coverTitle": "Reconstruindo o AUTOMATIC1111 com Gradio Workflow: Uma Nova Era para a Geração de Imagens",
+      "coverAvatar": "docs/uploads/avatar-marcondes-meeting-tablet.png",
+      "avatarRotationStart": 1,
+      "publishedAt": "2026-09-11T11:22:24.628Z",
+      "slotDate": "2026-09-11",
+      "slotIndex": 0,
+      "scheduledAt": "2026-09-11T09:30:00.000Z",
+      "workflowRun": "34593488330",
+      "mediaId": "17870103219638958",
+      "storyMediaId": "18023028590914085",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /17870103219638958/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"ASUNm1vn18MWK0cqNf9dnpe\"}}",
+      "permalink": "https://www.instagram.com/reel/DdJSrJIiY9Z/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Nossa IA",
+          "sourceUrl": "https://nossa.ia.br/noticia/reconstruindo-o-automatic1111-com-gradio-workflow-uma-nova-era-para-a-geracao-de-imagens/",
+          "sourceTitle": "Reconstruindo o AUTOMATIC1111 com Gradio Workflow: Uma Nova Era para a Geração de Imagens",
+          "imageUrl": "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?auto=format&fit=crop&w=1200&q=80",
+          "imageSourcePageUrl": "https://nossa.ia.br/noticia/reconstruindo-o-automatic1111-com-gradio-workflow-uma-nova-era-para-a-geracao-de-imagens/",
+          "imageCredit": "Nossa IA",
+          "imageEvidence": "Main image metadata of the selected article. Article photograph with matching subject terms.",
+          "imageHash": "891b5f96c410aae496c36ca7b1e978bfd327807bdd9d9a73e7f72a850e5a4423",
+          "perceptualHash": "0010000000001111001000000000111100100000000001100001111000010110000010011111100001001001011110110100100101111111000011011111111100001100111111110100110011111111100001001111111100000100111111110000010001111111100001101110111100000110001111110000011001111111",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://nossa.ia.br/noticia/reconstruindo-o-automatic1111-com-gradio-workflow-uma-nova-era-para-a-geracao-de-imagens/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-11-082055-slot-0/visual-candidate-3/radar-slide-01.avif",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Main image metadata of the selected article. Article photograph with matching subject terms."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-11T05:52:04.735Z",
+        "ageHours": 5.48,
+        "freshness": "stale",
+        "effectiveSamples": 107,
+        "effectiveReach": 749,
+        "controlledSamples": 82,
+        "selectionModes": {
+          "exploit": 54,
+          "explore": 16,
+          "experiment": 12
+        },
+        "confidenceLevel": "moderate",
+        "autonomousReady": false,
+        "learningEnabled": false,
+        "operatingMode": "editorial-fallback",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "morning",
+        "objective": "conversion",
+        "primarySignal": "alcance de nao seguidores",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|morning|conversion",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente"
+        ],
+        "fatiguePenalty": 8.22,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "research": {
+        "id": "fdd24019c698",
+        "source": "Nossa IA",
+        "sourceUrl": "https://nossa.ia.br/noticia/reconstruindo-o-automatic1111-com-gradio-workflow-uma-nova-era-para-a-geracao-de-imagens/",
+        "sourceTitle": "Reconstruindo o AUTOMATIC1111 com Gradio Workflow: Uma Nova Era para a Geração de Imagens",
+        "sourceImageUrl": "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80",
+        "publishedAt": "2026-09-10T15:03:09.000Z",
+        "researchedAt": "2026-09-11T11:20:50.151Z",
+        "theme": "automação com IA para empresas",
+        "sourceFact": "Descubra como a reconstrução da interface clássica de geração de imagens com Gradio Workflow promete modernizar o ecossistema de código aberto.",
+        "sourceFacts": [
+          "Descubra como a reconstrução da interface clássica de geração de imagens com Gradio Workflow promete modernizar o ecossistema de código aberto.",
+          "O ecossistema de geração de imagens por inteligência artificial deu mais um passo importante em direção à modernização. Recentemente, iniciativas focaram em reconstruir a clássica interface do AUTOMATIC1111 utilizando o Gradio Workflow. O objetivo central é superar gargalos arquiteturais acumulados ao longo dos anos, oferecendo uma fundação mais limpa, modular e adaptada às demandas atuais de engenharia de software voltada a modelos de difusão.",
+          "A migração e reestruturação utilizando o Gradio Workflow trazem melhorias notáveis na forma como componentes de interface e back-end interagem. Entre os diferenciais técnicos, destacam-se a redução da complexidade ciclomática do código, melhor gerenciamento de estado assíncrono para processamento pesado em GPUs e uma API nativa mais robusta. Isso permite que desenvolvedores integrem extensões e novos fluxos de trabalho — como ControlNet, LoRAs e upscalers — de maneira muito mais coesa e menos propensa a conflitos.",
+          "Descubra como a releitura do clássico AUTOMATIC1111 utilizando Gradio Workflow promete modernizar e flexibilizar o ecossistema de geração de imagens por inteligência artificial.",
+          "Nova integração combina modelos avançados da IBM com o streaming de dados da Confluent, abrindo portas para análises preditivas ultrarrápidas em ambientes corporativos."
+        ],
+        "editorialVariant": 2
+      }
     }
   ]
 }
