@@ -17833,6 +17833,168 @@
         ],
         "editorialVariant": 2
       }
+    },
+    {
+      "feedFingerprint": "c0849e88bd6b11e7c220a604209e33376ccae318ab6a09f8c641da8b93f9a279",
+      "storyFingerprint": "c0849e88bd6b11e7c220a604209e33376ccae318ab6a09f8c641da8b93f9a279",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Levantamento aponta uso de IA sem identificação por candidatos",
+      "captionFingerprint": "32f2bc87f0d1e2692f5ec73effc0322ef45faf4b6212802b9f75a12add4324f8",
+      "coverTitle": "Levantamento aponta uso de IA sem identificação por candidatos",
+      "coverAvatar": "docs/uploads/avatar-marcondes-presentation.png",
+      "avatarRotationStart": 2,
+      "publishedAt": "2026-09-11T11:36:09.316Z",
+      "slotDate": "2026-09-11",
+      "slotIndex": 1,
+      "scheduledAt": "2026-09-11T11:10:00.000Z",
+      "workflowRun": "34594611509",
+      "mediaId": "18115047794071124",
+      "storyMediaId": "18124461265632109",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18115047794071124/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AsBLAxSwLxMtzRDTIJlheFu\"}}",
+      "permalink": "https://www.instagram.com/p/DdJUT-cGxr0/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Agencia Brasil",
+          "sourceUrl": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/levantamento-aponta-uso-de-ia-sem-identificacao-por-candidatos",
+          "sourceTitle": "Levantamento aponta uso de IA sem identificação por candidatos",
+          "imageUrl": "https://imagens.ebc.com.br/VWdqOuA1pvmK5S4uVeMgnR5I4u0=/1600x800/https://agenciabrasil.ebc.com.br/sites/default/files/thumbnails/image/2023-07-18t221746z_1_lynxmpej6h0xa_rtroptp_4_tech-ai-autonomous-agents.jpg?itok=qY8rgGB5",
+          "imageSourcePageUrl": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/levantamento-aponta-uso-de-ia-sem-identificacao-por-candidatos",
+          "imageCredit": "Agencia Brasil",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "fbf115c2e95c4bfb12de0c33edca567b71a22c9b212df789cbb100f04521c549",
+          "perceptualHash": "0001111011110101000111100110101000111110100101100011111011011111001011101111111100001100110110110001110101110010011111100010101101110100110111110000100010111100000000001111010100000001100001011001000100111110000000001111100100000001110000110000000100001110",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/levantamento-aponta-uso-de-ia-sem-identificacao-por-candidatos",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-11-083502-slot-1/visual-candidate-2/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "explore",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-11T11:23:44.883Z",
+        "ageHours": 0.19,
+        "freshness": "current",
+        "effectiveSamples": 107,
+        "effectiveReach": 752,
+        "controlledSamples": 82,
+        "selectionModes": {
+          "exploit": 54,
+          "explore": 16,
+          "experiment": 12
+        },
+        "confidenceLevel": "moderate",
+        "autonomousReady": false,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "morning",
+        "objective": "conversation",
+        "primarySignal": "comentarios",
+        "selectionMode": "explore",
+        "experimentAxis": "candidate-novelty",
+        "contextKey": "FEED|morning|conversation",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "views-abaixo-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 7.13,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "research": {
+        "id": "4f52f4759e8a",
+        "source": "Agencia Brasil",
+        "sourceUrl": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/levantamento-aponta-uso-de-ia-sem-identificacao-por-candidatos",
+        "sourceTitle": "Levantamento aponta uso de IA sem identificação por candidatos",
+        "sourceImageUrl": "https://imagens.ebc.com.br/VWdqOuA1pvmK5S4uVeMgnR5I4u0=/1600x800/https://agenciabrasil.ebc.com.br/sites/default/files/thumbnails/image/2023-07-18t221746z_1_lynxmpej6h0xa_rtroptp_4_tech-ai-autonomous-agents.jpg?itok=qY8rgGB5",
+        "publishedAt": "2026-09-11T00:27:00.000Z",
+        "researchedAt": "2026-09-11T11:34:54.493Z",
+        "theme": "automação com IA para empresas",
+        "sourceFact": "Um levantamento do Observatório Lupa mostra que pelo menos 37 conteúdos foram gerados com inteligência artificial (IA) nas contas oficiais dos candidatos em redes sociais. Em todos esses conteúdos, não havia nenhuma indicação da manipulação digital. Entre os 314 conteúdos suspeitos coletados entre 16 e 26 de agosto em redes sociais e aplicativos de mensagem, foi constatado o uso de IA em 282 deles. Notícias relacionadas: TSE rejeita ação para derrubar imagem de Bolsonaro feita por IA .",
+        "sourceFacts": [
+          "Um levantamento do Observatório Lupa mostra que pelo menos 37 conteúdos foram gerados com inteligência artificial (IA) nas contas oficiais dos candidatos em redes sociais. Em todos esses conteúdos, não havia nenhuma indicação da manipulação digital.",
+          "Entre os 314 conteúdos suspeitos coletados entre 16 e 26 de agosto em redes sociais e aplicativos de mensagem, foi constatado o uso de IA em 282 deles. Desses conteúdos, a maioria deles era deepfake, peças artificiais criadas para simular a aparência, a voz ou a identidade de pessoas reais.",
+          "Segundo o levantamento, o presidente Luiz Inácio Lula da Silva (PT), candidato à reeleição, foi a maior vítima dos conteúdos falsos gerados por IA, aparecendo 115 vezes. A segunda maior vítima dos conteúdos falsos foi Flávio Bolsonaro (PL), aparecendo em 56 conteúdos.",
+          "O Facebook é a rede com maior registros de conteúdo enganoso: foram 202 ocorrências, seguido do Instagram, com 62 ocorrências.",
+          "“O que chama atenção nesses 37 casos é que não são conteúdos publicados por contas anônimas. São publicações feitas pelas contas oficiais de candidatos e partidos, que têm a obrigação de informar ao eleitor quando utilizam inteligência artificial”, alerta Cristina Tardáguila, gerente de inovação e formação e fundadora da Agência Lupa."
+        ],
+        "editorialVariant": 3
+      }
     }
   ]
 }
