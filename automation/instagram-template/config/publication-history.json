@@ -18484,6 +18484,169 @@
         ],
         "editorialVariant": 5
       }
+    },
+    {
+      "feedFingerprint": "89d1c1eff5bb55080baf0714e09ac318b8966b6ce2d8af6132701bf97c82348e",
+      "storyFingerprint": "89d1c1eff5bb55080baf0714e09ac318b8966b6ce2d8af6132701bf97c82348e",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Grupo no Iêmen usou Claude, IA da Anthropic, para desenvolver armas teleguiadas",
+      "captionFingerprint": "5175193c0308ddc114ceb32d3ae17c2cc13f163af435ef73ba50e94dd3c24915",
+      "coverTitle": "Grupo no Iêmen usou Claude, IA da Anthropic, para desenvolver armas teleguiadas",
+      "coverAvatar": "docs/uploads/avatar-marcondes-office-laptop.png",
+      "avatarRotationStart": 0,
+      "publishedAt": "2026-09-11T16:29:49.520Z",
+      "slotDate": "2026-09-11",
+      "slotIndex": 5,
+      "scheduledAt": "2026-09-11T16:00:00.000Z",
+      "workflowRun": "34622027896",
+      "mediaId": "18335591110261240",
+      "storyMediaId": "18091978031559141",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18335591110261240/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AfLsvqrYsHRdeiu24FwJ8W2\"}}",
+      "permalink": "https://www.instagram.com/p/DdJ17b3HAF5/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "G1 Tecnologia",
+          "sourceUrl": "https://g1.globo.com/tecnologia/noticia/2026/09/11/grupo-no-iemen-usou-ia-da-anthropic-para-desenvolver-armas-teleguiadas.ghtml",
+          "sourceTitle": "Grupo no Iêmen usou Claude, IA da Anthropic, para desenvolver armas teleguiadas",
+          "imageUrl": "https://s2-g1.glbimg.com/8cmxuzM2C5PJCn6xhzvXi1RTPj8=/1280x0/filters:format(jpeg)/https://s04.video.glbimg.com/x720/14721911.jpg",
+          "imageSourcePageUrl": "https://g1.globo.com/tecnologia/noticia/2026/09/11/grupo-no-iemen-usou-ia-da-anthropic-para-desenvolver-armas-teleguiadas.ghtml",
+          "imageCredit": "G1 Tecnologia",
+          "imageEvidence": "Main image metadata of the selected article.",
+          "imageHash": "82f0f422f8e53c0e457969928d65cc33aca8e5cffd4921a0fa29a81e88e692fe",
+          "perceptualHash": "0001011000001111001000011010011100101000011001110010101011010011001110001001101101111011100000110000110100011000000011100001110011001101111111011100111001001011001100001110011100010110011000110001011110110010100011110001110011111000111101010111110011100001",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://g1.globo.com/tecnologia/noticia/2026/09/11/grupo-no-iemen-usou-ia-da-anthropic-para-desenvolver-armas-teleguiadas.ghtml",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-11-132853-slot-5/visual-candidate-1/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Main image metadata of the selected article."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-11T15:04:48.909Z",
+        "ageHours": 1.4,
+        "freshness": "current",
+        "effectiveSamples": 109,
+        "effectiveReach": 764,
+        "controlledSamples": 85,
+        "selectionModes": {
+          "exploit": 55,
+          "explore": 18,
+          "experiment": 12
+        },
+        "confidenceLevel": "moderate",
+        "autonomousReady": false,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "conversation",
+        "primarySignal": "comentarios",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|midday|conversation",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "curiosidade-util",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "research": {
+        "id": "2826344c5433",
+        "source": "G1 Tecnologia",
+        "sourceUrl": "https://g1.globo.com/tecnologia/noticia/2026/09/11/grupo-no-iemen-usou-ia-da-anthropic-para-desenvolver-armas-teleguiadas.ghtml",
+        "sourceTitle": "Grupo no Iêmen usou Claude, IA da Anthropic, para desenvolver armas teleguiadas",
+        "sourceImageUrl": "https://s2-g1.glbimg.com/ggAgGAKz8sAilZq4KHwRV7WpvQk=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/h/N/xXDQmRQzWxBLmyIciB7g/107ee220-8a00-11f1-bf17-1d06aa0f4f93.jpg.webp",
+        "publishedAt": "2026-09-11T12:12:51.000Z",
+        "researchedAt": "2026-09-11T16:28:46.384Z",
+        "theme": "automação com IA para empresas",
+        "sourceFact": "Por que tanta gente está falando do Claude? Conheça a IA mais perigosa do mundo Um grupo baseado no norte do Iêmen usou o Claude, inteligência artificial da empresa americana Anthropic, para tentar desenvolver mísseis e outras armas, segundo um relatório divulgado pela companhia na quinta-feira (10). A empresa afirmou ter identificado três projetos militares conduzidos com ajuda da ferramenta. 🗒️ Tem alguma sugestão de reportagem? A Anthropic afirmou que o grupo chegou a testar o lançamento desse foguete.",
+        "sourceFacts": [
+          "Por que tanta gente está falando do Claude? Conheça a IA mais perigosa do mundo",
+          "Um grupo baseado no norte do Iêmen usou o Claude , inteligência artificial da empresa americana Anthropic, para tentar desenvolver mísseis e outras armas, segundo um relatório divulgado pela companhia na quinta-feira (10). A empresa afirmou ter identificado três projetos militares conduzidos com ajuda da ferramenta.",
+          "Entre eles estavam um foguete guiado, um míssil balístico com alcance superior a 2 mil quilômetros e um projétil equipado com um planador hipersônico. Apesar do avanço dos projetos, a Anthropic disse não ter encontrado evidências de que o grupo tenha conseguido colocar uma arma operacional em funcionamento.",
+          "Segundo a empresa, o grupo recorreu ao Claude para realizar tarefas que normalmente exigiriam uma equipe de engenheiros especializada em sistemas de orientação, navegação e controle de armas.",
+          "Um dos projetos envolvia um foguete capaz de ajustar automaticamente sua trajetória durante o voo. Para isso, o grupo desenvolveu um sistema de orientação que utilizava uma calculadora de voo semelhante à de um smartphone."
+        ],
+        "editorialVariant": 0
+      }
     }
   ]
 }
