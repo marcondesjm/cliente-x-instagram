@@ -19437,6 +19437,162 @@
         ],
         "editorialVariant": 2
       }
+    },
+    {
+      "feedFingerprint": "33a50034a718efaad52080e12bbeb9ea9208dccaed6779bcd86e3aaecac80c50",
+      "storyFingerprint": "33a50034a718efaad52080e12bbeb9ea9208dccaed6779bcd86e3aaecac80c50",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Homem reúne três placas de vídeo, incluindo uma modificada, e monta servidor com 70 GB de VRAM para IA",
+      "captionFingerprint": "e96a9c3b3b7828a07661871c513dbebc14ed53bd5bd0990003a97dd8fa5dff98",
+      "coverTitle": "Homem reúne três placas de vídeo, incluindo uma modificada, e monta servidor com 70 GB de VRAM para IA",
+      "coverAvatar": "docs/uploads/avatar-marcondes-presentation.png",
+      "avatarRotationStart": 2,
+      "publishedAt": "2026-09-11T22:13:49.098Z",
+      "slotDate": "2026-09-11",
+      "slotIndex": 11,
+      "scheduledAt": "2026-09-11T22:00:00.000Z",
+      "workflowRun": "34652855411",
+      "mediaId": "18006607694977403",
+      "storyMediaId": "18133529953710405",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18006607694977403/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"Ac6UhomxXdc5yCIbwAmaji_\"}}",
+      "permalink": "https://www.instagram.com/p/DdKdTORGHwC/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Hardware.com.br",
+          "sourceUrl": "https://www.hardware.com.br/noticias/servidor-ia-70-gb-vram-rtx-2080-ti-modificada/",
+          "sourceTitle": "Homem reúne três placas de vídeo, incluindo uma modificada, e monta servidor com 70 GB de VRAM para IA",
+          "imageUrl": "https://www.hardware.com.br/wp-content/uploads/2026/09/servidor-3.jpg",
+          "imageSourcePageUrl": "https://www.hardware.com.br/noticias/servidor-ia-70-gb-vram-rtx-2080-ti-modificada/",
+          "imageCredit": "Hardware.com.br",
+          "imageEvidence": "Main image metadata of the selected article.",
+          "imageHash": "7a5cd2b08d4f030280c6c858251f167022f7cf0db7167cecfb6a7df75e3a2206",
+          "perceptualHash": "1010011111101100101011111101100010101100110110101010100001011010110110100101100011011001100110001101110101011000110111101101100011001110010111001100101111011100110010111101110011001011110011101100110010001110110010101000101111001001110010111100100011001011",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://www.hardware.com.br/noticias/servidor-ia-70-gb-vram-rtx-2080-ti-modificada/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-11-191251-slot-11/visual-candidate-1/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Main image metadata of the selected article."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-11T21:43:36.965Z",
+        "ageHours": 0.49,
+        "freshness": "current",
+        "effectiveSamples": 114,
+        "effectiveReach": 811,
+        "controlledSamples": 91,
+        "selectionModes": {
+          "exploit": 60,
+          "explore": 19,
+          "experiment": 12
+        },
+        "confidenceLevel": "moderate",
+        "autonomousReady": false,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "evening",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|evening|utility",
+        "decisionReasons": [
+          "dado-concreto",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-abaixo-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 6.91,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "research": {
+        "id": "507cb620fe24",
+        "source": "Hardware.com.br",
+        "sourceUrl": "https://www.hardware.com.br/noticias/servidor-ia-70-gb-vram-rtx-2080-ti-modificada/",
+        "sourceTitle": "Homem reúne três placas de vídeo, incluindo uma modificada, e monta servidor com 70 GB de VRAM para IA",
+        "sourceImageUrl": "",
+        "publishedAt": "2026-09-11T14:57:45.000Z",
+        "researchedAt": "2026-09-11T22:12:40.337Z",
+        "theme": "automação com IA para empresas",
+        "sourceFact": "Homem reúne três placas de vídeo para montar um servidor de IA com 70 GB de VRAM, incluindo uma RTX 2080 Ti modificada de 11 GB para 22 GB.",
+        "sourceFacts": [
+          "Homem reúne três placas de vídeo para montar um servidor de IA com 70 GB de VRAM, incluindo uma RTX 2080 Ti modificada de 11 GB para 22 GB."
+        ],
+        "editorialVariant": 3
+      }
     }
   ]
 }
