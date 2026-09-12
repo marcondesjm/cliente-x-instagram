@@ -1,3 +1,13 @@
+## 2026-09-12 — estratégia educativa ativa v6.05
+
+- Pedido “bora fazer tudo” implementado: biblioteca de 16 aulas com exemplos, prompts e revisão; ciclo 7 tutoriais / 2 notícias aplicáveis / 1 oferta; um carrossel às 16h BRT com Story. Configuração remota confirmada com educationStrategy.enabled=true, início 13/09, revisão 27/09. Hoje já houve publicações; seletor respondeu has_due=false pela transição/limite diário.
+- Código 596f2e6c e correção 72c769c5 integrados a main. Deploy final dpl_5nuG517Y28GCt9mVou2xJBkVwb35 READY no alias principal; código equivalente ao commit anterior à reaplicação sobre uma coleta automática de métricas. Única diferença recebida do remoto durante essa reaplicação: performance-insights.json, consultado ao vivo pelo painel.
+- Domínio HTTP 200, v6.05; sessão autenticada exibiu estratégia ativa, plano salvo, um horário e comparação automática FEED/REELS em 24h/72h, com coleta de 12/09 às 12:30:32Z. Corrigidos limite de 1MB da leitura de métricas e contagem de agenda exibida antes do carregamento.
+- Página Bio pública confirmada: “Aprenda a aplicar IA no trabalho do seu negócio” e “Conversa sobre IA no seu negócio”. Bio do Instagram já estava atualizada pelo usuário e foi preservada.
+- Baseline parcial persistido, 181 observações elegíveis no snapshot inicial; painel informa cobertura atual por métrica. Conversas e vendas continuam manuais. Nenhum ganho ainda atribuído ao experimento.
+- Primeira aula prevista: “A equipe responde a mesma dúvida todo dia?”, episódio 6, 13/09 às 16h. Render do carrossel e Story validado e inspecionado sem publicar. Prova de publicação Meta depende do horário futuro; não há Feed/Story ID desse novo ciclo ainda.
+- Detalhes e limites da biblioteca: ESTRATEGIA_EDUCATIVA_2026-09-12.md. validate-copy, validate-growth-plan, validate-follower-growth e validate-education-strategy passaram.
+
 ## 2026-09-12 — painel de melhoria v6.04
 
 - Nova aba Melhorar Instagram publicada: checklist, bio copiável, três modelos no editor e resultados de um experimento de 14 dias, salvos por conta.
