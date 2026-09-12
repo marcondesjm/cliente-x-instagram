@@ -1,3 +1,10 @@
+## 2026-09-12 13h14 BRT — monitoramento e recuperação do slot 5
+
+- Usuário autorizou acompanhar e corrigir a próxima publicação. Slot 5, 13h BRT, ainda pendente; até a consulta de 13h14 não havia execução nova do principal/backup. Ambos ativos no GitHub; ausência de disparo observada, sem atribuir causa interna ao agendador.
+- Corrigido risco no gatilho de recuperação por push: antes rodava mesmo sem pendência e selecionava slot 0. Agora exige fila ou slot pendente, preserva modo manual explícito e metadados da fila; se outro run concluir antes, não publica conteúdo extra.
+- Testes validate-recovery-workflow e validate-restored-schedule aprovados (pendência, fila, modo manual, FFmpeg, marcação e tolerância/horário BRT).
+- Disparo de recuperação pelo arquivo já configurado no workflow; mantém grupo de concorrência automática e consulta de main. Prova de Feed/Story e ledger ainda pendente.
+
 ## 2026-09-12 — indicador do Radar corrigido, v6.08
 
 - O checklist confundia a prévia educativa de amanhã com falha do Radar: exigia que todos os packs futuros tivessem prefixo news-. Removida essa inferência.

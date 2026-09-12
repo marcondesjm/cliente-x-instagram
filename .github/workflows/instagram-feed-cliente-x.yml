@@ -137,39 +137,35 @@ jobs:
         run: node scripts/select-due-auto-slot.mjs
 
       - name: Install dependencies
-        if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
+        if: github.event_name == 'workflow_dispatch' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
         run: npm ci
 
       - name: Validate copy
-        if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
+        if: github.event_name == 'workflow_dispatch' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
         run: npm run instagram -- --account "$ACCOUNT" --validate-copy
 
       - name: Validate cloud visual agent
-        if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
+        if: github.event_name == 'workflow_dispatch' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
         run: node scripts/validate-visual-agent.mjs
 
       - name: Install Playwright Chromium
-        if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
+        if: github.event_name == 'workflow_dispatch' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
         run: npx playwright install --with-deps chromium
 
       - name: Install FFmpeg for Reels
-        if: (github.event_name == 'workflow_dispatch' && (github.event.inputs.publish_mode == 'reel-only' || github.event.inputs.publish_mode == 'reel-and-story')) || github.event_name == 'push' || (github.event_name != 'workflow_dispatch' && (steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'))
+        if: (github.event_name == 'workflow_dispatch' && (github.event.inputs.publish_mode == 'reel-only' || github.event.inputs.publish_mode == 'reel-and-story')) || (github.event_name != 'workflow_dispatch' && (steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'))
         run: |
           sudo apt-get update
           sudo apt-get install -y ffmpeg
           ffmpeg -version
 
       - name: Select content slot
-        if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
+        if: github.event_name == 'workflow_dispatch' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
         shell: bash
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             SLOT_INDEX="${{ github.event.inputs.slot_index || '0' }}"
           elif [ "${{ steps.scheduled_queue.outputs.has_due }}" = "true" ]; then
-            SLOT_INDEX="0"
-          elif [ "${{ github.event_name }}" = "push" ] && [ "${{ steps.auto_slot.outputs.has_due }}" = "true" ]; then
-            SLOT_INDEX="${{ steps.auto_slot.outputs.slot_index }}"
-          elif [ "${{ github.event_name }}" = "push" ]; then
             SLOT_INDEX="0"
           else
             SLOT_INDEX="${{ steps.auto_slot.outputs.slot_index }}"
@@ -177,11 +173,11 @@ jobs:
           echo "INSTAGRAM_TEMPLATE_SLOT_INDEX=$SLOT_INDEX" >> "$GITHUB_ENV"
 
       - name: Resolve automatic slot metadata
-        if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || steps.auto_slot.outputs.has_due == 'true'
+        if: github.event_name == 'workflow_dispatch' || steps.auto_slot.outputs.has_due == 'true'
         run: node scripts/resolve-slot-metadata.mjs --slot-index "$INSTAGRAM_TEMPLATE_SLOT_INDEX"
 
       - name: Publish feed and story
-        if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
+        if: github.event_name == 'workflow_dispatch' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
         shell: bash
         run: |
           ARGS=""
@@ -212,7 +208,7 @@ jobs:
         run: node scripts/record-watchdog-status.mjs --status=failed
 
       - name: Persist schedule state
-        if: always() && (steps.scheduled_queue.outputs.state_changed == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true')
+        if: always() && (steps.scheduled_queue.outputs.state_changed == 'true' || github.event_name == 'workflow_dispatch' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true')
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
