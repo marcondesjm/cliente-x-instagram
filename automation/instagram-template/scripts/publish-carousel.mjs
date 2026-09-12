@@ -302,15 +302,15 @@ async function loadSupabasePacks(env, accountName) {
   endpoint.searchParams.set('active', 'eq.true');
   endpoint.searchParams.set('order', 'slot_index.asc');
 
-  const res = await fetch(endpoint, {
-    headers: {
-      apikey: key,
-      Authorization: `Bearer ${key}`
-    }
+  // This is a read-only request, before any Meta publication. Transient
+  // gateway failures should use the same bounded retry policy as other reads.
+  const rows = await withRetry('Supabase posts', async () => {
+    const res = await fetchWithContext(endpoint, {
+      headers: { apikey: key, Authorization: `Bearer ${key}` }
+    }, 'Supabase posts');
+    if (!res.ok) throw createHttpError('Supabase posts', res.status, await res.text());
+    return res.json();
   });
-  if (!res.ok) throw new Error(`Supabase posts failed [${res.status}]: ${await res.text()}`);
-
-  const rows = await res.json();
   if (!Array.isArray(rows) || !rows.length) return null;
   return rows.map((row) => ({
     slotIndex: row.slot_index,
