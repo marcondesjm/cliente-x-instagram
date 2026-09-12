@@ -1,3 +1,10 @@
+## 2026-09-12 — aprendizado educativo v6.06 publicado
+
+- Código 56a81123 integrado a origin/main; deploy dpl_AWunksTqYinawAc94gwZ55BAgNd8 READY no alias cliente-x-instagram.vercel.app.
+- Seletor favorece temas de aulas inéditas por salvamentos, compartilhamentos e comentários sobre alcance, somente depois de seis aulas distintas com janela real de 24–36h e demais critérios. Mantém exploração determinística e travas de duplicidade. Decisão acompanha o metadado education no histórico.
+- Painel informa motivo, quantidade de tutoriais elegíveis e alcance. Estado atual sem amostra educativa suficiente; nenhuma melhora de engajamento atribuída. Agenda preservada: início 13/09 às 16h BRT.
+- Testes validate-education-learning e validate-education-strategy passaram; validate-growth-plan e validate-copy também passaram durante a implementação. HTTP 200 confirmou v6.06 e growth-panel.js público idêntico ao arquivo validado. Inspeção autenticada após deploy não concluída: navegador retornou Debugger unattached; não alegar verificação visual da nova mensagem.
+- Critérios e limites: APRENDIZADO_EDUCATIVO_2026-09-12.md. Métrica externa de 0,05% não usada como evidência comparável.
 ## 2026-09-12 — estratégia educativa ativa v6.05
 
 - Pedido “bora fazer tudo” implementado: biblioteca de 16 aulas com exemplos, prompts e revisão; ciclo 7 tutoriais / 2 notícias aplicáveis / 1 oferta; um carrossel às 16h BRT com Story. Configuração remota confirmada com educationStrategy.enabled=true, início 13/09, revisão 27/09. Hoje já houve publicações; seletor respondeu has_due=false pela transição/limite diário.
