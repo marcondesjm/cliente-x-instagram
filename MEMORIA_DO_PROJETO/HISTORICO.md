@@ -4,7 +4,7 @@
 - Saúde do Radar passa a ler a coleta persistida em main, isolada por conta, mostrando data em BRT, notícias únicas por URL e fontes representadas. Dados acima de 48h, ausência de pauta com origem/data válidas e falha na consulta mantêm aviso; agenda educativa não interfere.
 - Verificação remota anterior ao deploy: coleta de 12/09 às 08h16 BRT, 103 variantes, 102 URLs de notícias na janela e 13 fontes representadas entre 26 cadastradas. Não é garantia de pauta inédita pronta; qualidade e repetição continuam avaliadas no disparo.
 - Versão da API alinhada ao HTML em v6.08. Agenda de 13 horários preservada.
-- Testes: radar-health (datas, ausência, conta, HTTP/timeout e mix educativo), growth-plan (sintaxe do painel) e restored-schedule aprovados. Deploy em andamento.
+- Testes: radar-health (datas, ausência, conta, HTTP/timeout e mix educativo), growth-plan (sintaxe do painel) e restored-schedule aprovados. Produção: 5807cf36 em main; deploy dpl_4rD6wcBq3bK1TmPrqfmo7eDVce6k READY. Aba autenticada recarregada e inspecionada às 12h58 BRT: v6.08, Radar verde com coleta 08h16, 102 notícias/13 fontes e agenda com 13 horários.
 
 ## 2026-09-12 — restauração autorizada dos 13 horários, v6.07
 
