@@ -60,6 +60,7 @@
     const target = el('growthEvidence');
     if (!report) { target.textContent = error || 'Sem comparação automática disponível nesta conta.'; return; }
     const heading = document.createElement('h3'); heading.textContent = 'Coletas automáticas: comparação por formato e idade'; target.append(heading);
+    if (report.learning) { const status=document.createElement('p'); status.textContent=`Aprendizado educativo: ${report.learning.reason} Tutoriais elegíveis: ${report.learning.eligiblePosts}. Alcance acumulado: ${report.learning.totalReach}.`; target.append(status); }
     const note = document.createElement('p'); note.textContent = `Base: ${report.baselineStart} a ${report.baselineEnd}. Teste: ${report.startDate} a ${report.endDate}. Última coleta: ${report.collectedAt || 'indisponível'}. ${report.live ? 'Dados consultados na nuvem.' : 'Cópia local da última implantação; atualização ao vivo indisponível.'} Amostras disponíveis, não totais completos da conta.`; target.append(note);
     for (const group of report.groups) {
       const block = document.createElement('p');

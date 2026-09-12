@@ -5762,7 +5762,11 @@ async function main() {
     } else if (educationalKind === 'offer') {
       candidate = nextEducationPack(publicationHistory, duplicate, 'offer');
     }
-    if (!candidate) candidate = nextEducationPack(publicationHistory, duplicate);
+    if (!candidate) {
+      const insightPath = join(args.configDir, 'performance-insights.json');
+      const insights = existsSync(insightPath) ? readJson(insightPath) : {};
+      candidate = nextEducationPack(publicationHistory, duplicate, 'tutorial', {samples:insights.accounts?.[account.account]?.samples || [],updatedAt:insights.updatedAt,date:today});
+    }
     if (!candidate) throw Object.assign(new Error('Biblioteca educativa sem aula inédita elegível. Acrescente uma demonstração revisada; notícias genéricas não serão usadas como preenchimento.'), {stage:'education-library'});
     candidate.caption = fitInstagramCaption(candidate.caption, candidate);
     validatePack(candidate);

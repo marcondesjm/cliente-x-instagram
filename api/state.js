@@ -21,6 +21,7 @@ import { GROWTH_FILE, updateGrowthRecord } from '../lib/growth-plan.js';
 import { educationEnabled, educationPreview } from '../lib/education-strategy.js';
 import { educationEvidence } from '../lib/education-evidence.js';
 import { loadPerformanceInsights } from './private-metrics.js';
+import { educationLearningModel } from '../lib/education-learning.js';
 
 const ROOT = process.cwd();
 const CONTENT_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'content-packs.json');
@@ -52,7 +53,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'nerion-social-stable',
   label: 'Versão estável',
-  appVersion: 'v6.05',
+  appVersion: 'v6.06',
   status: 'funcionando',
   stableCommit: 'b0a0b45',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/b0a0b45',
@@ -2495,7 +2496,7 @@ export default async function handler(req, res) {
             const insights = await loadPerformanceInsights();
             const summary = educationEvidence(insights.stored.accounts?.[account.account]?.samples || [], account.educationStrategy.startDate, insights.stored.updatedAt);
             const {observations, ...report} = summary;
-            evidence = { ...report, live: insights.live, dataSource: insights.dataSource };
+            evidence = { ...report, live: insights.live, dataSource: insights.dataSource, learning: educationLearningModel(insights.stored.accounts?.[account.account]?.samples || [], insights.live ? insights.stored.updatedAt : null) };
           } catch { evidenceError = 'Coletas automáticas indisponíveis nesta consulta. Seu plano continua acessível.'; }
         }
         res.status(200).json({ record, evidence, evidenceError, strategy: account.educationStrategy || null, scheduleCount: account.scheduleUtc?.length || 0 });
