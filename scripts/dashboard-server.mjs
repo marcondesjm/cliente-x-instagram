@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { analyzeBrandDocument } from '../lib/brand-analysis.js';
 import { synchronizeDailyPlan } from '../api/state.js';
 import { GROWTH_FILE, updateGrowthRecord } from '../lib/growth-plan.js';
+import { educationEvidence } from '../lib/education-evidence.js';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const DOCS_DIR = join(ROOT, 'docs');
@@ -996,7 +997,10 @@ async function handleApi(req, res, url) {
           writeJson(path, result.records);
           record = result.record;
         }
-        return json(res, 200, { record });
+        const strategy = accounts.find(item=>item.account===body.account)?.educationStrategy || null;
+        const insights = readJson(join(ROOT, 'automation/instagram-template/config/performance-insights.json'));
+        const {observations, ...evidence} = educationEvidence(insights.accounts?.[body.account]?.samples || [],strategy?.startDate,insights.updatedAt);
+        return json(res, 200, { record, strategy, evidence:strategy?.enabled ? evidence : null });
       }
       if (body.action === 'update-account-profile') {
         return json(res, 200, updateAccountProfile(body));

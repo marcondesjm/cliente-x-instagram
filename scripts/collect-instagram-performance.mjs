@@ -481,6 +481,7 @@ async function main() {
       permalink: entry.permalink || null,
       publishedAt: entry.publishedAt,
       editorialSeries: entry.editorialSeries || null,
+      education: entry.education || null,
       source: entry.research?.source || null,
       theme: entry.research?.theme || null,
       coverTitle: entry.coverTitle || null,
@@ -495,6 +496,7 @@ async function main() {
       observations: []
     };
     sample.editorialSeries = entry.editorialSeries || sample.editorialSeries || null;
+    sample.education = entry.education || sample.education || null;
     sample.durationSeconds = entry.reelDurationSeconds || sample.durationSeconds || null;
     const dueWindow = WINDOWS.filter((windowHours) => ageHours >= windowHours && !sample.observations.some((item) => item.windowHours === windowHours)).at(-1);
     const lastCollected = Date.parse(sample.latestObservation?.collectedAt || sample.observations.at(-1)?.collectedAt || '');

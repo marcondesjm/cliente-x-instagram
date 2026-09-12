@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { chromium } from 'playwright';
 import { seriesForSlot, seriesPacks } from '../../../lib/follower-series.js';
+import { educationEnabled, educationKind, educationLessons, nextEducationPack, isBusinessAINews, newsWithPracticalExercise, educationPreview, educationDayBlocked } from '../../../lib/education-strategy.js';
 import { normalizeContentFingerprint, packContentFingerprint, availableBookStoryPacks } from '../../../lib/scheduled-content-guard.js';
 import { createHash, randomInt } from 'node:crypto';
 import { lookup } from 'node:dns/promises';
@@ -1315,6 +1316,7 @@ function enhanceCaption(caption, dateString, slotIndex, goal = CONTENT_GOALS.aut
 }
 
 function enhancePackForEngagement(pack, dateString, slotIndex, account = {}) {
+  if (pack.education) return { pack: JSON.parse(JSON.stringify(pack)), intelligence: { enabled: true, strategy: 'aula-pratica-com-um-proximo-passo', primarySignal: pack.education.kind === 'offer' ? 'conversas qualificadas' : 'salvamentos', educationalCopyPreserved: true } };
   if (process.env.INSTAGRAM_TEMPLATE_DISABLE_ENGAGEMENT_AI === 'true') {
     return {
       pack,
@@ -4288,6 +4290,7 @@ function recordPublicationHistory(configDir, accountKey, pack, result) {
       learning: result.learningDecision || null,
       learningContext: result.learningContext || null,
       editorialSeries: pack.editorialSeries || null,
+      education: pack.education || null,
       research: pack.research || null
     });
   }
@@ -5069,6 +5072,10 @@ async function main() {
 
   const today = args.planDate || todaySaoPaulo();
   if (args.planDay) {
+    if (educationEnabled(account)) {
+      console.log(JSON.stringify({ ok: true, account: account.account, date: today, dailyPlan: educationPreview(account, today, readPublicationHistory(args.configDir, account.account)) }, null, 2));
+      return;
+    }
     let plannedNews = [];
     if (radar.enabled && radar.sources.length) {
       try {
@@ -5088,6 +5095,11 @@ async function main() {
 
   const slotIndex = readSlotIndex();
   const publicationHistory = readPublicationHistory(args.configDir, account.account);
+  const educationalRun = educationEnabled(account) && process.env.INSTAGRAM_TEMPLATE_AUTOMATIC_RUN === 'true' && !process.env.INSTAGRAM_TEMPLATE_PACK_JSON?.trim() && !args.storyOnly && !args.scheduledOnly;
+  const educationalKind = educationKind(today, account.educationStrategy?.startDate);
+  if (educationalRun && !args.renderOnly && !args.dryRun && !args.validateCopy) {
+    if (slotIndex !== 0 || educationDayBlocked(account, today, publicationHistory)) throw Object.assign(new Error('Agenda educativa: aguarde o próximo dia elegível; limite de um post principal por dia.'), {stage:'education-daily-guard'});
+  }
   const creativeBatchSize = 74;
   const creativeGeneration = Math.floor(publicationHistory.length / creativeBatchSize) + 1;
   // Keep the real publication aligned with the dashboard preview. Freshness is
@@ -5097,7 +5109,7 @@ async function main() {
   const profilePacks = buildProfileContentPacks(account, today, generationSlotIndex);
   const autoPacks = profilePacks.length ? profilePacks : buildAutoContentPacks(today, generationSlotIndex);
   let editorialResearch = { packs: [], items: [], failures: [], researchedAt: new Date().toISOString() };
-  if (!args.validateCopy && radar.enabled && radar.sources.length) {
+  if (!args.validateCopy && radar.enabled && radar.sources.length && (!educationalRun || educationalKind === 'news')) {
     try {
       editorialResearch = await researchRadarWithFallback(radarOptions);
       if (editorialResearch.packs.length && !args.dryRun) {
@@ -5151,6 +5163,7 @@ async function main() {
   validatePacks(autoPacks);
   validatePacks(automaticSelectionPacks);
   if (args.validateCopy) {
+    validatePacks(educationLessons());
     validatePacks(seriesPacks());
     const githubRaceProbe = createHttpError(
       'GitHub image hosting',
@@ -5740,7 +5753,27 @@ async function main() {
   }
 
   let seriesSelection = null;
-  if (process.env.INSTAGRAM_TEMPLATE_AUTOMATIC_RUN === 'true' && !scheduledPost && !dashboardPack && !args.storyOnly && !args.scheduledOnly) {
+  if (educationalRun && !scheduledPost && !dashboardPack) {
+    const duplicate = candidate => Boolean(findDuplicateSelection(candidate, [], publicationHistory));
+    let candidate = null;
+    if (educationalKind === 'news') {
+      const news = editorialResearch.packs.filter(isBusinessAINews).find(p => !duplicate(p));
+      if (news) candidate = newsWithPracticalExercise(news);
+    } else if (educationalKind === 'offer') {
+      candidate = nextEducationPack(publicationHistory, duplicate, 'offer');
+    }
+    if (!candidate) candidate = nextEducationPack(publicationHistory, duplicate);
+    if (!candidate) throw Object.assign(new Error('Biblioteca educativa sem aula inédita elegível. Acrescente uma demonstração revisada; notícias genéricas não serão usadas como preenchimento.'), {stage:'education-library'});
+    candidate.caption = fitInstagramCaption(candidate.caption, candidate);
+    validatePack(candidate);
+    seriesSelection = candidate;
+    pack = candidate;
+    packIndex = `education-${candidate.education.lessonId}`;
+    selectionMode = `education-${candidate.education.kind}`;
+    publishMode = 'feed-and-story';
+    console.log(`Estratégia educativa: ${candidate.education.kind}, ${candidate.slides[0].title}.`);
+  }
+  if (!educationEnabled(account) && process.env.INSTAGRAM_TEMPLATE_AUTOMATIC_RUN === 'true' && !scheduledPost && !dashboardPack && !args.storyOnly && !args.scheduledOnly) {
     const candidate = seriesForSlot(account.account, process.env.INSTAGRAM_TEMPLATE_SLOT_DATE || today, slotIndex, publicationHistory);
     if (candidate && !findDuplicateSelection(candidate, [], publicationHistory)) {
       seriesSelection = candidate;

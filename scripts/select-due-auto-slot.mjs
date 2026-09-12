@@ -2,6 +2,7 @@
 import { existsSync, readFileSync, appendFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { educationDayBlocked } from '../lib/education-strategy.js';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const ACCOUNT = process.env.ACCOUNT || process.env.INSTAGRAM_TEMPLATE_ACCOUNT || 'cliente-x';
@@ -68,6 +69,13 @@ const done = new Set(
 const now = new Date();
 const dueUntil = new Date(now.getTime() - Math.max(0, GRACE_MINUTES) * 60_000);
 const currentLocalDate = saoPauloDate(now);
+if (account.educationStrategy?.enabled) {
+  const history = readJson(join(ROOT, 'automation/instagram-template/config/publication-history.json'), {})[ACCOUNT] || [];
+  if (educationDayBlocked(account, currentLocalDate, history)) {
+    writeOutput({ has_due: 'false', reason: 'education-daily-limit-or-transition' });
+    process.exit(0);
+  }
+}
 const candidates = [];
 
 for (const offset of [-1, 0]) {
