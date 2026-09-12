@@ -4,7 +4,7 @@
 - Restaurados os 13 crons e agenda anterior. Modo integrated-slot limita somente a aula, sem bloquear notícias publicadas no mesmo dia. Slot educativo em carrossel com Story; demais formatos anteriores preservados.
 - Retomada considera somente horários a partir de 12/09 às 12:43:30 BRT; slots anteriores não são acumulados. Próxima janela: 13h BRT, checagem principal 13h07.
 - Validações: estratégia educativa, aprendizado, painel, textos e regressão de agenda (crons, limite diário, horário BRT, tolerância e ausência de acúmulo) aprovadas.
-- Envio/deploy em andamento; confirmação remota será registrada em seguida. Nenhuma nova publicação Meta afirmada neste checkpoint.
+- Produção confirmada: cc1378e9 em origin/main; deploy dpl_7Fdgzs2N29hHmJn3qU2G6DfPyUqS READY no alias cliente-x-instagram.vercel.app. Domínio HTTP 200 com v6.07 e growth-panel.js público idêntico ao validado. Nenhuma nova publicação Meta afirmada; aguardar a próxima janela de 13h BRT.
 
 ## 2026-09-12 — aprendizado educativo v6.06 publicado
 
