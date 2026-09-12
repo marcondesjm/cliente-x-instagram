@@ -17,6 +17,7 @@ import { accountFromQuery, normalizeAccountKey, requireConfiguredAccount } from 
 import { analyzeBrandDocument } from '../lib/brand-analysis.js';
 import { EDITORIAL_SOURCES, normalizeEditorialSources, researchFreshEditorialPacks } from '../lib/editorial-research.js';
 import Stripe from 'stripe';
+import { GROWTH_FILE, updateGrowthRecord } from '../lib/growth-plan.js';
 
 const ROOT = process.cwd();
 const CONTENT_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'content-packs.json');
@@ -48,7 +49,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'nerion-social-stable',
   label: 'Versão estável',
-  appVersion: 'v6.03',
+  appVersion: 'v6.04',
   status: 'funcionando',
   stableCommit: 'b0a0b45',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/b0a0b45',
@@ -2468,6 +2469,21 @@ export default async function handler(req, res) {
       const session = getSession(req);
       if (!session) {
         res.status(401).json({ error: 'Login admin obrigatorio.' });
+        return;
+      }
+      if (body.action === 'load-growth-plan' || body.action === 'save-growth-plan') {
+        const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
+        const account = requireConfiguredAccount(accounts, String(body.account || ''));
+        if (!canAccessAccount(session, account)) throw userError('Seu usuário não pode acessar esta conta.', 403);
+        const file = await readGithubConfig(GROWTH_FILE);
+        let record = file.data.find(item => item.account === account.account) || null;
+        if (body.action === 'save-growth-plan') {
+          const result = updateGrowthRecord(file.data, account.account, body.plan, body.revision);
+          await writeGithubConfig(GROWTH_FILE, result.records, file.sha, `Update growth plan ${account.account}`);
+          record = result.record;
+        }
+        res.setHeader('cache-control', 'no-store');
+        res.status(200).json({ record });
         return;
       }
       if (body.action === 'validate-access') {

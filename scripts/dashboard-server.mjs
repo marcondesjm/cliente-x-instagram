@@ -6,6 +6,7 @@ import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { analyzeBrandDocument } from '../lib/brand-analysis.js';
 import { synchronizeDailyPlan } from '../api/state.js';
+import { GROWTH_FILE, updateGrowthRecord } from '../lib/growth-plan.js';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const DOCS_DIR = join(ROOT, 'docs');
@@ -984,6 +985,19 @@ async function handleApi(req, res, url) {
     }
     if (req.method === 'POST' && url.pathname === '/api/state') {
       const body = await readBody(req);
+      if (body.action === 'load-growth-plan' || body.action === 'save-growth-plan') {
+        const accounts = readJson(ACCOUNTS_PATH);
+        if (!accounts.some(item => item.account === body.account)) return json(res, 400, { error: 'Conta inválida.' });
+        const path = join(ROOT, GROWTH_FILE);
+        const records = readJson(path);
+        let record = records.find(item => item.account === body.account) || null;
+        if (body.action === 'save-growth-plan') {
+          const result = updateGrowthRecord(records, body.account, body.plan, body.revision);
+          writeJson(path, result.records);
+          record = result.record;
+        }
+        return json(res, 200, { record });
+      }
       if (body.action === 'update-account-profile') {
         return json(res, 200, updateAccountProfile(body));
       }

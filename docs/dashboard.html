@@ -1752,7 +1752,7 @@
         <div class="eyebrow">Instagram Automation</div>
         <h1>Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
-        <div class="header-version" id="headerVersion">Versão atual: v6.03</div>
+        <div class="header-version" id="headerVersion">Versão atual: v6.04</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
           <span class="header-health-dot" aria-hidden="true"></span>
           <span id="headerHealthText">Checkagem aguardando</span>
@@ -1776,6 +1776,7 @@
 
     <nav class="dashboard-nav" aria-label="Áreas do painel">
       <button type="button" class="active" data-dashboard-view="overview">Visão geral</button>
+      <button type="button" data-dashboard-view="growth">Melhorar Instagram</button>
       <button type="button" data-dashboard-view="content">Conteúdo</button>
       <button type="button" data-dashboard-view="posting-logic">Lógica da postagem</button>
       <button type="button" data-dashboard-view="direct-history">Histórico do Direct</button>
@@ -1789,6 +1790,12 @@
 
     <main>
       <section class="grid">
+        <div class="panel" id="growthPanel">
+          <div class="panel-head"><div><div class="section-label">Plano de ação · v6.04</div><h2>Melhorar Instagram</h2></div><span class="status-pill" id="growthProgress">0 de 5 ações</span></div>
+          <p>Transforme aplicações de IA em conteúdo útil e acompanhe as conversas que chegam ao seu negócio.</p>
+          <div id="growthBody"></div>
+          <div class="message" id="growthMessage" role="status" aria-live="polite">Abra esta aba para carregar seu plano.</div>
+        </div>
         <div class="metrics">
           <div class="metric">
             <div class="label">Próxima postagem</div>
@@ -2849,6 +2856,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     </footer>
   </div>
 
+  <link rel="stylesheet" href="/docs/growth-panel.css">
+  <script src="/docs/growth-panel.js"></script>
   <script>
     const DATA = {
       repo: 'marcondesjm/cliente-x-instagram',
@@ -2916,6 +2925,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
     const DIRECT_HISTORY_PAGE_SIZE = 10;
 
     const DASHBOARD_GROUPS = {
+      growth: ['growthPanel'],
       overview: ['instagramShowcase', 'latestPostTitle', 'performanceLearningPanel'],
       content: ['packSelect', 'directAutomationStatus'],
       'posting-logic': ['activeProfileStatus'],
@@ -2944,6 +2954,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       });
       document.getElementById('deployMessage')?.classList.toggle('dashboard-view-hidden', selected !== 'system');
       try { localStorage.setItem('dashboard-active-view', selected); } catch {}
+      if (selected === 'growth') window.loadGrowthPanel();
     }
 
     function setupDashboardNavigation() {
@@ -3100,6 +3111,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         appState.sessionRole = state.session?.role || appState.sessionRole;
         appState.selectedAccount = state.selectedAccount || state.accounts?.[0]?.account || '';
         appState.account = state.account || null;
+        window.resetGrowthAccount(appState.selectedAccount);
         appState.packs = state.packs || [];
         appState.scheduleBrt = state.scheduleBrt || [];
         appState.dailyPlan = state.dailyPlan || [];
