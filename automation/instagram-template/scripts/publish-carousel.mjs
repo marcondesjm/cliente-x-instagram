@@ -3626,18 +3626,16 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
       const headline = document.querySelector('.headline');
       const note = document.querySelector('.note');
       if (!headline) return { corrected: 0, collisions: [] };
-      const headlineRect = headline.getBoundingClientRect();
       const visuals = [...document.querySelectorAll('.panel, .context-photo')].filter((element) => {
         const style = getComputedStyle(element);
         return style.display !== 'none' && style.visibility !== 'hidden' && Number(style.opacity) > 0;
       });
       let corrected = 0;
-      const intersectsHeadline = (rect) => !(
-        rect.right <= headlineRect.left
-        || rect.left >= headlineRect.right
-        || rect.bottom <= headlineRect.top
-        || rect.top >= headlineRect.bottom
-      );
+      const intersectsHeadline = (rect) => {
+        const headlineRect = headline.getBoundingClientRect();
+        return !(rect.right <= headlineRect.left || rect.left >= headlineRect.right
+          || rect.bottom <= headlineRect.top || rect.top >= headlineRect.bottom);
+      };
       const intersects = (first, second) => !(
         first.right <= second.left
         || first.left >= second.right
@@ -3676,9 +3674,9 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
       for (const visual of visuals) {
         const rect = visual.getBoundingClientRect();
         if (!intersectsHeadline(rect)) continue;
-        const safeTop = Math.ceil(headlineRect.bottom + 34);
+        let safeTop = Math.ceil(headline.getBoundingClientRect().bottom + 34);
         const safeBottom = safeBottomFor(rect);
-        const safeHeight = safeBottom - safeTop;
+        let safeHeight = safeBottom - safeTop;
         const main = document.querySelector('main');
         const preserveCoverPhoto = main?.classList.contains('role-hook')
           && (visual.classList.contains('panel') || visual.classList.contains('context-photo'));
@@ -3686,6 +3684,18 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
         const preserveResearchPhoto = main?.classList.contains('has-research-image') && visual.classList.contains('context-photo');
         const preservePhoto = preserveCoverPhoto || preserveReelPhoto || preserveResearchPhoto;
         const minimumHeight = preservePhoto ? 280 : 150;
+        // A factual title may miss the note but still leave too little room
+        // for its required photo. Fit only this collision, keeping the full
+        // text, the photo and the established 38px readability floor.
+        for (let pass = 0; preservePhoto && safeHeight < minimumHeight && pass < 8; pass += 1) {
+          const size = parseFloat(getComputedStyle(headline).fontSize);
+          const nextSize = Math.max(38, Math.floor(size * 0.94));
+          if (nextSize >= size) break;
+          headline.style.fontSize = `${nextSize}px`;
+          corrected += 1;
+          safeTop = Math.ceil(headline.getBoundingClientRect().bottom + 34);
+          safeHeight = safeBottom - safeTop;
+        }
         if (safeHeight >= minimumHeight) {
           visual.style.top = `${safeTop}px`;
           visual.style.height = `${Math.max(minimumHeight, Math.min(Math.round(rect.height), safeHeight))}px`;
