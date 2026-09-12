@@ -1,3 +1,11 @@
+## 2026-09-12 — indicador do Radar corrigido, v6.08
+
+- O checklist confundia a prévia educativa de amanhã com falha do Radar: exigia que todos os packs futuros tivessem prefixo news-. Removida essa inferência.
+- Saúde do Radar passa a ler a coleta persistida em main, isolada por conta, mostrando data em BRT, notícias únicas por URL e fontes representadas. Dados acima de 48h, ausência de pauta com origem/data válidas e falha na consulta mantêm aviso; agenda educativa não interfere.
+- Verificação remota anterior ao deploy: coleta de 12/09 às 08h16 BRT, 103 variantes, 102 URLs de notícias na janela e 13 fontes representadas entre 26 cadastradas. Não é garantia de pauta inédita pronta; qualidade e repetição continuam avaliadas no disparo.
+- Versão da API alinhada ao HTML em v6.08. Agenda de 13 horários preservada.
+- Testes: radar-health (datas, ausência, conta, HTTP/timeout e mix educativo), growth-plan (sintaxe do painel) e restored-schedule aprovados. Deploy em andamento.
+
 ## 2026-09-12 — restauração autorizada dos 13 horários, v6.07
 
 - Pedido confirmado: 13 publicações diárias, com aula educativa incluída no slot 9 às 16h BRT, a partir de 13/09; aprendizado educativo mantido. Demais slots continuam com Radar e proteções de repetição e qualidade.

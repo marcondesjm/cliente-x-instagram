@@ -17,6 +17,7 @@ import { accountFromQuery, normalizeAccountKey, requireConfiguredAccount } from 
 import { analyzeBrandDocument } from '../lib/brand-analysis.js';
 import { EDITORIAL_SOURCES, normalizeEditorialSources, researchFreshEditorialPacks } from '../lib/editorial-research.js';
 import Stripe from 'stripe';
+import { loadRadarCollectionHealth } from '../lib/radar-health.js';
 import { GROWTH_FILE, updateGrowthRecord } from '../lib/growth-plan.js';
 import { educationEnabled, educationPreview } from '../lib/education-strategy.js';
 import { educationEvidence } from '../lib/education-evidence.js';
@@ -53,7 +54,7 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'nerion-social-stable',
   label: 'Versão estável',
-  appVersion: 'v6.06',
+  appVersion: 'v6.08',
   status: 'funcionando',
   stableCommit: 'b0a0b45',
   stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/b0a0b45',
@@ -2891,9 +2892,7 @@ export default async function handler(req, res) {
   }
   tomorrowPlan = mergeProgramItems(tomorrowPlan, weeklyPrograms, tomorrowDate);
   const radarConfig = radarConfigForAccount(account);
-  const tomorrowRadarWorking = radarConfig.enabled
-    && tomorrowPlan.some((item) => item.type === 'automatic')
-    && tomorrowPlan.filter((item) => item.type === 'automatic').every((item) => String(item.packIndex || '').startsWith('news-'));
+  const radarHealth = await loadRadarCollectionHealth(radarConfig, accountKey);
   // O Radar escolhe a pauta definitiva somente no disparo. Sincronizar a
   // data futura remove títulos provisórios que reapareciam deslocados do dia
   // atual e evita apresentar previsão editorial como conteúdo confirmado.
@@ -2933,8 +2932,7 @@ export default async function handler(req, res) {
       reviewedAt: new Date().toISOString()
     },
     editorialRadar: {
-      status: tomorrowRadarWorking ? 'working' : 'fallback',
-      label: tomorrowRadarWorking ? 'Radar funcionando' : (radarConfig.enabled ? 'Radar em modo de reserva' : 'Radar desativado para esta conta'),
+      ...radarHealth,
       maxAgeDays: radarConfig.maxAgeDays,
       sources: radarConfig.sources,
       keywords: radarConfig.keywords,
