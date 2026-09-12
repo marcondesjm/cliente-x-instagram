@@ -50,7 +50,7 @@
       const result = await api('/api/state', { method: 'POST', body: JSON.stringify({action:'load-growth-plan',account:selected}) });
       if (id !== requestId || selected !== appState.selectedAccount) return;
       revision = result.record?.revision || 0; loaded = true; render(result.record?.plan);
-      el('growthSchedule').textContent = `Agenda atual: ${appState.scheduleBrt?.length || 0} horários. Editar este formulário não altera os disparos.`;
+      el('growthSchedule').textContent = `Agenda atual: ${result.scheduleCount ?? appState.scheduleBrt?.length ?? 0} horários. Editar este formulário não altera os disparos.`;
       el('growthStrategy').textContent = result.strategy?.enabled ? `Estratégia educativa ativa: um carrossel às 16h BRT com Story complementar. Início: ${result.strategy.startDate}. Revisão: ${result.strategy.reviewDate}. Ciclo de 10 posts: 7 tutoriais, 2 notícias aplicáveis e 1 oferta. Sem notícia adequada, entra tutorial.` : 'Estratégia educativa ainda não ativada nesta conta.';
       renderEvidence(result.evidence, result.evidenceError);
       message(result.record ? `Plano carregado. Último salvamento: ${new Date(result.record.updatedAt).toLocaleString('pt-BR')}.` : 'Plano inicial pronto. Revise e salve para continuar depois.');
@@ -60,7 +60,7 @@
     const target = el('growthEvidence');
     if (!report) { target.textContent = error || 'Sem comparação automática disponível nesta conta.'; return; }
     const heading = document.createElement('h3'); heading.textContent = 'Coletas automáticas: comparação por formato e idade'; target.append(heading);
-    const note = document.createElement('p'); note.textContent = `Base: ${report.baselineStart} a ${report.baselineEnd}. Teste: ${report.startDate} a ${report.endDate}. Última coleta: ${report.collectedAt || 'indisponível'}. Amostras disponíveis, não totais completos da conta.`; target.append(note);
+    const note = document.createElement('p'); note.textContent = `Base: ${report.baselineStart} a ${report.baselineEnd}. Teste: ${report.startDate} a ${report.endDate}. Última coleta: ${report.collectedAt || 'indisponível'}. ${report.live ? 'Dados consultados na nuvem.' : 'Cópia local da última implantação; atualização ao vivo indisponível.'} Amostras disponíveis, não totais completos da conta.`; target.append(note);
     for (const group of report.groups) {
       const block = document.createElement('p');
       const metric = (period, key) => { const m = group[period].metrics[key]; return m.median === null ? 'sem dado' : `${m.median.toLocaleString('pt-BR')} (n=${m.observed})`; };

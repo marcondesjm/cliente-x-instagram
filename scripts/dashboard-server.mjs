@@ -1000,7 +1000,7 @@ async function handleApi(req, res, url) {
         const strategy = accounts.find(item=>item.account===body.account)?.educationStrategy || null;
         const insights = readJson(join(ROOT, 'automation/instagram-template/config/performance-insights.json'));
         const {observations, ...evidence} = educationEvidence(insights.accounts?.[body.account]?.samples || [],strategy?.startDate,insights.updatedAt);
-        return json(res, 200, { record, strategy, evidence:strategy?.enabled ? evidence : null });
+        return json(res, 200, { record, strategy, evidence:strategy?.enabled ? {...evidence,live:false,dataSource:'local'} : null, scheduleCount:accounts.find(item=>item.account===body.account)?.scheduleUtc?.length || 0 });
       }
       if (body.action === 'update-account-profile') {
         return json(res, 200, updateAccountProfile(body));

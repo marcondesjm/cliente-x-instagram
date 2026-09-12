@@ -23,7 +23,8 @@ process.env.ADMIN_USERS_JSON = JSON.stringify([{email:'limited@example.test',pas
 process.env.GITHUB_TOKEN = 'test-only-token';
 let records = [], writes = 0;
 global.fetch = async (url, options = {}) => {
-  if (String(url).includes('accounts.json')) return new Response(JSON.stringify({content:Buffer.from(JSON.stringify([{account:'cliente-x'},{account:'cliente-y'}])).toString('base64')}));
+  if (String(url).includes('accounts.json')) return new Response(JSON.stringify({content:Buffer.from(JSON.stringify([{account:'cliente-x',educationStrategy:{enabled:true,startDate:'2026-09-13'},scheduleUtc:['0 19 * * *']},{account:'cliente-y'}])).toString('base64')}));
+  if (String(url).includes('raw.githubusercontent.com') && String(url).includes('performance-insights.json')) return new Response(JSON.stringify({updatedAt:'2026-09-12T12:00:00Z',padding:'x'.repeat(1100000),accounts:{'cliente-x':{samples:[]}}}));
   assert.ok(String(url).includes('growth-plans.json'), 'Only growth config may be accessed');
   if (options.method === 'PUT') { records = JSON.parse(Buffer.from(JSON.parse(options.body).content, 'base64')); writes++; return new Response('{}'); }
   return new Response(JSON.stringify({sha:'test-sha',content:Buffer.from(JSON.stringify(records)).toString('base64')}));
@@ -37,6 +38,9 @@ async function call(body, email='owner@example.test') {
 assert.equal((await call({action:'load-growth-plan',account:'cliente-x'},null)).status,401);
 assert.equal((await call({action:'load-growth-plan',account:'cliente-x'},'limited@example.test')).status,403);
 assert.equal((await call({action:'load-growth-plan',account:'cliente-x'})).body.record,null);
+const loadedEvidence = await call({action:'load-growth-plan',account:'cliente-x'});
+assert.equal(loadedEvidence.body.evidence.live,true);
+assert.equal(loadedEvidence.body.scheduleCount,1);
 assert.equal((await call({action:'save-growth-plan',account:'cliente-x',revision:0,plan:{bio:'Minha bio',periods:{after:{sales:0}}}})).status,200);
 assert.equal((await call({action:'load-growth-plan',account:'cliente-x'})).body.record.plan.periods.after.sales,0);
 assert.equal((await call({action:'load-growth-plan',account:'cliente-y'},'limited@example.test')).body.record,null);

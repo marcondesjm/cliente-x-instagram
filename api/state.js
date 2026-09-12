@@ -20,6 +20,7 @@ import Stripe from 'stripe';
 import { GROWTH_FILE, updateGrowthRecord } from '../lib/growth-plan.js';
 import { educationEnabled, educationPreview } from '../lib/education-strategy.js';
 import { educationEvidence } from '../lib/education-evidence.js';
+import { loadPerformanceInsights } from './private-metrics.js';
 
 const ROOT = process.cwd();
 const CONTENT_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'content-packs.json');
@@ -2491,13 +2492,13 @@ export default async function handler(req, res) {
         let evidence = null, evidenceError = null;
         if (body.action === 'load-growth-plan' && educationEnabled(account)) {
           try {
-            const insights = await readGithubConfig('automation/instagram-template/config/performance-insights.json');
-            const summary = educationEvidence(insights.data.accounts?.[account.account]?.samples || [], account.educationStrategy.startDate, insights.data.updatedAt);
+            const insights = await loadPerformanceInsights();
+            const summary = educationEvidence(insights.stored.accounts?.[account.account]?.samples || [], account.educationStrategy.startDate, insights.stored.updatedAt);
             const {observations, ...report} = summary;
-            evidence = report;
+            evidence = { ...report, live: insights.live, dataSource: insights.dataSource };
           } catch { evidenceError = 'Coletas automáticas indisponíveis nesta consulta. Seu plano continua acessível.'; }
         }
-        res.status(200).json({ record, evidence, evidenceError, strategy: account.educationStrategy || null });
+        res.status(200).json({ record, evidence, evidenceError, strategy: account.educationStrategy || null, scheduleCount: account.scheduleUtc?.length || 0 });
         return;
       }
       if (body.action === 'validate-access') {

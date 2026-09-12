@@ -52,7 +52,7 @@ function growthFocus({ recentMedia = [], latestInsights = null } = {}) {
   return { signal: 'compartilhamentos', action: 'produzir conteudo util para uma pessoa enviar a colega, socio ou gestor' };
 }
 
-async function loadPerformanceInsights() {
+export async function loadPerformanceInsights() {
   try {
     const url = new URL(PERFORMANCE_INSIGHTS_LIVE_URL);
     url.searchParams.set('v', Date.now().toString());
