@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Plataforma de automação editorial para Instagram: pauta, criação, agenda, publicação e Direct em um único painel.">
+  <meta name="description" content="Plataforma de automação editorial para Instagram: pautas, aulas práticas de IA, criação, agenda, publicação, Direct e aprendizado por desempenho em um único painel.">
   <meta name="theme-color" content="#18241e">
   <title>Nerion Social | Automação editorial para Instagram</title>
   <style>
@@ -206,7 +206,7 @@
     .platform-carousel-control:hover { color: #fff; background: var(--olive-dark); }
     .platform-carousel-control.prev { left: 16px; }
     .platform-carousel-control.next { right: 16px; }
-    .platform-carousel-nav { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; padding: 0 20px 18px; background: #fff; }
+    .platform-carousel-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding: 0 20px 18px; background: #fff; }
     .platform-carousel-dot { width: 100%; min-height: 42px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 10px; color: var(--ink-soft); background: #fff; font-size: 12px; font-weight: 850; line-height: 1.2; cursor: pointer; }
     .platform-carousel-dot[aria-current="true"] { color: #fff; border-color: var(--olive-dark); background: var(--olive-dark); }
     .screen-visual, .output-visual { position: relative; overflow: hidden; isolation: isolate; background: var(--paper); }
@@ -224,8 +224,8 @@
     .instagram-proofs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: min(980px, 100%); margin: 0 auto; }
     .instagram-proof { margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: #fff; box-shadow: 0 18px 50px rgba(28,43,34,.08); }
     .instagram-proof-media { position: relative; display: block; height: 610px; overflow: hidden; background: var(--paper); }
-    .instagram-proof-media img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top; transition: transform .45s ease; }
-    .instagram-proof-media:hover img { transform: scale(1.018); }
+    .instagram-proof-media img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center top; transition: transform .45s ease; }
+    .instagram-proof-media:hover img { opacity: .96; }
     .instagram-pinned-label { position: absolute; z-index: 2; top: 14px; left: 14px; display: inline-flex; align-items: center; gap: 7px; padding: 9px 12px; border-radius: 999px; color: #fff; background: rgba(19,34,56,.9); box-shadow: 0 10px 28px rgba(19,34,56,.2); font-size: 11px; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; }
     .instagram-pinned-label::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #a8d77b; box-shadow: 0 0 0 4px rgba(168,215,123,.18); }
     .instagram-proof figcaption { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 17px 18px; border-top: 1px solid var(--line); }
@@ -447,6 +447,44 @@
       .motion-ready .trust { opacity: 1; transform: none; filter: none; }
       .motion-ready .product-stage { opacity: 1; clip-path: none; transform: none; }
     }
+
+    .feature-demo { height: auto; min-height: 650px; padding: 74px 72px 30px; background: linear-gradient(145deg, #f5f8f2, #fff 70%); }
+    .feature-demo-heading { max-width: 760px; margin-bottom: 25px; }
+    .feature-demo-heading small { color: var(--olive-dark); font-size: 11px; font-weight: 850; letter-spacing: .1em; }
+    .feature-demo-heading h3 { margin: 10px 0 12px; font-size: clamp(26px, 3vw, 38px); line-height: 1.1; letter-spacing: -.035em; }
+    .feature-demo-heading p { margin: 0; color: var(--ink-soft); font-size: 15px; }
+    .feature-demo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .feature-mini { padding: 18px 20px; background: #fff; border: 1px solid var(--line); border-radius: 12px; }
+    .feature-mini b { color: var(--olive-dark); font-size: 14px; }
+    .feature-mini p { margin: 7px 0 0; font-size: 13px; color: var(--ink-soft); }
+    .feature-demo-note { margin-top: 20px; padding: 16px 20px; background: var(--mint); border-radius: 10px; font-size: 13px; }
+    .feature-demo-note strong { display: block; margin-bottom: 4px; }
+    .learning-flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 30px 0; }
+    .learning-flow div { padding: 24px 18px; border-top: 3px solid var(--olive); background: #fff; border-radius: 0 0 10px 10px; }
+    .learning-flow b, .learning-flow span { display: block; }
+    .learning-flow b { font-size: 19px; margin-bottom: 10px; }
+    .learning-flow span { font-size: 14px; color: var(--ink-soft); }
+    .tour-note { margin: 15px auto 0; max-width: 1080px; color: var(--ink-soft); font-size: 12px; }
+    .proof-heading { margin: 44px auto 24px; max-width: 980px; }
+    .proof-heading h3 { font-size: clamp(24px, 3vw, 32px); margin: 0; line-height: 1.2; letter-spacing: -.03em; }
+    .proof-heading p:not(.eyebrow) { color: var(--ink-soft); }
+    .promo-volume-card:nth-child(2) > strong { font-size: 24px; }
+    @media (max-width: 760px) {
+      .feature-demo.platform-slide-image { height: auto; min-height: 660px; padding: 65px 24px 20px; }
+      .feature-demo-heading { margin-bottom: 18px; }
+      .feature-demo-heading h3 { font-size: 25px; }
+      .feature-demo-heading p { font-size: 13px; }
+      .feature-demo-grid { gap: 9px; }
+      .feature-mini { padding: 12px; }
+      .feature-mini b { font-size: 12px; }
+      .feature-mini p, .feature-demo-note { font-size: 12px; }
+      .feature-demo-note { margin-top: 15px; padding: 12px; }
+      .learning-flow { grid-template-columns: 1fr; gap: 9px; margin: 18px 0; }
+      .learning-flow div { padding: 12px 14px; }
+      .learning-flow b { font-size: 16px; margin-bottom: 3px; }
+      .learning-flow span { font-size: 12px; }
+      .platform-slide figcaption { min-height: 115px; }
+    }
   </style>
 </head>
 <body>
@@ -454,6 +492,7 @@
     <div class="wrap nav-inner">
       <a class="logo" href="#inicio"><span class="logo-mark" aria-hidden="true"></span><span>Nerion Social</span></a>
       <div class="nav-links">
+        <a href="#produto">Novidades</a>
         <a href="#recursos">Recursos</a>
         <a href="#como-funciona">Como funciona</a>
         <a href="#modelos">Planos</a>
@@ -468,7 +507,7 @@
         <div>
           <p class="eyebrow">Automação de conteúdo para Instagram</p>
           <h1>Conteúdo criado, agendado e publicado <span>para a sua empresa.</span></h1>
-          <p class="hero-copy">A Nerion Social é uma plataforma que <strong>pesquisa pautas, cria carrosséis, Stories e legendas e publica no Instagram automaticamente</strong>. A operação segue a identidade, o público e os objetivos da sua marca.</p>
+          <p class="hero-copy">A Nerion Social é uma plataforma que <strong>pesquisa pautas, prepara aulas práticas, cria carrosséis, Reels, Stories e legendas e publica no Instagram automaticamente</strong>. A operação segue a identidade, o público e os objetivos da sua marca. O painel Melhorar Instagram ajuda a planejar os próximos passos e comparar resultados.</p>
           <div class="hero-actions">
             <a class="button" href="https://wa.me/5548996029392?text=Ol%C3%A1%2C%20Marcondes!%20Quero%20saber%20como%20funciona%20a%20Nerion%20Social." target="_blank" rel="noopener noreferrer">Quero ver uma demonstração <span aria-hidden="true">→</span></a>
             <a class="button light" href="#como-funciona">Ver como funciona</a>
@@ -481,8 +520,8 @@
               <span class="promo-now"><small>Agora</small><strong>R$ 197<small>/mês</small></strong></span>
             </div>
             <div class="promo-volume" aria-label="Volume diário incluído">
-              <div class="promo-volume-card"><strong>+12</strong><span>carrosséis<br>por dia</span></div>
-              <div class="promo-volume-card"><strong>12</strong><span>Stories<br>por dia</span></div>
+              <div class="promo-volume-card"><strong>13</strong><span>horários<br>por dia</span></div>
+              <div class="promo-volume-card"><strong>Feed + Story</strong><span>carrosséis<br>e Reels</span></div>
               <div class="promo-gift">🎁 Implantação gratuita nesta oferta</div>
             </div>
           </div>
@@ -491,13 +530,13 @@
         <div class="product-stage">
           <div class="radar-showcase" aria-label="Como funciona o Radar editorial">
             <div class="radar-head">
-              <div><span class="radar-kicker">Radar editorial em execução</span><h2>Encontra pautas atuais antes de criar o conteúdo.</h2></div>
-              <span class="radar-state">ATIVO</span>
+              <div><span class="radar-kicker">Radar editorial com fonte e data</span><h2>Encontra pautas atuais antes de criar o conteúdo.</h2></div>
+              <span class="radar-state">26 FONTES</span>
             </div>
             <p class="radar-intro">O Radar pesquisa assuntos recentes, confere a origem e transforma a notícia em uma oportunidade relevante para a realidade da empresa.</p>
             <div class="radar-flow">
-              <div class="radar-step"><span class="radar-step-number">01</span><div><strong>Pesquisa fontes recentes</strong><small>Começa em 7 dias e amplia para 15 ou 30 quando necessário.</small></div><span class="radar-check">✓</span></div>
-              <div class="radar-step"><span class="radar-step-number">02</span><div><strong>Confere fonte e atualidade</strong><small>Exige um link rastreável e bloqueia conteúdo sem origem válida.</small></div><span class="radar-check">✓</span></div>
+              <div class="radar-step"><span class="radar-step-number">01</span><div><strong>Pesquisa fontes recentes</strong><small>Consulta as fontes e a janela de notícias configuradas para a marca.</small></div><span class="radar-check">✓</span></div>
+              <div class="radar-step"><span class="radar-step-number">02</span><div><strong>Confere fonte e atualidade</strong><small>Mostra a data da coleta e exige fonte e data válidas para cada notícia.</small></div><span class="radar-check">✓</span></div>
               <div class="radar-step"><span class="radar-step-number">03</span><div><strong>Evita assuntos e capas repetidas</strong><small>Compara links, histórico e as publicações recentes do perfil.</small></div><span class="radar-check">✓</span></div>
               <div class="radar-step"><span class="radar-step-number">04</span><div><strong>Adapta para o seu negócio</strong><small>Conecta a pauta a dores, oportunidades e objetivos da empresa.</small></div><span class="radar-check">✓</span></div>
             </div>
@@ -522,82 +561,109 @@
 
     <section class="section showcase" id="produto">
       <div class="wrap">
-        <div class="section-head"><p class="eyebrow">Produto em uso</p><h2>Veja todas as áreas da plataforma em funcionamento.</h2><p class="section-lead">As dez telas abaixo foram capturadas novamente na versão v5.27. Todos os atalhos ficam visíveis: escolha uma página para conhecer o Radar, a criação de conteúdo, o Direct, a agenda, os banners de Feed e Story, a Bio, o onboarding e a operação automática.</p></div>
+        <div class="section-head"><p class="eyebrow">Produto em uso</p><h2>Conheça o que evoluiu na sua operação.</h2><p class="section-lead">Agora você também pode organizar um plano de melhoria, publicar aulas práticas de IA e acompanhar o aprendizado por desempenho. Explore os guias dos novos recursos e as telas de referência da plataforma.</p></div>
         <div class="showcase-grid">
-          <div class="platform-carousel" id="platformCarousel" aria-roledescription="carrossel" aria-label="Páginas reais da plataforma">
+          <div class="platform-carousel" id="platformCarousel" aria-roledescription="carrossel" aria-label="Guias de recursos e telas de referência da plataforma">
             <div class="platform-carousel-viewport">
               <div class="platform-carousel-track">
-                <figure class="platform-slide" data-slide="overview" aria-hidden="false">
-                  <div class="platform-slide-image"><span class="visual-status">Página 1 de 10 · Visão geral</span><img src="/docs/uploads/platform-tabs/visao-geral.png?v=527" alt="Visão geral atual da plataforma com próxima postagem, vigia automático e publicação confirmada"></div>
+                <figure class="platform-slide" data-slide="growth" aria-hidden="false">
+                  <div class="feature-demo platform-slide-image">
+                    <span class="visual-status">Guia do recurso · Melhorar Instagram</span>
+                    <div class="feature-demo-heading"><small>DA INTENÇÃO AO PLANO</small><h3>Um próximo passo claro para o seu Instagram.</h3><p>Organize perfil, conteúdo e acompanhamento em uma área dedicada da plataforma.</p></div>
+                    <div class="feature-demo-grid">
+                      <div class="feature-mini"><b>01 · Prepare o perfil</b><p>Checklist de público, bio, demonstração, oferta e ponto de partida.</p></div>
+                      <div class="feature-mini"><b>02 · Crie com direção</b><p>Modelos de conteúdo abrem no editor para você adaptar à sua marca.</p></div>
+                      <div class="feature-mini"><b>03 · Ensine na prática</b><p>Aulas com exemplo, prompt, saída ilustrativa e revisão antes de usar.</p></div>
+                      <div class="feature-mini"><b>04 · Compare períodos</b><p>Acompanhe 14 dias de teste. Registre conversas e vendas no seu controle.</p></div>
+                    </div>
+                    <div class="feature-demo-note">Na operação demonstrada, a aula das 16h integra os 13 horários diários, a partir de 13/09/2026.</div>
+                  </div>
+                  <figcaption><div class="platform-slide-copy"><strong>Melhorar Instagram</strong><span>Plano salvo por conta, modelos editáveis e acompanhamento dos resultados.</span></div><a class="image-link" href="#recursos">Conhecer os recursos ↓</a></figcaption>
+                </figure>
+                <figure class="platform-slide" data-slide="learning" aria-hidden="true">
+                  <div class="feature-demo platform-slide-image">
+                    <span class="visual-status">Guia do recurso · Aprendizado assistido</span>
+                    <div class="feature-demo-heading"><small>DECISÕES COM CONTEXTO</small><h3>Aprender com os resultados sem perder o critério editorial.</h3><p>O desempenho orienta a escolha entre conteúdos inéditos que já passaram pelas verificações de qualidade.</p></div>
+                    <div class="learning-flow"><div><b>Observar</b><span>Alcance, salvamentos, compartilhamentos e comentários.</span></div><div><b>Comparar</b><span>Mesmo formato e tempo de publicação, com dados suficientes.</span></div><div><b>Orientar</b><span>Prioridade assistida para temas úteis, com espaço para explorar.</span></div></div>
+                    <div class="feature-demo-note"><strong>Sem amostra suficiente, a prioridade permanece neutra.</strong> O painel explica o motivo. A comparação de Feed e Reels e o aprendizado dos tutoriais mantêm critérios próprios.</div>
+                  </div>
+                  <figcaption><div class="platform-slide-copy"><strong>Aprendizado por desempenho</strong><span>Comparações em 24h e 72h, histórico de evidências e proteção contra repetição.</span></div><a class="image-link" href="#aprendizado-faq">Entender os critérios ↓</a></figcaption>
+                </figure>
+                <figure class="platform-slide" data-slide="overview" aria-hidden="true">
+                  <div class="platform-slide-image"><span class="visual-status">Captura de referência · Visão geral</span><img src="/docs/uploads/platform-tabs/visao-geral.png?v=527" alt="Visão geral da plataforma com próxima postagem, vigia automático e publicação confirmada"></div>
                   <figcaption><div class="platform-slide-copy"><strong>Visão geral da operação</strong><span>Mostra a próxima postagem, o vigia automático e o último conteúdo confirmado pela Meta.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/visao-geral.png?v=527" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
                 </figure>
                 <figure class="platform-slide" data-slide="editor" aria-hidden="true">
-                  <div class="platform-slide-image"><span class="visual-status">Página 2 de 10 · Conteúdo</span><img src="/docs/uploads/platform-tabs/conteudo.png?v=527" alt="Editor atual de conteúdo com slides, imagens, textos e Radar da marca"></div>
+                  <div class="platform-slide-image"><span class="visual-status">Captura de referência · Conteúdo</span><img src="/docs/uploads/platform-tabs/conteudo.png?v=527" alt="Editor de conteúdo com slides, imagens, textos e Radar da marca"></div>
                   <figcaption><div class="platform-slide-copy"><strong>Conteúdo, identidade e Radar</strong><span>Permite revisar criativos, editar cada slide e orientar as pautas com fontes oficiais do nicho.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/conteudo.png?v=527" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
                 </figure>
                 <figure class="platform-slide" data-slide="direct-automation" aria-hidden="true">
-                  <div class="platform-slide-image"><span class="visual-status">Página 3 de 10 · Automação do Direct</span><img src="/docs/uploads/platform-tabs/automacao-direct.png?v=527" alt="Configuração atual da automação do Direct com Meta conectada, palavras-chave e material"></div>
+                  <div class="platform-slide-image"><span class="visual-status">Captura de referência · Automação do Direct</span><img src="/docs/uploads/platform-tabs/automacao-direct.png?v=527" alt="Configuração da automação do Direct com Meta conectada, palavras-chave e material"></div>
                   <figcaption><div class="platform-slide-copy"><strong>Automação de comentário para Direct</strong><span>Configura a palavra-chave, o material entregue e a resposta automática vinculada à conta.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/automacao-direct.png?v=527" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
                 </figure>
                 <figure class="platform-slide" data-slide="direct" aria-hidden="true">
-                  <div class="platform-slide-image"><span class="visual-status">Página 4 de 10 · Histórico do Direct</span><img src="/docs/uploads/platform-tabs/historico-direct.png?v=527" alt="Histórico atual do Direct com registros e navegação lateral por datas"></div>
+                  <div class="platform-slide-image"><span class="visual-status">Captura de referência · Histórico do Direct</span><img src="/docs/uploads/platform-tabs/historico-direct.png?v=527" alt="Histórico do Direct com registros e navegação lateral por datas"></div>
                   <figcaption><div class="platform-slide-copy"><strong>Histórico do Direct por data</strong><span>Mostra palavras-chave, horários, envios e falhas e permite abrir rapidamente cada dia registrado.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/historico-direct.png?v=527" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
                 </figure>
                 <figure class="platform-slide" data-slide="agenda" aria-hidden="true">
-                  <div class="platform-slide-image"><span class="visual-status">Página 5 de 10 · Agenda</span><img src="/docs/uploads/platform-tabs/agenda.png?v=527" alt="Agenda atual em largura integral com 13 horários e conteúdos automáticos programados"></div>
-                  <figcaption><div class="platform-slide-copy"><strong>Agenda completa de publicações</strong><span>Exibe os 13 horários em BRT e todos os conteúdos que entrarão automaticamente na programação.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/agenda.png?v=527" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
+                  <div class="platform-slide-image"><span class="visual-status">Captura de referência · Agenda</span><img src="/docs/uploads/platform-tabs/agenda.png?v=527" alt="Agenda em largura integral com 13 horários e conteúdos automáticos programados"></div>
+                  <figcaption><div class="platform-slide-copy"><strong>Agenda completa de publicações</strong><span>Organiza os horários em BRT, mostra publicações confirmadas e diferencia prévias de pautas escolhidas no disparo.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/agenda.png?v=527" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
                 </figure>
                 <figure class="platform-slide" data-slide="weekly" aria-hidden="true">
-                  <div class="platform-slide-image"><span class="visual-status">Página 6 de 10 · Grade semanal</span><img src="/docs/uploads/platform-tabs/grade-semanal.png?v=527" alt="Grade semanal atual com prévia ao vivo para Feed e Story"></div>
+                  <div class="platform-slide-image"><span class="visual-status">Captura de referência · Grade semanal</span><img src="/docs/uploads/platform-tabs/grade-semanal.png?v=527" alt="Grade semanal com prévia ao vivo para Feed e Story"></div>
                   <figcaption><div class="platform-slide-copy"><strong>Grade semanal com postagem pronta</strong><span>Cadastra programas recorrentes, aceita banners prontos e gera artes de Feed 4:5 e Story 9:16.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/grade-semanal.png?v=527" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
                 </figure>
                 <figure class="platform-slide" data-slide="bio" aria-hidden="true">
-                  <div class="platform-slide-image"><span class="visual-status">Página 7 de 10 · Página Bio</span><img src="/docs/uploads/platform-tabs/pagina-bio.png?v=527" alt="Editor atual da Página Bio com visualização pública ao vivo na lateral"></div>
+                  <div class="platform-slide-image"><span class="visual-status">Captura de referência · Página Bio</span><img src="/docs/uploads/platform-tabs/pagina-bio.png?v=527" alt="Editor da Página Bio com visualização pública ao vivo na lateral"></div>
                   <figcaption><div class="platform-slide-copy"><strong>Página Bio com prévia ao vivo</strong><span>Edite foto, apresentação, oferta e links enquanto acompanha ao lado como a página pública ficará.</span></div><a class="image-link" href="https://cliente-x-instagram.vercel.app/bio" target="_blank" rel="noopener noreferrer">Abrir Bio real ↗</a></figcaption>
                 </figure>
                 <figure class="platform-slide" data-slide="clients" aria-hidden="true">
-                  <div class="platform-slide-image"><span class="visual-status">Página 8 de 10 · Clientes</span><img src="/docs/uploads/platform-tabs/clientes.png?v=527" alt="Carteira atual de clientes com fluxo de ativação segura pela Meta"></div>
+                  <div class="platform-slide-image"><span class="visual-status">Captura de referência · Clientes</span><img src="/docs/uploads/platform-tabs/clientes.png?v=527" alt="Carteira de clientes com fluxo de ativação segura pela Meta"></div>
                   <figcaption><div class="platform-slide-copy"><strong>Clientes e ativação segura</strong><span>Centraliza as empresas e orienta cadastro, convite, conexão da Meta e liberação da operação.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/clientes.png?v=527" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
                 </figure>
                 <figure class="platform-slide" data-slide="billing" aria-hidden="true">
-                  <div class="platform-slide-image"><span class="visual-status">Página 9 de 10 · Cobrança</span><img src="/docs/uploads/platform-tabs/cobranca.png?v=527" alt="Configuração atual de cobrança recorrente com campos protegidos e acessos conectados"></div>
+                  <div class="platform-slide-image"><span class="visual-status">Captura de referência · Cobrança</span><img src="/docs/uploads/platform-tabs/cobranca.png?v=527" alt="Configuração de cobrança recorrente com campos protegidos e acessos conectados"></div>
                   <figcaption><div class="platform-slide-copy"><strong>Cobrança recorrente</strong><span>Configura planos e checkout sem expor as chaves completas no navegador.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/cobranca.png?v=527" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
                 </figure>
                 <figure class="platform-slide" data-slide="system" aria-hidden="true">
-                  <div class="platform-slide-image"><span class="visual-status">Página 10 de 10 · Sistema</span><img src="/docs/uploads/platform-tabs/sistema.png?v=527" alt="Área Sistema atual com Radar, recursos da conta, execuções e estado do vigia"></div>
-                  <figcaption><div class="platform-slide-copy"><strong>Sistema, Radar e automação</strong><span>Resume o que está funcionando, acompanha execuções e verifica a saúde dos fluxos automáticos.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/sistema.png?v=527" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
+                  <div class="platform-slide-image"><span class="visual-status">Captura de referência · Sistema</span><img src="/docs/uploads/platform-tabs/sistema.png?v=527" alt="Área Sistema com Radar, recursos da conta, execuções e estado do vigia"></div>
+                  <figcaption><div class="platform-slide-copy"><strong>Sistema, Radar e automação</strong><span>Mostra a data da coleta do Radar, os registros de publicação e as pendências da recuperação automática.</span></div><a class="image-link" href="/docs/uploads/platform-tabs/sistema.png?v=527" target="_blank" rel="noopener noreferrer">Ampliar tela ↗</a></figcaption>
                 </figure>
               </div>
             </div>
             <button class="platform-carousel-control prev" type="button" aria-label="Mostrar página anterior">‹</button>
             <button class="platform-carousel-control next" type="button" aria-label="Mostrar próxima página">›</button>
             <div class="platform-carousel-nav" aria-label="Escolher página da plataforma">
-              <button class="platform-carousel-dot" type="button" data-platform-slide="0" aria-current="true">Visão geral</button>
-              <button class="platform-carousel-dot" type="button" data-platform-slide="1" aria-current="false">Conteúdo</button>
-              <button class="platform-carousel-dot" type="button" data-platform-slide="2" aria-current="false">Automação do Direct</button>
-              <button class="platform-carousel-dot" type="button" data-platform-slide="3" aria-current="false">Histórico do Direct</button>
-              <button class="platform-carousel-dot" type="button" data-platform-slide="4" aria-current="false">Agenda</button>
-              <button class="platform-carousel-dot" type="button" data-platform-slide="5" aria-current="false">Grade semanal</button>
-              <button class="platform-carousel-dot" type="button" data-platform-slide="6" aria-current="false">Página Bio</button>
-              <button class="platform-carousel-dot" type="button" data-platform-slide="7" aria-current="false">Clientes</button>
-              <button class="platform-carousel-dot" type="button" data-platform-slide="8" aria-current="false">Cobrança</button>
-              <button class="platform-carousel-dot" type="button" data-platform-slide="9" aria-current="false">Sistema</button>
+              <button class="platform-carousel-dot" type="button" data-platform-slide="0" aria-current="true">Melhorar Instagram</button>
+              <button class="platform-carousel-dot" type="button" data-platform-slide="1" aria-current="false">Aprendizado</button>
+              <button class="platform-carousel-dot" type="button" data-platform-slide="2" aria-current="false">Visão geral</button>
+              <button class="platform-carousel-dot" type="button" data-platform-slide="3" aria-current="false">Conteúdo</button>
+              <button class="platform-carousel-dot" type="button" data-platform-slide="4" aria-current="false">Automação do Direct</button>
+              <button class="platform-carousel-dot" type="button" data-platform-slide="5" aria-current="false">Histórico do Direct</button>
+              <button class="platform-carousel-dot" type="button" data-platform-slide="6" aria-current="false">Agenda</button>
+              <button class="platform-carousel-dot" type="button" data-platform-slide="7" aria-current="false">Grade semanal</button>
+              <button class="platform-carousel-dot" type="button" data-platform-slide="8" aria-current="false">Página Bio</button>
+              <button class="platform-carousel-dot" type="button" data-platform-slide="9" aria-current="false">Clientes</button>
+              <button class="platform-carousel-dot" type="button" data-platform-slide="10" aria-current="false">Cobrança</button>
+              <button class="platform-carousel-dot" type="button" data-platform-slide="11" aria-current="false">Sistema</button>
             </div>
           </div>
-          <div class="instagram-proofs" aria-label="Publicações reais no Instagram">
+          <p class="tour-note">Os dois primeiros painéis são guias dos novos recursos. As demais imagens são capturas de referência da interface v5.27.</p>
+          <div class="section-head proof-heading"><p class="eyebrow">Da plataforma para o Instagram</p><h3>Carrossel e Story de uma publicação real.</h3><p>Exemplo publicado em 12/09/2026. Confira o carrossel no Instagram e veja o Story complementar.</p></div>
+          <div class="instagram-proofs" aria-label="Exemplo de carrossel e Story publicados em 12 de setembro de 2026">
             <figure class="instagram-proof">
-              <a class="instagram-proof-media" href="https://www.instagram.com/p/DcHuU08EiyD/" target="_blank" rel="noopener noreferrer" aria-label="Abrir post fixado sobre inteligência artificial nas eleições">
-                <span class="instagram-pinned-label">Fixado no Instagram</span>
-                <img src="/docs/generated/cliente-x/2026-08-16-211242-slot-0/slide-01.jpg?v=526" alt="Post fixado no Instagram sobre seis casos reais de inteligência artificial nas eleições" loading="lazy">
+              <a class="instagram-proof-media" href="https://www.instagram.com/p/DdMatQPFIiW/" target="_blank" rel="noopener noreferrer" aria-label="Abrir o carrossel publicado sobre revisão de conteúdos gerados por IA">
+                <span class="instagram-pinned-label">Carrossel publicado · 12/09/2026</span>
+                <img src="/docs/generated/cliente-x/2026-09-12-132851-slot-5/slide-01.jpg" alt="Capa do carrossel publicado: advogado é multado após IA inventar testemunhas" loading="lazy" width="1080" height="1350">
               </a>
-              <figcaption><div><strong>IA nas eleições: casos reais</strong><span>Post fixado no perfil @marcondes.machado.oficial.</span></div><a class="image-link" href="https://www.instagram.com/p/DcHuU08EiyD/" target="_blank" rel="noopener noreferrer">Abrir post ↗</a></figcaption>
+              <figcaption><div><strong>Uma notícia, com fonte e contexto</strong><span>Carrossel publicado no perfil @marcondes.machado.oficial.</span></div><a class="image-link" href="https://www.instagram.com/p/DdMatQPFIiW/" target="_blank" rel="noopener noreferrer">Abrir post ↗</a></figcaption>
             </figure>
             <figure class="instagram-proof">
-              <a class="instagram-proof-media" href="https://www.instagram.com/p/DcHxTYymGS0/" target="_blank" rel="noopener noreferrer" aria-label="Abrir post fixado sobre profissionais que produzem vídeos com inteligência artificial">
-                <span class="instagram-pinned-label">Fixado no Instagram</span>
-                <img src="/docs/generated/cliente-x/2026-08-16-213846-slot-0/slide-01.jpg?v=526" alt="Post fixado no Instagram sobre profissionais que deixaram a CLT para produzir vídeos com inteligência artificial" loading="lazy">
+              <a class="instagram-proof-media" href="/docs/generated/cliente-x/2026-09-12-132851-slot-5/story.jpg" target="_blank" rel="noopener noreferrer" aria-label="Ampliar a arte do Story que acompanhou a publicação">
+                <span class="instagram-pinned-label">Story complementar · 12/09/2026</span>
+                <img src="/docs/generated/cliente-x/2026-09-12-132851-slot-5/story.jpg" alt="Story da mesma notícia, com chamada para conferir o conteúdo completo no feed" loading="lazy" width="1080" height="1920">
               </a>
-              <figcaption><div><strong>Vídeos com IA como profissão</strong><span>Post fixado, criado e publicado pela plataforma.</span></div><a class="image-link" href="https://www.instagram.com/p/DcHxTYymGS0/" target="_blank" rel="noopener noreferrer">Abrir post ↗</a></figcaption>
+              <figcaption><div><strong>A mesma pauta, em formato de Story</strong><span>Arte do Story publicado junto com o carrossel.</span></div><a class="image-link" href="/docs/generated/cliente-x/2026-09-12-132851-slot-5/story.jpg" target="_blank" rel="noopener noreferrer">Ampliar Story ↗</a></figcaption>
             </figure>
           </div>
         </div>
@@ -613,7 +679,10 @@
           <article class="card"><div class="card-icon">03</div><h3>Organiza a agenda</h3><p>Distribui o conteúdo nos horários definidos para manter uma presença constante e atualizada.</p></article>
           <article class="card"><div class="card-icon">04</div><h3>Publica e registra o resultado</h3><p>Envia feed e Story pela integração oficial e confirma no painel o que realmente foi publicado.</p></article>
           <article class="card"><div class="card-icon">05</div><h3>Responde pelo Direct</h3><p>Reconhece palavras-chave nos comentários e entrega automaticamente materiais ou links no privado.</p></article>
-          <article class="card"><div class="card-icon">06</div><h3>Permite acompanhar e ajustar</h3><p>Você vê conteúdos, agenda, histórico e saúde da automação em um painel organizado.</p></article>
+          <article class="card"><div class="card-icon">06</div><h3>Permite acompanhar e ajustar</h3><p>Acompanhe a coleta do Radar, o histórico e a recuperação de horários pendentes, sem repetir o que já foi publicado.</p></article>
+          <article class="card"><div class="card-icon">07</div><h3>Transforma objetivos em um plano</h3><p>O painel Melhorar Instagram reúne checklist, rascunho da bio, modelos editáveis e comparação de períodos de 14 dias.</p></article>
+          <article class="card"><div class="card-icon">08</div><h3>Ensina IA com exemplos práticos</h3><p>Aulas com entrada fictícia, prompt pronto, saída ilustrativa e revisão humana entram na agenda junto com as notícias.</p></article>
+          <article class="card"><div class="card-icon">09</div><h3>Aprende com evidências</h3><p>Compara formatos e considera interações úteis para orientar novos temas. Só ajusta prioridades com amostra suficiente, mantendo conteúdo inédito.</p></article>
         </div>
       </div>
     </section>
@@ -649,8 +718,8 @@
             <h3>Plano Completo</h3>
             <p class="offer-sub">Para uma empresa que quer receber a marca configurada e manter o Instagram em operação todos os dias.</p>
             <p class="offer-price"><span class="setup-free"><s>Implantação R$ 297</s><b>Implantação grátis</b></span><span class="monthly-promo"><s>R$ 397/mês</s><strong>R$ 197/mês</strong></span></p>
-            <ul><li>Uma marca configurada no painel</li><li>Mais de 12 carrosséis publicados no feed por dia</li><li>12 Stories publicados diariamente</li><li>Agenda automática e Direct</li><li>Perfil editorial, identidade visual e suporte</li></ul>
-            <a class="button" href="https://wa.me/5548996029392?text=Ol%C3%A1%2C%20Marcondes!%20Tenho%20interesse%20na%20oferta%20promocional%20da%20Nerion%20Social%20de%20R%24%20397%20por%20R%24%20197%20ao%20m%C3%AAs%2C%20com%20mais%20de%2012%20carross%C3%A9is%20no%20feed%20por%20dia%20e%2012%20Stories%20di%C3%A1rios.%20Quero%20agendar%20uma%20demonstra%C3%A7%C3%A3o." target="_blank" rel="noopener noreferrer">Quero aproveitar por R$ 197</a>
+            <ul><li>Uma marca configurada no painel</li><li>Agenda com 13 horários diários</li><li>Carrosséis ou Reels com Story complementar</li><li>Agenda automática e Direct</li><li>Plano de melhoria e aprendizado assistido</li><li>Perfil editorial, identidade visual e suporte</li></ul>
+            <a class="button" href="https://wa.me/5548996029392?text=Ol%C3%A1%2C%20Marcondes%21%20Tenho%20interesse%20na%20oferta%20promocional%20da%20Nerion%20Social%20de%20R%24%20397%20por%20R%24%20197%20ao%20m%C3%AAs%2C%20com%20agenda%20de%2013%20hor%C3%A1rios%20di%C3%A1rios%2C%20carross%C3%A9is%20ou%20Reels%20e%20Stories%20complementares.%20Quero%20agendar%20uma%20demonstra%C3%A7%C3%A3o." target="_blank" rel="noopener noreferrer">Quero aproveitar por R$ 197</a>
           </article>
           <article class="offer">
             <span class="offer-tag">Para operações estruturadas</span>
@@ -669,7 +738,7 @@
       <div class="wrap">
         <div class="section-head"><p class="eyebrow">Credibilidade sem promessa vazia</p><h2>Você confere a operação antes de depender dela.</h2><p class="section-lead">Em vez de depoimentos inventados, mostramos provas que podem ser abertas e verificadas. Quando clientes autorizarem seus relatos, eles poderão ser adicionados aqui com nome, empresa e contexto reais.</p></div>
         <div class="assurance-grid">
-          <article class="assurance-card"><span class="assurance-label">Prova pública</span><h3>Publicações reais no Instagram</h3><p>Os exemplos exibidos nesta página são posts fixados no perfil e permitem conferir o conteúdo entregue.</p><a href="https://www.instagram.com/p/DcHuU08EiyD/" target="_blank" rel="noopener noreferrer">Conferir publicação fixada ↗</a></article>
+          <article class="assurance-card"><span class="assurance-label">Prova pública</span><h3>Publicações reais no Instagram</h3><p>O carrossel exibido nesta página tem publicação confirmada e um link direto para conferir o conteúdo entregue no Instagram.</p><a href="https://www.instagram.com/p/DdMatQPFIiW/" target="_blank" rel="noopener noreferrer">Conferir publicação real ↗</a></article>
           <article class="assurance-card"><span class="assurance-label">Prova técnica</span><h3>Confirmação no painel</h3><p>A plataforma registra agenda, execução e confirmação da publicação para que você acompanhe o que realmente aconteceu.</p><a href="#produto">Ver telas da plataforma ↑</a></article>
           <article class="assurance-card featured"><span class="assurance-label">Garantia de implantação</span><h3>A configuração só termina depois do teste.</h3><p>A implantação é acompanhada até a marca estar configurada, a agenda definida e uma publicação de teste ser confirmada. Se algo falhar nessa etapa, a configuração continua sem custo adicional até a correção.</p><a href="https://wa.me/5548996029392?text=Ol%C3%A1%2C%20Marcondes!%20Quero%20entender%20a%20garantia%20de%20implanta%C3%A7%C3%A3o%20da%20Nerion%20Social." target="_blank" rel="noopener noreferrer">Entender a garantia →</a></article>
         </div>
@@ -681,13 +750,16 @@
       <div class="wrap">
         <div class="section-head"><p class="eyebrow">Perguntas frequentes</p><h2>O que você precisa saber antes da demonstração.</h2></div>
         <div class="faq">
+          <details><summary>As aulas educativas substituem as notícias?</summary><p>Elas podem fazer parte da mesma agenda. Na operação demonstrada, a aula das 16h ocupa um dos 13 horários, a partir de 13/09/2026. Os demais seguem com o Radar. Cada aula traz exemplo, prompt e revisão antes de aplicar no negócio.</p></details>
+          <details id="aprendizado-faq"><summary>Como funciona o aprendizado por desempenho?</summary><p>O painel compara publicações por formato e tempo de observação, incluindo janelas de 24h e 72h. O aprendizado educativo considera alcance, salvamentos, compartilhamentos e comentários de tutoriais comparáveis. Sem dados suficientes, mantém a prioridade neutra e informa o motivo. Isso orienta a seleção editorial; não garante crescimento nem vendas.</p></details>
+          <details><summary>Como sei se o Radar está atualizado?</summary><p>O checklist mostra a data da coleta, a quantidade de notícias e as fontes representadas. A pauta definitiva ainda passa pelas verificações de qualidade, imagem e repetição no horário da publicação. Uma aula na agenda não é tratada como falha do Radar.</p></details>
           <details><summary>Preciso criar e publicar os conteúdos manualmente?</summary><p><strong>Não. Você não precisa escrever legendas, montar artes ou fazer cada postagem.</strong> A própria plataforma pesquisa as pautas, cria o conteúdo, produz os criativos para carrossel e Story, escreve as legendas, organiza a agenda e publica automaticamente. Você mantém o controle das decisões estratégicas, aprovações e do relacionamento com os clientes.</p></details>
           <details><summary>Uma rede social ativa ajuda a atrair seguidores e clientes?</summary><p>Uma presença constante, atualizada e visualmente cuidada transmite mais confiança e ajuda a atrair seguidores reais e alinhados com a marca. São pessoas com maior potencial para interagir com os conteúdos, pedir informações, comprar produtos ou contratar serviços. O resultado não é automático nem garantido, mas publicar com consistência aumenta as oportunidades de engajamento e conversão.</p></details>
           <details><summary>Como a plataforma é acessada?</summary><p><strong>A plataforma é acessada na nuvem.</strong> Pela internet, você pode configurar, revisar e acompanhar a operação, enquanto os fluxos programados executam a agenda automaticamente.</p></details>
           <details><summary>Posso usar para vários clientes?</summary><p>Sim. A estrutura suporta contas, perfis editoriais, agendas e configurações separadas. O escopo comercial depende da quantidade de marcas e do nível de serviço desejado.</p></details>
           <details><summary>O conteúdo fica igual para todas as empresas?</summary><p>Não. Nicho, objetivo, oferta, linguagem, identidade visual, imagens, fontes e chamadas são configurados por conta.</p></details>
           <details><summary>É possível conhecer antes de contratar?</summary><p>Sim. Primeiro fazemos uma demonstração do fluxo e um diagnóstico breve para confirmar qual plano atende à operação.</p></details>
-          <details><summary>O que está incluído na promoção de R$ 197 mensais?</summary><p>O Plano Completo atende uma marca com mais de 12 carrosséis publicados no feed por dia e 12 Stories diários, além de criação de legendas, agenda automática, Direct, configuração e suporte. O valor anterior era R$ 397 por mês e a implantação de R$ 297 também está gratuita nesta oferta.</p></details>
+          <details><summary>O que está incluído na promoção de R$ 197 mensais?</summary><p>O Plano Completo atende uma marca com agenda de 13 horários diários, carrosséis ou Reels e Stories complementares, além de criação de legendas, agenda automática, Direct, configuração e suporte. O valor anterior era R$ 397 por mês e a implantação de R$ 297 também está gratuita nesta oferta.</p></details>
           <details><summary>Preciso de menos publicações. Existe um plano menor?</summary><p>Sim. Para uma frequência menor de conteúdo, consulte uma proposta adequada ao volume necessário.</p></details>
         </div>
       </div>
@@ -702,7 +774,7 @@
   </main>
 
   <footer class="site-footer">
-    <div class="wrap footer-inner"><span>Nerion Social · Automação editorial para Instagram</span><span>Uma solução de Marcondes Machado · IA aplicada a empresas</span></div>
+    <div class="wrap footer-inner"><span>Nerion Social · Automação editorial para Instagram</span><span>Uma solução de Marcondes Machado · IA aplicada a empresas · Apresentação atualizada em 12/09/2026</span></div>
   </footer>
   <script>
     (() => {
