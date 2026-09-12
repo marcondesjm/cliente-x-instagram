@@ -1,3 +1,14 @@
+## 2026-09-12 13h31 BRT — slot das 13h recuperado com Feed e Story
+
+- Publicação real confirmada no run 34705287535 (success), código 76423e19: 12/09 às 13:29:42 BRT. Carrossel “Advogado é multado após IA inventar testemunhas em caso de assassinato”.
+- Feed 18405571927094061; Story 17947150239306300; permalink https://www.instagram.com/p/DdMatQPFIiW/. Slot 5 publicado em published-slots.json e entrada correspondente em publication-history.json, persistidos em main (33c90c29). Alertas do slot resolvidos.
+- Falha visual corrigida em dca52ef0: título longo deixava espaço insuficiente para a fotografia, mesmo sem encostar no cartão de apoio. Ajuste apenas quando necessário, sem cortar texto, ocultar foto ou reduzir abaixo de 38px; leitura dos limites do título atualizada após redimensionamento.
+- Dry-run 34705054342 aprovado sem marcar slot; slide 2 e Story inspecionados. Também inspecionados slide 2 e Story dos artefatos da publicação real, separados e sem sobreposição. Arquivos finais persistidos em docs/generated/cliente-x/2026-09-12-132851-slot-5/.
+- Falha seguinte (run 34705107355) foi Supabase HTTP 504 na leitura inicial, antes da Meta. 76423e19 aplica as tentativas limitadas existentes à consulta GET, sem substituir conteúdos nem repetir erros permanentes de autenticação. Regressão 504→200, limite de tentativas e 401 aprovada.
+- Proteção complementar: dry-run não deve resolver alerta de publicação; gate ajustado e validado. A publicação real desta recuperação já está comprovada independentemente dos alertas resolvidos pelo dry-run anterior.
+- Comentário automático continua sem publicação por permissão Meta (#10); Feed e Story confirmados. Nenhuma credencial alterada.
+- Agenda de 13 horários e aula às 16h a partir de 13/09 mantidas. Próximo horário previsto: 13h50 BRT. O atraso no disparo foi contornado pelo gatilho cloud existente; não foi comprovada a causa interna do agendador GitHub nem prometida pontualidade futura.
+
 ## 2026-09-12 13h14 BRT — monitoramento e recuperação do slot 5
 
 - Usuário autorizou acompanhar e corrigir a próxima publicação. Slot 5, 13h BRT, ainda pendente; até a consulta de 13h14 não havia execução nova do principal/backup. Ambos ativos no GitHub; ausência de disparo observada, sem atribuir causa interna ao agendador.
