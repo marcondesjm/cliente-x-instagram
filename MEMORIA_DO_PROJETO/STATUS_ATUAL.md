@@ -1,3 +1,10 @@
+## 2026-09-12 — apresentação pública atualizada
+
+- /plataforma destaca Melhorar Instagram, aulas com prompts e revisão, aprendizado por desempenho, Radar com data da coleta e agenda de 13 horários.
+- Dois guias novos no carrossel; dez capturas anteriores identificadas como referência v5.27. Exemplo público substituído pelo carrossel e Story reais de 12/09, permalink DdMatQPFIiW.
+- Validação: 12 slides/12 controles, imagens existentes e carregadas, HTML HTTPS correspondente ao arquivo local (normalizadas quebras de linha). Navegação e inspeção visual desktop/celular; largura 390px sem overflow horizontal, guias sem corte vertical; viewport restaurado.
+- Vercel produção READY: dpl_9UuVAV8UQHmiyFimyyvLyFC2LHSL; alias cliente-x-instagram.vercel.app.
+
 ## 2026-09-12 13h31 BRT — slot das 13h recuperado com Feed e Story
 
 - Publicação real confirmada no run 34705287535 (success), código 76423e19: 12/09 às 13:29:42 BRT. Carrossel “Advogado é multado após IA inventar testemunhas em caso de assassinato”.
