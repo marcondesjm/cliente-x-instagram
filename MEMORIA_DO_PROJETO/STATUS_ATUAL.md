@@ -1,3 +1,10 @@
+## 2026-09-12 — painel de melhoria v6.04
+
+- Nova aba Melhorar Instagram publicada: checklist, bio copiável, três modelos no editor e resultados de um experimento de 14 dias, salvos por conta.
+- Código 8ae064f9 integrado a main. Deploy dpl_3LcRGUyQjTjoMjivxqTJ2Gxjc8tK READY, alias cliente-x-instagram.vercel.app. HTTP 200 confirmou v6.04, a nova aba e CSS/JS; script público idêntico ao validado.
+- Testes passaram para autorização, isolamento entre contas, salvamento com GitHub simulado, conflitos de revisão, limites, datas e ausência versus zero. Detalhes em PAINEL_CRESCIMENTO_2026-09-12.md.
+- Agenda de publicação, perfil do Instagram e layout editorial preservados. Um post por dia permanece proposta para revisar no painel, não alteração automática. Sem resultado de crescimento ainda medido.
+
 ## 2026-09-07 11:06 BRT — retomada e revisão da série
 
 - Referência remota conferida por fetch: origin/main c542e4d3; checkout followers, branch feat/follower-growth-series-20260906, atualizado por fast-forward. Arquivo de QA local preexistente preservado.
