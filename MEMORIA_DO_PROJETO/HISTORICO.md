@@ -1,3 +1,11 @@
+## 2026-09-12 — restauração autorizada dos 13 horários, v6.07
+
+- Pedido confirmado: 13 publicações diárias, com aula educativa incluída no slot 9 às 16h BRT, a partir de 13/09; aprendizado educativo mantido. Demais slots continuam com Radar e proteções de repetição e qualidade.
+- Restaurados os 13 crons e agenda anterior. Modo integrated-slot limita somente a aula, sem bloquear notícias publicadas no mesmo dia. Slot educativo em carrossel com Story; demais formatos anteriores preservados.
+- Retomada considera somente horários a partir de 12/09 às 12:43:30 BRT; slots anteriores não são acumulados. Próxima janela: 13h BRT, checagem principal 13h07.
+- Validações: estratégia educativa, aprendizado, painel, textos e regressão de agenda (crons, limite diário, horário BRT, tolerância e ausência de acúmulo) aprovadas.
+- Envio/deploy em andamento; confirmação remota será registrada em seguida. Nenhuma nova publicação Meta afirmada neste checkpoint.
+
 # Historico
 
 ## 2026-09-07 11:06 BRT — retomada e revisão da série

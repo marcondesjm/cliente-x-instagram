@@ -168,9 +168,29 @@
     "userIdEnv": "CLIENTE_X_INSTAGRAM_USER_ID",
     "imgbbKeyEnv": "IMGBB_API_KEY",
     "scheduleUtc": [
-      "0 19 * * *"
+      "30 9 * * *",
+      "10 11 * * *",
+      "0 12 * * *",
+      "50 14 * * *",
+      "10 15 * * *",
+      "0 16 * * *",
+      "50 16 * * *",
+      "15 17 * * *",
+      "50 17 * * *",
+      "0 19 * * *",
+      "40 20 * * *",
+      "0 22 * * *",
+      "0 1 * * *"
     ],
-    "reelScheduleSlots": [],
+    "reelScheduleSlots": [
+      0,
+      2,
+      4,
+      6,
+      7,
+      10,
+      12
+    ],
     "avatarRotation": {
       "enabled": true,
       "urls": [
@@ -222,8 +242,11 @@
         9,
         10,
         12
-      ]
-    }
+      ],
+      "mode": "integrated-slot",
+      "slotIndex": 9
+    },
+    "automaticScheduleStartsAt": "2026-09-12T15:43:30.000Z"
   },
   {
     "account": "cliente-turismo",

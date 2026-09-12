@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { chromium } from 'playwright';
 import { seriesForSlot, seriesPacks } from '../../../lib/follower-series.js';
-import { educationEnabled, educationKind, educationLessons, nextEducationPack, isBusinessAINews, newsWithPracticalExercise, educationPreview, educationDayBlocked } from '../../../lib/education-strategy.js';
+import { educationEnabled, educationKind, educationLessons, nextEducationPack, isBusinessAINews, newsWithPracticalExercise, educationPreview, educationDayBlocked, educationIntegrated, educationSlotIndex, educationForSlot } from '../../../lib/education-strategy.js';
 import { normalizeContentFingerprint, packContentFingerprint, availableBookStoryPacks } from '../../../lib/scheduled-content-guard.js';
 import { createHash, randomInt } from 'node:crypto';
 import { lookup } from 'node:dns/promises';
@@ -5095,10 +5095,10 @@ async function main() {
 
   const slotIndex = readSlotIndex();
   const publicationHistory = readPublicationHistory(args.configDir, account.account);
-  const educationalRun = educationEnabled(account) && process.env.INSTAGRAM_TEMPLATE_AUTOMATIC_RUN === 'true' && !process.env.INSTAGRAM_TEMPLATE_PACK_JSON?.trim() && !args.storyOnly && !args.scheduledOnly;
-  const educationalKind = educationKind(today, account.educationStrategy?.startDate);
+  const educationalRun = educationForSlot(account, today, slotIndex) && process.env.INSTAGRAM_TEMPLATE_AUTOMATIC_RUN === 'true' && !process.env.INSTAGRAM_TEMPLATE_PACK_JSON?.trim() && !args.storyOnly && !args.scheduledOnly;
+  const educationalKind = educationIntegrated(account) ? 'tutorial' : educationKind(today, account.educationStrategy?.startDate);
   if (educationalRun && !args.renderOnly && !args.dryRun && !args.validateCopy) {
-    if (slotIndex !== 0 || educationDayBlocked(account, today, publicationHistory)) throw Object.assign(new Error('Agenda educativa: aguarde o próximo dia elegível; limite de um post principal por dia.'), {stage:'education-daily-guard'});
+    if (slotIndex !== educationSlotIndex(account) || educationDayBlocked(account, today, publicationHistory)) throw Object.assign(new Error('Agenda educativa: aguarde o próximo dia elegível; limite de um post principal por dia.'), {stage:'education-daily-guard'});
   }
   const creativeBatchSize = 74;
   const creativeGeneration = Math.floor(publicationHistory.length / creativeBatchSize) + 1;
