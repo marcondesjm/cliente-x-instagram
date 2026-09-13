@@ -21608,6 +21608,165 @@
         ],
         "editorialVariant": 1
       }
+    },
+    {
+      "feedFingerprint": "33bf7223dd6c7442358260a82cf91b8de776faa32283d085aba22080092ee2df",
+      "storyFingerprint": "33bf7223dd6c7442358260a82cf91b8de776faa32283d085aba22080092ee2df",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Sua empresa sabe quantos agentes de IA estão trabalhando de forma governada, orquestrada e segura?",
+      "captionFingerprint": "26dffb7adab4bce95fbd4f27ece27e01af922fcfb113152ec66a65bf29b74016",
+      "coverTitle": "Sua empresa sabe quantos agentes de IA estão trabalhando de forma governada, orquestrada e segura?",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-03.png",
+      "avatarRotationStart": 6,
+      "publishedAt": "2026-09-13T11:53:22.986Z",
+      "slotDate": "2026-09-13",
+      "slotIndex": 1,
+      "scheduledAt": "2026-09-13T11:10:00.000Z",
+      "workflowRun": "34755496214",
+      "mediaId": "18384602431226792",
+      "storyMediaId": "18626153773002944",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18384602431226792/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AWwM-lHVcWGpReglJqZEsw7\"}}",
+      "permalink": "https://www.instagram.com/p/DdOf4oSILKO/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Olhar Digital",
+          "sourceUrl": "https://olhardigital.com.br/2026/09/13/colunistas/sua-empresa-sabe-quantos-agentes-de-ia-estao-trabalhando-de-forma-governada-orquestrada-e-segura/",
+          "sourceTitle": "Sua empresa sabe quantos agentes de IA estão trabalhando de forma governada, orquestrada e segura?",
+          "imageUrl": "https://img.odcdn.com.br/wp-content/uploads/2026/08/agente-de-ia-scaled.jpg",
+          "imageSourcePageUrl": "https://olhardigital.com.br/2026/09/13/colunistas/sua-empresa-sabe-quantos-agentes-de-ia-estao-trabalhando-de-forma-governada-orquestrada-e-segura/",
+          "imageCredit": "Olhar Digital",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "fff76d172a36896a12a2acab518c76a79523d5f1d2e1f874a56ad5cb53d63d35",
+          "perceptualHash": "0101010011011000001001001000100010101110100110011011011010101000000101101111111010010100111010010111000001110011011000010110110010101100111001010110011000011100110011111010111001001100101011100100010101101100000000101110101011001001111011101100011100110000",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://olhardigital.com.br/2026/09/13/colunistas/sua-empresa-sabe-quantos-agentes-de-ia-estao-trabalhando-de-forma-governada-orquestrada-e-segura/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-13-085223-slot-1/visual-candidate-1/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-13T06:00:17.053Z",
+        "ageHours": 5.87,
+        "freshness": "stale",
+        "effectiveSamples": 120,
+        "effectiveReach": 898,
+        "controlledSamples": 103,
+        "selectionModes": {
+          "exploit": 69,
+          "explore": 21,
+          "experiment": 13
+        },
+        "confidenceLevel": "moderate",
+        "autonomousReady": false,
+        "learningEnabled": false,
+        "operatingMode": "editorial-fallback",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "morning",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|morning|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente"
+        ],
+        "fatiguePenalty": 7.92,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "56585c976198",
+        "source": "Olhar Digital",
+        "sourceUrl": "https://olhardigital.com.br/2026/09/13/colunistas/sua-empresa-sabe-quantos-agentes-de-ia-estao-trabalhando-de-forma-governada-orquestrada-e-segura/",
+        "sourceTitle": "Sua empresa sabe quantos agentes de IA estão trabalhando de forma governada, orquestrada e segura?",
+        "sourceImageUrl": "https://img.odcdn.com.br/wp-content/uploads/2026/08/agente-de-ia-scaled.jpg",
+        "publishedAt": "2026-09-13T10:05:00.000Z",
+        "researchedAt": "2026-09-13T11:52:14.775Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Acredito que saber criar agentes de IA será uma competência tecnológica, mas governá-los será uma competência de negócio O post Sua empresa sabe quantos agentes de IA estão trabalhando de forma governada, orquestrada e segura? apareceu primeiro em Olhar Digital .",
+        "sourceFacts": [
+          "Até 2028, uma empresa média da Fortune 500 poderá ter mais de 150 mil agentes de Inteligência Artificial operando em sua infraestrutura. Em 2025, eram menos de 15. A projeção do Gartner mostra a velocidade de uma transformação que, na minha visão, exige uma mudança urgente na forma como as empresas discutem IA.",
+          "Há outro dado que considero ainda mais preocupante. Apenas 13% das organizações afirmam ter hoje uma estrutura adequada de governança para agentes de IA. Ou seja, enquanto avançamos rapidamente na criação de uma nova força de trabalho digital, ainda estamos aprendendo a administrá-la.",
+          "É nesse cenário que ganha relevância o chamado AI Agent Sprawl, a proliferação descontrolada de agentes de Inteligência Artificial dentro das organizações.",
+          "Nos últimos anos, acompanhei uma mudança significativa nas conversas sobre tecnologia e automação. Primeiro, a pergunta era quais processos poderiam ser automatizados. Depois, passou a ser onde aplicar inteligência artificial. Agora, acredito que precisamos acrescentar outra questão: quem está controlando tudo aquilo que colocamos para funcionar?",
+          "Vejo os agentes como uma das evoluções mais importantes da automação empresarial. Eles podem consultar bancos de dados, acessar sistemas, utilizar APIs, movimentar informações, iniciar processos e interagir com outros agentes. É justamente essa autonomia que cria enormes possibilidades de eficiência. Mas ela também traz um risco que não podemos ignorar."
+        ],
+        "editorialVariant": 2
+      }
     }
   ]
 }
