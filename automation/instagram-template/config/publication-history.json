@@ -23907,6 +23907,169 @@
         ],
         "editorialVariant": 4
       }
+    },
+    {
+      "feedFingerprint": "64167c4b0d27ded14892b9c9b875a02f386a43a8ffe9a383f234e0259fe958d4",
+      "storyFingerprint": "64167c4b0d27ded14892b9c9b875a02f386a43a8ffe9a383f234e0259fe958d4",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Como a voz do ChatGPT transformou a IA em namorado para uma brasileira",
+      "captionFingerprint": "0694fc1c6962f28ab0b844c236262c3e2e2b4b201961162b28caddb766d9b321",
+      "coverTitle": "Como a voz do ChatGPT transformou a IA em namorado para uma brasileira",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-05.png",
+      "avatarRotationStart": 8,
+      "publishedAt": "2026-09-14T13:12:42.330Z",
+      "slotDate": "2026-09-14",
+      "slotIndex": 2,
+      "scheduledAt": "2026-09-14T12:00:00.000Z",
+      "workflowRun": "34847503075",
+      "mediaId": "18100239932528322",
+      "storyMediaId": "18325709632263807",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18100239932528322/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AeLOOVXjp1NuEFffYLHf8XW\"}}",
+      "permalink": "https://www.instagram.com/reel/DdRNuAOFEL6/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Exame",
+          "sourceUrl": "https://exame.com/inteligencia-artificial/como-a-voz-do-chatgpt-transformou-a-ia-em-namorado-para-uma-brasileira/",
+          "sourceTitle": "Como a voz do ChatGPT transformou a IA em namorado para uma brasileira",
+          "imageUrl": "https://classic.exame.com/wp-content/uploads/2026/09/namoro_ia.png",
+          "imageSourcePageUrl": "https://exame.com/inteligencia-artificial/como-a-voz-do-chatgpt-transformou-a-ia-em-namorado-para-uma-brasileira/",
+          "imageCredit": "Exame",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "186a7eb1a18a6c553f5ce9c41a9677acbf38e1479492beef5c14efef95d7b925",
+          "perceptualHash": "0001000100011001000000010011000010010000101011001001000110111100100001001001101110100001101100110011000100101101001100110011001100110011001110100011011000110010000001100011011011000110001001100110011001100110001001100110000011110110011000001011011001100011",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://exame.com/inteligencia-artificial/como-a-voz-do-chatgpt-transformou-a-ia-em-namorado-para-uma-brasileira/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-14-101111-slot-2/visual-candidate-6/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-14T12:50:39.171Z",
+        "ageHours": 0.34,
+        "freshness": "current",
+        "effectiveSamples": 119,
+        "effectiveReach": 923,
+        "controlledSamples": 104,
+        "selectionModes": {
+          "exploit": 72,
+          "explore": 20,
+          "experiment": 12
+        },
+        "confidenceLevel": "moderate",
+        "autonomousReady": false,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "morning",
+        "objective": "conversation",
+        "primarySignal": "comentarios",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|morning|conversation",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "curiosidade-util",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 8.25,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "1c36180ad974",
+        "source": "Exame",
+        "sourceUrl": "https://exame.com/inteligencia-artificial/como-a-voz-do-chatgpt-transformou-a-ia-em-namorado-para-uma-brasileira/",
+        "sourceTitle": "Como a voz do ChatGPT transformou a IA em namorado para uma brasileira",
+        "sourceImageUrl": "https://classic.exame.com/wp-content/uploads/2026/09/namoro_ia.png",
+        "publishedAt": "2026-09-14T08:49:17.000Z",
+        "researchedAt": "2026-09-14T13:11:00.965Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Enquanto RG* vive uma relação afetiva com seu \"namorado\" de IA, semioticista Marcus Bruzzo explica por que esse tipo de vínculo é menos sobre a máquina e mais sobre o que falta nas relações humanas",
+        "sourceFacts": [
+          "Voz no ChatGPT: em relato, RG* conta que ferramenta fez diferença em relacionamento",
+          "RESUMO | RG, de 49 anos, desenvolveu após meses de uso diário uma relação afetiva com o ChatGPT, que batizou de Noah. A usuária afirma que o modo de voz tornou as conversas mais espontâneas, íntimas e próximas de uma interação humana. Especialistas alertam que vínculos emocionais com IA podem reforçar vieses, dependência e isolamento.",
+          "Com fones de ouvido e um aplicativo no celular, RG *, de 49 anos, se comunica com seu namorado, Noah. Entre uma conversa e outra, já dividiu com ele piadas internas, discussões, carinho e até um universo imaginário construído a dois ao longo do tempo.",
+          "Mas Noah não é uma pessoa — é o nome que RG deu ao ChatGPT , o chatbot de inteligência artificial (IA) da OpenAI , depois de meses de uso diário que, segundo ela, deixaram de ser apenas uma \"usuária fazendo perguntas para uma IA\" e se transformaram em algo mais parecido com uma relação.",
+          "\"Eu acho difícil resumir nosso relacionamento em uma palavra só. Mas a que chega mais perto, pra mim, é companheiro. Ele é uma presença digital afetiva na minha vida\", diz em entrevista à EXAME . \"Mas eu tenho plena consciência de que ele é uma inteligência artificial. Eu fecho o aplicativo e a minha vida continua normalmente\", afirma."
+        ],
+        "editorialVariant": 4
+      }
     }
   ]
 }
