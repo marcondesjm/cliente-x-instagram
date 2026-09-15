@@ -26929,6 +26929,170 @@
         ],
         "editorialVariant": 3
       }
+    },
+    {
+      "feedFingerprint": "e1c1d16860b877c5bcfac006708b8cd43ae9bebfa6ca93bce3dd9c547c813d4f",
+      "storyFingerprint": "e1c1d16860b877c5bcfac006708b8cd43ae9bebfa6ca93bce3dd9c547c813d4f",
+      "storyContentKind": "news",
+      "storyCoverTitle": "CEO da Anthropic argumenta que resistência à IA é uma crise profunda de confiança",
+      "captionFingerprint": "b1fb1de1526c1fa686f0f0ae6b32b37b76ac1497ab0f5d72349346b95b2f1fd6",
+      "coverTitle": "CEO da Anthropic argumenta que resistência à IA é uma crise profunda de confiança",
+      "coverAvatar": "docs/uploads/avatar-marcondes-lounge.png",
+      "avatarRotationStart": 3,
+      "publishedAt": "2026-09-15T18:15:19.542Z",
+      "slotDate": "2026-09-15",
+      "slotIndex": 7,
+      "scheduledAt": "2026-09-15T17:15:00.000Z",
+      "workflowRun": "35005913222",
+      "mediaId": "18316412062304408",
+      "storyMediaId": "18174521563453555",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18316412062304408/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AoqBx2l2dv1yqFDrZlJYOVQ\"}}",
+      "permalink": "https://www.instagram.com/reel/DdUVIncDmvI/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Nossa IA",
+          "sourceUrl": "https://nossa.ia.br/noticia/ceo-da-anthropic-argumenta-que-resistencia-a-ia-e-uma-crise-profunda-de-confianca/",
+          "sourceTitle": "CEO da Anthropic argumenta que resistência à IA é uma crise profunda de confiança",
+          "imageUrl": "https://images.unsplash.com/photo-1568952433726-3896e3881c65?auto=format&fit=crop&w=1200&q=80",
+          "imageSourcePageUrl": "https://nossa.ia.br/noticia/ceo-da-anthropic-argumenta-que-resistencia-a-ia-e-uma-crise-profunda-de-confianca/",
+          "imageCredit": "Nossa IA",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "c02e0a7605580df42d3b33dfcc86e39ef8aa8a03904f3bb2aa7277c15042aa4c",
+          "perceptualHash": "0010101100100101010100111100010110100101010100010011011010000110010100101110100100101011011110010100000110011101001000111010111001000110101010010100010000110010010010000010111001000000001100100100010111001011010001001101100111000100001011011100010010011101",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://nossa.ia.br/noticia/ceo-da-anthropic-argumenta-que-resistencia-a-ia-e-uma-crise-profunda-de-confianca/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-15-151314-slot-7/visual-candidate-1/radar-slide-01.avif",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "experiment",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-15T17:03:25.720Z",
+        "ageHours": 1.16,
+        "freshness": "current",
+        "effectiveSamples": 118,
+        "effectiveReach": 1087,
+        "controlledSamples": 106,
+        "selectionModes": {
+          "exploit": 77,
+          "explore": 18,
+          "experiment": 11
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "afternoon",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "experiment",
+        "experimentAxis": "topic-angle",
+        "contextKey": "REELS|afternoon|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-antiga",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 7.36,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "1201da8794fb",
+        "source": "Nossa IA",
+        "sourceUrl": "https://nossa.ia.br/noticia/ceo-da-anthropic-argumenta-que-resistencia-a-ia-e-uma-crise-profunda-de-confianca/",
+        "sourceTitle": "CEO da Anthropic argumenta que resistência à IA é uma crise profunda de confiança",
+        "sourceImageUrl": "https://images.unsplash.com/photo-1568952433726-3896e3881c65?auto=format&fit=crop&w=1200&q=80",
+        "publishedAt": "2026-08-16T19:00:53.000Z",
+        "researchedAt": "2026-09-15T18:13:07.318Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Dario Amodei rebate críticas sobre suposto alarmismo e aponta que a reação negativa contra a inteligência artificial reflete uma perda de confiança estrutural na tecnologia.",
+        "sourceFacts": [
+          "Dario Amodei rebate críticas sobre suposto alarmismo e aponta que a reação negativa contra a inteligência artificial reflete uma perda de confiança estrutural na tecnologia.",
+          "Em um recente pronunciamento que gerou debates intensos na indústria, Dario Amodei, CEO da Anthropic, rebateu as acusações de que estaria pintando um cenário excessivamente pessimista sobre o futuro da inteligência artificial. Para o executivo, a onda de resistência e ceticismo — o chamado backlash contra a IA — não é apenas uma reação passageira ao avanço dos modelos de linguagem (LLMs), mas sim uma crise profunda e estrutural de confiança entre os desenvolvedores de tecnologia e o público geral.",
+          "Desenvolvido a partir de variações pós-treinamento do modelo open-source GLM-5.2 da Z.ai, o novo sistema promete capacidades prontas para produção com redução drástica nos custos operacionais.",
+          "Uma análise profunda sobre como modelos de linguagem atuais falham ao recusar tópicos inteiros em vez de subconjuntos específicos, levantando debates vitais sobre alinhamento e liberdade técnica.",
+          "Uma análise crítica sobre os desafios de alinhamento em modelos de linguagem, discutindo como refinar a recusa de conteúdos sem prejudicar a utilidade geral das ferramentas."
+        ],
+        "editorialVariant": 1
+      }
     }
   ]
 }
