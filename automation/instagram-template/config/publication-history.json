@@ -27627,6 +27627,171 @@
         ],
         "editorialVariant": 2
       }
+    },
+    {
+      "feedFingerprint": "702c761696bc82227887ff3521763eb5b98625e01d978f08802ccbf7fe3a0cb0",
+      "storyFingerprint": "702c761696bc82227887ff3521763eb5b98625e01d978f08802ccbf7fe3a0cb0",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Seu Agente de IA Passou no Teste. Mas Ele Fará Isso de Novo?",
+      "captionFingerprint": "9fbd02963710115f43b88c6d97f3bfb8a411492e20a35d746712d69218ceb5ce",
+      "coverTitle": "Seu Agente de IA Passou no Teste. Mas Ele Fará Isso de Novo?",
+      "coverAvatar": "docs/uploads/avatar-marcondes-meeting-tablet.png",
+      "avatarRotationStart": 1,
+      "publishedAt": "2026-09-15T22:12:09.580Z",
+      "slotDate": "2026-09-15",
+      "slotIndex": 11,
+      "scheduledAt": "2026-09-15T22:00:00.000Z",
+      "workflowRun": "35029493947",
+      "mediaId": "18129101335688337",
+      "storyMediaId": "18115256545796204",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18129101335688337/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"Aohx7kX5C1aBOy8ejey13fB\"}}",
+      "permalink": "https://www.instagram.com/p/DdUwRvZmIKS/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Nossa IA",
+          "sourceUrl": "https://nossa.ia.br/noticia/seu-agente-de-ia-passou-no-teste-mas-ele-fara-isso-de-novo/",
+          "sourceTitle": "Seu Agente de IA Passou no Teste. Mas Ele Fará Isso de Novo?",
+          "imageUrl": "https://images.unsplash.com/photo-1617791160505-6f00504e3519?auto=format&fit=crop&w=1200&q=80",
+          "imageSourcePageUrl": "https://nossa.ia.br/noticia/seu-agente-de-ia-passou-no-teste-mas-ele-fara-isso-de-novo/",
+          "imageCredit": "Nossa IA",
+          "imageEvidence": "Main image metadata of the selected article. Article photograph with matching subject terms.",
+          "imageHash": "52016c3528ab61ff003167a63207c9ca0b8b40e4a4ec47ad2cef0fd5409f0a1e",
+          "perceptualHash": "0000100000000011000010000000001100000100000001110111010000000111111100100000010111011001000001111011100001000011101111000010010100101110000110010010111100001000000001111100000100000011110000010000000011100001000000000111000100000000000110010000000000001101",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://nossa.ia.br/noticia/seu-agente-de-ia-passou-no-teste-mas-ele-fara-isso-de-novo/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-15-191110-slot-11/visual-candidate-1/radar-slide-01.avif",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Main image metadata of the selected article. Article photograph with matching subject terms."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-15T21:23:13.906Z",
+        "ageHours": 0.8,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 1213,
+        "controlledSamples": 105,
+        "selectionModes": {
+          "exploit": 75,
+          "explore": 18,
+          "experiment": 12
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "evening",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|evening|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "curiosidade-util",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 8.53,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "95fded28a6cf",
+        "source": "Nossa IA",
+        "sourceUrl": "https://nossa.ia.br/noticia/seu-agente-de-ia-passou-no-teste-mas-ele-fara-isso-de-novo/",
+        "sourceTitle": "Seu Agente de IA Passou no Teste. Mas Ele Fará Isso de Novo?",
+        "sourceImageUrl": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=1200&q=80",
+        "publishedAt": "2026-09-15T19:01:52.000Z",
+        "researchedAt": "2026-09-15T22:11:01.660Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "A IBM Research e a Hugging Face abordam o calcanhar de Aquiles dos agentes de IA: a consistência de desempenho em múltiplas execuções, um desafio crítico para a adoção corporativa.",
+        "sourceFacts": [
+          "A IBM Research e a Hugging Face abordam o calcanhar de Aquiles dos agentes de IA: a consistência de desempenho em múltiplas execuções, um desafio crítico para a adoção corporativa.",
+          "Desenvolvido a partir de variações pós-treinamento do modelo open-source GLM-5.2 da Z.ai, o novo sistema promete capacidades prontas para produção com redução drástica nos custos operacionais.",
+          "Uma análise profunda sobre como modelos de linguagem atuais falham ao recusar tópicos inteiros em vez de subconjuntos específicos, levantando debates vitais sobre alinhamento e liberdade técnica.",
+          "Uma análise crítica sobre os desafios de alinhamento em modelos de linguagem, discutindo como refinar a recusa de conteúdos sem prejudicar a utilidade geral das ferramentas.",
+          "Receba gratuitamente as principais novidades, lançamentos de modelos e tutoriais de IA direto no seu e-mail todas as manhãs."
+        ],
+        "editorialVariant": 3
+      }
     }
   ]
 }
