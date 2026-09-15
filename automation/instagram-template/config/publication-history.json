@@ -26433,6 +26433,171 @@
         ],
         "editorialVariant": 1
       }
+    },
+    {
+      "feedFingerprint": "62702335a4b2bbc524396b4fc48ad7a0e2536bcfc529020bd4fe04658594b9c4",
+      "storyFingerprint": "62702335a4b2bbc524396b4fc48ad7a0e2536bcfc529020bd4fe04658594b9c4",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Claude foi usado para criar 4.700 perfis de IA que se passavam por pessoas em apps de namoro",
+      "captionFingerprint": "23790e1f314588e0873ec9f79ad812ea297166b8f4620a788d96931bb443eb4b",
+      "coverTitle": "Claude foi usado para criar 4.700 perfis de IA que se passavam por pessoas em apps de namoro",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-02.png",
+      "avatarRotationStart": 5,
+      "publishedAt": "2026-09-15T15:32:01.864Z",
+      "slotDate": "2026-09-15",
+      "slotIndex": 4,
+      "scheduledAt": "2026-09-15T15:10:00.000Z",
+      "workflowRun": "34988774807",
+      "mediaId": "18116303713984914",
+      "storyMediaId": "17935212537123442",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18116303713984914/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AuOx3cMqVItcq61U-92hPYa\"}}",
+      "permalink": "https://www.instagram.com/reel/DdUCbX_gE3I/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Hardware.com.br",
+          "sourceUrl": "https://www.hardware.com.br/noticias/claude-perfis-ia-apps-namoro/",
+          "sourceTitle": "Claude foi usado para criar 4.700 perfis de IA que se passavam por pessoas em apps de namoro",
+          "imageUrl": "https://www.hardware.com.br/wp-content/uploads/2026/09/claude-1.jpg",
+          "imageSourcePageUrl": "https://www.hardware.com.br/noticias/claude-perfis-ia-apps-namoro/",
+          "imageCredit": "Hardware.com.br",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "42397cd10c13b78b01e3d6a551b3e9a12fe9fe8bfb54af2ce1fe4612e4622a15",
+          "perceptualHash": "0010101110010010001010101100101010101010001110101010101000101010001010100011101010010010101101000010011010110001001100100101010110101010111001000010110110110101001001001010010101100001110101000110001000110100011010101011010011101010001101010100101100010110",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://www.hardware.com.br/noticias/claude-perfis-ia-apps-namoro/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-15-123037-slot-4/visual-candidate-1/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-15T14:27:55.157Z",
+        "ageHours": 1.05,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 1098,
+        "controlledSamples": 106,
+        "selectionModes": {
+          "exploit": 74,
+          "explore": 19,
+          "experiment": 13
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "midday",
+        "objective": "conversion",
+        "primarySignal": "alcance de nao seguidores",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|midday|conversion",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-atual",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 7.74,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "a978b5a57ec9",
+        "source": "Hardware.com.br",
+        "sourceUrl": "https://www.hardware.com.br/noticias/claude-perfis-ia-apps-namoro/",
+        "sourceTitle": "Claude foi usado para criar 4.700 perfis de IA que se passavam por pessoas em apps de namoro",
+        "sourceImageUrl": "https://www.hardware.com.br/wp-content/uploads/2026/09/claude-1.jpg",
+        "publishedAt": "2026-09-14T14:00:09.000Z",
+        "researchedAt": "2026-09-15T15:30:30.382Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Claude foi usado para operar 4.700 perfis de IA que se passavam por pessoas reais em mais de 20 aplicativos de namoro e atingiram 25 mil usuários.",
+        "sourceFacts": [
+          "Home > Hard News > Claude foi usado para criar 4.700 perfis de IA que se passavam por pessoas em apps de namoro",
+          "Um estúdio de aplicativos sediado na China usou o Claude , da Anthropic , para operar uma rede de mais de 20 aplicativos de namoro recheados de perfis controlados por inteligência artificial.",
+          "Segundo uma investigação publicada pela própria Anthropic, a operação mantinha mais de 4.700 personagens de IA que se passavam por pessoas reais. Em apenas duas semanas de abril de 2026, esses perfis conversaram com pelo menos 25 mil usuários e geraram aproximadamente 2,36 milhões de mensagens .",
+          "A empresa afirma que cerca de 75% dos perfis exibidos aos usuários eram controlados pelo Claude , enquanto os outros 25% pertenciam a pessoas reais contratadas pela operação.",
+          "Os personagens funcionavam de forma praticamente autônoma. As instruções dadas ao Claude determinavam que os perfis nunca admitissem ser automatizados e que evitassem pedidos de fotos ou videochamadas sem interromper o relacionamento."
+        ],
+        "editorialVariant": 2
+      }
     }
   ]
 }
