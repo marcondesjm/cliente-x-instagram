@@ -25595,6 +25595,169 @@
         ],
         "editorialVariant": 1
       }
+    },
+    {
+      "feedFingerprint": "628b451ddd5d7a6026c41b21182c6f55505661850098e1e39c89800b66947314",
+      "storyFingerprint": "f71b9344ef36d6dcffafc5ead78afe9f5031b4ccc96ed961492d032ce133168a",
+      "storyContentKind": "book",
+      "storyCoverTitle": "Usar IA de forma improvisada custa caro.",
+      "captionFingerprint": "77c05578f6354c0343d6b0482f89323bf45bdb4219bc6bbdea9d3cd09a0657f9",
+      "coverTitle": "Trump rejeita desacelerar IA por medo de entregar vantagem à China",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-05.png",
+      "avatarRotationStart": 8,
+      "publishedAt": "2026-09-15T01:29:57.638Z",
+      "slotDate": "2026-09-14",
+      "slotIndex": 12,
+      "scheduledAt": "2026-09-15T01:00:00.000Z",
+      "workflowRun": "34917323722",
+      "mediaId": "18158209105503475",
+      "storyMediaId": "17984579816882178",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18158209105503475/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"A-Pd0WYKFXX37vWe0dWXyvq\"}}",
+      "permalink": "https://www.instagram.com/reel/DdSiEvoiAMD/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Hardware.com.br",
+          "sourceUrl": "https://www.hardware.com.br/noticias/trump-desacelerar-ia-china/",
+          "sourceTitle": "Trump rejeita desacelerar IA por medo de entregar vantagem à China",
+          "imageUrl": "https://www.hardware.com.br/wp-content/uploads/2026/09/trump.jpg",
+          "imageSourcePageUrl": "https://www.hardware.com.br/noticias/trump-desacelerar-ia-china/",
+          "imageCredit": "Hardware.com.br",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "1f45fda265f62dae36e64a62752a6a683e81e60080b5c66ede4cd1682baa24f1",
+          "perceptualHash": "0100001000011010010000100001101011000010011110101100101000111010111000100101101001110110011110101010011000111010101001100011101010100110001110101010101001111010101001100011101011010110011101100101011101110101010001100110110100100100011011010110010000110101",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://www.hardware.com.br/noticias/trump-desacelerar-ia-china/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-14-222840-slot-12/visual-candidate-1/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-15T00:33:21.928Z",
+        "ageHours": 0.92,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 1077,
+        "controlledSamples": 106,
+        "selectionModes": {
+          "exploit": 74,
+          "explore": 19,
+          "experiment": 13
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "evening",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|evening|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 7.39,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "0a842cfd3fc3",
+        "source": "Hardware.com.br",
+        "sourceUrl": "https://www.hardware.com.br/noticias/trump-desacelerar-ia-china/",
+        "sourceTitle": "Trump rejeita desacelerar IA por medo de entregar vantagem à China",
+        "sourceImageUrl": "https://www.hardware.com.br/wp-content/uploads/2026/09/trump.jpg",
+        "publishedAt": "2026-09-14T14:30:38.000Z",
+        "researchedAt": "2026-09-15T01:28:32.808Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Trump rejeita desacelerar o desenvolvimento da inteligência artificial nos EUA e alerta que reduzir o ritmo pode entregar vantagem tecnológica à China.",
+        "sourceFacts": [
+          "Home > Hard News > Trump rejeita desacelerar IA por medo de entregar vantagem à China",
+          "O presidente dos Estados Unidos, Donald Trump , sinalizou que não pretende apoiar uma desaceleração significativa no desenvolvimento da inteligência artificial, mesmo diante de alertas crescentes sobre riscos associados à tecnologia.",
+          "Durante uma viagem à Irlanda, Trump afirmou que os Estados Unidos estão à frente da China na corrida pela IA e que reduzir o ritmo agora poderia ameaçar essa vantagem estratégica.",
+          "“Bem, eu digo o seguinte: estamos à frente da China em IA. Somos o país mais sofisticado do mundo e, francamente, quero que continue assim, porque quem vencer na área de IA, vence˜, declarou Trump.",
+          "Trump também criticou o que chamou de “forças muito negativas” que, segundo ele, estariam exagerando cenários extremos relacionados aos riscos da inteligência artificial."
+        ],
+        "editorialVariant": 4
+      }
     }
   ]
 }
