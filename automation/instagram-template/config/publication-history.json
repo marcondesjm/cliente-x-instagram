@@ -26598,6 +26598,172 @@
         ],
         "editorialVariant": 2
       }
+    },
+    {
+      "feedFingerprint": "139b582326cbd66f711c6132cced967857b53073efe9268d1967ab0d02870afc",
+      "storyFingerprint": "f71b9344ef36d6dcffafc5ead78afe9f5031b4ccc96ed961492d032ce133168a",
+      "storyContentKind": "book",
+      "storyCoverTitle": "Usar IA de forma improvisada custa caro.",
+      "captionFingerprint": "68650b53e674feaf66307bf869e535ccdfa9e505a3d70044a23066ef41240a6b",
+      "coverTitle": "A aposta de US$ 1 trilhão da IA enfrenta seu primeiro teste no mercado",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-03.png",
+      "avatarRotationStart": 6,
+      "publishedAt": "2026-09-15T16:53:49.683Z",
+      "slotDate": "2026-09-15",
+      "slotIndex": 5,
+      "scheduledAt": "2026-09-15T16:00:00.000Z",
+      "workflowRun": "34997490250",
+      "mediaId": "18113175629089855",
+      "storyMediaId": "18449983837193914",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18113175629089855/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"Ani-TtI4q2dDp7kq1fuUEI4\"}}",
+      "permalink": "https://www.instagram.com/p/DdUL2T5G0fV/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Exame",
+          "sourceUrl": "https://exame.com/inteligencia-artificial/a-aposta-de-us-1-trilhao-da-ia-enfrenta-seu-primeiro-teste-no-mercado/",
+          "sourceTitle": "A aposta de US$ 1 trilhão da IA enfrenta seu primeiro teste no mercado",
+          "imageUrl": "https://classic.exame.com/wp-content/uploads/2026/09/Ia_mercados.png",
+          "imageSourcePageUrl": "https://exame.com/inteligencia-artificial/a-aposta-de-us-1-trilhao-da-ia-enfrenta-seu-primeiro-teste-no-mercado/",
+          "imageCredit": "Exame",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "967efea7eff76aefc207d8d8662f866fe62f5cfb3ee48110fc88637f2e19550f",
+          "perceptualHash": "0001100111100110110010001111011010000101001001111110001110100101010000101110110101010010110010010101001010011000001100100101100000111011010100011010111001010001101001100101100110100110100111010010010011001111010011000110001100100110000110101011000100000011",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://exame.com/inteligencia-artificial/a-aposta-de-us-1-trilhao-da-ia-enfrenta-seu-primeiro-teste-no-mercado/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-15-135246-slot-5/visual-candidate-3/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-15T15:35:16.726Z",
+        "ageHours": 1.29,
+        "freshness": "current",
+        "effectiveSamples": 118,
+        "effectiveReach": 1053,
+        "controlledSamples": 106,
+        "selectionModes": {
+          "exploit": 76,
+          "explore": 18,
+          "experiment": 12
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "conversation",
+        "primarySignal": "comentarios",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|midday|conversation",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "curiosidade-util",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 8.56,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "285e9eb29bc2",
+        "source": "Exame",
+        "sourceUrl": "https://exame.com/inteligencia-artificial/a-aposta-de-us-1-trilhao-da-ia-enfrenta-seu-primeiro-teste-no-mercado/",
+        "sourceTitle": "A aposta de US$ 1 trilhão da IA enfrenta seu primeiro teste no mercado",
+        "sourceImageUrl": "https://classic.exame.com/wp-content/uploads/2026/09/Ia_mercados.png",
+        "publishedAt": "2026-09-15T11:01:09.000Z",
+        "researchedAt": "2026-09-15T16:52:34.072Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Com alerta do CEO da Anthropic sobre desaceleração de modelos, ações de fabricantes de chips caem até 7%, enquanto gigantes de cibersegurança sobem até 15% na expectativa de contenção de riscos",
+        "sourceFacts": [
+          "RESUMO | As ações de fabricantes de chips caíram e as de cibersegurança dispararam na segunda-feira, 14, após Dario Amodei, CEO da Anthropic, defender a desaceleração dos modelos de inteligência artificial. A Nvidia recuou cerca de 3%, enquanto a CrowdStrike subiu 15%, em uma reação aos diferentes impactos dos riscos da IA.",
+          "Poucas vezes um único fim de semana produziu um sinal tão claro sobre para onde o dinheiro acha que a inteligência artificial (IA) deve ir.",
+          "No sábado, 12, Dario Amodei, CEO da Anthropic , publicou um ensaio pedindo que a indústria \"desacelere o ritmo em que melhora as capacidades dos modelos de IA\".",
+          "Na segunda-feira, 14, quando os mercados abriram, os investidores pareciam já ter decidido, de forma quase instantânea, quem sai perdendo com essa desaceleração — e, de forma ainda mais reveladora, quem sai ganhando.",
+          "A reação mais óbvia veio dos fabricantes de semicondutores, cujas receitas dependem diretamente do apetite insaciável dos laboratórios de IA por poder computacional."
+        ],
+        "editorialVariant": 0
+      }
     }
   ]
 }
