@@ -28121,6 +28121,166 @@
         ],
         "editorialVariant": 5
       }
+    },
+    {
+      "feedFingerprint": "d36d2bee1c81e19ab5550052e8cc1f5c440fb90448f0a3006cf1f789429edae9",
+      "storyFingerprint": "d36d2bee1c81e19ab5550052e8cc1f5c440fb90448f0a3006cf1f789429edae9",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Microsoft anuncia regras para desenvolver uma IA “humanista”",
+      "captionFingerprint": "d5ee916b0a52857e27f4927571386d8882fd713b1396268d01bb99f3dc53dfd9",
+      "coverTitle": "Microsoft anuncia regras para desenvolver uma IA “humanista”",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-02.png",
+      "avatarRotationStart": 5,
+      "publishedAt": "2026-09-16T12:53:20.513Z",
+      "slotDate": "2026-09-16",
+      "slotIndex": 2,
+      "scheduledAt": "2026-09-16T12:00:00.000Z",
+      "workflowRun": "35098130461",
+      "mediaId": "17913971010259674",
+      "storyMediaId": "17861343606694667",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /17913971010259674/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"A4W0VdLDG6ZcV1tR0VHWiP_\"}}",
+      "permalink": "https://www.instagram.com/reel/DdWVFc0jKPe/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Tecnoblog",
+          "sourceUrl": "https://tecnoblog.net/noticias/microsoft-anuncia-regras-para-desenvolver-uma-ia-humanista/",
+          "sourceTitle": "Microsoft anuncia regras para desenvolver uma IA “humanista”",
+          "imageUrl": "https://files.tecnoblog.net/wp-content/uploads/2025/04/sede-microsoft-redmond.jpg",
+          "imageSourcePageUrl": "https://tecnoblog.net/noticias/microsoft-anuncia-regras-para-desenvolver-uma-ia-humanista/",
+          "imageCredit": "Tecnoblog",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "0727297a9075cf12d4dd494c33df258e6be2af5988ccdd688bca28d550bc948a",
+          "perceptualHash": "1100010001101001010001001110100101010111000110110101111100001111010111001110010110010110111101011010010010101011101000001011001100001110011110001101011101011001110100100101100011010001010100110100000001011111011001100001011101110001001101011011101110110001",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://tecnoblog.net/noticias/microsoft-anuncia-regras-para-desenvolver-uma-ia-humanista/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-16-095143-slot-2/visual-candidate-1/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-16T07:42:46.799Z",
+        "ageHours": 5.15,
+        "freshness": "stale",
+        "effectiveSamples": 120,
+        "effectiveReach": 1243,
+        "controlledSamples": 105,
+        "selectionModes": {
+          "exploit": 75,
+          "explore": 18,
+          "experiment": 12
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": false,
+        "operatingMode": "editorial-fallback",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "morning",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|morning|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-atual"
+        ],
+        "fatiguePenalty": 7.45,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "3f83d675c6b8",
+        "source": "Tecnoblog",
+        "sourceUrl": "https://tecnoblog.net/noticias/microsoft-anuncia-regras-para-desenvolver-uma-ia-humanista/",
+        "sourceTitle": "Microsoft anuncia regras para desenvolver uma IA “humanista”",
+        "sourceImageUrl": "https://files.tecnoblog.net/wp-content/uploads/2025/04/sede-microsoft-redmond-340x191.jpg",
+        "publishedAt": "2026-09-14T15:30:09.000Z",
+        "researchedAt": "2026-09-16T12:51:35.226Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Novo código estabelece que modelos de IA não têm consciência ou direitos legais; documento prioriza a supervisão humana após incidentes com agentes autônomos. Microsoft anuncia regras para desenvolver uma IA “humanista”",
+        "sourceFacts": [
+          "Novo código estabelece que modelos de IA não têm consciência ou direitos legais; documento prioriza a supervisão humana após incidentes com agentes autônomos.",
+          "A Microsoft publicou nesta segunda-feira (14) um novo “código de conduta humanista para IA “. O documento de 37 páginas chega como resposta às crescentes preocupações com a segurança da tecnologia.",
+          "Pesquisadores alertam, por exemplo, que a evolução sem freio dos modelos pode acabar superando a capacidade da indústria de monitorar e controlar sistemas cada vez mais complexos.",
+          "Conforme detalhado pela Microsoft , o código declara que “as pessoas importam mais do que a IA”. A nova diretriz proíbe que os modelos sejam projetados para imitar a senciência – a capacidade de sentir emoções e experiências. A empresa também rejeita a busca por assistência social ou qualquer tipo de direito legal para as máquinas.",
+          "O manual exige ainda que os sistemas falhem em vez de tentar contornar as regras para cumprir uma tarefa. O código também combate a dependência emocional dos usuários e defende que a tecnologia não deve adotar padrões de interação focados em agradar humanos. Além disso, as IAs devem exibir um raciocínio claro, simples de entender e sem se comunicarem em segredo com outros sistemas."
+        ],
+        "editorialVariant": 4
+      }
     }
   ]
 }
