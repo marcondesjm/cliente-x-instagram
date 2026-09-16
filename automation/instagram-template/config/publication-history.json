@@ -28446,6 +28446,171 @@
         ],
         "editorialVariant": 2
       }
+    },
+    {
+      "feedFingerprint": "9871d049a06257e1caaa324e64f3a7580b46b82b2e3b546cc3f10e5698dd5518",
+      "storyFingerprint": "9871d049a06257e1caaa324e64f3a7580b46b82b2e3b546cc3f10e5698dd5518",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Homem monta servidor com 10 placas de vídeo para rodar IA local depender da nuvem",
+      "captionFingerprint": "2d1c58661ee09c81cae80edeaa0ed72590a2093396c623098fc73c3ebac287c1",
+      "coverTitle": "Homem monta servidor com 10 placas de vídeo para rodar IA local depender da nuvem",
+      "coverAvatar": "docs/uploads/avatar-marcondes-office-laptop.png",
+      "avatarRotationStart": 0,
+      "publishedAt": "2026-09-16T15:30:47.507Z",
+      "slotDate": "2026-09-16",
+      "slotIndex": 4,
+      "scheduledAt": "2026-09-16T15:10:00.000Z",
+      "workflowRun": "35115529430",
+      "mediaId": "18092489117446535",
+      "storyMediaId": "18121277170844656",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18092489117446535/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AnaHCFHi7A3ArIWEJCovR3b\"}}",
+      "permalink": "https://www.instagram.com/reel/DdWnGZWj2bM/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Hardware.com.br",
+          "sourceUrl": "https://www.hardware.com.br/noticias/servidor-10-gpus-ia-local/",
+          "sourceTitle": "Homem monta servidor com 10 placas de vídeo para rodar IA local depender da nuvem",
+          "imageUrl": "https://www.hardware.com.br/wp-content/uploads/2026/09/servidor-4.jpg",
+          "imageSourcePageUrl": "https://www.hardware.com.br/noticias/servidor-10-gpus-ia-local/",
+          "imageCredit": "Hardware.com.br",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "638b11408702ef6a0185504e9047a2165807914feb6989a0f55a21456c5899d4",
+          "perceptualHash": "1001100101010011100110010001001110011001001100110101100101111010010100101101100001010010110110000001101011001000000110100110100001010010011010010100101111001001110010010100100111001010010010001000011011001000110101011110110001111011010011000111110011101100",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://www.hardware.com.br/noticias/servidor-10-gpus-ia-local/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-16-122931-slot-4/visual-candidate-2/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-16T14:21:10.942Z",
+        "ageHours": 1.14,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 1255,
+        "controlledSamples": 105,
+        "selectionModes": {
+          "exploit": 75,
+          "explore": 17,
+          "experiment": 13
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "midday",
+        "objective": "conversation",
+        "primarySignal": "comentarios",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|midday|conversation",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-atual",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "abertura-com-abandono-consistente",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 8.26,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "7583dd28f97b",
+        "source": "Hardware.com.br",
+        "sourceUrl": "https://www.hardware.com.br/noticias/servidor-10-gpus-ia-local/",
+        "sourceTitle": "Homem monta servidor com 10 placas de vídeo para rodar IA local depender da nuvem",
+        "sourceImageUrl": "https://www.hardware.com.br/wp-content/uploads/2026/09/servidor-4.jpg",
+        "publishedAt": "2026-09-15T14:00:59.000Z",
+        "researchedAt": "2026-09-16T15:29:23.994Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Homem monta em casa um servidor com 10 GPUs NVIDIA para rodar IA local. A máquina soma 200 GB de VRAM e custou cerca de US$ 12 mil.",
+        "sourceFacts": [
+          "Home > Hard News > Homem monta servidor com 10 placas de vídeo para rodar IA local depender da nuvem",
+          "Um servidor doméstico equipado com dez GPUs NVIDIA RTX A4500 de 20 GB chamou atenção no Reddit não apenas pelo hardware, mas pelo custo acumulado da máquina. O dono do equipamento estimou ter investido cerca de US$ 12 mil no conjunto e disse que pretende usar a infraestrutura para tornar seus projetos de inteligência artificial lucrativos.",
+          "Quando um usuário perguntou se o equipamento teria custado mais de US$ 100 mil, o autor respondeu que o valor estava mais próximo de US$ 12 mil. Segundo ele, cada RTX A4500 custou aproximadamente US$ 1.100 .",
+          "As placas utilizadas são RTX A4500, modelo profissional da NVIDIA com 20 GB de memória por unidade. Na prática, isso significa que o servidor possui 200 GB de VRAM física distribuídos entre as dez GPUs."
+        ],
+        "editorialVariant": 4
+      }
     }
   ]
 }
