@@ -30433,6 +30433,172 @@
         ],
         "editorialVariant": 1
       }
+    },
+    {
+      "feedFingerprint": "5c9d4ea199ff352d3e927d39e71be4dea9c8f60f2f93709a63b66dbf54c44764",
+      "storyFingerprint": "5c9d4ea199ff352d3e927d39e71be4dea9c8f60f2f93709a63b66dbf54c44764",
+      "storyContentKind": "news",
+      "storyCoverTitle": "1 em cada 3 profissionais usa IA escondido no trabalho; como isso afeta a gestão?",
+      "captionFingerprint": "cda7f9e10046626c00062d064d7b6ce9483638dfc5f41429f3270f77bd5c109c",
+      "coverTitle": "1 em cada 3 profissionais usa IA escondido no trabalho; como isso afeta a gestão?",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-04.png",
+      "avatarRotationStart": 7,
+      "publishedAt": "2026-09-17T15:21:35.707Z",
+      "slotDate": "2026-09-17",
+      "slotIndex": 3,
+      "scheduledAt": "2026-09-17T14:50:00.000Z",
+      "workflowRun": "35239368324",
+      "mediaId": "18073251206723140",
+      "storyMediaId": "17889034359614213",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18073251206723140/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AP20LwBel1iMx8s5Mqi3hU7\"}}",
+      "permalink": "https://www.instagram.com/p/DdZK4UcDK7R/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Exame",
+          "sourceUrl": "https://exame.com/inteligencia-artificial/1-em-cada-3-profissionais-usa-ia-escondido-no-trabalho-como-isso-afeta-a-gestao/",
+          "sourceTitle": "1 em cada 3 profissionais usa IA escondido no trabalho; como isso afeta a gestão?",
+          "imageUrl": "https://classic.exame.com/wp-content/uploads/2026/09/2149622853.jpg",
+          "imageSourcePageUrl": "https://exame.com/inteligencia-artificial/1-em-cada-3-profissionais-usa-ia-escondido-no-trabalho-como-isso-afeta-a-gestao/",
+          "imageCredit": "Exame",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "4bd443dae307c500599e18d746080255242b7e90555ba79f194b8bd14c60dde3",
+          "perceptualHash": "0001100110101001000011011010000100001101101100010000110110110001000111011011100100011101101010100001100110101000000110011010100000001001111001000100001111100100010000111000110101100010101111010011010000111101000110001111110000001000111011010000000001111101",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://exame.com/inteligencia-artificial/1-em-cada-3-profissionais-usa-ia-escondido-no-trabalho-como-isso-afeta-a-gestao/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-17-122027-slot-3/visual-candidate-1/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-17T14:26:52.915Z",
+        "ageHours": 0.89,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 1335,
+        "controlledSamples": 108,
+        "selectionModes": {
+          "exploit": 80,
+          "explore": 16,
+          "experiment": 12
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "conversation",
+        "primarySignal": "comentarios",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|midday|conversation",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "curiosidade-util",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 8.24,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "ca52215c9a79",
+        "source": "Exame",
+        "sourceUrl": "https://exame.com/inteligencia-artificial/1-em-cada-3-profissionais-usa-ia-escondido-no-trabalho-como-isso-afeta-a-gestao/",
+        "sourceTitle": "1 em cada 3 profissionais usa IA escondido no trabalho; como isso afeta a gestão?",
+        "sourceImageUrl": "https://classic.exame.com/wp-content/uploads/2026/09/2149622853.jpg",
+        "publishedAt": "2026-09-17T11:36:13.000Z",
+        "researchedAt": "2026-09-17T15:20:19.667Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Pesquisa da Deloitte mostra que o uso de IA avança mais rápido que as regras nas empresas e revela novos desafios para gestores, de treinamento a segurança",
+        "sourceFacts": [
+          "1 em cada 3 profissionais usa IA escondido no trabalho; como isso afeta a gestão? (Magnific/Reprodução)",
+          "A inteligência artificial já entrou na rotina de muitos profissionais, mas nem sempre de forma visível para as empresas. Uma pesquisa da Deloitte UK com 25 mil trabalhadores mostrou que 31% dos usuários de IA generativa utilizam as ferramentas sem o conhecimento do empregador.",
+          "O levantamento, realizado entre maio e junho de 2026, ouviu trabalhadores de 18 a 70 anos no Reino Unido. Ao todo, 63% afirmaram usar IA generativa no trabalho e quase um quarto disse utilizar essas ferramentas diariamente.",
+          "O fenômeno é chamado de shadow AI , expressão usada para descrever o uso de ferramentas de inteligência artificial sem autorização ou conhecimento da organização.",
+          "Para líderes que precisam desenvolver esse repertório, a Saint Paul lança o Pós-MBA em Gestão e Estratégia com IA, programa de 6 encontros voltado a gerentes, heads e coordenadores que não precisam ter formação em tecnologia. As aulas começam em 17 de outubro, no formato presencial ou ao vivo remoto"
+        ],
+        "editorialVariant": 2
+      }
     }
   ]
 }
