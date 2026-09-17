@@ -31579,6 +31579,171 @@
         }
       },
       "research": null
+    },
+    {
+      "feedFingerprint": "8b90a13eab20d8182e74ec5d7dfa3428ce5404192dacd5603ef39aed6a6cba93",
+      "storyFingerprint": "8b90a13eab20d8182e74ec5d7dfa3428ce5404192dacd5603ef39aed6a6cba93",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Entusiasta monta servidor de IA com 6 placas de vídeo e precisa adaptar o gabinete para fazer tudo caber",
+      "captionFingerprint": "76905533c25ca75fdb96993962688a461aca88c088807c273c97e298974bff77",
+      "coverTitle": "Entusiasta monta servidor de IA com 6 placas de vídeo e precisa adaptar o gabinete para fazer tudo caber",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-03.png",
+      "avatarRotationStart": 6,
+      "publishedAt": "2026-09-17T20:49:40.630Z",
+      "slotDate": "2026-09-17",
+      "slotIndex": 10,
+      "scheduledAt": "2026-09-17T20:40:00.000Z",
+      "workflowRun": "35272867776",
+      "mediaId": "18369117949208733",
+      "storyMediaId": "18137281933722859",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18369117949208733/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"A-mu6jrxveWzCGKgy6AnomU\"}}",
+      "permalink": "https://www.instagram.com/reel/DdZwZVLgcXL/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Hardware.com.br",
+          "sourceUrl": "https://www.hardware.com.br/noticias/servidor-ia-6-gpus-gabinete-adaptado/",
+          "sourceTitle": "Entusiasta monta servidor de IA com 6 placas de vídeo e precisa adaptar o gabinete para fazer tudo caber",
+          "imageUrl": "https://www.hardware.com.br/wp-content/uploads/2026/09/gabinete-2.jpg",
+          "imageSourcePageUrl": "https://www.hardware.com.br/noticias/servidor-ia-6-gpus-gabinete-adaptado/",
+          "imageCredit": "Hardware.com.br",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "71a7d2f88433d365ba443fc9a921dd1b0a2514e8228abcd320cc970badbd7a2d",
+          "perceptualHash": "1110101011101010110010101111000001001010111110011100101011110001110100100111000111011100001101011101101001110101110110100011010011010110001101001001101001101100100111100011011010011010100101001101011011000100110011101110001010000010011100101000000100010111",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://www.hardware.com.br/noticias/servidor-ia-6-gpus-gabinete-adaptado/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-17-174829-slot-10/visual-candidate-2/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-17T20:25:13.031Z",
+        "ageHours": 0.39,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 1361,
+        "controlledSamples": 110,
+        "selectionModes": {
+          "exploit": 82,
+          "explore": 16,
+          "experiment": 12
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "afternoon",
+        "objective": "conversion",
+        "primarySignal": "alcance de nao seguidores",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|afternoon|conversion",
+        "decisionReasons": [
+          "imagem-editorial",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "abertura-com-abandono-consistente",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 6.36,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "8be0f2d4ce9f",
+        "source": "Hardware.com.br",
+        "sourceUrl": "https://www.hardware.com.br/noticias/servidor-ia-6-gpus-gabinete-adaptado/",
+        "sourceTitle": "Entusiasta monta servidor de IA com 6 placas de vídeo e precisa adaptar o gabinete para fazer tudo caber",
+        "sourceImageUrl": "https://www.hardware.com.br/wp-content/uploads/2026/09/gabinete-2.jpg",
+        "publishedAt": "2026-09-17T14:01:42.000Z",
+        "researchedAt": "2026-09-17T20:48:23.690Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Entusiasta monta um servidor de IA com seis placas de vídeo Tesla V100 e precisa adaptar o gabinete para conseguir acomodar todo o hardware.",
+        "sourceFacts": [
+          "Home > Hard News > Entusiasta monta servidor de IA com 6 placas de vídeo e precisa adaptar o gabinete para fazer tudo caber",
+          "Montar um servidor com seis GPUs normalmente significa recorrer a um chassi aberto ou a um gabinete de servidor. Um usuário do Reddit decidiu seguir outro caminho: colocou seis NVIDIA Tesla V100 PCIe de 16 GB dentro de um gabinete full tower convencional , criando uma máquina com 96 GB de memória HBM2 somada entre as placas para experimentos com inteligência artificial local.",
+          "As fotografias deixam clara a principal dificuldade do projeto. Quatro V100 ficam empilhadas na região tradicional das placas de expansão, enquanto outras duas foram posicionadas em outra área do gabinete e conectadas por extensores PCIe. Segundo o autor, o próprio gabinete precisou ser modificado para receber essas duas GPUs.",
+          "Installing 6 GPUs in a standard case rather than using an open-frame chassis. by u/Odd_Caterpillar_2994 in LocalAIServers",
+          "A escolha das V100 cria outro problema: energia e refrigeração. A NVIDIA especifica até 250 W de consumo para cada Tesla V100 PCIe , o que levaria seis unidades a uma potência máxima combinada de 1.500 W apenas nas GPUs. Cada placa utiliza PCIe 3.0 x16 e pode trazer 16 GB ou 32 GB de HBM2."
+        ],
+        "editorialVariant": 5
+      }
     }
   ]
 }
