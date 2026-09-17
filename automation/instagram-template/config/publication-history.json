@@ -29775,6 +29775,172 @@
         ],
         "editorialVariant": 5
       }
+    },
+    {
+      "feedFingerprint": "00439c9955c2e1696fd9de4d7c1d31aeb4bf8a0f364101e70ea64643a992c782",
+      "storyFingerprint": "00439c9955c2e1696fd9de4d7c1d31aeb4bf8a0f364101e70ea64643a992c782",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Vale recupera US$ 1,65 milhão com IA que mapeia bens e impostos",
+      "captionFingerprint": "fac9ce7c9932ccdb7e3211e0b4aa933e3558ffc5da9ded3031b8004b0b98d647",
+      "coverTitle": "Vale recupera US$ 1,65 milhão com IA que mapeia bens e impostos",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-02.png",
+      "avatarRotationStart": 5,
+      "publishedAt": "2026-09-17T01:28:17.101Z",
+      "slotDate": "2026-09-16",
+      "slotIndex": 12,
+      "scheduledAt": "2026-09-17T01:00:00.000Z",
+      "workflowRun": "35170430858",
+      "mediaId": "18425521057145662",
+      "storyMediaId": "18282134899295380",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18425521057145662/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"ASg4ydTow0oSgXzyQC9GzB9\"}}",
+      "permalink": "https://www.instagram.com/reel/DdXre8xCPt8/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Mobile Time",
+          "sourceUrl": "https://www.mobiletime.com.br/noticias/16/09/2026/vale-ia-bens-impostos/",
+          "sourceTitle": "Vale recupera US$ 1,65 milhão com IA que mapeia bens e impostos",
+          "imageUrl": "https://www.mobiletime.com.br/wp-content/uploads/2026/09/v2_9501aa59-5d27-4bb3-8706-3b9541dafbe5.jpg",
+          "imageSourcePageUrl": "https://www.mobiletime.com.br/noticias/16/09/2026/vale-ia-bens-impostos/",
+          "imageCredit": "Mobile Time",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "baa2afd4ba7b75969fb774bdda3d9e1949b54671db3ed66abf3a469d8d2c81a5",
+          "perceptualHash": "1000011001100111110001101111011111000001111101111100011111111111100111110111110110110111101101101000010011110110100001001011011110011100101101111000101010110111000010101100011110001000100001111001000010001110110100000000011111001000000011101000001000001100",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://www.mobiletime.com.br/noticias/16/09/2026/vale-ia-bens-impostos/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-16-222608-slot-12/visual-candidate-2/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-17T00:33:43.032Z",
+        "ageHours": 0.87,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 1335,
+        "controlledSamples": 107,
+        "selectionModes": {
+          "exploit": 78,
+          "explore": 17,
+          "experiment": 12
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "evening",
+        "objective": "conversation",
+        "primarySignal": "comentarios",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|evening|conversation",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "abertura-com-abandono-consistente",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 6.64,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "08a562cada6c",
+        "source": "Mobile Time",
+        "sourceUrl": "https://www.mobiletime.com.br/noticias/16/09/2026/vale-ia-bens-impostos/",
+        "sourceTitle": "Vale recupera US$ 1,65 milhão com IA que mapeia bens e impostos",
+        "sourceImageUrl": "https://www.mobiletime.com.br/wp-content/uploads/2026/09/v2_9501aa59-5d27-4bb3-8706-3b9541dafbe5.jpg",
+        "publishedAt": "2026-09-16T23:25:50.000Z",
+        "researchedAt": "2026-09-17T01:25:56.700Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Com LLM, tarefas que antes gastavam até meses de análise tiveram redução de 80% no tempo",
+        "sourceFacts": [
+          "A Vale conseguiu recuperar US$ 1,65 milhão aos seus cofres, utilizando uma inteligência artificial voltada à contagem de bens e impostos da companhia. A inovação, criada com auxílio da plataforma da Databricks pela equipe de Finanças da mineradora, foi desenvolvida em apenas cinco dias para resolver três questões:",
+          "A tecnologia é capaz de analisar 300 mil itens em apenas um minuto e trouxe uma redução de 80% na análise de documentos, regulamentações e aplicações. Outro exemplo de aplicação de IA, citado por Alexandre Pigatti, head of AI da Vale, é na logística marinha. A empresa criou um sistema inteligente que monitora o trajeto dos navios que saem do Brasil rumo à China para a entrega de minérios.",
+          "A inovação traça rotas otimizadas, baseando-se nas condições climáticas e nas ondas de mar, e sugere a velocidade ideal do navio. Toda a análise é compartilhada com o comandante da embarcação. Graças a isso, a empresa não só economizou US$ 66 milhões em combustível em 2025, como conseguiu aumentar a precisão da data de chegada em 15%.",
+          "Alexandre Pigatti, head of AI da Vale, afirmou que antes qualquer pedido de informação ou relatório dependia exclusivamente da área de TI, que poderia levar até três semanas para atender à demanda. Com o programa, a equipe passou a ser responsável apenas pela segurança e pelos custos da iniciativa. De acordo com Pigatti, o modelo já gerou US$ 2,5 bilhões em benefícios para a empresa.",
+          "Como próximos passos, a empresa quer treinar mais 5 mil funcionários para utilizar a plataforma e disponibilizar outras 1 mil bases de dados para consulta. Além disso, a Vale deseja dobrar o uso de IA na rotina de trabalho."
+        ],
+        "editorialVariant": 5
+      }
     }
   ]
 }
