@@ -32768,6 +32768,172 @@
         ],
         "editorialVariant": 1
       }
+    },
+    {
+      "feedFingerprint": "30144967cec244b411a9c243535ebc0e37fa7bd3d5b674d0881157d7e7ca56f2",
+      "storyFingerprint": "30144967cec244b411a9c243535ebc0e37fa7bd3d5b674d0881157d7e7ca56f2",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Pinterest ganha IA que muda a decoração do seu quarto por foto",
+      "captionFingerprint": "ad535de47e3a7c25b2ed5bf75a8d64f815554369021a39d8211ed0fc95baae76",
+      "coverTitle": "Pinterest ganha IA que muda a decoração do seu quarto por foto",
+      "coverAvatar": "docs/uploads/avatar-marcondes-presentation.png",
+      "avatarRotationStart": 2,
+      "publishedAt": "2026-09-18T16:20:53.849Z",
+      "slotDate": "2026-09-18",
+      "slotIndex": 4,
+      "scheduledAt": "2026-09-18T15:10:00.000Z",
+      "workflowRun": "35367679718",
+      "mediaId": "17928472869409155",
+      "storyMediaId": "18093964115647554",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /17928472869409155/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AnJ79vAGorybSUF_2cAJ8jo\"}}",
+      "permalink": "https://www.instagram.com/reel/Ddb2cNykTWX/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Canaltech",
+          "sourceUrl": "https://canaltech.com.br/inteligencia-artificial/pinterest-ganha-ia-que-muda-a-decoracao-do-seu-quarto-por-foto/",
+          "sourceTitle": "Pinterest ganha IA que muda a decoração do seu quarto por foto",
+          "imageUrl": "https://tl.ctcdn.com.br/XibX3ar0WBH93CmBwzJ2AxIbqtA=/1200x675/smart/filters:format(webp):quality(85)/6d8b6d34-9980-42ca-94df-52eddbe92dba.jpg",
+          "imageSourcePageUrl": "https://canaltech.com.br/inteligencia-artificial/pinterest-ganha-ia-que-muda-a-decoracao-do-seu-quarto-por-foto/",
+          "imageCredit": "Canaltech",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "b775de6d7eaa12c40122c82dc0766148d81cd4086c503966c7fb8a6463608d95",
+          "perceptualHash": "1011011110100110001101010101001010100010101010010010001010110111001000101011001101100101110111110010011000011111001010011100111000101100111011100010110011011110101011000100111010101111101101111010111011110111111011110110011111101111111001111110111110100111",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://canaltech.com.br/inteligencia-artificial/pinterest-ganha-ia-que-muda-a-decoracao-do-seu-quarto-por-foto/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-18-131950-slot-4/visual-candidate-1/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "explore",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-18T15:03:14.238Z",
+        "ageHours": 1.28,
+        "freshness": "current",
+        "effectiveSamples": 119,
+        "effectiveReach": 1339,
+        "controlledSamples": 111,
+        "selectionModes": {
+          "exploit": 82,
+          "explore": 17,
+          "experiment": 12
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "midday",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "explore",
+        "experimentAxis": "candidate-novelty",
+        "contextKey": "REELS|midday|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "curiosidade-util",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "abertura-com-abandono-consistente",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 8.55,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "f5b16b144b30",
+        "source": "Canaltech",
+        "sourceUrl": "https://canaltech.com.br/inteligencia-artificial/pinterest-ganha-ia-que-muda-a-decoracao-do-seu-quarto-por-foto/",
+        "sourceTitle": "Pinterest ganha IA que muda a decoração do seu quarto por foto",
+        "sourceImageUrl": "https://tl.ctcdn.com.br/XibX3ar0WBH93CmBwzJ2AxIbqtA=/1200x675/smart/filters:format(webp):quality(85)/6d8b6d34-9980-42ca-94df-52eddbe92dba.jpg",
+        "publishedAt": "2026-09-17T19:14:50.000Z",
+        "researchedAt": "2026-09-18T16:19:42.176Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "O Pinterest anunciou o Restyle , uma nova ferramenta de inteligência artificial que permite visualizar mudanças na decoração de ambientes a partir de fotos reais. Integrado à plataforma e baseado no sistema Pinterest Intelligence , o recurso permite testar móveis, objetos e diferentes estilos de decoração antes de comprar os produtos. O recurso foi apresentado durante o Pinterest Presents, evento anual da plataforma voltado ao mercado publicitário. Quem pode usar o Pinterest Restyle?",
+        "sourceFacts": [
+          "O Pinterest anunciou o Restyle , uma nova ferramenta de inteligência artificial que permite visualizar mudanças na decoração de ambientes a partir de fotos reais. Integrado à plataforma e baseado no sistema Pinterest Intelligence , o recurso permite testar móveis, objetos e diferentes estilos de decoração antes de comprar os produtos.",
+          "O recurso foi apresentado durante o Pinterest Presents, evento anual da plataforma voltado ao mercado publicitário. Com o Restyle, o usuário pode fotografar um cômodo e escrever comandos para pedir alterações na imagem. A IA consegue adicionar móveis, quadros, acessórios e outros elementos de decoração, inclusive itens encontrados em outras imagens do Pinterest.",
+          "Também é possível fazer mudanças na aparência do ambiente , como alterar a iluminação, a cor das paredes e a disposição das plantas. O usuário ainda pode selecionar objetos individualmente para substituí-los, apagá-los ou editá-los.",
+          "Para mudanças mais amplas, o Restyle consegue transformar o cômodo de acordo com estilos específicos , como industrial, boho, whimsical e japandi, além de tendências , como o dopamine decor, que aposta em cores e elementos vibrantes.",
+          "A estratégia por trás da ferramenta é conectar a fase de inspiração à decisão de compra, incentivando os usuários a adquirir os itens salvos em suas pastas ao visualizá-los em seus próprios cômodos."
+        ],
+        "editorialVariant": 0
+      }
     }
   ]
 }
