@@ -3128,3 +3128,9 @@ Conclusao de ativacao:
 - Run manual `35445792221`, modo `story-only`, concluído com sucesso. Story ID `18380125852236605`, timestamp Meta `2026-09-19T13:28:19Z`.
 - A execução usou a imagem aprovada em `docs/generated/cliente-x/2026-09-19-story-correction-ozempic/story.jpg`, sem criar novo feed e sem marcar slot automático.
 - `publication-history.json` persistiu `storyMediaId`, títulos do Story/feed alinhados e `mediaId: null`, `permalink: null`, comprovando que somente o Story foi publicado.
+## 2026-09-19 10:42 BRT — prompts educativos reestruturados
+
+- Usuário apontou que os prompts da série não ensinavam de verdade. Diagnóstico: frases de uma linha eram rotuladas como “COPIE ESTE PROMPT”.
+- Biblioteca completa de 16 aulas convertida para prompt estruturado: papel, contexto e dados, tarefa, regras contra invenção, formato de saída e checagem final. Método de teste passa a comparar entrada e resposta, registrar erros, ajustar regra e só então usar dados autorizados.
+- Carrossel ampliado para dez cartões, distribuindo o prompt em cinco partes visíveis. O primeiro render ainda ocultava regras e checagem; a composição foi corrigida e reinspecionada no render final `2026-09-19-104202-slot-9-render-only`.
+- `validate-education-strategy` cobre todos os blocos, tamanho mínimo, cinco cartões e o caso de arquivos; `validate-copy` aprovou 75 seleções. Episódios 6–11 já publicados foram preservados, sem exclusão ou republicação.

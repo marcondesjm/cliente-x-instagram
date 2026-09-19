@@ -21,13 +21,31 @@ assert.equal(account.scheduleUtc[9],'0 19 * * *');
 const workflow=readFileSync('.github/workflows/instagram-feed-cliente-x.yml','utf8');
 assert.equal((workflow.match(/- cron:/g)||[]).length,13);
 assert.ok(workflow.includes('7 19 * * *'));
-assert.equal(nextEducationPack(history).editorialSeries.episode,6);
-const simulated=[...history];
+assert.equal(nextEducationPack(history).editorialSeries.episode,12);
+const simulated=[];
 for(let i=0;i<13;i++) { const p=nextEducationPack(simulated); assert.ok(p,'Enough tutorials for 14 days even if every news slot falls back'); simulated.push({mediaId:`test-${i}`,education:p.education,editorialSeries:p.editorialSeries}); }
 const lessons=educationLessons();
 assert.equal(new Set(lessons.map(p=>p.education.lessonId)).size,lessons.length);
 for(const p of [...lessons,offerPack()]) { assert.ok(p.caption.length<=2200); assert.ok(p.slides.length>=4); for(const s of p.slides) { assert.ok(s.title && s.body); if(s.imagePath) assert.ok(readFileSync(s.imagePath).length>1000); } }
-assert.ok(lessons.every(p=>p.caption.includes('COPIE ESTE PROMPT') && p.caption.includes('SAÍDA ILUSTRATIVA')));
+for (const lesson of lessons) {
+  assert.ok(lesson.caption.includes('COPIE ESTE PROMPT') && lesson.caption.includes('EXEMPLO DE RESPOSTA'));
+  assert.ok(lesson.caption.includes('PAPEL\nVocê é '));
+  assert.ok(lesson.caption.includes('CONTEXTO E DADOS\n'));
+  assert.ok(lesson.caption.includes('TAREFA\n'));
+  assert.ok(lesson.caption.includes('REGRAS\n1. '));
+  assert.ok(lesson.caption.includes('FORMATO DE SAÍDA\n'));
+  assert.ok(lesson.caption.includes('ANTES DE CONCLUIR\n'));
+  assert.ok(lesson.caption.includes('COMO TESTAR DE VERDADE'));
+  const prompt = lesson.caption.match(/COPIE ESTE PROMPT\n([\s\S]*?)\n\nEXEMPLO DE RESPOSTA/)?.[1] || '';
+  assert.ok(prompt.length >= 430, `${lesson.education.lessonId}: prompt curto demais para ensinar contexto, regras e checagem`);
+  assert.deepEqual(lesson.slides.slice(2, 7).map(slide => slide.eyebrow), ['PROMPT · 1/5', 'PROMPT · 2/5', 'PROMPT · 3/5', 'PROMPT · 4/5', 'PROMPT · 5/5']);
+  assert.deepEqual(lesson.slides.slice(3, 6).map(slide => slide.body), lesson.caption.match(/REGRAS\n([\s\S]*?)\n\nFORMATO DE SAÍDA/)?.[1].split('\n').map(line => line.replace(/^\d+\.\s*/, '')));
+  assert.ok(lesson.slides[6].body.includes('Formato: ') && lesson.slides[6].body.includes('; checagem: '));
+}
+const fileLesson = lessons.find(lesson => lesson.education.lessonId === 'serie-11');
+assert.ok(fileLesson.caption.includes('Nome atual | Nome sugerido | Dado ausente | Motivo da sugestão'));
+assert.ok(fileLesson.caption.includes('Não transforme “final nova” em APROVADA.'));
+assert.ok(fileLesson.caption.includes('o original continua intacto'));
 assert.equal(nextEducationPack(history,()=>true),null);
 assert.equal(educationPreview(account,'2026-09-13',history)[9].educationKind,'tutorial');
 assert.equal(isBusinessAINews({research:{sourceUrl:'https://example.test',sourceTitle:'STF divulga processos',sourceFact:'Uma empresa acompanha o tema.'}}),false);

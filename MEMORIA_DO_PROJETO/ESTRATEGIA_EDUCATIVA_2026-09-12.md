@@ -1,5 +1,12 @@
 # Estratégia educativa v6.05
 
+## Revisão de qualidade dos prompts — 19/09/2026
+
+- Uma frase imperativa não é mais apresentada como prompt completo. Cada aula ensina papel, contexto e dados, tarefa, três limites, formato de saída e checagem final.
+- O carrossel distribui o prompt em cinco cartões para manter todo o conteúdo legível; a legenda oferece a versão copiável integral.
+- O teste recomendado começa com dados fictícios, compara cada resposta com a entrada, registra invenções e omissões, ajusta uma regra e repete antes de usar dados autorizados.
+- A validação exige os blocos estruturais, tamanho mínimo, correspondência entre regras da legenda e cartões e casos concretos como organização de arquivos.
+
 Pedido autorizado: aplicar conteúdo educativo, frequência menor, conversão e medição. Base origin/main 30635e99; branch feat/education-first-20260912; checkout cliente-x-instagram-education-20260912.
 
 ## Operação

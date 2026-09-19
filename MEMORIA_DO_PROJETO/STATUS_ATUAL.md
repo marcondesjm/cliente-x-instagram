@@ -1231,3 +1231,9 @@ Resultado:
 - Run `35445792221` concluído com sucesso em `story-only`. Story Meta `18380125852236605`, publicado em `2026-09-19T13:28:19Z`.
 - Histórico persistido em `origin/main`: `storyCoverTitle` e `coverTitle` agora registram “IA vasculha 400 mil posts e encontra sintomas inesperados ligados ao Ozempic”; `mediaId` e permalink são nulos porque não houve nova publicação de feed.
 - Imagem publicada: `docs/generated/cliente-x/2026-09-19-story-correction-ozempic/story.jpg`. Primeiro comentário não se aplica ao modo Story e não houve erro registrado.
+## 2026-09-19 10:42 BRT — prompts educativos reestruturados
+
+- A captura do episódio 11 mostrou que “Sugira um nome...” era uma instrução curta apresentada como prompt; ela não ensinava contexto, limites, formato de saída nem revisão.
+- As 16 aulas agora geram prompts completos com papel, contexto e dados, tarefa, três regras explícitas, formato verificável e checagem antes da conclusão. A legenda inclui o prompt copiável e um método de teste em cinco passos.
+- O carrossel usa dez cartões: entrada fictícia, cinco partes legíveis do prompt, exemplo de resposta, revisão humana e aplicação. Teste impede prompts com menos de 430 caracteres ou sem qualquer bloco obrigatório.
+- Próxima aula inédita: episódio 12, pós-venda. Render `2026-09-19-104202-slot-9-render-only` inspecionado: regras, formato, checagem e Story legíveis, sem sobreposição. Publicações antigas foram preservadas; a melhoria vale para as aulas ainda não publicadas.
