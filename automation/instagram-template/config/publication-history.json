@@ -34432,6 +34432,168 @@
         ],
         "editorialVariant": 5
       }
+    },
+    {
+      "feedFingerprint": "073b1e62a387e5e6e846ca3a6251c5c08340b4597b55e8e0a9e30fc3ff9fa24e",
+      "storyFingerprint": "073b1e62a387e5e6e846ca3a6251c5c08340b4597b55e8e0a9e30fc3ff9fa24e",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Virgínia aperta o cerco contra expansão desordenada de data centers e cria força-tarefa de IA",
+      "captionFingerprint": "46dfc13ecd31e741ab7d8900b944d105305d1a49f5bae27c142cc416d19714fb",
+      "coverTitle": "Virgínia aperta o cerco contra expansão desordenada de data centers e cria força-tarefa de IA",
+      "coverAvatar": "docs/uploads/avatar-marcondes-presentation.png",
+      "avatarRotationStart": 2,
+      "publishedAt": "2026-09-19T11:15:56.695Z",
+      "slotDate": "2026-09-19",
+      "slotIndex": 1,
+      "scheduledAt": "2026-09-19T11:10:00.000Z",
+      "workflowRun": "35439508601",
+      "mediaId": "17934188028399672",
+      "storyMediaId": "17885427522485283",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /17934188028399672/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AsjkQb4uQz44wAHXcgTWoSw\"}}",
+      "permalink": "https://www.instagram.com/p/Ddd4XjsGEWB/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Nossa IA",
+          "sourceUrl": "https://nossa.ia.br/noticia/virginia-aperta-o-cerco-contra-expansao-desordenada-de-data-centers-e-cria-forca-tarefa-de-ia/",
+          "sourceTitle": "Virgínia aperta o cerco contra expansão desordenada de data centers e cria força-tarefa de IA",
+          "imageUrl": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2295948062.jpg?quality=90&strip=all&crop=0,0,100,100",
+          "imageSourcePageUrl": "https://nossa.ia.br/noticia/virginia-aperta-o-cerco-contra-expansao-desordenada-de-data-centers-e-cria-forca-tarefa-de-ia/",
+          "imageCredit": "Nossa IA",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "d72305897176f290b08f6162719acd206ceb9d50b7d271227e750259c07aa003",
+          "perceptualHash": "0010101000011001011110010111000100101010111001110011100010000111101011001111011010100101111011011010100110011101111010011000111111101001100011111110100111111101000110011110110101011000101110010001010110110011100011001001001101000000100110110100100010010111",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://nossa.ia.br/noticia/virginia-aperta-o-cerco-contra-expansao-desordenada-de-data-centers-e-cria-forca-tarefa-de-ia/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-19-081451-slot-1/visual-candidate-1/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-19T07:21:41.474Z",
+        "ageHours": 3.89,
+        "freshness": "current",
+        "effectiveSamples": 119,
+        "effectiveReach": 1358,
+        "controlledSamples": 111,
+        "selectionModes": {
+          "exploit": 80,
+          "explore": 19,
+          "experiment": 12
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "morning",
+        "objective": "conversation",
+        "primarySignal": "comentarios",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|morning|conversation",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "532759d49b4c",
+        "source": "Nossa IA",
+        "sourceUrl": "https://nossa.ia.br/noticia/virginia-aperta-o-cerco-contra-expansao-desordenada-de-data-centers-e-cria-forca-tarefa-de-ia/",
+        "sourceTitle": "Virgínia aperta o cerco contra expansão desordenada de data centers e cria força-tarefa de IA",
+        "sourceImageUrl": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2295948062.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "publishedAt": "2026-09-18T19:01:07.000Z",
+        "researchedAt": "2026-09-19T11:14:41.815Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Nova ordem executiva na capital mundial dos data centers restringe acordos de confidencialidade, impõe regras de ruído e cria força-tarefa para mitigar os riscos da Inteligência Artificial.",
+        "sourceFacts": [
+          "Nova ordem executiva na capital mundial dos data centers restringe acordos de confidencialidade, impõe regras de ruído e cria força-tarefa para mitigar os riscos da Inteligência Artificial.",
+          "A Virgínia, reconhecida globalmente como a capital mundial dos data centers — especialmente na região de Loudoun County, que abriga o maior entroncamento de tráfego de internet do planeta —, deu um passo importante para frear a expansão desenfreada da infraestrutura de TI. A governadora Abigail Spanberger emitiu a Ordem Executiva 22, impondo restrições severas e exigindo maior transparência nos processos de licenciamento dessas megaestruturas.",
+          "A medida surge em um momento de pressão extrema sobre as redes de energia e os recursos hídricos locais, impulsionada pelo boom da inteligência artificial e pela necessidade crescente de clusters de computação de alta performance. Com a nova diretriz, o governo estadual busca dar voz às comunidades locais, que frequentemente enfrentam os impactos ambientais e estruturais desses empreendimentos sem o devido diálogo público.",
+          "A Ordem Executiva 22 introduz mecanismos diretos de controle e fiscalização sobre a infraestrutura crítica de dados:",
+          "Do ponto de vista estratégico, a decisão da Virgínia marca um ponto de inflexão na relação entre o avanço agressivo da IA generativa e a realidade física da infraestrutura global. Modelos de linguagem avançados (LLMs) e cargas de trabalho pesadas baseadas em GPUs e TPUs exigem parques de servidores colossais, capazes de consumir a energia equivalente a cidades inteiras. O modelo de crescimento “a qualquer custo” começa a encontrar barreiras regulatórias e sociais intransponíveis."
+        ],
+        "editorialVariant": 3
+      }
     }
   ]
 }
