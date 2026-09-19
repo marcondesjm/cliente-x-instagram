@@ -3134,3 +3134,10 @@ Conclusao de ativacao:
 - Biblioteca completa de 16 aulas convertida para prompt estruturado: papel, contexto e dados, tarefa, regras contra invenção, formato de saída e checagem final. Método de teste passa a comparar entrada e resposta, registrar erros, ajustar regra e só então usar dados autorizados.
 - Carrossel ampliado para dez cartões, distribuindo o prompt em cinco partes visíveis. O primeiro render ainda ocultava regras e checagem; a composição foi corrigida e reinspecionada no render final `2026-09-19-104202-slot-9-render-only`.
 - `validate-education-strategy` cobre todos os blocos, tamanho mínimo, cinco cartões e o caso de arquivos; `validate-copy` aprovou 75 seleções. Episódios 6–11 já publicados foram preservados, sem exclusão ou republicação.
+
+## 2026-09-19 10:57 BRT — publicação da aula 12
+
+- Usuário autorizou publicar a próxima aula para conferir o resultado real. Foi usado o pack exato do episódio 12 em `feed-and-story`, com `mark_automatic_slot: false`.
+- Run `35447132492` concluído com sucesso. Feed carrossel `17986961867870252`, Story `18017622122938743`, permalink https://www.instagram.com/p/DdeKzlaHP1Q/.
+- O post foi aberto no Instagram e confirmou o título “O pós-venda depende de alguém lembrar?”, os dez cartões e a legenda completa com prompt e método de teste.
+- Estado persistido em `origin/main`: `lessonId: serie-12`, episódio 12, formato `CAROUSEL`, Feed e Story com IDs válidos. Primeiro comentário sem ID e sem erro; a interface do Instagram mostrou que ainda não havia comentários.

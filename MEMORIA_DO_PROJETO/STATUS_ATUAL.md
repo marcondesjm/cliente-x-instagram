@@ -1237,3 +1237,10 @@ Resultado:
 - As 16 aulas agora geram prompts completos com papel, contexto e dados, tarefa, três regras explícitas, formato verificável e checagem antes da conclusão. A legenda inclui o prompt copiável e um método de teste em cinco passos.
 - O carrossel usa dez cartões: entrada fictícia, cinco partes legíveis do prompt, exemplo de resposta, revisão humana e aplicação. Teste impede prompts com menos de 430 caracteres ou sem qualquer bloco obrigatório.
 - Próxima aula inédita: episódio 12, pós-venda. Render `2026-09-19-104202-slot-9-render-only` inspecionado: regras, formato, checagem e Story legíveis, sem sobreposição. Publicações antigas foram preservadas; a melhoria vale para as aulas ainda não publicadas.
+
+## 2026-09-19 10:57 BRT — aula 12 publicada e verificada
+
+- Publicação manual autorizada pelo usuário, em `feed-and-story`, sem marcar o slot automático como publicado.
+- Run `35447132492` concluído com sucesso. Carrossel `17986961867870252`, Story `18017622122938743` e permalink https://www.instagram.com/p/DdeKzlaHP1Q/.
+- Episódio 12, “O pós-venda depende de alguém lembrar?”, publicado com dez cartões e o prompt completo. O post foi aberto no Instagram e a legenda com papel, contexto, tarefa, regras, formato, checagem e método de teste foi conferida.
+- `publication-history.json` persistiu `lessonId: serie-12`, `publishedFormat: CAROUSEL`, os dois IDs e o permalink. `firstCommentId` e `firstCommentError` ficaram nulos; não há comentário confirmado.
