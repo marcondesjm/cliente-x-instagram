@@ -2,7 +2,7 @@
 import { chromium } from 'playwright';
 import { seriesForSlot, seriesPacks } from '../../../lib/follower-series.js';
 import { educationEnabled, educationKind, educationLessons, nextEducationPack, isBusinessAINews, newsWithPracticalExercise, educationPreview, educationDayBlocked, educationIntegrated, educationSlotIndex, educationForSlot } from '../../../lib/education-strategy.js';
-import { normalizeContentFingerprint, packContentFingerprint, availableBookStoryPacks } from '../../../lib/scheduled-content-guard.js';
+import { normalizeContentFingerprint, packContentFingerprint } from '../../../lib/scheduled-content-guard.js';
 import { createHash, randomInt } from 'node:crypto';
 import { lookup } from 'node:dns/promises';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -4237,33 +4237,6 @@ function readPublicationHistory(configDir, accountKey) {
   return Array.isArray(history?.[accountKey]) ? history[accountKey] : [];
 }
 
-function bookStoryPacks(configDir, accountKey) {
-  const { group } = loadScheduledPosts(configDir, accountKey);
-  return (group.posts || [])
-    .map((post) => post?.pack)
-    .filter((pack) => pack?.authoredBook && Array.isArray(pack.slides) && pack.slides.length);
-}
-
-function pickBookStoryAfterNews(history = [], candidates = [], newsInterval = 5) {
-  if (!candidates.length) return null;
-  const bookTitles = new Set(candidates.map((pack) => normalizedCoverTitle(pack)).filter(Boolean));
-  let newsStories = 0;
-  for (const entry of [...history].reverse()) {
-    const entryTitle = normalizeContentFingerprint(entry.storyCoverTitle || entry.coverTitle || '');
-    const isBookStory = entry.storyContentKind === 'book' || bookTitles.has(entryTitle);
-    if (isBookStory && entry.storyMediaId) break;
-    if (entry.storyMediaId && entry.research?.sourceUrl) newsStories += 1;
-  }
-  if (newsStories < newsInterval) return null;
-
-  const usedBookTitles = new Set(history
-    .filter((entry) => entry.storyContentKind === 'book' || bookTitles.has(normalizeContentFingerprint(entry.storyCoverTitle || entry.coverTitle || '')))
-    .map((entry) => normalizeContentFingerprint(entry.storyCoverTitle || entry.coverTitle || ''))
-    .filter(Boolean));
-  return candidates.find((pack) => !usedBookTitles.has(normalizedCoverTitle(pack)))
-    || candidates[Math.floor(newsStories / newsInterval) % candidates.length];
-}
-
 function recordPublicationHistory(configDir, accountKey, pack, result) {
   const path = publicationHistoryPath(configDir);
   const history = existsSync(path) ? readJson(path) : {};
@@ -5188,19 +5161,6 @@ async function main() {
     );
     if (githubInvalidProbe.retryable) throw new Error('Erro permanente 422 do GitHub foi marcado para repeticao indevida.');
     const duplicateProbePack = automaticSelectionPacks[0];
-    const configuredBookStoryPacks = bookStoryPacks(args.configDir, account.account);
-    if (!configuredBookStoryPacks.length) throw new Error('Rodízio editorial não encontrou Stories autorais do livro na fila configurada.');
-    const bookRotationProbe = { authoredBook: { title: 'Livro' }, slides: [{ title: 'Trecho inédito', body: 'Aplicação prática.' }], caption: 'Trecho autoral.' };
-    const fiveNewsProbe = Array.from({ length: 5 }, (_, index) => ({
-      storyMediaId: `story-${index}`,
-      coverTitle: `Notícia ${index}`,
-      research: { sourceUrl: `https://example.com/news-${index}` }
-    }));
-    if (pickBookStoryAfterNews(fiveNewsProbe.slice(0, 4), [bookRotationProbe])) throw new Error('Rodízio do livro antecipou o Story antes de cinco notícias.');
-    if (pickBookStoryAfterNews(fiveNewsProbe, [bookRotationProbe]) !== bookRotationProbe) throw new Error('Rodízio do livro não selecionou Story após cinco notícias.');
-    if (pickBookStoryAfterNews([...fiveNewsProbe, { storyMediaId: 'book-story', storyContentKind: 'book', storyCoverTitle: 'Trecho inédito' }], [bookRotationProbe])) {
-      throw new Error('Rodízio do livro repetiu Story sem acumular outras cinco notícias.');
-    }
     const duplicateProbe = pickFreshPack([duplicateProbePack], today, slotIndex, [], [{
       feedFingerprint: packContentFingerprint(duplicateProbePack),
       storyFingerprint: packContentFingerprint(duplicateProbePack)
@@ -5670,8 +5630,7 @@ async function main() {
       checkedAutoPacks: autoPacks.length,
       checkedAutomaticSelectionPacks: automaticSelectionPacks.length,
       duplicateHistoryGuard: 'ok',
-      storyEditorialBalanceGuard: 'five-news-then-one-authored-book',
-      checkedBookStoryPacks: configuredBookStoryPacks.length,
+      storyEditorialBalanceGuard: 'same-pack-and-style-as-feed',
       sourceBalanceGuard: 'ok',
       avatarRotationGuard: 'ok',
       checkedAvatarRotation: avatarProbeCovers.length,
@@ -6031,23 +5990,10 @@ async function main() {
   const reelOnly = publishMode === 'reel-only';
   const reelAndStory = publishMode === 'reel-and-story';
   const reelMode = reelOnly || reelAndStory;
-  const rotatedBookStoryPack = (!scheduledPost && !dashboardPack && !seriesSelection && !args.storyOnly && !feedOnly && !reelOnly)
-    ? pickBookStoryAfterNews(publicationHistory, availableBookStoryPacks(loadScheduledPosts(args.configDir, account.account).group.posts), 5)
-    : null;
-  const storyPack = rotatedBookStoryPack
-    ? preparePackForPublication(JSON.parse(JSON.stringify(rotatedBookStoryPack)), today, generationSlotIndex, account, 'story-only', { allowIhc: false }).pack
-    : pack;
-  const storyVisualAccount = storyPack.visualDirection
-    ? { ...account, contentProfile: { ...account.contentProfile, visualDirection: storyPack.visualDirection } }
-    : account;
-  const storyStyle = rotatedBookStoryPack
-    ? styleWithBrandPalette(
-      pickVisualStyle(styles, storyVisualAccount, today, generationSlotIndex + 1),
-      account,
-      { dateString: today, slotIndex: generationSlotIndex + 1, variationSeed: stableAvatarOffset(storyPack.slides?.[0]?.title || 'book-story') }
-    )
-    : style;
-  if (rotatedBookStoryPack) console.log(`Rodízio editorial: após cinco Stories de notícias, Story do livro selecionado: ${storyPack.slides?.[0]?.title || 'trecho autoral'}.`);
+  // A publicação conjunta deve manter a mesma pauta, fotografia e estilo.
+  // Livros continuam elegíveis em suas publicações próprias/agendadas.
+  const storyPack = pack;
+  const storyStyle = style;
   if (!args.renderOnly && !args.dryRun && (scheduledPost || dashboardPack || seriesSelection || args.storyOnly)) {
     const duplicate = findDuplicatePack(publicationHistory, historyPack);
     if (duplicate) {
@@ -6079,7 +6025,7 @@ async function main() {
   };
   const imagePaths = storyOnly ? [] : await renderSlides(runDir, pack.slides, account, style, renderContext);
   const customStoryImage = String(pack.storyImageUrl || pack.storyImagePath || '').trim();
-  const storyImagePath = (feedOnly || reelOnly) ? null : (customStoryImage || await renderStory(runDir, storyPack, account, storyStyle, { ...renderContext, publishMode: rotatedBookStoryPack ? 'story-only' : publishMode }));
+  const storyImagePath = (feedOnly || reelOnly) ? null : (customStoryImage || await renderStory(runDir, storyPack, account, storyStyle, renderContext));
   const reelRender = reelMode ? renderReelVideo(runDir, imagePaths) : null;
   const reelVideoPath = reelRender?.reelPath || null;
   const reelAudioTrack = reelRender?.audioTrack || null;

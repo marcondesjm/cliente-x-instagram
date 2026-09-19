@@ -3114,3 +3114,12 @@ Conclusao de ativacao:
 - validate-follower-growth verifica existência, caminhos e SHA256 distintos das dez imagens, incluindo não reuso da foto antiga. Sintaxe, validate-copy (75 seleções) e diff passaram.
 - Dez imagens inspecionadas. Ensaio automático com SLOT_DATE=2026-09-11 selecionou episódio 5 e gerou cinco slides, Reel e Story. Capa e Story inspecionados sem colisão: runs/cliente-x/2026-09-10-191757-slot-9-render-only.
 - Alteração preparada para próximas publicações; nenhuma publicação antecipada, exclusão ou republicação. Prova de postagem com a nova foto depende da execução futura do slot 9.
+
+## 2026-09-19 — Story alinhado ao feed
+
+- Base origin/main 34604723; worktree cliente-x-instagram-story-consistency-20260919, branch fix/story-feed-consistency-20260919.
+- Incidente comprovado no run 35435465262 (19/09 06:45 BRT): Reel 17905873356480438, Story 18105760100222204, https://www.instagram.com/reel/DdduB0hjG6U/. Feed sobre Ozempic, Story com texto do livro e imagem da notícia; fingerprints e títulos diferentes persistidos no histórico.
+- Causa: rodízio após cinco notícias substituía storyPack e storyStyle, mas reutilizava o contexto visual do feed. Removida essa substituição nas publicações; Story usa o mesmo pack, estilo e contexto da publicação selecionada. Conteúdos próprios/agendados de livro mantidos.
+- Validações: sintaxe, validate-copy (75 seleções), validate-story-feed-consistency (15 combinações de modo/conteúdo e histórico de seis notícias), renderStory real com guardas de layout e inspeção visual da prévia de Ozempic. Prévia reconstruída dos fatos e título persistidos, com estilo impact-carousel branco; não é comprovante de publicação.
+- Nenhuma mídia existente apagada ou republicada. Comentário do Reel original falhou separadamente por permissão Meta #10. Correção de código preparada para main; próxima publicação com a correção ainda não observada.
+

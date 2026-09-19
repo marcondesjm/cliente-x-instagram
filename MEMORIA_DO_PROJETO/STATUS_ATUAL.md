@@ -1,3 +1,11 @@
+## 2026-09-19 — Story alinhado ao feed
+
+- Base origin/main 34604723; worktree cliente-x-instagram-story-consistency-20260919, branch fix/story-feed-consistency-20260919.
+- Incidente comprovado no run 35435465262 (19/09 06:45 BRT): Reel 17905873356480438, Story 18105760100222204, https://www.instagram.com/reel/DdduB0hjG6U/. Feed sobre Ozempic, Story com texto do livro e imagem da notícia; fingerprints e títulos diferentes persistidos no histórico.
+- Causa: rodízio após cinco notícias substituía storyPack e storyStyle, mas reutilizava o contexto visual do feed. Removida essa substituição nas publicações; Story usa o mesmo pack, estilo e contexto da publicação selecionada. Conteúdos próprios/agendados de livro mantidos.
+- Validações: sintaxe, validate-copy (75 seleções), validate-story-feed-consistency (15 combinações de modo/conteúdo e histórico de seis notícias), renderStory real com guardas de layout e inspeção visual da prévia de Ozempic. Prévia reconstruída dos fatos e título persistidos, com estilo impact-carousel branco; não é comprovante de publicação.
+- Nenhuma mídia existente apagada ou republicada. Comentário do Reel original falhou separadamente por permissão Meta #10. Correção de código preparada para main; próxima publicação com a correção ainda não observada.
+
 ## 2026-09-12 — apresentação pública atualizada
 
 - /plataforma destaca Melhorar Instagram, aulas com prompts e revisão, aprendizado por desempenho, Radar com data da coleta e agenda de 13 horários.
