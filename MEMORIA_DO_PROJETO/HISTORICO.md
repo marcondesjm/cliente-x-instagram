@@ -3122,3 +3122,9 @@ Conclusao de ativacao:
 - Causa: rodízio após cinco notícias substituía storyPack e storyStyle, mas reutilizava o contexto visual do feed. Removida essa substituição nas publicações; Story usa o mesmo pack, estilo e contexto da publicação selecionada. Conteúdos próprios/agendados de livro mantidos.
 - Validações: sintaxe, validate-copy (75 seleções), validate-story-feed-consistency (15 combinações de modo/conteúdo e histórico de seis notícias), renderStory real com guardas de layout e inspeção visual da prévia de Ozempic. Prévia reconstruída dos fatos e título persistidos, com estilo impact-carousel branco; não é comprovante de publicação.
 - Nenhuma mídia existente apagada ou republicada. Comentário do Reel original falhou separadamente por permissão Meta #10. Correção enviada para origin/main em ee00fc14; próxima publicação com a correção ainda não observada. Prévia entregue em output/story/Cliente-X-Ozempic-story-corrigido.jpg no workspace pai.
+## 2026-09-19 10:28 BRT — Story de Ozempic corrigido e publicado
+
+- O usuário confirmou a publicação da correção após verificar a prévia.
+- Run manual `35445792221`, modo `story-only`, concluído com sucesso. Story ID `18380125852236605`, timestamp Meta `2026-09-19T13:28:19Z`.
+- A execução usou a imagem aprovada em `docs/generated/cliente-x/2026-09-19-story-correction-ozempic/story.jpg`, sem criar novo feed e sem marcar slot automático.
+- `publication-history.json` persistiu `storyMediaId`, títulos do Story/feed alinhados e `mediaId: null`, `permalink: null`, comprovando que somente o Story foi publicado.

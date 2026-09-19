@@ -1225,3 +1225,9 @@ Resultado:
 - validate-follower-growth verifica existência, caminhos e SHA256 distintos das dez imagens, incluindo não reuso da foto antiga. Sintaxe, validate-copy (75 seleções) e diff passaram.
 - Dez imagens inspecionadas. Ensaio automático com SLOT_DATE=2026-09-11 selecionou episódio 5 e gerou cinco slides, Reel e Story. Capa e Story inspecionados sem colisão: runs/cliente-x/2026-09-10-191757-slot-9-render-only.
 - Alteração preparada para próximas publicações; nenhuma publicação antecipada, exclusão ou republicação. Prova de postagem com a nova foto depende da execução futura do slot 9.
+## 2026-09-19 10:28 BRT — Story de Ozempic corrigido e publicado
+
+- Publicação manual autorizada pelo usuário, limitada ao Story corrigido; o feed não foi repetido e nenhum slot automático foi consumido.
+- Run `35445792221` concluído com sucesso em `story-only`. Story Meta `18380125852236605`, publicado em `2026-09-19T13:28:19Z`.
+- Histórico persistido em `origin/main`: `storyCoverTitle` e `coverTitle` agora registram “IA vasculha 400 mil posts e encontra sintomas inesperados ligados ao Ozempic”; `mediaId` e permalink são nulos porque não houve nova publicação de feed.
+- Imagem publicada: `docs/generated/cliente-x/2026-09-19-story-correction-ozempic/story.jpg`. Primeiro comentário não se aplica ao modo Story e não houve erro registrado.
