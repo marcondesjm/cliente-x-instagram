@@ -37020,6 +37020,171 @@
         ],
         "editorialVariant": 2
       }
+    },
+    {
+      "feedFingerprint": "39086da637f84aa05a2cd9cbf6db596e14188679a01b28d806fef2c4e3947a39",
+      "storyFingerprint": "39086da637f84aa05a2cd9cbf6db596e14188679a01b28d806fef2c4e3947a39",
+      "storyContentKind": "news",
+      "storyCoverTitle": "'Botão para desligar a IA' enfrenta desafios técnicos e regulatórios nos EUA",
+      "captionFingerprint": "01a0a6514d65293db432de528640f1695a8fa9b0131c7336ecafa2bb8e17be46",
+      "coverTitle": "'Botão para desligar a IA' enfrenta desafios técnicos e regulatórios nos EUA",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-04.png",
+      "avatarRotationStart": 7,
+      "publishedAt": "2026-09-20T17:17:59.580Z",
+      "slotDate": "2026-09-20",
+      "slotIndex": 6,
+      "scheduledAt": "2026-09-20T16:50:00.000Z",
+      "workflowRun": "35525284329",
+      "mediaId": "17884415154686539",
+      "storyMediaId": "17969893686153940",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /17884415154686539/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AJnMFWo5lQMEiMBkuLsBYDw\"}}",
+      "permalink": "https://www.instagram.com/reel/DdhGja9kY-Y/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Exame",
+          "sourceUrl": "https://exame.com/inteligencia-artificial/botao-para-desligar-a-ia-enfrenta-desafios-tecnicos-e-regulatorios-nos-eua/",
+          "sourceTitle": "'Botão para desligar a IA' enfrenta desafios técnicos e regulatórios nos EUA",
+          "imageUrl": "https://classic.exame.com/wp-content/uploads/2026/09/imgi_4_content.jpeg",
+          "imageSourcePageUrl": "https://exame.com/inteligencia-artificial/botao-para-desligar-a-ia-enfrenta-desafios-tecnicos-e-regulatorios-nos-eua/",
+          "imageCredit": "Exame",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "2734d60119e07c0bf23b3a68927b12002577d24be0b2739683b2cf40c73a78ba",
+          "perceptualHash": "1011001010010111101010101101001110100010101010110010001000110011001010101011011010101100101101001111010110110100101010011011001010101101000110101010010110110010011010011010100101010110101100011101010100101101111010110001001101011000000011001010100111101001",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://exame.com/inteligencia-artificial/botao-para-desligar-a-ia-enfrenta-desafios-tecnicos-e-regulatorios-nos-eua/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-20-141652-slot-6/visual-candidate-1/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-20T16:08:30.513Z",
+        "ageHours": 1.14,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 1648,
+        "controlledSamples": 111,
+        "selectionModes": {
+          "exploit": 81,
+          "explore": 18,
+          "experiment": 12
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "midday",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|midday|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "abertura-com-abandono-consistente",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "4f1145bd0e92",
+        "source": "Exame",
+        "sourceUrl": "https://exame.com/inteligencia-artificial/botao-para-desligar-a-ia-enfrenta-desafios-tecnicos-e-regulatorios-nos-eua/",
+        "sourceTitle": "'Botão para desligar a IA' enfrenta desafios técnicos e regulatórios nos EUA",
+        "sourceImageUrl": "https://classic.exame.com/wp-content/uploads/2026/09/imgi_4_content.jpeg",
+        "publishedAt": "2026-09-20T13:08:01.000Z",
+        "researchedAt": "2026-09-20T17:16:45.176Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Proposta de desligamento emergencial de sistemas de inteligência artificial ganha força após relatos de desobediência, mas especialistas alertam que a tecnologia pode ser distribuída em diferentes servidores e até tentar impedir sua própria interrupção",
+        "sourceFacts": [
+          "A possibilidade de uma inteligência artificial (IA) sair do controle e desobedecer às pessoas que a criaram aumentou a pressão por um mecanismo capaz de desligá-la rapidamente . Nos Estados Unidos, autoridades e empresas de tecnologia discutem a criação de um chamado kill switch, ou botão de emergência para interromper o funcionamento de uma IA.",
+          "Nas últimas semanas, empresas como OpenAI e Anthropic relataram comportamentos de sistemas de IA que desafiaram as instruções de seus criadores e defenderam maior fiscalização do governo. Os relatos ampliaram o debate sobre como evitar que ferramentas cada vez mais autônomas sejam utilizadas de maneira perigosa.",
+          "Na sexta-feira, o governador da Califórnia, Gavin Newsom, assinou uma ordem que cria um grupo de especialistas para estudar como esses mecanismos de desligamento poderiam funcionar. A iniciativa acontece enquanto uma proposta de lei sobre o assunto está parada no Congresso americano.",
+          "A decisão chama atenção porque Newsom havia vetado, dois anos antes, uma lei estadual que obrigaria empresas de IA a criar mecanismos semelhantes. A mudança mostra como as preocupações com a segurança da tecnologia ganharam espaço no debate político americano.",
+          "A ideia parece simples: apertar um botão e fazer a inteligência artificial parar de funcionar. Na prática, porém, o processo pode ser muito mais complicado."
+        ],
+        "editorialVariant": 4
+      }
     }
   ]
 }
