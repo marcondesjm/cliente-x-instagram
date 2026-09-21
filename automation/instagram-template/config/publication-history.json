@@ -39859,6 +39859,165 @@
         }
       },
       "research": null
+    },
+    {
+      "feedFingerprint": "29ccf6625715f1d9ac527aacefadbc696a86a45b4246496f355ab4652e989a56",
+      "storyFingerprint": "29ccf6625715f1d9ac527aacefadbc696a86a45b4246496f355ab4652e989a56",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Amazon bloqueia agente de IA da Meta que faz compras sozinho",
+      "captionFingerprint": "6fe1d8c6a1f0dbf702ee17d6e65c18ede8a75351dfa03dc12de4f7e930fa722e",
+      "coverTitle": "Amazon bloqueia agente de IA da Meta que faz compras sozinho",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-03.png",
+      "avatarRotationStart": 6,
+      "publishedAt": "2026-09-21T20:45:48.961Z",
+      "slotDate": "2026-09-21",
+      "slotIndex": 10,
+      "scheduledAt": "2026-09-21T20:40:00.000Z",
+      "workflowRun": "35652817336",
+      "mediaId": "18153497533545572",
+      "storyMediaId": "18122801915513833",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18153497533545572/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AbwHX-bsH_WvT3hexkbcwBS\"}}",
+      "permalink": "https://www.instagram.com/reel/DdkDIfvEyAa/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Tecnoblog",
+          "sourceUrl": "https://tecnoblog.net/noticias/amazon-bloqueia-agente-de-ia-da-meta-que-faz-compras-sozinho/",
+          "sourceTitle": "Amazon bloqueia agente de IA da Meta que faz compras sozinho",
+          "imageUrl": "https://files.tecnoblog.net/wp-content/uploads/2026/09/muse-stroller.png",
+          "imageSourcePageUrl": "https://tecnoblog.net/noticias/amazon-bloqueia-agente-de-ia-da-meta-que-faz-compras-sozinho/",
+          "imageCredit": "Tecnoblog",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "3ac108cbd9295ec3e5926f1727338cd48b5f5538cc5507d4f15498481e029c6e",
+          "perceptualHash": "0000000111101111000011011100111100001101010011110000010001010011001001010101101100100100010100110010010001010011001001010101001100100101010100110010010101001011001101010101001100100100010101110000010001011011000011101001011100101101010100110000010111001111",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://tecnoblog.net/noticias/amazon-bloqueia-agente-de-ia-da-meta-que-faz-compras-sozinho/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-21-174439-slot-10/visual-candidate-1/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-21T20:26:16.168Z",
+        "ageHours": 0.31,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 1806,
+        "controlledSamples": 112,
+        "selectionModes": {
+          "exploit": 83,
+          "explore": 16,
+          "experiment": 13
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "afternoon",
+        "objective": "conversion",
+        "primarySignal": "alcance de nao seguidores",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|afternoon|conversion",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "aderencia-ao-perfil",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "abertura-com-abandono-consistente",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 7.51,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "800a7d09e3e9",
+        "source": "Tecnoblog",
+        "sourceUrl": "https://tecnoblog.net/noticias/amazon-bloqueia-agente-de-ia-da-meta-que-faz-compras-sozinho/",
+        "sourceTitle": "Amazon bloqueia agente de IA da Meta que faz compras sozinho",
+        "sourceImageUrl": "https://files.tecnoblog.net/wp-content/uploads/2026/09/muse-stroller-340x191.png",
+        "publishedAt": "2026-09-21T18:50:39.000Z",
+        "researchedAt": "2026-09-21T20:44:32.195Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Meta Muse foi impedido de acessar a loja após realizar compras e consultar dados sem se identificar. Amazon alega violação dos termos de uso. Amazon bloqueia agente de IA da Meta que faz compras sozinho",
+        "sourceFacts": [
+          "Meta Muse foi impedido de acessar a loja após realizar compras e consultar dados sem se identificar. Amazon alega violação dos termos de uso. Amazon bloqueia agente de IA da Meta que faz compras sozinho"
+        ],
+        "editorialVariant": 4
+      }
     }
   ]
 }
