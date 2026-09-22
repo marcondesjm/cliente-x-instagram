@@ -41348,6 +41348,170 @@
         ],
         "editorialVariant": 4
       }
+    },
+    {
+      "feedFingerprint": "0216194fc592b4019eeda326e9064c5fb5d7812c62c00ce86b89f8d4f926d622",
+      "storyFingerprint": "0216194fc592b4019eeda326e9064c5fb5d7812c62c00ce86b89f8d4f926d622",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Jun Kim, criador do MLX, une-se à Hugging Face para impulsionar o ecossistema de IA da Apple",
+      "captionFingerprint": "a3a23c5c9f49f0d4c37415e60de8a7f74534529ed6df3115d670d1feddf53f14",
+      "coverTitle": "Jun Kim, criador do MLX, une-se à Hugging Face para impulsionar o ecossistema de IA da Apple",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-02.png",
+      "avatarRotationStart": 5,
+      "publishedAt": "2026-09-22T18:29:50.015Z",
+      "slotDate": "2026-09-22",
+      "slotIndex": 7,
+      "scheduledAt": "2026-09-22T17:15:00.000Z",
+      "workflowRun": "35767174535",
+      "mediaId": "17911628589494550",
+      "storyMediaId": "17959459344237154",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /17911628589494550/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"ALuqNqg_vD-PVcVRrADweBS\"}}",
+      "permalink": "https://www.instagram.com/reel/DdmYWdyCOcP/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Nossa IA",
+          "sourceUrl": "https://nossa.ia.br/noticia/jun-kim-criador-do-mlx-une-se-a-hugging-face-para-impulsionar-o-ecossistema-de-ia-da-apple/",
+          "sourceTitle": "Jun Kim, criador do MLX, une-se à Hugging Face para impulsionar o ecossistema de IA da Apple",
+          "imageUrl": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80",
+          "imageSourcePageUrl": "https://nossa.ia.br/noticia/jun-kim-criador-do-mlx-une-se-a-hugging-face-para-impulsionar-o-ecossistema-de-ia-da-apple/",
+          "imageCredit": "Nossa IA",
+          "imageEvidence": "Main image metadata of the selected article. Article photograph with matching subject terms.",
+          "imageHash": "0ad85aa0eda38db64a387c9b407ae1126654004921edda302a72e3824523a89e",
+          "perceptualHash": "0100000001010101001111000011000000110011111111010101011001001101010011010111110100110011101111010010001101111101001000111011110100100011101111010010001001111110011100101011001001111011100101100111001111010100001110101010011011111111101101100111101110110010",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://nossa.ia.br/noticia/jun-kim-criador-do-mlx-une-se-a-hugging-face-para-impulsionar-o-ecossistema-de-ia-da-apple/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-22-152824-slot-7/visual-candidate-6/radar-slide-01.avif",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Main image metadata of the selected article. Article photograph with matching subject terms."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-22T16:58:57.727Z",
+        "ageHours": 1.49,
+        "freshness": "current",
+        "effectiveSamples": 119,
+        "effectiveReach": 1839,
+        "controlledSamples": 111,
+        "selectionModes": {
+          "exploit": 80,
+          "explore": 18,
+          "experiment": 13
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "afternoon",
+        "objective": "utility",
+        "primarySignal": "salvamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|afternoon|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "abertura-com-abandono-consistente"
+        ],
+        "fatiguePenalty": 7.96,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "34617482035b",
+        "source": "Nossa IA",
+        "sourceUrl": "https://nossa.ia.br/noticia/jun-kim-criador-do-mlx-une-se-a-hugging-face-para-impulsionar-o-ecossistema-de-ia-da-apple/",
+        "sourceTitle": "Jun Kim, criador do MLX, une-se à Hugging Face para impulsionar o ecossistema de IA da Apple",
+        "sourceImageUrl": "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80",
+        "publishedAt": "2026-09-22T07:01:38.000Z",
+        "researchedAt": "2026-09-22T18:28:12.081Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "O criador e mantenedor do framework MLX agora faz parte da Hugging Face, prometendo revolucionar a integração de modelos de linguagem e machine learning no hardware da Apple.",
+        "sourceFacts": [
+          "O criador e mantenedor do framework MLX agora faz parte da Hugging Face, prometendo revolucionar a integração de modelos de linguagem e machine learning no hardware da Apple.",
+          "Descubra como a modernização da clássica interface AUTOMATIC1111 utilizando Gradio Workflow promete revolucionar o ecossistema de geração de imagens com IA.",
+          "Descubra como a releitura do clássico AUTOMATIC1111 utilizando Gradio Workflow promete modernizar e flexibilizar o ecossistema de geração de imagens por inteligência artificial.",
+          "Descubra como a reconstrução da interface clássica de geração de imagens com Gradio Workflow promete modernizar o ecossistema de código aberto.",
+          "Receba gratuitamente as principais novidades, lançamentos de modelos e tutoriais de IA direto no seu e-mail todas as manhãs."
+        ],
+        "editorialVariant": 3
+      }
     }
   ]
 }
