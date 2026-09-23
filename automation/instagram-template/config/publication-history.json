@@ -42179,6 +42179,167 @@
         ],
         "editorialVariant": 3
       }
+    },
+    {
+      "feedFingerprint": "c7a1ce162c92a69941742f4b43863a0830a79d239edb92864311920bd295c28b",
+      "storyFingerprint": "c7a1ce162c92a69941742f4b43863a0830a79d239edb92864311920bd295c28b",
+      "storyContentKind": "news",
+      "storyCoverTitle": "TSE cria ferramenta de IA para acesso a informações sobre eleições",
+      "captionFingerprint": "af6ab6a0fcb6439b6c8861e5314a91a13ad2293ffb234dfc5a9256d657457576",
+      "coverTitle": "TSE cria ferramenta de IA para acesso a informações sobre eleições",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-05.png",
+      "avatarRotationStart": 8,
+      "publishedAt": "2026-09-23T15:29:28.349Z",
+      "slotDate": "2026-09-23",
+      "slotIndex": 3,
+      "scheduledAt": "2026-09-23T14:50:00.000Z",
+      "workflowRun": "35881633994",
+      "mediaId": "18058658282535668",
+      "storyMediaId": "18097650428256529",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18058658282535668/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AZAq7eqRcE7ccbqot7kl1RM\"}}",
+      "permalink": "https://www.instagram.com/p/Ddooj60F5pV/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Agencia Brasil",
+          "sourceUrl": "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/tse-cria-ferramenta-de-ia-para-acesso-informacoes-sobre-eleicoes",
+          "sourceTitle": "TSE cria ferramenta de IA para acesso a informações sobre eleições",
+          "imageUrl": "https://imagens.ebc.com.br/88ax7ZZEtSKCcQtDNHCAOfgOvis=/1600x800/https://agenciabrasil.ebc.com.br/sites/default/files/thumbnails/image/predio-tse_mcamgo_abr_22062023-5.jpg?itok=smL4v_WI",
+          "imageSourcePageUrl": "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/tse-cria-ferramenta-de-ia-para-acesso-informacoes-sobre-eleicoes",
+          "imageCredit": "Agencia Brasil",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "8a7b20c8dc6d8d9460ee02b119b8e2f52a38c95d58b183155622e1855a327b3f",
+          "perceptualHash": "1111111110000000111111111000000011111111100000010111111111000010100111111100011010101111110001001001001111001100001011001111111000101111001111101000100110111110001000001011011000011100000111100010110111111000000011100111111000101110011110100011111001101000",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/tse-cria-ferramenta-de-ia-para-acesso-informacoes-sobre-eleicoes",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-23-122841-slot-3/visual-candidate-1/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-23T14:23:42.357Z",
+        "ageHours": 1.08,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 1888,
+        "controlledSamples": 111,
+        "selectionModes": {
+          "exploit": 84,
+          "explore": 17,
+          "experiment": 10
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|midday|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "contexto-com-baixo-historico"
+        ],
+        "fatiguePenalty": 8.55,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "b3f7c0f63223",
+        "source": "Agencia Brasil",
+        "sourceUrl": "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/tse-cria-ferramenta-de-ia-para-acesso-informacoes-sobre-eleicoes",
+        "sourceTitle": "TSE cria ferramenta de IA para acesso a informações sobre eleições",
+        "sourceImageUrl": "https://imagens.ebc.com.br/88ax7ZZEtSKCcQtDNHCAOfgOvis=/1600x800/https://agenciabrasil.ebc.com.br/sites/default/files/thumbnails/image/predio-tse_mcamgo_abr_22062023-5.jpg?itok=smL4v_WI",
+        "publishedAt": "2026-09-23T14:13:00.000Z",
+        "researchedAt": "2026-09-23T15:28:34.634Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Um assistente virtual, criado pelo Tribunal Superior Eleitoral (TSE), ajudará os eleitores brasileiros a acessarem informações e esclarecerem dúvidas sobre o pleito que elegerá, em 2026, presidente e governadores, além dos representantes da população nos legislativos federal, estadual e distrital. Tudo de forma rápida e com linguagem acessível. Notícias relacionadas: TSE vai enviar alertas no e-Título com orientações para eleições. Eleições 2026: saiba o que é permitido e proibido no dia da votação.",
+        "sourceFacts": [
+          "Um assistente virtual, criado pelo Tribunal Superior Eleitoral (TSE), ajudará os eleitores brasileiros a acessarem informações e esclarecerem dúvidas sobre o pleito que elegerá, em 2026, presidente e governadores, além dos representantes da população nos legislativos federal, estadual e distrital. Tudo de forma rápida e com linguagem acessível.",
+          "Tendo como base a Inteligência Artificial (IA), o ChatVote pode ser acessado por meio de um ícone localizado no canto inferior direito do portal do TSE ou pelo aplicativo e-Título.",
+          "“O assistente reúne informações sobre serviços e temas de interesse do eleitor, como dia, horário e local de votação; justificativa de ausência às urnas; orientações para mesários; conteúdo das resoluções das eleições, entre outros”, informou o TSE.",
+          "O ChatVote esclarece também as principais dúvidas que costumam ser levadas à Justiça Eleitoral.",
+          "“Com a incorporação de IA, a interação deixa de ocorrer por meio de menus fechados e passa a ser feita em formato conversacional, permitindo que o eleitor formule perguntas de maneira mais livre e intuitiva”, detalhou o tribunal."
+        ],
+        "editorialVariant": 4
+      }
     }
   ]
 }
