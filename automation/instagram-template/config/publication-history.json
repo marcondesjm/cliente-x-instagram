@@ -45074,6 +45074,171 @@
         ],
         "editorialVariant": 0
       }
+    },
+    {
+      "feedFingerprint": "00e92a764d9c8c75f073ebf997e01b6dc5ad77ae32e73b972c9eba17088af9f6",
+      "storyFingerprint": "00e92a764d9c8c75f073ebf997e01b6dc5ad77ae32e73b972c9eba17088af9f6",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Quem cria vídeos com IA deveria conhecer este site com 46 movimentos de câmera prontos",
+      "captionFingerprint": "215973be2951ad1bfedaefdae4aeaa729c84a49c73246d41fc118a654abe4da2",
+      "coverTitle": "Quem cria vídeos com IA deveria conhecer este site com 46 movimentos de câmera prontos",
+      "coverAvatar": "docs/uploads/avatar-marcondes-office-laptop.png",
+      "avatarRotationStart": 0,
+      "publishedAt": "2026-09-25T15:52:04.173Z",
+      "slotDate": "2026-09-25",
+      "slotIndex": 3,
+      "scheduledAt": "2026-09-25T14:50:00.000Z",
+      "workflowRun": "36156735886",
+      "mediaId": "18128558434691953",
+      "storyMediaId": "18154911583543807",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18128558434691953/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"Aj-9Jz-BLJMYYhGxpmc-uB2\"}}",
+      "permalink": "https://www.instagram.com/p/Ddt0u6IGhUY/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Hardware.com.br",
+          "sourceUrl": "https://www.hardware.com.br/noticias/site-movimentos-camera-prompts-videos-ia/",
+          "sourceTitle": "Quem cria vídeos com IA deveria conhecer este site com 46 movimentos de câmera prontos",
+          "imageUrl": "https://www.hardware.com.br/wp-content/uploads/2026/09/camera-2.jpg",
+          "imageSourcePageUrl": "https://www.hardware.com.br/noticias/site-movimentos-camera-prompts-videos-ia/",
+          "imageCredit": "Hardware.com.br",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "869116fc12a2a178b732bf3b71f95513a0968825e86ef8f1fd3d450fcdb35871",
+          "perceptualHash": "0000000000100000100011111000000110011111010000011100111101010001110011110100101011001101011101100100111010010101011110011100011101011110111000010100111010110001110011101011011111001110111001010110101001010101010010101111011100110011111110110011001101111011",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://www.hardware.com.br/noticias/site-movimentos-camera-prompts-videos-ia/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-25-125102-slot-3/visual-candidate-1/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-25T14:45:06.742Z",
+        "ageHours": 1.1,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 1798,
+        "controlledSamples": 112,
+        "selectionModes": {
+          "exploit": 87,
+          "explore": 15,
+          "experiment": 10
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "conversation",
+        "primarySignal": "comentarios",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|midday|conversation",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-atual",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-abaixo-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 7.62,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "9e5e8ec82409",
+        "source": "Hardware.com.br",
+        "sourceUrl": "https://www.hardware.com.br/noticias/site-movimentos-camera-prompts-videos-ia/",
+        "sourceTitle": "Quem cria vídeos com IA deveria conhecer este site com 46 movimentos de câmera prontos",
+        "sourceImageUrl": "https://www.hardware.com.br/wp-content/uploads/2026/09/camera-2.jpg",
+        "publishedAt": "2026-09-24T14:37:27.000Z",
+        "researchedAt": "2026-09-25T15:50:52.927Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Conheça um site gratuito que reúne 46 movimentos de câmera, mostra o resultado em vídeo e entrega prompts prontos para usar em geradores de vídeo com IA.",
+        "sourceFacts": [
+          "Home > Hard News > Quem cria vídeos com IA deveria conhecer este site com 46 movimentos de câmera prontos",
+          "Gerar uma imagem convincente com inteligência artificial já não é necessariamente a parte mais difícil do processo. Quando chega a hora de transformá-la em vídeo, outro problema aparece: como explicar para a IA exatamente o que a câmera deve fazer?",
+          "É justamente essa etapa que o site gratuito AI Camera Movements tenta simplificar. A página funciona como uma espécie de catálogo visual de movimentos de câmera, mostrando o resultado de cada técnica em vídeo e oferecendo o respectivo prompt pronto para copiar. Ao todo, atualmente são 46 exemplos divididos em sete categorias , incluindo movimentos como pan , tilt , dolly , tracking , movimentos de drone, câmera na mão e técnicas mais incomuns.",
+          "A grande vantagem é que o usuário não precisa descobrir cada movimento na base da tentativa e erro. O AI Camera Movements mostra previamente como cada técnica se comporta em vídeo e fornece a instrução correspondente pronta para copiar. Isso pode evitar várias gerações desnecessárias em serviços de vídeo por IA que trabalham com créditos ou limites de uso, já que você consegue escolher primeiro o tipo de movimento que procura e só depois levar o prompt para a ferramenta de geração.",
+          "Quer uma câmera que circule o personagem? O movimento pode ser um orbit. Quer avançar fisicamente em direção ao objeto em vez de simplesmente ampliar a imagem? O termo correto pode ser dolly in."
+        ],
+        "editorialVariant": 4
+      }
     }
   ]
 }
