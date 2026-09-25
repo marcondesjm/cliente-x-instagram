@@ -45404,6 +45404,171 @@
         ],
         "editorialVariant": 0
       }
+    },
+    {
+      "feedFingerprint": "1d711fb3356d395e8d941608595e2401eb1e7ec4d6c1006ba9d23b660daee309",
+      "storyFingerprint": "1d711fb3356d395e8d941608595e2401eb1e7ec4d6c1006ba9d23b660daee309",
+      "storyContentKind": "news",
+      "storyCoverTitle": "TV QLED Samsung 50″ com Vision AI fica quase R$ 1 mil mais barata",
+      "captionFingerprint": "2881a40e4c1395d4954c6e3919031733c53d0fc9c404e966aa5026c2d45a2703",
+      "coverTitle": "TV QLED Samsung 50″ com Vision AI fica quase R$ 1 mil mais barata",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-04.png",
+      "avatarRotationStart": 7,
+      "publishedAt": "2026-09-25T16:26:55.799Z",
+      "slotDate": "2026-09-25",
+      "slotIndex": 5,
+      "scheduledAt": "2026-09-25T16:00:00.000Z",
+      "workflowRun": "36160533170",
+      "mediaId": "18029087009906427",
+      "storyMediaId": "18635009788053564",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18029087009906427/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"A2Q4wqeeS_A6L1t7i7x8ypi\"}}",
+      "permalink": "https://www.instagram.com/p/Ddt4u6YIKPw/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Tecnoblog",
+          "sourceUrl": "https://tecnoblog.net/achados/tv-qled-samsung-50-com-vision-ai-fica-mais-de-r-1-mil-mais-barata/",
+          "sourceTitle": "TV QLED Samsung 50″ com Vision AI fica quase R$ 1 mil mais barata",
+          "imageUrl": "https://tecnoblog.net/files.tecnoblog.net/wp-content/uploads/2025/12/samsung-tv-qled-q7f-1.png",
+          "imageSourcePageUrl": "https://tecnoblog.net/achados/tv-qled-samsung-50-com-vision-ai-fica-mais-de-r-1-mil-mais-barata/",
+          "imageCredit": "Tecnoblog",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "3816cf94a90623d26b79182d71a5458bff608d7532e2ea074bb1828e90cedd3b",
+          "perceptualHash": "1001100110001000011110001001000101100010100100000110110010010001001011100111000100100010111100010110110011110001011000101111000001101010111110010110111000011001111001011001100111100010100111011110010010100000001110100100000001111100111000100011000011110000",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://tecnoblog.net/achados/tv-qled-samsung-50-com-vision-ai-fica-mais-de-r-1-mil-mais-barata/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-25-132558-slot-5/visual-candidate-1/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-25T15:53:41.717Z",
+        "ageHours": 0.54,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 1756,
+        "controlledSamples": 112,
+        "selectionModes": {
+          "exploit": 86,
+          "explore": 16,
+          "experiment": 10
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|midday|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-atual",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-abaixo-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "9e0946b390d7",
+        "source": "Tecnoblog",
+        "sourceUrl": "https://tecnoblog.net/achados/tv-qled-samsung-50-com-vision-ai-fica-mais-de-r-1-mil-mais-barata/",
+        "sourceTitle": "TV QLED Samsung 50″ com Vision AI fica quase R$ 1 mil mais barata",
+        "sourceImageUrl": "https://tecnoblog.net/files.tecnoblog.net/wp-content/uploads/2025/12/samsung-tv-qled-q7f-1-1060x596.png",
+        "publishedAt": "2026-09-23T20:37:57.000Z",
+        "researchedAt": "2026-09-25T16:25:52.998Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Smart TV 4K Samsung com painel QLED Ultra com um bilhão de cores e IA integrada tem desconto de 24% com cupom no Mercado Livre TV QLED Samsung 50″ com Vision AI fica quase R$ 1 mil mais barata",
+        "sourceFacts": [
+          "Smart TV 4K Samsung com painel QLED Ultra com um bilhão de cores e IA integrada tem desconto de 24% com cupom no Mercado Livre",
+          "A Smart TV Samsung Vision AI QLED 50″ QN50Q7FAAGXZD está em oferta no Mercado Livre. O modelo sai por R$ 2.647 no Pix com o cupom CORREAQUI . Essa é uma oportunidade excelente para quem busca renovar a sala pagando bem menos por um televisor com ampla gama de cores e recursos de IA.",
+          "Equipada com o Processador Q4 AI, a TV da Samsung realiza o upscaling de conteúdos para a resolução 4K utilizando inteligência artificial . Isso significa que mesmo vídeos antigos ou transmissões de TV aberta ganham mais nitidez e detalhes na tela, melhorando a experiência visual",
+          "A tecnologia de Pontos Quânticos do painel QLED Ultra garante 100% do volume de cor com certificação Pantone. Na prática, você assiste a filmes com cores vivas e realistas, além de contar com o Quantum HDR, que ajusta o brilho para revelar detalhes tanto em cenas muito escuras quanto claras.",
+          "Para os gamers, o Samsung Gaming Hub permite jogar via nuvem sem precisar de console. O recurso Motion Xcelerator mantém as cenas fluidas, enquanto o Modo Game com AI otimiza de forma automática as configurações de som e imagem de acordo com o gênero do jogo."
+        ],
+        "editorialVariant": 1
+      }
     }
   ]
 }
