@@ -47381,6 +47381,170 @@
         ],
         "editorialVariant": 4
       }
+    },
+    {
+      "feedFingerprint": "3d5429bafe49e243e8ffc1cbd0e7e79f3910c0ccee5e8a62aa87c6ffc99eb384",
+      "storyFingerprint": "3d5429bafe49e243e8ffc1cbd0e7e79f3910c0ccee5e8a62aa87c6ffc99eb384",
+      "storyContentKind": "news",
+      "storyCoverTitle": "China está construindo “nova Hollywood” para fazer filmes inteiramente com IA",
+      "captionFingerprint": "c0b8723e73d89e39b5c37c7e26d2143b3098f535d3546a413260a826d740c949",
+      "coverTitle": "China está construindo “nova Hollywood” para fazer filmes inteiramente com IA",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-06.png",
+      "avatarRotationStart": 9,
+      "publishedAt": "2026-09-26T18:06:35.784Z",
+      "slotDate": "2026-09-26",
+      "slotIndex": 8,
+      "scheduledAt": "2026-09-26T17:50:00.000Z",
+      "workflowRun": "36261213420",
+      "mediaId": "18155920843507068",
+      "storyMediaId": "18130064236664521",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18155920843507068/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AnvXvpoBbL8Uf52viWlGsYd\"}}",
+      "permalink": "https://www.instagram.com/p/Ddwo6yimHrk/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Canaltech",
+          "sourceUrl": "https://canaltech.com.br/inteligencia-artificial/china-esta-construindo-nova-hollywood-para-fazer-filmes-inteiramente-com-ia/",
+          "sourceTitle": "China está construindo “nova Hollywood” para fazer filmes inteiramente com IA",
+          "imageUrl": "https://tl.ctcdn.com.br/F8wM6IEdHzM-oSjiUR7sKZxA-Sw=/1200x675/smart/filters:format(webp):quality(85)/60d59c0a-f89b-4b33-a161-1823cf235e5b.png",
+          "imageSourcePageUrl": "https://canaltech.com.br/inteligencia-artificial/china-esta-construindo-nova-hollywood-para-fazer-filmes-inteiramente-com-ia/",
+          "imageCredit": "Canaltech",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "ee45fba127608c5a66ef87db1d5a23960bb357998c63555745bb0c274b3b08e7",
+          "perceptualHash": "1001000001001010110000000100001011100000010011000110101010100000011010100100001100110100101010000100001010110101001101001010101010001011001110101100001011010101111000000110101001101001010011110111010000100110101100100010001000101100100110110110001000010011",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://canaltech.com.br/inteligencia-artificial/china-esta-construindo-nova-hollywood-para-fazer-filmes-inteiramente-com-ia/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-26-150532-slot-8/visual-candidate-3/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "explore",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-26T16:25:41.539Z",
+        "ageHours": 1.66,
+        "freshness": "current",
+        "effectiveSamples": 117,
+        "effectiveReach": 1600,
+        "controlledSamples": 113,
+        "selectionModes": {
+          "exploit": 86,
+          "explore": 15,
+          "experiment": 12
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "afternoon",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "explore",
+        "experimentAxis": "candidate-novelty",
+        "contextKey": "FEED|afternoon|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-abaixo-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 8.23,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "826f87ad14aa",
+        "source": "Canaltech",
+        "sourceUrl": "https://canaltech.com.br/inteligencia-artificial/china-esta-construindo-nova-hollywood-para-fazer-filmes-inteiramente-com-ia/",
+        "sourceTitle": "China está construindo “nova Hollywood” para fazer filmes inteiramente com IA",
+        "sourceImageUrl": "https://tl.ctcdn.com.br/F8wM6IEdHzM-oSjiUR7sKZxA-Sw=/1200x675/smart/filters:format(webp):quality(85)/60d59c0a-f89b-4b33-a161-1823cf235e5b.png",
+        "publishedAt": "2026-09-25T20:07:00.000Z",
+        "researchedAt": "2026-09-26T18:05:25.245Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "A China está transformando a inteligência artificial generativa em uma nova frente da indústria audiovisual . Com dinheiro público, infraestrutura de computação e incentivos para empresas, o país tenta criar um ecossistema capaz de produzir filmes e séries com IA em escala. A estratégia já atrai cineastas, estúdios e startups e segue um modelo parecido com o usado anteriormente para impulsionar os setores de veículos elétricos e energia solar. O principal atrativo está no custo . 000 iuanes (cerca de US$ 747).",
+        "sourceFacts": [
+          "A China está transformando a inteligência artificial generativa em uma nova frente da indústria audiovisual . Com dinheiro público, infraestrutura de computação e incentivos para empresas, o país tenta criar um ecossistema capaz de produzir filmes e séries com IA em escala. A estratégia já atrai cineastas, estúdios e startups e segue um modelo parecido com o usado anteriormente para impulsionar os setores de veículos elétricos e energia solar.",
+          "O principal atrativo está no custo . Segundo dados da emissora estatal CCTV, produzir um minuto de um drama curto com IA custava, em média, 5.000 iuanes (cerca de US$ 747). No primeiro semestre de 2026, esse valor caiu para algumas centenas de iuanes. O preço ainda pode ser menor para produtoras que aproveitam os benefícios oferecidos pelos governos locais, como computação subsidiada e isenções de aluguel.",
+          "Um caso citado pelo estudante de cinema Pan Xiaojun ajuda a dimensionar essa diferença. Uma sequência de casamento que custaria cerca de 60.000 iuanes em uma gravação convencional poderia ser produzida com IA por aproximadamente 1.400 iuanes. Para quem está produzindo filmes e séries, a possibilidade de substituir parte dos gastos com equipes, cenários, locações e efeitos visuais por geração digital muda a lógica de produção.",
+          "É nesse ponto que entram os investimentos regionais . Pequim mantém um fundo de tecnologia audiovisual de 260 milhões de iuanes e Xangai oferece acesso a recursos de computação e modelos de IA na nuvem. Shenzhen aposta em subsídios para aluguel e suporte técnico na área de efeitos visuais. As medidas têm objetivos semelhantes: reduzir o custo de entrada e atrair empresas e profissionais para um mercado que ainda está se formando.",
+          "As próprias empresas chinesas também estão criando as ferramentas para esse novo modelo de produção. A ByteDance desenvolve o Seedance 2.0 , enquanto a Kuaishou aposta no Kling . Com modelos capazes de gerar vídeos e uma infraestrutura mais barata para processá-los, as produtoras conseguem experimentar formatos que seriam caros ou demorados em uma produção tradicional."
+        ],
+        "editorialVariant": 4
+      }
     }
   ]
 }
