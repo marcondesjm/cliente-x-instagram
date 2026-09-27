@@ -48388,6 +48388,170 @@
         ],
         "editorialVariant": 5
       }
+    },
+    {
+      "feedFingerprint": "9db8ceb8cbb145d68d35da9c68a031944d085250f04469ab076119945571962d",
+      "storyFingerprint": "9db8ceb8cbb145d68d35da9c68a031944d085250f04469ab076119945571962d",
+      "storyContentKind": "news",
+      "storyCoverTitle": "IA nas mãos erradas é a ameaça mais urgente do mundo, alerta Bill Gates",
+      "captionFingerprint": "54a162899e0e01f047438ad02bd9d87c4580061252fafe60f742459f7358bfe3",
+      "coverTitle": "IA nas mãos erradas é a ameaça mais urgente do mundo, alerta Bill Gates",
+      "coverAvatar": "docs/uploads/avatar-marcondes-office-laptop.png",
+      "avatarRotationStart": 0,
+      "publishedAt": "2026-09-27T16:55:52.692Z",
+      "slotDate": "2026-09-27",
+      "slotIndex": 5,
+      "scheduledAt": "2026-09-27T16:00:00.000Z",
+      "workflowRun": "36334860282",
+      "mediaId": "18116733715777540",
+      "storyMediaId": "18114138569105360",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18116733715777540/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AfLIMsxQY8QyAK3ZYavTnhH\"}}",
+      "permalink": "https://www.instagram.com/p/DdzFn76IC1c/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Exame",
+          "sourceUrl": "https://exame.com/inteligencia-artificial/ia-nas-maos-erradas-e-a-ameaca-mais-urgente-do-mundo-alerta-bill-gates/",
+          "sourceTitle": "IA nas mãos erradas é a ameaça mais urgente do mundo, alerta Bill Gates",
+          "imageUrl": "https://classic.exame.com/wp-content/uploads/2025/10/bill-gates-cop30.jpg",
+          "imageSourcePageUrl": "https://exame.com/inteligencia-artificial/ia-nas-maos-erradas-e-a-ameaca-mais-urgente-do-mundo-alerta-bill-gates/",
+          "imageCredit": "Exame",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "fa85eb07a7d78bd17405343453bbcae1f1103b4cfe6ecf7777e8c84f9adafec3",
+          "perceptualHash": "0000000001111111100000010111111010000000101111101100000000111110110000000111111011100000001111111001000010011111001100101001111100010010100111110001001010111111000110011011011100011100101101110010110000100111000110011110011100010001100100110011000110110001",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://exame.com/inteligencia-artificial/ia-nas-maos-erradas-e-a-ameaca-mais-urgente-do-mundo-alerta-bill-gates/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-27-135452-slot-5/visual-candidate-1/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "explore",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-27T15:43:27.628Z",
+        "ageHours": 1.19,
+        "freshness": "current",
+        "effectiveSamples": 119,
+        "effectiveReach": 1584,
+        "controlledSamples": 114,
+        "selectionModes": {
+          "exploit": 83,
+          "explore": 19,
+          "experiment": 12
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "conversation",
+        "primarySignal": "comentarios",
+        "selectionMode": "explore",
+        "experimentAxis": "candidate-novelty",
+        "contextKey": "FEED|midday|conversation",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-abaixo-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "d9f847a04da7",
+        "source": "Exame",
+        "sourceUrl": "https://exame.com/inteligencia-artificial/ia-nas-maos-erradas-e-a-ameaca-mais-urgente-do-mundo-alerta-bill-gates/",
+        "sourceTitle": "IA nas mãos erradas é a ameaça mais urgente do mundo, alerta Bill Gates",
+        "sourceImageUrl": "https://classic.exame.com/wp-content/uploads/2025/10/bill-gates-cop30.jpg",
+        "publishedAt": "2026-09-27T11:37:13.000Z",
+        "researchedAt": "2026-09-27T16:54:43.774Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "À emissora NBC, Bill Gates defendeu que os EUA liderem um marco regulatório mundial para a IA, mas alertou que chegar a um consenso global será mais complexo do que os tratados nucleares do século passado",
+        "sourceFacts": [
+          "Bill Gates: cofundador da Microsoft afirmou que IA será difícil de negociar (Patrick van Katwijk/Getty Images)",
+          "O cofundador da empresa de tecnologia Microsoft, Bill Gates, afirmou em entrevista exibida neste domingo, 27, que a ameaça mais urgente da IA é seu uso por pessoas mal-intencionadas em fraudes, ciberataques e bioterrorismo. À emissora NBC, Gates defendeu monitoramento obrigatório nos laboratórios, um mecanismo de desligamento e um marco regulatório global liderado pelos Estados Unidos.",
+          "Para Bill Gates , a ameaça mais urgente da inteligência artificial (IA) não é um sistema que decide se voltar contra a humanidade sozinho — é o que uma pessoa mal-intencionada já consegue fazer com ela hoje.",
+          "\"Alguém que quer fraudar uma pessoa, ou quer desligar a rede elétrica, ou embaralhar contas bancárias — essas pessoas agora estão fortalecidas\", disse o cofundador da Microsoft ao programa \"Meet the Press\", da NBC , em entrevista à jornalista Kristen Welker, exibida neste domingo, 27.",
+          "Segundo Gates, a IA apagou uma distinção que sustentava boa parte da segurança global: a de que só Estados tinham escala para causar dano em massa."
+        ],
+        "editorialVariant": 3
+      }
     }
   ]
 }
