@@ -49887,6 +49887,171 @@
         ],
         "editorialVariant": 5
       }
+    },
+    {
+      "feedFingerprint": "0d2652987aad8cd6dfeb4c666a6e5e11a06c92e3373dfdd7b123c989a3bd4d6f",
+      "storyFingerprint": "0d2652987aad8cd6dfeb4c666a6e5e11a06c92e3373dfdd7b123c989a3bd4d6f",
+      "storyContentKind": "news",
+      "storyCoverTitle": "IA do Kwai avança contra o TikTok e lança gerador de vídeo de 30 segundos",
+      "captionFingerprint": "9b2894b21e39abe1785e5abcc17dc30e93b3bdf8152d880c2e7e9e7622d1b511",
+      "coverTitle": "IA do Kwai avança contra o TikTok e lança gerador de vídeo de 30 segundos",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-03.png",
+      "avatarRotationStart": 6,
+      "publishedAt": "2026-09-28T17:57:56.255Z",
+      "slotDate": "2026-09-28",
+      "slotIndex": 5,
+      "scheduledAt": "2026-09-28T16:00:00.000Z",
+      "workflowRun": "36460998069",
+      "mediaId": "17889316404460638",
+      "storyMediaId": "18068282096770835",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /17889316404460638/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"A6bNR7RW0D60WG8tyODbTkn\"}}",
+      "permalink": "https://www.instagram.com/p/Dd1xhY-GAL9/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Exame",
+          "sourceUrl": "https://exame.com/inteligencia-artificial/ia-do-kwai-avanca-contra-o-tiktok-e-lanca-gerador-de-video-de-30-segundos/",
+          "sourceTitle": "IA do Kwai avança contra o TikTok e lança gerador de vídeo de 30 segundos",
+          "imageUrl": "https://classic.exame.com/wp-content/uploads/2026/03/imgi_94_Kling-AI-1536x1024-1.jpeg",
+          "imageSourcePageUrl": "https://exame.com/inteligencia-artificial/ia-do-kwai-avanca-contra-o-tiktok-e-lanca-gerador-de-video-de-30-segundos/",
+          "imageCredit": "Exame",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "3e8752816af1f2c4536bd6ee3664ac67002b44ea5c71dd0d72f1dc0b91af71c7",
+          "perceptualHash": "1001101100100101100010101010010100001010111001011111001010111111000011100010111111111110110010110000111101110010000000111001001001100011100100100010001110000010101100111000001000110011100000101011001100000010101110011100000010100101100100010010111110110101",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://exame.com/inteligencia-artificial/ia-do-kwai-avanca-contra-o-tiktok-e-lanca-gerador-de-video-de-30-segundos/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-28-145654-slot-5/visual-candidate-6/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-28T17:51:49.577Z",
+        "ageHours": 0.08,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 1660,
+        "controlledSamples": 115,
+        "selectionModes": {
+          "exploit": 83,
+          "explore": 21,
+          "experiment": 11
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "utility",
+        "primarySignal": "salvamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|midday|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-abaixo-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 8.36,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "803756fcf170",
+        "source": "Exame",
+        "sourceUrl": "https://exame.com/inteligencia-artificial/ia-do-kwai-avanca-contra-o-tiktok-e-lanca-gerador-de-video-de-30-segundos/",
+        "sourceTitle": "IA do Kwai avança contra o TikTok e lança gerador de vídeo de 30 segundos",
+        "sourceImageUrl": "https://classic.exame.com/wp-content/uploads/2026/03/imgi_94_Kling-AI-1536x1024-1.jpeg",
+        "publishedAt": "2026-09-28T13:04:32.000Z",
+        "researchedAt": "2026-09-28T17:56:46.372Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Kling 4.0 chega a assinantes em versão reduzida antes da estreia completa, em outubro, e aproxima a empresa da ByteDance antes de um IPO em Hong Kong",
+        "sourceFacts": [
+          "A Kuaishou, dona do Kwai, apresentou o Kling 4.0, novo modelo de inteligência artificial capaz de criar vídeos de até 30 segundos com referências em texto, imagem e vídeo. A ferramenta amplia a disputa no mercado de geração de vídeos por IA contra concorrentes como ByteDance, OpenAI e Google, enquanto a unidade Kling AI cresce e foi avaliada em US$ 18 bilhões.",
+          "A unidade de vídeos por inteligência artificial da chinesa Kuaishou , dona do Kwai, apresentou nesta segunda-feira, 28, um modelo capaz de gerar clipes de até 30 segundos, o dobro do limite anterior, de acordo com a Bloomberg .",
+          "Batizado de Kling 4.0 , o modelo aceita mais de uma dúzia de referências em texto, imagem e vídeo para orientar o resultado. O usuário também pode definir até dez quadros-chave, imagens que fixam como deve ficar cada trecho do vídeo.",
+          "Por enquanto, o modelo está em teste com um grupo restrito de usuários. Uma versão reduzida já está disponível para assinantes do plano anual, e o lançamento completo está previsto para outubro, segundo a empresa.",
+          "O Kling 3.0 , lançado em fevereiro, chegava a 15 segundos por vídeo e já reunia texto, imagem, áudio e vídeo em uma única ferramenta, de acordo com comunicado da Kuaishou."
+        ],
+        "editorialVariant": 4
+      }
     }
   ]
 }
