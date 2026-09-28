@@ -50052,6 +50052,170 @@
         ],
         "editorialVariant": 4
       }
+    },
+    {
+      "feedFingerprint": "08a7238ac62131e081809fd71884a298047af1281aedf7b686ecea25e31544a6",
+      "storyFingerprint": "08a7238ac62131e081809fd71884a298047af1281aedf7b686ecea25e31544a6",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Microsoft anuncia agente de IA que trabalha 24 horas por dia",
+      "captionFingerprint": "31cd2ff2cf13ac82b6b757ab4337051328028340b4b144025e4104087158b548",
+      "coverTitle": "Microsoft anuncia agente de IA que trabalha 24 horas por dia",
+      "coverAvatar": "docs/uploads/avatar-marcondes-office-laptop.png",
+      "avatarRotationStart": 0,
+      "publishedAt": "2026-09-28T18:26:44.354Z",
+      "slotDate": "2026-09-28",
+      "slotIndex": 6,
+      "scheduledAt": "2026-09-28T16:50:00.000Z",
+      "workflowRun": "36464787899",
+      "mediaId": "18093194819668418",
+      "storyMediaId": "17950812660291271",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18093194819668418/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"A6klktmgZ2ZIB4lLP_8v1mQ\"}}",
+      "permalink": "https://www.instagram.com/reel/Dd10xuWlTI9/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Tecnoblog",
+          "sourceUrl": "https://tecnoblog.net/noticias/microsoft-anuncia-agente-24x7-chamado-autopilot/",
+          "sourceTitle": "Microsoft anuncia agente de IA que trabalha 24 horas por dia",
+          "imageUrl": "https://files.tecnoblog.net/wp-content/uploads/2026/09/new-copilot-edited-1.png",
+          "imageSourcePageUrl": "https://tecnoblog.net/noticias/microsoft-anuncia-agente-24x7-chamado-autopilot/",
+          "imageCredit": "Tecnoblog",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "8c472b326fbe0e2e26c94a98cc9d5a911ad193915f988fee1acdd4c90d0fa19b",
+          "perceptualHash": "1001110001100010111000000110001011100000001110101110000000011100111000100001010011001110000101001100110000010100100000000000000000000001100000001000010011001110100001011100110000000100000000000000110000000000000111000000000000001100000000001010011000000000",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://tecnoblog.net/noticias/microsoft-anuncia-agente-24x7-chamado-autopilot/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-28-152516-slot-6/visual-candidate-1/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-28T17:51:49.577Z",
+        "ageHours": 0.56,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 1660,
+        "controlledSamples": 115,
+        "selectionModes": {
+          "exploit": 83,
+          "explore": 21,
+          "experiment": 11
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "midday",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|midday|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-abaixo-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "ee0b448d109e",
+        "source": "Tecnoblog",
+        "sourceUrl": "https://tecnoblog.net/noticias/microsoft-anuncia-agente-24x7-chamado-autopilot/",
+        "sourceTitle": "Microsoft anuncia agente de IA que trabalha 24 horas por dia",
+        "sourceImageUrl": "https://files.tecnoblog.net/wp-content/uploads/2026/09/new-copilot-edited-1-340x191.png",
+        "publishedAt": "2026-09-25T12:00:00.000Z",
+        "researchedAt": "2026-09-28T18:25:05.233Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "O Autopilot faz parte da reformulação do aplicativo Copilot, que também ganha novas abas. Microsoft anuncia agente de IA que trabalha 24 horas por dia",
+        "sourceFacts": [
+          "O Autopilot faz parte da reformulação do aplicativo Copilot, que também ganha novas abas.",
+          "A Microsoft anunciou hoje (25/09) uma reformulação completa do aplicativo de inteligência artificial Copilot, que passa a contar com três abas: Home, Code e Autopilot. O anúncio foi feito por Jared Spataro, diretor de marketing de IA para o trabalho da Microsoft. De acordo com a empresa, os usuários terão mais facilidade para simplesmente começar a realizar suas tarefas.",
+          "O destaque vai para a função de Autopilot, que conta com agentes de IA que rodam 24×7, numa pegada similar à do Gemini Spark, do Google , e do Muse, recentemente anunciado pela Meta . A divulgação foi feita nesta sexta-feira, mas a Microsoft não deu detalhes sobre quando as novidades chegam ao Brasil nem sobre os preços.",
+          "Spataro aproveitou o lançamento para revelar que, atualmente, os clientes usam chats de IA com a mesma frequência com que mandam emails ou iniciam conversas no Microsoft Teams. Ele não apresentou números absolutos.",
+          "O aplicativo do Copilot (seja no celular ou no computador) passa a contar com três áreas, conforme comentamos acima."
+        ],
+        "editorialVariant": 4
+      }
     }
   ]
 }
