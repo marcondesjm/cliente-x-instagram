@@ -50706,6 +50706,168 @@
         ],
         "editorialVariant": 1
       }
+    },
+    {
+      "feedFingerprint": "8fe6c15c492ddc10019deb008b6b2db56f353c8ef30ba6887a9855eaf7bc610f",
+      "storyFingerprint": "8fe6c15c492ddc10019deb008b6b2db56f353c8ef30ba6887a9855eaf7bc610f",
+      "storyContentKind": "news",
+      "storyCoverTitle": "A corrida de US$ 2 trilhões do Claude: como o IPO da Anthropic testa o futuro da IA",
+      "captionFingerprint": "ca7afc1068f462f564008dc90196466729ab286107564d6ee3cade129036b184",
+      "coverTitle": "A corrida de US$ 2 trilhões do Claude: como o IPO da Anthropic testa o futuro da IA",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-06.png",
+      "avatarRotationStart": 9,
+      "publishedAt": "2026-09-29T15:53:43.873Z",
+      "slotDate": "2026-09-29",
+      "slotIndex": 1,
+      "scheduledAt": "2026-09-29T11:10:00.000Z",
+      "workflowRun": "36593274271",
+      "mediaId": "18115846399816003",
+      "storyMediaId": "17936310660126194",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18115846399816003/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"A_1Lu9feE0-xVsHkBa9eIgs\"}}",
+      "permalink": "https://www.instagram.com/p/Dd4IGW9GHvA/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Exame",
+          "sourceUrl": "https://exame.com/inteligencia-artificial/a-corrida-de-us-2-trilhoes-do-claude-como-o-ipo-da-anthropic-testa-o-futuro-da-ia/",
+          "sourceTitle": "A corrida de US$ 2 trilhões do Claude: como o IPO da Anthropic testa o futuro da IA",
+          "imageUrl": "https://classic.exame.com/wp-content/uploads/2026/09/dario_amodei1.jpg",
+          "imageSourcePageUrl": "https://exame.com/inteligencia-artificial/a-corrida-de-us-2-trilhoes-do-claude-como-o-ipo-da-anthropic-testa-o-futuro-da-ia/",
+          "imageCredit": "Exame",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "74d2e143752c0a498b49fd563915a7fc03281efdd962b8040c7673872f1fe601",
+          "perceptualHash": "0000001101111111000001110011111100000110001111110000011000111111000001110011111100001110000111110011111010011111000111001001111100111101100111111001110110011111100011100000111110001110000111101100111000011110010111110001111001011111100111110001111100001111",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://exame.com/inteligencia-artificial/a-corrida-de-us-2-trilhoes-do-claude-como-o-ipo-da-anthropic-testa-o-futuro-da-ia/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-29-125233-slot-1/visual-candidate-5/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "explore",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-29T08:33:12.773Z",
+        "ageHours": 7.32,
+        "freshness": "stale",
+        "effectiveSamples": 120,
+        "effectiveReach": 1635,
+        "controlledSamples": 115,
+        "selectionModes": {
+          "exploit": 83,
+          "explore": 22,
+          "experiment": 10
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": false,
+        "operatingMode": "editorial-fallback",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "morning",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "explore",
+        "experimentAxis": "candidate-novelty",
+        "contextKey": "FEED|morning|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "curiosidade-util",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "63ce1ec4b6a0",
+        "source": "Exame",
+        "sourceUrl": "https://exame.com/inteligencia-artificial/a-corrida-de-us-2-trilhoes-do-claude-como-o-ipo-da-anthropic-testa-o-futuro-da-ia/",
+        "sourceTitle": "A corrida de US$ 2 trilhões do Claude: como o IPO da Anthropic testa o futuro da IA",
+        "sourceImageUrl": "https://classic.exame.com/wp-content/uploads/2026/09/dario_amodei1.jpg",
+        "publishedAt": "2026-09-29T10:59:53.000Z",
+        "researchedAt": "2026-09-29T15:52:22.531Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Com US$ 518 bilhões comprometidos em chips e nuvem, prospecto de IPO revela o custo real para manter a infraestrutura e a evolução do Claude",
+        "sourceFacts": [
+          "Dario Amodei: executivo é fundador e CEO da Anthropic, dona do Claude (Benjamin Fanjoy / GETTY IMAGES NORTH AMERICA / Getty Images /AFP)",
+          "O prospecto, o documento que a empresa entrega à SEC, a Comissão de Valores Mobiliários dos Estados Unidos, para abrir capital, é o retrato mais detalhado até agora de uma companhia cujo crescimento vertiginoso vinha alimentando expectativas de todo o mercado. O que o documento mostra é que essa espera tem um custo, e que ele está sobretudo nos chips e na energia que fazem o Claude funcionar.",
+          "Em 2025, a Anthropic reduziu o peso da computação sobre a receita e, para cada US$ 1 recebido, gastou US$ 1,60 com infraestrutura, contra mais de US$ 6 no ano anterior. Ainda assim, a empresa encerrou o período no vermelho e prevê US$ 518 bilhões em obrigações futuras com nuvem, computação e infraestrutura.",
+          "A receita chegou a US$ 4,59 bilhões em 2025, quase 12 vezes acima do ano anterior, enquanto os custos de servidores e chips cresceram para US$ 7,33 bilhões. O prejuízo líquido de quase US$ 42 bilhões foi influenciado por US$ 34 bilhões em efeitos contábeis, segundo a Reuters , enquanto o prejuízo operacional subiu de US$ 2,98 bilhões para US$ 8,06 bilhões.",
+          "Em 2026, a receita acelerou. No segundo trimestre, alcançou US$ 11,5 bilhões, acima do faturamento de todo o ano anterior, e a receita anualizada passou de US$ 65 bilhões em julho, com projeção de superar US$ 100 bilhões no ano."
+        ],
+        "editorialVariant": 5
+      }
     }
   ]
 }
