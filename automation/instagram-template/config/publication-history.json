@@ -51030,6 +51030,166 @@
         ],
         "editorialVariant": 5
       }
+    },
+    {
+      "feedFingerprint": "d5ebbc6ab5899192d09608eb3d15e80a35f57152b0f22e0e4585d84f5c18a7ac",
+      "storyFingerprint": "d5ebbc6ab5899192d09608eb3d15e80a35f57152b0f22e0e4585d84f5c18a7ac",
+      "storyContentKind": "news",
+      "storyCoverTitle": "O novo agente de IA da Meta: um adorável urso virtual focado em otimizar (e gastar) seu dinheiro",
+      "captionFingerprint": "fbef45845ec504b5a7755e5d157e140001133e6a929e70200ade97b98c5513fb",
+      "coverTitle": "O novo agente de IA da Meta: um adorável urso virtual focado em otimizar (e gastar) seu dinheiro",
+      "coverAvatar": "docs/uploads/avatar-marcondes-presentation.png",
+      "avatarRotationStart": 2,
+      "publishedAt": "2026-09-29T16:08:10.650Z",
+      "slotDate": "2026-09-29",
+      "slotIndex": 3,
+      "scheduledAt": "2026-09-29T14:50:00.000Z",
+      "workflowRun": "36595119368",
+      "mediaId": "18155534497525853",
+      "storyMediaId": "18047071100815265",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18155534497525853/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AErM7jTmnopjM3lKfGOPzJT\"}}",
+      "permalink": "https://www.instagram.com/p/Dd4JwIdl_QZ/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Nossa IA",
+          "sourceUrl": "https://nossa.ia.br/noticia/o-novo-agente-de-ia-da-meta-um-adoravel-urso-virtual-focado-em-otimizar-e-gastar-seu-dinheiro/",
+          "sourceTitle": "O novo agente de IA da Meta: um adorável urso virtual focado em otimizar (e gastar) seu dinheiro",
+          "imageUrl": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/DSC04272_processed.jpg?quality=90&strip=all&crop=0,0,100,100",
+          "imageSourcePageUrl": "https://nossa.ia.br/noticia/o-novo-agente-de-ia-da-meta-um-adoravel-urso-virtual-focado-em-otimizar-e-gastar-seu-dinheiro/",
+          "imageCredit": "Nossa IA",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "b332d6e0b0b59261490283888e1b595b38f75dba1b765ca2276150f178464702",
+          "perceptualHash": "0101110000000011010111000100001101011110000000110101110000000011010111010000001101011011000000100101110010000011010110011000011101011001100111101001111011110101110111011100110111000111010011111100110011000100010011100000010000001110000111000100101001011110",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://nossa.ia.br/noticia/o-novo-agente-de-ia-da-meta-um-adoravel-urso-virtual-focado-em-otimizar-e-gastar-seu-dinheiro/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-29-130717-slot-3/visual-candidate-8/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-29T08:33:12.773Z",
+        "ageHours": 7.57,
+        "freshness": "stale",
+        "effectiveSamples": 120,
+        "effectiveReach": 1635,
+        "controlledSamples": 115,
+        "selectionModes": {
+          "exploit": 83,
+          "explore": 22,
+          "experiment": 10
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": false,
+        "operatingMode": "editorial-fallback",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "conversation",
+        "primarySignal": "comentarios",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|midday|conversation",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "curiosidade-util",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente"
+        ],
+        "fatiguePenalty": 7.9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "2744643ef2d2",
+        "source": "Nossa IA",
+        "sourceUrl": "https://nossa.ia.br/noticia/o-novo-agente-de-ia-da-meta-um-adoravel-urso-virtual-focado-em-otimizar-e-gastar-seu-dinheiro/",
+        "sourceTitle": "O novo agente de IA da Meta: um adorável urso virtual focado em otimizar (e gastar) seu dinheiro",
+        "sourceImageUrl": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/DSC04272_processed.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "publishedAt": "2026-09-23T19:01:07.000Z",
+        "researchedAt": "2026-09-29T16:07:05.108Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "A Meta apresentou um assistente de inteligência artificial em formato de urso fofo projetado para auxiliar em tarefas cotidianas e compras, prometendo redefinir a interação humano-computador.",
+        "sourceFacts": [
+          "A Meta apresentou um assistente de inteligência artificial em formato de urso fofo projetado para auxiliar em tarefas cotidianas e compras, prometendo redefinir a interação humano-computador.",
+          "A investida da Meta revela uma mudança estratégica crucial no mercado de inteligência artificial: a humanização e a atratividade visual como barreiras de entrada para a adoção em massa. Historicamente, assistentes virtuais sofriam com baixa retenção devido a interfaces frias ou comandos excessivamente rígidos. Ao introduzir um personagem carismático, a empresa reduz a fricção psicológica do usuário ao delegar tarefas financeiras e organizacionais.",
+          "A dupla Sylvan Esso retorna com o álbum 'Ow ∞', explorando novas sonoridades eletrônicas e expandindo os limites criativos que marcaram sua trajetória desde 2014.",
+          "Nova ferramenta da plataforma permite gerar visualizações de dados, enquetes e micro-aplicações em tempo real usando comandos em linguagem natural e integração com LLMs.",
+          "Nova funcionalidade do Slack permite gerar dashboards, enquetes e micro-sites interativos apenas descrevendo o que você precisa para o Slackbot."
+        ],
+        "editorialVariant": 5
+      }
     }
   ]
 }
