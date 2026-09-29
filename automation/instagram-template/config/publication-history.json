@@ -51839,6 +51839,170 @@
         ],
         "editorialVariant": 2
       }
+    },
+    {
+      "feedFingerprint": "656603c107cce49d65289537a6e4a351fed12ce56d1e7606f7bb53e4eabd3339",
+      "storyFingerprint": "656603c107cce49d65289537a6e4a351fed12ce56d1e7606f7bb53e4eabd3339",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Agentes de IA da OpenAI saem do controle e invadem sites do governo dos EUA",
+      "captionFingerprint": "0a522c5cc52593b53585701ba7327cc93b86c1281dcc29a8937c790080dafabf",
+      "coverTitle": "Agentes de IA da OpenAI saem do controle e invadem sites do governo dos EUA",
+      "coverAvatar": "docs/uploads/avatar-marcondes-lounge.png",
+      "avatarRotationStart": 3,
+      "publishedAt": "2026-09-29T18:08:12.961Z",
+      "slotDate": "2026-09-29",
+      "slotIndex": 8,
+      "scheduledAt": "2026-09-29T17:50:00.000Z",
+      "workflowRun": "36609528951",
+      "mediaId": "18217706080350524",
+      "storyMediaId": "17977571510917106",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18217706080350524/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"ABcs50nL1i7NeBFx70Obx8-\"}}",
+      "permalink": "https://www.instagram.com/p/Dd4Xfc9FBwX/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Hardware.com.br",
+          "sourceUrl": "https://www.hardware.com.br/noticias/agentes-openai-sites-governo-eua/",
+          "sourceTitle": "Agentes de IA da OpenAI saem do controle e invadem sites do governo dos EUA",
+          "imageUrl": "https://www.hardware.com.br/wp-content/uploads/2026/09/openai-2.jpg",
+          "imageSourcePageUrl": "https://www.hardware.com.br/noticias/agentes-openai-sites-governo-eua/",
+          "imageCredit": "Hardware.com.br",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "a1501fcfb2126e357e0493d1df9563a9e797341a429de1ba779a6b1378bee78e",
+          "perceptualHash": "0001011100011010100101010001011110001001101010111001110010100011010101001110001100001110010010110110010010101011001110111010001100110101110100110011000011100111001010101010001100101011001010100011010100110011001101001101001001100111001100100100100010101101",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://www.hardware.com.br/noticias/agentes-openai-sites-governo-eua/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-29-150714-slot-8/visual-candidate-4/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-29T16:58:19.088Z",
+        "ageHours": 1.15,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 1693,
+        "controlledSamples": 115,
+        "selectionModes": {
+          "exploit": 82,
+          "explore": 22,
+          "experiment": 11
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "afternoon",
+        "objective": "utility",
+        "primarySignal": "salvamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|afternoon|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "aa091330dcb0",
+        "source": "Hardware.com.br",
+        "sourceUrl": "https://www.hardware.com.br/noticias/agentes-openai-sites-governo-eua/",
+        "sourceTitle": "Agentes de IA da OpenAI saem do controle e invadem sites do governo dos EUA",
+        "sourceImageUrl": "https://www.hardware.com.br/wp-content/uploads/2026/09/openai-2.jpg",
+        "publishedAt": "2026-09-29T14:55:48.000Z",
+        "researchedAt": "2026-09-29T18:07:06.576Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "A OpenAI confirmou que agentes de IA acessaram sistemas de órgãos dos EUA fora do comportamento esperado, incluindo sites da SEC e do Departamento de Comércio.",
+        "sourceFacts": [
+          "Home > Hard News > Agentes de IA da OpenAI saem do controle e invadem sites do governo dos EUA",
+          "Os agentes de IA da OpenAI escaparam mais uma vez de seu ambiente de testes e invadiram sites de outras entidades sem autorização. Desta vez, os agentes de IA invadiram e obtiveram informações de diversos sites do governo dos Estados Unidos. A OpenAI admitiu ao The New York Times que seus agentes comprometeram os sites do Departamento de Comércio dos EUA e da Comissão de Valores Mobiliários (SEC). A empresa também está investigando um incidente envolvendo um site operado pelo Departamento de Educação dos EUA.",
+          "A Transluce, um laboratório de pesquisa sem fins lucrativos que desenvolve tecnologia para melhor compreender os sistemas de IA, revelou que agentes da OpenAI tentaram invadir o site do Departamento de Educação dos EUA para obter dados do escritório de direitos civis da agência.",
+          "O agente da OpenAI também extraiu dados do site do Departamento do Censo, que está sob a tutela do Departamento de Comércio dos EUA, usando credenciais de login encontradas online.",
+          "OpenAI estaria disposta a desacelerar corrida por novas IAs diante de riscos de segurança"
+        ],
+        "editorialVariant": 3
+      }
     }
   ]
 }
