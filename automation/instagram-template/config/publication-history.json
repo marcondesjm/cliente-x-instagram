@@ -51350,6 +51350,164 @@
         ],
         "editorialVariant": 0
       }
+    },
+    {
+      "feedFingerprint": "a98637580cb42a2787b4e73bdf339fd765de8c77dc4a681065e321895609f685",
+      "storyFingerprint": "a98637580cb42a2787b4e73bdf339fd765de8c77dc4a681065e321895609f685",
+      "storyContentKind": "news",
+      "storyCoverTitle": "OpenAI desiste de lançar nova IA após problemas de segurança",
+      "captionFingerprint": "b403103bb564ccd9c97e38cddc08689606f1f864350e3a562c5087e9e95c233a",
+      "coverTitle": "OpenAI desiste de lançar nova IA após problemas de segurança",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-02.png",
+      "avatarRotationStart": 5,
+      "publishedAt": "2026-09-29T16:40:50.260Z",
+      "slotDate": "2026-09-29",
+      "slotIndex": 5,
+      "scheduledAt": "2026-09-29T16:00:00.000Z",
+      "workflowRun": "36599147740",
+      "mediaId": "18164221114486741",
+      "storyMediaId": "18056223479567269",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18164221114486741/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AOKi_62qgrvJu-GyOoU4ZlP\"}}",
+      "permalink": "https://www.instagram.com/p/Dd4NfgalxZd/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Tecnoblog",
+          "sourceUrl": "https://tecnoblog.net/noticias/openai-desiste-de-lancar-nova-ia-apos-problemas-de-seguranca/",
+          "sourceTitle": "OpenAI desiste de lançar nova IA após problemas de segurança",
+          "imageUrl": "https://files.tecnoblog.net/wp-content/uploads/2023/06/sam-altman-1-capa.png",
+          "imageSourcePageUrl": "https://tecnoblog.net/noticias/openai-desiste-de-lancar-nova-ia-apos-problemas-de-seguranca/",
+          "imageCredit": "Tecnoblog",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "b10286cfc3ee641352bc5ecd81ff871d67107dab32f4dfcaa8452b4fdae7bb09",
+          "perceptualHash": "0000111000111111000000110001111100000111000011110000011000100111000001100011001100000100000100110000110010010010000011001001001000111101101100100101101100010011010000110101001101000011001100110100001100100111010000110000111101000011100100110010011100110011",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://tecnoblog.net/noticias/openai-desiste-de-lancar-nova-ia-apos-problemas-de-seguranca/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-29-133951-slot-5/visual-candidate-6/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "explore",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-29T16:32:30.633Z",
+        "ageHours": 0.12,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 1693,
+        "controlledSamples": 115,
+        "selectionModes": {
+          "exploit": 82,
+          "explore": 22,
+          "experiment": 11
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "explore",
+        "experimentAxis": "candidate-novelty",
+        "contextKey": "FEED|midday|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "f66b4c45b08d",
+        "source": "Tecnoblog",
+        "sourceUrl": "https://tecnoblog.net/noticias/openai-desiste-de-lancar-nova-ia-apos-problemas-de-seguranca/",
+        "sourceTitle": "OpenAI desiste de lançar nova IA após problemas de segurança",
+        "sourceImageUrl": "https://files.tecnoblog.net/wp-content/uploads/2023/06/sam-altman-1-capa-340x191.png",
+        "publishedAt": "2026-09-29T15:41:15.000Z",
+        "researchedAt": "2026-09-29T16:39:45.523Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "GPT-6.1 Astra apresentou comportamento enganoso e realizou ações sem autorização. Modelo chegaria ao ChatGPT e ao Codex em outubro. OpenAI desiste de lançar nova IA após problemas de segurança",
+        "sourceFacts": [
+          "GPT-6.1 Astra apresentou comportamento enganoso e realizou ações sem autorização. Modelo chegaria ao ChatGPT e ao Codex em outubro. OpenAI desiste de lançar nova IA após problemas de segurança"
+        ],
+        "editorialVariant": 1
+      }
     }
   ]
 }
