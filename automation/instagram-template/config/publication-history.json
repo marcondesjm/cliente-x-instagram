@@ -52323,6 +52323,166 @@
         ],
         "editorialVariant": 2
       }
+    },
+    {
+      "feedFingerprint": "f4ee57c18cb10bf0d6111e6dfebbf9ee2d102e98dc279ca07a939532f6d36866",
+      "storyFingerprint": "f4ee57c18cb10bf0d6111e6dfebbf9ee2d102e98dc279ca07a939532f6d36866",
+      "storyContentKind": "news",
+      "storyCoverTitle": "É preciso usar IA para combater ataques de DDoS, recomenda Nokia",
+      "captionFingerprint": "e4325e8093218dcce9ff8ebf7be7f0ecce65114d92a6a1b3fd8714668af10da8",
+      "coverTitle": "É preciso usar IA para combater ataques de DDoS, recomenda Nokia",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-06.png",
+      "avatarRotationStart": 9,
+      "publishedAt": "2026-09-30T14:20:47.314Z",
+      "slotDate": "2026-09-30",
+      "slotIndex": 2,
+      "scheduledAt": "2026-09-30T12:00:00.000Z",
+      "workflowRun": "36727560594",
+      "mediaId": "18152119348467323",
+      "storyMediaId": "18134908759725928",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18152119348467323/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"Ae1SkNGK6b72h8xGRcvx9P7\"}}",
+      "permalink": "https://www.instagram.com/reel/Dd6iOGZCDM2/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Mobile Time",
+          "sourceUrl": "https://www.mobiletime.com.br/noticias/30/09/2026/ia-contra-ddos/",
+          "sourceTitle": "É preciso usar IA para combater ataques de DDoS, recomenda Nokia",
+          "imageUrl": "https://www.mobiletime.com.br/wp-content/uploads/2026/09/troch.jpg",
+          "imageSourcePageUrl": "https://www.mobiletime.com.br/noticias/30/09/2026/ia-contra-ddos/",
+          "imageCredit": "Mobile Time",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "102c2086396ae5c8abd92c27ff1ef731aebbac3b8087108eaef72280a9108359",
+          "perceptualHash": "0000110011111011001001011110101100100001011110110111000011011011011100001101101101100001001010111110000100101011110100010010001111010001001000111101101110100011100110111010001110111001101010001011100110101000110111011100000110011001110010011001100111001100",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://www.mobiletime.com.br/noticias/30/09/2026/ia-contra-ddos/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-30-111923-slot-2/visual-candidate-2/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-30T08:36:31.211Z",
+        "ageHours": 5.71,
+        "freshness": "stale",
+        "effectiveSamples": 120,
+        "effectiveReach": 1720,
+        "controlledSamples": 116,
+        "selectionModes": {
+          "exploit": 81,
+          "explore": 22,
+          "experiment": 13
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": false,
+        "operatingMode": "editorial-fallback",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "morning",
+        "objective": "conversation",
+        "primarySignal": "comentarios",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|morning|conversation",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "a97b6d6aa11f",
+        "source": "Mobile Time",
+        "sourceUrl": "https://www.mobiletime.com.br/noticias/30/09/2026/ia-contra-ddos/",
+        "sourceTitle": "É preciso usar IA para combater ataques de DDoS, recomenda Nokia",
+        "sourceImageUrl": "https://www.mobiletime.com.br/wp-content/uploads/2026/09/troch.jpg",
+        "publishedAt": "2026-09-30T11:22:18.000Z",
+        "researchedAt": "2026-09-30T14:19:15.737Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Executivo da companhia relata um ataque recente de 30 TB que seria capaz de derrubar uma rede inteira ou até um país",
+        "sourceFacts": [
+          "O volume e a frequência de ataques DDoS no mundo aumentaram sensivelmente nos últimos dois anos e a única forma de combatê-los é usando inteligência artificial com machine learning para identificar rapidamente novos padrões e a origem das ameaças. A recomendação é de Bruno de Troch, CTO de infraestrutura de redes na Europa da Nokia, durante apresentação no Atlantic Convergence , evento realizado nesta quarta-feira, 30, em Lisboa.",
+          "“Vimos recentemente um ataque de 30 TB. Isso é capaz de derrubar uma rede inteira ou até um país”, relatou Troch.",
+          "De dois anos para cá, a capacidade dos ataques de DDoS aumentou mais de 100 vezes, por conta do crescimento no número de redes de bots e de proxies residenciais, com uma grande variedade de vetores, especialmente dispositivos conectados dentro de casa, como caixinhas de IPTV.",
+          "O problema é que essas mesmas redes também acabam sendo usadas para ataques de DDoS. Os criminosos estão utilizando IA para aumentar a escala dos ataques e torná-los cada vez mais sofisticados, dificultando a detecção.",
+          "É impossível combater o problema com uma análise humana do tráfego, diz Troch. É preciso utilizar ferramentas de IA para identificar novos padrões de ataque tão logo eles aconteçam."
+        ],
+        "editorialVariant": 3
+      }
     }
   ]
 }
