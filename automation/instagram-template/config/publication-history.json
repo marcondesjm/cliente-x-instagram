@@ -52163,6 +52163,166 @@
         ],
         "editorialVariant": 0
       }
+    },
+    {
+      "feedFingerprint": "3a4af9bcab6792a02eb9d78e8663381abe951f16b5354c352a2d7c12992d2afe",
+      "storyFingerprint": "3a4af9bcab6792a02eb9d78e8663381abe951f16b5354c352a2d7c12992d2afe",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Nvidia lança plataforma para barrar agentes de IA",
+      "captionFingerprint": "b60570bab2c3694b7bedfe5dae454b4cd863bc377c01b8e79468a195631bebd4",
+      "coverTitle": "Nvidia lança plataforma para barrar agentes de IA",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-05.png",
+      "avatarRotationStart": 8,
+      "publishedAt": "2026-09-30T14:00:08.410Z",
+      "slotDate": "2026-09-30",
+      "slotIndex": 1,
+      "scheduledAt": "2026-09-30T11:10:00.000Z",
+      "workflowRun": "36725311056",
+      "mediaId": "18430864714151708",
+      "storyMediaId": "18167530474481588",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18430864714151708/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"ABBJMiybgWHbgbpVtqU-TPX\"}}",
+      "permalink": "https://www.instagram.com/p/Dd6f44rmN-d/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Tecnoblog",
+          "sourceUrl": "https://tecnoblog.net/noticias/nvidia-lanca-plataforma-para-barrar-agentes-de-ia/",
+          "sourceTitle": "Nvidia lança plataforma para barrar agentes de IA",
+          "imageUrl": "https://files.tecnoblog.net/wp-content/uploads/2022/05/nvidia-video_capa-1_tb.png",
+          "imageSourcePageUrl": "https://tecnoblog.net/noticias/nvidia-lanca-plataforma-para-barrar-agentes-de-ia/",
+          "imageCredit": "Tecnoblog",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "41a10b1934cd753aec9548896b059ed6152f0bfde255887d6a8af4ce146f3343",
+          "perceptualHash": "0000000011111111000000010011111100000011001111110100001110111111010000111001111101000011101001110100000110110111101000101001001101100010100101110010001010111110110000100111111011010000111111111001000011111110100100000110011010010000010100011010100011011001",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://tecnoblog.net/noticias/nvidia-lanca-plataforma-para-barrar-agentes-de-ia/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-30-105901-slot-1/visual-candidate-2/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "explore",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-30T08:36:31.211Z",
+        "ageHours": 5.37,
+        "freshness": "stale",
+        "effectiveSamples": 120,
+        "effectiveReach": 1720,
+        "controlledSamples": 116,
+        "selectionModes": {
+          "exploit": 81,
+          "explore": 22,
+          "experiment": 13
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": false,
+        "operatingMode": "editorial-fallback",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "morning",
+        "objective": "conversion",
+        "primarySignal": "alcance de nao seguidores",
+        "selectionMode": "explore",
+        "experimentAxis": "candidate-novelty",
+        "contextKey": "FEED|morning|conversion",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-atual"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "a5598a780f74",
+        "source": "Tecnoblog",
+        "sourceUrl": "https://tecnoblog.net/noticias/nvidia-lanca-plataforma-para-barrar-agentes-de-ia/",
+        "sourceTitle": "Nvidia lança plataforma para barrar agentes de IA",
+        "sourceImageUrl": "https://files.tecnoblog.net/wp-content/uploads/2022/05/nvidia-video_capa-1_tb-340x191.png",
+        "publishedAt": "2026-09-28T14:51:44.000Z",
+        "researchedAt": "2026-09-30T13:58:51.936Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Open Agent Safety Platform combina software e hardware para interromper tentativas de contornar restrições. Sistema foi criado com Microsoft, Oracle e Dell. Nvidia lança plataforma para barrar agentes de IA",
+        "sourceFacts": [
+          "Open Agent Safety Platform combina software e hardware para interromper tentativas de contornar restrições. Sistema foi criado com Microsoft, Oracle e Dell.",
+          "Semanas após relatos de problemas na contenção de modelos de IA em ambientes de testes, a Nvidia surge com uma tentativa de solução. A empresa lançou hoje (28/09) a Open Agent Safety Platform, criada para impedir que os agentes ultrapassem as permissões definidas pelos desenvolvedores.",
+          "A plataforma pretende restringir o acesso dos agentes a sistemas externos e interromper tentativas de escapar de ambinetes isolados em uma combinação de software e hardware. À CNBC , o CEO da companhia, Jensen Huang, comparou a proposta a um navegador de internet voltado especificamente para agentes de IA.",
+          "Segundo o executivo, a ideia é permitir que esses sistemas executem tarefas sem que possam circular livremente pela infraestrutura de uma empresa. “Não podemos ter uma indústria de IA bem-sucedida se o mundo não confiar ou não acreditar que ela foi construída e implementada de forma segura”, afirmou.",
+          "A Open Agent Safety Plataform é formada por duas ferramentas: o Nvidia OpenShell e o Nvidia Sentry. O primeiro funciona no nível dos processadores e estabelece as permissões que determinam o que cada agente pode fazer dentro do próprio ambiente. A empresa informou à Reuters que trabalha com a Arm e a Intel para garantir a compatibilidade da tecnologia em chips das fabricantes."
+        ],
+        "editorialVariant": 2
+      }
     }
   ]
 }
