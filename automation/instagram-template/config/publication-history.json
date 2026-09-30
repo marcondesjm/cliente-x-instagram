@@ -52003,6 +52003,166 @@
         ],
         "editorialVariant": 3
       }
+    },
+    {
+      "feedFingerprint": "f1f48510d10d54c6c28bf91d3f9c0b62fb28c003396071aa10d2cb715929c6a6",
+      "storyFingerprint": "f1f48510d10d54c6c28bf91d3f9c0b62fb28c003396071aa10d2cb715929c6a6",
+      "storyContentKind": "news",
+      "storyCoverTitle": "A parte da IA que mora no fundo do mar: cabos submarinos do Pacífico viram fronteira tecnológica",
+      "captionFingerprint": "5a63fedfa4e0bb171516e11f378532e1f5313a1d162b91d34c427c5bf1b2eba8",
+      "coverTitle": "A parte da IA que mora no fundo do mar: cabos submarinos do Pacífico viram fronteira tecnológica",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-04.png",
+      "avatarRotationStart": 7,
+      "publishedAt": "2026-09-30T13:48:01.454Z",
+      "slotDate": "2026-09-30",
+      "slotIndex": 0,
+      "scheduledAt": "2026-09-30T09:30:00.000Z",
+      "workflowRun": "36723574488",
+      "mediaId": "17912205207496854",
+      "storyMediaId": "18098111030542514",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /17912205207496854/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AS4gv05LOaXdjRbBPbZmJdP\"}}",
+      "permalink": "https://www.instagram.com/reel/Dd6eczPAldA/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Exame",
+          "sourceUrl": "https://exame.com/tecnologia/o-futuro-da-ia-mora-no-fundo-do-mar-e-a-disputa-por-mais-cabos-submarinos-ja-comecou/",
+          "sourceTitle": "A parte da IA que mora no fundo do mar: cabos submarinos do Pacífico viram fronteira tecnológica",
+          "imageUrl": "https://classic.exame.com/wp-content/uploads/2026/09/materia-hacker-6.jpg",
+          "imageSourcePageUrl": "https://exame.com/tecnologia/o-futuro-da-ia-mora-no-fundo-do-mar-e-a-disputa-por-mais-cabos-submarinos-ja-comecou/",
+          "imageCredit": "Exame",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "a711524e6cd6c70ba0f5a1cec5f1533e70c02a990f5aae5e77125154409841c2",
+          "perceptualHash": "0001111111001111011010101100111111100111101011111000001111010111110000000111011100010000000011110000011001100111100100011110001110001000010010111000000111101001100001111110011010000110011010101000001000110111100001100011001000000100101110110000011010111011",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://exame.com/tecnologia/o-futuro-da-ia-mora-no-fundo-do-mar-e-a-disputa-por-mais-cabos-submarinos-ja-comecou/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-09-30-104534-slot-0/visual-candidate-1/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "explore",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-09-30T08:36:31.211Z",
+        "ageHours": 5.15,
+        "freshness": "stale",
+        "effectiveSamples": 120,
+        "effectiveReach": 1720,
+        "controlledSamples": 116,
+        "selectionModes": {
+          "exploit": 81,
+          "explore": 22,
+          "experiment": 13
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": false,
+        "operatingMode": "editorial-fallback",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "morning",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "explore",
+        "experimentAxis": "candidate-novelty",
+        "contextKey": "REELS|morning|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "7d910718a5fe",
+        "source": "Exame",
+        "sourceUrl": "https://exame.com/tecnologia/o-futuro-da-ia-mora-no-fundo-do-mar-e-a-disputa-por-mais-cabos-submarinos-ja-comecou/",
+        "sourceTitle": "A parte da IA que mora no fundo do mar: cabos submarinos do Pacífico viram fronteira tecnológica",
+        "sourceImageUrl": "https://classic.exame.com/wp-content/uploads/2026/09/materia-hacker-6.jpg",
+        "publishedAt": "2026-09-30T07:28:09.000Z",
+        "researchedAt": "2026-09-30T13:45:24.125Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "No Atlantic Convergence, executivos de 700 empresas discutem quem vai construir, controlar e proteger as redes que a inteligência artificial exige, e por que o Atlântico virou a rota mais estratégica do planeta",
+        "sourceFacts": [
+          "Ivo Ivanov, CEO da DE-CIX, durante apresentação sobre a infraestrutura global de dados e a expansão de cabos submarinos impulsionada pela inteligência artificial. (Getty Images)",
+          "Quando alguém em São Paulo pede uma resposta a um chatbot hospedado num data center europeu, a pergunta não sobe para o espaço. Desce para o fundo do mar. Segundo Ivo Ivanov , CEO da DE-CIX, praticamente todos os dados que cruzam oceanos, 99,99% deles viajam por cabos submarinos .",
+          "Os satélites, apesar do barulho em torno de constelações como a Starlink, ficam com uma fração residual. E nenhuma rota pesa tanto quanto o Atlântico, que tem, por alto, capacidade 2,5 vezes maior do que a do Pacífico .",
+          "É essa geografia que explica por que Lisboa recebe, até 1º de outubro, a terceira edição do Atlantic Convergence . Organizado pela DE-CIX, uma das maiores operadoras de pontos de troca de tráfego de internet ( Internet Exchange , ou IX) do mundo, o encontro reúne no Pátio da Galé representantes de mais de 700 empresas de 80 países , com cerca de 1.400 inscritos. Entre os parceiros estão AtlasEdge, EllaLink, Interfiber Networks, MEO Wholesale Solutions e Nokia.",
+          "A tese central da abertura é que a inteligência artificial não apenas aumenta o tráfego de dados. Ela muda onde o processamento acontece e onde o dinheiro é gerado. Agentes autônomos e aplicações distribuídas por vários continentes exigem redes com latência baixa, capacidade alta e pouca tolerância a falhas ."
+        ],
+        "editorialVariant": 0
+      }
     }
   ]
 }
