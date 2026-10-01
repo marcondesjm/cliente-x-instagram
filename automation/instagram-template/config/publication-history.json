@@ -53640,6 +53640,166 @@
         ],
         "editorialVariant": 1
       }
+    },
+    {
+      "feedFingerprint": "c53d8a08ba24b660317d1852ea8d7523d19d45d43ee0b69d923ba8eff77e658a",
+      "storyFingerprint": "c53d8a08ba24b660317d1852ea8d7523d19d45d43ee0b69d923ba8eff77e658a",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Selbetti compra Botdesigner e foca em automação na saúde",
+      "captionFingerprint": "40f352201624bc14b6879dde6e32d660da2fc2041d5dfe693954fd7841d32e0a",
+      "coverTitle": "Selbetti compra Botdesigner e foca em automação na saúde",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-04.png",
+      "avatarRotationStart": 7,
+      "publishedAt": "2026-10-01T13:16:23.844Z",
+      "slotDate": "2026-10-01",
+      "slotIndex": 1,
+      "scheduledAt": "2026-10-01T11:10:00.000Z",
+      "workflowRun": "36866995898",
+      "mediaId": "18101058392380434",
+      "storyMediaId": "18098623298636848",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18101058392380434/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AkNF4gwbuknS0S0DQSCknjk\"}}",
+      "permalink": "https://www.instagram.com/p/Dd8_sjGoALO/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Startups",
+          "sourceUrl": "https://startups.com.br/negocios/ma/selbetti-compra-botdesigner-e-foca-em-automacao-na-saude/",
+          "sourceTitle": "Selbetti compra Botdesigner e foca em automação na saúde",
+          "imageUrl": "https://uploads.startups.com.br/2026/09/1320-X-768-33.jpg",
+          "imageSourcePageUrl": "https://startups.com.br/negocios/ma/selbetti-compra-botdesigner-e-foca-em-automacao-na-saude/",
+          "imageCredit": "Startups",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "fd73cbd68e51a2023f21fe0f85efa1d9fd504cae7dcd08cd47c4f68deeb6d030",
+          "perceptualHash": "0000000100111111010000011011111101110010101111110110001000111111011000100001111101100010001111110110001100011111011011101001111100000110100011110000110010001111000111001010111100011101100011110100110101101111000110110100111111011000010011110101101000001111",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://startups.com.br/negocios/ma/selbetti-compra-botdesigner-e-foca-em-automacao-na-saude/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-01-101532-slot-1/visual-candidate-1/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "experiment",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-01T07:10:23.790Z",
+        "ageHours": 6.09,
+        "freshness": "stale",
+        "effectiveSamples": 120,
+        "effectiveReach": 1781,
+        "controlledSamples": 116,
+        "selectionModes": {
+          "exploit": 78,
+          "explore": 23,
+          "experiment": 15
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": false,
+        "operatingMode": "editorial-fallback",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "morning",
+        "objective": "conversation",
+        "primarySignal": "comentarios",
+        "selectionMode": "experiment",
+        "experimentAxis": "topic-angle",
+        "contextKey": "FEED|morning|conversation",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "d2733405e963",
+        "source": "Startups",
+        "sourceUrl": "https://startups.com.br/negocios/ma/selbetti-compra-botdesigner-e-foca-em-automacao-na-saude/",
+        "sourceTitle": "Selbetti compra Botdesigner e foca em automação na saúde",
+        "sourceImageUrl": "https://uploads.startups.com.br/2026/09/1320-X-768-33.jpg",
+        "publishedAt": "2026-09-30T15:09:59.000Z",
+        "researchedAt": "2026-10-01T13:15:25.023Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Junior Selbach, CEO da Selbetti | Foto: divulgação Startup catarinense que automatiza jornada do paciente atende mais de 200 instituições de saúde e entra na unidade de Customer Experience O post Selbetti compra Botdesigner e foca em automação na saúde apareceu primeiro em Startups .",
+        "sourceFacts": [
+          "Em seu caminho para bater R$ 1 bilhão em receita e se tornar um ecossistema completo de soluções em automação e atendimento para diferentes verticais, a Selbetti anunciou a compra da Botdesigner , empresa de Florianópolis que automatiza a jornada do paciente em instituições de saúde.",
+          "O anúncio foi feito pela Selbetti nesta quarta (30) em comunicado, mas o valor do deal não foi revelado. Por outro lado, as companhias destacaram que as operações já começam a funcionar integradas em 1º de outubro, com a adquirida passando a compor a unidade Selbetti Customer Experience.",
+          "Com a aquisição, a Selbetti adiciona à sua carteira uma base de mais de 200 instituições atendidas, entre hospitais, santas casas, clínicas, serviços de imagem e operadoras, com alcance de mais de 20 milhões de pacientes.",
+          "A solução da Botdesigner se conecta aos sistemas de gestão de clínicas e hospitais e, com automação e IA, permite que o paciente resolva sozinho quase todo o percurso: descobrir a especialidade certa, agendar, confirmar, remarcar, cancelar e acompanhar o pós-atendimento. WhatsApp, SMS, telefone e e-mail ficam num ambiente só.",
+          "Entre os clientes, segundo a companhia, a solução responde por mais de 85% dos agendamentos automatizados e mais de 90% das consultas confirmadas pelo bot, com queda superior a 60% no absenteísmo."
+        ],
+        "editorialVariant": 2
+      }
     }
   ]
 }
