@@ -53964,6 +53964,171 @@
         ],
         "editorialVariant": 4
       }
+    },
+    {
+      "feedFingerprint": "39420708cc655b5dc3075e774db97e6a75703f8ea4790c6391a8e9fb19b76065",
+      "storyFingerprint": "39420708cc655b5dc3075e774db97e6a75703f8ea4790c6391a8e9fb19b76065",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Pesquisa da Nuvemshop revela que mais de 95% das vendas recomendadas por IA são via ChatGPT",
+      "captionFingerprint": "ec7e4f012683ceb05a36a000eaf1aebcdcf54387cb301cdd35f821916490c743",
+      "coverTitle": "Pesquisa da Nuvemshop revela que mais de 95% das vendas recomendadas por IA são via ChatGPT",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-06.png",
+      "avatarRotationStart": 9,
+      "publishedAt": "2026-10-01T16:44:11.788Z",
+      "slotDate": "2026-10-01",
+      "slotIndex": 3,
+      "scheduledAt": "2026-10-01T14:50:00.000Z",
+      "workflowRun": "36893692021",
+      "mediaId": "18117194270001219",
+      "storyMediaId": "18052804463799751",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18117194270001219/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AI588-GfhGqzBEoP4DxQlah\"}}",
+      "permalink": "https://www.instagram.com/p/Dd9XeCDmAbo/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Mobile Time",
+          "sourceUrl": "https://www.mobiletime.com.br/noticias/30/09/2026/nuvemshop-vendas-chatgpt/",
+          "sourceTitle": "Pesquisa da Nuvemshop revela que mais de 95% das vendas recomendadas por IA são via ChatGPT",
+          "imageUrl": "https://www.mobiletime.com.br/wp-content/uploads/2026/09/PAT_4554.jpg",
+          "imageSourcePageUrl": "https://www.mobiletime.com.br/noticias/30/09/2026/nuvemshop-vendas-chatgpt/",
+          "imageCredit": "Mobile Time",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "b9c335a179a0f3fedf486b3d6e468adab2f2b60d6c98bb87e3c076c9f2bf96c9",
+          "perceptualHash": "0000111001111100000001110110110100000101011011000001010101101100010111001110110001010001111011001000100011101100100001001110110100010000111011000000100111101111000001001110010000010000111011001001000010101110000100001010111000010010101010011001001010110111",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://www.mobiletime.com.br/noticias/30/09/2026/nuvemshop-vendas-chatgpt/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-01-134252-slot-3/visual-candidate-2/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "explore",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-01T13:18:56.683Z",
+        "ageHours": 3.4,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 1768,
+        "controlledSamples": 116,
+        "selectionModes": {
+          "exploit": 78,
+          "explore": 23,
+          "experiment": 15
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "explore",
+        "experimentAxis": "candidate-novelty",
+        "contextKey": "FEED|midday|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-abaixo-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 7.77,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "10b5aaf75c07",
+        "source": "Mobile Time",
+        "sourceUrl": "https://www.mobiletime.com.br/noticias/30/09/2026/nuvemshop-vendas-chatgpt/",
+        "sourceTitle": "Pesquisa da Nuvemshop revela que mais de 95% das vendas recomendadas por IA são via ChatGPT",
+        "sourceImageUrl": "https://www.mobiletime.com.br/wp-content/uploads/2026/09/PAT_4554.jpg",
+        "publishedAt": "2026-09-30T21:09:18.000Z",
+        "researchedAt": "2026-10-01T16:42:40.889Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Entre os clientes da plataforma, as visitas via inteligência artificial têm ticket médio de quase R$ 400 e superam as conversões de vendas de redes sociais e Google",
+        "sourceFacts": [
+          "Um levantamento feito pela Nuvemshop com sua base de usuários revelou que 96,3% das vendas sugeridas por IA generativa acontecem no ChatGPT ( Android , iOS ). De acordo com a plataforma de e-commerce, em 2026, o número de vendas concretizadas dentro dos modelos de linguagem é 17 vezes superior ao registrado em 2025.",
+          "Em média, os consumidores responsáveis pelas transações gastam R$ 380, valor 36% maior que o registrado em acessos via redes sociais e 10% superior ao dos que vieram do Google. Os dados foram extraídos das 180 mil marcas usuárias da Nuvemshop na Argentina, Brasil, Chile, Colômbia e México, entre janeiro e agosto de 2026.",
+          "Em agosto, a Nuvemshop disponibilizou o acesso ao Pixel, da OpenAI, ferramenta que monitora quantidade de acessos, número de conversões via ChatGPT e carrinhos abandonados, e viu o tráfego agêntico crescer 15% até agora. A empresa acredita que, nos próximos anos, as recomendações de inteligência artificial representarão em torno de 20% das visitas a lojas virtuais.",
+          "Além do acesso aos e-commerces, a tecnologia cada vez mais ganha espaço nos produtos e serviços da Nuvemshop. Segundo Laíza Buchala, diretora de product marketing da plataforma de e-commerce, em 2026, com as soluções de inteligência artificial, os clientes ganharam em torno de 5 milhões de horas, o equivalente a R$ 25 milhões em produtividade. Recentemente, a plataforma lançou sua IA nativa, o Lumi, que conta com mais de 30 agentes, sendo capaz de fazer análises de dados, dar insights e executar comandos.",
+          "Receba gratuitamente a newsletter do Mobile Time e fique bem informado sobre tecnologia móvel e negócios. Cadastre-se aqui!"
+        ],
+        "editorialVariant": 0
+      }
     }
   ]
 }
