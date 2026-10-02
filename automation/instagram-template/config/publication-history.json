@@ -56255,6 +56255,168 @@
         ],
         "editorialVariant": 3
       }
+    },
+    {
+      "feedFingerprint": "9416b57bde616ee44ee2e81883db2fe25892dc4d9d13990e1032a790ce007ae7",
+      "storyFingerprint": "9416b57bde616ee44ee2e81883db2fe25892dc4d9d13990e1032a790ce007ae7",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Conselho da Meta quer supervisionar indústria de IA",
+      "captionFingerprint": "0370cc2f58681faaa429534a950222c4078b3420a8e70e73fa3f2050b0214112",
+      "coverTitle": "Conselho da Meta quer supervisionar indústria de IA",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-02.png",
+      "avatarRotationStart": 5,
+      "publishedAt": "2026-10-02T18:35:28.271Z",
+      "slotDate": "2026-10-02",
+      "slotIndex": 8,
+      "scheduledAt": "2026-10-02T17:50:00.000Z",
+      "workflowRun": "37048123316",
+      "mediaId": "18019894148944048",
+      "storyMediaId": "17990679456111064",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18019894148944048/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AxDxBgh9NOI9WR799x3oJ6t\"}}",
+      "permalink": "https://www.instagram.com/p/DeAI_1SjP6x/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Mobile Time",
+          "sourceUrl": "https://www.mobiletime.com.br/noticias/30/09/2026/conselho-meta-avaliar-ia/",
+          "sourceTitle": "Conselho da Meta quer supervisionar indústria de IA",
+          "imageUrl": "https://www.mobiletime.com.br/wp-content/uploads/2026/09/Social-thumbnail-25-1536x744-1.jpg",
+          "imageSourcePageUrl": "https://www.mobiletime.com.br/noticias/30/09/2026/conselho-meta-avaliar-ia/",
+          "imageCredit": "Mobile Time",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "89efb45fc5639e92a3bb5dd011fe6dc44a41541465b02815a3ea3942ca7088c4",
+          "perceptualHash": "0100100101000000010010110110010001101010011000000110110110010000001111010100000000000110100000000000101100110000000100110011000000010011001000000001101100100000000100110010000000011011001100000001001100100000000111001001000000011100110100000001110010010000",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://www.mobiletime.com.br/noticias/30/09/2026/conselho-meta-avaliar-ia/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-02-153438-slot-8/visual-candidate-1/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-02T17:53:41.008Z",
+        "ageHours": 0.68,
+        "freshness": "current",
+        "effectiveSamples": 118,
+        "effectiveReach": 1651,
+        "controlledSamples": 118,
+        "selectionModes": {
+          "exploit": 80,
+          "explore": 21,
+          "experiment": 17
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "afternoon",
+        "objective": "conversation",
+        "primarySignal": "comentarios",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|afternoon|conversation",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-atual",
+          "fonte-com-baixo-historico",
+          "contexto-com-baixo-historico"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "83b6486f5e06",
+        "source": "Mobile Time",
+        "sourceUrl": "https://www.mobiletime.com.br/noticias/30/09/2026/conselho-meta-avaliar-ia/",
+        "sourceTitle": "Conselho da Meta quer supervisionar indústria de IA",
+        "sourceImageUrl": "https://www.mobiletime.com.br/wp-content/uploads/2026/09/Social-thumbnail-25-1536x744-1.jpg",
+        "publishedAt": "2026-09-30T23:50:23.000Z",
+        "researchedAt": "2026-10-02T18:34:19.932Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Grupo propõe seis etapas para supervisionar e fazer a governança da inteligência artificial, entre elas acesso livre a dados, orçamento dedicado e ampliar o escopo de investigação da Meta para todo o setor",
+        "sourceFacts": [
+          "O Conselho de Supervisão da Meta (Oversight Committee) defendeu em uma carta aberta que a inteligência artificial precisa de supervisão independente e externa na adoção de padrões industriais, regulação e coordenação internacional. O grupo ainda tenta se posicionar como uma opção para ser o supervisor de todo o setor de IA.",
+          "No documento divulgado nesta quarta-feira, 30 , o conjunto de especialistas pede o mesmo empenho usado pelos líderes para desenvolver a tecnologia até aqui para promover proteções que garantam respeito aos Direitos Humanos e garantias de que as pessoas estarão salvas.",
+          "“A confiança do público em IA está em queda, à medida que mais publicações apontam os seus riscos atuais e em potencial. Agora é hora da indústria se juntar, ao lado de stakeholders e parlamentares, para construir mecanismos de governança significativos e pontes que tragam confiança”, diz trecho da carta.",
+          "Na abertura do texto, o conjunto de notáveis deixa claro que tal tecnologia não pode ser construída unilateralmente pela indústria de tecnologia.",
+          "O Comitê, que tem o especialista Ronaldo Lemos entre seus conselheiros, sugere seis elementos essenciais para a governança efetiva e independente da IA:"
+        ],
+        "editorialVariant": 4
+      }
     }
   ]
 }
