@@ -55106,6 +55106,170 @@
         ],
         "editorialVariant": 1
       }
+    },
+    {
+      "feedFingerprint": "c7c228b32e948e1162338c3c6f885b478bc0a5f72b7f7bff70452644e47e13e8",
+      "storyFingerprint": "c7c228b32e948e1162338c3c6f885b478bc0a5f72b7f7bff70452644e47e13e8",
+      "storyContentKind": "news",
+      "storyCoverTitle": "IA do Instagram ajuda influenciadores a melhorarem os posts",
+      "captionFingerprint": "ee72d60b74bc440c9a98f390ce10bcacf3b5f3a64d146b93f98b00ba5be997fd",
+      "coverTitle": "IA do Instagram ajuda influenciadores a melhorarem os posts",
+      "coverAvatar": "docs/uploads/avatar-marcondes-lounge.png",
+      "avatarRotationStart": 3,
+      "publishedAt": "2026-10-02T12:55:53.425Z",
+      "slotDate": "2026-10-02",
+      "slotIndex": 1,
+      "scheduledAt": "2026-10-02T11:10:00.000Z",
+      "workflowRun": "37009344612",
+      "mediaId": "18389777362163911",
+      "storyMediaId": "18102583880313381",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18389777362163911/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AHkgp9JB--7HlYgP1rV7Osw\"}}",
+      "permalink": "https://www.instagram.com/p/Dd_iJI7DFma/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Tecnoblog",
+          "sourceUrl": "https://tecnoblog.net/noticias/ia-do-instagram-ajuda-influenciadores-a-melhorarem-os-posts/",
+          "sourceTitle": "IA do Instagram ajuda influenciadores a melhorarem os posts",
+          "imageUrl": "https://files.tecnoblog.net/wp-content/uploads/2022/03/instagram-capa-2.jpg",
+          "imageSourcePageUrl": "https://tecnoblog.net/noticias/ia-do-instagram-ajuda-influenciadores-a-melhorarem-os-posts/",
+          "imageCredit": "Tecnoblog",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "63a72aebbbe475992b8d778d714fc143067e209f767b83a749b61ae1ea3a67d3",
+          "perceptualHash": "0010000011000110010101111000111000111100000011101011110000101110101110001001110000111001000111000110100100101100011011001010110001001100101011001100110000001110111001001001101001100100000110100010010000011010001101000010001010110010010000011001000000001100",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://tecnoblog.net/noticias/ia-do-instagram-ajuda-influenciadores-a-melhorarem-os-posts/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-02-095505-slot-1/visual-candidate-1/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "explore",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-02T12:38:19.106Z",
+        "ageHours": 0.28,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 1847,
+        "controlledSamples": 118,
+        "selectionModes": {
+          "exploit": 79,
+          "explore": 22,
+          "experiment": 17
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "morning",
+        "objective": "utility",
+        "primarySignal": "salvamentos",
+        "selectionMode": "explore",
+        "experimentAxis": "candidate-novelty",
+        "contextKey": "FEED|morning|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-atual",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-abaixo-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "c6533ae7507b",
+        "source": "Tecnoblog",
+        "sourceUrl": "https://tecnoblog.net/noticias/ia-do-instagram-ajuda-influenciadores-a-melhorarem-os-posts/",
+        "sourceTitle": "IA do Instagram ajuda influenciadores a melhorarem os posts",
+        "sourceImageUrl": "https://files.tecnoblog.net/wp-content/uploads/2022/03/instagram-capa-2-340x191.jpg",
+        "publishedAt": "2026-09-30T18:35:56.000Z",
+        "researchedAt": "2026-10-02T12:54:54.016Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Assistente do Edits analisa métricas da conta para sugerir temas, roteiros, legendas e mudanças que podem melhorar o desempenho dos conteúdos. IA do Instagram ajuda influenciadores a melhorarem os posts",
+        "sourceFacts": [
+          "Assistente do Edits analisa métricas da conta para sugerir temas, roteiros, legendas e mudanças que podem melhorar o desempenho dos conteúdos.",
+          "O Instagram decidiu adicionar um assistente de inteligência artificial ao aplicativo Edits que é capaz de analisar o desempenho de uma conta. Ele sugere maneiras de melhorar novos conteúdos. A ferramenta considera visualizações, curtidas, compartilhamentos e retenção de audiência para responder às dúvidas dos influenciadores.",
+          "Será possível perguntar por que algum vídeo teve desempenho melhor que outro, quais conteúdos mais agradaram ao público ou quais tendências estão ganhando força na plataforma. O assistente também poderá sugerir ideias, roteiros, legendas, músicas e mais, expandindo as funções do Edits, o aplicativo de edição de vídeos lançado pelo Instagram em 2025 .",
+          "A diferença em relação a um chatbot genérico está nas informações usadas pelo assistente. Em vez de oferecer apenas recomendações genéricas sobre criação de conteúdo, a ferramenta poderá consultar dados de desempenho da própria conta para identificar padrões, como quais características aparecem com frequência nas publicações mais compartilhadas, por exemplo.",
+          "A IA poderá cruzar esses dados e transformar isso em sugestões para novos conteúdos. Esses registros já podem ser consultados pelos criadores por meio dos Insights do Instagram , que exibem informações sobre alcance, engajamento, público e desempenho das publicações. O novo assistente acrescenta uma camada mais interativa à análise dessas métricas."
+        ],
+        "editorialVariant": 5
+      }
     }
   ]
 }
