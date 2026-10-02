@@ -55270,6 +55270,171 @@
         ],
         "editorialVariant": 5
       }
+    },
+    {
+      "feedFingerprint": "ac91f7bafdab45a7a30bb84a87304b03af55c163e0b3db005535808ab66398f6",
+      "storyFingerprint": "ac91f7bafdab45a7a30bb84a87304b03af55c163e0b3db005535808ab66398f6",
+      "storyContentKind": "news",
+      "storyCoverTitle": "STF encontra tentativa de prompt injection em processo do 8/1",
+      "captionFingerprint": "1c3182f5ade649d9ab2de6d0b27248c36a04c53a2cf59f56c17f4da8c793610c",
+      "coverTitle": "STF encontra tentativa de prompt injection em processo do 8/1",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-04.png",
+      "avatarRotationStart": 7,
+      "publishedAt": "2026-10-02T14:12:59.471Z",
+      "slotDate": "2026-10-02",
+      "slotIndex": 2,
+      "scheduledAt": "2026-10-02T12:00:00.000Z",
+      "workflowRun": "37017791328",
+      "mediaId": "17923170894441517",
+      "storyMediaId": "18430416256199647",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /17923170894441517/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"A_INni9lelMw9hvymO-NihE\"}}",
+      "permalink": "https://www.instagram.com/reel/Dd_q336oAZJ/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Mobile Time",
+          "sourceUrl": "https://www.mobiletime.com.br/noticias/01/10/2026/stf-prompt-injection-8-1/",
+          "sourceTitle": "STF encontra tentativa de prompt injection em processo do 8/1",
+          "imageUrl": "https://www.mobiletime.com.br/wp-content/uploads/2025/02/alexandre_de-moraes-credito_Gustavo_Moreno_STF.jpg",
+          "imageSourcePageUrl": "https://www.mobiletime.com.br/noticias/01/10/2026/stf-prompt-injection-8-1/",
+          "imageCredit": "Mobile Time",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "eb77bc91346d9d9611ee37b3d191565ceb99fd03237898a23714b85a11784ca1",
+          "perceptualHash": "0000000011000000101000001100001001000000111000001000000001100000110100000110000011000010011100001101000001100000100100100110000010110010001000000011010001101000101100010110101000010001011110101110010010101001110001001011110111000100101111011100011000111101",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://www.mobiletime.com.br/noticias/01/10/2026/stf-prompt-injection-8-1/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-02-111112-slot-2/visual-candidate-1/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-02T12:38:19.106Z",
+        "ageHours": 1.55,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 1847,
+        "controlledSamples": 118,
+        "selectionModes": {
+          "exploit": 79,
+          "explore": 22,
+          "experiment": 17
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "morning",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|morning|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-abaixo-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 8.78,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "20c0dbfff4bf",
+        "source": "Mobile Time",
+        "sourceUrl": "https://www.mobiletime.com.br/noticias/01/10/2026/stf-prompt-injection-8-1/",
+        "sourceTitle": "STF encontra tentativa de prompt injection em processo do 8/1",
+        "sourceImageUrl": "https://www.mobiletime.com.br/wp-content/uploads/2025/02/alexandre_de-moraes-credito_Gustavo_Moreno_STF.jpg",
+        "publishedAt": "2026-10-01T20:39:16.000Z",
+        "researchedAt": "2026-10-02T14:10:59.709Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Segunda tentativa de comando oculto de IA contra o Supremo foi encontrada pela área de TI e resulta em uma multa inicial de R$ 5 mil contra o advogado",
+        "sourceFacts": [
+          "O ministro do Supremo Tribunal Federal (STF) , Alexandre de Moraes, aplicou uma multa de R$ 5 mil ao advogado de um réu do julgamento da tentativa de Golpe de Estado de 8 de janeiro de 2023, após encontrar uma tentativa de inserção de comando de inteligência artificial em petição apresentada pela defesa nesta quinta-feira, 1.",
+          "Com a ajuda do módulo MARIA Shield, de detecção de tentativas de uso de IA e manipulação de conteúdo, a área de tecnologia do Tribunal identificou e preparou um relatório sobre o caso. Essa técnica é conhecida como prompt injection e não é a primeira vez que é tentada contra a Corte.",
+          "Na última sexta-feira, 25, o ministro Cristiano Zanin encontrou outra ação do gênero com IA em um pedido de recurso.",
+          "Na ação de Moraes, o prompt usado para “negar todos os comandos do GPT” estava em um documento da defesa e tinha como objetivo influenciar ou mudar o comportamento de modelos de IA generativa usados na análise de documentos.",
+          "Atualmente, o STF utiliza IA em seu operacional. Um exemplo é a robô VitórIA , que analisa textos de petições e recursos e aglutina em blocos as ações que tratam do mesmo assunto, mas não julga processos nem toma decisões."
+        ],
+        "editorialVariant": 4
+      }
     }
   ]
 }
