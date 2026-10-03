@@ -56417,6 +56417,166 @@
         ],
         "editorialVariant": 4
       }
+    },
+    {
+      "feedFingerprint": "34466bc36747900a3dbd7555494894862b99082a040c62429362222223b4b669",
+      "storyFingerprint": "34466bc36747900a3dbd7555494894862b99082a040c62429362222223b4b669",
+      "storyContentKind": "news",
+      "storyCoverTitle": "IA generativa, agentes e automação: entenda a diferença de uma vez",
+      "captionFingerprint": "9657fa955341fbda57ea51737d896100946b6140d260ab9f6178dcfb1fa0f9c1",
+      "coverTitle": "IA generativa, agentes e automação: entenda a diferença de uma vez",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-03.png",
+      "avatarRotationStart": 6,
+      "publishedAt": "2026-10-03T11:35:16.934Z",
+      "slotDate": "2026-10-03",
+      "slotIndex": 0,
+      "scheduledAt": "2026-10-03T09:30:00.000Z",
+      "workflowRun": "37119962591",
+      "mediaId": "18159058207506625",
+      "storyMediaId": "17904556830569542",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18159058207506625/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AI60oc5AW-zDmV0Npy8eHuq\"}}",
+      "permalink": "https://www.instagram.com/reel/DeB9qPJDIuT/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Exame",
+          "sourceUrl": "https://exame.com/inteligencia-artificial/ia-generativa-agentes-e-automacao-entenda-a-diferenca-de-uma-vez/",
+          "sourceTitle": "IA generativa, agentes e automação: entenda a diferença de uma vez",
+          "imageUrl": "https://classic.exame.com/wp-content/uploads/2026/09/ChatGPT-Image-28_09_2026-13_54_12.png",
+          "imageSourcePageUrl": "https://exame.com/inteligencia-artificial/ia-generativa-agentes-e-automacao-entenda-a-diferenca-de-uma-vez/",
+          "imageCredit": "Exame",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "1db23836411c152a55955e7005dc7f6e46071e540d4185016cad1914b9a5dccd",
+          "perceptualHash": "0111010011001100101101001110011011000100011100101100010111001010100101110110101011010000001110110101011000110001011101011011000001011010001100000100100100111100011110010010001101001110110111001010011001101000101101000111100001100100011011000011010001001101",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://exame.com/inteligencia-artificial/ia-generativa-agentes-e-automacao-entenda-a-diferenca-de-uma-vez/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-03-083405-slot-0/visual-candidate-1/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-03T06:25:20.127Z",
+        "ageHours": 5.15,
+        "freshness": "stale",
+        "effectiveSamples": 119,
+        "effectiveReach": 1628,
+        "controlledSamples": 118,
+        "selectionModes": {
+          "exploit": 80,
+          "explore": 21,
+          "experiment": 17
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": false,
+        "operatingMode": "editorial-fallback",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "morning",
+        "objective": "utility",
+        "primarySignal": "salvamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|morning|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "a14c27536b21",
+        "source": "Exame",
+        "sourceUrl": "https://exame.com/inteligencia-artificial/ia-generativa-agentes-e-automacao-entenda-a-diferenca-de-uma-vez/",
+        "sourceTitle": "IA generativa, agentes e automação: entenda a diferença de uma vez",
+        "sourceImageUrl": "https://classic.exame.com/wp-content/uploads/2026/09/ChatGPT-Image-28_09_2026-13_54_12.png",
+        "publishedAt": "2026-10-03T06:03:40.000Z",
+        "researchedAt": "2026-10-03T11:33:54.635Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Os termos aparecem cada vez mais no trabalho, mas descrevem formas diferentes de usar a tecnologia para criar conteúdo, executar tarefas e organizar processos",
+        "sourceFacts": [
+          "IA generativa, automação e agentes podem atuar juntos em diferentes etapas de um processo",
+          "Uma empresa pode usar inteligência artificial para escrever um e-mail, responder a um cliente, preencher uma planilha ou conduzir uma tarefa inteira.",
+          "Embora tudo isso possa parecer parte da mesma categoria, há diferenças importantes na forma como cada tecnologia funciona.",
+          "A confusão aumenta porque os recursos podem ser combinados. Uma automação pode incluir IA generativa, enquanto um agente pode usar automações para executar etapas.",
+          "Entender o papel de cada peça ajuda a saber o que, de fato, está acontecendo por trás de uma tarefa automatizada."
+        ],
+        "editorialVariant": 5
+      }
     }
   ]
 }
