@@ -1255,3 +1255,7 @@ Resultado:
 - OAuth preparado para sincronizar token/ID para Vercel e GitHub Actions usando sealed boxes. Kids solicita somente basic/content_publish.
 - Checks: sintaxe, validate-copy (36 packs), validate-kids-onboarding (isolamento/agenda/secrets), render feed e Story. Prévia 2026-10-04-104509-slot-0-render-only inspecionada.
 - Pendente: deploy, autorização Meta, teste de conexão, dry-run e liberação da agenda com data inicial. Nenhuma publicação Kids realizada nesta etapa.
+- Deploy de produção confirmado READY: dpl_A6f47VxrXZvf7zXshrTMYNdc1ktD, domínio cliente-x-instagram.vercel.app. Commit funcional e6bff43a em main.
+- Painel de produção confirmou os 12 horários e o ID do Instagram configurado. Salvamento de agenda executado no novo endpoint.
+- Fluxo OAuth alcançou o consentimento na Meta, mas a sessão inicial era @marcondes.machado.oficial; consentimento cancelado para não conectar a conta errada. Troca/login de @sabedoriakidsoficial em andamento.
+- Consentimento de publicação da conta Kids ainda não concedido; nenhum token/ID Kids confirmado e nenhuma publicação Kids realizada. Conta continua onboarding.
