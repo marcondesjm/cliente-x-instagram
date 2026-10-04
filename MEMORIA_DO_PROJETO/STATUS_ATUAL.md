@@ -1259,3 +1259,5 @@ Resultado:
 - Painel de produção confirmou os 12 horários e o ID do Instagram configurado. Salvamento de agenda executado no novo endpoint.
 - Fluxo OAuth alcançou o consentimento na Meta, mas a sessão inicial era @marcondes.machado.oficial; consentimento cancelado para não conectar a conta errada. Troca/login de @sabedoriakidsoficial em andamento.
 - Consentimento de publicação da conta Kids ainda não concedido; nenhum token/ID Kids confirmado e nenhuma publicação Kids realizada. Conta continua onboarding.
+- GitHub confirmou o workflow Instagram Sabedoria Kids como active, ainda sem execução registrada. Isso não é prova de publicação.
+- Login do Sabedoria Kids encontrou reCAPTCHA (“Não sou um robô”). Verificação deixada para o usuário no navegador; autorização Meta Kids permanece pendente. Não houve clique em Permitir.
