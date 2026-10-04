@@ -2351,8 +2351,17 @@ async function completeInstagramOAuth(req, account, code) {
   const longPayload = await longResponse.json().catch(() => ({}));
   const accessToken = longResponse.ok && longPayload.access_token ? longPayload.access_token : tokenPayload.access_token;
   const profileResponse = await fetch(`https://graph.instagram.com/v26.0/me?fields=user_id,username&access_token=${encodeURIComponent(tokenPayload.access_token)}`);
-  const profile = await profileResponse.json().catch(() => ({}));
-  if (!profileResponse.ok || !(profile.user_id || profile.id)) throw userError('Consulta do perfil Instagram: ' + (profile.error?.message || 'Não foi possível validar a conta profissional.'), profileResponse.status);
+  const profileText = await profileResponse.text();
+  let profilePayload = {};
+  try { profilePayload = JSON.parse(profileText); } catch {}
+  const profile = Array.isArray(profilePayload.data) && profilePayload.data.length === 1 ? profilePayload.data[0] : profilePayload;
+  const exactProfileId = profileText.match(/"user_id"\s*:\s*"?(\d+)"?/);
+  if (exactProfileId && !profilePayload.error) profile.user_id = exactProfileId[1];
+  if (!profileResponse.ok || !(profile.user_id || profile.id)) {
+    const metaError = profilePayload.error || profile.error;
+    const details = metaError?.code ? ` (Meta ${metaError.code}${metaError.error_subcode ? '/' + metaError.error_subcode : ''})` : '';
+    throw userError('Consulta do perfil Instagram: ' + (metaError?.message || 'Não foi possível validar a conta profissional.') + details, profileResponse.ok ? 400 : profileResponse.status);
+  }
   if (account.expectedUsername && account.expectedUsername.toLowerCase() !== String(profile.username || '').toLowerCase()) {
     throw userError(`Você autorizou @${profile.username}, mas o convite é para @${account.expectedUsername}.`, 409);
   }
