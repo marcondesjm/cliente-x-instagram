@@ -2342,9 +2342,9 @@ async function completeInstagramOAuth(req, account, code) {
   const longResponse = await fetch(longUrl);
   const longPayload = await longResponse.json().catch(() => ({}));
   const accessToken = longResponse.ok && longPayload.access_token ? longPayload.access_token : tokenPayload.access_token;
-  const profileResponse = await fetch(`https://graph.instagram.com/v23.0/me?fields=id,user_id,username&access_token=${encodeURIComponent(accessToken)}`);
+  const profileResponse = await fetch(`https://graph.instagram.com/v23.0/${encodeURIComponent(tokenPayload.user_id || "me")}?fields=user_id,username&access_token=${encodeURIComponent(accessToken)}`);
   const profile = await profileResponse.json().catch(() => ({}));
-  if (!profileResponse.ok || !(profile.user_id || profile.id)) throw userError(profile.error?.message || 'Não foi possível validar a conta profissional do Instagram.', profileResponse.status);
+  if (!profileResponse.ok || !(profile.user_id || profile.id)) throw userError('Consulta do perfil Instagram: ' + (profile.error?.message || 'Não foi possível validar a conta profissional.'), profileResponse.status);
   if (account.expectedUsername && profile.username && account.expectedUsername.toLowerCase() !== String(profile.username).toLowerCase()) {
     throw userError(`Você autorizou @${profile.username}, mas o convite é para @${account.expectedUsername}.`, 409);
   }
