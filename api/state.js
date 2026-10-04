@@ -2739,7 +2739,10 @@ export default async function handler(req, res) {
     return;
   }
 
-  if (String(req.query?.instagram || '') === 'callback') {
+  // Instagram may return code/state without preserving the redirect query.
+  // The signed, expiring invite is still verified before any token exchange.
+  const implicitInstagramCallback = !req.query?.instagram && !req.query?.threads && req.query?.state && (req.query?.code || req.query?.error);
+  if (String(req.query?.instagram || '') === 'callback' || implicitInstagramCallback) {
     const token = String(req.query?.state || '');
     try {
       if (req.query?.error) throw userError(String(req.query.error_description || req.query.error));

@@ -1261,3 +1261,11 @@ Resultado:
 - Consentimento de publicação da conta Kids ainda não concedido; nenhum token/ID Kids confirmado e nenhuma publicação Kids realizada. Conta continua onboarding.
 - GitHub confirmou o workflow Instagram Sabedoria Kids como active, ainda sem execução registrada. Isso não é prova de publicação.
 - Login do Sabedoria Kids encontrou reCAPTCHA (“Não sou um robô”). Verificação deixada para o usuário no navegador; autorização Meta Kids permanece pendente. Não houve clique em Permitir.
+
+## 04/10/2026 - Calendario Sabedoria Kids e pesquisa biblica
+- Main 27165c16: calendario mensal na Agenda, 12 horarios BRT previstos, publicacoes por conta com IDs reais, navegacao entre meses e detalhes por dia.
+- Pesquisa diaria em GitHub Actions as 05:20 BRT: catalogo de 59 temas do Biblia para Criancas. Sugestoes de pesquisa; nao gera/publica textos de terceiros automaticamente.
+- Fontes no cadastro: bibleforchildren.org (historias) e bibliaonline.com.br/nvi (conferencia de passagens).
+- Pesquisa na nuvem passou: https://github.com/marcondesjm/cliente-x-instagram/actions/runs/37208348759
+- Calendario e catalogo verificados no painel de producao da conta sabedoria-kids.
+- Conexao ainda pendente: usuario concluiu seguranca, mas a sessao visivel do Instagram continua marcondes.machado.oficial. Solicitada entrada na conta Kids. Nenhuma publicacao Kids confirmada.
