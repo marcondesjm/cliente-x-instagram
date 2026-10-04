@@ -2907,6 +2907,12 @@ export default async function handler(req, res) {
   // atual e evita apresentar previsão editorial como conteúdo confirmado.
   tomorrowPlan = synchronizeDailyPlan(tomorrowPlan, publishedSlots, publicationHistory, accountKey, tomorrowDate);
 
+  if (account?.contentProfile?.curatedOnly) {
+    const labelCurated = item => item.type === 'automatic' && item.status !== 'published'
+      ? { ...item, title: 'Conteúdo bíblico do acervo será selecionado no disparo', caption: 'A seleção respeita o histórico e a disponibilidade de pautas preparadas. A pesquisa de sites fornece sugestões para desenvolver.' } : item;
+    plan = plan.map(labelCurated);
+    tomorrowPlan = tomorrowPlan.map(labelCurated);
+  }
   res.setHeader('cache-control', 'no-store');
   res.status(200).json({
     account,

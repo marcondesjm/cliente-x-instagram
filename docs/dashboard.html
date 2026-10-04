@@ -1756,7 +1756,7 @@
     <header>
       <div class="brand-block">
         <div class="eyebrow">Instagram Automation</div>
-        <h1>Marcondes Machado</h1>
+        <h1 id="accountBrandHeading">Marcondes Machado</h1>
         <div class="subline" id="accountSubline">@marcondes.machado.oficial · IA aplicada a empresas</div>
         <div class="header-version" id="headerVersion">Versão atual: v6.08</div>
         <div class="header-health" id="headerHealth" role="status" aria-live="polite">
@@ -3126,6 +3126,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         appState.sessionRole = state.session?.role || appState.sessionRole;
         appState.selectedAccount = state.selectedAccount || state.accounts?.[0]?.account || '';
         appState.account = state.account || null;
+        document.getElementById('accountBrandHeading').textContent = appState.account?.brandName || 'Instagram';
         window.resetGrowthAccount(appState.selectedAccount);
         appState.packs = state.packs || [];
         appState.scheduleBrt = state.scheduleBrt || [];
@@ -6476,7 +6477,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <span class="status-pill good">Automático</span>
           </div>
           <div class="plan-title">Pautas escolhidas no momento da publicação</div>
-          <div class="plan-caption">O Radar verifica novidade, fonte e repetição no disparo. O painel não replica títulos de hoje como se fossem uma previsão confirmada de amanhã.</div>
+          <div class="plan-caption">${appState.account?.contentProfile?.curatedOnly ? 'A seleção usa o acervo bíblico preparado e verifica repetição. Os temas encontrados nos sites são sugestões de pesquisa; precisam ser desenvolvidos antes de entrar no acervo.' : 'O Radar verifica novidade, fonte e repetição no disparo. O painel não replica títulos de hoje como se fossem uma previsão confirmada de amanhã.'}</div>
           <div class="plan-actions">
             <div class="run-meta">${escapeHtml(automaticItems.map((item) => item.time).join(' · '))}</div>
           </div>
