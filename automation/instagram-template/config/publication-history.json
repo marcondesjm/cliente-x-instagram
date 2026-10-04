@@ -57853,6 +57853,170 @@
         ],
         "editorialVariant": 1
       }
+    },
+    {
+      "feedFingerprint": "baec8cfbc5d708ba144bdbb14ce9472a8fd462b9d2abc0203e9c80daacd6171c",
+      "storyFingerprint": "baec8cfbc5d708ba144bdbb14ce9472a8fd462b9d2abc0203e9c80daacd6171c",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Big Mac mais caro? McDonald's adota IA para cobrar \"preço dinâmico\" dos lanches",
+      "captionFingerprint": "2f6327aa697bc5eb85708f1afff55d45633bd505433dbbe57da3157ca8a9a9ce",
+      "coverTitle": "Big Mac mais caro? McDonald's adota IA para cobrar \"preço dinâmico\" dos lanches",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-02.png",
+      "avatarRotationStart": 5,
+      "publishedAt": "2026-10-04T12:24:13.163Z",
+      "slotDate": "2026-10-04",
+      "slotIndex": 0,
+      "scheduledAt": "2026-10-04T09:30:00.000Z",
+      "workflowRun": "37201742613",
+      "mediaId": "18123194362911713",
+      "storyMediaId": "18128322505827381",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18123194362911713/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AexMR9BAmR_MWLslwoevXs1\"}}",
+      "permalink": "https://www.instagram.com/reel/DeEoDqDFYPh/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Canaltech",
+          "sourceUrl": "https://canaltech.com.br/inteligencia-artificial/big-mac-mais-caro-mcdonalds-adota-ia-para-cobrar-preco-dinamico-dos-lanches/",
+          "sourceTitle": "Big Mac mais caro? McDonald's adota IA para cobrar \"preço dinâmico\" dos lanches",
+          "imageUrl": "https://tl.ctcdn.com.br/WwHbE1jLqWFx8LK1wHkOmIMAiKI=/1200x675/smart/filters:format(webp):quality(85)/aa046309-97d0-42d1-a52c-ff8c8f09f6bc.png",
+          "imageSourcePageUrl": "https://canaltech.com.br/inteligencia-artificial/big-mac-mais-caro-mcdonalds-adota-ia-para-cobrar-preco-dinamico-dos-lanches/",
+          "imageCredit": "Canaltech",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "929654c25df4faec48fe93a9093555d4e66a4b36d859a2022c484d6bf8c0597d",
+          "perceptualHash": "0101001011100111001000101100010110010010110000011000001011010011010000010010001111100011100001101000011001100111010011110100110110011101001011111011011100001110001001010010111011000111000111100100110100011110100011011011111011001010000111101100100000011010",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://canaltech.com.br/inteligencia-artificial/big-mac-mais-caro-mcdonalds-adota-ia-para-cobrar-preco-dinamico-dos-lanches/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-04-092214-slot-0/visual-candidate-1/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-04T08:29:19.171Z",
+        "ageHours": 3.88,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 1602,
+        "controlledSamples": 118,
+        "selectionModes": {
+          "exploit": 80,
+          "explore": 22,
+          "experiment": 16
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "morning",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|morning|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-atual",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 8.14,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "a4551ff1dd59",
+        "source": "Canaltech",
+        "sourceUrl": "https://canaltech.com.br/inteligencia-artificial/big-mac-mais-caro-mcdonalds-adota-ia-para-cobrar-preco-dinamico-dos-lanches/",
+        "sourceTitle": "Big Mac mais caro? McDonald's adota IA para cobrar \"preço dinâmico\" dos lanches",
+        "sourceImageUrl": "https://tl.ctcdn.com.br/WwHbE1jLqWFx8LK1wHkOmIMAiKI=/1200x675/smart/filters:format(webp):quality(85)/aa046309-97d0-42d1-a52c-ff8c8f09f6bc.png",
+        "publishedAt": "2026-10-02T17:01:00.000Z",
+        "researchedAt": "2026-10-04T12:22:03.670Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "O McDonald's está usando inteligência artificial para recomendar quanto cada restaurante deve cobrar pelos itens do cardápio nos Estados Unidos e em alguns mercados internacionais. O sistema analisa milhões de transações e considera até uma estimativa de quanto os consumidores de determinada região estão dispostos a pagar para calcular o que a rede chama de “preço ideal”. A tecnologia não altera automaticamente o preço de um Big Mac e, segundo a companhia, os franqueados continuam responsáveis pela decisão final.",
+        "sourceFacts": [
+          "O McDonald's está usando inteligência artificial para recomendar quanto cada restaurante deve cobrar pelos itens do cardápio nos Estados Unidos e em alguns mercados internacionais. O sistema analisa milhões de transações e considera até uma estimativa de quanto os consumidores de determinada região estão dispostos a pagar para calcular o que a rede chama de “preço ideal”.",
+          "A tecnologia não altera automaticamente o preço de um Big Mac e, segundo a companhia, os franqueados continuam responsáveis pela decisão final. O McDonald's também nega usar “preço dinâmico”, prática em que os valores podem mudar em tempo real conforme horário, demanda ou outras condições.",
+          "Uma investigação da Reuters mostrou, porém, que a ferramenta pode contribuir para aumentar a diferença de preços entre restaurantes. Em Fresno, na Califórnia, a agência encontrou um Big Mac vendido por US$ 5,69 em uma unidade e por US$ 6,89 em outra loja da própria companhia localizada a cerca de 3 km de distância, uma diferença de 21%.",
+          "A Reuters não conseguiu determinar se a diferença específica entre os dois restaurantes foi causada pelas recomendações da IA.",
+          "O sistema usa algoritmos de aprendizado de máquina para analisar continuamente dados de milhões de compras feitas nos quase 14 mil restaurantes do McDonald's nos Estados Unidos."
+        ],
+        "editorialVariant": 3
+      }
     }
   ]
 }
