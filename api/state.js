@@ -2896,6 +2896,10 @@ export default async function handler(req, res) {
     tomorrowPlan = editorialDailyPlan(scheduleBrt, account, packs, scheduledPosts, tomorrowDate);
   }
   tomorrowPlan = mergeProgramItems(tomorrowPlan, weeklyPrograms, tomorrowDate);
+  let biblicalResearch = null;
+  if (accountKey === 'sabedoria-kids') {
+    try { biblicalResearch = (await readGithubConfig('automation/instagram-template/config/sabedoria-kids-sources.json')).data; } catch { biblicalResearch = null; }
+  }
   const radarConfig = radarConfigForAccount(account);
   const radarHealth = await loadRadarCollectionHealth(radarConfig, accountKey);
   // O Radar escolhe a pauta definitiva somente no disparo. Sincronizar a
@@ -2930,6 +2934,10 @@ export default async function handler(req, res) {
     accessConfig: accessConfigForAccount(account),
     secrets: session ? secretStatuses(accounts) : [],
     scheduleBrt,
+    biblicalResearch,
+    calendarPublications: (publicationHistory[accountKey] || [])
+      .filter(entry => entry.mediaId && entry.publishedAt)
+      .map(entry => ({ date: brtDateAndTime(entry.publishedAt).date, title: entry.coverTitle || 'Publicado', permalink: entry.permalink || '', mediaId: entry.mediaId, storyMediaId: entry.storyMediaId || '' })),
     dailyPlan: plan,
     tomorrowPreview: {
       date: tomorrowDate,

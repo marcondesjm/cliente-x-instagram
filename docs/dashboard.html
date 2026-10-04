@@ -1720,6 +1720,12 @@
         width: 100%;
       }
     }
+
+    .editorial-calendar{margin-top:28px;padding:24px;background:#fff;color:#26304a;border:1px solid #e5e4f2;border-radius:20px}
+    .calendar-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.calendar-head h2{color:#19253d;font-family:Georgia,serif;text-transform:capitalize}.calendar-head button{background:#fff;color:#6741a5;border:1px solid #e1dbef}
+    .calendar-legend{display:flex;flex-wrap:wrap;gap:18px;font-size:12px;margin:16px 0 22px}.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}.calendar-weekday{text-align:center;font-size:12px;padding:8px 0}
+    .calendar-day{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:78px;padding:8px 2px;background:white;color:#27354a;border:1px solid #e4e2f4;border-radius:14px;cursor:pointer}.calendar-day small{font-size:11px}.calendar-day.planned{background:#effcf3;border-color:#a5ebbc}.calendar-day.published{background:#eef6ff;border-color:#96b9ee}.calendar-day.selected{outline:2px solid #8d46ca;outline-offset:-2px}.calendar-detail{margin-top:20px;font-size:14px;line-height:1.7}.calendar-detail ul{padding-left:20px}.calendar-detail a,#calendarBibleSources a{color:#63409b}#calendarBibleSources{margin-top:18px;font-size:13px;line-height:1.7}
+    @media(max-width:600px){.editorial-calendar{padding:12px}.calendar-grid{gap:4px}.calendar-day{min-height:68px;border-radius:9px}.calendar-day small{font-size:9px}.calendar-head h2{font-size:20px}}
   </style>
 </head>
 <body>
@@ -1995,6 +2001,13 @@
             <span class="status-pill" id="dailyPlanStatus">Carregando</span>
           </div>
           <div class="daily-plan" id="dailyPlan"></div>
+          <section class="editorial-calendar" aria-label="Calendário editorial mensal">
+            <div class="calendar-head"><button type="button" id="calendarPrevious" aria-label="Mês anterior">‹</button><h2 id="calendarMonth"></h2><button type="button" id="calendarNext" aria-label="Próximo mês">›</button></div>
+            <div class="calendar-legend"><span>🟢 Planejado / previsto</span><span>🔵 Publicado</span><span>🟣 Dia selecionado</span></div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+            <div class="calendar-detail" id="calendarDetail" aria-live="polite"></div>
+            <div id="calendarBibleSources"></div>
+          </section>
           <div style="height: 16px;"></div>
           <div class="panel-head" style="margin-bottom: 10px;">
             <div>
@@ -3116,6 +3129,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         window.resetGrowthAccount(appState.selectedAccount);
         appState.packs = state.packs || [];
         appState.scheduleBrt = state.scheduleBrt || [];
+        appState.calendarPublications = state.calendarPublications || [];
+        appState.biblicalResearch = state.biblicalResearch || null;
         appState.dailyPlan = state.dailyPlan || [];
         appState.tomorrowPreview = state.tomorrowPreview || { date: '', items: [] };
         appState.editorialRadar = state.editorialRadar || { status: 'fallback', label: 'Radar indisponível', sources: [], safeguards: [] };
@@ -3141,6 +3156,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         renderWatchdog();
         renderSystemCapabilities();
         renderSchedule();
+        renderEditorialCalendar();
         renderDailyPlan();
         renderTomorrowPreview();
         renderWeeklyPrograms();
@@ -5601,10 +5617,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           body: bodyWithAccount({ times: scheduleTimesFromInputs() })
         });
         appState.scheduleBrt = state.scheduleBrt || [];
+        appState.calendarPublications = state.calendarPublications || [];
+        appState.biblicalResearch = state.biblicalResearch || null;
         appState.dailyPlan = state.dailyPlan || appState.dailyPlan;
         DATA.schedulesUtc = state.account?.scheduleUtc || DATA.schedulesUtc;
         document.getElementById('contentNote').textContent = `${DATA.schedulesUtc.length} horários ativos`;
         renderSchedule();
+        renderEditorialCalendar();
         renderDailyPlan();
         renderScheduleEditor();
         renderChecks();
@@ -6266,6 +6285,50 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
 
       return { now, today, upcoming };
     }
+
+    let calendarMonthKey = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit' }).format(new Date()).replace('/', '-');
+    // Use date parts rather than locale-specific formatting order.
+    const calendarTodayParts = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', year:'numeric',month:'2-digit',day:'2-digit' }).formatToParts(new Date());
+    const calendarToday = ['year','month','day'].map(key => calendarTodayParts.find(part => part.type === key).value).join('-');
+    calendarMonthKey = calendarToday.slice(0,7);
+    let calendarSelectedDate = calendarToday;
+    function renderEditorialCalendar() {
+      const grid = document.getElementById('calendarGrid');
+      if (!grid) return;
+      const [year, month] = calendarMonthKey.split('-').map(Number);
+      document.getElementById('calendarMonth').textContent = new Intl.DateTimeFormat('pt-BR',{month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(Date.UTC(year,month-1,1)));
+      const days = new Date(Date.UTC(year,month,0)).getUTCDate();
+      const first = new Date(Date.UTC(year,month-1,1)).getUTCDay();
+      const manual = appState.scheduledPosts || [];
+      const history = appState.calendarPublications || [];
+      const getManual = date => manual.filter(post => post.status === 'pending' && post.scheduledFor && new Intl.DateTimeFormat('en-CA',{timeZone:'America/Sao_Paulo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date(post.scheduledFor)).filter(part => ['year','month','day'].includes(part.type)).sort((a,b)=>['year','month','day'].indexOf(a.type)-['year','month','day'].indexOf(b.type)).map(part=>part.value).join('-') === date);
+      grid.innerHTML = ['DOM','SEG','TER','QUA','QUI','SEX','SÁB'].map(day => `<div class="calendar-weekday">${day}</div>`).join('') + '<div></div>'.repeat(first);
+      for (let day=1; day<=days; day++) {
+        const date = `${calendarMonthKey}-${String(day).padStart(2,'0')}`;
+        const pubs = history.filter(item => item.date === date);
+        const planned = getManual(date).length;
+        const expected = date >= calendarToday ? (appState.scheduleBrt || []).length : 0;
+        const button = document.createElement('button');
+        button.type='button'; button.className = 'calendar-day' + (pubs.length ? ' published' : planned || expected ? ' planned' : '') + (date === calendarSelectedDate ? ' selected' : '');
+        button.setAttribute('aria-label', `${day}: ${pubs.length} publicados, ${planned || expected} previstos`);
+        button.innerHTML = `<span>${day}</span><small>${pubs.length ? `${pubs.length} publicados` : planned ? `${planned} agendados` : expected ? `${expected} previstos` : '—'}</small>`;
+        button.onclick = () => { calendarSelectedDate=date; renderEditorialCalendar(); };
+        grid.appendChild(button);
+      }
+      const publications = history.filter(item => item.date === calendarSelectedDate);
+      const detail = document.getElementById('calendarDetail');
+      detail.replaceChildren();
+      const label=document.createElement('strong');label.textContent=calendarSelectedDate.split('-').reverse().join('/');detail.appendChild(label);
+      const note=document.createElement('p');note.textContent=(calendarSelectedDate >= calendarToday ? `Grade prevista: ${(appState.scheduleBrt || []).join(' · ')} (Brasília). ` : '') + (appState.account?.clientProfile?.status === 'onboarding' ? 'A conexão da conta ainda está pendente. ' : '') + 'A grade indica horários; a pauta definitiva depende do conteúdo disponível. Publicado exige registro real de mídia.';detail.appendChild(note);
+      const list=document.createElement('ul');
+      for(const item of publications){const row=document.createElement('li');row.textContent=item.title+' · Feed '+item.mediaId+(item.storyMediaId ? ' · Story '+item.storyMediaId : ''); if(/^https:\/\/(www\.)?instagram\.com\//.test(item.permalink)){const link=document.createElement('a');link.href=item.permalink;link.target='_blank';link.rel='noopener noreferrer';link.textContent=' Abrir publicação';row.appendChild(link);}list.appendChild(row);}
+      for(const item of getManual(calendarSelectedDate)){const row=document.createElement('li');row.textContent=`Agendado: ${item.time || ''} ${item.title || item.packTitle || 'Conteúdo manual'}`;list.appendChild(row);}
+      if(!publications.length){const row=document.createElement('li');row.textContent='Nenhuma publicação confirmada neste dia.';list.appendChild(row);}detail.appendChild(list);
+      const sources=document.getElementById('calendarBibleSources');sources.replaceChildren();
+      if(appState.biblicalResearch?.entries?.length){const summary=document.createElement('p');summary.textContent=`Pesquisa bíblica: ${appState.biblicalResearch.entries.length} temas encontrados. São sugestões para desenvolver, ainda sem publicação. Última consulta: ${new Date(appState.biblicalResearch.checkedAt).toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo'})}.`;sources.appendChild(summary);const details=document.createElement('details');const heading=document.createElement('summary');heading.textContent='Ver temas bíblicos encontrados';details.appendChild(heading);const list=document.createElement('ul');for(const item of appState.biblicalResearch.entries){const row=document.createElement('li');row.textContent=item.title;list.appendChild(row);}details.appendChild(list);sources.appendChild(details);}
+      for(const source of appState.account?.contentProfile?.biblicalSources || []){if(!/^https:\/\//.test(source.url))continue;const row=document.createElement('p');const link=document.createElement('a');link.href=source.url;link.target='_blank';link.rel='noopener noreferrer';link.textContent=source.name;row.appendChild(link);row.appendChild(document.createTextNode(' — '+source.purpose));sources.appendChild(row);}
+    }
+    for(const [id,offset] of [['calendarPrevious',-1],['calendarNext',1]]) document.getElementById(id)?.addEventListener('click',()=>{const [year,month]=calendarMonthKey.split('-').map(Number);const date=new Date(Date.UTC(year,month-1+offset,1));calendarMonthKey=`${date.getUTCFullYear()}-${String(date.getUTCMonth()+1).padStart(2,'0')}`;calendarSelectedDate=calendarMonthKey+'-01';renderEditorialCalendar();});
 
     function renderSchedule() {
       const { now, today, upcoming } = scheduleRows();
