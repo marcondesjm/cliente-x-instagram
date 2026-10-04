@@ -2333,7 +2333,11 @@ async function completeInstagramOAuth(req, account, code) {
     headers: { 'content-type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({ client_id: appId, client_secret: appSecret, grant_type: 'authorization_code', redirect_uri: instagramRedirectUri(req), code })
   });
-  const tokenPayload = await tokenResponse.json().catch(() => ({}));
+  const tokenText = await tokenResponse.text();
+  let tokenPayload = {};
+  try { tokenPayload = JSON.parse(tokenText); } catch {}
+  const exactUserId = tokenText.match(/"user_id"\s*:\s*"?(\d+)"?/);
+  if (exactUserId) tokenPayload.user_id = exactUserId[1];
   if (!tokenResponse.ok || !tokenPayload.access_token) throw userError(tokenPayload.error_message || tokenPayload.error?.message || 'A Meta recusou a autorização do Instagram.', tokenResponse.status);
   const longUrl = new URL('https://graph.instagram.com/access_token');
   longUrl.searchParams.set('grant_type', 'ig_exchange_token');
@@ -2342,7 +2346,7 @@ async function completeInstagramOAuth(req, account, code) {
   const longResponse = await fetch(longUrl);
   const longPayload = await longResponse.json().catch(() => ({}));
   const accessToken = longResponse.ok && longPayload.access_token ? longPayload.access_token : tokenPayload.access_token;
-  const profileResponse = await fetch(`https://graph.instagram.com/v23.0/${encodeURIComponent(tokenPayload.user_id || "me")}?fields=user_id,username&access_token=${encodeURIComponent(accessToken)}`);
+  const profileResponse = await fetch(`https://graph.instagram.com/v23.0/me?fields=user_id,username&access_token=${encodeURIComponent(tokenPayload.access_token)}`);
   const profile = await profileResponse.json().catch(() => ({}));
   if (!profileResponse.ok || !(profile.user_id || profile.id)) throw userError('Consulta do perfil Instagram: ' + (profile.error?.message || 'Não foi possível validar a conta profissional.'), profileResponse.status);
   if (account.expectedUsername && profile.username && account.expectedUsername.toLowerCase() !== String(profile.username).toLowerCase()) {
