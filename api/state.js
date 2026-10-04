@@ -23,6 +23,7 @@ import { educationEnabled, educationPreview } from '../lib/education-strategy.js
 import { educationEvidence } from '../lib/education-evidence.js';
 import { loadPerformanceInsights } from './private-metrics.js';
 import { educationLearningModel } from '../lib/education-learning.js';
+import { saveInstagramGithubSecrets } from '../lib/github-secrets.js';
 
 const ROOT = process.cwd();
 const CONTENT_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'content-packs.json');
@@ -1493,7 +1494,8 @@ async function testInstagramAccountConnection(account = {}) {
     throw userError('A conta ainda não tem token e ID do Instagram configurados. Conclua o convite de ativação primeiro.', 409);
   }
 
-  const profileResponse = await fetch(`https://graph.facebook.com/v22.0/${encodeURIComponent(userId)}?fields=id,username,account_type,media_count&access_token=${encodeURIComponent(accessToken)}`);
+  const graphBase = account.instagramLogin === 'instagram' ? 'https://graph.instagram.com/v23.0' : 'https://graph.facebook.com/v22.0';
+  const profileResponse = await fetch(`${graphBase}/${encodeURIComponent(userId)}?fields=id,username,account_type,media_count&access_token=${encodeURIComponent(accessToken)}`);
   const profile = await profileResponse.json().catch(() => ({}));
   if (!profileResponse.ok || profile.error) {
     throw userError(profile.error?.message || `Meta recusou a conexão: HTTP ${profileResponse.status}.`, profileResponse.status);
@@ -1507,10 +1509,10 @@ async function testInstagramAccountConnection(account = {}) {
 
   let publishingPermission = null;
   try {
-    const permissionsResponse = await fetch(`https://graph.facebook.com/v22.0/me/permissions?access_token=${encodeURIComponent(accessToken)}`);
+    const permissionsResponse = await fetch(`${graphBase}/me/permissions?access_token=${encodeURIComponent(accessToken)}`);
     const permissions = await permissionsResponse.json().catch(() => ({}));
     if (permissionsResponse.ok && Array.isArray(permissions.data)) {
-      const permission = permissions.data.find((item) => item.permission === 'instagram_content_publish');
+      const permission = permissions.data.find((item) => item.permission === (account.instagramLogin === 'instagram' ? 'instagram_business_content_publish' : 'instagram_content_publish'));
       publishingPermission = permission ? permission.status === 'granted' : null;
     }
   } catch {
@@ -2348,6 +2350,7 @@ async function completeInstagramOAuth(req, account, code) {
   }
   await saveVercelEnv(account.accessTokenEnv, accessToken);
   await saveVercelEnv(account.userIdEnv, String(profile.user_id || profile.id));
+  await saveInstagramGithubSecrets(account, accessToken, profile.user_id || profile.id);
   await markInstagramOnboardingConnected(account.account, profile);
   await redeployVercelProduction();
   return profile;
@@ -2722,7 +2725,9 @@ export default async function handler(req, res) {
       const authorize = new URL('https://www.instagram.com/oauth/authorize');
       authorize.searchParams.set('client_id', appId);
       authorize.searchParams.set('redirect_uri', instagramRedirectUri(req));
-      authorize.searchParams.set('scope', 'instagram_business_basic,instagram_business_content_publish,instagram_business_manage_comments,instagram_business_manage_messages');
+      authorize.searchParams.set('scope', account.contentProfile?.curatedOnly
+        ? 'instagram_business_basic,instagram_business_content_publish'
+        : 'instagram_business_basic,instagram_business_content_publish,instagram_business_manage_comments,instagram_business_manage_messages');
       authorize.searchParams.set('response_type', 'code');
       authorize.searchParams.set('state', token);
       authorize.searchParams.set('enable_fb_login', '0');

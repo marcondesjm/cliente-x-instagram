@@ -297,7 +297,7 @@
     "footerText": "A Palavra de Deus para crianças",
     "accessTokenEnv": "SABEDORIA_KIDS_INSTAGRAM_ACCESS_TOKEN",
     "userIdEnv": "SABEDORIA_KIDS_INSTAGRAM_USER_ID",
-    "imgbbKeyEnv": "SABEDORIA_KIDS_IMGBB_API_KEY",
+    "imgbbKeyEnv": "IMGBB_API_KEY",
     "contentProfile": {
       "niche": "Histórias e ensinamentos da Bíblia para crianças, com referências bíblicas e linguagem infantil",
       "audience": "Crianças acompanhadas por pais, responsáveis e educadores cristãos",
@@ -314,7 +314,8 @@
         "excludeKeywords": [],
         "sources": []
       },
-      "visualDirection": "anatex-editorial"
+      "visualDirection": "anatex-editorial",
+      "curatedOnly": true
     },
     "brandSummary": {
       "description": "Sabedoria Kids ensina a Palavra de Deus às crianças com histórias bíblicas, explicações simples e atividades em família. Citações devem indicar a referência e a tradução; adaptações infantis devem ser identificadas. Variar temas e personagens sem inventar acontecimentos bíblicos.",
@@ -322,19 +323,19 @@
       "differentiator": "Conteúdo acolhedor, adequado à infância, com referências bíblicas e acompanhamento de um adulto"
     },
     "brandPalette": {
-      "primary": "#17211c",
-      "secondary": "#0e7c5a",
-      "background": "#f4f7f5",
+      "primary": "#233876",
+      "secondary": "#d98424",
+      "background": "#fff8e8",
       "enabled": true
     },
     "clientProfile": {
       "contactName": "",
       "email": "",
       "whatsapp": "",
-      "businessType": "Educação e materiais pedagógicos digitais",
+      "businessType": "Educação bíblica infantil",
       "plan": "starter",
       "status": "onboarding",
-      "approvalMode": "approval",
+      "approvalMode": "automatic",
       "monthlyPrice": 0,
       "startedAt": "2026-10-03T16:27:34.806Z"
     },
@@ -344,23 +345,24 @@
       "inviteExpiresInHours": 48
     },
     "scheduleUtc": [
-      "30 9 * * *",
-      "10 11 * * *",
+      "0 10 * * *",
+      "0 11 * * *",
       "0 12 * * *",
-      "50 14 * * *",
-      "10 15 * * *",
+      "0 13 * * *",
+      "0 14 * * *",
+      "0 15 * * *",
       "0 16 * * *",
-      "50 16 * * *",
-      "15 17 * * *",
-      "50 17 * * *",
+      "0 17 * * *",
+      "0 18 * * *",
       "0 19 * * *",
-      "40 20 * * *",
-      "0 22 * * *",
-      "0 1 * * *"
+      "0 21 * * *",
+      "0 23 * * *"
     ],
     "avatarRotation": {
       "enabled": false,
       "urls": []
-    }
+    },
+    "instagramLogin": "instagram",
+    "avatarPath": "docs/uploads/sabedoria-kids-mark.svg"
   }
 ]

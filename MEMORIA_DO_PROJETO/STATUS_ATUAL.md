@@ -1244,3 +1244,14 @@ Resultado:
 - Run `35447132492` concluído com sucesso. Carrossel `17986961867870252`, Story `18017622122938743` e permalink https://www.instagram.com/p/DdeKzlaHP1Q/.
 - Episódio 12, “O pós-venda depende de alguém lembrar?”, publicado com dez cartões e o prompt completo. O post foi aberto no Instagram e a legenda com papel, contexto, tarefa, regras, formato, checagem e método de teste foi conferida.
 - `publication-history.json` persistiu `lessonId: serie-12`, `publishedFormat: CAROUSEL`, os dois IDs e o permalink. `firstCommentId` e `firstCommentError` ficaram nulos; não há comentário confirmado.
+
+## 2026-10-04 — Sabedoria Kids: cadastro e pré-ativação
+- Conta confirmada pelo usuário: @sabedoriakidsoficial. Tema: Bíblia para crianças. Frequência: 12 posts/dia.
+- Instagram Login do app nerion-IG: INSTAGRAM_APP_ID 1010383948566434; cadastrado na Vercel Production. Callback existente conferido na Meta.
+- Grade BRT: 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18 e 20 horas. Conta continua onboarding até autorização e preflight Meta.
+- 36 pautas bíblicas originais com referências e resumos infantis; packs antigos de IA removidos apenas da conta Kids. CuratedOnly bloqueia negócios/IA e fallback genérico quando esgotar a biblioteca.
+- Workflow independente instagram-sabedoria-kids.yml, com os secrets próprios do Kids e sem tokens Meta da conta Marcondes.
+- Correção de api/schedule: conversão BRT, permissão por conta, gravação no GitHub com SHA e proteção de índices já iniciados.
+- OAuth preparado para sincronizar token/ID para Vercel e GitHub Actions usando sealed boxes. Kids solicita somente basic/content_publish.
+- Checks: sintaxe, validate-copy (36 packs), validate-kids-onboarding (isolamento/agenda/secrets), render feed e Story. Prévia 2026-10-04-104509-slot-0-render-only inspecionada.
+- Pendente: deploy, autorização Meta, teste de conexão, dry-run e liberação da agenda com data inicial. Nenhuma publicação Kids realizada nesta etapa.

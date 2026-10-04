@@ -41,7 +41,7 @@ const FORBIDDEN_GENERIC_RESEARCH_COVERS = [
   /uma pequena demora pode virar uma oportunidade perdida/i,
   /apresenta uma novidade sobre/i
 ];
-const IG_BASE = 'https://graph.facebook.com/v21.0';
+let IG_BASE = 'https://graph.facebook.com/v21.0';
 const RETRY_ATTEMPTS = Number.parseInt(process.env.INSTAGRAM_TEMPLATE_RETRY_ATTEMPTS || '3', 10);
 const RETRY_BASE_DELAY_MS = Number.parseInt(process.env.INSTAGRAM_TEMPLATE_RETRY_BASE_DELAY_MS || '2500', 10);
 const GITHUB_REF_RETRY_ATTEMPTS = Number.parseInt(process.env.INSTAGRAM_TEMPLATE_GITHUB_REF_RETRY_ATTEMPTS || '6', 10);
@@ -1544,6 +1544,7 @@ function profileTopicFromAccount(account = {}, dateString = todaySaoPaulo(), slo
 }
 
 function buildProfileContentPacks(account, dateString, slotIndex, runStamp = null) {
+  if (account.contentProfile?.curatedOnly) return [];
   const topic = profileTopicFromAccount(account, dateString, slotIndex);
   if (!topic) return [];
   const specialistContext = topic.industryId !== 'perfil'
@@ -3809,7 +3810,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
   // A URL editorial pode existir no feed e ainda apontar para vídeo/embed ou
   // falhar no download. Nesse caso o Story precisa manter uma fotografia real
   // do rodízio, nunca um retângulo degradê tratado como imagem.
-  const fallbackStoryImage = explicitStoryImage || (researchSource ? '' : sectorPhotoCssImage(visualCue, 0, renderContext));
+  const fallbackStoryImage = explicitStoryImage || (researchSource || slide.typographicOnly ? '' : sectorPhotoCssImage(visualCue, 0, renderContext));
   const storyVisualImage = researchImage || fallbackStoryImage;
   const storyPhotoClass = storyVisualImage ? ' has-story-photo' : '';
   const researchPhotoClass = researchImage ? ' has-research-photo' : '';
@@ -5044,12 +5045,13 @@ async function main() {
   const args = parseArgs(process.argv);
   const env = loadEnv();
   const { account, packs: localPacks, styles } = loadConfig(args.configDir, args.account);
+  IG_BASE = account.instagramLogin === 'instagram' ? 'https://graph.instagram.com/v23.0' : 'https://graph.facebook.com/v21.0';
   const { radar, options: radarOptions } = radarResearchOptions(account);
   if (!args.renderOnly && !args.dryRun && !args.validateCopy && account.clientProfile && account.clientProfile.status !== 'active') {
     const billingStatus = account.clientProfile.billing?.status || account.clientProfile.status || 'onboarding';
     throw new Error(`Publicacao bloqueada para ${account.account}: cliente ${billingStatus}. Regularize ou ative o contrato antes de publicar.`);
   }
-  const supabasePacks = await loadSupabasePacks(env, args.account);
+  const supabasePacks = account.contentProfile?.curatedOnly ? [] : await loadSupabasePacks(env, args.account);
   const packs = mergePacks(supabasePacks, localPacks);
   validatePacks(packs);
 
@@ -5090,7 +5092,7 @@ async function main() {
   const generationSlotIndex = slotIndex;
   const creativeBatchRemaining = creativeBatchSize - (publicationHistory.length % creativeBatchSize);
   const profilePacks = buildProfileContentPacks(account, today, generationSlotIndex);
-  const autoPacks = profilePacks.length ? profilePacks : buildAutoContentPacks(today, generationSlotIndex);
+  const autoPacks = account.contentProfile?.curatedOnly ? packs : profilePacks.length ? profilePacks : buildAutoContentPacks(today, generationSlotIndex);
   let editorialResearch = { packs: [], items: [], failures: [], researchedAt: new Date().toISOString() };
   if (!args.validateCopy && radar.enabled && radar.sources.length && (!educationalRun || educationalKind === 'news')) {
     try {
@@ -5836,6 +5838,7 @@ async function main() {
           }
         }
         if (!radar.enabled) {
+          if (account.contentProfile?.curatedOnly) throw new Error('Conteúdo bíblico inédito esgotado. Adicione novas pautas revisadas; nenhum conteúdo genérico será publicado.');
           const autoFresh = pickFreshPack(autoPacks, today, generationSlotIndex, recentMedia, publicationHistory, randomInt, selectionLearningContext);
           if (!autoFresh.pack) {
             const fallbackPacks = Array.from({ length: creativeBatchSize }, (_, offset) => buildLastResortPack(today, generationSlotIndex + offset));
