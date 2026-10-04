@@ -58352,6 +58352,167 @@
         ],
         "editorialVariant": 4
       }
+    },
+    {
+      "feedFingerprint": "ffcbd8f2d3d4fe9ec517e8e025a198b982ed6bdd8dabbf8362c5444d56fa4ac8",
+      "storyFingerprint": "ffcbd8f2d3d4fe9ec517e8e025a198b982ed6bdd8dabbf8362c5444d56fa4ac8",
+      "storyContentKind": "news",
+      "storyCoverTitle": "OpenAI é criticada por ex-funcionário que alerta para riscos da IA",
+      "captionFingerprint": "f44af4d26f3b187e0aa6e62e9ea17b091d8b6e2af1dde2d0f8fd80db016c2be3",
+      "coverTitle": "OpenAI é criticada por ex-funcionário que alerta para riscos da IA",
+      "coverAvatar": "docs/uploads/avatar-marcondes-lounge.png",
+      "avatarRotationStart": 3,
+      "publishedAt": "2026-10-04T15:00:09.698Z",
+      "slotDate": "2026-10-04",
+      "slotIndex": 3,
+      "scheduledAt": "2026-10-04T14:50:00.000Z",
+      "workflowRun": "37211139233",
+      "mediaId": "18113102375116295",
+      "storyMediaId": "18126474547853075",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18113102375116295/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AQ9EqHzU72x82AtV9AWOcP9\"}}",
+      "permalink": "https://www.instagram.com/p/DeE58abjJPM/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Olhar Digital",
+          "sourceUrl": "https://olhardigital.com.br/2026/10/04/inteligencia-artificial/openai-e-criticada-por-ex-funcionario-que-alerta-para-riscos-da-ia/",
+          "sourceTitle": "OpenAI é criticada por ex-funcionário que alerta para riscos da IA",
+          "imageUrl": "https://olhardigital.com.br/wp-content/uploads/2026/10/openai-1.jpg",
+          "imageSourcePageUrl": "https://olhardigital.com.br/2026/10/04/inteligencia-artificial/openai-e-criticada-por-ex-funcionario-que-alerta-para-riscos-da-ia/",
+          "imageCredit": "Olhar Digital",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "3583babed14aae678729da119a1d3d2ab9f0b902154527d7ce1e9f7dbfb51b1e",
+          "perceptualHash": "0111110000000000111111000000000011111110000000001111111000000000111111100000000011110111111110001111001111111000111100110001100011110010100110001111000000011000111111000001100111111111010010111111111100010010111111100000001011111000000000001100000000000000",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://olhardigital.com.br/2026/10/04/inteligencia-artificial/openai-e-criticada-por-ex-funcionario-que-alerta-para-riscos-da-ia/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-04-115841-slot-3/visual-candidate-1/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-04T08:29:19.171Z",
+        "ageHours": 6.49,
+        "freshness": "stale",
+        "effectiveSamples": 120,
+        "effectiveReach": 1602,
+        "controlledSamples": 118,
+        "selectionModes": {
+          "exploit": 80,
+          "explore": 22,
+          "experiment": 16
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": false,
+        "operatingMode": "editorial-fallback",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "utility",
+        "primarySignal": "salvamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|midday|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "curiosidade-util",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente"
+        ],
+        "fatiguePenalty": 7.26,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "9670d5a02ee8",
+        "source": "Olhar Digital",
+        "sourceUrl": "https://olhardigital.com.br/2026/10/04/inteligencia-artificial/openai-e-criticada-por-ex-funcionario-que-alerta-para-riscos-da-ia/",
+        "sourceTitle": "OpenAI é criticada por ex-funcionário que alerta para riscos da IA",
+        "sourceImageUrl": "https://olhardigital.com.br/wp-content/uploads/2026/10/openai-1.jpg",
+        "publishedAt": "2026-10-04T14:20:36.000Z",
+        "researchedAt": "2026-10-04T14:58:29.964Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Segundo David Robinson, a velocidade da corrida tecnológica aumenta a possibilidade de falhas e exige uma postura mais cautelosa O post OpenAI é criticada por ex-funcionário que alerta para riscos da IA apareceu primeiro em Olhar Digital .",
+        "sourceFacts": [
+          "Um ex-funcionário da área de segurança da OpenAI , empresa responsável pelo ChatGPT , criticou a forma como companhias de inteligência artificial (IA) estão lidando com os riscos associados ao desenvolvimento de sistemas cada vez mais avançados. Segundo David Robinson, a velocidade da corrida tecnológica aumenta a possibilidade de falhas e exige uma postura mais cautelosa.",
+          "Em um artigo publicado neste sábado (3) na revista estadunidense The Atlantic , Robinson afirmou que as empresas de IA , incluindo a OpenAI, não estão sendo “nem de perto cuidadosas o suficiente”.",
+          "Para o ex-funcionário, as companhias deveriam dar mais espaço a especialistas em segurança e à pesquisa antes de desenvolver sistemas mais avançados. “O tempo de tentativa e erro acabou”, escreveu Robinson.",
+          "Na avaliação dele, sistemas avançados de IA precisam de medidas de segurança semelhantes às adotadas em setores, como energia nuclear e aviação.",
+          "Robinson também criticou uma prática que a OpenAI chama de “implantação iterativa”, que consiste em lançar sistemas e reforçar as medidas de segurança conforme os problemas aparecem."
+        ],
+        "editorialVariant": 4
+      }
     }
   ]
 }
