@@ -2342,7 +2342,7 @@ async function completeInstagramOAuth(req, account, code) {
   const longResponse = await fetch(longUrl);
   const longPayload = await longResponse.json().catch(() => ({}));
   const accessToken = longResponse.ok && longPayload.access_token ? longPayload.access_token : tokenPayload.access_token;
-  const profileResponse = await fetch(`https://graph.instagram.com/me?fields=id,user_id,username,name,account_type&access_token=${encodeURIComponent(accessToken)}`);
+  const profileResponse = await fetch(`https://graph.instagram.com/v23.0/me?fields=id,user_id,username&access_token=${encodeURIComponent(accessToken)}`);
   const profile = await profileResponse.json().catch(() => ({}));
   if (!profileResponse.ok || !(profile.user_id || profile.id)) throw userError(profile.error?.message || 'Não foi possível validar a conta profissional do Instagram.', profileResponse.status);
   if (account.expectedUsername && profile.username && account.expectedUsername.toLowerCase() !== String(profile.username).toLowerCase()) {
