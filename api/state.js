@@ -2257,7 +2257,7 @@ function publicBaseUrl(req) {
 }
 
 function instagramRedirectUri(req) {
-  return `${publicBaseUrl(req)}/api/state?instagram=callback`;
+  return `${publicBaseUrl(req)}/api/state`;
 }
 
 function onboardingSecret() {
