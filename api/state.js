@@ -2350,7 +2350,7 @@ async function completeInstagramOAuth(req, account, code) {
   const longResponse = await fetch(longUrl);
   const longPayload = await longResponse.json().catch(() => ({}));
   const accessToken = longResponse.ok && longPayload.access_token ? longPayload.access_token : tokenPayload.access_token;
-  const profileResponse = await fetch(`https://graph.instagram.com/v26.0/me?fields=user_id,username&access_token=${encodeURIComponent(tokenPayload.access_token)}`);
+  const profileResponse = await fetch(`https://graph.instagram.com/v26.0/me?fields=user_id,username&access_token=${encodeURIComponent(accessToken)}`);
   const profileText = await profileResponse.text();
   let profilePayload = {};
   try { profilePayload = JSON.parse(profileText); } catch {}
@@ -2748,7 +2748,7 @@ export default async function handler(req, res) {
       authorize.searchParams.set('response_type', 'code');
       authorize.searchParams.set('state', token);
       authorize.searchParams.set('enable_fb_login', 'false');
-      authorize.searchParams.set('force_reauth', 'true');
+      if (req.query?.switch_account === '1') authorize.searchParams.set('force_reauth', 'true');
       res.redirect(302, authorize.toString());
     } catch (error) {
       res.redirect(302, `/ativar?instagram=error&message=${encodeURIComponent(error.message)}`);

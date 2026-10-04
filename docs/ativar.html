@@ -26,6 +26,9 @@
     .message { display:none; margin-bottom:16px; padding:13px 14px; border-radius:13px; font-weight:800; }
     .message.good { display:block; color:#05603b; background:#eafbf2; }
     .message.bad { display:block; color:var(--danger); background:#fff0ef; }
+    .support { margin:12px 0 18px; font-size:13px; color:var(--muted); overflow-wrap:anywhere; }
+    .switch { display:block; margin-top:14px; text-align:center; color:var(--green); font-size:14px; }
+    [hidden] { display:none !important; }
   </style>
 </head>
 <body>
@@ -34,15 +37,15 @@
     <h1>Conecte sua empresa</h1>
     <p class="lead">Você fará a autorização diretamente no Instagram. A Cliente X não solicita, recebe ou visualiza sua senha.</p>
     <div class="message" id="message"></div>
+    <details class="support" id="errorDetails" hidden><summary>Detalhes para o suporte</summary><p id="technicalError"></p></details>
     <div class="account" id="accountBox"><strong id="brandName"></strong><span id="instagramName"></span></div>
     <div class="checks">
       <div class="check done"><span class="icon">✓</span><span>Empresa cadastrada</span></div>
-      <div class="check" id="professionalCheck"><span class="icon">2</span><span>Conta profissional confirmada</span></div>
-      <div class="check" id="instagramCheck"><span class="icon">3</span><span>Instagram conectado</span></div>
-      <div class="check" id="permissionsCheck"><span class="icon">4</span><span>Permissões concedidas</span></div>
-      <div class="check" id="readyCheck"><span class="icon">5</span><span>Conta pronta para usar</span></div>
+      <div class="check" id="instagramCheck"><span class="icon">2</span><span>Conectar e autorizar o Instagram</span></div>
+      <div class="check" id="readyCheck"><span class="icon">3</span><span>Conexão validada pelo aplicativo</span></div>
     </div>
     <a class="button" id="connectButton" aria-disabled="true">Validando convite...</a>
+    <a class="switch" id="switchAccount" hidden>Usar outra conta do Instagram</a>
     <p class="note">Use uma conta profissional do Instagram, do tipo Empresa ou Criador. Você poderá remover o acesso posteriormente nas configurações da Meta.</p>
   </main>
   <script>
@@ -52,7 +55,7 @@
     const message = document.getElementById('message');
     const setMessage = (text, type) => { message.textContent = text; message.className = `message ${type}`; };
     const complete = () => {
-      ['professionalCheck','instagramCheck','permissionsCheck','readyCheck'].forEach((id) => {
+      ['instagramCheck','readyCheck'].forEach((id) => {
         const item = document.getElementById(id); item.classList.add('done'); item.querySelector('.icon').textContent = '✓';
       });
       button.textContent = 'Instagram conectado com sucesso';
@@ -68,13 +71,23 @@
         document.getElementById('brandName').textContent = invitation.brandName || 'Nova empresa';
         document.getElementById('instagramName').textContent = invitation.expectedUsername ? `Instagram esperado: @${invitation.expectedUsername}` : 'O Instagram será identificado na autorização';
         document.getElementById('accountBox').style.display = 'block';
-        if (invitation.connected || params.get('instagram') === 'connected') {
+        if (invitation.connected) {
           setMessage('Tudo certo. Sua empresa já está conectada.', 'good'); complete(); return;
         }
-        if (params.get('instagram') === 'error') setMessage(params.get('message') || 'A autorização não foi concluída.', 'bad');
-        button.textContent = 'Conectar meu Instagram';
+        if (params.get('instagram') === 'error') {
+          const detail = params.get('message') || 'A autorização não foi concluída.';
+          setMessage(detail.includes('Consulta do perfil Instagram')
+            ? 'Você autorizou o Instagram, mas a conexão ainda não pôde ser validada. Tente novamente. Se o erro continuar, o administrador precisa revisar a integração; não é necessário recadastrar sua empresa.'
+            : detail, 'bad');
+          document.getElementById('errorDetails').hidden = false;
+          document.getElementById('technicalError').textContent = detail;
+        }
+        button.textContent = params.get('instagram') === 'error' ? 'Tentar conectar novamente' : 'Conectar meu Instagram';
         button.href = `/api/state?instagram=connect&token=${encodeURIComponent(token)}`;
         button.setAttribute('aria-disabled','false');
+        const switchAccount = document.getElementById('switchAccount');
+        switchAccount.hidden = false;
+        switchAccount.href = button.href + '&switch_account=1';
       } catch (error) {
         setMessage(error.message, 'bad');
         button.textContent = 'Solicite um novo convite';
