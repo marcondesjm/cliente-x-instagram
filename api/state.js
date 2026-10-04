@@ -2336,6 +2336,10 @@ async function completeInstagramOAuth(req, account, code) {
   const tokenText = await tokenResponse.text();
   let tokenPayload = {};
   try { tokenPayload = JSON.parse(tokenText); } catch {}
+  if (Array.isArray(tokenPayload.data)) {
+    if (tokenPayload.data.length !== 1) throw userError('A Meta retornou uma autorização ambígua.', 400);
+    tokenPayload = tokenPayload.data[0];
+  }
   const exactUserId = tokenText.match(/"user_id"\s*:\s*"?(\d+)"?/);
   if (exactUserId) tokenPayload.user_id = exactUserId[1];
   if (!tokenResponse.ok || !tokenPayload.access_token) throw userError(tokenPayload.error_message || tokenPayload.error?.message || 'A Meta recusou a autorização do Instagram.', tokenResponse.status);
@@ -2346,10 +2350,10 @@ async function completeInstagramOAuth(req, account, code) {
   const longResponse = await fetch(longUrl);
   const longPayload = await longResponse.json().catch(() => ({}));
   const accessToken = longResponse.ok && longPayload.access_token ? longPayload.access_token : tokenPayload.access_token;
-  const profileResponse = await fetch(`https://graph.instagram.com/v23.0/me?fields=user_id,username&access_token=${encodeURIComponent(tokenPayload.access_token)}`);
+  const profileResponse = await fetch(`https://graph.instagram.com/v26.0/me?fields=user_id,username&access_token=${encodeURIComponent(tokenPayload.access_token)}`);
   const profile = await profileResponse.json().catch(() => ({}));
   if (!profileResponse.ok || !(profile.user_id || profile.id)) throw userError('Consulta do perfil Instagram: ' + (profile.error?.message || 'Não foi possível validar a conta profissional.'), profileResponse.status);
-  if (account.expectedUsername && profile.username && account.expectedUsername.toLowerCase() !== String(profile.username).toLowerCase()) {
+  if (account.expectedUsername && account.expectedUsername.toLowerCase() !== String(profile.username || '').toLowerCase()) {
     throw userError(`Você autorizou @${profile.username}, mas o convite é para @${account.expectedUsername}.`, 409);
   }
   await saveVercelEnv(account.accessTokenEnv, accessToken);
@@ -2734,8 +2738,8 @@ export default async function handler(req, res) {
         : 'instagram_business_basic,instagram_business_content_publish,instagram_business_manage_comments,instagram_business_manage_messages');
       authorize.searchParams.set('response_type', 'code');
       authorize.searchParams.set('state', token);
-      authorize.searchParams.set('enable_fb_login', '0');
-      authorize.searchParams.set('force_authentication', '1');
+      authorize.searchParams.set('enable_fb_login', 'false');
+      authorize.searchParams.set('force_reauth', 'true');
       res.redirect(302, authorize.toString());
     } catch (error) {
       res.redirect(302, `/ativar?instagram=error&message=${encodeURIComponent(error.message)}`);
