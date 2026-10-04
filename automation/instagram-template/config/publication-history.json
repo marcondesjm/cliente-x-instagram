@@ -59169,6 +59169,169 @@
         ],
         "editorialVariant": 1
       }
+    },
+    {
+      "feedFingerprint": "538c5cba5d1a15341f7f83c51c94a75014a77cdae9cffe6307f9f2df461ec62c",
+      "storyFingerprint": "538c5cba5d1a15341f7f83c51c94a75014a77cdae9cffe6307f9f2df461ec62c",
+      "storyContentKind": "news",
+      "storyCoverTitle": "DXC e CrewAI fecham parceria para levar IA agêntica a empresas da América Latina",
+      "captionFingerprint": "9551896391dbcbad123add95bf0f74758b54f1b068e08b7e65efdc6d593992e8",
+      "coverTitle": "DXC e CrewAI fecham parceria para levar IA agêntica a empresas da América Latina",
+      "coverAvatar": "docs/uploads/avatar-marcondes-presentation.png",
+      "avatarRotationStart": 2,
+      "publishedAt": "2026-10-04T18:32:41.469Z",
+      "slotDate": "2026-10-04",
+      "slotIndex": 8,
+      "scheduledAt": "2026-10-04T17:50:00.000Z",
+      "workflowRun": "37224624783",
+      "mediaId": "18077566445416618",
+      "storyMediaId": "18101385755148857",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18077566445416618/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"A0_LrKnjYCiOI9lYsEbexvI\"}}",
+      "permalink": "https://www.instagram.com/p/DeFSRdMAa1y/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Startups",
+          "sourceUrl": "https://startups.com.br/negocios/dxc-e-crewai-fecham-parceria-para-levar-ia-agentica-a-empresas-da-america-latina/",
+          "sourceTitle": "DXC e CrewAI fecham parceria para levar IA agêntica a empresas da América Latina",
+          "imageUrl": "https://uploads.startups.com.br/2026/10/Agentes-de-IA.jpg",
+          "imageSourcePageUrl": "https://startups.com.br/negocios/dxc-e-crewai-fecham-parceria-para-levar-ia-agentica-a-empresas-da-america-latina/",
+          "imageCredit": "Startups",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "89859d5acf6f37fa4a5b8561b7cc49fe6521bd9c2c5a332f01663fdf9140c814",
+          "perceptualHash": "0011100010111111001111001111011110010110111000111001010011100011100001001100001110001010010000011110001011000101111000111100011110001010010001111000101011000101101000111110011100100110110001111001100110000111111111111010011110101001111001111000110011100011",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://startups.com.br/negocios/dxc-e-crewai-fecham-parceria-para-levar-ia-agentica-a-empresas-da-america-latina/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-04-153144-slot-8/visual-candidate-3/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-04T16:51:38.500Z",
+        "ageHours": 1.67,
+        "freshness": "current",
+        "effectiveSamples": 119,
+        "effectiveReach": 1625,
+        "controlledSamples": 118,
+        "selectionModes": {
+          "exploit": 80,
+          "explore": 22,
+          "experiment": 16
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "afternoon",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|afternoon|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-atual",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "7a5d3914c99f",
+        "source": "Startups",
+        "sourceUrl": "https://startups.com.br/negocios/dxc-e-crewai-fecham-parceria-para-levar-ia-agentica-a-empresas-da-america-latina/",
+        "sourceTitle": "DXC e CrewAI fecham parceria para levar IA agêntica a empresas da América Latina",
+        "sourceImageUrl": "https://uploads.startups.com.br/2026/10/Agentes-de-IA.jpg",
+        "publishedAt": "2026-10-02T19:00:00.000Z",
+        "researchedAt": "2026-10-04T18:31:31.942Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Imagem ilustrativa para representar um agente de IA | Crédito: Canva Acordo une plataforma de orquestração de agentes e o método de consultoria da DXC para tirar projetos da fase de testes O post DXC e CrewAI fecham parceria para levar IA agêntica a empresas da América Latina apareceu primeiro em Startups .",
+        "sourceFacts": [
+          "A DXC Technology e a CrewAI decidiram unir forças para implementar IA agêntica em operações corporativas na América Latina. Pelo acordo, a CrewAI entra com a plataforma de criação, orquestração (coordenação de vários agentes que trabalham juntos) e governança dos agentes, e a DXC , com consultoria, implementação e operação das soluções nos ambientes dos clientes.",
+          "A parceria parte de um cenário em que as empresas estão em estágios muito diferentes de adoção de IA. Segundo Pedro Moura, Head of Latin America da CrewAI , há clientes que começaram a trabalhar com inteligência artificial antes de o tema ganhar força, enquanto outros ainda estruturam os primeiros projetos . “Temos visto uma necessidade crescente das empresas de ter uma musculatura técnica capaz de acompanhá-las em diferentes momentos da jornada”, afirma, em entrevista ao Startups .",
+          "É nesse ponto que entra a experiência da DXC em integração de tecnologias, infraestrutura, segurança e serviços gerenciados. Daniel Mirrha, Head de Delivery para Soluções de AI da DXC na América Latina, descreve o papel da empresa como conectar o negócio dos clientes às ferramentas.",
+          "“Atuamos muito na integração, no mapeamento das necessidades e em levar a reinvenção para o cliente. Do outro lado, a CrewAI traz uma plataforma com um poder muito forte de resolver esses problemas, de automatizar o que o cliente precisa e de trazer conhecimento a partir de dados fragmentados, de uma forma muito dinâmica de colocar em produção e muito rápida para a gente desenvolver”, diz.",
+          "A DXC leva para a parceria o Exponential, método próprio que, segundo Daniel, começa pela definição do problema que o cliente quer resolver. “É comum um cliente identificar um problema que, na verdade, é sintoma de outro. A diferença que a gente faz é transformar essa visão e mostrar o que é sintoma e qual é o problema real. Agora vem com a gente, vamos definir qual é o futuro e como a gente vai resolver isso”, explica."
+        ],
+        "editorialVariant": 5
+      }
     }
   ]
 }
