@@ -63622,6 +63622,171 @@
         ],
         "editorialVariant": 1
       }
+    },
+    {
+      "feedFingerprint": "b1fbe61cb008533b2f3a0a5ec0439f939202f1e480480caf1884c0f8ecd1e510",
+      "storyFingerprint": "b1fbe61cb008533b2f3a0a5ec0439f939202f1e480480caf1884c0f8ecd1e510",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Brasil supera EUA, Japão e Índia em profissionais de fronteira em IA, aponta Microsoft",
+      "captionFingerprint": "e209ccd04cc5dc40594531c50a6a5ea24a61115b2def362c3a1df06f481a1349",
+      "coverTitle": "Brasil supera EUA, Japão e Índia em profissionais de fronteira em IA, aponta Microsoft",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-05.png",
+      "avatarRotationStart": 8,
+      "publishedAt": "2026-10-07T20:56:45.083Z",
+      "slotDate": "2026-10-07",
+      "slotIndex": 8,
+      "scheduledAt": "2026-10-07T17:50:00.000Z",
+      "workflowRun": "37683398891",
+      "mediaId": "18119107609948866",
+      "storyMediaId": "18119679958743731",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18119107609948866/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AQje9HsbUKP-LBMWfkljt12\"}}",
+      "permalink": "https://www.instagram.com/p/DeNRIraje5m/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Exame",
+          "sourceUrl": "https://exame.com/inteligencia-artificial/brasil-supera-eua-japao-e-india-em-profissionais-de-fronteira-em-ia-aponta-microsoft/",
+          "sourceTitle": "Brasil supera EUA, Japão e Índia em profissionais de fronteira em IA, aponta Microsoft",
+          "imageUrl": "https://classic.exame.com/wp-content/uploads/2026/10/Brasil-na-Vanguarda-da-Inteligencia-Artificial.png",
+          "imageSourcePageUrl": "https://exame.com/inteligencia-artificial/brasil-supera-eua-japao-e-india-em-profissionais-de-fronteira-em-ia-aponta-microsoft/",
+          "imageCredit": "Exame",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "358fb36a2c71abf82bdbebda776609e21a1afc13b18f5b6ccd7d91dfab3bc4dd",
+          "perceptualHash": "0100000110101100011001001011111001001010001111100101110001001110110111000100111001111111000011001100111001000111000011100100001100000110011100111000011001110001100001000111001011000100011100101110000001010010111000001000110010110000011110100000001111100010",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://exame.com/inteligencia-artificial/brasil-supera-eua-japao-e-india-em-profissionais-de-fronteira-em-ia-aponta-microsoft/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-07-175549-slot-8/visual-candidate-2/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "explore",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-07T20:33:29.401Z",
+        "ageHours": 0.37,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 2333,
+        "controlledSamples": 119,
+        "selectionModes": {
+          "exploit": 78,
+          "explore": 23,
+          "experiment": 18
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "afternoon",
+        "objective": "utility",
+        "primarySignal": "salvamentos",
+        "selectionMode": "explore",
+        "experimentAxis": "candidate-novelty",
+        "contextKey": "FEED|afternoon|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "promocao-ou-clickbait",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "03c5e4fb1095",
+        "source": "Exame",
+        "sourceUrl": "https://exame.com/inteligencia-artificial/brasil-supera-eua-japao-e-india-em-profissionais-de-fronteira-em-ia-aponta-microsoft/",
+        "sourceTitle": "Brasil supera EUA, Japão e Índia em profissionais de fronteira em IA, aponta Microsoft",
+        "sourceImageUrl": "https://classic.exame.com/wp-content/uploads/2026/10/Brasil-na-Vanguarda-da-Inteligencia-Artificial.png",
+        "publishedAt": "2026-10-07T17:17:36.000Z",
+        "researchedAt": "2026-10-07T20:55:40.878Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Estudo da Microsoft com 20 mil trabalhadores em dez países mostra que o Brasil tem mais usuários avançados de IA, proporcionalmente, do que EUA, Japão e Índia",
+        "sourceFacts": [
+          "O Brasil tem proporcionalmente mais profissionais \"de fronteira\" no uso de inteligência artificial do que Estados Unidos, Japão e Índia. O dado é do Work Trend Index 2026, relatório da Microsoft baseado em entrevistas com 20 mil trabalhadores em dez países e em sinais de produtividade do Microsoft 365.",
+          "Segundo o estudo, 27% dos brasileiros que usam IA já estão em nível avançado. Na média global, os chamados Frontier Professionals representam 16% dos usuários.",
+          "Invista no seu autoconhecimento e na sua adaptação tecnológica agora mesmo para não ficar para trás. O Pré-MBA Saint Paul com a EXAME ensina em 4 aulas, online, por R$37. Comece hoje!",
+          "A Microsoft classifica nessa categoria quem vai além do uso básico de assistentes de texto. Esses profissionais automatizam fluxos de trabalho com agentes de IA, criam sistemas multiagentes, reformulam rotinas e identificam tarefas repetitivas que podem ser delegadas à tecnologia.",
+          "Os termos são simples. Um agente de IA é um programa que executa tarefas de forma semiautônoma a partir de instruções. Um sistema multiagente reúne vários deles, cada um com uma função. Um exemplo: um analista financeiro configura um agente para reunir dados de relatórios, outro para checar inconsistências e um terceiro para redigir o resumo semanal."
+        ],
+        "editorialVariant": 5
+      }
     }
   ]
 }
