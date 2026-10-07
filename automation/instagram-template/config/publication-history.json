@@ -62805,6 +62805,166 @@
         ],
         "editorialVariant": 2
       }
+    },
+    {
+      "feedFingerprint": "8ffe847538df9bea606b773dc314a97e291cb301a570f4bff853a46a0b474048",
+      "storyFingerprint": "8ffe847538df9bea606b773dc314a97e291cb301a570f4bff853a46a0b474048",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Com Serasa, idwall inicia processo de internacionalização",
+      "captionFingerprint": "3c332114b86f41ef93ffb0283e341da015c038540a868bbdf1688c6d2a0c411b",
+      "coverTitle": "Com Serasa, idwall inicia processo de internacionalização",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-02.png",
+      "avatarRotationStart": 5,
+      "publishedAt": "2026-10-07T17:15:00.465Z",
+      "slotDate": "2026-10-07",
+      "slotIndex": 3,
+      "scheduledAt": "2026-10-07T14:50:00.000Z",
+      "workflowRun": "37657130958",
+      "mediaId": "18106475095957844",
+      "storyMediaId": "18022981229871077",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18106475095957844/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AeRyP-KK9Zde-IKfeHOwxzP\"}}",
+      "permalink": "https://www.instagram.com/p/DeM3wwImAbr/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Startups",
+          "sourceUrl": "https://startups.com.br/negocios/idtech/com-serasa-idwall-inicia-processo-de-internacionalizacao/",
+          "sourceTitle": "Com Serasa, idwall inicia processo de internacionalização",
+          "imageUrl": "https://uploads.startups.com.br/2026/10/Okta_032825_2_Lincoln-Ando.jpg.jpeg",
+          "imageSourcePageUrl": "https://startups.com.br/negocios/idtech/com-serasa-idwall-inicia-processo-de-internacionalizacao/",
+          "imageCredit": "Startups",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "da06a147b36d074e24553c105bf11716e560f6458a9ff7204a70c2f49ff60004",
+          "perceptualHash": "0111011111000001011111011010000101111001101000000111100101110000011100000111000101111000111100010101100000110010010001101101110010001110010101110000100011101011100010000111011100100000001101010011000010110001001100000111000100100100011000010110011001100001",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://startups.com.br/negocios/idtech/com-serasa-idwall-inicia-processo-de-internacionalizacao/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-07-141354-slot-3/visual-candidate-1/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-07T08:41:53.477Z",
+        "ageHours": 8.53,
+        "freshness": "stale",
+        "effectiveSamples": 120,
+        "effectiveReach": 2224,
+        "controlledSamples": 119,
+        "selectionModes": {
+          "exploit": 77,
+          "explore": 23,
+          "experiment": 19
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": false,
+        "operatingMode": "editorial-fallback",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "conversation",
+        "primarySignal": "comentarios",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|midday|conversation",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "a65fe1a440ae",
+        "source": "Startups",
+        "sourceUrl": "https://startups.com.br/negocios/idtech/com-serasa-idwall-inicia-processo-de-internacionalizacao/",
+        "sourceTitle": "Com Serasa, idwall inicia processo de internacionalização",
+        "sourceImageUrl": "https://uploads.startups.com.br/2026/10/Okta_032825_2_Lincoln-Ando.jpg.jpeg",
+        "publishedAt": "2026-10-07T11:00:00.000Z",
+        "researchedAt": "2026-10-07T17:13:44.619Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Lincoln Ando, cofundador da idwall (Foto: Divulgação) Plano de internacionalização era a tese da série D da idwall, que acabou virando um M&A de quase R$ 450M com a Serasa Experian O post Com Serasa, idwall inicia processo de internacionalização apareceu primeiro em Startups .",
+        "sourceFacts": [
+          "Lincoln não especificou quais mercados estão na mira nem cravou um prazo. Mas deixou claro de onde vem a lógica: “Uma vez que a gente tem a plataforma, internacionalizar é muito fácil, porque você consegue plugar nossas soluções lá e fazer com que os próprios clientes consigam consumí-las”, defendeu. Outro ponto que ajuda nesse processo é a experiência combatendo fraudes no Brasil.",
+          "Isso tanto é verdade que nomes como Certta – antiga Caf , ou Combate à Fraude – e unico já mantém operações internacionais há alguns anos.",
+          "Na avaliação de Lincoln, o mercado está fragmentado por perguntas. E cada fornecedor responde apenas uma delas. Ele descreve três camadas de confiança.",
+          "A primeira: essa pessoa é quem diz ser — biometria, liveness, device, validação documental. A segunda: posso fazer negócio com ela — background check, KYC, prevenção à lavagem de dinheiro. A terceira: quanto posso confiar nela — score de crédito, dívidas. “Ou você é um birô de crédito, ou você é uma empresa de reconhecimento facial, ou você é uma empresa de background check “, disse. “Quando a gente soma isso, se torna muito poderoso”, avaliou.",
+          "Além da vantagem competitiva da venda de um pacote de soluções, essa tese se mostra ainda mais relevante diante do avanço da IA generativa e da criação de imagens e vídeos falsos. “Se você confia só na biometria, você vai se frustrar porque tem a deepfake. Se você confia só no device, tem forma de burlar. Se confiar só no documento, é a mesma coisa. Agora, se você concilia tudo isso com o histórico, com o comportamento, com todos esses data points , é muito difícil ou impossível burlar”, acrescentou."
+        ],
+        "editorialVariant": 4
+      }
     }
   ]
 }
