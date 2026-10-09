@@ -66092,6 +66092,170 @@
         ],
         "editorialVariant": 1
       }
+    },
+    {
+      "feedFingerprint": "cbf2a28b731dff6aabd4fcc73185ab77a804adb334644f82abb89be82ac0e699",
+      "storyFingerprint": "cbf2a28b731dff6aabd4fcc73185ab77a804adb334644f82abb89be82ac0e699",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Encontro Nacional de Automação abre inscrições para edição de 2026",
+      "captionFingerprint": "b125301d5b78cf3e80788743f7c83002f4ed1a21f457ec0e70992e09e7ef6524",
+      "coverTitle": "Encontro Nacional de Automação abre inscrições para edição de 2026",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-02.png",
+      "avatarRotationStart": 5,
+      "publishedAt": "2026-10-09T16:55:09.793Z",
+      "slotDate": "2026-10-09",
+      "slotIndex": 5,
+      "scheduledAt": "2026-10-09T16:00:00.000Z",
+      "workflowRun": "37962283033",
+      "mediaId": "18221222704341511",
+      "storyMediaId": "18129154912859409",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18221222704341511/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AWv_xCKr-7aDy8YPjhoGull\"}}",
+      "permalink": "https://www.instagram.com/p/DeR_E6UF-7u/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Exame",
+          "sourceUrl": "https://exame.com/bussola/encontro-nacional-de-automacao-abre-inscricoes-para-edicao-de-2026/",
+          "sourceTitle": "Encontro Nacional de Automação abre inscrições para edição de 2026",
+          "imageUrl": "https://classic.exame.com/wp-content/uploads/2026/10/Capa-Noticia-18-1024x396-1.jpg",
+          "imageSourcePageUrl": "https://exame.com/bussola/encontro-nacional-de-automacao-abre-inscricoes-para-edicao-de-2026/",
+          "imageCredit": "Exame",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "7d5bee5ef9b41396a0a8837fa72ac272ac556af0214ae1dc7364c6d2ec6d8821",
+          "perceptualHash": "1001001100011011011000101001111100110000101101100010000010110010001000000111101000110000011110100101001110101010001110010101111010010101010110001101000001011001100001100010100110101110111010011001010110011101001011011001110110001001000010011000001100111000",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://exame.com/bussola/encontro-nacional-de-automacao-abre-inscricoes-para-edicao-de-2026/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-09-135409-slot-5/visual-candidate-3/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-09T16:33:23.882Z",
+        "ageHours": 0.35,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 2546,
+        "controlledSamples": 119,
+        "selectionModes": {
+          "exploit": 80,
+          "explore": 25,
+          "experiment": 14
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "conversation",
+        "primarySignal": "comentarios",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|midday|conversation",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico"
+        ],
+        "fatiguePenalty": 8.22,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "d28bcba12401",
+        "source": "Exame",
+        "sourceUrl": "https://exame.com/bussola/encontro-nacional-de-automacao-abre-inscricoes-para-edicao-de-2026/",
+        "sourceTitle": "Encontro Nacional de Automação abre inscrições para edição de 2026",
+        "sourceImageUrl": "https://classic.exame.com/wp-content/uploads/2026/10/Capa-Noticia-18-1024x396-1.jpg",
+        "publishedAt": "2026-10-09T13:00:55.000Z",
+        "researchedAt": "2026-10-09T16:54:01.621Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Evento será realizado em 4 e 5 de novembro, no Expominas, com palestras, painéis e demonstrações práticas de tecnologias",
+        "sourceFacts": [
+          "ENA 2026 discutirá a integração de automação e inteligência artificial aos desafios da indústria, em evento gratuito em BH",
+          "O Encontro Nacional de Automação (ENA) abriu inscrições gratuitas para os dias 4 e 5 de novembro de 2026, no Expominas, em BH. Realizado pela Federação das Indústrias de Minas Gerais (FIEMG), em parceria com a produtora de aço Gerdau, o evento terá palestras, painéis e demonstrações práticas sobre automação e inteligência artificial.",
+          "Realizado em BH, entre os dias 4 e 5 de novembro, no Expominas, o Encontro Nacional de Automação (ENA) é considerado um dos eventos mais importantes do do país voltados à automação industrial , inovação e transformação digital da indústria.",
+          "A programação do evento contará com palestras e painéis com especialistas, apresentação de tecnologias e soluções, experiências práticas, além de oportunidades de networking. AS inscrições são gratuitas.",
+          "Realizado pela Federação das Indústrias de Minas Gerais (FIEMG), em parceria com a Gerdau, a maior empresa brasileira produtora de aço, o ENA tem como objetivo estimular a troca de conhecimento, promover oportunidades de negócios e apresentar as principais tecnologias relacionadas à automação e à inteligência artificial ."
+        ],
+        "editorialVariant": 5
+      }
     }
   ]
 }
