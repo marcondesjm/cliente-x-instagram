@@ -66585,6 +66585,170 @@
         ],
         "editorialVariant": 5
       }
+    },
+    {
+      "feedFingerprint": "d09b265bd67274a7cf990023e57caedad14b62c385fb8249e081d99840671330",
+      "storyFingerprint": "d09b265bd67274a7cf990023e57caedad14b62c385fb8249e081d99840671330",
+      "storyContentKind": "news",
+      "storyCoverTitle": "A IA é mesmo tão inteligente ou o marketing está exagerando?",
+      "captionFingerprint": "7482ecde48136ab60040bd20c576429d799d6b240a44c34053e5352a9d4ed549",
+      "coverTitle": "A IA é mesmo tão inteligente ou o marketing está exagerando?",
+      "coverAvatar": "docs/uploads/avatar-marcondes-lounge.png",
+      "avatarRotationStart": 3,
+      "publishedAt": "2026-10-09T18:20:26.313Z",
+      "slotDate": "2026-10-09",
+      "slotIndex": 8,
+      "scheduledAt": "2026-10-09T17:50:00.000Z",
+      "workflowRun": "37972300586",
+      "mediaId": "18168982153463630",
+      "storyMediaId": "18118621811284971",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18168982153463630/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AJs1CYZIKLItUpDgyigd8Ij\"}}",
+      "permalink": "https://www.instagram.com/p/DeSI1uJF4rG/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Exame",
+          "sourceUrl": "https://exame.com/bussola/a-ia-e-mesmo-tao-inteligente-ou-o-marketing-esta-exagerando/",
+          "sourceTitle": "A IA é mesmo tão inteligente ou o marketing está exagerando?",
+          "imageUrl": "https://classic.exame.com/wp-content/uploads/2026/10/Marketing-IA-Gorodenkoff.jpg",
+          "imageSourcePageUrl": "https://exame.com/bussola/a-ia-e-mesmo-tao-inteligente-ou-o-marketing-esta-exagerando/",
+          "imageCredit": "Exame",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "3549d6903f61203797a2e813ab085309c3af2a7994ada282d90626ef623a629a",
+          "perceptualHash": "1010001010001110011010011100011101101001110010110110100011001110011010011100010101100001110001010110000111100100011000011110010101100001101001110100001110100111010000111010010101010010011111010100110100111111000010010110111100011001110011110011110011000111",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://exame.com/bussola/a-ia-e-mesmo-tao-inteligente-ou-o-marketing-esta-exagerando/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-09-151920-slot-8/visual-candidate-1/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-09T17:30:25.478Z",
+        "ageHours": 0.82,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 2578,
+        "controlledSamples": 119,
+        "selectionModes": {
+          "exploit": 80,
+          "explore": 25,
+          "experiment": 14
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "afternoon",
+        "objective": "conversion",
+        "primarySignal": "alcance de nao seguidores",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|afternoon|conversion",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "4465ecab9caf",
+        "source": "Exame",
+        "sourceUrl": "https://exame.com/bussola/a-ia-e-mesmo-tao-inteligente-ou-o-marketing-esta-exagerando/",
+        "sourceTitle": "A IA é mesmo tão inteligente ou o marketing está exagerando?",
+        "sourceImageUrl": "https://classic.exame.com/wp-content/uploads/2026/10/Marketing-IA-Gorodenkoff.jpg",
+        "publishedAt": "2026-10-09T15:00:34.000Z",
+        "researchedAt": "2026-10-09T18:19:13.609Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Termo superinteligência amplia expectativas e exige mais disciplina para avaliar custos, produtividade e geração de receita",
+        "sourceFacts": [
+          "A troca de inteligência artificial por superinteligência não elimina a necessidade de comprovar resultados nas empresas (Gorodenkoff/Shutterstock)",
+          "Rodrigo Oliveira, CFO e cofundador da agência Bull Digital, afirma que substituir o termo inteligência artificial por superinteligência pode ampliar expectativas sem garantir resultados. Para o executivo, decisões de investimento devem considerar custos, tempo economizado, receita gerada e problemas resolvidos, em vez do nome da tecnologia.",
+          "A discussão recente sobre substituir o termo “ inteligência artificial ” por “ superinteligência ” pode parecer apenas uma disputa de palavras. Não é.",
+          "Em mercados tecnológicos, nomes também funcionam como ativos: moldam expectativas, influenciam investimentos e ajudam a determinar como uma inovação será percebida antes mesmo que seus resultados sejam plenamente conhecidos.",
+          "Foi assim com expressões como “transformação digital” , “metaverso” e, mais recentemente, “ IA generativa ” . Cada novo conceito cria não apenas uma maneira de descrever determinada tecnologia, mas também uma narrativa sobre aquilo que empresas, investidores e consumidores deveriam esperar dela."
+        ],
+        "editorialVariant": 2
+      }
     }
   ]
 }
