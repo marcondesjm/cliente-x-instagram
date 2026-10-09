@@ -1,22 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-10-06:9:37550535667",
-    "status": "open",
-    "account": "cliente-x",
-    "date": "2026-10-06",
-    "slotIndex": 9,
-    "scheduledAt": "2026-10-06T19:00:00.000Z",
-    "scheduledPostId": null,
-    "failedAt": "2026-10-07T00:12:08.895Z",
-    "workflowRun": "37550535667",
-    "workflowName": "Instagram Feed Cliente X",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/37550535667",
-    "stage": "unknown",
-    "error": "Story rejeitado: a foto editorial não carregou.",
-    "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o conteúdo ou dependência indicada antes da próxima tentativa.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-10-06-211208.json"
-  },
-  {
     "key": "cliente-x:2026-10-06:9:37550719138",
     "status": "open",
     "account": "cliente-x",
@@ -848,5 +831,22 @@
     "error": "Story rejeitado: a foto editorial não carregou.",
     "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o conteúdo ou dependência indicada antes da próxima tentativa.",
     "failurePath": "automation/instagram-template/runs/failure-2026-10-08-234420.json"
+  },
+  {
+    "key": "cliente-x:2026-10-09:3:37959528040",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-10-09",
+    "slotIndex": 3,
+    "scheduledAt": "2026-10-09T14:50:00.000Z",
+    "scheduledPostId": null,
+    "failedAt": "2026-10-09T16:32:22.370Z",
+    "workflowRun": "37959528040",
+    "workflowName": "Instagram Feed Cliente X",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/37959528040",
+    "stage": "Graph GET /18126769540857549",
+    "error": "Graph GET /18126769540857549 failed [400]: {\"error\":{\"message\":\"Unsupported get request. Object with ID '18126769540857549' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https://developers.facebook.com/docs/graph-api\",\"code\":100,\"type\":\"GraphMethodException\",\"error_subcode\":33,\"fbtrace_id\":\"AwMZAOS9HL5EOflnfFV1ejE\"}}",
+    "solution": "Gerar novo token Meta/Instagram, atualizar o secret da conta no Vercel e no GitHub, depois rodar validar acessos no painel.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-10-09-133222.json"
   }
 ]
