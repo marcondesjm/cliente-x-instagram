@@ -834,7 +834,7 @@
   },
   {
     "key": "cliente-x:2026-10-09:3:37959528040",
-    "status": "open",
+    "status": "resolved",
     "account": "cliente-x",
     "date": "2026-10-09",
     "slotIndex": 3,
@@ -847,6 +847,8 @@
     "stage": "Graph GET /18126769540857549",
     "error": "Graph GET /18126769540857549 failed [400]: {\"error\":{\"message\":\"Unsupported get request. Object with ID '18126769540857549' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https://developers.facebook.com/docs/graph-api\",\"code\":100,\"type\":\"GraphMethodException\",\"error_subcode\":33,\"fbtrace_id\":\"AwMZAOS9HL5EOflnfFV1ejE\"}}",
     "solution": "Gerar novo token Meta/Instagram, atualizar o secret da conta no Vercel e no GitHub, depois rodar validar acessos no painel.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-10-09-133222.json"
+    "failurePath": "automation/instagram-template/runs/failure-2026-10-09-133222.json",
+    "resolvedAt": "2026-10-09T16:35:00.815Z",
+    "resolvedRun": "37959863843"
   }
 ]

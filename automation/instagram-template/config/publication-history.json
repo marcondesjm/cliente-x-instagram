@@ -65768,6 +65768,166 @@
         ],
         "editorialVariant": 2
       }
+    },
+    {
+      "feedFingerprint": "63fb2eb43414c7f9566404bf40a91b7eb22061951952d176c4fffa927dbb2005",
+      "storyFingerprint": "63fb2eb43414c7f9566404bf40a91b7eb22061951952d176c4fffa927dbb2005",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Google lança agente de IA para tarefas de trabalho",
+      "captionFingerprint": "7557ab9fd1785d16290f2b2c90bb09127eb70e207f81fef3f51058520d474b94",
+      "coverTitle": "Google lança agente de IA para tarefas de trabalho",
+      "coverAvatar": "docs/uploads/avatar-marcondes-presentation.png",
+      "avatarRotationStart": 2,
+      "publishedAt": "2026-10-09T16:35:00.671Z",
+      "slotDate": "2026-10-09",
+      "slotIndex": 3,
+      "scheduledAt": "2026-10-09T14:50:00.000Z",
+      "workflowRun": "37959863843",
+      "mediaId": "18122391625918083",
+      "storyMediaId": "18027108857696823",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18122391625918083/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AFj8NMblSzNS0HuFYGDYKPb\"}}",
+      "permalink": "https://www.instagram.com/p/DeR8x2ADdkq/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "G1 Tecnologia",
+          "sourceUrl": "https://g1.globo.com/tecnologia/noticia/2026/10/08/google-lanca-agente-de-ia-para-tarefas-de-trabalho.ghtml",
+          "sourceTitle": "Google lança agente de IA para tarefas de trabalho",
+          "imageUrl": "https://s2-g1.glbimg.com/G6BmEYtOtn_48_6Rur7NOJOJCl4=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/A/r/jLptk7TVeGwIA1OPH2fA/2026-10-06t142830z-1400402375-rc229faavkce-rtrmadp-3-britain-court-google.jpg",
+          "imageSourcePageUrl": "https://g1.globo.com/tecnologia/noticia/2026/10/08/google-lanca-agente-de-ia-para-tarefas-de-trabalho.ghtml",
+          "imageCredit": "G1 Tecnologia",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "67c555229795e9ef19dbdfe218052866b05808b3efc2a71782d33cc84b1dc7ff",
+          "perceptualHash": "1011000101001010101100000000100000110000000111010101010000010111101101100001110110010011010010101001100100101011010100100100110000110110100011011011000000011111100110010001110101010000000111010100110000000100010110100101000100010110110100110111101001010001",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://g1.globo.com/tecnologia/noticia/2026/10/08/google-lanca-agente-de-ia-para-tarefas-de-trabalho.ghtml",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-09-133404-slot-3/visual-candidate-1/radar-slide-01.avif",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-09T09:06:35.743Z",
+        "ageHours": 7.46,
+        "freshness": "stale",
+        "effectiveSamples": 120,
+        "effectiveReach": 2528,
+        "controlledSamples": 119,
+        "selectionModes": {
+          "exploit": 81,
+          "explore": 24,
+          "experiment": 14
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": false,
+        "operatingMode": "editorial-fallback",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|midday|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "ea39a3cd382e",
+        "source": "G1 Tecnologia",
+        "sourceUrl": "https://g1.globo.com/tecnologia/noticia/2026/10/08/google-lanca-agente-de-ia-para-tarefas-de-trabalho.ghtml",
+        "sourceTitle": "Google lança agente de IA para tarefas de trabalho",
+        "sourceImageUrl": "https://s2-g1.glbimg.com/G6BmEYtOtn_48_6Rur7NOJOJCl4=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/A/r/jLptk7TVeGwIA1OPH2fA/2026-10-06t142830z-1400402375-rc229faavkce-rtrmadp-3-britain-court-google.jpg",
+        "publishedAt": "2026-10-08T15:18:27.000Z",
+        "researchedAt": "2026-10-09T16:33:54.686Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Logo do Google é visto do lado de fora dos escritórios da empresa em Londres, no Reino Unido, em 24 de junho de 2025 REUTERS/Carlos Jasso/Foto de arquivo O Google Cloud, da Alphabet, apresentou nesta quinta-feira (8) o Gemini Agent, um agente de inteligência artificial voltado ao ambiente de trabalho. A ferramenta pode responder a perguntas, realizar tarefas, criar conteúdo e escrever códigos. 🗒️ Tem alguma sugestão de reportagem? As ações da Alphabet subiram ligeiramente no início do pregão.",
+        "sourceFacts": [
+          "O Google Cloud, da Alphabet, apresentou nesta quinta-feira (8) o Gemini Agent, um agente de inteligência artificial voltado ao ambiente de trabalho . A ferramenta p ode responder a perguntas, realizar tarefas, criar conteúdo e escrever códigos.",
+          "O anúncio ocorre em um momento em que as empresas de tecnologia disputam espaço no mercado de ferramentas de inteligência artificial capazes de executar tarefas de forma autônoma.",
+          "A novidade chega após a OpenAI lançar, em setembro , agentes que ficam ativos continuamente, chamados \"dots\", capazes de executar objetivos dos usuários em diferentes aplicativos.",
+          "No início do mês passado, a Meta lançou o Muse, um agente pessoal de IA que pode fazer compras , reservar viagens, enviar e-mails e efetuar pagamentos em nome dos usuários. As ações da Alphabet subiram ligeiramente no início do pregão.",
+          "Segundo o Google, o Gemini Agent consegue planejar atividades, usar diferentes ferramentas e se conectar aos sistemas de uma empresa para concluir tarefas . O trabalho pode ser entregue em documentos, e-mails e ambientes de desenvolvimento."
+        ],
+        "editorialVariant": 3
+      }
     }
   ]
 }
