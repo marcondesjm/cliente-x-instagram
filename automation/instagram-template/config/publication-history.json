@@ -66749,6 +66749,169 @@
         ],
         "editorialVariant": 2
       }
+    },
+    {
+      "feedFingerprint": "02c6fc290aa2d8de26ef4dd2fa55a03275e9d9959019baaa5e734f2ffb57d79f",
+      "storyFingerprint": "02c6fc290aa2d8de26ef4dd2fa55a03275e9d9959019baaa5e734f2ffb57d79f",
+      "storyContentKind": "news",
+      "storyCoverTitle": "O que é inteligência híbrida? Conheça a nova aposta da Microsoft em IA",
+      "captionFingerprint": "54741c80f152f900f3c45d8f42f3f7205efec079085b951e36eabbb68cf82197",
+      "coverTitle": "O que é inteligência híbrida? Conheça a nova aposta da Microsoft em IA",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-04.png",
+      "avatarRotationStart": 7,
+      "publishedAt": "2026-10-10T13:42:51.123Z",
+      "slotDate": "2026-10-10",
+      "slotIndex": 0,
+      "scheduledAt": "2026-10-10T09:30:00.000Z",
+      "workflowRun": "38056605795",
+      "mediaId": "18094484123379277",
+      "storyMediaId": "18129964405691445",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18094484123379277/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AiTpnRQ5KsLmRRcZ2C4lcOw\"}}",
+      "permalink": "https://www.instagram.com/reel/DeUN0-rgtt3/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Canaltech",
+          "sourceUrl": "https://canaltech.com.br/inteligencia-artificial/o-que-e-inteligencia-hibrida-em-ia/",
+          "sourceTitle": "O que é inteligência híbrida? Conheça a nova aposta da Microsoft em IA",
+          "imageUrl": "https://tl.ctcdn.com.br/t1qy4mPkKCD_kazJkAcWH-3zDqE=/1200x675/smart/filters:format(webp):quality(85)/b50085d8-8609-4d76-9b07-2d989f937aea.jpeg",
+          "imageSourcePageUrl": "https://canaltech.com.br/inteligencia-artificial/o-que-e-inteligencia-hibrida-em-ia/",
+          "imageCredit": "Canaltech",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "6abfcfefc2671df4487a8d832509c45d4d7ce326d7a33e88e7d46455f7910858",
+          "perceptualHash": "0100000000111101010001111100110000000100110111100000010101110110001001010111011100010110101001111001001100101111000001010111011000010110100101011101010011110101010110001101010110010000111101010001100010100110110100001000011000010000111101000001000011110100",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://canaltech.com.br/inteligencia-artificial/o-que-e-inteligencia-hibrida-em-ia/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-10-104138-slot-0/visual-candidate-1/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "explore",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-10T12:34:36.882Z",
+        "ageHours": 1.12,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 2508,
+        "controlledSamples": 119,
+        "selectionModes": {
+          "exploit": 83,
+          "explore": 23,
+          "experiment": 13
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "morning",
+        "objective": "conversation",
+        "primarySignal": "comentarios",
+        "selectionMode": "explore",
+        "experimentAxis": "candidate-novelty",
+        "contextKey": "REELS|morning|conversation",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico"
+        ],
+        "fatiguePenalty": 8.65,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "7ecdce1032a6",
+        "source": "Canaltech",
+        "sourceUrl": "https://canaltech.com.br/inteligencia-artificial/o-que-e-inteligencia-hibrida-em-ia/",
+        "sourceTitle": "O que é inteligência híbrida? Conheça a nova aposta da Microsoft em IA",
+        "sourceImageUrl": "https://tl.ctcdn.com.br/t1qy4mPkKCD_kazJkAcWH-3zDqE=/1200x675/smart/filters:format(webp):quality(85)/b50085d8-8609-4d76-9b07-2d989f937aea.jpeg",
+        "publishedAt": "2026-10-09T19:03:00.000Z",
+        "researchedAt": "2026-10-10T13:41:28.552Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Inteligência híbrida é uma estrutura de inteligência artificial em PCs para combinar o uso de modelos locais de IA com a tecnologia oferecida em nuvem . Os objetivos são garantir um equilíbrio para ter acesso a recursos de ponta, rodar diferentes LLMs localmente e preservar o gasto de tokens em assinaturas. O termo foi usado pela Microsoft para marcar um nova era de IA da empresa nos computadores Windows , encabeçada pela estrutura para uso de agentes de IA e pelos novos notebooks com chip NVIDIA RTX Spark.",
+        "sourceFacts": [
+          "Por André Lourenti Magalhães • Editado por Jones Oliveira | 09/10/2026 às 16:03",
+          "Inteligência híbrida é uma estrutura de inteligência artificial em PCs para combinar o uso de modelos locais de IA com a tecnologia oferecida em nuvem . Os objetivos são garantir um equilíbrio para ter acesso a recursos de ponta, rodar diferentes LLMs localmente e preservar o gasto de tokens em assinaturas.",
+          "O termo foi usado pela Microsoft para marcar um nova era de IA da empresa nos computadores Windows , encabeçada pela estrutura para uso de agentes de IA e pelos novos notebooks com chip NVIDIA RTX Spark.",
+          "A empresa menciona três pilares principais: roteamento inteligente de tarefas para o melhor modelo possível, execução de LLMs locais mais avançados e runtime de alto desempenho para otimizar o uso do hardware.",
+          "Os agentes locais de IA se popularizaram em 2025 com OpenClaw, Claude Cowork e outras ferramentas. Nesses casos, o próprio computador funciona como um servidor para rodar localmente o modelo de inteligência artificial e garante mais segurança para acessar dados sensíveis, visto que os arquivos não precisam ser compartilhados com servidores externos."
+        ],
+        "editorialVariant": 4
+      }
     }
   ]
 }
