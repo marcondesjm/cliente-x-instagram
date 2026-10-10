@@ -67404,6 +67404,172 @@
         ],
         "editorialVariant": 5
       }
+    },
+    {
+      "feedFingerprint": "b1ab6c56528885ca1c7bcb7650b731e26358bb376ab523cc164854a7c23e22a3",
+      "storyFingerprint": "b1ab6c56528885ca1c7bcb7650b731e26358bb376ab523cc164854a7c23e22a3",
+      "storyContentKind": "news",
+      "storyCoverTitle": "ClickBus: agente de IA cria campanhas para marketing 300 vezes mais rápido que o time humano",
+      "captionFingerprint": "3a6c0d1e0faea2b6fea7a60d2598078e0504f912dd86b333718b3d1c5f80bab2",
+      "coverTitle": "ClickBus: agente de IA cria campanhas para marketing 300 vezes mais rápido que o time humano",
+      "coverAvatar": "docs/uploads/avatar-marcondes-presentation.png",
+      "avatarRotationStart": 2,
+      "publishedAt": "2026-10-10T15:35:35.474Z",
+      "slotDate": "2026-10-10",
+      "slotIndex": 4,
+      "scheduledAt": "2026-10-10T15:10:00.000Z",
+      "workflowRun": "38064040596",
+      "mediaId": "18118014575062020",
+      "storyMediaId": "18096383792404757",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18118014575062020/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"ASzyGDgY6HlNwL1uaTX80oN\"}}",
+      "permalink": "https://www.instagram.com/reel/DeUauYhALHY/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Mobile Time",
+          "sourceUrl": "https://www.mobiletime.com.br/noticias/09/10/2026/clickbus-agente-de-ia/",
+          "sourceTitle": "ClickBus: agente de IA cria campanhas para marketing 300 vezes mais rápido que o time humano",
+          "imageUrl": "https://www.mobiletime.com.br/wp-content/uploads/2026/10/ClickBus_agentic.jpg",
+          "imageSourcePageUrl": "https://www.mobiletime.com.br/noticias/09/10/2026/clickbus-agente-de-ia/",
+          "imageCredit": "Mobile Time",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "9976578f500eca7f6080b22aecef1ed7ca0c1d8643dbc6bfd25965604de8db18",
+          "perceptualHash": "0000010111111001000001011111010101101000001001000110101101001000011000111111001010100011101100110010001111110110001010010111010000111001001011000001001100110110010100010011011010000101011101100010011100110010000010011111101100001000111010110000011101110001",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://www.mobiletime.com.br/noticias/09/10/2026/clickbus-agente-de-ia/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-10-123421-slot-4/visual-candidate-1/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-10T12:34:36.882Z",
+        "ageHours": 3,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 2508,
+        "controlledSamples": 119,
+        "selectionModes": {
+          "exploit": 83,
+          "explore": 23,
+          "experiment": 13
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "midday",
+        "objective": "conversation",
+        "primarySignal": "comentarios",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|midday|conversation",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "abertura-com-abandono-consistente",
+          "views-abaixo-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 7.87,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "1902bae00a28",
+        "source": "Mobile Time",
+        "sourceUrl": "https://www.mobiletime.com.br/noticias/09/10/2026/clickbus-agente-de-ia/",
+        "sourceTitle": "ClickBus: agente de IA cria campanhas para marketing 300 vezes mais rápido que o time humano",
+        "sourceImageUrl": "https://www.mobiletime.com.br/wp-content/uploads/2026/10/ClickBus_agentic.jpg",
+        "publishedAt": "2026-10-09T18:15:38.000Z",
+        "researchedAt": "2026-10-10T15:34:11.947Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Ferramenta organiza os dados e as variáveis e produz uma peça em 2 segundos. Time levava 10 minutos",
+        "sourceFacts": [
+          "A ClickBus ( Android , iOS ) desenvolveu um agente de inteligência artificial para acelerar a produção de campanhas de descontos para o produto Click Oferta . Como resultado, uma tarefa que levaria dez minutos para o time de marketing, é realizada em dois segundos pela ferramenta, ou seja, ela é 300 vezes mais rápida do que a equipe. Com o agente de IA, a empresa consegue criar ofertas personalizadas até para trechos de ônibus com poucos clientes interessados, uma operação que antes seria inviável.",
+          "Em exemplo apresentado, Salgado explicou que o trecho Curitiba-São Paulo, a ClickBus possui 56 ofertas para apresentar aos clientes. A operação como um todo, por sua vez, precisa considerar cerca de 6,8 mil destinos e diferentes perfis de consumidores. A empresa chama de cauda longa a parcela de rotas e públicos com menor volume de interessados.",
+          "No início dessa cauda, é relativamente simples direcionar uma comunicação a quem pesquisou um trecho específico, como Rio de Janeiro-São Paulo. Na outra extremidade, porém, o público pode ser tão pequeno que não compensa mobilizar a equipe para montar uma campanha. Em um dos exemplos citados, havia uma mensagem destinada a apenas 12 pessoas.",
+          "A inteligência artificial passou a viabilizar essa operação. O agente organiza as diversas variáveis de cada passagem e transforma o serviço em um produto identificável para os sistemas de venda, estruturando as informações em um SKU. No caso de Curitiba-São Paulo, por exemplo, ele processa as 56 ofertas disponíveis e prepara as comunicações correspondentes.",
+          "Além da organização dos dados, o agente redige os textos, elabora testes A/B, avaliando se atrai o público ao indicar o desconto percentual ou em valor absoluto, e é capaz de aprender continuamente a cada ciclo."
+        ],
+        "editorialVariant": 3
+      }
     }
   ]
 }
