@@ -68086,6 +68086,171 @@
         ],
         "editorialVariant": 5
       }
+    },
+    {
+      "feedFingerprint": "cac04ffc36f479dc778c1c315a71898f467ae4a17e9d92e1e7f30958b510792a",
+      "storyFingerprint": "cac04ffc36f479dc778c1c315a71898f467ae4a17e9d92e1e7f30958b510792a",
+      "storyContentKind": "news",
+      "storyCoverTitle": "IA da Anthropic denuncia falso caso de homicídio à polícia dos EUA",
+      "captionFingerprint": "5b90d0b6b1a062d9a45035e62916a386a4a3c53ca19cbadbd6bed40718a3b112",
+      "coverTitle": "IA da Anthropic denuncia falso caso de homicídio à polícia dos EUA",
+      "coverAvatar": "docs/uploads/avatar-marcondes-office-laptop.png",
+      "avatarRotationStart": 0,
+      "publishedAt": "2026-10-11T10:35:16.251Z",
+      "slotDate": "2026-10-11",
+      "slotIndex": 0,
+      "scheduledAt": "2026-10-11T09:30:00.000Z",
+      "workflowRun": "38132314838",
+      "mediaId": "18012573149983140",
+      "storyMediaId": "18101588462056471",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18012573149983140/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"Au24NZ0x0lXxM-FazXQ7D3L\"}}",
+      "permalink": "https://www.instagram.com/reel/DeWdJ1wnK8Q/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Olhar Digital",
+          "sourceUrl": "https://olhardigital.com.br/2026/10/10/inteligencia-artificial/ia-da-anthropic-denuncia-falso-caso-de-homicidio-a-policia-dos-eua/",
+          "sourceTitle": "IA da Anthropic denuncia falso caso de homicídio à polícia dos EUA",
+          "imageUrl": "https://olhardigital.com.br/wp-content/uploads/2026/10/anthropic-2.jpg",
+          "imageSourcePageUrl": "https://olhardigital.com.br/2026/10/10/inteligencia-artificial/ia-da-anthropic-denuncia-falso-caso-de-homicidio-a-policia-dos-eua/",
+          "imageCredit": "Olhar Digital",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "fc92a27faa77b8df2023f0b675c6c50f3b25aeb79f89a4b2c07fb80dfa5dadf5",
+          "perceptualHash": "1100110010011011111001001011101111111110111100011111001100111001111100001011100111110000111100011111000011111001111100010111100110110001011100010011000101110001001100001111000100010010101100011001001010111001110100100101000111010000000000011101000000000011",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://olhardigital.com.br/2026/10/10/inteligencia-artificial/ia-da-anthropic-denuncia-falso-caso-de-homicidio-a-policia-dos-eua/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-11-073356-slot-0/visual-candidate-3/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-11T07:05:09.962Z",
+        "ageHours": 3.48,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 2483,
+        "controlledSamples": 119,
+        "selectionModes": {
+          "exploit": 82,
+          "explore": 23,
+          "experiment": 14
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "morning",
+        "objective": "utility",
+        "primarySignal": "salvamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|morning|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "abertura-com-abandono-consistente",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 8.05,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "cd92d7ee088d",
+        "source": "Olhar Digital",
+        "sourceUrl": "https://olhardigital.com.br/2026/10/10/inteligencia-artificial/ia-da-anthropic-denuncia-falso-caso-de-homicidio-a-policia-dos-eua/",
+        "sourceTitle": "IA da Anthropic denuncia falso caso de homicídio à polícia dos EUA",
+        "sourceImageUrl": "https://olhardigital.com.br/wp-content/uploads/2026/10/anthropic-2.jpg",
+        "publishedAt": "2026-10-10T21:37:14.000Z",
+        "researchedAt": "2026-10-11T10:33:47.545Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Após enviar uma denúncia falsa à polícia, agente de IA levou a Anthropic a desativar o teste e responder por demora na comunicação O post IA da Anthropic denuncia falso caso de homicídio à polícia dos EUA apareceu primeiro em Olhar Digital .",
+        "sourceFacts": [
+          "Um agente de inteligência artificial (IA) da Anthropic enviou uma denúncia falsa sobre um homicídio não resolvido à polícia da Filadélfia, nos Estados Unidos. A mensagem foi barrada pelo filtro de spam , mas a empresa levou mais de dois meses para identificar a falha e outros nove dias para comunicá-la às autoridades.",
+          "O envio ocorreu em 18 de julho, durante um teste automatizado que envolvia interações com sites escolhidos aleatoriamente. A polícia não investigou a denúncia, mas criticou a demora da empresa e cobrou medidas para evitar novos episódios.",
+          "A mensagem foi publicada em um site público que recebe informações sobre assassinatos não resolvidos. Segundo a polícia, o agente afirmou que poderia ter informações sobre um caso e alegou ter visto alguém que correspondia à descrição divulgada.",
+          "A Anthropic identificou o problema em 28 de setembro e desativou o processo de teste responsável pelo envio. As autoridades só foram notificadas em 7 de outubro.",
+          "A polícia da Filadélfia informou que seus mecanismos de segurança impediram que a mensagem avançasse para uma investigação. Também afirmou não ter encontrado indícios de invasão aos sistemas do departamento."
+        ],
+        "editorialVariant": 4
+      }
     }
   ]
 }
