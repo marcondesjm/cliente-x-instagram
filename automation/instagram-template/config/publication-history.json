@@ -68416,6 +68416,169 @@
         ],
         "editorialVariant": 2
       }
+    },
+    {
+      "feedFingerprint": "e86f3dcaaa3baadc17268f7a9095fbc032df1be062021d486d394fe47396d953",
+      "storyFingerprint": "e86f3dcaaa3baadc17268f7a9095fbc032df1be062021d486d394fe47396d953",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Suno expande horizontes e agora gera vozes faladas em inteligência artificial",
+      "captionFingerprint": "ef0c45baacab317cf97c777b8a0041c31b91fbcc54026b66bacc9fc4040c2723",
+      "coverTitle": "Suno expande horizontes e agora gera vozes faladas em inteligência artificial",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-04.png",
+      "avatarRotationStart": 7,
+      "publishedAt": "2026-10-11T15:51:46.277Z",
+      "slotDate": "2026-10-11",
+      "slotIndex": 2,
+      "scheduledAt": "2026-10-11T12:00:00.000Z",
+      "workflowRun": "38152884165",
+      "mediaId": "18018026336740167",
+      "storyMediaId": "18137049922651634",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18018026336740167/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AB3CsKpgeCRinN9HcatDIAC\"}}",
+      "permalink": "https://www.instagram.com/reel/DeXBYgZAFv9/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Nossa IA",
+          "sourceUrl": "https://nossa.ia.br/noticia/suno-expande-horizontes-e-agora-gera-vozes-faladas-em-inteligencia-artificial/",
+          "sourceTitle": "Suno expande horizontes e agora gera vozes faladas em inteligência artificial",
+          "imageUrl": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/Suno-AI-voices.jpg?quality=90&strip=all&crop=0,0,100,100",
+          "imageSourcePageUrl": "https://nossa.ia.br/noticia/suno-expande-horizontes-e-agora-gera-vozes-faladas-em-inteligencia-artificial/",
+          "imageCredit": "Nossa IA",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "1f4bb386f7e995ec870ce697b5d89505d3d6ca3a6dda49d0ee664eb3c649db95",
+          "perceptualHash": "0000011111001101000001111110111100011111001100110010011100011110011001110001011001001101000111000001100111111100100111000111110110011100111011011000111010111101000111011111110001011000011011100111100001101110011000000110110000000001111111110000000011111111",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://nossa.ia.br/noticia/suno-expande-horizontes-e-agora-gera-vozes-faladas-em-inteligencia-artificial/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-11-125038-slot-2/visual-candidate-3/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-11T12:52:46.158Z",
+        "ageHours": 2.96,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 2454,
+        "controlledSamples": 119,
+        "selectionModes": {
+          "exploit": 83,
+          "explore": 22,
+          "experiment": 14
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "morning",
+        "objective": "conversion",
+        "primarySignal": "alcance de nao seguidores",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|morning|conversion",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-abaixo-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 7.06,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "b9364ce85c05",
+        "source": "Nossa IA",
+        "sourceUrl": "https://nossa.ia.br/noticia/suno-expande-horizontes-e-agora-gera-vozes-faladas-em-inteligencia-artificial/",
+        "sourceTitle": "Suno expande horizontes e agora gera vozes faladas em inteligência artificial",
+        "sourceImageUrl": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/Suno-AI-voices.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "publishedAt": "2026-10-02T11:01:08.000Z",
+        "researchedAt": "2026-10-11T15:50:27.829Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Conhecida por sua revolucionária geração de músicas, a Suno lança em beta público um recurso capaz de criar locuções realistas acompanhadas de trilha sonora simultânea.",
+        "sourceFacts": [
+          "Conhecida por sua revolucionária geração de músicas, a Suno lança em beta público um recurso capaz de criar locuções realistas acompanhadas de trilha sonora simultânea.",
+          "A dupla Sylvan Esso retorna com o álbum 'Ow ∞', explorando novas sonoridades eletrônicas e expandindo os limites criativos que marcaram sua trajetória desde 2014.",
+          "Nova ferramenta da plataforma permite gerar visualizações de dados, enquetes e micro-aplicações em tempo real usando comandos em linguagem natural e integração com LLMs.",
+          "Nova funcionalidade do Slack permite gerar dashboards, enquetes e micro-sites interativos apenas descrevendo o que você precisa para o Slackbot.",
+          "Receba gratuitamente as principais novidades, lançamentos de modelos e tutoriais de IA direto no seu e-mail todas as manhãs."
+        ],
+        "editorialVariant": 1
+      }
     }
   ]
 }
