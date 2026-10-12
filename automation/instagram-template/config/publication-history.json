@@ -70919,6 +70919,169 @@
         ],
         "editorialVariant": 3
       }
+    },
+    {
+      "feedFingerprint": "fd8c9bb5bae98da9dbf7a8fb949911c0354a751014209e455e1365f3f3a30c94",
+      "storyFingerprint": "fd8c9bb5bae98da9dbf7a8fb949911c0354a751014209e455e1365f3f3a30c94",
+      "storyContentKind": "news",
+      "storyCoverTitle": "OpenAI lança 'Dots': agentes de IA voltados para produtividade corporativa",
+      "captionFingerprint": "2992b6c6fd0426f6df01dc85d876e272ea0f33182786fc753ed962be181ab533",
+      "coverTitle": "OpenAI lança 'Dots': agentes de IA voltados para produtividade corporativa",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-01.png",
+      "avatarRotationStart": 4,
+      "publishedAt": "2026-10-12T21:15:08.755Z",
+      "slotDate": "2026-10-12",
+      "slotIndex": 8,
+      "scheduledAt": "2026-10-12T17:50:00.000Z",
+      "workflowRun": "38309201846",
+      "mediaId": "18131641150835570",
+      "storyMediaId": "18644556988015108",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18131641150835570/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AbF3PFXGW62SrXDdptX-1KL\"}}",
+      "permalink": "https://www.instagram.com/p/DeaLOqXDAOO/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Nossa IA",
+          "sourceUrl": "https://nossa.ia.br/noticia/openai-lanca-dots-agentes-de-ia-voltados-para-produtividade-corporativa/",
+          "sourceTitle": "OpenAI lança 'Dots': agentes de IA voltados para produtividade corporativa",
+          "imageUrl": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/DSC04281_processed.jpg?quality=90&strip=all&crop=0,0,100,100",
+          "imageSourcePageUrl": "https://nossa.ia.br/noticia/openai-lanca-dots-agentes-de-ia-voltados-para-produtividade-corporativa/",
+          "imageCredit": "Nossa IA",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "2fcf7ad9ec486a20a117fe73fd7cf0a2bbd46e4a8a66bd74b90d188e30f388ea",
+          "perceptualHash": "0111001001101101001111100111001000011000101100000101100010101101010110001010110000011001000010001001100101001000011100110001100100000010110100000000011010110100111001101110100011101110111010001110111001100000110101110101000011110110110100011111111001110001",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://nossa.ia.br/noticia/openai-lanca-dots-agentes-de-ia-voltados-para-produtividade-corporativa/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-12-181422-slot-8/visual-candidate-3/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-12T20:21:34.417Z",
+        "ageHours": 0.88,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 2846,
+        "controlledSamples": 119,
+        "selectionModes": {
+          "exploit": 83,
+          "explore": 20,
+          "experiment": 16
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "afternoon",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|afternoon|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 8.52,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "5811984cebd7",
+        "source": "Nossa IA",
+        "sourceUrl": "https://nossa.ia.br/noticia/openai-lanca-dots-agentes-de-ia-voltados-para-produtividade-corporativa/",
+        "sourceTitle": "OpenAI lança 'Dots': agentes de IA voltados para produtividade corporativa",
+        "sourceImageUrl": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/DSC04281_processed.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "publishedAt": "2026-10-02T19:01:07.000Z",
+        "researchedAt": "2026-10-12T21:14:15.227Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "A OpenAI apresentou o Dots, uma nova plataforma de agentes de inteligência artificial que combina uma interface amigável com foco profundo em automação de fluxos de trabalho empresariais.",
+        "sourceFacts": [
+          "A OpenAI apresentou o Dots, uma nova plataforma de agentes de inteligência artificial que combina uma interface amigável com foco profundo em automação de fluxos de trabalho empresariais.",
+          "Do ponto de vista de arquitetura de interface e interação, o Dots adota um modelo operacional estruturado em duas janelas simultâneas: de um lado, o usuário conduz o chat conversacional com o agente utilizando LLMs de última geração; do outro, é possível acompanhar o progresso das tarefas em execução real.",
+          "A plataforma foi desenhada para suportar múltiplos agentes no futuro, embora nesta fase inicial o usuário tenha acesso a um único assistente customizável. A engenharia por trás do sistema foca em raciocínio híbrido e capacidade de tomada de decisão passo a passo, permitindo que a IA navegue por softwares empresariais e execute comandos encadeados com menor intervenção humana.",
+          "A chegada do Dots sinaliza uma mudança clara na estratégia da OpenAI: a transição definitiva dos chatbots tradicionais para sistemas baseados em agentes autônomos orientados a produtividade. Enquanto o mercado tem explorado interfaces lúdicas e focadas no consumidor final, o Dots assume uma postura eminentemente corporativa — enfatizando a eficiência no trabalho.",
+          "Desenvolvido a partir de variações pós-treinamento do modelo open-source GLM-5.2 da Z.ai, o novo sistema promete capacidades prontas para produção com redução drástica nos custos operacionais."
+        ],
+        "editorialVariant": 4
+      }
     }
   ]
 }
