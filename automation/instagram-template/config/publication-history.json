@@ -70084,6 +70084,163 @@
         ],
         "editorialVariant": 4
       }
+    },
+    {
+      "feedFingerprint": "39f32b5c8ec13366d89dafb4cca1c8dd1a6766f7a09633242e0b0f3730f1ff5f",
+      "storyFingerprint": "39f32b5c8ec13366d89dafb4cca1c8dd1a6766f7a09633242e0b0f3730f1ff5f",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Novo “rival” do Office foi criado com auxílio da IA",
+      "captionFingerprint": "8375176a48f2f873abc38a96d15abe0f75fc2a6ab0a878bb7d155eae94e2b236",
+      "coverTitle": "Novo “rival” do Office foi criado com auxílio da IA",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-04.png",
+      "avatarRotationStart": 7,
+      "publishedAt": "2026-10-12T17:55:59.524Z",
+      "slotDate": "2026-10-12",
+      "slotIndex": 3,
+      "scheduledAt": "2026-10-12T14:50:00.000Z",
+      "workflowRun": "38287203384",
+      "mediaId": "17978328560916650",
+      "storyMediaId": "17973436533147986",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /17978328560916650/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AG_Nt4GxFVVQ97RlKMvd8H0\"}}",
+      "permalink": "https://www.instagram.com/p/DeZ0a-3GD3I/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Tecnoblog",
+          "sourceUrl": "https://tecnoblog.net/noticias/novo-rival-do-office-foi-criado-com-auxilio-da-ia/",
+          "sourceTitle": "Novo “rival” do Office foi criado com auxílio da IA",
+          "imageUrl": "https://files.tecnoblog.net/wp-content/uploads/2026/07/capas_anthropic-claude-7.jpg",
+          "imageSourcePageUrl": "https://tecnoblog.net/noticias/novo-rival-do-office-foi-criado-com-auxilio-da-ia/",
+          "imageCredit": "Tecnoblog",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "ff953c8245282a8b23ab349a45d5991b7aed30f52cb9c45c18b96cc73dc3dabb",
+          "perceptualHash": "0100110101000100010111110110100101001010011000011101111000100001010011100010000101001110011000010100111101000100000011010100011001100111001000000111111000110000011100000011111101110110001110111110011001010001111011101110100011101010110111000101001010100110",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://tecnoblog.net/noticias/novo-rival-do-office-foi-criado-com-auxilio-da-ia/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-12-145452-slot-3/visual-candidate-2/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-12T15:28:57.362Z",
+        "ageHours": 2.43,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 2636,
+        "controlledSamples": 119,
+        "selectionModes": {
+          "exploit": 82,
+          "explore": 21,
+          "experiment": 16
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "utility",
+        "primarySignal": "salvamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|midday|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "curiosidade-util",
+          "aderencia-ao-perfil",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "contexto-com-baixo-historico"
+        ],
+        "fatiguePenalty": 7.75,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "fea99ecfd2b2",
+        "source": "Tecnoblog",
+        "sourceUrl": "https://tecnoblog.net/noticias/novo-rival-do-office-foi-criado-com-auxilio-da-ia/",
+        "sourceTitle": "Novo “rival” do Office foi criado com auxílio da IA",
+        "sourceImageUrl": "https://files.tecnoblog.net/wp-content/uploads/2026/07/capas_anthropic-claude-7.jpg",
+        "publishedAt": "2026-10-12T16:22:28.000Z",
+        "researchedAt": "2026-10-12T17:54:43.845Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "WordCraft, GridCraft e DeckCraft são projetos de código aberto criados com auxílio do Claude. Novo “rival” do Office foi criado com auxílio da IA",
+        "sourceFacts": [
+          "WordCraft, GridCraft e DeckCraft são projetos de código aberto criados com auxílio do Claude. Novo “rival” do Office foi criado com auxílio da IA"
+        ],
+        "editorialVariant": 2
+      }
     }
   ]
 }
