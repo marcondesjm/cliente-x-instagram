@@ -71927,6 +71927,169 @@
         ],
         "editorialVariant": 4
       }
+    },
+    {
+      "feedFingerprint": "4692265be2e23ef696b18b96546948531a1bf05772d09c08388f3067d31a728e",
+      "storyFingerprint": "4692265be2e23ef696b18b96546948531a1bf05772d09c08388f3067d31a728e",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Nova York proíbe uso de IA por alunos do ensino fundamental",
+      "captionFingerprint": "289f1653d28d1738c9db29ee3ab5c98225c41e9d2ca7edf350087247cc2441fa",
+      "coverTitle": "Nova York proíbe uso de IA por alunos do ensino fundamental",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-05.png",
+      "avatarRotationStart": 8,
+      "publishedAt": "2026-10-13T17:12:30.226Z",
+      "slotDate": "2026-10-13",
+      "slotIndex": 5,
+      "scheduledAt": "2026-10-13T16:00:00.000Z",
+      "workflowRun": "38436363112",
+      "mediaId": "18216120907360222",
+      "storyMediaId": "18045370940827935",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18216120907360222/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AYMKiemWM_c5lIbBNhiSj5r\"}}",
+      "permalink": "https://www.instagram.com/p/DecUPW9GN2R/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Hardware.com.br",
+          "sourceUrl": "https://www.hardware.com.br/noticias/nova-york-proibe-uso-de-ia-por-alunos-do-ensino-fundamental/",
+          "sourceTitle": "Nova York proíbe uso de IA por alunos do ensino fundamental",
+          "imageUrl": "https://www.hardware.com.br/wp-content/uploads/2026/10/ia-escola-nova-york.png",
+          "imageSourcePageUrl": "https://www.hardware.com.br/noticias/nova-york-proibe-uso-de-ia-por-alunos-do-ensino-fundamental/",
+          "imageCredit": "Hardware.com.br",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "dd7aab2be159ea4d61c964c874bd8fcbfd2f2c9022569c28b8b2c711c042420d",
+          "perceptualHash": "0101101001000000100110010111100001110001011101000111100101100100110010001010010010001000101011001011110010101110101011101100111011101010110011101110100101001110110010011100110000111111010011011111100011100101110000111100110110000010011001010011100001111101",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://www.hardware.com.br/noticias/nova-york-proibe-uso-de-ia-por-alunos-do-ensino-fundamental/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-13-141115-slot-5/visual-candidate-1/radar-slide-01.png",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-13T16:01:04.911Z",
+        "ageHours": 1.17,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 4121,
+        "controlledSamples": 119,
+        "selectionModes": {
+          "exploit": 84,
+          "explore": 21,
+          "experiment": 14
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "conversation",
+        "primarySignal": "comentarios",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|midday|conversation",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "3c75faec3df1",
+        "source": "Hardware.com.br",
+        "sourceUrl": "https://www.hardware.com.br/noticias/nova-york-proibe-uso-de-ia-por-alunos-do-ensino-fundamental/",
+        "sourceTitle": "Nova York proíbe uso de IA por alunos do ensino fundamental",
+        "sourceImageUrl": "https://www.hardware.com.br/wp-content/uploads/2026/10/ia-escola-nova-york.png",
+        "publishedAt": "2026-10-13T16:29:26.000Z",
+        "researchedAt": "2026-10-13T17:11:06.482Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Restrição abrangerá mais de 500 mil estudantes da rede pública durante o ano letivo de 2026-2027.",
+        "sourceFacts": [
+          "Home > Hard News > Nova York proíbe uso de IA por alunos do ensino fundamental",
+          "As escolas públicas de Nova York vão proibir o uso de ferramentas de inteligência artificial (IA) por alunos da educação infantil e do ensino fundamental durante o ano letivo de 2026-2027. A política, confirmada pelo distrito escolar à ABC News, abrange mais de 500 mil estudantes, desde programas de educação infantil, incluindo o 2-K, até o oitavo ano.",
+          "A medida estabelece uma das restrições mais abrangentes ao uso de IA por estudantes nos Estados Unidos. Segundo o prefeito de Nova York, Zohran Mamdani, a cidade passará o próximo ano letivo estudando os efeitos da inteligência artificial generativa antes de decidir como a tecnologia deverá ser incorporada à educação.",
+          "“A indústria de tecnologia quer nos fazer acreditar que a educação infantil impulsionada por IA não é apenas inevitável, mas também necessária. Não vemos as coisas dessa forma” , afirmou Mamdani em comunicado à ABC News.",
+          "A moratória eliminará o acesso dos alunos abrangidos pela medida a softwares de IA e proibirá chatbots que funcionam como assistentes virtuais. A decisão reflete a crescente preocupação de educadores e autoridades com os efeitos da tecnologia na capacidade dos estudantes de pensar de forma independente, desenvolver habilidades fundamentais e realizar atividades escolares sem assistência automatizada."
+        ],
+        "editorialVariant": 2
+      }
     }
   ]
 }
