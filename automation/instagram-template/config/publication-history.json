@@ -71412,6 +71412,160 @@
         ],
         "editorialVariant": 0
       }
+    },
+    {
+      "feedFingerprint": "92500a143463a3c4a842e47aabe6d6aefaa996fd5982efcd1d5bfd2e3a59c2c9",
+      "storyFingerprint": "92500a143463a3c4a842e47aabe6d6aefaa996fd5982efcd1d5bfd2e3a59c2c9",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Meta lança o Muse Wonder, sua IA mais avançada até agora",
+      "captionFingerprint": "20542b08ab8ce96777d6456ba3dc248f84c3f3a13bd1ecd528e26330ae615c29",
+      "coverTitle": "Meta lança o Muse Wonder, sua IA mais avançada até agora",
+      "coverAvatar": "docs/uploads/avatar-marcondes-office-laptop.png",
+      "avatarRotationStart": 0,
+      "publishedAt": "2026-10-13T13:29:57.482Z",
+      "slotDate": "2026-10-13",
+      "slotIndex": 2,
+      "scheduledAt": "2026-10-13T12:00:00.000Z",
+      "workflowRun": "38405031933",
+      "mediaId": "17874366300637934",
+      "storyMediaId": "18105677321525728",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /17874366300637934/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"Ai5GkdCrqUt2Zxce3ygiENW\"}}",
+      "permalink": "https://www.instagram.com/reel/Deb6veljcT5/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Tecnoblog",
+          "sourceUrl": "https://tecnoblog.net/noticias/meta-lanca-o-muse-wonder-sua-ia-mais-avancada-ate-agora/",
+          "sourceTitle": "Meta lança o Muse Wonder, sua IA mais avançada até agora",
+          "imageUrl": "https://files.tecnoblog.net/wp-content/uploads/2022/11/meta-capa-2-nov-2022.png",
+          "imageSourcePageUrl": "https://tecnoblog.net/noticias/meta-lanca-o-muse-wonder-sua-ia-mais-avancada-ate-agora/",
+          "imageCredit": "Tecnoblog",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "4047ba7a1c1013cf96115b800dd1f7c95ba12777fe83c6a0ae654a838b864860",
+          "perceptualHash": "0000110000111001000000110001110000000110000110000000111000011000000111000000111000010000010101110011000011110011001111010111001000111001011100100011000101110010011001000111001001100010011100100000000000111111000000000000101100000000000000010000000000000001",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://tecnoblog.net/noticias/meta-lanca-o-muse-wonder-sua-ia-mais-avancada-ate-agora/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-13-102846-slot-2/visual-candidate-1/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "explore",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-13T07:40:00.754Z",
+        "ageHours": 5.81,
+        "freshness": "stale",
+        "effectiveSamples": 120,
+        "effectiveReach": 2780,
+        "controlledSamples": 119,
+        "selectionModes": {
+          "exploit": 85,
+          "explore": 19,
+          "experiment": 15
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": false,
+        "operatingMode": "editorial-fallback",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "morning",
+        "objective": "utility",
+        "primarySignal": "salvamentos",
+        "selectionMode": "explore",
+        "experimentAxis": "candidate-novelty",
+        "contextKey": "REELS|morning|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "aderencia-ao-perfil",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente"
+        ],
+        "fatiguePenalty": 7.94,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "389b15f34738",
+        "source": "Tecnoblog",
+        "sourceUrl": "https://tecnoblog.net/noticias/meta-lanca-o-muse-wonder-sua-ia-mais-avancada-ate-agora/",
+        "sourceTitle": "Meta lança o Muse Wonder, sua IA mais avançada até agora",
+        "sourceImageUrl": "https://files.tecnoblog.net/wp-content/uploads/2022/11/meta-capa-2-nov-2022-340x191.png",
+        "publishedAt": "2026-10-13T13:14:34.000Z",
+        "researchedAt": "2026-10-13T13:28:39.580Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Novos modelos focam em agentes capazes de lembrar informações, usar computadores e executar tarefas. Meta lança o Muse Wonder, sua IA mais avançada até agora",
+        "sourceFacts": [
+          "Novos modelos focam em agentes capazes de lembrar informações, usar computadores e executar tarefas. Meta lança o Muse Wonder, sua IA mais avançada até agora"
+        ],
+        "editorialVariant": 0
+      }
     }
   ]
 }
