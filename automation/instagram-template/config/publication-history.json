@@ -71249,6 +71249,169 @@
         ],
         "editorialVariant": 2
       }
+    },
+    {
+      "feedFingerprint": "d49ba29f8864dfa577f3ac24bf9e871a4aa81bf9d65021a3691be62d4e11f767",
+      "storyFingerprint": "d49ba29f8864dfa577f3ac24bf9e871a4aa81bf9d65021a3691be62d4e11f767",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Califórnia endurece regras de energia e água para data centers de IA",
+      "captionFingerprint": "6cc62486ac6d63dceb9a06db47fa4cd8035f025a84cc4455870f2b7ed561e373",
+      "coverTitle": "Califórnia endurece regras de energia e água para data centers de IA",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-03.png",
+      "avatarRotationStart": 6,
+      "publishedAt": "2026-10-13T12:13:54.898Z",
+      "slotDate": "2026-10-13",
+      "slotIndex": 1,
+      "scheduledAt": "2026-10-13T11:10:00.000Z",
+      "workflowRun": "38395406218",
+      "mediaId": "18102228098038753",
+      "storyMediaId": "17875205871587807",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18102228098038753/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AkULm62Ev9suqUSDsC7ps2F\"}}",
+      "permalink": "https://www.instagram.com/p/DebyEQjoBU8/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Nossa IA",
+          "sourceUrl": "https://nossa.ia.br/noticia/california-endurece-regras-de-energia-e-agua-para-data-centers-de-ia/",
+          "sourceTitle": "Califórnia endurece regras de energia e água para data centers de IA",
+          "imageUrl": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2286055476.jpg?quality=90&strip=all&crop=0,0,100,100",
+          "imageSourcePageUrl": "https://nossa.ia.br/noticia/california-endurece-regras-de-energia-e-agua-para-data-centers-de-ia/",
+          "imageCredit": "Nossa IA",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "8326006f6043e3c0db409a0ac6e9bc1a119c13a904ce3818816ea94faab72a97",
+          "perceptualHash": "0001001111000011000101110100000000111111110100000011001011011000001010101011100000111100111110100011000011011010001100100111100000110010110011000011001010101101001100101010110100110001110010010011000101001001001100010101101000110101010110100001010000111001",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://nossa.ia.br/noticia/california-endurece-regras-de-energia-e-agua-para-data-centers-de-ia/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-13-091235-slot-1/visual-candidate-3/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "explore",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-13T07:40:00.754Z",
+        "ageHours": 4.54,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 2780,
+        "controlledSamples": 119,
+        "selectionModes": {
+          "exploit": 85,
+          "explore": 19,
+          "experiment": 15
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "morning",
+        "objective": "conversation",
+        "primarySignal": "comentarios",
+        "selectionMode": "explore",
+        "experimentAxis": "candidate-novelty",
+        "contextKey": "FEED|morning|conversation",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-antiga",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "b7288dd5e66f",
+        "source": "Nossa IA",
+        "sourceUrl": "https://nossa.ia.br/noticia/california-endurece-regras-de-energia-e-agua-para-data-centers-de-ia/",
+        "sourceTitle": "Califórnia endurece regras de energia e água para data centers de IA",
+        "sourceImageUrl": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2286055476.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "publishedAt": "2026-09-21T23:01:10.000Z",
+        "researchedAt": "2026-10-13T12:12:26.870Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Governador Gavin Newsom sanciona pacote de sete leis para impedir que infraestruturas de Inteligência Artificial repassem custos de serviços públicos aos cidadãos californianos.",
+        "sourceFacts": [
+          "Governador Gavin Newsom sanciona pacote de sete leis para impedir que infraestruturas de Inteligência Artificial repassem custos de serviços públicos aos cidadãos californianos.",
+          "A corrida global pelo domínio da Inteligência Artificial esbarrou em uma barreira regulatória histórica nos Estados Unidos. O governador da Califórnia, Gavin Newsom, sancionou um pacote rigoroso composto por sete leis direcionadas aos data centers de IA. A medida, inicialmente reportada pelo Los Angeles Times , foi desenhada para blindar os consumidores locais contra aumentos nas contas de luz e água provocados pela demanda massiva dessas instalações de alta performance.",
+          "Com as novas regras, a Comissão de Utilidades Públicas da Califórnia (CPUC) terá o poder de instituir uma categoria tarifária específica para data centers. Isso significa que gigantes da tecnologia e operadoras de infraestrutura não poderão mais diluir o custo de sua expansão energética na fatia paga pelos cidadãos comuns. Além disso, as empresas serão legalmente responsabilizadas por financiar atualizações estruturais nas redes elétricas locais e nos sistemas de abastecimento de água.",
+          "O escopo técnico da nova legislação vai muito além de taxas financeiras, impondo exigências operacionais severas para novos projetos de data centers no estado:",
+          "A decisão da Califórnia marca um ponto de virada na relação entre o boom da Inteligência Artificial e a realidade dos recursos naturais. Até então, o custo oculto do treinamento de LLMs massivas e da inferência em larga escala era arcado pelas comunidades do entorno, que sofriam com oscilações na rede elétrica e escassez de recursos hídricos."
+        ],
+        "editorialVariant": 0
+      }
     }
   ]
 }
