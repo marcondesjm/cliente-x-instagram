@@ -73420,6 +73420,170 @@
         ],
         "editorialVariant": 5
       }
+    },
+    {
+      "feedFingerprint": "8606dc113b9464cd145ba4365cde888bf2260b78d09c2e03779242e3e2666a03",
+      "storyFingerprint": "8606dc113b9464cd145ba4365cde888bf2260b78d09c2e03779242e3e2666a03",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Deezer lança ferramenta que exclui músicas de IA para o usuário",
+      "captionFingerprint": "dc7e0fa26ec2a7c627c11ef7b2126046978455d4888123c7b436188a514b935d",
+      "coverTitle": "Deezer lança ferramenta que exclui músicas de IA para o usuário",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-04.png",
+      "avatarRotationStart": 7,
+      "publishedAt": "2026-10-14T16:27:08.086Z",
+      "slotDate": "2026-10-14",
+      "slotIndex": 5,
+      "scheduledAt": "2026-10-14T16:00:00.000Z",
+      "workflowRun": "38597803398",
+      "mediaId": "18070849118495481",
+      "storyMediaId": "17883289944625797",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18070849118495481/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"A-JZM3RmpWr02xgzcAMhs78\"}}",
+      "permalink": "https://www.instagram.com/p/Deez2CXIIXd/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Mobile Time",
+          "sourceUrl": "https://www.mobiletime.com.br/noticias/13/10/2026/deezer-exclui-musicas-ia/",
+          "sourceTitle": "Deezer lança ferramenta que exclui músicas de IA para o usuário",
+          "imageUrl": "https://www.mobiletime.com.br/wp-content/uploads/2026/10/image.jpg",
+          "imageSourcePageUrl": "https://www.mobiletime.com.br/noticias/13/10/2026/deezer-exclui-musicas-ia/",
+          "imageCredit": "Mobile Time",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "ad364e032fec17b8e093dd5f9f2899c61894c6135da16aff088c903e65e85d29",
+          "perceptualHash": "0010011100110010001001110011110000100111001111100110011001110110011001100111011001100110110101100010011101011100001001111101110000100110101111000000011101011000000101111011100000010011010111000001100100111100000110010111110000010001010111000001000101011101",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://www.mobiletime.com.br/noticias/13/10/2026/deezer-exclui-musicas-ia/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-14-132600-slot-5/visual-candidate-2/radar-slide-01.jpg",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-14T15:53:48.393Z",
+        "ageHours": 0.54,
+        "freshness": "current",
+        "effectiveSamples": 119,
+        "effectiveReach": 4179,
+        "controlledSamples": 119,
+        "selectionModes": {
+          "exploit": 84,
+          "explore": 22,
+          "experiment": 13
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "utility",
+        "primarySignal": "salvamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|midday|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "f5bf7b1c9544",
+        "source": "Mobile Time",
+        "sourceUrl": "https://www.mobiletime.com.br/noticias/13/10/2026/deezer-exclui-musicas-ia/",
+        "sourceTitle": "Deezer lança ferramenta que exclui músicas de IA para o usuário",
+        "sourceImageUrl": "https://www.mobiletime.com.br/wp-content/uploads/2026/10/image.jpg",
+        "publishedAt": "2026-10-14T00:10:06.000Z",
+        "researchedAt": "2026-10-14T16:25:51.254Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Companhia tem observado aumento de faixas e álbuns de IA com foco em fraudes de streams, além de mais pedidos por clareza em IA",
+        "sourceFacts": [
+          "A Deezer ( Android , iOS ) anunciou nesta terça-feira, 13, um recurso que permitirá aos ouvintes filtrar e remover de suas reproduções músicas geradas por inteligência artificial. De acordo com a empresa, a ferramenta de exclusão voltada ao público geral estará disponível até o fim de 2026.",
+          "A medida visa atender à demanda da maioria dos consumidores. Um recorte brasileiro de uma pesquisa global com 9 mil pessoas, conduzida pela Ipsos em novembro do ano passado, revelou que 73% dos usuários desejam mais transparência nas obras geradas por inteligência artificial, enquanto 76% afirmaram ter escutado faixas criadas pela tecnologia ao menos uma vez.",
+          "O principal destaque do levantamento, contudo, mostra que 97% dos brasileiros não souberam distinguir se uma gravação havia sido produzida ou não por IA.",
+          "A Deezer utiliza desde janeiro de 2025 um sistema dedicado à identificação de conteúdos gerados por IA. A companhia estima que 1% a 3% do catálogo na plataforma seja composto por faixas criadas artificialmente com o propósito de manipular reproduções e desviar royalties.",
+          "Para combater esse cenário de irregularidades, o serviço de streaming utilizou a tecnologia e constatou que 85% das execuções de faixas sintéticas eram fraudulentas."
+        ],
+        "editorialVariant": 5
+      }
     }
   ]
 }
