@@ -74578,6 +74578,170 @@
         ],
         "editorialVariant": 0
       }
+    },
+    {
+      "feedFingerprint": "b3461807c1d20d4bd5fb48d5cd18736c3e8ed785aa9956806b0ab1fd401dca78",
+      "storyFingerprint": "b3461807c1d20d4bd5fb48d5cd18736c3e8ed785aa9956806b0ab1fd401dca78",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Character.ai entra com pedido de falência e pode encerrar app",
+      "captionFingerprint": "af66055edaef4f0513089c2db527d2248bafe65bd6e28775d1cdc04d0e8e11d4",
+      "coverTitle": "Character.ai entra com pedido de falência e pode encerrar app",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-03.png",
+      "avatarRotationStart": 6,
+      "publishedAt": "2026-10-15T15:03:02.803Z",
+      "slotDate": "2026-10-15",
+      "slotIndex": 3,
+      "scheduledAt": "2026-10-15T14:50:00.000Z",
+      "workflowRun": "38756414228",
+      "mediaId": "17990328030028147",
+      "storyMediaId": "18137049241653074",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /17990328030028147/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AswVWUkT95dAcKIhPnl33Qw\"}}",
+      "permalink": "https://www.instagram.com/p/DehPBuVmhmN/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Tecnoblog",
+          "sourceUrl": "https://tecnoblog.net/noticias/character-ai-entra-com-pedido-de-falencia-e-pode-encerrar-app/",
+          "sourceTitle": "Character.ai entra com pedido de falência e pode encerrar app",
+          "imageUrl": "https://files.tecnoblog.net/wp-content/uploads/2026/10/character-ai-2.png",
+          "imageSourcePageUrl": "https://tecnoblog.net/noticias/character-ai-entra-com-pedido-de-falencia-e-pode-encerrar-app/",
+          "imageCredit": "Tecnoblog",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "08e46950d50e2447bd21661b8ffd7b83765fe34f48c411d430afe7a6d4098cc3",
+          "perceptualHash": "0000000000000000001001001100101000100100010110100010110001011110000011010101011000010101010111100011010101000110001001010100101000100101011001100010010101100110000011010110011000001101010000100000110101000110001011000100011010001100110001101100000000000000",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://tecnoblog.net/noticias/character-ai-entra-com-pedido-de-falencia-e-pode-encerrar-app/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-15-120207-slot-3/visual-candidate-1/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-15T14:23:27.496Z",
+        "ageHours": 0.64,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 4185,
+        "controlledSamples": 119,
+        "selectionModes": {
+          "exploit": 84,
+          "explore": 24,
+          "experiment": 11
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "conversation",
+        "primarySignal": "comentarios",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|midday|conversation",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-atual",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "372164c44e6d",
+        "source": "Tecnoblog",
+        "sourceUrl": "https://tecnoblog.net/noticias/character-ai-entra-com-pedido-de-falencia-e-pode-encerrar-app/",
+        "sourceTitle": "Character.ai entra com pedido de falência e pode encerrar app",
+        "sourceImageUrl": "https://files.tecnoblog.net/wp-content/uploads/2026/10/character-ai-2-340x191.png",
+        "publishedAt": "2026-10-13T15:23:23.000Z",
+        "researchedAt": "2026-10-15T15:01:59.133Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Empresa recebeu oferta de US$ 20 milhões da Disney por parte dos ativos. Continuidade da plataforma depende de comprador. Character.ai entra com pedido de falência e pode encerrar app",
+        "sourceFacts": [
+          "Empresa recebeu oferta de US$ 20 milhões da Disney por parte dos ativos. Continuidade da plataforma depende de comprador.",
+          "A Character.ai pediu proteção contra falência nos Estados Unidos e iniciou um processo de venda de ativos sob supervisão judicial. A empresa informou que continuará operando durante as negociações. A Disney já apresentou uma oferta inicial de US$ 20 milhões (quase R$ 100 milhões, em conversão direta), mas a continuidade do aplicativo depende do resultado da venda.",
+          "Conhecida pelos chatbots que permitem conversar com personagens virtuais , a Character.ai enfrenta dificuldades jurídicas, regulatórias e operacionais, segundo a própria companhia.",
+          "O aplicativo segue disponível, mas seu futuro não está garantido. Em comunicado aos usuários, a Character.ai afirmou que encerrará a plataforma caso o processo não gere uma proposta capaz de manter suas operações. A expectativa é concluir a venda no fim de novembro ou no início de dezembro de 2026.",
+          "Por enquanto, as assinaturas permanecem ativas e a cobrança não mudou. O anúncio não estabelece uma data para encerrar o serviço. A empresa pretende avisar os assinantes caso haja mudanças que afetem os recursos pagos e afirma que suas práticas de privacidade e segurança permanecem iguais."
+        ],
+        "editorialVariant": 5
+      }
     }
   ]
 }
