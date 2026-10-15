@@ -75402,6 +75402,171 @@
         ],
         "editorialVariant": 4
       }
+    },
+    {
+      "feedFingerprint": "8adc9a0550515241dc46dfeaa86b7496c91b8103b0955185f9b73dee0f341276",
+      "storyFingerprint": "8adc9a0550515241dc46dfeaa86b7496c91b8103b0955185f9b73dee0f341276",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Agente de IA apagou uma temporada inteira de reality show semanas antes da estreia",
+      "captionFingerprint": "beddc8c96defffbe6d3838dd200514c0878a114e07fcd4efe94316cbada1e46a",
+      "coverTitle": "Agente de IA apagou uma temporada inteira de reality show semanas antes da estreia",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-06.png",
+      "avatarRotationStart": 9,
+      "publishedAt": "2026-10-15T18:00:49.311Z",
+      "slotDate": "2026-10-15",
+      "slotIndex": 8,
+      "scheduledAt": "2026-10-15T17:50:00.000Z",
+      "workflowRun": "38781701146",
+      "mediaId": "17916424131264655",
+      "storyMediaId": "17922847371225056",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /17916424131264655/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"A1-pm9qcljenyUHNVsNXBKs\"}}",
+      "permalink": "https://www.instagram.com/p/DehjXKqmuDS/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Hardware.com.br",
+          "sourceUrl": "https://www.hardware.com.br/noticias/agente-de-ia-da-empresa-apagou-uma-temporada-inteira-de-reality-show-semanas-antes-da-estreia/",
+          "sourceTitle": "Agente de IA apagou uma temporada inteira de reality show semanas antes da estreia",
+          "imageUrl": "https://www.hardware.com.br/wp-content/uploads/2026/10/ia-apaga-show.png",
+          "imageSourcePageUrl": "https://www.hardware.com.br/noticias/agente-de-ia-da-empresa-apagou-uma-temporada-inteira-de-reality-show-semanas-antes-da-estreia/",
+          "imageCredit": "Hardware.com.br",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "b87c944651380aa3017415489d4c38359f138acbd6e3ff65a9791968c9bcc6f9",
+          "perceptualHash": "0010110100100111001010010010101101100001001101110100010010101010111001011101101011000111010110011110010101011110001100100111000100001010101101101000000110010110110100011000101101011000100111000100100011011011010110001101000010010100011110011000110000100000",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://www.hardware.com.br/noticias/agente-de-ia-da-empresa-apagou-uma-temporada-inteira-de-reality-show-semanas-antes-da-estreia/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-15-145947-slot-8/visual-candidate-1/radar-slide-01.png",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-15T17:03:38.610Z",
+        "ageHours": 0.94,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 4299,
+        "controlledSamples": 119,
+        "selectionModes": {
+          "exploit": 84,
+          "explore": 24,
+          "experiment": 11
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "afternoon",
+        "objective": "utility",
+        "primarySignal": "salvamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|afternoon|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "curiosidade-util",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 7.6,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "299f6e626f82",
+        "source": "Hardware.com.br",
+        "sourceUrl": "https://www.hardware.com.br/noticias/agente-de-ia-da-empresa-apagou-uma-temporada-inteira-de-reality-show-semanas-antes-da-estreia/",
+        "sourceTitle": "Agente de IA apagou uma temporada inteira de reality show semanas antes da estreia",
+        "sourceImageUrl": "https://www.hardware.com.br/wp-content/uploads/2026/10/ia-apaga-show.png",
+        "publishedAt": "2026-10-15T16:39:18.000Z",
+        "researchedAt": "2026-10-15T17:59:25.828Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Falha eliminou meses de trabalho no reality show, enquanto problemas no sistema de backup impediram a recuperação dos arquivos finalizados.",
+        "sourceFacts": [
+          "Home > Hard News > Agente de IA apagou uma temporada inteira de reality show semanas antes da estreia",
+          "Um agente de inteligência artificial (IA) teria apagado a edição finalizada da versão sueca de The Challenge poucas semanas antes da estreia prevista, eliminando meses de trabalho e obrigando a equipe a recomeçar a edição de toda a temporada. O incidente levantou preocupações sobre os riscos de conceder a sistemas autônomos de IA acesso a infraestruturas críticas de produção, especialmente quando não há backups confiáveis disponíveis.",
+          "Segundo uma reportagem do Aftonbladet , o agente de IA tinha acesso ao servidor de produção onde a temporada finalizada estava armazenada. Ainda não está claro qual tarefa havia sido atribuída ao agente nem em quais circunstâncias os arquivos foram apagados.",
+          "Felizmente, as gravações originais foram preservadas, permitindo que a equipe reconstrua a temporada. No entanto, a edição final teria sido perdida, obrigando os profissionais a refazer uma quantidade considerável de trabalho justamente em uma das etapas mais delicadas da produção.",
+          "A TV4, emissora responsável pela encomenda do programa, investigou o incidente e atribuiu o ocorrido a um fator humano, e não à própria IA. O diretor do programa teria apontado a falha no sistema de backup como um dos principais fatores para o desastre, e sem uma cópia de segurança funcional, a equipe de produção não pôde simplesmente restaurar a edição finalizada e retomar o trabalho de onde havia parado."
+        ],
+        "editorialVariant": 1
+      }
     }
   ]
 }
