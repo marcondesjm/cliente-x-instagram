@@ -74907,6 +74907,171 @@
         ],
         "editorialVariant": 5
       }
+    },
+    {
+      "feedFingerprint": "31daf1a97901ed9856312a55d026b269891e039ac2f927f8e3d306442732e5a9",
+      "storyFingerprint": "31daf1a97901ed9856312a55d026b269891e039ac2f927f8e3d306442732e5a9",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Character.AI pede recuperação judicial nos EUA e negocia venda à Disney por R$ 100 milhões",
+      "captionFingerprint": "a9ab831cf9441d927d57c101b233891a21d14fce9c565a098ec164e3e0440551",
+      "coverTitle": "Character.AI pede recuperação judicial nos EUA e negocia venda à Disney por R$ 100 milhões",
+      "coverAvatar": "docs/uploads/avatar-marcondes-lounge.png",
+      "avatarRotationStart": 3,
+      "publishedAt": "2026-10-15T16:52:42.413Z",
+      "slotDate": "2026-10-15",
+      "slotIndex": 5,
+      "scheduledAt": "2026-10-15T16:00:00.000Z",
+      "workflowRun": "38772257389",
+      "mediaId": "17995995195021519",
+      "storyMediaId": "17978351660918768",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /17995995195021519/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AqqsQXHNw8Epw5ywjlRHGA8\"}}",
+      "permalink": "https://www.instagram.com/p/Dehbkugmr7S/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "G1 Tecnologia",
+          "sourceUrl": "https://g1.globo.com/tecnologia/noticia/2026/10/13/inteligencia-artificial-characterai-recuperacao-judicial.ghtml",
+          "sourceTitle": "Character.AI pede recuperação judicial nos EUA e negocia venda à Disney por R$ 100 milhões",
+          "imageUrl": "https://s2-g1.glbimg.com/6uJrSPQ_mJtI7Adv9_B-q-JJ2Kc=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/D/L/BFpxo1TeWswV2QBsLVGg/character-ai.png",
+          "imageSourcePageUrl": "https://g1.globo.com/tecnologia/noticia/2026/10/13/inteligencia-artificial-characterai-recuperacao-judicial.ghtml",
+          "imageCredit": "G1 Tecnologia",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "b85c05c0621d3a794b7c3934b74468d434f36e604a9828a127c55ed6cfa46eea",
+          "perceptualHash": "1110000010000000101000001000000010010000101010001001000010101110111000101011011010110010101101101010101010100010111011101010011010101110101011100010101010001110111010101001110010101010100001001010100010100110111010101000011011001010110000001010101011000000",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://g1.globo.com/tecnologia/noticia/2026/10/13/inteligencia-artificial-characterai-recuperacao-judicial.ghtml",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-15-135142-slot-5/visual-candidate-4/radar-slide-01.avif",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-15T15:39:11.707Z",
+        "ageHours": 1.21,
+        "freshness": "current",
+        "effectiveSamples": 120,
+        "effectiveReach": 4185,
+        "controlledSamples": 119,
+        "selectionModes": {
+          "exploit": 84,
+          "explore": 24,
+          "experiment": 11
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|midday|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-atual",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "80577cbf226e",
+        "source": "G1 Tecnologia",
+        "sourceUrl": "https://g1.globo.com/tecnologia/noticia/2026/10/13/inteligencia-artificial-characterai-recuperacao-judicial.ghtml",
+        "sourceTitle": "Character.AI pede recuperação judicial nos EUA e negocia venda à Disney por R$ 100 milhões",
+        "sourceImageUrl": "https://s2-g1.glbimg.com/6uJrSPQ_mJtI7Adv9_B-q-JJ2Kc=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/D/L/BFpxo1TeWswV2QBsLVGg/character-ai.png",
+        "publishedAt": "2026-10-13T10:52:26.000Z",
+        "researchedAt": "2026-10-15T16:51:29.452Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Character. AI, plataforma de inteligência artificial para criar personagens que se passam por pessoas reais Divulgação/Character. AI A Character. AI, plataforma que permite criar personagens virtuais com inteligência artificial para conversar sobre diferentes assuntos, informou nesta segunda-feira (12) que pediu recuperação judicial nos Estados Unidos e aceitou vender parte de seus ativos à Walt Disney por US$ 20 milhões (cerca de R$ 99,7 milhões). 🗒️ Tem alguma sugestão de reportagem? AI. A Character.",
+        "sourceFacts": [
+          "A Character.AI pediu recuperação judicial nos EUA nesta segunda-feira (12). A empresa concordou em vender parte de seus ativos para a Disney por US$ 20 milhões.",
+          "O grupo controlador declarou possuir ativos e dívidas de US$ 50 milhões a US$ 100 milhões. A plataforma deve continuar funcionando durante o processo de venda.",
+          "A empresa já enfrentou processos por casos de suicídio de jovens nos EUA. No Brasil, o Ministério da Justiça recomendou avaliar os riscos desse tipo de plataforma.",
+          "A Character.AI, plataforma que permite criar personagens virtuais com inteligência artificial para conversar sobre diferentes assuntos, informou nesta segunda-feira (12) que pediu recuperação judicial nos Estados Unidos e aceitou vender parte de seus ativos à Walt Disney por US$ 20 milhões (cerca de R$ 99,7 milhões).",
+          "Fundada por ex-engenheiros do Google , a empresa ficou conhecida por oferecer chatbots que simulam conversas humanas e podem interagir com usuários sobre temas como entretenimento, amizade e apoio emocional."
+        ],
+        "editorialVariant": 2
+      }
     }
   ]
 }
