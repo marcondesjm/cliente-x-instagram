@@ -76769,6 +76769,171 @@
         ],
         "editorialVariant": 1
       }
+    },
+    {
+      "feedFingerprint": "feca899919aca6d824a25573efbb153bac73dc841f2228fa6c2824a7b06f8565",
+      "storyFingerprint": "feca899919aca6d824a25573efbb153bac73dc841f2228fa6c2824a7b06f8565",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Meta AI barra Lula, mas gera imagens com referência a Flávio",
+      "captionFingerprint": "20864fa055707c591af010bafac8e53fd42dba3df9f6a4cdaf6e5d363c8ec123",
+      "coverTitle": "Meta AI barra Lula, mas gera imagens com referência a Flávio",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-04.png",
+      "avatarRotationStart": 7,
+      "publishedAt": "2026-10-16T17:25:59.463Z",
+      "slotDate": "2026-10-16",
+      "slotIndex": 7,
+      "scheduledAt": "2026-10-16T17:15:00.000Z",
+      "workflowRun": "38939263909",
+      "mediaId": "17964523959233461",
+      "storyMediaId": "18123625639925359",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /17964523959233461/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AqyLCEPF6sHyXgzeHkLMD8A\"}}",
+      "permalink": "https://www.instagram.com/reel/DekEISFlAHh/",
+      "reelDurationSeconds": 22.4,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Tecnoblog",
+          "sourceUrl": "https://tecnoblog.net/noticias/meta-ai-barra-lula-mas-gera-imagens-com-referencia-a-flavio/",
+          "sourceTitle": "Meta AI barra Lula, mas gera imagens com referência a Flávio",
+          "imageUrl": "https://files.tecnoblog.net/wp-content/uploads/2026/10/lula-e-flavio-bolsonaro.png",
+          "imageSourcePageUrl": "https://tecnoblog.net/noticias/meta-ai-barra-lula-mas-gera-imagens-com-referencia-a-flavio/",
+          "imageCredit": "Tecnoblog",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "70e6cc11e84d1edaa4d47f7b5ebc880f5ddf6e7eb147c9e5a92becaa165a02c9",
+          "perceptualHash": "1100110110001110100011011001111010001111100111100000011110011110000101111001111010010111100111111001111110001111100111111000111100011101100011101001110110011011100110011010001111001101100000111100110110000011111001110000001101001110000000111100111000000101",
+          "reusedRelevantImage": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://tecnoblog.net/noticias/meta-ai-barra-lula-mas-gera-imagens-com-referencia-a-flavio/",
+        "slideCount": 5,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-16-142441-slot-7/visual-candidate-2/radar-slide-01.webp",
+          null,
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 5,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-16T16:34:58.612Z",
+        "ageHours": 0.83,
+        "freshness": "current",
+        "effectiveSamples": 119,
+        "effectiveReach": 4249,
+        "controlledSamples": 119,
+        "selectionModes": {
+          "exploit": 84,
+          "explore": 25,
+          "experiment": 10
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "afternoon",
+        "objective": "utility",
+        "primarySignal": "salvamentos",
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|afternoon|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "densidade-factual",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-atual",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "abertura-com-abandono-consistente",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "education": null,
+      "research": {
+        "id": "5a6302ed1ca5",
+        "source": "Tecnoblog",
+        "sourceUrl": "https://tecnoblog.net/noticias/meta-ai-barra-lula-mas-gera-imagens-com-referencia-a-flavio/",
+        "sourceTitle": "Meta AI barra Lula, mas gera imagens com referência a Flávio",
+        "sourceImageUrl": "https://files.tecnoblog.net/wp-content/uploads/2026/10/lula-e-flavio-bolsonaro-340x191.png",
+        "publishedAt": "2026-10-14T17:55:16.000Z",
+        "researchedAt": "2026-10-16T17:24:32.482Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Empresa trabalha para implementar novos filtros em sistema de inteligência artificial. Meta AI barra Lula, mas gera imagens com referência a Flávio",
+        "sourceFacts": [
+          "Empresa trabalha para implementar novos filtros em sistema de inteligência artificial.",
+          "A ferramenta de inteligência artificial Meta AI, que está presente no WhatsApp, recusa os comandos para gerar imagens com alusão à campanha de Lula ao Palácio do Planalto. Ao mesmo tempo, aceita criar imagens com referências a outros candidatos, inclusive Flávio Bolsonaro, que levou vantagem sobre o presidente no primeiro turno. O caso viralizou nas redes sociais nas últimas horas.",
+          "Nos nossos testes, comandos com “Flávio 22” geraram as imagens, enquanto pedidos com o nome completo de Flávio Bolsonaro foram barrados. Já as solicitações com “Lula 13” foram recusadas, mesmo quando ocorreram na mesma sessão com o chatbot. A ferramenta produziu normalmente imagens ao receber um prompt com “Luiz 13”.",
+          "O Tecnoblog apurou que o assunto é tratado internamente na Meta como um erro de configuração. Enquanto os nomes completos dos candidatos são bloqueados, os primeiros nomes não são impactados pelo filtro. Por isso a Meta AI gera figuras com “Flávio” e “Luiz”.",
+          "A empresa disse ao Tecnoblog ter adotado medidas adicionais para impedir a geração de imagens a partir de comandos que usem apenas o primeiro nome dos candidatos e o número de urna. A expectativa é de que os usuários percebam a diferença num futuro breve, mas não é possível precisar quanto tempo isso deve levar."
+        ],
+        "editorialVariant": 5
+      }
     }
   ]
 }
