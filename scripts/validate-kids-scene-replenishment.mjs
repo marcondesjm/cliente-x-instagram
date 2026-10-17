@@ -18,6 +18,7 @@ assert.equal(recoverTransientCalls(recovery,new Date('2026-10-18T00:20:00Z')),fa
 assert.equal(recoverTransientCalls(recovery,new Date('2026-10-18T00:35:00Z')),true);assert.equal(recovery.calls[0].status,'interrupted');assert.equal(recovery.circuit,'provider_temporarily_unavailable');
 assert.equal(recoverTransientCalls(recovery,new Date('2026-10-18T01:01:00Z')),true);assert.equal(recovery.circuit,null);
 recovery.circuit='pixel_reading_not_confirmed';assert.equal(recoverTransientCalls(recovery,new Date('2026-10-19T00:00:00Z')),false);assert.equal(recovery.circuit,'pixel_reading_not_confirmed');
+recovery.calls.push({status:'reserved',startedAt:'2026-10-18T00:00:00Z'});assert.equal(recoverTransientCalls(recovery,new Date('2026-10-19T00:00:00Z')),false);assert.equal(recovery.circuit,'pixel_reading_not_confirmed');
 assert.deepEqual(passageRanges('Gênesis 6:9–22; 7:1–9'),[{book:'GEN',chapter:6,start:9,end:22},{book:'GEN',chapter:7,start:1,end:9}]);
 assert.throws(()=>passageRanges('Gênesis 1:1 lixo'),/integralmente/);
 const scripture={translation:{identifier:'web',license:'Public Domain'},verses:[{book_id:'GEN',chapter:1,verse:1,text:'In the beginning.'}]};
