@@ -11,16 +11,56 @@
     {
       "id": "b31fc9d6-7bfb-4e4e-94ad-c1fecae4652c",
       "day": "2026-10-17",
-      "status": "reserved",
+      "status": "completed",
       "stage": "compatible-tree",
       "startedAt": "2026-10-17T23:16:00.885Z",
+      "promptHash": "2b00ce86b583fff5fbe02c4f648b3a4d6d94460ae80f839a3b7f0610761fbead",
+      "completedAt": "2026-10-17T23:16:16.046Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 38,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
+    }
+  ],
+  "entries": [
+    {
+      "id": "compatible-tree",
+      "expectedCopyMatch": true,
+      "passed": false,
+      "syntheticTextFixture": true,
+      "imageInspection": false,
+      "value": {
+        "decision": "reject",
+        "cards": [
+          {
+            "scene": 1,
+            "observedEvent": "Uma pessoa sobe em uma árvore enquanto outras pessoas observam do chão.",
+            "passageMatch": true,
+            "childSuitable": true,
+            "distinct": true,
+            "copyMatch": true,
+            "verse": "19:4",
+            "reason": "A observação corresponde ao evento descrito em Lucas 19:4, onde Zaqueu subiu na árvore para ver Jesus. A cena é semanticamente compatível com o título e corpo do cartão 1. Composição visual distinta."
+          },
+          {
+            "scene": 2,
+            "observedEvent": "Um homem caminha à frente de outras pessoas por uma rua.",
+            "passageMatch": false,
+            "childSuitable": true,
+            "distinct": true,
+            "copyMatch": false,
+            "verse": "19:1",
+            "reason": "A observação 'um homem caminha à frente de outras pessoas por uma rua' não corresponde especificamente à narrativa de Lucas 19. Embora Jesus tenha passado por Jericó (v.1), a descrição é genérica e ambígua - poderia ser qualquer pessoa, não necessariamente Jesus ou Zaqueu. Não há elementos distintivos que conectem esta cena à passagem específica (como a interação com Zaqueu, a árvore, ou o contexto de Jericó). Além disso, não há correspondência semântica clara com nenhum cartão editorial específico, pois a descrição é vaga demais para estabelecer compatibilidade com o copy editorial esperado."
+          }
+        ]
+      },
       "promptHash": "2b00ce86b583fff5fbe02c4f648b3a4d6d94460ae80f839a3b7f0610761fbead"
     }
   ],
-  "entries": [],
   "circuit": null,
   "passed": false,
   "health": "awaiting_test",
-  "checkedAt": "2026-10-17T23:16:00.885Z",
+  "checkedAt": "2026-10-17T23:16:16.046Z",
   "run": "39078284213"
 }
