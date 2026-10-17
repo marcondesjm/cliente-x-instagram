@@ -1,3 +1,16 @@
+## 2026-10-17 — publicação ilustrada autorizada e fechamento sem livro grande
+
+- Usuário aprovou a prévia e autorizou publicar/seguir o estilo; pediu melhor distribuição e retirar destaque indevido ao livro.
+- Branch feat/kids-illustrated-publish-20261017, base 1a441a60; e3fe873f e 70557e45 enviados ao origin/main. Imagens explícitas em Sabedoria Kids usam composição de cena inteira; painel/avatar grande oculto no modo ilustrado, mantendo identificação discreta no cabeçalho.
+- Fechamento do Bom Samaritano: Quem você pode ajudar hoje?, referência e atividade em família; CTA salve para ler em família. Removido selo numérico que sobrepunha texto e reposicionada a progressão abaixo da imagem.
+- Bondade já publicada às 13:53: tema não reenviado. Escolhido pack inédito kids-biblia-24, O bom samaritano parou para ajudar, com cinco ilustrações e Story distinto, fonte Sweet Publishing/FreeBibleimages CC BY-SA 3.0, créditos na legenda.
+- Render final 2026-10-17-140817-slot-0-render-only aprovado com QA visual de capa/fechamento; validação dos 37 packs e guardas de antirrepetição aprovadas. Run manual 39052509987 acionado com conta sabedoria-kids, feed-and-story, dry_run=false, pack explícito e mark_automatic_slot=false. Não substitui slot automático nem ativa outra conta.
+- Em acompanhamento até IDs/permalink/histórico persistido; não considerar o simples disparo como publicação concluída.
+
+- Publicação confirmada: run 39052509987 terminou success; Feed ID 18097755125543253, Story ID 17866270857676988, permalink https://www.instagram.com/p/DemnVJSlF4I/, publicado em 17/10/2026 às 14:11:38 BRT. Primeiro comentário sem ID/erro registrado, não enviado.
+- Histórico persistido em origin/main 367620a3. Instagram aberto e cinco páginas navegadas; créditos presentes na legenda. Evidências locais output/sabedoria-kids/samaritano-publicado-capa.png e samaritano-publicado-fechamento.png.
+- Deploy READY dpl_ETa2nARfn4DghMhaUPXvACMZrZ6y, código 70557e45, alias cliente-x-instagram.vercel.app. Padrão salvo para pautas de Sabedoria Kids com imagens explícitas; 35 pautas do acervo ainda carecem de ilustrações. Nenhuma busca indiscriminada, exclusão ou republicação de Bondade.
+
 ## 2026-10-17 — ilustrações licenciadas no acervo de Sabedoria Kids
 
 - Usuário pediu melhorar a arte de Bondade com imagens dos sites. Branch feat/kids-illustrated-library-20261017, base d2cd9e3a.
