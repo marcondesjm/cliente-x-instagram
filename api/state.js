@@ -2890,10 +2890,12 @@ export default async function handler(req, res) {
   let biblicalResearch = null;
   let biblicalImageDiscovery = null;
   let biblicalSceneAutomation = null;
+  let biblicalSceneReplenishment = null;
   if (accountKey === 'sabedoria-kids') {
     try { biblicalResearch = (await readGithubConfig('automation/instagram-template/config/sabedoria-kids-sources.json')).data; } catch { biblicalResearch = null; }
     try { biblicalImageDiscovery = (await readGithubConfig('automation/instagram-template/config/kids-image-discovery.json')).data; } catch { biblicalImageDiscovery = null; }
     try { biblicalSceneAutomation = (await readGithubConfig('automation/instagram-template/config/kids-scene-automation.json')).data; } catch { biblicalSceneAutomation = null; }
+    try { biblicalSceneReplenishment = (await readGithubConfig('automation/instagram-template/config/kids-scene-replenishment.json')).data; } catch { biblicalSceneReplenishment = null; }
   }
   const radarConfig = radarConfigForAccount(account);
   const radarHealth = await loadRadarCollectionHealth(radarConfig, accountKey);
@@ -2938,6 +2940,7 @@ export default async function handler(req, res) {
     biblicalResearch,
     biblicalImageDiscovery,
     biblicalSceneAutomation,
+    biblicalSceneReplenishment,
     visualReadiness: { required: requiresBibleIllustrations(account), total: packs.length, ready: readyPacks.length, pending: packs.length - readyPacks.length },
     calendarPublications: (publicationHistory[accountKey] || [])
       .filter(entry => entry.mediaId && entry.publishedAt)
