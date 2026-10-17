@@ -1,5 +1,7 @@
 ## 2026-10-17 — padrão ilustrado obrigatório em Sabedoria Kids
 
+- Produção: commits 53d2c492 e 7884d7aa enviados; deploy READY dpl_7NUmt8a1Vh5igykhnssw1wXJhhcK, alias cliente-x-instagram.vercel.app. Teste integrado com pack explícito sem imagem retornou erro antes de render/upload/Meta. Painel recarregado exigiu novo login, portanto contagem na UI não foi visualmente confirmada nesta sessão. Nenhuma nova publicação disparada.
+
 - Incidente: usuário mostrou Abraão deu o primeiro passo sem imagem após aprovação do padrão ilustrado. Causa confirmada: kids-biblia-05 ainda tinha typographicOnly=true e nenhum imagePath; apenas duas das 37 pautas tinham ilustração completa. Salvar preferência não implementou exigência de qualidade na seleção.
 - Branch fix/kids-enforce-illustrated-standard, base 4a685016. contentProfile.visualStandard=illustrated-bible; filtro central retém apenas pautas com imagens existentes em todos os cartões, layout ilustrado, Story distinto da capa e fonte/licença/revisão. Guarda final também bloqueia packs explícitos/manuais sem esses requisitos antes de render/upload/Meta.
 - Ilustrado Abraão com seis imagens individuais Sweet Publishing / FreeBibleimages, CC BY-SA 3.0, conjunto abraham-canaan. Fonte/atribuição/licença registradas; cenas e mapa inspecionados. Nenhuma substituição ou republicação do post já publicado DempTZ9msno.
