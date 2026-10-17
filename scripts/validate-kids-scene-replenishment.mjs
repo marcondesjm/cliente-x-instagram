@@ -5,7 +5,7 @@ import {callAllowance,calibrationImage,visualSignature,similarScenes,contactShee
 import {reviewBinding,assertAutomaticReview,verseIsWithin} from '../lib/kids-scene-review-proof.js';
 import {passageRanges,loadPassage} from '../lib/kids-bible-passage.js';
 import {validateRecipe,hash} from '../lib/kids-scene-assembly.js';
-import {beginDiagnosticPilot,endDiagnosticPilot,reviewCircuitBlocked} from '../lib/kids-scene-vision.js';
+import {beginDiagnosticPilot,endDiagnosticPilot,reviewCircuitBlocked,cachedBlindObservation,VISION_VERSION} from '../lib/kids-scene-vision.js';
 import {sceneGroundingTask,groundingFingerprint} from '../lib/editorial-grounding.js';
 const state={calls:[],circuit:null,policy:{maxCallsPerDay:2,maxInputTokensPerDay:100,maxInputTokensPerCall:100}};
 assert.equal(reviewPoolLimit({maxCallsPerDay:26,maxInputTokensPerDay:1500000,maxInputTokensPerCall:120000}),9);
@@ -29,6 +29,17 @@ assert.throws(()=>beginDiagnosticPilot(diagnostic,'another','kids-biblia-29',now
 diagnostic.circuit='vision_validation_failed';
 assert.throws(()=>callAllowance(diagnostic,now),/pausada/,'Persisted pilot metadata never grants permission in another process');
 assert.equal(diagnostic.policy.maxCallsPerDay,1);
+diagnostic.calls=[];diagnostic.entries=[{id:'kids-biblia-29',status:'reviewed',checkedAt:'2026-10-17T00:00:00Z'}];
+beginDiagnosticPilot(diagnostic,'new-pilot','kids-biblia-29',now);endDiagnosticPilot(diagnostic,now);
+assert.equal(diagnostic.pilotRun.status,'rejected','A previously reviewed entry cannot make a no-op pilot succeed');
+const cachedScene={id:'0123456789abcdef',sha256:'a'.repeat(64)};
+const cachedState={model:'claude-haiku-4.5',pixelCache:{[cachedScene.sha256]:{version:VISION_VERSION,model:'claude-haiku-4.5',promptHash:'prompt-hash',checkedAt:now.toISOString(),observation:{...cachedScene,imageHash:'b'.repeat(64),imageBytes:50000,visible:true,style:'illustration',childSuitable:true,observedEvent:'Pessoas atravessam a água em um barco.'}}}};
+assert.equal(cachedBlindObservation(cachedState,cachedScene,'prompt-hash',now).id,cachedScene.id);
+assert.equal(cachedBlindObservation(cachedState,cachedScene,'changed-prompt',now),null);
+assert.equal(cachedBlindObservation(cachedState,cachedScene,'prompt-hash',new Date(now.getTime()+25*60*60*1000)),null);
+const missingPayload=structuredClone(cachedState);delete missingPayload.pixelCache[cachedScene.sha256].observation.imageHash;
+assert.equal(cachedBlindObservation(missingPayload,cachedScene,'prompt-hash',now),null);
+assert.equal(cachedBlindObservation({...cachedState,model:'claude-sonnet-4.6'},cachedScene,'prompt-hash',now),null);
 state.calls=[{day:'2026-10-17',status:'reserved'}];assert.throws(()=>callAllowance(state,now),/sem recibo/);
 state.calls=[{day:'2026-10-17',status:'completed',inputTokens:100}];assert.throws(()=>callAllowance(state,now),/tokens/);
 state.calls=[{day:'2026-10-17',status:'failed'},{day:'2026-10-17',status:'completed'}];assert.throws(()=>callAllowance(state,now),/chamadas/);

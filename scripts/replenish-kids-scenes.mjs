@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import {randomUUID} from 'node:crypto';
 import {matchingSchema,matchingPrompt,matchSceneOptions} from '../lib/kids-scene-matching.js';
-import {beginDiagnosticPilot,endDiagnosticPilot,reviewCircuitBlocked,bindVerificationObservations} from '../lib/kids-scene-vision.js';
+import {beginDiagnosticPilot,endDiagnosticPilot,reviewCircuitBlocked,bindVerificationObservations,cachedBlindObservation} from '../lib/kids-scene-vision.js';
 import {resolve,dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {persistState} from './persist-instagram-state.mjs';
@@ -106,13 +106,16 @@ async function reviewPack(pack,candidate,known,{attempt=0,feedback=null}={}) {
   const score=s=>(s.description.toLowerCase().match(/[a-z]{4,}/g) || []).filter(w=>words.has(w)).length;
   const ranked=[...source.scenes].sort((a,b)=>score(b)-score(a));
   const poolPolicy=state.pilotRun?.status==='running'?{...state.policy,maxCallsPerDay:Math.min(state.policy.maxCallsPerDay,state.pilotRun.maxCalls),maxInputTokensPerDay:Math.min(state.policy.maxInputTokensPerDay,state.pilotRun.maxInputTokens)}:state.policy;
-  let downloaded=0;
+  const newReadLimit=reviewPoolLimit(poolPolicy);
+  let downloaded=0,newReads=0;
   for(const scene of ranked.slice(0,30)) {
-    if(pool.length>=reviewPoolLimit(poolPolicy))break;
+    if(pool.length>=12)break;
     const item=await getScene(scene);downloaded+=item.bytes.length;
     if(downloaded>30_000_000)throw new Error('Conjunto excede limite de download.');
     if([...known,...pool].some(other=>similarScenes(item,other)))continue;
-    pool.push(item);
+    const cached=blindCache.get(item.sha256) || cachedBlindObservation(state,item,hash(BLIND_SCENE_PROMPT));
+    if(!cached && newReads>=newReadLimit)continue;
+    pool.push(item);if(!cached)newReads++;
   }
   if(pool.length<pack.slides.length+1)throw new Error('Faltam seis cenas distintas e inéditas para esta pauta.');
   const sheet=await contactSheet(pool),ctx=context(pack,passage);
@@ -124,10 +127,8 @@ async function reviewPack(pack,candidate,known,{attempt=0,feedback=null}={}) {
   for(const scene of pool) {
     if(blindCache.has(scene.sha256) && blindCache.get(scene.sha256)===null)continue;
     let observation=blindCache.get(scene.sha256);
-    const cached=state.pixelCache?.[scene.sha256];
-    if(!observation && cached?.version===VISION_VERSION && cached.model===state.model && cached.promptHash===hash(BLIND_SCENE_PROMPT) && Date.parse(cached.checkedAt)+24*60*60*1000>Date.now() && cached.observation?.id===scene.id && cached.observation.sha256===scene.sha256) {
-      assertBlindScene(cached.observation);observation=cached.observation;blindCache.set(scene.sha256,observation);
-    }
+    const cached=cachedBlindObservation(state,scene,hash(BLIND_SCENE_PROMPT));
+    if(!observation && cached){observation=cached;blindCache.set(scene.sha256,observation);}
     if(!observation) {
       const image=await individualSceneImage(scene.bytes);
       callAllowance(state,new Date(),4);
@@ -216,7 +217,7 @@ async function replenish() {
     const pack=packs.find(p=>p.id===entry.id);
     if(!pack || published(pack) || recipes.some(r=>r.id===pack.id) || pack.slides.every(s=>s.imagePath))continue;
     if(processed>=state.policy.maxPacksPerRun)break;
-    const choice=entry.candidates.filter(c=>c.scenes.length>=pack.slides.length+1).map(candidate=>({candidate,fingerprint:hash({copy:copyFingerprint(pack),terms:candidate.termsHash,scenes:candidate.scenes.map(s=>s.id),version:VISION_VERSION,model:state.model,reasoningModel:state.reasoningModel,responseFormat:state.responseFormat,parameters:'blind-hybrid-card-options-identity-forced-v4'})})).find(c=>!state.rejections[c.fingerprint] || Date.parse(state.rejections[c.fingerprint].retryAfter)<=Date.now());
+    const choice=entry.candidates.filter(c=>c.scenes.length>=pack.slides.length+1).map(candidate=>({candidate,fingerprint:hash({copy:copyFingerprint(pack),terms:candidate.termsHash,scenes:candidate.scenes.map(s=>s.id),version:VISION_VERSION,model:state.model,reasoningModel:state.reasoningModel,responseFormat:state.responseFormat,parameters:'blind-hybrid-card-options-identity-cache-pool-v5'})})).find(c=>!state.rejections[c.fingerprint] || Date.parse(state.rejections[c.fingerprint].retryAfter)<=Date.now());
     if(!choice)continue;
     const {candidate,fingerprint}=choice;
     try {callAllowance(state,new Date(),3);}catch(error){
