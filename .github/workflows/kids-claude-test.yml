@@ -2,6 +2,13 @@ name: Sabedoria Kids - testar Claude
 on:
   workflow_dispatch:
     inputs:
+      provider:
+        description: Servidor autorizado para receber a credencial e a imagem
+        type: choice
+        default: anthropic
+        options:
+          - anthropic
+          - claude-ss
       vision:
         description: Uma chamada visual curta (pode consumir credito da API)
         type: boolean
@@ -24,6 +31,7 @@ jobs:
         env:
           KIDS_VISION_ANTHROPIC_API_KEY: ${{ secrets.KIDS_VISION_ANTHROPIC_API_KEY }}
           KIDS_VISION_TEST: ${{ inputs.vision }}
+          KIDS_VISION_PROVIDER: ${{ inputs.provider }}
         run: node scripts/test-kids-claude.mjs
       - name: Save diagnostic receipt
         if: always()
