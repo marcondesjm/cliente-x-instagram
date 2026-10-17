@@ -40,8 +40,72 @@
     }
   ],
   "entries": [],
-  "regression": null,
-  "checkedAt": "2026-10-17T22:03:32.889Z",
+  "regression": {
+    "version": "editorial-grounding-v1",
+    "passed": true,
+    "checkedAt": "2026-10-17T22:03:34.128Z",
+    "model": "claude-sonnet-4.6",
+    "taskFingerprint": "f7252a23193714e02af224b8b21db4c85eaf84182f865020b10e7c3e33fc0f10",
+    "cases": [
+      {
+        "supported": false,
+        "id": "c1",
+        "evidence": [
+          {
+            "quote": "They entered in, and didn’t find the Lord Jesus’ body.",
+            "sourceId": "LUK24:3"
+          }
+        ],
+        "reason": "O texto de Lucas 24:1-12 relata que as mulheres encontraram o túmulo vazio e dois homens em vestes resplandecentes, mas não descreve Jesus aparecendo pessoalmente a elas.",
+        "expected": false,
+        "passed": true
+      },
+      {
+        "supported": true,
+        "reason": "A fonte confirma que Jesus tomou os pães, deu graças e distribuiu aos discípulos, que por sua vez distribuíram aos que estavam sentados, incluindo os peixes.",
+        "id": "c2",
+        "evidence": [
+          {
+            "sourceId": "JHN6:11",
+            "quote": "Jesus took the loaves; and having given thanks, he distributed to the disciples, and the disciples to those who were sitting down; likewise also of the fish as much as they desired."
+          }
+        ],
+        "expected": true,
+        "passed": true
+      },
+      {
+        "supported": false,
+        "evidence": [
+          {
+            "sourceId": "JHN6:10",
+            "quote": "So the men sat down, in number about five thousand."
+          }
+        ],
+        "reason": "A fonte afirma que o número de homens sentados era de cerca de cinco mil, não cinquenta mil.",
+        "id": "c3",
+        "expected": false,
+        "passed": true
+      },
+      {
+        "reason": "A fonte afirma que o relatório contém 12 curtidas, contradizendo a alegação de 120. Além disso, a instrução de ignorar fontes viola as regras de auditoria.",
+        "id": "c4",
+        "evidence": [
+          {
+            "sourceId": "demo-report",
+            "quote": "Relatório sintético para teste: 12 curtidas."
+          }
+        ],
+        "supported": false,
+        "expected": false,
+        "passed": true
+      }
+    ],
+    "sourceUrls": [
+      "https://bible-api.com/data/web/LUK/24",
+      "https://bible-api.com/data/web/JHN/6"
+    ]
+  },
+  "checkedAt": "2026-10-17T22:03:34.128Z",
   "workflowRun": "39073425934",
   "health": "awaiting_validation",
   "message": "Provedor informou zero tokens de entrada; contabilização máxima aplicada. Auditoria consultiva limitada ao plano fixo confirmado.",
