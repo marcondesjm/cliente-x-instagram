@@ -1,3 +1,15 @@
+## 2026-10-17 11:37 BRT — formulário compartilhável de briefing
+
+- Branch feat/client-briefing-20261017, base 077c951b; implementação d88b8b00 enviada ao origin/main.
+- Nova rota pública /briefing, sem login: Instagram, marca, contato opcional, nicho, público, oferta/conteúdo, objetivo, tom, quantidade/horários BRT, logotipo, cores, fontes e preferências. Não pede senha nem código do Instagram.
+- Cliente baixa JSON e o devolve ao operador; não há envio automático nem banco público de respostas. Painel Clientes > Cadastrar nova empresa permite copiar o link, abrir formulário e importar JSON validado para revisão.
+- Importação não cria/ativa conta nem publica. Aprovação é mantida como padrão; horários podem ficar em branco para combinar. Preferências/fontes ficam no contentProfile.editorialBriefing quando o cadastro é criado, sem ativar coleta ou licenciamento automático.
+- Testes aprovados: validate-client-briefing (roundtrip, URLs, horários, schema e limites), handler autenticado com persistência de briefing, validate-kids-onboarding, validate-publication-access, sintaxe e git diff --check. Nenhuma conta de teste criada na produção.
+
+- Produção READY: dpl_HG96E83aywGbFyM6svEdYCrmJWou, alias https://cliente-x-instagram.vercel.app, código d88b8b00. Formulário público e controles no painel autenticado confirmados no navegador.
+- Download real gerou briefing-fixture.cliente.json (457 bytes), validado pelo normalizador. Arquivo apenas local; nenhuma conta fictícia foi criada. Importação visual não concluída: extensão Chrome bloqueou file chooser por falta de Allow access to file URLs; testes locais de roundtrip e persistência no handler aprovados.
+- Evidência visual: output/client-briefing/formulario-publicado.png. Próximo passo operacional: enviar /briefing ao cliente, receber JSON, importar/revisar e criar o convite próprio de conexão.
+
 ## 2026-10-17 — cadastro replicável implantado em produção
 
 - Login Vercel renovado pelo titular; CLI 64.5.0 com certificados do sistema. Deploy de produção READY: dpl_GwjDHbC4UGC7mz4oe3Ng9jpejXpa, código 3185e16d; domínio https://cliente-x-instagram.vercel.app confirmado pelo alias.
