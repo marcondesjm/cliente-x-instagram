@@ -37,7 +37,7 @@ const temp=fs.mkdtempSync(path.join(os.tmpdir(),'kids-discovery-test-'));
 try {
   for(const dir of ['scripts','lib','automation/instagram-template/config'])fs.mkdirSync(path.join(temp,dir),{recursive:true});
   fs.writeFileSync(path.join(temp,'package.json'),'{"type":"module"}');
-  for(const file of ['scripts/discover-kids-images.mjs','lib/bible-visual-standard.js','lib/kids-scene-assembly.js','lib/scheduled-content-guard.js'])fs.copyFileSync(file,path.join(temp,file));
+  for(const file of ['scripts/discover-kids-images.mjs','lib/bible-visual-standard.js','lib/kids-scene-assembly.js','lib/kids-scene-review-proof.js','lib/scheduled-content-guard.js'])fs.copyFileSync(file,path.join(temp,file));
   fs.writeFileSync(path.join(temp,'lib/kids-image-discovery.js'),fs.readFileSync('lib/kids-image-discovery.js','utf8').replace("from 'entities'",`from '${import.meta.resolve('entities')}'`));
   const config='automation/instagram-template/config/';
   const pack=JSON.parse(fs.readFileSync(config+'content-packs.json')).find(g=>g.account==='sabedoria-kids').packs.find(p=>p.id==='kids-biblia-02');

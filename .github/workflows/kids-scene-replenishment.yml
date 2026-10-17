@@ -1,0 +1,64 @@
+name: Sabedoria Kids - repor cenas novas
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Calibrar pixels, testar uma pauta ou executar reposicao ativa
+        type: choice
+        default: calibrate
+        options:
+          - calibrate
+          - pilot
+          - replenish
+  schedule:
+    # Entre descoberta e montagem: 05h40, 11h40, 17h40 e 23h40 BRT.
+    - cron: '40 2,8,14,20 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: instagram-feed-sabedoria-kids-automatic
+  cancel-in-progress: false
+jobs:
+  replenish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Refresh state
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git pull --rebase origin main
+      - run: npm ci --ignore-scripts
+      - name: Calibrate or review new scenes with persisted usage receipts
+        env:
+          KIDS_VISION_ANTHROPIC_API_KEY: ${{ secrets.KIDS_VISION_ANTHROPIC_API_KEY }}
+          REVIEW_MODE: ${{ inputs.mode || 'replenish' }}
+        run: |
+          if [ "$REVIEW_MODE" = calibrate ]; then
+            node scripts/replenish-kids-scenes.mjs --calibrate --persist
+          elif [ "$REVIEW_MODE" = pilot ]; then
+            node scripts/replenish-kids-scenes.mjs --pilot --persist
+          else
+            node scripts/replenish-kids-scenes.mjs --persist
+          fi
+      - name: Install render browser
+        if: inputs.mode != 'calibrate'
+        run: npx playwright install --with-deps chromium
+      - name: Assemble and render approved selections
+        if: inputs.mode != 'calibrate'
+        run: node scripts/assemble-kids-scenes.mjs --persist
+      - name: Save review evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kids-scene-replenishment-evidence
+          path: |
+            output/kids-replenishment/
+            automation/instagram-template/config/kids-scene-replenishment.json
+            automation/instagram-template/runs/sabedoria-kids/
+          if-no-files-found: ignore
