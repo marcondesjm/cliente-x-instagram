@@ -1063,11 +1063,17 @@
       "model": "claude-haiku-4.5",
       "responseFormat": "json",
       "startedAt": "2026-10-17T23:42:29.041Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 68958,
       "promptChars": 659,
       "imageFingerprint": "9d37a56479ea836abdd1f3a7e7433474d9f0fa150eaf4c4c2a46ce2bd4bd830c",
-      "promptFingerprint": "8757f8af2d72f56ed83bcbd4da7166c7c5186e2a50a019a9ee0803cf91ed29fc"
+      "promptFingerprint": "8757f8af2d72f56ed83bcbd4da7166c7c5186e2a50a019a9ee0803cf91ed29fc",
+      "completedAt": "2026-10-17T23:42:45.338Z",
+      "reportedInputTokens": 24946,
+      "inputTokens": 24946,
+      "outputTokens": 57,
+      "usageStatus": "provider_reported",
+      "stopReason": "end_turn"
     }
   ],
   "entries": [
@@ -1162,7 +1168,7 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T23:42:29.041Z",
+  "checkedAt": "2026-10-17T23:42:45.338Z",
   "lastRun": "39079987099",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -1335,91 +1341,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "select:kids-biblia-29",
+    "stage": "pixels:kids-biblia-27:8e150ed2cdf55de4",
     "value": {
-      "cards": [
-        {
-          "card": 1,
-          "options": [
-            {
-              "scene": 5,
-              "verse": "19:5-7",
-              "reason": "A cena mostra Zaqueu recebendo Jesus na entrada de sua casa enquanto a multidão observa e murmura. Isso retrata diretamente o evento central do título 'Zaqueu recebeu Jesus em sua casa', que é o clímax narrativo da passagem."
-            }
-          ],
-          "reason": "A capa deve ilustrar o evento principal do título. A cena 5 é a única que mostra explicitamente a recepção de Jesus na casa de Zaqueu, alinhando-se perfeitamente com o título da capa."
-        },
-        {
-          "card": 2,
-          "options": [
-            {
-              "scene": 3,
-              "verse": "19:4-5",
-              "reason": "A cena mostra Zaqueu nos galhos da árvore olhando para baixo e Jesus olhando para cima, correspondendo à parte do resumo 'Zaqueu subiu em uma árvore para ver Jesus'."
-            },
-            {
-              "scene": 6,
-              "verse": "19:4",
-              "reason": "A cena mostra uma pessoa subindo em uma árvore frondosa enquanto um grupo observa, ilustrando diretamente a ação de Zaqueu subir na sicômora para ver Jesus, conforme descrito no resumo."
-            }
-          ],
-          "reason": "O cartão narrativo resume dois eventos: subir na árvore e receber Jesus/reparar erros. As cenas 3 e 6 ilustram a primeira parte desse resumo (subir na árvore) de forma clara e pertinente ao texto bíblico."
-        },
-        {
-          "card": 3,
-          "options": [
-            {
-              "scene": 2,
-              "verse": "19:8",
-              "reason": "A cena mostra Zaqueu em pé conversando com Jesus, gesticulando, o que corresponde ao momento em que ele declara sua mudança de atitude ao prometer dar metade dos bens aos pobres e restituir quatro vezes mais. Isso ilustra a lição sobre mudança de atitude e reparação."
-            }
-          ],
-          "reason": "A lição fala sobre 'mudança de atitude' e 'reparar erros'. A cena 2 é a única que retrata Zaqueu fazendo sua declaração pública de arrependimento e restituição, que é a manifestação concreta dessa mudança de atitude."
-        },
-        {
-          "card": 4,
-          "options": [
-            {
-              "scene": 2,
-              "verse": "19:8",
-              "reason": "A atividade familiar trata de 'devolver algo e reparar um prejuízo'. A cena 2 mostra Zaqueu prometendo restituir quatro vezes mais o que tirou injustamente, sendo a ilustração bíblica direta do conceito de reparação discutido na atividade."
-            }
-          ],
-          "reason": "A atividade familiar pede uma conversa sobre reparação. A cena 2 ilustra o momento exato em que Zaqueu se compromete com a restituição, fornecendo o fundamento bíblico para a discussão familiar sobre devolver e reparar."
-        },
-        {
-          "card": 5,
-          "options": [
-            {
-              "scene": 3,
-              "verse": "19:5",
-              "reason": "A cena mostra o encontro entre Jesus e Zaqueu na árvore, onde Jesus o convida para sua casa. Este é um momento chave da passagem que pode ser explorado na leitura familiar, diferente das cenas já usadas nas posições anteriores."
-            },
-            {
-              "scene": 7,
-              "verse": "19:1",
-              "reason": "A cena mostra Jesus caminhando com seus discípulos passando por Jericó, ilustrando o contexto inicial da passagem ('Ele entrou e passava por Jericó'), adequado para introduzir a leitura completa da história."
-            }
-          ],
-          "reason": "O cartão de leitura incentiva a leitura da passagem completa. As cenas 3 e 7 oferecem contextos visuais diferentes (o encontro na árvore ou a chegada a Jericó) que podem servir como ponto de partida visual para a leitura familiar, sem repetir as cenas principais já utilizadas."
-        },
-        {
-          "card": 6,
-          "options": [
-            {
-              "scene": 1,
-              "verse": "19:9-10",
-              "reason": "A cena mostra um grupo de homens conversando em ambiente externo, correspondendo ao sourceContext que cita Jesus declarando 'hoje veio a salvação a esta casa' e 'o Filho do Homem veio buscar e salvar o perdido'. É uma cena distinta das demais, focada na conclusão teológica da passagem."
-            },
-            {
-              "scene": 4,
-              "verse": "19:2-3",
-              "reason": "A cena mostra Jesus conversando com um grupo, com sourceContext mencionando Zaqueu como cobrador de impostos rico mas de má reputação. Oferece uma perspectiva diferente sobre o contexto social da história, adequada para o Story final."
-            }
-          ],
-          "reason": "O Story deve apresentar uma cena diferente relacionada à mesma passagem. As cenas 1 e 4 não foram utilizadas nas posições anteriores e oferecem ângulos distintos (a declaração de salvação ou o contexto social de Zaqueu), enriquecendo a compreensão geral da narrativa."
-        }
-      ]
+      "visible": true,
+      "style": "illustration",
+      "childSuitable": true,
+      "observedEvent": "Pessoas em uma embarcação inclinada por ondas agitadas, com uma pessoa se agarrando à lateral do barco e outras permanecendo a bordo"
     }
   },
   "lastFactualEvaluation": {
