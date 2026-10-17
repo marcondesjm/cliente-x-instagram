@@ -3,13 +3,13 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "review_completed",
-  "message": "1 pauta(s) examinada(s); somente seleções aprovadas seguem para montagem.",
+  "health": "blocked",
+  "message": "Revisão de cenas novas bloqueada: no piloto a API descreveu imagens genéricas ausentes da fonte e reprovou a seleção da capa. As três seleções previamente revisadas continuam; nenhuma pauta nova foi liberada automaticamente.",
   "policy": {
-    "maxCallsPerDay": 44,
+    "maxCallsPerDay": 26,
     "maxInputTokensPerCall": 120000,
-    "maxInputTokensPerDay": 2200000,
-    "maxPacksPerRun": 1,
+    "maxInputTokensPerDay": 1500000,
+    "maxPacksPerRun": 3,
     "readyStockTarget": 24
   },
   "calls": [
@@ -716,7 +716,7 @@
     "passed": true,
     "challengeHash": "0b7ec60b9a4308dcd844c422ee2ef46cc86991769d376775e51eba73385eb04f"
   },
-  "circuit": null,
+  "circuit": "vision_validation_failed",
   "publicationTriggered": false,
   "checkedAt": "2026-10-17T22:19:03.684Z",
   "lastRun": "39074391132",
@@ -851,7 +851,7 @@
       }
     ]
   },
-  "validationBudgetNote": "Piloto v2 limitado a uma pauta com novo controle factual; limites26 chamadas/3 pautas só após ativação comprovada.",
+  "validationBudgetNote": "Testes encerrados; limites operacionais26 chamadas/dia e1,5M tokens restaurados. Consumo sem recibo permanece contado pelo máximo.",
   "semanticValidation": {
     "version": "editorial-grounding-v1",
     "checkedAt": "2026-10-17T22:03:34.128Z",
@@ -1013,5 +1013,12 @@
         }
       ]
     }
+  },
+  "visualValidationIncident": {
+    "checkedAt": "2026-10-17T22:20:07.749Z",
+    "workflowRun": "39074391132",
+    "packId": "kids-biblia-29",
+    "reason": "Verificador descreveu crianças lendo/desenhando e cenas domésticas genéricas; conferência local dos oito originais confirmou somente cenas bíblicas de Zaqueu. Segunda tentativa rejeitou corretamente a capa incompatível. Nenhuma seleção passou pelo conjunto de controles.",
+    "evidenceImage": "output/kids-scenes/zaqueu-conjunto-fonte-conferido.jpg"
   }
 }
