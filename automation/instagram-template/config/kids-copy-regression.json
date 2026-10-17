@@ -25,10 +25,16 @@
     {
       "id": "3ea0e556-4d74-4d62-9bf5-f56bf67531a1",
       "day": "2026-10-17",
-      "status": "reserved",
+      "status": "completed",
       "stage": "incompatible-house",
       "startedAt": "2026-10-17T23:16:17.557Z",
-      "promptHash": "c59ef1e84890121120f1fc1f111259eddb68cb16c0aec87ca651585ce4795c9e"
+      "promptHash": "c59ef1e84890121120f1fc1f111259eddb68cb16c0aec87ca651585ce4795c9e",
+      "completedAt": "2026-10-17T23:16:34.344Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 1,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -64,11 +70,44 @@
         ]
       },
       "promptHash": "2b00ce86b583fff5fbe02c4f648b3a4d6d94460ae80f839a3b7f0610761fbead"
+    },
+    {
+      "id": "incompatible-house",
+      "expectedCopyMatch": false,
+      "passed": true,
+      "syntheticTextFixture": true,
+      "imageInspection": false,
+      "value": {
+        "decision": "reject",
+        "cards": [
+          {
+            "scene": 1,
+            "observedEvent": "Uma pessoa sobe em uma árvore enquanto outras pessoas observam do chão.",
+            "passageMatch": true,
+            "childSuitable": true,
+            "distinct": true,
+            "copyMatch": false,
+            "verse": "19:4",
+            "reason": "A observação descreve alguém subindo em uma árvore, o que corresponde a Lucas 19:4 (Zaqueu subiu numa árvore). No entanto, o cartão correspondente tem título 'Zaqueu recebeu Jesus em sua casa' e corpo 'Zaqueu desceu depressa e recebeu Jesus com alegria em sua casa', que se refere ao versículo 19:6. A ação observada (subir na árvore) não é semanticamente compatível com o conteúdo do cartão (receber Jesus em casa). Portanto copyMatch é false."
+          },
+          {
+            "scene": 2,
+            "observedEvent": "Um homem caminha à frente de outras pessoas por uma rua.",
+            "passageMatch": true,
+            "childSuitable": true,
+            "distinct": true,
+            "copyMatch": true,
+            "verse": "19:1-4",
+            "reason": "A observação descreve um homem caminhando à frente de outros por uma rua, o que pode corresponder a Zaqueu correndo adiante (Lucas 19:4) ou Jesus passando por Jericó (Lucas 19:1). Como há apenas um cartão e esta é a segunda cena, não há cartão correspondente específico para comparar copyMatch. A cena é pertinente à passagem geral e distinta da primeira cena (árvore vs. rua). Considerando que não há segundo cartão definido, avalio como compatível com o contexto geral da passagem."
+          }
+        ]
+      },
+      "promptHash": "c59ef1e84890121120f1fc1f111259eddb68cb16c0aec87ca651585ce4795c9e"
     }
   ],
   "circuit": null,
   "passed": false,
   "health": "awaiting_test",
-  "checkedAt": "2026-10-17T23:16:17.557Z",
+  "checkedAt": "2026-10-17T23:16:34.344Z",
   "run": "39078284213"
 }
