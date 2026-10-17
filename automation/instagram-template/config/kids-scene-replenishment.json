@@ -1243,11 +1243,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "json",
       "startedAt": "2026-10-17T23:47:50.209Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 6273,
       "imageFingerprint": null,
-      "promptFingerprint": "0acb4c160c41d3d8d5f11678a82f1ce812fbc107531a3f40e73f2e04549bb1ea"
+      "promptFingerprint": "0acb4c160c41d3d8d5f11678a82f1ce812fbc107531a3f40e73f2e04549bb1ea",
+      "completedAt": "2026-10-17T23:48:15.489Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 1044,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "end_turn"
     }
   ],
   "entries": [
@@ -1350,7 +1356,7 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T23:47:50.209Z",
+  "checkedAt": "2026-10-17T23:48:15.489Z",
   "lastRun": "39080306641",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -1527,69 +1533,99 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "verify:kids-biblia-27",
+    "stage": "select:kids-biblia-27",
     "value": {
-      "decision": "reject",
       "cards": [
         {
-          "scene": 4,
-          "observedEvent": "Um grupo de pessoas na margem observa uma embarcação com várias pessoas a bordo navegando sobre a água.",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true,
-          "verse": "4:35-36",
-          "reason": "A cena retrata a partida do barco deixando a multidão, compatível com o título da capa 'Jesus e os discípulos na tempestade' como evento inicial da narrativa (v. 35-36). A ilustração estabelece o contexto da viagem antes da tempestade."
+          "card": 1,
+          "options": [
+            {
+              "scene": 1,
+              "verse": "4:37",
+              "reason": "Ilustra o evento central do título 'na tempestade', mostrando o barco inclinado pelas ondas agitadas conforme descrito em Marcos 4:37."
+            },
+            {
+              "scene": 5,
+              "verse": "4:37-38",
+              "reason": "Retrata a navegação em águas agitadas, compatível com o contexto da tempestade mencionado no título da capa."
+            }
+          ],
+          "reason": "A capa exige o evento do título (tempestade). As cenas 1 e 5 mostram a agitação das águas. A cena 1 é mais dramática e focada no perigo, enquanto a 5 mostra o grupo no barco durante a turbulência."
         },
         {
-          "scene": 1,
-          "observedEvent": "Pessoas em uma embarcação inclinada por ondas agitadas, com uma pessoa se agarrando à lateral do barco e outras permanecendo a bordo",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true,
-          "verse": "4:37",
-          "reason": "A cena mostra o barco sendo atingido pelas ondas durante a tempestade, correspondendo exatamente ao corpo do cartão narrativo que descreve a tempestade. Visualmente compatível com v. 37."
+          "card": 2,
+          "options": [
+            {
+              "scene": 6,
+              "verse": "4:39",
+              "reason": "Ilustra Jesus acalmando a tempestade ('repreendeu o vento... Paz! Acalma-te!'), que é a ação central descrita no resumo narrativo."
+            },
+            {
+              "scene": 1,
+              "verse": "4:37",
+              "reason": "Mostra a parte da narrativa onde 'as ondas batiam no barco', antecedente imediato à ação de Jesus citada no resumo."
+            }
+          ],
+          "reason": "O cartão narra a sequência: tempestade -> chamada -> acalmar. A cena 6 mostra diretamente Jesus interagindo para acalmar (braço estendido, contexto de calma subsequente ou diálogo). A cena 1 mostra a intensidade da tempestade mencionada."
         },
         {
-          "scene": 6,
-          "observedEvent": "Dois homens ajudam um terceiro homem deitado em uma cama ou leito",
-          "passageMatch": false,
-          "childSuitable": false,
-          "distinct": true,
-          "copyMatch": false,
-          "verse": "4:38",
-          "reason": "REPROVADO: A observação descreve homens ajudando alguém deitado em 'cama ou leito', o que não corresponde à passagem onde Jesus está dormindo 'na popa, sobre uma almofada' no barco durante a tempestade. A cena visual é incompatível com o contexto bíblico (barco em tempestade, não quarto/cama). Além disso, não retrata adequadamente a lição sobre o poder de Jesus e confiança dos discípulos."
+          "card": 3,
+          "options": [
+            {
+              "scene": 3,
+              "verse": "4:41",
+              "reason": "Ilustra a reação dos discípulos ('tiveram grande temor') e a reflexão sobre o poder de Jesus, conectando-se à lição sobre confiança e poder divino."
+            },
+            {
+              "scene": 6,
+              "verse": "4:40",
+              "reason": "Mostra Jesus questionando a fé dos discípulos ('Por que sois tão tímidos? Ainda não tendes fé?'), ponto central da lição espiritual."
+            }
+          ],
+          "reason": "A lição foca no poder de Jesus e na confiança/fé. A cena 3 mostra os discípulos processando o evento (pergunta 'Quem é este?'). A cena 6 mostra o ensino direto de Jesus sobre a fé."
         },
         {
-          "scene": 2,
-          "observedEvent": "Um homem de túnica vermelha estende o braço e toca o ombro de outro homem sentado em um barco com velas amarelas, cercado por outros homens.",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": false,
-          "verse": "4:39-40",
-          "reason": "REPROVADO: Embora a cena ocorra no barco, a ação descrita (tocar o ombro) não corresponde semanticamente ao cartão de atividade familiar que pede para 'desenhar o barco e conversar'. A ilustração não deve retratar literalmente a atividade, mas deve ser uma cena da passagem relacionada à lição. Esta cena representa Jesus acalmando a tempestade ou conversando, mas não se conecta adequadamente com o propósito do cartão de atividade familiar."
+          "card": 4,
+          "options": [
+            {
+              "scene": 7,
+              "verse": "4:36",
+              "reason": "Cena tranquila de partida/observação, adequada para ilustrar o contexto geral da história sem o caos da tempestade, servindo como pano de fundo para uma atividade familiar calma."
+            },
+            {
+              "scene": 5,
+              "verse": "4:38",
+              "reason": "Mostra Jesus dormindo no barco, um detalhe específico e curioso da passagem que pode ser interessante para crianças desenharem ou discutirem."
+            }
+          ],
+          "reason": "Atividade familiar pede uma cena relacionada, mas não a atividade em si. Cena 7 é segura e contextual. Cena 5 oferece um elemento visual distinto (Jesus dormindo) que facilita o desenho do barco."
         },
         {
-          "scene": 5,
-          "observedEvent": "Um homem de barba gesticula com as mãos enquanto fala em um campo aberto à beira de um corpo d'água com barcos ao fundo.",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true,
-          "verse": "4:35",
-          "reason": "A cena mostra Jesus falando às margens do lago antes de embarcar, compatível com o cartão de leitura que incentiva continuar a conversa em família e ler a passagem. Estabelece o contexto inicial da narrativa."
+          "card": 5,
+          "options": [
+            {
+              "scene": 4,
+              "verse": "4:35",
+              "reason": "Ilustra o início da jornada ('Vamos passar para a outra margem'), convidando à leitura desde o começo da passagem."
+            },
+            {
+              "scene": 7,
+              "verse": "4:36",
+              "reason": "Mostra a partida deixando a multidão, marcando o início físico da narrativa a ser lida."
+            }
+          ],
+          "reason": "Leitura incentiva começar a passagem. Cenas 4 e 7 representam o início cronológico (convite e partida), adequadas para introduzir a leitura completa."
         },
         {
-          "scene": 3,
-          "observedEvent": "Grupo de homens barbados com turbantes conversando juntos ao ar livre próximo a um corpo d'água",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true,
-          "verse": "4:41",
-          "reason": "A cena retrata os discípulos conversando entre si após a tempestade, questionando quem é Jesus, compatível com o story (última posição) que deve pertencer à passagem. Corresponde a v. 41 onde eles dizem uns aos outros: 'Quem é este, que até o vento e o mar lhe obedecem?'"
+          "card": 6,
+          "options": [
+            {
+              "scene": 2,
+              "verse": "4:38",
+              "reason": "Cena distinta das anteriores (foco em Jesus sendo acordado/discípulos interagindo com Ele de perto), pertinente à passagem e adequada para o Story como momento íntimo da narrativa."
+            }
+          ],
+          "reason": "O Story exige uma cena diferente. A cena 2 foca na interação pessoal de acordar Jesus, um momento chave não usado como opção principal nas outras posições (que focaram mais na tempestade externa, no acalmar, na reação final ou na partida)."
         }
       ]
     }
