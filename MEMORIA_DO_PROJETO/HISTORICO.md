@@ -1,3 +1,11 @@
+## 2026-10-17 11:01 BRT — teste das seis fontes e prévia de Marcos 10
+
+- Teste HTTP das seis fontes: cinco acessíveis; SBB retornou HTTP 403 na consulta direta pelo Node. Não contornar bloqueio; fonte permanece como referência para consulta assistida.
+- Marcos 10:13–16 conferido no YouVersion e na Bíblia Online, ambos NVI. Criado texto original infantil Jesus acolhe as crianças, com referências das duas páginas e atividade em família.
+- Render-only dos cinco slides concluído; cinco imagens inspecionadas, sem texto cortado observado. Agente visual aprovou composição tipográfica.
+- Relatório e pack salvos em output/sabedoria-kids na raiz do workspace; ZIP e capa em teste-fontes-marcos-10. Nenhuma publicação disparada neste teste.
+- Limite: teste de acesso e preparação editorial assistida; não comprova extração automática das cinco novas fontes. Coletor continua implementado somente para Bíblia para Crianças.
+
 ## 2026-10-17 — quatro fontes adicionais da Sabedoria Kids
 
 - Pedido explícito: cadastrar mais fontes. Adicionadas SBB, YouVersion Bíblia em português, YouVersion Bíblia para Crianças e 3 Palavrinhas; total de seis fontes no perfil.
