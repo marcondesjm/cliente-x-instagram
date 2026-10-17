@@ -6,6 +6,9 @@
 - Sem mídia, erro ou perfil divergente não reutiliza publicação anterior. Imagens reaparecem em consultas bem-sucedidas; removidos exemplos fixos do HTML inicial.
 - validate-account-post-preview aprovado: respostas fora de ordem, troca, ausência de mídia, perfil divergente e erro; validate-account-onboarding/sintaxe e git diff --check aprovados. Sem alteração de publicação, agenda ou credenciais.
 
+- Correção adicional da causa do HTTP 500 de Sabedoria Kids: api/private-metrics.js usava graph.facebook.com fixo, embora a conta use instagramLogin=instagram. Agora escolhe graph.instagram.com/v23.0 por conta, como o publicador; falhas retornam JSON controlado. Implementação 994c6ad6, checkpoint 3687a4a6.
+- validate-metrics-account-host aprovado com handler autenticado, roteamento dos dois tipos de login e falha estruturada. Deploy final READY dpl_FxFvo4aL7LbF7uzprzWDszaBEvHo, alias cliente-x-instagram.vercel.app. Validação visual final concluída: seletor sabedoria-kids limpa imediatamente a imagem anterior e depois exibe Jesus acolhe as crianças, permalink https://www.instagram.com/p/DemShwemsHk/, confirmado pela Meta. Evidência local output/account-switch/sabedoria-kids-corrigido.png. Nenhum novo post enviado.
+
 ## 2026-10-17 — orientação de conta profissional no briefing
 
 - Branch feat/briefing-professional-20261017 alinhada ao origin/main db840683; implementação 277ced01 enviada ao main, preservando atualizações operacionais concorrentes.
