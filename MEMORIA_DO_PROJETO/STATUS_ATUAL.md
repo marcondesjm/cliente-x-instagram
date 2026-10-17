@@ -1,3 +1,13 @@
+## 2026-10-17 — logotipo anexado no briefing
+
+- Branch feat/briefing-logo-20261017, base 5c154b92; implementação c8164a8c enviada ao origin/main.
+- Formulário público recebe PNG/JPG/WebP de até 1 MB, por seletor de arquivos do computador/celular; mostra prévia e remoção. Link HTTPS continua opcional. Arquivo é embutido no JSON de briefing, sem upload automático do formulário.
+- Importação permite briefing de até 1,6 MB, mostra logo/nome e permite removê-lo. Cadastro envia anexo validado para contentProfile.logoAttachment. Isso preserva a referência de marca; não aplica automaticamente logo às artes/publicações.
+- Validação compartilhada limita tamanho, MIME, base64 e assinatura; página também verifica decodificação. SVG e executáveis não aceitos. Arquivos anteriores sem anexo seguem compatíveis.
+- validate-client-briefing aprovado com roundtrip do anexo, formatos inválidos e tamanho; validate-account-onboarding confirma persistência no handler simulado; validate-publication-access, sintaxe JS e git diff --check aprovados. Nenhuma conta real criada.
+
+- Produção READY: dpl_J7r9bWmyKYH4ahP3QeDkP2oU79j6, código c8164a8c, alias https://cliente-x-instagram.vercel.app. Campo de anexo e alternativa de link confirmados no navegador; captura output/client-briefing/anexar-logotipo.png. Teste ponta a ponta de seleção pela extensão continua limitado pela permissão local de arquivos identificada anteriormente; serialização e persistência validadas em testes locais.
+
 ## 2026-10-17 — formatos no briefing do cliente
 
 - Branch feat/briefing-formats-20261017; base 45fd4c24; implementação 80a4d77f enviada ao origin/main.
