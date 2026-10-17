@@ -1494,7 +1494,9 @@ async function testInstagramAccountConnection(account = {}) {
 }
 
 async function createAccountConfig(body = {}, session = null, req = null) {
+  if (String(body.editorialBriefing || '').length > 30000) throw userError('O briefing deve ter no máximo 30.000 caracteres.');
   const contentProfile = {
+    editorialBriefing: String(body.editorialBriefing || '').trim(),
     niche: String(body.niche || '').trim(),
     audience: String(body.audience || '').trim(),
     offer: String(body.offer || '').trim(),

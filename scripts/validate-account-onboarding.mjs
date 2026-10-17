@@ -69,7 +69,7 @@ globalThis.fetch = async (url, options) => {
   else throw new Error(`Unexpected fixture request: ${path}`);
   return { ok: true, text: async () => JSON.stringify(result) };
 };
-const req = Readable.from([JSON.stringify({ action: 'create-account', expectedUsername: 'https://www.instagram.com/nova.marca/', niche: 'educação', audience: 'famílias', offer: 'atividades educativas', sourceAccount: 'source', times: ['08:30'] })]);
+const req = Readable.from([JSON.stringify({ action: 'create-account', editorialBriefing: 'Preferências do cliente e fontes revisáveis', expectedUsername: 'https://www.instagram.com/nova.marca/', niche: 'educação', audience: 'famílias', offer: 'atividades educativas', sourceAccount: 'source', times: ['08:30'] })]);
 req.method = 'POST';
 req.headers = { host: 'example.invalid', cookie: createSessionCookie('owner@example.invalid').split(';')[0] };
 const res = { setHeader() {}, status(code) { this.code = code; return this; }, json(value) { this.value = value; return this; } };
@@ -85,6 +85,7 @@ assert.equal(registered[1].clientProfile.approvalMode, 'approval');
 assert.equal(registered[1].onboarding.status, 'awaiting_connection');
 assert.equal(registered[1].instagramLogin, 'instagram');
 assert.equal(registered[1].contentProfile.curatedOnly, true);
+assert.equal(registered[1].contentProfile.editorialBriefing, 'Preferências do cliente e fontes revisáveis');
 assert.equal(registered[1].footerText, 'nova.marca');
 assert.equal(tree.length, 3);
 assert.equal(res.value.inviteUrl.startsWith('https://'), true);

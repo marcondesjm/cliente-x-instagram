@@ -2656,6 +2656,17 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               </div>
             </div>
           </div>
+          <div class="document-box" style="margin:20px 0">
+            <h3>Briefing do futuro cliente</h3>
+            <p>Copie o link e envie ao cliente. Ele preenche, baixa o arquivo e devolve para você importar e revisar abaixo. Não é necessário acessar o painel nem informar senha.</p>
+            <label>Link público do formulário<input id="clientBriefingUrl" readonly aria-label="Link público do briefing"></label>
+            <div class="briefing-actions">
+              <button type="button" id="copyClientBriefingLink">Copiar link do formulário</button>
+              <a href="/briefing" target="_blank" rel="noopener">Abrir formulário do cliente</a>
+            </div>
+            <label>Importar briefing preenchido (.json)<input type="file" id="importClientBriefing" accept=".json,application/json"></label>
+            <p id="clientBriefingStatus" role="status" aria-live="polite"></p>
+          </div>
           <div class="access-manager">
             <div class="form-section-title"><span>1</span>Responsável e identificação</div>
             <label>
@@ -3996,6 +4007,27 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       }
     }
 
+    async function importClientBriefing(event) {
+      const status = document.getElementById('clientBriefingStatus');
+      const file = event.target.files[0];
+      if (!file) return;
+      try {
+        if (file.size > 100000) throw new Error('O arquivo deve ter no máximo 100 KB.');
+        const { normalizeBriefing, briefingNotes } = await import('/docs/briefing-data.js');
+        const data = normalizeBriefing(JSON.parse(await file.text()));
+        const fields = {newAccountUsername:data.username,newAccountBrand:data.brand,newAccountFooter:data.brand,newClientContact:data.contact,newClientEmail:data.email,newClientWhatsapp:data.whatsapp,newAccountNiche:data.niche,newAccountAudience:data.audience,newAccountOffer:data.offer,newAccountTone:data.tone,newAccountGoal:data.goal,newAccountTimes:data.times.join(', '),newAccountBriefingTemplate:briefingNotes(data)};
+        for (const [id, value] of Object.entries(fields)) document.getElementById(id).value = value;
+        for (const id of ['newAccountKey','newClientBusinessType','newClientMonthlyPrice','newBrandSummary','newBrandPositioning','newBrandDifferentiator']) document.getElementById(id).value = '';
+        document.getElementById('newBrandPrimary').value = '#17211c';
+        document.getElementById('newBrandSecondary').value = '#0e7c5a';
+        document.getElementById('newBrandBackground').value = '#f4f7f5';
+        document.getElementById('newClientPlan').value = 'starter';
+        document.getElementById('newClientApprovalMode').value = 'approval';
+        status.textContent = 'Briefing importado. Revise o cadastro, as referências e os horários antes de criar a empresa. ' + (data.times.length ? '' : 'Os horários ainda precisam ser definidos para a programação.');
+      } catch (error) { status.textContent = 'Não foi possível importar: ' + error.message; }
+      finally { event.target.value = ''; }
+    }
+
     async function createAccount() {
       const button = document.getElementById('createAccount');
       const result = document.getElementById('newAccountResult');
@@ -4037,6 +4069,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           method: 'POST',
           body: JSON.stringify({
             action: 'create-account',
+            editorialBriefing: document.getElementById('newAccountBriefingTemplate').value.trim(),
             account,
             expectedUsername,
             brandName,
@@ -7624,6 +7657,13 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('fillBrandBriefing').addEventListener('click', () => fillBrandBriefingTemplate({ force: true }));
       document.getElementById('copyBrandBriefing').addEventListener('click', copyBrandBriefingTemplate);
       document.getElementById('downloadBrandBriefing').addEventListener('click', downloadBrandBriefingTemplate);
+      document.getElementById('clientBriefingUrl').value = location.origin + '/briefing';
+      document.getElementById('importClientBriefing').addEventListener('change', importClientBriefing);
+      document.getElementById('copyClientBriefingLink').addEventListener('click', async () => {
+        const status = document.getElementById('clientBriefingStatus');
+        try { await navigator.clipboard.writeText(location.origin + '/briefing'); status.textContent = 'Link copiado. Envie ao futuro cliente.'; }
+        catch { document.getElementById('clientBriefingUrl').select(); status.textContent = 'Selecione e copie o link acima.'; }
+      });
       document.getElementById('fillNewAccountBriefing').addEventListener('click', () => fillNewAccountBriefingTemplate({ force: true }));
       document.getElementById('copyNewAccountBriefing').addEventListener('click', copyNewAccountBriefingTemplate);
       document.getElementById('downloadNewAccountBriefing').addEventListener('click', downloadNewAccountBriefingTemplate);

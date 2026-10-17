@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
+  <title>Briefing do Instagram</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#f4f7f5;color:#17211c;font:16px/1.6 system-ui,sans-serif}main{max-width:860px;margin:auto;padding:40px 20px 70px}header{margin-bottom:28px}h1{font-size:clamp(28px,5vw,42px);line-height:1.15;margin:12px 0}h2{font-size:21px;margin-top:0}.eyebrow{color:#0e7c5a;font-size:13px;font-weight:750;letter-spacing:.12em;text-transform:uppercase}section{padding:26px;background:white;border:1px solid #dce5df;border-radius:18px;margin:20px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.wide{grid-column:1/-1}label{display:block;font-weight:650}small{display:block;color:#56665d;font-weight:400}input,textarea,select{width:100%;font:inherit;padding:11px;border:1px solid #9cafa2;border-radius:8px;margin-top:6px;background:white;color:#17211c}textarea{min-height:100px}button{background:#0e7c5a;color:white;padding:14px 22px;font:inherit;font-weight:700;border:0;border-radius:9px;cursor:pointer}button:hover{background:#095b41}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #d5a92a;outline-offset:3px}.notice{padding:16px;border-radius:10px;background:#eaf3ed}#status{white-space:pre-line;font-weight:650}footer{font-size:14px;color:#56665d}@media(max-width:600px){.grid{grid-template-columns:1fr}section{padding:20px}main{padding-top:24px}}
+  </style>
+</head>
+<body><main>
+  <header><span class="eyebrow">Seu próximo passo</span><h1>Vamos conhecer seu Instagram</h1><p>Conte sobre sua marca para prepararmos o conteúdo e a programação da sua conta.</p><div class="notice"><strong>Como funciona</strong><br>1. Preencha o formulário. 2. Baixe o arquivo. 3. Envie o arquivo à pessoa que está cuidando do seu cadastro.<br>Não pedimos senha nem código de acesso do Instagram.</div></header>
+  <form id="briefingForm">
+    <section><h2>1. Sua conta e seu contato</h2><div class="grid">
+      <label>Instagram *<input name="username" required maxlength="150" placeholder="@sua_conta ou link do perfil" autocomplete="off"></label>
+      <label>Nome da marca *<input name="brand" required maxlength="200" autocomplete="organization"></label>
+      <label>Seu nome<input name="contact" maxlength="200" autocomplete="name"></label>
+      <label>E-mail<input name="email" type="email" maxlength="200" autocomplete="email"></label>
+      <label>WhatsApp<input name="whatsapp" type="tel" maxlength="50" autocomplete="tel"></label>
+    </div></section>
+    <section><h2>2. O que vamos comunicar</h2><div class="grid">
+      <label>Nicho *<input name="niche" required maxlength="500" placeholder="Ex.: educação bíblica infantil"></label>
+      <label>Público ideal *<input name="audience" required maxlength="1000" placeholder="Quem você quer alcançar?"></label>
+      <label class="wide">Conteúdo, produto ou serviço principal *<textarea name="offer" required maxlength="5000" placeholder="O que seu perfil oferece ao público?"></textarea></label>
+      <label>Objetivo<select name="goal"><option value="authority">Fortalecer a marca</option><option value="leads">Atrair contatos</option><option value="offer">Divulgar produtos ou serviços</option><option value="personalBrand">Construir marca pessoal</option><option value="reactivation">Reativar o perfil</option></select></label>
+      <label>Tom de voz<select name="tone"><option value="educativo">Educativo</option><option value="consultivo">Consultivo</option><option value="autoridade">Autoridade</option><option value="provocativo">Provocativo</option></select></label>
+      <label>Publicações desejadas por dia *<input name="postsPerDay" type="number" min="1" max="24" required value="1"><small>A programação será revisada antes da ativação.</small></label>
+      <label>Horários preferidos (Brasília)<input name="times" maxlength="200" placeholder="07:00, 12:00, 18:00"><small>Deixe em branco se quiser combinar depois.</small></label>
+    </div></section>
+    <section><h2>3. Referências e preferências</h2><div class="grid">
+      <label>Link HTTPS do logotipo<input name="logo" type="url" maxlength="1000" placeholder="https://..."><small>Opcional. Você também pode enviar o logo separadamente.</small></label>
+      <label>Cores da marca<input name="colors" maxlength="500" placeholder="Ex.: verde e branco, #0e7c5a"></label>
+      <label class="wide">Sites e fontes de referência<textarea name="sources" maxlength="5000" placeholder="Um link HTTPS por linha"></textarea><small>As referências passarão por revisão antes de serem usadas.</small></label>
+      <label class="wide">Preferências e assuntos a evitar<textarea name="preferences" maxlength="5000" placeholder="Estilo visual, temas permitidos, restrições e outras orientações"></textarea></label>
+    </div></section>
+    <p>Os campos com * são obrigatórios. Os dados ficam nesta página até você baixar o arquivo; este formulário não envia o briefing automaticamente. O arquivo contém seus contatos, se preenchidos: compartilhe com o responsável pelo cadastro.</p>
+    <button type="submit">Baixar briefing para enviar</button><p id="status" role="status" aria-live="polite"></p>
+  </form><footer>Após a revisão, você receberá um convite separado para conectar o Instagram com segurança.</footer>
+</main><script type="module" src="/docs/client-briefing.js"></script></body></html>

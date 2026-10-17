@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { normalizeBriefing, briefingNotes } from '../docs/briefing-data.js';
+const sample = {schema:'instagram-client-briefing',version:1,username:'https://www.instagram.com/fixture.cliente/',brand:'Marca teste',niche:'Educação',audience:'Famílias',offer:'Atividades',postsPerDay:2,times:'07:00, 18:00',sources:'https://example.com/fonte',preferences:'Evitar promessas',secret:'discard'};
+const data = normalizeBriefing(sample);
+assert.equal(data.username,'fixture.cliente');
+assert.deepEqual(data.times,['07:00','18:00']);
+assert.equal(data.secret,undefined);
+assert.deepEqual(normalizeBriefing(JSON.parse(JSON.stringify(data))),data);
+assert.match(briefingNotes(data),/Evitar promessas/);
+assert.match(briefingNotes(data),/https:\/\/example.com\/fonte/);
+for (const change of [{version:2},{username:'https://evil.test/name'},{username:'https://instagram.com/p/abc/'},{times:'07:00, 07:00'},{times:'25:00, 18:00'},{times:'07:00'},{postsPerDay:0},{sources:'javascript:alert(1)'},{niche:''},{preferences:'x'.repeat(5001)}]) assert.throws(()=>normalizeBriefing({...sample,...change}));
+assert.deepEqual(normalizeBriefing({...sample,times:''}).times,[]);
+const page=readFileSync('docs/briefing.html','utf8');
+for (const key of ['username','brand','niche','audience','offer','postsPerDay','times','preferences','sources','logo']) assert.ok(page.includes(`name="${key}"`));
+const dashboard=readFileSync('docs/dashboard.html','utf8');
+assert.ok(dashboard.includes("editorialBriefing: document.getElementById('newAccountBriefingTemplate').value.trim()"));
+console.log('PASS: exportação/importação, validação de perfil/horários/links, descarte de campos desconhecidos e preservação editorial.');
