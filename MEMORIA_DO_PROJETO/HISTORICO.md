@@ -1,3 +1,11 @@
+## 2026-10-17 10:44 BRT — conexão da Sabedoria Kids concluída
+
+- Branch fix/kids-profile-20261017; conexão persistida no origin/main e7153b12, onboarding.status=connected. clientProfile.status permanece onboarding.
+- Convite de Testador do Instagram enviado e aceito para o perfil exato sabedoriakidsoficial. Erro Meta 100 superado na nova autorização.
+- Permissão Secrets read/write adicionada com aprovação explícita ao token cliente-x-instagram-vercel, somente para marcondesjm/cliente-x-instagram. GitHub confirmou atualização. Os Secrets SABEDORIA_KIDS_INSTAGRAM_ACCESS_TOKEN e SABEDORIA_KIDS_INSTAGRAM_USER_ID estão presentes.
+- Teste seguro em produção: Conexão aprovada; @sabedoriakidsoficial; BUSINESS; 16 mídias. Permissão de publicação ainda inconclusiva: painel informa confirmação na primeira publicação.
+- Nenhum post publicado; rotina de 12 horários não ativada. Próximo passo: revisar criativo e validar publicação real com ID/permalink antes da ativação.
+
 ## 2026-10-17 — Sabedoria Kids: nicho evangélico confirmado
 
 - Branch: fix/kids-profile-20261017; base alinhada com origin/main 39fceb67.

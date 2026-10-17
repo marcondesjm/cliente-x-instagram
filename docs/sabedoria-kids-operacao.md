@@ -11,7 +11,9 @@
 
 ## Ativação pendente
 
-A conta continua em implantação e aguardando conexão. A tentativa de autorização desta sessão retornou erro Meta 100 na consulta do perfil. O convite de testador foi apenas preparado, sem envio confirmado. Não há publicação de teste comprovada nesta sessão.
+A conexão foi concluída em 17/10/2026 às 10:44 BRT, registrada no commit `e7153b12`. O convite de testador foi enviado e aceito. Após aprovação do usuário, a permissão Secrets de leitura e gravação foi adicionada ao token GitHub, limitada ao repositório da operação. Os dois Secrets próprios da conta foram confirmados no GitHub, sem leitura dos valores.
+
+O teste seguro no painel retornou “Conexão aprovada”, `@sabedoriakidsoficial`, tipo `BUSINESS` e 16 mídias. A permissão de publicação ainda não foi confirmada pelo teste; depende da primeira publicação real. A conta permanece em implantação, sem ativação da rotina nem publicação de teste nesta sessão.
 
 Antes de ativar: validar a identidade `sabedoriakidsoficial`, as permissões e credenciais próprias, revisar o criativo e confirmar a publicação pelo ID e permalink. Não reutilizar credenciais de outra conta.
 
