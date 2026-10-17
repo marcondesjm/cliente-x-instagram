@@ -24,3 +24,7 @@ Esta conta é um piloto. O cadastro e o calendário existentes não comprovam ca
 ## Publicação de exemplo — 17/10/2026
 
 Carrossel de cinco slides publicado às 10:52 BRT: https://www.instagram.com/p/DemQkPaG6xI/ . Feed ID 17931592575165167; run 39038224704 concluído com sucesso; registro persistido em 357782ab. Story e primeiro comentário não enviados. A rotina automática permanece em implantação. A publicação real comprova o funcionamento da publicação no feed para esta conta.
+
+## Rotina autorizada — 18/10/2026
+
+Conta ativa com início em 18/10/2026 às 07h BRT e 12 horários diários. Workflow GitHub ativo e seletor validado em simulação; primeira publicação automática futura ainda precisa ser comprovada. Carrossel ilustrado publicado em 17/10 às 11:09 BRT: https://www.instagram.com/p/DemShwemsHk/ (Feed ID 18090373076257154). Acervo: 37 packs, com ilustrações licenciadas neste carrossel; demais conteúdos mantêm os visuais existentes.

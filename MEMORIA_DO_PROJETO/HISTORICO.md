@@ -1,3 +1,12 @@
+## 2026-10-17 11:09 BRT — carrossel ilustrado publicado e rotina autorizada
+
+- Usuário autorizou publicar e continuar amanhã. Publicado Jesus acolhe as crianças, cinco slides ilustrados com créditos Gavin Thomson / Little Zebra Books, CC BY 4.0.
+- Run 39039416968 concluído com sucesso; Feed ID 18090373076257154; permalink https://www.instagram.com/p/DemShwemsHk/; 17/10/2026 às 11:09:41 BRT. Histórico persistido em c493bb03. Somente feed; Story e primeiro comentário não enviados.
+- 7895de19: conta ativa e automaticScheduleStartsAt=2026-10-18T10:00:00Z (07h BRT). Mantidos 12 horários: 07h, 08h, 09h, 10h, 11h, 12h, 13h, 14h, 15h, 16h, 18h e 20h. Workflow Instagram Sabedoria Kids confirmado active no GitHub.
+- Testes: seletor retorna has_due=false hoje e seleciona slot 0 em simulação de 18/10 às 07:03 BRT; validação Kids aprovada. Acervo agora possui 37 packs; demais conteúdos ainda usam visuais existentes.
+- Painel recusou índice 36 como slot (HTTP 422, sem dispatch). Publicação concluída por workflow manual com slot 0 e pack explícito; c1745cf5 corrige mapeamento no código da API, testado com requisição stream e fetch simulado. Deploy da correção da API ainda não comprovado.
+- Próximo passo: verificar primeira execução agendada de 18/10 até IDs/permalink e ampliar o acervo ilustrado. Configuração ativa não equivale a publicação futura comprovada.
+
 ## 2026-10-17 11:04 BRT — prévia com ilustrações licenciadas
 
 - Bíblia para Crianças informa uso não comercial. Para o teste de Marcos 10:13–16, selecionadas cinco ilustrações de Gavin Thomson / Little Zebra Books via FreeBibleimages, conjunto zb-jesus-children, CC BY 4.0 e uso em redes sociais com atribuição indicado na página.
