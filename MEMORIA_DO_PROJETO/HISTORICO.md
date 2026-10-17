@@ -1,3 +1,11 @@
+## 2026-10-17 — servidor Claude intermediario autorizado e teste de imagem
+
+Usuário forneceu configuração ANTHROPIC_BASE_URL=https://claude-ss.ia.br + ANTHROPIC_AUTH_TOKEN e autorizou explicitamente o envio da credencial GitHub e de uma imagem pública a esse serviço. Não reutilizar a chave exposta no chat nem registrá-la em código. Diagnóstico manual agora permite escolha fechada anthropic/claude-ss, host fixo, Bearer só no proxy, x-api-key só na Anthropic, redirects proibidos, sem retries. Nenhuma alteração nos publicadores, aprovação editorial ou agendamentos.
+
+Commit 7314f52d adicionou proxy; run 39067130313 autenticou com sucesso, mas não encontrou alias esperado. Commit 4f169818 aceita nomes Haiku/Sonnet anunciados pelo proxy (caracteres filtrados, sem thinking/reasoning) e inclui testes simulados de headers/host/recibo sem segredo. Run 39067275498 / job 117497436117 passou em 1m54s, authentication=true, vision=true, status=vision_response_received; modelo anunciado claude-haiku-4.5. Isso comprova resposta textual a requisição com imagem, NÃO acurácia de revisão bíblica, identidade real do modelo ou automação editorial pronta. publicationTriggered=false, automaticApprovalEnabled=false.
+
+Recibo do provedor informou inputTokens=121181, outputTokens=46; consumo de entrada alto para teste curto, cobrança/origem desse volume precisa ser esclarecida antes de chamadas recorrentes. Nenhuma nova chamada de inferência após esse resultado. Evidência output/kids-scenes/teste-proxy-claude-sucesso.png e artifact kids-claude-connection-test. Não ativar rotina recorrente como decorrência do sucesso do diagnóstico.
+
 ## 2026-10-17 — teste manual Claude recusado (401)
 
 Segredo KIDS_VISION_ANTHROPIC_API_KEY cadastrado pelo usuário no GitHub (valor não lido). Diagnóstico manual kids-claude-test.yml / scripts/test-kids-claude.mjs, commit 24f9792a: GET /v1/models primeiro; uma imagem e até 160 tokens de saída somente após autenticação, sem retries ou publicação. Run 39066056216 / job 117493855321 terminou em 57s com authentication=false, vision=false, invalid_credentials, HTTP401 às 17h18 BRT. Nenhuma chamada Messages enviada. Necessário substituir credencial no GitHub; não presumir chave válida ou integração visual ativa. Testes simulados de segredo ausente,401,hash inválido e chamada única passaram.
