@@ -152,7 +152,8 @@ async function replenish() {
   let processed=0;
   const referenceLength=e=>passageRanges(e.reference).reduce((n,r)=>n+r.end-r.start+1,0);
   const attempts=e=>state.calls.filter(c=>c.stage==='select:'+e.id).length;
-  const candidates=discovery.entries.filter(e=>e.status==='found').sort((a,b)=>attempts(a)-attempts(b) || referenceLength(b)-referenceLength(a));
+  const interrupted=e=>!state.entries.some(r=>r.id===e.id) && state.calls.some(c=>c.stage==='verify:'+e.id && c.status==='completed');
+  const candidates=discovery.entries.filter(e=>e.status==='found').sort((a,b)=>Number(interrupted(b))-Number(interrupted(a)) || attempts(a)-attempts(b) || referenceLength(b)-referenceLength(a));
   for(const entry of candidates) {
     const pack=packs.find(p=>p.id===entry.id);
     if(!pack || published(pack) || recipes.some(r=>r.id===pack.id) || pack.slides.every(s=>s.imagePath))continue;

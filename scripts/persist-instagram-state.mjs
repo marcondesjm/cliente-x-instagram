@@ -25,9 +25,17 @@ export function mergeState(base, local, remote) {
 }
 const git=(args,options={})=>execFileSync('git',args,{encoding:'utf8',maxBuffer:64*1024*1024,...options}).trim();
 const readAt=(rev,path)=>JSON.parse(git(['show',`${rev}:${path}`]));
+// A long-running reviewer persists several receipts without moving its checkout HEAD.
+// Compare to the previous local snapshot confirmed on success. Remote overlays must
+// remain remote changes when the caller still holds an older in-memory document.
+const persistedBases=new Map();
 export function persistState(paths, assets = []) {
   const base=git(['rev-parse','HEAD']);
-  const saved=paths.map(path=>({path,base:readAt(base,path),local:JSON.parse(readFileSync(path,'utf8').replace(/^\uFEFF/,''))}));
+  const root=git(['rev-parse','--show-toplevel']);
+  const saved=paths.map(path=>{
+    const cacheKey=`${root}\0${path}`,previous=persistedBases.get(cacheKey);
+    return {path,cacheKey,base:previous?.head===base?previous.data:readAt(base,path),local:JSON.parse(readFileSync(path,'utf8').replace(/^\uFEFF/,''))};
+  });
   const temp=mkdtempSync(join(tmpdir(),'instagram-state-'));
   try {
     for(let attempt=0;attempt<5;attempt++) {
@@ -40,14 +48,15 @@ export function persistState(paths, assets = []) {
         writeFileSync(item.path,JSON.stringify(merged,null,2)+'\n');
         git(['add','--',item.path],{env});
       }
+      const remember=()=>saved.forEach(item=>persistedBases.set(item.cacheKey,{head:base,data:structuredClone(item.local)}));
       for(const path of assets) {
         if(!/^docs\/illustrations\/sabedoria-kids\/[a-z0-9-]+\/[a-zA-Z0-9_.-]+\.(jpg|png)$/.test(path)) throw new Error('Invalid reviewed Bible asset path');
         git(['add','--',path],{env});
       }
       const tree=git(['write-tree'],{env});
-      if(tree===git(['rev-parse',`${parent}^{tree}`])) { console.log('State already persisted.'); return; }
+      if(tree===git(['rev-parse',`${parent}^{tree}`])) { remember();console.log('State already persisted.'); return; }
       const commit=git(['commit-tree',tree,'-p',parent,'-m','Update Instagram schedule state']);
-      try { git(['push','origin',`${commit}:refs/heads/main`]); console.log(`State persisted: ${commit}`); return; }
+      try { git(['push','origin',`${commit}:refs/heads/main`]); remember();console.log(`State persisted: ${commit}`); return; }
       catch(error) { if(attempt===4) throw error; }
     }
   } finally { rmSync(temp,{recursive:true,force:true}); }
