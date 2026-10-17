@@ -2354,6 +2354,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     isReelMode ? 'reel-mode' : '',
     researchImage ? 'has-research-image' : '',
     isImpact ? 'impact-carousel' : '',
+    slide.imageLayout === 'bible-illustration' && sectorPhotoImage ? 'bible-illustration' : '',
     headlineLengthClass,
     index % 2 === 0 ? 'slide-even' : 'slide-odd'
   ].join(' ');
@@ -3136,6 +3137,14 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .s1 { right: 400px; top: 170px; }
     .s2 { right: 126px; bottom: 108px; }
     footer { position: absolute; right: 58px; bottom: 58px; z-index: 3; color: ${accent}; font-size: 27px; font-weight: 900; }
+    /* Licensed Bible illustrations keep the whole scene visible. */
+    body main.bible-illustration.has-sector-photo .headline { position:absolute;left:58px;right:58px;top:180px;width:auto;max-width:964px;margin:0;font-size:66px;line-height:1.06;text-align:left; }
+    body main.bible-illustration.has-sector-photo .note { left:58px;right:58px;top:365px;bottom:auto;width:auto;height:auto;min-height:0;max-width:964px;padding:22px 28px;transform:none; }
+    body main.bible-illustration.has-sector-photo .note .lead, body main.bible-illustration.has-sector-photo .note .emphasis, body main.bible-illustration.has-sector-photo .note .close {font-size:30px;line-height:1.2;}
+    body main.bible-illustration.has-sector-photo .context-photo {display:block;left:58px;right:58px;top:570px;width:auto;height:620px;transform:none;background-color:white;background-size:contain;border:0;border-radius:24px;opacity:1;box-shadow:none;}
+    body main.bible-illustration.has-sector-photo .context-photo::after {display:none;}
+    body main.bible-illustration.has-sector-photo .panel, body main.bible-illustration.has-sector-photo .bubble, body main.bible-illustration.has-sector-photo .spark {display:none;}
+    body main.bible-illustration.has-sector-photo .note .close {min-height:0;padding:0;margin-top:8px;background:transparent;color:inherit;}
   </style>
 </head>
 <body>
@@ -3969,10 +3978,18 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     .impact-carousel.has-story-photo.mode-statement h1::before { width: 84px; height: 9px; margin: 0 0 34px; }
     .impact-carousel.has-story-photo.mode-statement p { margin: 28px 0 0; max-width: 850px; font-size: 31px; text-align: left; }
     .impact-carousel.has-story-photo.mode-statement .feed-cta { margin-top: 22px; max-width: 560px; padding: 16px 22px; font-size: 27px; }
+    main.bible-illustration .brand {position:absolute;left:72px;top:260px;margin:0;font-size:30px;}
+    main.bible-illustration .badge {position:absolute;left:72px;top:320px;margin:0;text-align:left;}
+    main.bible-illustration h1 {position:absolute;left:72px;right:72px;top:420px;max-width:936px;margin:0;font-size:66px;line-height:1.08;text-align:left;}
+    main.bible-illustration h1::before {display:none;}
+    main.bible-illustration p {position:absolute;left:72px;right:72px;top:610px;max-width:936px;margin:0;font-size:36px;line-height:1.2;text-align:left;}
+    main.bible-illustration .feed-cta {position:absolute;left:72px;top:740px;margin:0;font-size:28px;}
+    main.bible-illustration .visual-card {display:block;left:72px;right:72px;top:850px;width:auto;height:460px;background-color:white;background-size:contain;box-shadow:none;}
+    main.bible-illustration .avatar, main.bible-illustration .panel, main.bible-illustration .note {display:none;}
   </style>
 </head>
 <body>
-  <main class="mode-${mode}${titleClass}${impactClass}${storyPhotoClass}${researchPhotoClass}">
+  <main class="mode-${mode}${titleClass}${impactClass}${storyPhotoClass}${researchPhotoClass}${slide.imageLayout === 'bible-illustration' && storyVisualImage ? ' bible-illustration' : ''}">
     <div class="brand">${usernameDisplay}</div>
     <div class="badge">${eyebrow}</div>
     <h1>${title.replace(/\s+IA\b/i, ' <strong>IA</strong>')}</h1>
@@ -4062,9 +4079,10 @@ function storyHtml(slide, account, style, renderContext = {}) {
 async function renderStory(runDir, pack, account, style, renderContext = {}) {
   const browser = await launchChromium();
   const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
-  const html = storyHtml(pack.slides[0], account, style, renderContext);
+  const storySlide = pack.storySlide || pack.slides[0];
+  const html = storyHtml(storySlide, account, style, renderContext);
   assertNoMojibake(html);
-  assertPortugueseAccents(`${pack.slides[0].eyebrow}\n${pack.slides[0].title}\n${pack.slides[0].body}`);
+  assertPortugueseAccents(`${storySlide.eyebrow}\n${storySlide.title}\n${storySlide.body}`);
   const htmlPath = join(runDir, 'story.html');
   const imagePath = join(runDir, 'story.jpg');
   writeFileSync(htmlPath, html, 'utf8');

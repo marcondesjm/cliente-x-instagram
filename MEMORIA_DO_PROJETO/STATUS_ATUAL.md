@@ -1,3 +1,12 @@
+## 2026-10-17 — ilustrações licenciadas no acervo de Sabedoria Kids
+
+- Usuário pediu melhorar a arte de Bondade com imagens dos sites. Branch feat/kids-illustrated-library-20261017, base d2cd9e3a.
+- Seis imagens individuais do conjunto Good Samaritan (Sweet Publishing / FreeBibleimages), fonte https://www.freebibleimages.org/illustrations/good-samaritan/, licença CC BY-SA 3.0 conferida na página; créditos e adaptações sob mesma licença na legenda e CREDITOS.txt.
+- Duas pautas existentes receberam cinco ilustrações distintas e Story com outra cena: O bom samaritano parou para ajudar e Bondade é um fruto que podemos cultivar. Bondade explicita Lucas 10 como exemplo complementar, sem apresentar a ilustração como cena de Gálatas.
+- Layout opcional bible-illustration mantém paleta/identidade, mostra cena inteira sem corte vertical e dá maior espaço à imagem. Campo storySlide opcional permite arte relacionada distinta; fallback anterior preservado nos demais packs.
+- Renderização das duas pautas aprovada com cinco slides + Story; guardas de imagem/limites/sobreposição mantidas. QA visual identificou e corrigiu corte da cena e sobreposição inicial de marca/badge. validate-kids-onboarding, sintaxe e git diff --check aprovados.
+- Prévia estática: docs/generated/sabedoria-kids/previa-bondade-ilustrada-20261017. Somente prévia; nenhuma republicação solicitada ou disparada. Post já publicado continua DemlNycIInI. Acervo total continua 37, agora com duas pautas ilustradas; demais 35 ainda não receberam imagens. Sem busca indiscriminada/automática em todos os sites e sem enfraquecer antirrepetição.
+
 ## 2026-10-17 — aviso de radar adaptado ao acervo bíblico
 
 - Branch fix/kids-biblical-radar-label-20261017, base 44d586a1; implementação ff69dce6 enviada ao origin/main.
