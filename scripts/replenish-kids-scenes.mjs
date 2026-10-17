@@ -9,6 +9,7 @@ import {loadPassage,passageRanges} from '../lib/kids-bible-passage.js';
 import {visualReadyPacks} from '../lib/bible-visual-standard.js';
 import {reviewBinding,verseIsWithin} from '../lib/kids-scene-review-proof.js';
 import {sceneGroundingTask,groundingPrompt,groundingSchema,assertGrounding,groundingFingerprint} from '../lib/editorial-grounding.js';
+import {normalizeProviderUsage} from '../lib/platform-editorial-validation.js';
 import {VISION_VERSION,callAllowance,sendVision,calibrationImage,CALIBRATION_PROMPT,visualSignature,similarScenes,contactSheet,recoverTransientCalls,promptSceneDescription,selectionSchema,verificationSchema} from '../lib/kids-scene-vision.js';
 
 const ROOT=resolve(dirname(fileURLToPath(import.meta.url)),'..');process.chdir(ROOT);
@@ -48,10 +49,10 @@ async function paidCall(stage,image,prompt,maxOutputTokens=2200,schema=null) {
     if(transient)state.retryAfter=new Date(Date.now()+60*60*1000).toISOString();save();
     throw new Error('Falha ou resposta não verificável do provedor. Sem nova tentativa paga automática.');
   }
-  const {inputTokens,outputTokens}=result.usage;
-  Object.assign(call,{status:'completed',completedAt:now(),inputTokens:Number.isSafeInteger(inputTokens)?inputTokens:null,outputTokens:Number.isSafeInteger(outputTokens)?outputTokens:null,stopReason:result.stopReason || null});
-  if(!Number.isSafeInteger(inputTokens) || inputTokens<1 || !Number.isSafeInteger(outputTokens) || outputTokens<1)state.circuit='invalid_usage_receipt';
-  else if(inputTokens>state.policy.maxInputTokensPerCall)state.circuit='input_usage_above_limit';
+  const {blocked,...receipt}=normalizeProviderUsage(result.usage,state.policy,state.billingMode);
+  Object.assign(call,{status:'completed',completedAt:now(),...receipt,stopReason:result.stopReason || null});
+  state.lastResponse={stage,value:JSON.parse(JSON.stringify(result.value).replaceAll(key,'[redacted]'))};
+  if(blocked)state.circuit=receipt.inputTokens>state.policy.maxInputTokensPerCall?'input_usage_above_limit':'invalid_usage_receipt';
   save();
   if(state.circuit)throw new Error('Consumo ou recibo fora do limite; reposição pausada automaticamente.');
   if(result.stopReason!=='end_turn' && !(result.stopReason==='tool_use' && result.structured===true))throw new Error('Avaliação incompleta; não aprovada.');

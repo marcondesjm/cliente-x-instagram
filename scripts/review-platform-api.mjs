@@ -4,7 +4,7 @@ import {persistState} from './persist-instagram-state.mjs';
 import {sendVision,callAllowance} from '../lib/kids-scene-vision.js';
 import {loadPassage} from '../lib/kids-bible-passage.js';
 import {GROUNDING_VERSION,groundingPrompt,groundingSchema,inspectGrounding,groundingFingerprint} from '../lib/editorial-grounding.js';
-import {accountEditorialSnapshot,recommendationSchema,recommendationPrompt,validateRecommendation,snapshotHash,advisoryUsage} from '../lib/platform-editorial-validation.js';
+import {accountEditorialSnapshot,recommendationSchema,recommendationPrompt,validateRecommendation,snapshotHash,normalizeProviderUsage} from '../lib/platform-editorial-validation.js';
 const C='automation/instagram-template/config/',PATH=C+'editorial-api-validation.json';
 const read=p=>JSON.parse(fs.readFileSync(p,'utf8').replace(/^\uFEFF/,''));
 const state=read(PATH),key=process.env.KIDS_VISION_ANTHROPIC_API_KEY;
@@ -17,7 +17,7 @@ async function request(stage,prompt,schema) {
   let r;
   try{r=await sendVision({key,model:state.model,prompt,schema,maxOutputTokens:3500});}
   catch(e){c.status='failed';c.completedAt=new Date().toISOString();c.httpStatus=e.httpStatus || null;state.circuit='provider_response_unconfirmed';save();throw new Error('API indisponível ou resposta não confirmada; sem repetição automática.');}
-  const usage=advisoryUsage(r.usage,state.policy,state.billingMode);
+  const usage=normalizeProviderUsage(r.usage,state.policy,state.billingMode);
   const {blocked,...receipt}=usage;
   Object.assign(c,{status:'completed',completedAt:new Date().toISOString(),...receipt,stopReason:r.stopReason || null});
   state.lastResponse={stage,value:JSON.parse(JSON.stringify(r.value).replaceAll(key,'[redacted]'))};
