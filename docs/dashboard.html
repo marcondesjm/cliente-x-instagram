@@ -1838,7 +1838,7 @@
               <div class="section-label">Instagram ao vivo</div>
               <h2>Última publicação da conta</h2>
             </div>
-            <a class="button" id="instagramShowcaseLink" href="https://www.instagram.com/marcondes.machado.oficial/" target="_blank" rel="noreferrer">Ver no Instagram</a>
+            <a class="button" id="instagramShowcaseLink" hidden target="_blank" rel="noreferrer">Ver no Instagram</a>
           </div>
           <div class="instagram-embed-shell">
             <button class="showcase-control previous" id="showcasePrevious" type="button" aria-label="Página anterior" hidden>‹</button>
@@ -2250,19 +2250,15 @@
           <div class="panel-head">
             <div>
               <div class="section-label">Último post confirmado</div>
-              <h2 id="latestPostTitle">Postagem salva localmente</h2>
+              <h2 id="latestPostTitle">Carregando publicações da conta</h2>
             </div>
-            <a class="button" id="latestPostLink" href="https://www.instagram.com/p/DbBP5OAljgp/" target="_blank" rel="noreferrer">Abrir post</a>
+            <a class="button" id="latestPostLink" hidden target="_blank" rel="noreferrer">Abrir post</a>
           </div>
           <div class="preview">
-            <img id="latestPostImage" src="../automation/instagram-template/runs/cliente-x/2026-07-20-122011-slot-3/story.jpg" alt="Imagem da última publicação">
+            <img id="latestPostImage" hidden alt="Imagem da última publicação">
             <div>
               <div class="status-pill good" id="latestPostStatus">Publicado</div>
-              <p class="caption" id="latestPostCaption">Automação financeira não é só sobre economizar tempo.
-
-É sobre reduzir erro, proteger caixa e dar clareza para decisões que acontecem todos os meses. A IA ajuda quando existe processo, dado e critério de revisão.
-
-O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais conferir.</p>
+              <p class="caption" id="latestPostCaption">Aguardando confirmação da conta selecionada.</p>
             </div>
           </div>
         </div>
@@ -2951,6 +2947,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       showcaseSlideIndex: 0
     };
     let privateMetricsRequest = null;
+    let accountViewVersion = 0;
     let directHistoryPage = 1;
     let directHistoryDate = '';
     let directAutomationIndex = 0;
@@ -3136,8 +3133,10 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         return false;
       }
 
+      const viewVersion = accountViewVersion;
       try {
         const state = await api(withAccount(`/api/state${refreshRadar ? `?refresh=${Date.now()}` : ''}`));
+        if (viewVersion !== accountViewVersion) return false;
         appState.accounts = state.accounts || [];
         appState.users = state.users || [];
         appState.sessionRole = state.session?.role || appState.sessionRole;
@@ -3190,6 +3189,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         renderAccessConfig();
         return true;
       } catch (error) {
+        if (viewVersion !== accountViewVersion) return false;
         setMessage(`Não consegui carregar pelo servidor: ${error.message}`, 'bad');
         return false;
       }
@@ -3594,6 +3594,9 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
 
     async function switchAccount(event) {
       appState.selectedAccount = event.target.value || '';
+      accountViewVersion++;
+      privateMetricsRequest = null;
+      resetLatestPost('Carregando publicações desta conta...');
       appState.openAccessIndex = null;
       appState.privateMetrics = null;
       directHistoryDate = '';
@@ -4727,36 +4730,65 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       }
     }
 
+    function resetLatestPost(message = 'Nenhuma publicação confirmada disponível para esta conta.') {
+      appState.showcaseSlides = [];
+      appState.showcaseSlideIndex = 0;
+      document.getElementById('latestPostTitle').textContent = 'Publicações · ' + appState.selectedAccount;
+      document.getElementById('latestPostStatus').textContent = 'Aguardando confirmação';
+      document.getElementById('latestPostStatus').className = 'status-pill warn';
+      document.getElementById('latestPostCaption').textContent = message;
+      document.getElementById('lastPostTime').textContent = '--:--';
+      document.getElementById('lastPostNote').textContent = message;
+      for (const id of ['latestPostImage', 'instagramShowcaseImage']) {
+        const image = document.getElementById(id);
+        image.onerror = null;
+        image.removeAttribute('src');
+        image.hidden = true;
+        image.style.display = 'none';
+      }
+      for (const id of ['latestPostLink', 'instagramShowcaseLink']) {
+        const link = document.getElementById(id);
+        link.removeAttribute('href');
+        link.hidden = true;
+      }
+      for (const id of ['showcasePrevious','showcaseNext','showcaseCounter']) document.getElementById(id).hidden = true;
+    }
+
     async function loadPrivateMetrics() {
       if (!appState.serverMode) return;
       if (privateMetricsRequest) return privateMetricsRequest;
-      privateMetricsRequest = (async () => {
+      const viewVersion = accountViewVersion;
+      const account = appState.selectedAccount;
+      const request = (async () => {
         try {
           const refreshUrl = withAccount(`/api/private-metrics?refresh=${Date.now()}`);
-          appState.privateMetrics = await api(refreshUrl, {
+          const metrics = await api(refreshUrl, {
             cache: 'no-store',
-            headers: {
-              'cache-control': 'no-cache',
-              pragma: 'no-cache'
-            }
+            headers: { 'cache-control': 'no-cache', pragma: 'no-cache' }
           });
-          renderLatestPost(appState.privateMetrics);
-          renderPerformanceLearning(appState.privateMetrics?.performanceLearning);
+          if (viewVersion !== accountViewVersion || account !== appState.selectedAccount) return null;
+          appState.privateMetrics = metrics;
+          renderLatestPost(metrics);
+          renderPerformanceLearning(metrics?.performanceLearning);
         } catch (error) {
+          if (viewVersion !== accountViewVersion || account !== appState.selectedAccount) return null;
           appState.privateMetrics = { error: error.message };
+          resetLatestPost('Não foi possível consultar as publicações desta conta. Tente atualizar.');
           renderPerformanceLearning(null, error.message);
         } finally {
-          privateMetricsRequest = null;
+          if (viewVersion === accountViewVersion) privateMetricsRequest = null;
         }
         renderChecks();
         return appState.privateMetrics;
       })();
-      return privateMetricsRequest;
+      privateMetricsRequest = request;
+      return request;
     }
 
     function renderLatestPost(privateMetrics) {
       const media = privateMetrics?.latestMedia;
-      if (!media) return;
+      resetLatestPost();
+      if (!media || privateMetrics?.account?.matchesExpected === false) return;
 
       const link = document.getElementById('latestPostLink');
       const image = document.getElementById('latestPostImage');
@@ -4772,6 +4804,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       if (media.permalink) {
         link.href = media.permalink;
         showcaseLink.href = media.permalink;
+        link.hidden = false;
+        showcaseLink.hidden = false;
       }
       if (media.caption) caption.textContent = media.caption;
       document.getElementById('lastPostTime').textContent = formatTimeOnly(media.timestamp);
@@ -4785,6 +4819,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       appState.showcaseSlides = carouselSlides.length ? carouselSlides : [mediaImage].filter(Boolean);
       appState.showcaseSlideIndex = 0;
       if (mediaImage) {
+        image.hidden = false;
+        image.style.display = '';
         image.src = mediaImage;
       }
       renderShowcaseSlide();
@@ -4864,6 +4900,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       if (!slides.length) return;
       const total = slides.length;
       appState.showcaseSlideIndex = (appState.showcaseSlideIndex + total) % total;
+      image.hidden = false;
+      image.style.display = '';
       image.src = slides[appState.showcaseSlideIndex];
       const carousel = total > 1;
       previous.hidden = !carousel;
