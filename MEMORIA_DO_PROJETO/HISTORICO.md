@@ -1,5 +1,7 @@
 ## 2026-10-17 — resultados de crescimento somente automáticos
 
+- Produção confirmada: código 952868d0, deploy READY dpl_4PJAMn9AzvuHeSQ5TL3C4FHnko1o, alias cliente-x-instagram.vercel.app. Asset HTTP 200 conferido sem campos manuais/data e com Resultados automáticos. Screenshot local output/growth-evidence-preview/automatic-only.png. Servidor de prévia encerrado; nenhum plano real alterado nos testes.
+
 - Pedido explícito: retirar o manual e deixar só automático. Removidos tabela editável de resultados, data do experimento e botão de escolha do período da interface. Seção 4 Resultados automáticos exibe somente coletas, progresso, datas correntes e tabelas por formato/janela, com Atualizar resultados.
 - Período padrão da API agora usa os últimos 14 dias completos em BRT, comparados aos 14 anteriores, independentemente da antiga data salva em setembro. Avança a cada dia. Não inventa visitas, conversas ou vendas quando não coletadas.
 - Plano de preparação do perfil/bio preservado; botão renomeado Salvar plano. Valores manuais antigos permanecem armazenados e são preservados ao salvar o plano, sem campos editáveis ou apresentação como métricas automáticas. Isolamento de contas e proteção contra respostas atrasadas mantidos.
