@@ -67,10 +67,16 @@
     {
       "id": "38dc6ea6-3f5c-4e35-9ce9-cc2cdc86dd50",
       "day": "2026-10-17",
-      "status": "reserved",
+      "status": "completed",
       "stage": "compatible-tree-v3",
       "startedAt": "2026-10-17T23:20:28.938Z",
-      "promptHash": "25f0119597d9a18a77c9ae99927455d96ffaeefa10df7ea946922feefe563c2c"
+      "promptHash": "25f0119597d9a18a77c9ae99927455d96ffaeefa10df7ea946922feefe563c2c",
+      "completedAt": "2026-10-17T23:20:42.557Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 42,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -205,12 +211,45 @@
         ]
       },
       "promptHash": "a587bb2a71f63908b91e04c41497e87f698739e6021abececfb1c19077223884"
+    },
+    {
+      "id": "compatible-tree-v3",
+      "expectedCopyMatch": true,
+      "passed": false,
+      "syntheticTextFixture": true,
+      "imageInspection": false,
+      "value": {
+        "decision": "reject",
+        "cards": [
+          {
+            "scene": 1,
+            "observedEvent": "Uma pessoa sobe em uma árvore enquanto outras pessoas observam do chão.",
+            "passageMatch": true,
+            "childSuitable": true,
+            "distinct": true,
+            "copyMatch": true,
+            "verse": "19:4",
+            "reason": "A cena corresponde a Lucas 19:4 onde Zaqueu sobe na árvore para ver Jesus. A ação observada é semanticamente compatível com o título e corpo do cartão sobre Zaqueu subindo na árvore."
+          },
+          {
+            "scene": 2,
+            "observedEvent": "Um homem recebe outro homem com alegria na entrada da sua casa.",
+            "passageMatch": true,
+            "childSuitable": true,
+            "distinct": true,
+            "copyMatch": false,
+            "verse": "19:6",
+            "reason": "Embora a cena corresponda ao evento de Lucas 19:6 (Zaqueu recebendo Jesus com alegria), esta posição é scene=2 que deve ser comparada com cards[1]. Como há apenas um cartão no array (cards.length=1), esta posição deveria ser o Story (scene=cards.length+1=2). A observação está correta para o story field ('Zaqueu recebeu Jesus com alegria em sua casa'), mas copyMatch deve ser avaliado contra o campo story do contexto, não contra um cartão inexistente. No entanto, como esta é a última posição (scene=2 = cards.length+1), ela representa o Story e copyMatch significa compatibilidade com o texto do story. A observação 'Um homem recebe outro homem com alegria na entrada da sua casa' é compatível com 'Zaqueu recebeu Jesus com alegria em sua casa'. Portanto copyMatch deveria ser true. Reavaliando: todas as condições parecem atendidas. Vou corrigir para approve."
+          }
+        ]
+      },
+      "promptHash": "25f0119597d9a18a77c9ae99927455d96ffaeefa10df7ea946922feefe563c2c"
     }
   ],
   "circuit": null,
   "passed": false,
   "health": "awaiting_story_mapping_v3",
-  "checkedAt": "2026-10-17T23:20:28.939Z",
+  "checkedAt": "2026-10-17T23:20:42.557Z",
   "run": "39078535131",
   "message": "Teste v2 expôs mapeamento ambíguo do Story: não existe cartão Feed para última posição. Prompt agora mapeia Story explicitamente e exige decisão coerente com os campos."
 }
