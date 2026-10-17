@@ -6,6 +6,7 @@
 - Preparadas kids-biblia-11 (Rute 1:6–18) e kids-biblia-07 (Êxodo 2:1–10), cada uma com cinco cenas distintas no Feed e outra no Story. JPEGs originais e CREDITOS.txt em docs/illustrations/sabedoria-kids/ruth-naomi/ e baby-moses/.
 - Mantidos padrão ilustrado, leitura com adulto, atividade/pergunta em família e créditos na legenda. Inventário: 9/37 pautas ilustradas, não implica nove inéditas disponíveis; bloqueios de histórico preservados.
 - QA: duas renderizações completas Feed/Story e inspeção visual da galeria; validate-bible-visual-standard, scheduled guard e validate-copy. Imagens adicionadas ao acervo, sem disparar postagem nem alterar horários.
+- Produção READY dpl_6hBaNXx9gHJXm9BMR17gASp2W68F, código b029a71c; dashboard HTTP 200 sem controles de IA e duas imagens novas HTTP 200 image/jpeg. Prévia local output/kids-sites/previas-rute-moises.png.
 
 
 ## 2026-10-17 — Sabedoria Kids: slot 8 recuperado e persistência concorrente
