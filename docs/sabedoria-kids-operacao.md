@@ -20,3 +20,7 @@ Antes de ativar: validar a identidade `sabedoriakidsoficial`, as permissões e c
 ## Replicação
 
 Esta conta é um piloto. O cadastro e o calendário existentes não comprovam capacidade para operar 50 contas. A expansão depende de autorização por perfil, permissões Meta adequadas, isolamento dos dados e validação das filas e do monitoramento.
+
+## Publicação de exemplo — 17/10/2026
+
+Carrossel de cinco slides publicado às 10:52 BRT: https://www.instagram.com/p/DemQkPaG6xI/ . Feed ID 17931592575165167; run 39038224704 concluído com sucesso; registro persistido em 357782ab. Story e primeiro comentário não enviados. A rotina automática permanece em implantação. A publicação real comprova o funcionamento da publicação no feed para esta conta.

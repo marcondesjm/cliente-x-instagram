@@ -1,3 +1,12 @@
+## 2026-10-17 10:52 BRT — primeiro exemplo publicado na Sabedoria Kids
+
+- Pedido explícito: pode postar exemplo. Carrossel de cinco slides Deus criou um mundo cheio de vida, Gênesis 1:1–31, revisado visualmente antes do envio; publicação somente no feed.
+- Run 39038224704 concluído com sucesso. Feed ID 17931592575165167; permalink https://www.instagram.com/p/DemQkPaG6xI/; publicado em 17/10/2026 às 10:52:36 BRT. publication-history.json persistido em origin/main 357782ab.
+- Story não solicitado nem publicado; primeiro comentário não enviado. Rotina automática continua bloqueada por clientProfile.status=onboarding.
+- Correções: 3c57e1fb disponibiliza Secrets Kids somente no dispatch dessa conta; d92cae20 permite exemplo manual com pack explícito e conta conectada em onboarding. Automação, contas pausadas e bloqueios de cobrança preservados.
+- Validação: teste publication-access, validate-kids-onboarding, node --check e git diff --check aprovados; render manual local cinco slides inspecionados.
+- Próximo passo: avaliar o exemplo e decidir sobre ativação da rotina. Nenhuma validação de escala para 50 contas concluída.
+
 ## 2026-10-17 10:44 BRT — conexão da Sabedoria Kids concluída
 
 - Branch fix/kids-profile-20261017; conexão persistida no origin/main e7153b12, onboarding.status=connected. clientProfile.status permanece onboarding.
