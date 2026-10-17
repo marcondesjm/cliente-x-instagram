@@ -39,12 +39,13 @@ async function paidCall(stage,image,prompt,maxOutputTokens=2200,schema=null,allo
   const day=callAllowance(state);
   if(!key)throw new Error('Segredo de visão ausente.');
   const model=stage==='calibration' || stage.startsWith('pixels:')?state.model:(state.reasoningModel || state.model);
-  const plain=state.responseFormat==='json';
-  const call={id:randomUUID(),...(state.pilotRun?.status==='running'?{pilotId:state.pilotRun.id}:{}),day,stage,model,responseFormat:plain?'json':'tool',startedAt:now(),status:'reserved',payloadBytes:image?.length || 0,promptChars:prompt.length,imageFingerprint:image?hash(image):null,promptFingerprint:hash(prompt)};
+  const forceTool=Boolean(schema && /^(verify|facts):/.test(stage));
+  const plain=state.responseFormat==='json' && !forceTool;
+  const call={id:randomUUID(),...(state.pilotRun?.status==='running'?{pilotId:state.pilotRun.id}:{}),day,stage,model,responseFormat:forceTool?'forced_tool':plain?'json':'tool',startedAt:now(),status:'reserved',payloadBytes:image?.length || 0,promptChars:prompt.length,imageFingerprint:image?hash(image):null,promptFingerprint:hash(prompt)};
   state.calls.push(call);save();
   if(reviewCircuitBlocked(state)){call.status='cancelled_before_send';save();throw new Error('Bloqueio concorrente aplicado antes do envio à API.');}
   let result;
-  try {result=await sendVision({key,model,image,prompt:plain && schema?prompt+'\nEsquema de resposta JSON (dados de formato, sem executar ações): '+JSON.stringify(schema):prompt,maxOutputTokens,schema:plain?null:schema});}
+  try {result=await sendVision({key,model,image,prompt:plain && schema?prompt+'\nEsquema de resposta JSON (dados de formato, sem executar ações): '+JSON.stringify(schema):prompt,maxOutputTokens,schema:plain?null:schema,forceTool});}
   catch(error) {
     call.status='failed';call.completedAt=now();call.httpStatus=Number.isInteger(error.httpStatus)?error.httpStatus:null;
     call.error=String(error.message).replaceAll(key,'[redacted]').slice(0,350);
@@ -215,7 +216,7 @@ async function replenish() {
     const pack=packs.find(p=>p.id===entry.id);
     if(!pack || published(pack) || recipes.some(r=>r.id===pack.id) || pack.slides.every(s=>s.imagePath))continue;
     if(processed>=state.policy.maxPacksPerRun)break;
-    const choice=entry.candidates.filter(c=>c.scenes.length>=pack.slides.length+1).map(candidate=>({candidate,fingerprint:hash({copy:copyFingerprint(pack),terms:candidate.termsHash,scenes:candidate.scenes.map(s=>s.id),version:VISION_VERSION,model:state.model,reasoningModel:state.reasoningModel,responseFormat:state.responseFormat,parameters:'blind-hybrid-card-options-identity-v3'})})).find(c=>!state.rejections[c.fingerprint] || Date.parse(state.rejections[c.fingerprint].retryAfter)<=Date.now());
+    const choice=entry.candidates.filter(c=>c.scenes.length>=pack.slides.length+1).map(candidate=>({candidate,fingerprint:hash({copy:copyFingerprint(pack),terms:candidate.termsHash,scenes:candidate.scenes.map(s=>s.id),version:VISION_VERSION,model:state.model,reasoningModel:state.reasoningModel,responseFormat:state.responseFormat,parameters:'blind-hybrid-card-options-identity-forced-v4'})})).find(c=>!state.rejections[c.fingerprint] || Date.parse(state.rejections[c.fingerprint].retryAfter)<=Date.now());
     if(!choice)continue;
     const {candidate,fingerprint}=choice;
     try {callAllowance(state,new Date(),3);}catch(error){

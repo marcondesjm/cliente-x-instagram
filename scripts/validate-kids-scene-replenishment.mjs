@@ -69,6 +69,11 @@ const structured=await sendVision({key:'test-key',model:'claude-sonnet-4.6',imag
  return new Response(JSON.stringify({content:[{type:'tool_use',name:'submit_scene_review',input:{decision:'reject'}}],usage:{input_tokens:500,output_tokens:10},stop_reason:'tool_use'}));
 }});
 assert.equal(structured.structured,true);assert.equal(structured.value.decision,'reject');
+const forced=await sendVision({key:'test-key',model:'claude-sonnet-4.6',prompt:'Return the complete review',schema,forceTool:true,fetchImpl:async(url,options)=>{
+ const body=JSON.parse(options.body);assert.deepEqual(body.tool_choice,{type:'tool',name:'submit_scene_review'});
+ return new Response(JSON.stringify({content:[{type:'tool_use',name:'submit_scene_review',input:{decision:'reject'}}],usage:{input_tokens:500,output_tokens:10},stop_reason:'tool_use'}));
+}});
+assert.equal(forced.value.decision,'reject','Forcing the data tool never forces editorial approval');
 const unknown=await sendVision({key:'test-key',model:'claude-sonnet-4.6',image,prompt:'test',schema,fetchImpl:async()=>new Response(JSON.stringify({content:[{type:'tool_use',name:'run_shell',input:{command:'never execute'}}],usage:{input_tokens:500,output_tokens:10},stop_reason:'tool_use'}))});
 assert.equal(unknown.value,null);
 const invalid=await sendVision({key:'fake-test-key',model:'claude-haiku-4.5',image,prompt:'test',fetchImpl:async()=>new Response(JSON.stringify({content:[{type:'text',text:'Invalid JSON fake-test-key'}],usage:{input_tokens:700,output_tokens:20},stop_reason:'end_turn'}))});
