@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import sharp from 'sharp';
 import {callAllowance,calibrationImage,visualSignature,similarScenes,contactSheet,sendVision,parseObject,recoverTransientCalls} from '../lib/kids-scene-vision.js';
-import {reviewBinding,assertAutomaticReview} from '../lib/kids-scene-review-proof.js';
+import {reviewBinding,assertAutomaticReview,verseIsWithin} from '../lib/kids-scene-review-proof.js';
 import {passageRanges,loadPassage} from '../lib/kids-bible-passage.js';
 import {validateRecipe,hash} from '../lib/kids-scene-assembly.js';
 const state={calls:[],circuit:null,policy:{maxCallsPerDay:2,maxInputTokensPerDay:100,maxInputTokensPerCall:100}};
@@ -46,6 +46,8 @@ await assert.rejects(sendVision({key:'x',model:'other-host',image,prompt:'x'}),/
 const auto=structuredClone(recipe);auto.status='automatically-reviewed';
 auto.selected=auto.selected.map((s,i)=>({...s,visualHash:String(i).padStart(16,'0'),mirrorHash:String(i+10).padStart(16,'0')}));
 auto.automaticReview={version:'kids-scene-review-v1',calibrationPassed:true,scriptureHash:'f'.repeat(64),reviewedAt:new Date().toISOString(),verseIds:['45:1'],selection:{decision:'approve',feed:auto.selected.slice(0,-1).map(s=>s.id),story:auto.selected.at(-1).id,childSuitable:true,distinct:true,referenceAccurate:true},verification:{decision:'approve',cards:auto.selected.map(s=>({id:s.id,passageMatch:true,childSuitable:true,distinct:true,copyMatch:true,verse:'45:1',reason:'A cena mostra uma família reunida.'}))},binding:reviewBinding(auto)};
+auto.automaticReview.selection.evidence=auto.selected.map((s,i)=>({id:s.id,card:i+1,verse:'45:1',reason:'A cena mostra o reencontro da família.'}));
+assert.equal(verseIsWithin('45:1–2',['45:1','45:2']),true);assert.equal(verseIsWithin('45:1–3',['45:1','45:2']),false);
 assertAutomaticReview(auto);
 const pack=JSON.parse(fs.readFileSync('automation/instagram-template/config/content-packs.json')).find(g=>g.account==='sabedoria-kids').packs.find(p=>p.id===auto.id);
 validateRecipe(auto,pack);
