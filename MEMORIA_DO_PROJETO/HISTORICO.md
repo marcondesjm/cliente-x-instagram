@@ -7,6 +7,7 @@
 - Inventário agora 12/37 pautas ilustradas, não significa 12 inéditas disponíveis. Cadência e histórico preservados; nenhum disparo manual de publicação feito neste turno.
 - Renderizações de cinco cartões + Story: 2026-10-17-163833 (José), 163841 (sarça), 163846 (maná), slot-0-render-only. Revisão visual das 18 fontes e 18 artes finais; validate-copy, padrão bíblico e scheduled guard passaram. Prévia output/kids-scenes/previas-cenas-revisadas.png.
 - output/ excluído do deploy Vercel: prévias locais, arquivos de pesquisa e cenas rejeitadas não devem ser publicados junto com o site.
+- Produção READY dpl_GfGggca8DzXUwhsnf4DGhBkUggwG, código 3ca07005. Conferidos os três JPEGs de capa com HTTP 200 image/jpeg e /output/kids-scenes/selected.html com HTTP 404.
 
 
 ## 2026-10-17 — busca automática de imagens em sites para Sabedoria Kids
