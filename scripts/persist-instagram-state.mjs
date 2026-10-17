@@ -23,7 +23,7 @@ export function mergeState(base, local, remote) {
   if (local===undefined && remote!==undefined && !same(base,remote)) return remote;
   return local;
 }
-const git=(args,options={})=>execFileSync('git',args,{encoding:'utf8',...options}).trim();
+const git=(args,options={})=>execFileSync('git',args,{encoding:'utf8',maxBuffer:64*1024*1024,...options}).trim();
 const readAt=(rev,path)=>JSON.parse(git(['show',`${rev}:${path}`]));
 export function persistState(paths) {
   const base=git(['rev-parse','HEAD']);
