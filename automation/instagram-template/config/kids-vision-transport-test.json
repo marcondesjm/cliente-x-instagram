@@ -146,11 +146,17 @@
     {
       "id": "fe11fa53-182d-429b-9fc7-b15818b901c1",
       "day": "2026-10-17",
-      "status": "reserved",
+      "status": "completed",
       "stage": "haiku-holdout:holdout-2",
       "startedAt": "2026-10-17T22:45:03.069Z",
       "imageHash": "34169359e67f7acc29d673c680eab8f7cc3bbe6cf27019b69da83c755945902e",
-      "imageBytes": 57096
+      "imageBytes": 57096,
+      "completedAt": "2026-10-17T22:45:12.700Z",
+      "reportedInputTokens": 20834,
+      "inputTokens": 20834,
+      "outputTokens": 164,
+      "usageStatus": "provider_reported",
+      "stopReason": "end_turn"
     }
   ],
   "entries": [
@@ -337,12 +343,33 @@
       "checkedAt": "2026-10-17T22:45:00.458Z",
       "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/08_FB_Zacchaeus_1024.jpg?1724237549",
       "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817"
+    },
+    {
+      "id": "haiku-holdout:holdout-2",
+      "mode": "haiku-holdout",
+      "fixture": "holdout-2",
+      "model": "claude-haiku-4.5",
+      "passed": true,
+      "value": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration",
+        "description": "Ilustração mostrando dois homens em um ambiente interno com paredes de pedra e uma janela. O homem à esquerda está sentado, tem cabelos castanhos longos e barba, veste túnica amarela com manto vermelho sobre o ombro, e segura um copo ou cálice prateado nas mãos. À sua frente há uma mesa de madeira com uma tigela contendo frutos vermelhos. O homem à direita está em pé, tem barba escura, usa turbante ou faixa amarela na cabeça, túnica azul com faixas vermelhas no peito e cinto vermelho, e gesticula com a mão direita estendida em direção ao homem sentado."
+      },
+      "expected": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration"
+      },
+      "checkedAt": "2026-10-17T22:45:12.700Z",
+      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/07_FB_Zacchaeus_1024.jpg?1724237549",
+      "imageHash": "34169359e67f7acc29d673c680eab8f7cc3bbe6cf27019b69da83c755945902e"
     }
   ],
   "circuit": null,
   "health": "awaiting_holdout",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T22:45:03.069Z",
+  "checkedAt": "2026-10-17T22:45:12.700Z",
   "workflowRun": "39076244962",
   "summary": [
     {
