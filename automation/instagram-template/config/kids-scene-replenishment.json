@@ -3,8 +3,8 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "manual_repair_pilot",
-  "message": "Piloto com Sonnet anunciado pelo provedor; requer nova calibração de pixels.",
+  "health": "calibrated",
+  "message": "Leitura real dos pixels confirmada com desafio aleatório; aguarda piloto bíblico.",
   "policy": {
     "maxCallsPerDay": 26,
     "maxInputTokensPerCall": 120000,
@@ -155,15 +155,15 @@
   ],
   "calibration": {
     "version": "kids-scene-review-v1",
-    "model": "claude-haiku-4.5",
+    "model": "claude-sonnet-4.6",
     "provider": "claude-ss",
-    "checkedAt": "2026-10-17T20:45:42.963Z",
+    "checkedAt": "2026-10-17T21:07:22.439Z",
     "passed": true,
-    "challengeHash": "91b419461861a802c539a47a4dcb8827d615f8e5231ac93d45f38a56ce649475"
+    "challengeHash": "ad02f2bd52f0f48705bf10ca8a9338df51d52140a9c50a7c264a0b827dd36d47"
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T21:07:20.988Z",
+  "checkedAt": "2026-10-17T21:07:22.440Z",
   "lastRun": "39069508959",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
