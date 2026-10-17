@@ -23,6 +23,8 @@ let calls=0;
 const result=await testClaude({provider:'claude-ss',key:'test',vision:true,fetchImpl:async()=>{calls++;return {ok:false,status:401}}});
 assert.equal(calls,1);assert.equal(result.status,'invalid_credentials');assert.equal(result.vision,false);
 const never=()=>{throw Error('Unexpected request')};
+const proxyAlias=await testClaude({provider:'claude-ss',key:'test',image,expectedHash,vision:true,fetchImpl:async(url)=>({ok:true,json:async()=>url.includes('/models')?{data:[{id:'claude-sonnet-4.6'},{id:'unsafe model string'}]}:{content:[{type:'text',text:'Cena'}]}})});
+assert.equal(proxyAlias.model,'claude-sonnet-4.6');assert.equal(proxyAlias.status,'vision_response_received');assert.deepEqual(proxyAlias.availableModels,['claude-sonnet-4.6']);
 assert.equal((await testClaude({provider:'unknown',key:'test',fetchImpl:never})).status,'unsupported_provider');
 assert.equal((await testClaude({fetchImpl:never})).status,'missing_secret');
 assert.equal((await testClaude({provider:'claude-ss',key:'test',image,expectedHash:'bad',vision:true,fetchImpl:async()=>({ok:true,json:async()=>({data:[{id:'claude-haiku-4-5-20251001'}]})})})).status,'invalid_test_image');

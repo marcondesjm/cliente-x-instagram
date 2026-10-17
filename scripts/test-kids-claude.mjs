@@ -21,8 +21,10 @@ export async function testClaude({key, image, expectedHash, vision=false, provid
     const models=await request('models?limit=100');
     if(!Array.isArray(models.data))return {...result,status:'invalid_models_response'};
     result.authentication=true;
+    const available=models.data.map(m=>m.id).filter(id=>typeof id==='string' && /^claude-[a-z0-9._-]{1,80}$/.test(id));
+    result.availableModels=available.slice(0,30);
     if(!vision)return {...result,status:'authenticated'};
-    const model=['claude-haiku-4-5-20251001','claude-haiku-4-5','claude-haiku-5-5'].find(id=>models.data.some(m=>m.id===id));
+    const model=['claude-haiku-4-5-20251001','claude-haiku-4-5','claude-haiku-5-5'].find(id=>available.includes(id)) || (provider==='claude-ss'?available.filter(id=>/^claude-(haiku|sonnet)-/.test(id) && !/thinking|reasoning/.test(id)).sort((a,b)=>Number(b.includes('haiku'))-Number(a.includes('haiku')) || a.localeCompare(b))[0]:undefined);
     if(!model)return {...result,status:'test_model_unavailable'};
     if(!Buffer.isBuffer(image) || image.length>1_000_000 || image[0]!==255 || image[1]!==216 || createHash('sha256').update(image).digest('hex')!==expectedHash)return {...result,status:'invalid_test_image'};
     result.model=model;
