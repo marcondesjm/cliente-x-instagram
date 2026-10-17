@@ -39,10 +39,16 @@
     {
       "id": "903db670-065f-4e4c-be91-e071841d971d",
       "day": "2026-10-17",
-      "status": "reserved",
+      "status": "completed",
       "stage": "compatible-tree-v2",
       "startedAt": "2026-10-17T23:17:59.581Z",
-      "promptHash": "af9b7b234c0f546186b3ced375f33dd74fb933d3234fe29a634c361889e6ea6a"
+      "promptHash": "af9b7b234c0f546186b3ced375f33dd74fb933d3234fe29a634c361889e6ea6a",
+      "completedAt": "2026-10-17T23:18:15.999Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 38,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -111,12 +117,45 @@
         ]
       },
       "promptHash": "c59ef1e84890121120f1fc1f111259eddb68cb16c0aec87ca651585ce4795c9e"
+    },
+    {
+      "id": "compatible-tree-v2",
+      "expectedCopyMatch": true,
+      "passed": false,
+      "syntheticTextFixture": true,
+      "imageInspection": false,
+      "value": {
+        "decision": "approve",
+        "cards": [
+          {
+            "scene": 1,
+            "observedEvent": "Uma pessoa sobe em uma árvore enquanto outras pessoas observam do chão.",
+            "passageMatch": true,
+            "childSuitable": true,
+            "distinct": true,
+            "copyMatch": true,
+            "verse": "19:4",
+            "reason": "A observação descreve visualmente a ação de Zaqueu subindo na árvore para ver Jesus (Lucas 19:4). A cena é compatível com o cartão 1 ('Zaqueu subiu na árvore para ver Jesus') e semanticamente corresponde ao título e corpo do cartão. É adequada para crianças e distinta da segunda cena."
+          },
+          {
+            "scene": 2,
+            "observedEvent": "Um homem recebe outro homem com alegria na entrada da sua casa.",
+            "passageMatch": true,
+            "childSuitable": true,
+            "distinct": true,
+            "copyMatch": false,
+            "verse": "19:6",
+            "reason": "A observação retrata Zaqueu recebendo Jesus com alegria (Lucas 19:6), conforme descrito no Story. A cena é compatível com a passagem, adequada para crianças e composicionalmente distinta da cena da árvore. No entanto, copyMatch é falso porque não há um cartão editorial correspondente fornecido no contexto - apenas o Story menciona esta cena como última posição."
+          }
+        ]
+      },
+      "promptHash": "af9b7b234c0f546186b3ced375f33dd74fb933d3234fe29a634c361889e6ea6a"
     }
   ],
   "circuit": null,
   "passed": false,
   "health": "awaiting_v2",
-  "checkedAt": "2026-10-17T23:17:59.581Z",
+  "checkedAt": "2026-10-17T23:18:15.999Z",
   "run": "39078414452",
   "message": "Primeiro par distinguiu copyMatch corretamente; Story genérico produziu inconsistência. Novo par usa descrição auxiliar explícita."
 }
