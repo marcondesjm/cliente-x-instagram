@@ -3,13 +3,13 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "blocked",
-  "message": "Reposição de cenas novas bloqueada após falso positivo factual na conferência bíblica. Busca e montagem das três seleções previamente revisadas continuam; novas seleções exigem controle factual adicional validado.",
+  "health": "awaiting_grounded_pilot",
+  "message": "Controle factual passou4 casos reais; piloto v2 de uma pauta ainda obrigatório. Aprovação recorrente desativada.",
   "policy": {
-    "maxCallsPerDay": 26,
+    "maxCallsPerDay": 40,
     "maxInputTokensPerCall": 120000,
     "maxInputTokensPerDay": 1500000,
-    "maxPacksPerRun": 3,
+    "maxPacksPerRun": 1,
     "readyStockTarget": 24
   },
   "calls": [
@@ -542,7 +542,7 @@
     "passed": true,
     "challengeHash": "ad02f2bd52f0f48705bf10ca8a9338df51d52140a9c50a7c264a0b827dd36d47"
   },
-  "circuit": "semantic_false_positive",
+  "circuit": null,
   "publicationTriggered": false,
   "checkedAt": "2026-10-17T21:46:36.930Z",
   "lastRun": "39072053494",
@@ -659,5 +659,13 @@
       }
     ]
   },
-  "validationBudgetNote": "Piloto encerrado; limite operacional restaurado para26 chamadas/dia. Plano fixo informado pelo usuário."
+  "validationBudgetNote": "Piloto v2 limitado a uma pauta com novo controle factual; limites26 chamadas/3 pautas só após ativação comprovada.",
+  "semanticValidation": {
+    "version": "editorial-grounding-v1",
+    "checkedAt": "2026-10-17T22:03:34.128Z",
+    "sourceRun": "39073425934",
+    "taskFingerprint": "f7252a23193714e02af224b8b21db4c85eaf84182f865020b10e7c3e33fc0f10",
+    "passedCases": 4,
+    "previousCircuit": "semantic_false_positive"
+  }
 }
