@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { extractArticleFacts, paginateArticleFacts, buildResearchPack } from '../lib/editorial-research.js';
-import { validatePack, preparePackForPublication, assertCarouselPublishingLimit, splitCreativeDescription } from '../automation/instagram-template/scripts/publish-carousel.mjs';
+import { validatePack, preparePackForPublication, assertCarouselPublishingLimit, splitCreativeDescription, approvedRevisionImageReuse } from '../automation/instagram-template/scripts/publish-carousel.mjs';
 
 const paragraphs = Array.from({ length: 14 }, (_, i) => `O ponto ${i + 1} apresenta uma informação distinta sobre a supervisão de agentes e a responsabilidade das empresas.`);
 const facts = extractArticleFacts(`<nav><p>Conteúdo de navegação que não pertence à reportagem original.</p></nav><article>${paragraphs.map(p => `<p>${p}</p>`).join('')}<aside><p>Outra notícia que não pertence ao conteúdo da reportagem original.</p></aside></article><footer><p>Rodapé que não pertence à matéria e precisa ser descartado.</p></footer>`);
@@ -26,4 +26,10 @@ assert.throws(() => assertCarouselPublishingLimit(pack, 'feed-only'), /API da Me
 assert.doesNotThrow(() => assertCarouselPublishingLimit(pack, 'feed-only', { renderOnly: true }));
 assert.doesNotThrow(() => assertCarouselPublishingLimit({ slides: pack.slides.slice(0, 10) }, 'feed-only'));
 assert.throws(() => buildResearchPack({ ...item, articleFacts: [...facts, ...paragraphs] }, undefined, { niche: 'IA', keywords: ['agentes'] }), /sem cortar o final/);
+const revision = { ...pack, publicationRevision: { allowSourceImageReuse: true, previousMediaId: 'old-post' } };
+const history = [{ mediaId: 'old-post', research: { sourceUrl: item.url } }];
+assert.equal(approvedRevisionImageReuse(revision, history, true), true);
+assert.equal(approvedRevisionImageReuse(revision, history, false), false);
+assert.equal(approvedRevisionImageReuse(revision, [{ mediaId: 'old-post', research: { sourceUrl: 'https://example.com/other' } }], true), false);
+assert.equal(approvedRevisionImageReuse(revision, [], true), false);
 console.log('OK: 14 parágrafos preservados; conclusão, paginação, IHC, omissões e limites de publicação verificados.');

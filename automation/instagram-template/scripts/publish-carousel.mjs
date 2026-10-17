@@ -2008,7 +2008,14 @@ async function downloadEditorialImage(sourceImageUrl = '', runDir = '', fileStem
   }
 }
 
-async function downloadResearchSlideImages(pack = {}, editorialPacks = [], publicationHistory = [], runDir = '', requiredCount = pack.slides?.length || 0) {
+export function approvedRevisionImageReuse(pack, history = [], manual = false) {
+  const revision = pack?.publicationRevision;
+  return Boolean(manual && revision?.allowSourceImageReuse === true && revision.previousMediaId
+    && history.some(entry => String(entry.mediaId) === String(revision.previousMediaId)
+      && entry.research?.sourceUrl === pack.research?.sourceUrl));
+}
+
+async function downloadResearchSlideImages(pack = {}, editorialPacks = [], publicationHistory = [], runDir = '', requiredCount = pack.slides?.length || 0, options = {}) {
   const slideCount = Array.isArray(pack.slides) ? pack.slides.length : 0;
   if (!pack?.research?.sourceUrl || !slideCount) return [];
   const priorUrls = new Set();
@@ -2041,20 +2048,21 @@ async function downloadResearchSlideImages(pack = {}, editorialPacks = [], publi
       ...alternative,
       imageUrl: normalizedEditorialImageUrl(alternative.imageUrl)
     };
-    if (!candidate.imageUrl || currentUrls.has(photoIdentity(candidate.imageUrl)) || priorUrls.has(photoIdentity(candidate.imageUrl))) continue;
+    if (!candidate.imageUrl || currentUrls.has(photoIdentity(candidate.imageUrl)) || (!options.allowSourceImageReuse && priorUrls.has(photoIdentity(candidate.imageUrl)))) continue;
     const downloaded = await downloadEditorialImage(candidate.imageUrl, runDir, `radar-slide-${String(selected.length + 1).padStart(2, '0')}`);
-    if (!downloaded || currentHashes.has(downloaded.imageHash) || priorHashes.has(downloaded.imageHash) || priorUrls.has(photoIdentity(downloaded.imageUrl))) continue;
+    if (!downloaded || currentHashes.has(downloaded.imageHash) || (!options.allowSourceImageReuse && (priorHashes.has(downloaded.imageHash) || priorUrls.has(photoIdentity(downloaded.imageUrl))))) continue;
     let perceptualHash;
     try { perceptualHash = await photoSignature(photoPage, downloaded.path); }
     catch (error) { console.warn(`Foto rejeitada: ${error.message}`); continue; }
-    if ([...priorPerceptualHashes, ...selected.map(visual => visual.perceptualHash)].some(hash => similarPhoto(hash, perceptualHash))) continue;
+    if ([...(options.allowSourceImageReuse ? [] : priorPerceptualHashes), ...selected.map(visual => visual.perceptualHash)].some(hash => similarPhoto(hash, perceptualHash))) continue;
     currentHashes.add(downloaded.imageHash);
     currentUrls.add(photoIdentity(candidate.imageUrl));
     selected.push({
       ...candidate,
       ...downloaded,
       perceptualHash,
-      reusedRelevantImage: priorUrls.has(candidate.imageUrl) || priorHashes.has(downloaded.imageHash)
+      reusedRelevantImage: priorUrls.has(photoIdentity(candidate.imageUrl)) || priorHashes.has(downloaded.imageHash),
+      approvedRevisionImageReuse: options.allowSourceImageReuse === true
     });
     if (selected.length >= requiredCount) break;
   }
@@ -6000,7 +6008,8 @@ async function main() {
     editorialResearch.packs,
     publicationHistory,
     runDir,
-    publishMode === 'story-only' ? 1 : pack.slides.length
+    publishMode === 'story-only' ? 1 : pack.slides.length,
+    { allowSourceImageReuse: approvedRevisionImageReuse(pack, publicationHistory, Boolean(dashboardPack)) }
   );
   const visualPack = publishMode === 'story-only' ? { ...pack, slides: pack.slides.slice(0, 1) } : pack;
   const visualAgent = assertVisualAgentPlan(visualPack, buildVisualAgentPlan(visualPack, researchVisualSources));
