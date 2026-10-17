@@ -6346,7 +6346,7 @@ export function assertCarouselPublishingLimit(pack, publishMode, args = {}) {
   }
 }
 
-export { validatePack, preparePackForPublication, renderSlides, loadConfig, splitCreativeDescription };
+export { validatePack, preparePackForPublication, renderSlides, loadConfig, splitCreativeDescription, recordPublicationHistory };
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main().catch((error) => {
   const args = parseArgs(process.argv);
