@@ -11,6 +11,7 @@ const state={calls:[],circuit:null,policy:{maxCallsPerDay:2,maxInputTokensPerDay
 assert.equal(reviewPoolLimit({maxCallsPerDay:26,maxInputTokensPerDay:1500000,maxInputTokensPerCall:120000}),9);
 assert.equal(reviewPoolLimit({maxCallsPerDay:40,maxInputTokensPerDay:3000000,maxInputTokensPerCall:120000}),12);
 assert.equal(reviewPoolLimit({maxCallsPerDay:8,maxInputTokensPerDay:3000000,maxInputTokensPerCall:120000}),5);
+assert.equal(reviewPoolLimit({maxCallsPerDay:10,maxInputTokensPerDay:1200000,maxInputTokensPerCall:120000}),7,'A fresh pilot must reserve three calls after reading the image pool');
 const now=new Date('2026-10-18T01:00:00Z');assert.equal(callAllowance(state,now),'2026-10-17');
 const diagnostic={enabled:false,circuit:'vision_validation_failed',calls:[{day:'2026-10-17',status:'completed',inputTokens:120000}],entries:[],policy:{maxCallsPerDay:1,maxInputTokensPerDay:120000,maxInputTokensPerCall:120000}};
 beginDiagnosticPilot(diagnostic,'test-pilot','kids-biblia-29',now);

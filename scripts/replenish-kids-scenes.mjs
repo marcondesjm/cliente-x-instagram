@@ -104,9 +104,10 @@ async function reviewPack(pack,candidate,known,{attempt=0,feedback=null}={}) {
   const words=new Set(passage.verses.map(v=>v.text).join(' ').toLowerCase().match(/[a-z]{4,}/g));
   const score=s=>(s.description.toLowerCase().match(/[a-z]{4,}/g) || []).filter(w=>words.has(w)).length;
   const ranked=[...source.scenes].sort((a,b)=>score(b)-score(a));
+  const poolPolicy=state.pilotRun?.status==='running'?{...state.policy,maxCallsPerDay:Math.min(state.policy.maxCallsPerDay,state.pilotRun.maxCalls),maxInputTokensPerDay:Math.min(state.policy.maxInputTokensPerDay,state.pilotRun.maxInputTokens)}:state.policy;
   let downloaded=0;
   for(const scene of ranked.slice(0,30)) {
-    if(pool.length>=reviewPoolLimit(state.policy))break;
+    if(pool.length>=reviewPoolLimit(poolPolicy))break;
     const item=await getScene(scene);downloaded+=item.bytes.length;
     if(downloaded>30_000_000)throw new Error('Conjunto excede limite de download.');
     if([...known,...pool].some(other=>similarScenes(item,other)))continue;
