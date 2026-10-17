@@ -613,11 +613,17 @@
       "day": "2026-10-17",
       "stage": "verify:kids-biblia-29",
       "startedAt": "2026-10-17T22:18:34.547Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 45816,
       "promptChars": 4200,
       "imageFingerprint": "e542e57abe625c6c7c7f20b29ed7e4377b46438992bbb4e5c91f08a7b0d2a99d",
-      "promptFingerprint": "5c63450a0e533ff23ff63f349aea9d28aec7c8acb8c83e264a5e60b09567aa8d"
+      "promptFingerprint": "5c63450a0e533ff23ff63f349aea9d28aec7c8acb8c83e264a5e60b09567aa8d",
+      "completedAt": "2026-10-17T22:18:58.824Z",
+      "reportedInputTokens": 18069,
+      "inputTokens": 18069,
+      "outputTokens": 725,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -712,7 +718,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T22:18:34.548Z",
+  "checkedAt": "2026-10-17T22:18:58.824Z",
   "lastRun": "39074391132",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -851,56 +857,69 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "select:kids-biblia-29",
+    "stage": "verify:kids-biblia-29",
     "value": {
-      "decision": "approve",
-      "feed": [
-        4,
-        6,
-        3,
-        5,
-        2
-      ],
-      "story": 1,
-      "childSuitable": true,
-      "distinct": true,
-      "referenceAccurate": true,
-      "evidence": [
+      "decision": "reject",
+      "cards": [
         {
-          "card": 1,
-          "scene": 4,
-          "verse": "19:1-2",
-          "reason": "Cena mostra Jesus em multidão com Zaqueu ao fundo entre pessoas altas, correspondendo à chegada em Jericó e apresentação do cobrador de impostos rico"
-        },
-        {
-          "card": 2,
-          "scene": 6,
-          "verse": "19:3-4",
-          "reason": "Zaqueu subindo na árvore sicômoro para ver Jesus acima da multidão, detalhe visual claro da ação descrita no texto"
-        },
-        {
-          "card": 3,
-          "scene": 3,
-          "verse": "19:5",
-          "reason": "Jesus olhando para cima na árvore e falando com Zaqueu, representando o momento exato do convite para descer"
-        },
-        {
-          "card": 4,
-          "scene": 5,
-          "verse": "19:6-7",
-          "reason": "Zaqueu recebendo Jesus em sua casa com expressão alegre enquanto pessoas ao fundo murmuram, capturando tanto a recepção quanto a reação negativa"
-        },
-        {
-          "card": 5,
-          "scene": 2,
-          "verse": "19:8",
-          "reason": "Zaqueu de pé diante de Jesus fazendo gesto de declaração pública sobre restituição, correspondendo ao momento concreto da promessa de reparação"
-        },
-        {
-          "card": 6,
           "scene": 1,
-          "verse": "19:9-10",
-          "reason": "Jesus declarando salvação na casa de Zaqueu, cena diferente dos cartões que ilustra o clímax teológico da passagem"
+          "observedEvent": "Jesus de túnica vermelha caminha entre um grupo de homens em vestes antigas, alguns usando turbantes coloridos.",
+          "passageMatch": false,
+          "childSuitable": true,
+          "distinct": true,
+          "copyMatch": false,
+          "verse": "19:1-2",
+          "reason": "A imagem retrata Jesus caminhando na multidão (Lucas 19:1), mas o título do cartão é 'Zaqueu recebeu Jesus em sua casa'. A cena visual não corresponde ao texto do cartão, que descreve a recepção na casa, nem ilustra Zaqueu."
+        },
+        {
+          "scene": 2,
+          "observedEvent": "Um homem pequeno sobe em uma árvore frondosa enquanto uma multidão passa abaixo por uma rua com casas de pedra.",
+          "passageMatch": true,
+          "childSuitable": true,
+          "distinct": true,
+          "copyMatch": true,
+          "verse": "19:3-4",
+          "reason": "A cena ilustra corretamente Zaqueu subindo na sicômoro para ver Jesus devido à multidão e à sua baixa estatura, conforme descrito no corpo do cartão."
+        },
+        {
+          "scene": 3,
+          "observedEvent": "Jesus olha para cima apontando para um homem sentado nos galhos de uma árvore, cercado por observadores.",
+          "passageMatch": true,
+          "childSuitable": true,
+          "distinct": true,
+          "copyMatch": false,
+          "verse": "19:5",
+          "reason": "Visualmente corresponde a Lucas 19:5 (Jesus chamando Zaqueu da árvore). No entanto, o copyMatch é falso pois o cartão 3 trata de 'Uma lição para o nosso dia' (aplicação moral), e a imagem mostra um fato narrativo específico, não uma representação abstrata de mudança de atitude."
+        },
+        {
+          "scene": 4,
+          "observedEvent": "Homens em trajes bíblicos conversam em um pátio ou corredor com arcos de pedra, em tom de murmuração ou discussão.",
+          "passageMatch": true,
+          "childSuitable": true,
+          "distinct": true,
+          "copyMatch": false,
+          "verse": "19:7",
+          "reason": "A imagem retrata a murmuração da multidão (Lucas 19:7). O cartão 4 é uma chamada para atividade familiar ('Converse com um adulto sobre devolver algo'), portanto a imagem narrativa não corresponde ao texto instrucional do cartão."
+        },
+        {
+          "scene": 5,
+          "observedEvent": "Dois homens sentados à mesa compartilham uma refeição; um veste vermelho e branco, o outro azul, em ambiente interno.",
+          "passageMatch": true,
+          "childSuitable": true,
+          "distinct": true,
+          "copyMatch": false,
+          "verse": "19:6",
+          "reason": "Ilustra Zaqueu recebendo Jesus em casa (Lucas 19:6). O cartão 5 pede 'Leia Lucas 19:1–10 com um adulto', sendo um convite à leitura, não uma ilustração da ceia. Há desacordo entre imagem narrativa e texto funcional."
+        },
+        {
+          "scene": 6,
+          "observedEvent": "Jesus e Zaqueu estão juntos rodeados por outras pessoas; Zaqueu gesticula com a mão levantada em sinal de declaração pública.",
+          "passageMatch": true,
+          "childSuitable": true,
+          "distinct": true,
+          "copyMatch": false,
+          "verse": "19:8-9",
+          "reason": "Representa Zaqueu declarando restituição e Jesus anunciando salvação (Lucas 19:8-9). O Story pede 'Uma cena diferente relacionada à mesma passagem; leitura com um adulto', mas a imagem é uma cena narrativa direta, não uma representação conceitual de leitura ou estudo bíblico em família."
         }
       ]
     }
