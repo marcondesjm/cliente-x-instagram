@@ -11,7 +11,7 @@ const key=process.env.KIDS_VISION_ANTHROPIC_API_KEY;
 if(!process.argv.includes('--persist') || !key)throw Error('Teste exige segredo existente e recibos persistidos.');
 const save=()=>{state.checkedAt=new Date().toISOString();state.run=process.env.GITHUB_RUN_ID;fs.writeFileSync(path,JSON.stringify(state,null,2)+'\n');persistState([path]);};
 const observations=[{scene:1,observedEvent:'Uma pessoa sobe em uma árvore enquanto outras pessoas observam do chão.'},{scene:2,observedEvent:'Um homem recebe outro homem com alegria na entrada da sua casa.'}];
-const cases=[{id:'compatible-tree-v2',title:'Zaqueu subiu na árvore para ver Jesus',body:'Ele correu à frente e subiu na árvore para conseguir ver Jesus.',expected:true},{id:'incompatible-house-v2',title:'Zaqueu recebeu Jesus em sua casa',body:'Zaqueu desceu depressa e recebeu Jesus com alegria em sua casa.',expected:false}];
+const cases=[{id:'compatible-tree-v3',title:'Zaqueu subiu na árvore para ver Jesus',body:'Ele correu à frente e subiu na árvore para conseguir ver Jesus.',expected:true},{id:'incompatible-house-v3',title:'Zaqueu recebeu Jesus em sua casa',body:'Zaqueu desceu depressa e recebeu Jesus com alegria em sua casa.',expected:false}];
 try {
  const passage=await loadPassage('Lucas 19:1–10');
  for(const fixture of cases) {

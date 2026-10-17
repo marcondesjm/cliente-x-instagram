@@ -3,9 +3,9 @@
   "model": "claude-sonnet-4.6",
   "billingMode": "fixed_plan_user_confirmed",
   "policy": {
-    "maxCallsPerDay": 4,
+    "maxCallsPerDay": 6,
     "maxInputTokensPerCall": 120000,
-    "maxInputTokensPerDay": 480000
+    "maxInputTokensPerDay": 720000
   },
   "calls": [
     {
@@ -201,8 +201,8 @@
   ],
   "circuit": null,
   "passed": false,
-  "health": "rejected",
+  "health": "awaiting_story_mapping_v3",
   "checkedAt": "2026-10-17T23:18:32.277Z",
   "run": "39078414452",
-  "message": "Primeiro par distinguiu copyMatch corretamente; Story genérico produziu inconsistência. Novo par usa descrição auxiliar explícita."
+  "message": "Teste v2 expôs mapeamento ambíguo do Story: não existe cartão Feed para última posição. Prompt agora mapeia Story explicitamente e exige decisão coerente com os campos."
 }
