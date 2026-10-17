@@ -1,3 +1,12 @@
+## 2026-10-17 — cadastro replicável implantado em produção
+
+- Login Vercel renovado pelo titular; CLI 64.5.0 com certificados do sistema. Deploy de produção READY: dpl_GwjDHbC4UGC7mz4oe3Ng9jpejXpa, código 3185e16d; domínio https://cliente-x-instagram.vercel.app confirmado pelo alias.
+- HTTP 200 em produção com newAccountTimes, entrada @/URL e aprovação como padrão. Formulário visível no navegador autenticado.
+- Teste real sem criação: envio do perfil já existente sabedoriakidsoficial com chave omitida foi rejeitado com Este Instagram já está cadastrado. Selecione a conta existente. Nenhum novo cadastro ou convite criado.
+- Testes locais aprovados novamente: validate-account-onboarding (50 identidades simuladas), validate-kids-onboarding, validate-publication-access e git diff --check.
+- Workflow Sabedoria Kids permanece active; rotina prevista para 18/10 às 07h BRT. As duas publicações manuais seguem como evidência atual; primeira execução automática futura ainda pendente.
+- Próximo passo: cadastrar o próximo perfil real com seu briefing, conectar autorização própria e validar publicação. Escala de 50 publicações simultâneas, filas genéricas por conta e aprovação Meta para clientes externos continuam pendentes.
+
 ## 2026-10-17 — cadastro replicável por nicho
 
 - Branch feat/multiaccount-onboarding-20261017; base c455fa39; implementação enviada ao origin/main em 13456434.
