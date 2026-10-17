@@ -1,4 +1,14 @@
 
+## 2026-10-17 — montagem automática das cenas revisadas
+
+- Pedido explícito: automatizar a etapa de montagem das cenas. Workflow kids-scene-assembly.yml às 05h50, 11h50, 17h50 e 23h50 BRT, separado da busca e do disparo Meta. Usa a mesma fila de concorrência do publicador Kids.
+- Catálogo inicial: três mapas de cenas já conferidas (José, sarça, maná) em kids-reviewed-scenes.json. Texto/referência vinculados por copyFingerprint. Novas imagens descobertas não recebem aprovação automática nem entram nesta etapa sem seleção revisada. Limite intencional e informado no painel; não prometer aprovação semântica autônoma ou estoque infinito.
+- Rotina baixa arquivos ausentes com limite, verifica JPEG/hash/cena de origem/termos/licença, monta cinco cartões + Story distinto, executa render-only oficial e só depois persiste o pack pronto. Reutiliza montagem íntegra validada por até 24h; histórico impede remontar/republicar conteúdo usado. Sem token Meta no workflow.
+- Falha de integridade, referência/texto, licença, fonte ou render bloqueia a pauta automaticamente com sceneAutomation.status=blocked; guard de publicação respeita o bloqueio. Mudança de texto após montagem invalida aprovação por hash, inclusive em merge concorrente.
+- Estado/recibos em kids-scene-automation.json, imagens e acervo persistidos com merge de três versões/índice Git temporário, sem force; outras contas preservadas. Painel Agenda/acervo mostra montagens prontas, bloqueadas, horários e execução.
+- Testes: montagem idempotente, licença/termos/cena alterados, arquivos corrompidos, downloads simulados, Story distinto, bloqueio de texto, e integração Git real local com conta concorrente + asset passaram. Busca, padrão bíblico, merge e scheduled guard passaram. Falta neste checkpoint verificar execução real na nuvem.
+
+
 ## 2026-10-17 — cenas selecionadas, conferidas e montadas
 
 - Continuação pedida para as cenas após busca automática. Selecionadas 18 ilustrações Sweet Publishing / FreeBibleimages CC BY-SA 3.0 para três pautas existentes inéditas: José/irmãos (Gênesis 45:1–15), Moisés/sarça (Êxodo 3:1–12) e maná (contexto ampliado para Êxodo 16:1–18). Cinco cenas no Feed e outra no Story por pauta, com créditos e licença nas legendas e CREDITOS.txt.

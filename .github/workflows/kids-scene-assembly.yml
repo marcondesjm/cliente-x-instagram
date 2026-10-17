@@ -1,0 +1,39 @@
+name: Sabedoria Kids - montar cenas revisadas
+on:
+  workflow_dispatch:
+  schedule:
+    # Quinze minutos depois da busca: 05h50, 11h50, 17h50 e 23h50 BRT.
+    - cron: '50 2,8,14,20 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: instagram-feed-sabedoria-kids-automatic
+  cancel-in-progress: false
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Refresh state
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git pull --rebase origin main
+      - run: npm ci --ignore-scripts
+      - run: npx playwright install --with-deps chromium
+      - name: Download, assemble, render and activate reviewed scenes
+        run: node scripts/assemble-kids-scenes.mjs --persist
+      - name: Save render evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kids-reviewed-scene-renders
+          path: |
+            automation/instagram-template/runs/sabedoria-kids/
+            automation/instagram-template/config/kids-scene-automation.json
+          if-no-files-found: ignore

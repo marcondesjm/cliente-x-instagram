@@ -2889,9 +2889,11 @@ export default async function handler(req, res) {
   tomorrowPlan = mergeProgramItems(tomorrowPlan, weeklyPrograms, tomorrowDate);
   let biblicalResearch = null;
   let biblicalImageDiscovery = null;
+  let biblicalSceneAutomation = null;
   if (accountKey === 'sabedoria-kids') {
     try { biblicalResearch = (await readGithubConfig('automation/instagram-template/config/sabedoria-kids-sources.json')).data; } catch { biblicalResearch = null; }
     try { biblicalImageDiscovery = (await readGithubConfig('automation/instagram-template/config/kids-image-discovery.json')).data; } catch { biblicalImageDiscovery = null; }
+    try { biblicalSceneAutomation = (await readGithubConfig('automation/instagram-template/config/kids-scene-automation.json')).data; } catch { biblicalSceneAutomation = null; }
   }
   const radarConfig = radarConfigForAccount(account);
   const radarHealth = await loadRadarCollectionHealth(radarConfig, accountKey);
@@ -2935,6 +2937,7 @@ export default async function handler(req, res) {
     scheduleBrt,
     biblicalResearch,
     biblicalImageDiscovery,
+    biblicalSceneAutomation,
     visualReadiness: { required: requiresBibleIllustrations(account), total: packs.length, ready: readyPacks.length, pending: packs.length - readyPacks.length },
     calendarPublications: (publicationHistory[accountKey] || [])
       .filter(entry => entry.mediaId && entry.publishedAt)
