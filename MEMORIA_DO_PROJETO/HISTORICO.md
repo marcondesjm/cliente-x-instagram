@@ -1,3 +1,10 @@
+## 2026-10-17 — quatro fontes adicionais da Sabedoria Kids
+
+- Pedido explícito: cadastrar mais fontes. Adicionadas SBB, YouVersion Bíblia em português, YouVersion Bíblia para Crianças e 3 Palavrinhas; total de seis fontes no perfil.
+- Páginas consultadas ao vivo; finalidades registradas distinguem referência bíblica de apoio pedagógico. Textos e imagens devem ser originais e passagens conferidas.
+- Validação: JSON válido, seis URLs HTTPS únicas com finalidade e demais contas idênticas; git diff --check aprovado.
+- Cadastro não amplia automaticamente o coletor: os 59 temas continuam vindo do catálogo Bíblia para Crianças. As novas fontes ficam disponíveis para pesquisa editorial e no painel; nenhuma nova publicação disparada.
+
 ## 2026-10-17 10:58 BRT — fontes bíblicas conferidas e pesquisa atualizada
 
 - Pedido: usar fontes bíblicas nas postagens da Sabedoria Kids. Confirmadas as fontes cadastradas em accounts.json: Bíblia para Crianças (pautas infantis) e Bíblia Online NVI (conferência das passagens).
