@@ -109,10 +109,16 @@
     {
       "id": "f0b1f004-56c6-4a26-a072-5a3ffd4ab1c4",
       "day": "2026-10-17",
-      "status": "reserved",
+      "status": "completed",
       "stage": "incompatible-house-v4",
       "startedAt": "2026-10-17T23:22:38.985Z",
-      "promptHash": "22e09d4973bb53fc00770483ec972e83d55f3bcefca6e6da1c7908b89674351b"
+      "promptHash": "22e09d4973bb53fc00770483ec972e83d55f3bcefca6e6da1c7908b89674351b",
+      "completedAt": "2026-10-17T23:23:02.669Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 362,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -346,12 +352,45 @@
         "decision": "approve"
       },
       "promptHash": "f15541d595f385d79eb690ded3d53e18def313a9b89282f33f4d78bc27736776"
+    },
+    {
+      "id": "incompatible-house-v4",
+      "expectedCopyMatch": false,
+      "passed": false,
+      "syntheticTextFixture": true,
+      "imageInspection": false,
+      "value": {
+        "cards": [
+          {
+            "scene": 1,
+            "observedEvent": "Uma pessoa sobe em uma árvore enquanto outras pessoas observam do chão.",
+            "reason": "A observação descreve alguém subindo em uma árvore (Lucas 19:4), mas o target do cartão Feed refere-se ao evento de Zaqueu descendo e recebendo Jesus em sua casa (Lucas 19:6). São ações distintas e semanticamente incompatíveis: subir versus descer/receber. A passagem mencionada no target não corresponde à ação observada.",
+            "verse": "19:4",
+            "passageMatch": false,
+            "childSuitable": true,
+            "distinct": true,
+            "copyMatch": false
+          },
+          {
+            "scene": 2,
+            "observedEvent": "Um homem recebe outro homem com alegria na entrada da sua casa.",
+            "reason": "A observação é compatível com Lucas 19:6, onde Zaqueu desceu e recebeu Jesus com alegria. O target do Story confirma explicitamente esta cena como distinta da árvore. Há correspondência semântica completa entre a ação observada e o texto do target.",
+            "verse": "19:6",
+            "passageMatch": true,
+            "childSuitable": true,
+            "distinct": true,
+            "copyMatch": true
+          }
+        ],
+        "decision": "reject"
+      },
+      "promptHash": "22e09d4973bb53fc00770483ec972e83d55f3bcefca6e6da1c7908b89674351b"
     }
   ],
   "circuit": null,
   "passed": false,
   "health": "awaiting_explicit_targets_v4",
-  "checkedAt": "2026-10-17T23:22:38.985Z",
+  "checkedAt": "2026-10-17T23:23:02.669Z",
   "run": "39078704818",
   "message": "V3 retornou justificativa compatível com booleano falso. V4 fornece target explícito por posição e ordena justificativa antes dos campos/decisão."
 }
