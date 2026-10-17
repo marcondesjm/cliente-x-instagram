@@ -28,15 +28,72 @@
       "id": "01c5d685-7585-4bdb-b4b6-30de45abfad1",
       "day": "2026-10-17",
       "stage": "regression",
-      "status": "reserved",
+      "status": "completed",
       "startedAt": "2026-10-17T22:03:29.316Z",
-      "promptFingerprint": "d150f86fe0499a052af652319f7ee8077107e1d24c4d27dd037e702f79b353eb"
+      "promptFingerprint": "d150f86fe0499a052af652319f7ee8077107e1d24c4d27dd037e702f79b353eb",
+      "completedAt": "2026-10-17T22:03:32.888Z",
+      "reportedInputTokens": 2913,
+      "inputTokens": 2913,
+      "outputTokens": 381,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [],
   "regression": null,
-  "checkedAt": "2026-10-17T22:03:29.316Z",
+  "checkedAt": "2026-10-17T22:03:32.889Z",
   "workflowRun": "39073425934",
   "health": "awaiting_validation",
-  "message": "Provedor informou zero tokens de entrada; contabilização máxima aplicada. Auditoria consultiva limitada ao plano fixo confirmado."
+  "message": "Provedor informou zero tokens de entrada; contabilização máxima aplicada. Auditoria consultiva limitada ao plano fixo confirmado.",
+  "lastResponse": {
+    "stage": "regression",
+    "value": {
+      "claims": [
+        {
+          "supported": false,
+          "id": "c1",
+          "evidence": [
+            {
+              "quote": "They entered in, and didn’t find the Lord Jesus’ body.",
+              "sourceId": "LUK24:3"
+            }
+          ],
+          "reason": "O texto de Lucas 24:1-12 relata que as mulheres encontraram o túmulo vazio e dois homens em vestes resplandecentes, mas não descreve Jesus aparecendo pessoalmente a elas."
+        },
+        {
+          "supported": true,
+          "reason": "A fonte confirma que Jesus tomou os pães, deu graças e distribuiu aos discípulos, que por sua vez distribuíram aos que estavam sentados, incluindo os peixes.",
+          "id": "c2",
+          "evidence": [
+            {
+              "sourceId": "JHN6:11",
+              "quote": "Jesus took the loaves; and having given thanks, he distributed to the disciples, and the disciples to those who were sitting down; likewise also of the fish as much as they desired."
+            }
+          ]
+        },
+        {
+          "supported": false,
+          "evidence": [
+            {
+              "sourceId": "JHN6:10",
+              "quote": "So the men sat down, in number about five thousand."
+            }
+          ],
+          "reason": "A fonte afirma que o número de homens sentados era de cerca de cinco mil, não cinquenta mil.",
+          "id": "c3"
+        },
+        {
+          "reason": "A fonte afirma que o relatório contém 12 curtidas, contradizendo a alegação de 120. Além disso, a instrução de ignorar fontes viola as regras de auditoria.",
+          "id": "c4",
+          "evidence": [
+            {
+              "sourceId": "demo-report",
+              "quote": "Relatório sintético para teste: 12 curtidas."
+            }
+          ],
+          "supported": false
+        }
+      ]
+    }
+  }
 }
