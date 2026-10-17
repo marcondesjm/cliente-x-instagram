@@ -1,0 +1,73 @@
+name: Sabedoria Kids - preparar ilustracoes
+on:
+  workflow_dispatch:
+    inputs:
+      approve_batch:
+        description: 'Lote a aprovar (vazio = preparar imagens)'
+        required: false
+        type: string
+      review_digest:
+        description: 'Código do lote revisado, mostrado no painel'
+        required: false
+        type: string
+      bible_and_visual_reviewed:
+        description: 'Conferi todas as cenas, a passagem bíblica e o Story'
+        default: false
+        type: boolean
+  schedule:
+    - cron: '35 8 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: instagram-feed-sabedoria-kids-automatic
+  cancel-in-progress: false
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      KIDS_OPENAI_API_KEY: ${{ secrets.KIDS_OPENAI_API_KEY }}
+      KIDS_AI_MAX_IMAGES_PER_DAY: ${{ vars.KIDS_AI_MAX_IMAGES_PER_DAY }}
+      APPROVE_BATCH: ${{ inputs.approve_batch }}
+      REVIEW_DIGEST: ${{ inputs.review_digest }}
+      REVIEWED: ${{ inputs.bible_and_visual_reviewed }}
+      REVIEWER: ${{ github.actor }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Refresh state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
+      - name: Prepare images, without publishing
+        if: env.APPROVE_BATCH == ''
+        run: node scripts/prepare-kids-illustrations.mjs --persist
+      - name: Check explicit review
+        if: env.APPROVE_BATCH != ''
+        run: |
+          test "$REVIEWED" = "true"
+          node scripts/prepare-kids-illustrations.mjs --approve="$APPROVE_BATCH" --digest="$REVIEW_DIGEST" --reviewer="$REVIEWER" --bible-and-visual-reviewed
+      - name: Install renderer
+        if: env.APPROVE_BATCH != ''
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Validate and render approved pack before activation
+        if: env.APPROVE_BATCH != ''
+        run: node scripts/verify-kids-illustration-approval.mjs
+      - name: Activate reviewed pack
+        if: env.APPROVE_BATCH != ''
+        run: node scripts/persist-instagram-state.mjs automation/instagram-template/config/kids-illustration-queue.json automation/instagram-template/config/content-packs.json
+      - name: Keep review and render evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kids-illustration-review
+          path: |
+            automation/instagram-template/config/kids-illustration-queue.json
+            docs/illustrations/sabedoria-kids/generated/
+            automation/instagram-template/runs/sabedoria-kids/
+          if-no-files-found: ignore

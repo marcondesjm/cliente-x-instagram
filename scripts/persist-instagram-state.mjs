@@ -5,7 +5,7 @@ import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const same = (a,b) => JSON.stringify(a) === JSON.stringify(b);
-const keyFor = x => x?.key || (x?.account && x?.date && Number.isInteger(Number(x?.slotIndex)) ? `${x.account}:${x.date}:${x.slotIndex}` : null) || x?.id || x?.mediaId || x?.feedFingerprint || x?.storyFingerprint;
+const keyFor = x => x?.key || (x?.account && x?.date && Number.isInteger(Number(x?.slotIndex)) ? `${x.account}:${x.date}:${x.slotIndex}` : null) || x?.id || x?.mediaId || x?.feedFingerprint || x?.storyFingerprint || x?.account;
 export function mergeState(base, local, remote) {
   if (same(local,base)) return remote;
   if (same(remote,base) || same(local,remote)) return local;
@@ -25,7 +25,7 @@ export function mergeState(base, local, remote) {
 }
 const git=(args,options={})=>execFileSync('git',args,{encoding:'utf8',maxBuffer:64*1024*1024,...options}).trim();
 const readAt=(rev,path)=>JSON.parse(git(['show',`${rev}:${path}`]));
-export function persistState(paths) {
+export function persistState(paths, assets = []) {
   const base=git(['rev-parse','HEAD']);
   const saved=paths.map(path=>({path,base:readAt(base,path),local:JSON.parse(readFileSync(path,'utf8').replace(/^\uFEFF/,''))}));
   const temp=mkdtempSync(join(tmpdir(),'instagram-state-'));
@@ -40,6 +40,10 @@ export function persistState(paths) {
         writeFileSync(item.path,JSON.stringify(merged,null,2)+'\n');
         git(['add','--',item.path],{env});
       }
+      for (const path of assets) {
+        if (!/^docs\/illustrations\/sabedoria-kids\/generated\/[a-zA-Z0-9/_-]+\.(png|jpg)$/.test(path)) throw new Error('Invalid generated asset path');
+        git(['add','--',path],{env});
+      }
       const tree=git(['write-tree'],{env});
       if(tree===git(['rev-parse',`${parent}^{tree}`])) { console.log('State already persisted.'); return; }
       const commit=git(['commit-tree',tree,'-p',parent,'-m','Update Instagram schedule state']);
@@ -48,4 +52,7 @@ export function persistState(paths) {
     }
   } finally { rmSync(temp,{recursive:true,force:true}); }
 }
-if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url)) persistState(process.argv.slice(2));
+if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url)) {
+  const args=process.argv.slice(2);
+  persistState(args.filter(x=>!x.startsWith('--asset=')),args.filter(x=>x.startsWith('--asset=')).map(x=>x.slice(8)));
+}
