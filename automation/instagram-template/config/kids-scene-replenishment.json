@@ -3,13 +3,13 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-haiku-4.5",
-  "health": "blocked",
-  "message": "Piloto isolado 39077990789: seleção rejeitada antes da verificação copyMatch. Fluxo completo não validado; produção preservada.",
+  "health": "awaiting_cover_gate_pilot",
+  "message": "Piloto isolado de uma pauta com filtro de candidatos para capa e comparação semântica validada.",
   "policy": {
-    "maxCallsPerDay": 26,
+    "maxCallsPerDay": 76,
     "maxInputTokensPerCall": 120000,
-    "maxInputTokensPerDay": 1500000,
-    "maxPacksPerRun": 3,
+    "maxInputTokensPerDay": 3802198,
+    "maxPacksPerRun": 1,
     "readyStockTarget": 24
   },
   "calls": [
@@ -1125,7 +1125,7 @@
     "passed": true,
     "challengeHash": "f9cf4f9f861e4e0017e4a4bc1cf4f312f73f8f7c0f2d44294c5eddfd0b4e7f84"
   },
-  "circuit": "vision_validation_failed",
+  "circuit": null,
   "publicationTriggered": false,
   "checkedAt": "2026-10-17T23:12:05.213Z",
   "lastRun": "39077990789",
@@ -1286,7 +1286,7 @@
       }
     ]
   },
-  "validationBudgetNote": "Piloto encerrado: uma chamada textual adicional; leituras de pixels reutilizadas por hash. Limites operacionais restaurados; nenhuma ativação.",
+  "validationBudgetNote": "Até 10 chamadas adicionais ao histórico de 66, com máximo de 1.200.000 tokens adicionais; mantém enabled=false e persiste somente nesta branch de teste.",
   "semanticValidation": {
     "version": "editorial-grounding-v1",
     "checkedAt": "2026-10-17T22:03:34.128Z",

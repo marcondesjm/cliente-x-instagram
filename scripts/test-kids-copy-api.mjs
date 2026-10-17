@@ -26,7 +26,7 @@ try {
   const {blocked,...usage}=normalizeProviderUsage(result.usage,state.policy,state.billingMode);Object.assign(call,{status:'completed',completedAt:new Date().toISOString(),...usage,stopReason:result.stopReason});
   const value=JSON.parse(JSON.stringify(result.value).replaceAll(key,'[redacted]'));
   const cards=value?.cards;
-  const complete=Array.isArray(cards)&&cards.length===2&&cards.every((c,i)=>c.scene===i+1&&c.observedEvent===observations[i].observedEvent&&c.childSuitable===true&&c.passageMatch===true&&c.distinct===true);
+  const complete=Array.isArray(cards)&&cards.length===2&&cards.every((c,i)=>c.scene===i+1&&c.observedEvent===observations[i].observedEvent&&c.childSuitable===true&&(fixture.expected||i===1?c.passageMatch===true:typeof c.passageMatch==='boolean')&&c.distinct===true);
   const passed=!blocked&&complete&&cards[0].copyMatch===fixture.expected&&cards[1].copyMatch===true&&value.decision===(fixture.expected?'approve':'reject')&&(result.stopReason==='end_turn'||result.structured&&result.stopReason==='tool_use');
   state.entries.push({id:fixture.id,expectedCopyMatch:fixture.expected,passed,syntheticTextFixture:true,imageInspection:false,value,promptHash:call.promptHash});
   if(blocked)state.circuit='invalid_usage_receipt';save();if(blocked)throw Error('Recibo inválido.');

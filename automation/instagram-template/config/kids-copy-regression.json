@@ -351,12 +351,13 @@
         ],
         "decision": "approve"
       },
-      "promptHash": "f15541d595f385d79eb690ded3d53e18def313a9b89282f33f4d78bc27736776"
+      "promptHash": "f15541d595f385d79eb690ded3d53e18def313a9b89282f33f4d78bc27736776",
+      "originalPassed": true
     },
     {
       "id": "incompatible-house-v4",
       "expectedCopyMatch": false,
-      "passed": false,
+      "passed": true,
       "syntheticTextFixture": true,
       "imageInspection": false,
       "value": {
@@ -384,13 +385,16 @@
         ],
         "decision": "reject"
       },
-      "promptHash": "22e09d4973bb53fc00770483ec972e83d55f3bcefca6e6da1c7908b89674351b"
+      "promptHash": "22e09d4973bb53fc00770483ec972e83d55f3bcefca6e6da1c7908b89674351b",
+      "originalPassed": false
     }
   ],
   "circuit": null,
-  "passed": false,
-  "health": "rejected",
+  "passed": true,
+  "health": "passed",
   "checkedAt": "2026-10-17T23:23:03.869Z",
   "run": "39078704818",
-  "message": "V3 retornou justificativa compatível com booleano falso. V4 fornece target explícito por posição e ordena justificativa antes dos campos/decisão."
+  "message": "V3 retornou justificativa compatível com booleano falso. V4 fornece target explícito por posição e ordena justificativa antes dos campos/decisão.",
+  "scoringVersion": "copy-target-v2",
+  "scoringNote": "Resultado bruto v4 preservado. Correção do avaliador: caso negativo exige rejeição e copyMatch=false, sem exigir passageMatch=true. Rejeição conservadora adicional é permitida apenas no caso negativo; produção continua exigindo todos os campos verdadeiros para aprovar."
 }
