@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
-import {assertGrounding,inspectGrounding,groundingPrompt,groundingFingerprint} from '../lib/editorial-grounding.js';
+import {assertGrounding,inspectGrounding,groundingPrompt,groundingFingerprint,sceneGroundingTask} from '../lib/editorial-grounding.js';
 import {accountEditorialSnapshot,validateRecommendation,constrainRecommendation,normalizeProviderUsage} from '../lib/platform-editorial-validation.js';
 import {callAllowance} from '../lib/kids-scene-vision.js';
 import {sendVision} from '../lib/kids-scene-vision.js';
@@ -16,6 +16,9 @@ assert.equal(inspectGrounding(task,negative).approved,false);assert.throws(()=>a
 assert.throws(()=>inspectGrounding(task,{claims:[]}));
 assert.notEqual(groundingFingerprint(task),groundingFingerprint({...task,claims:[{id:'scene-1',text:'Different factual event'}]}));
 assert.match(groundingPrompt(task),/não harmonize/);
+const visibleTask=sceneGroundingTask([{id:'scene-1',description:'Contexto cultural externo que não está visível.'}],{reference:'Lucas24',verses:task.sources},[{observedEvent:'Um anjo fala às mulheres no túmulo.'}]);
+assert.equal(visibleTask.claims[0].text,'Um anjo fala às mulheres no túmulo.');assert.equal(JSON.stringify(visibleTask).includes('Contexto cultural'),false);
+assert.throws(()=>sceneGroundingTask([{id:'scene-1'}],{verses:task.sources},[]),/Observação visual/);
 const a={account:'account-a',contentProfile:{niche:'turismo',editorialBriefing:'PRIVATE',logoAttachment:{dataUrl:'PRIVATE'}},clientProfile:{email:'PRIVATE',whatsapp:'PRIVATE'},accessToken:'PRIVATE',scheduleUtc:['13:00']};
 const snapshot=accountEditorialSnapshot(a,[{slides:[{title:'Teste',body:'Exemplo',imagePath:'x'}],storySlide:{imagePath:'y'},secret:'PRIVATE'}],{assetExists:()=>true});
 assert.equal(JSON.stringify(snapshot).includes('PRIVATE'),false);assert.equal(snapshot.illustratedPacks,1);assert.equal(snapshot.connection,'not_verified_by_this_audit');
