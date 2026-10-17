@@ -746,11 +746,17 @@
       "day": "2026-10-17",
       "stage": "calibration",
       "startedAt": "2026-10-17T22:48:14.444Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 4051,
       "promptChars": 418,
       "imageFingerprint": "f9cf4f9f861e4e0017e4a4bc1cf4f312f73f8f7c0f2d44294c5eddfd0b4e7f84",
-      "promptFingerprint": "1899afb49c740cb4ae56aa02c5ff6a25febd6c880af1a386065420905a36d75d"
+      "promptFingerprint": "1899afb49c740cb4ae56aa02c5ff6a25febd6c880af1a386065420905a36d75d",
+      "completedAt": "2026-10-17T22:48:24.383Z",
+      "reportedInputTokens": 3142,
+      "inputTokens": 3142,
+      "outputTokens": 15,
+      "usageStatus": "provider_reported",
+      "stopReason": "end_turn"
     }
   ],
   "entries": [
@@ -845,7 +851,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T22:48:14.445Z",
+  "checkedAt": "2026-10-17T22:48:24.383Z",
   "lastRun": "39076470290",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -992,12 +998,15 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-29:e64874ce7ad7e208",
+    "stage": "calibration",
     "value": {
-      "visible": true,
-      "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Um homem de barba no centro conversa com um grupo de outros homens barbados que o cercam em uma cena ilustrada."
+      "code": "825602",
+      "colors": [
+        "red",
+        "green",
+        "blue",
+        "yellow"
+      ]
     }
   },
   "lastFactualEvaluation": {
