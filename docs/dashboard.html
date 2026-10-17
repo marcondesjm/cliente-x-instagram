@@ -2660,7 +2660,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <div class="form-section-title"><span>1</span>Responsável e identificação</div>
             <label>
               Chave da conta
-              <input id="newAccountKey" placeholder="ex: cliente-advogados">
+              <input id="newAccountKey" placeholder="opcional: gerada a partir do Instagram">
             </label>
             <label>
               Responsável pelo negócio
@@ -2691,7 +2691,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
               Publicação
               <select id="newClientApprovalMode">
                 <option value="automatic">Automática</option>
-                <option value="approval">Aprovação antes de publicar</option>
+                <option value="approval" selected>Aprovação antes de publicar</option>
               </select>
             </label>
             <label>
@@ -2701,7 +2701,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             <div class="form-section-title"><span>3</span>Instagram e direção da marca</div>
             <label>
               Instagram
-              <input id="newAccountUsername" placeholder="opcional: será identificado na conexão">
+              <input id="newAccountUsername" placeholder="@perfil ou https://www.instagram.com/perfil/">
             </label>
             <label>
               Nome/marca
@@ -2709,7 +2709,12 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             </label>
             <label>
               Rodapé dos posts
-              <input id="newAccountFooter" placeholder="ex: IA aplicada ao jurídico">
+              <input id="newAccountFooter" placeholder="opcional: usa o nome da marca">
+            </label>
+            <label>
+              Horários em Brasília (opcional)
+              <input id="newAccountTimes" placeholder="ex: 07:00, 12:00, 18:00">
+              <small>Agenda própria desta conta. Sem horários, a agenda começa vazia. O cadastro permanece em implantação até a conexão e a validação.</small>
             </label>
             <label>
               Nicho
@@ -2806,7 +2811,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             </div>
             <div class="form-section-title"><span>4</span>Criar empresa e preparar o convite</div>
             <button class="primary" id="createAccount" type="button">Criar empresa e gerar convite</button>
-            <div class="access-result" id="newAccountResult">Campos essenciais: chave da conta, nicho, público ideal e oferta principal.</div>
+            <div class="access-result" id="newAccountResult">Informe o Instagram ou a chave da conta, além de nicho, público ideal e oferta principal.</div>
             <div class="document-box" id="onboardingInviteBox">
               <strong>Convite de ativação</strong>
               <span>O cliente conecta o próprio Instagram na Meta. Você não precisa pedir login nem senha.</span>
@@ -3997,6 +4002,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       const original = button.textContent;
       const account = document.getElementById('newAccountKey').value.trim();
       const expectedUsername = document.getElementById('newAccountUsername').value.trim();
+      const times = document.getElementById('newAccountTimes').value.split(/[,;\n]+/).map(value => value.trim()).filter(Boolean);
       const brandName = document.getElementById('newAccountBrand').value.trim();
       const footerText = document.getElementById('newAccountFooter').value.trim();
       const niche = document.getElementById('newAccountNiche').value.trim();
@@ -4049,7 +4055,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             monthlyPrice,
             brandSummary,
             brandPalette,
-            sourceAccount: appState.selectedAccount
+            times
           })
         });
         appState.selectedAccount = payload.account?.account || account;
@@ -4059,7 +4065,8 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         document.getElementById('newClientWhatsapp').value = '';
         document.getElementById('newClientBusinessType').value = '';
         document.getElementById('newClientPlan').value = 'starter';
-        document.getElementById('newClientApprovalMode').value = 'automatic';
+        document.getElementById('newClientApprovalMode').value = 'approval';
+        document.getElementById('newAccountTimes').value = '';
         document.getElementById('newClientMonthlyPrice').value = '';
         document.getElementById('newAccountUsername').value = '';
         document.getElementById('newAccountBrand').value = '';

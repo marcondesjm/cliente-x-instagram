@@ -14,6 +14,8 @@ import {
   validateLogin
 } from '../lib/auth.js';
 import { accountFromQuery, normalizeAccountKey, requireConfiguredAccount } from '../lib/accounts.js';
+import { onboardingIdentity, starterPacks } from '../lib/account-onboarding.js';
+import { commitConfigBatch } from '../lib/github-config-batch.js';
 import { analyzeBrandDocument } from '../lib/brand-analysis.js';
 import { EDITORIAL_SOURCES, normalizeEditorialSources, researchFreshEditorialPacks } from '../lib/editorial-research.js';
 import Stripe from 'stripe';
@@ -1267,8 +1269,8 @@ async function githubJson(path, options = {}) {
   return payload;
 }
 
-async function readGithubConfig(filePath) {
-  const file = await githubJson(`contents/${filePath}?ref=main`);
+async function readGithubConfig(filePath, ref = 'main') {
+  const file = await githubJson(`contents/${filePath}?ref=${encodeURIComponent(ref)}`);
   return {
     sha: file.sha,
     data: JSON.parse(Buffer.from(file.content, 'base64').toString('utf8').replace(/^\uFEFF/, ''))
@@ -1385,49 +1387,6 @@ async function forceInstagramWatchdog(session) {
   };
 }
 
-function envPrefixFromAccount(accountKey) {
-  return accountKey.toUpperCase().replace(/[^A-Z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'CLIENTE';
-}
-
-function buildInitialPacksForProfile(profile = {}, brandName = '') {
-  const niche = profile.niche || 'empresas';
-  const audience = profile.audience || 'donos e gestores';
-  const offer = profile.offer || 'automação com IA';
-  const tone = profile.tone || 'consultivo';
-  return [
-    {
-      slides: [
-        {
-          eyebrow: 'Diagnóstico',
-          title: `${brandName || niche}: onde a IA pode gerar resultado?`,
-          body: `Antes de escolher ferramenta, entenda a rotina que mais pesa para ${audience}.`
-        },
-        {
-          eyebrow: 'Nicho',
-          title: `O contexto muda tudo em ${niche}.`,
-          body: `A comunicação precisa falar da dor real, da decisão e do risco que esse público já sente.`
-        },
-        {
-          eyebrow: 'Oferta',
-          title: `${offer} precisa parecer prático.`,
-          body: 'Mostre aplicação, consequência e próximo passo. Conteúdo bonito sem clareza não gera conversa.'
-        },
-        {
-          eyebrow: 'Linha editorial',
-          title: `Tom ${tone}, com prova e direção.`,
-          body: 'Cada post deve ensinar algo útil e abrir uma porta para atendimento, diagnóstico ou reunião.'
-        },
-        {
-          eyebrow: 'Próximo passo',
-          title: 'A automação começa pelo posicionamento.',
-          body: 'Com nicho, público e oferta definidos, a IA cria posts mais específicos e menos genéricos.'
-        }
-      ],
-      caption: `${brandName || niche} com IA não começa pela ferramenta.\n\nComeça entendendo o nicho, o público e a oferta.\n\nPara ${audience}, o conteúdo precisa mostrar um problema real, uma aplicação clara e um próximo passo simples.\n\nAqui a linha editorial será ${tone}: útil, direta e conectada a ${offer}.\n\n#inteligenciaartificial #automacao #marketingdigital #gestao #negocios`
-    }
-  ];
-}
-
 function normalizeBrandSummary(value = {}) {
   return {
     description: String(value.description || '').trim(),
@@ -1535,10 +1494,6 @@ async function testInstagramAccountConnection(account = {}) {
 }
 
 async function createAccountConfig(body = {}, session = null, req = null) {
-  const accountKey = normalizeAccountKey(body.account);
-  const expectedUsername = String(body.expectedUsername || '').replace(/^@/, '').trim();
-  const brandName = String(body.brandName || accountKey).trim();
-  const footerText = String(body.footerText || 'IA aplicada a empresas').trim();
   const contentProfile = {
     niche: String(body.niche || '').trim(),
     audience: String(body.audience || '').trim(),
@@ -1554,23 +1509,21 @@ async function createAccountConfig(body = {}, session = null, req = null) {
     ...normalizeBrandPalette(body.brandPalette || {}),
     enabled: Boolean(body.brandPaletteEnabled)
   };
-  const sourceAccount = normalizeAccountKey(body.sourceAccount || 'cliente-x');
   if (!contentProfile.niche || !contentProfile.audience || !contentProfile.offer) {
     throw userError('Informe nicho, publico ideal e oferta principal para criar a conta.');
   }
 
-  const envPrefix = envPrefixFromAccount(accountKey);
+  const base = await githubJson('git/ref/heads/main');
+  const parent = base.object.sha;
   const [accountsFile, contentFile, queueFile] = await Promise.all([
-    readGithubConfig(ACCOUNTS_FILE_PATH),
-    readGithubConfig(CONTENT_FILE_PATH),
-    readGithubConfig(SCHEDULED_FILE_PATH)
+    readGithubConfig(ACCOUNTS_FILE_PATH, parent),
+    readGithubConfig(CONTENT_FILE_PATH, parent),
+    readGithubConfig(SCHEDULED_FILE_PATH, parent)
   ]);
-
-  if (accountsFile.data.some((item) => item.account === accountKey)) {
-    throw userError(`Conta ${accountKey} ja existe.`);
-  }
-
-  const source = accountsFile.data.find((item) => item.account === sourceAccount) || accountsFile.data[0] || {};
+  const { accountKey, expectedUsername, envPrefix, scheduleUtc } = onboardingIdentity(body, accountsFile.data);
+  const brandName = String(body.brandName || expectedUsername || accountKey).trim();
+  const footerText = String(body.footerText || brandName).trim();
+  if (contentFile.data.some(item => item.account === accountKey) || queueFile.data.some(item => item.account === accountKey)) throw userError('Já existem registros desta conta. Revise o cadastro antes de tentar novamente.', 409);
 
   const newAccount = {
     account: accountKey,
@@ -1579,8 +1532,9 @@ async function createAccountConfig(body = {}, session = null, req = null) {
     footerText,
     accessTokenEnv: `${envPrefix}_INSTAGRAM_ACCESS_TOKEN`,
     userIdEnv: `${envPrefix}_INSTAGRAM_USER_ID`,
-    imgbbKeyEnv: `${envPrefix}_IMGBB_API_KEY`,
-    contentProfile: { ...contentProfile, visualDirection: 'anatex-editorial' },
+    imgbbKeyEnv: 'IMGBB_API_KEY',
+    contentProfile: { ...contentProfile, visualDirection: 'anatex-editorial', curatedOnly: true },
+    instagramLogin: 'instagram',
     brandSummary,
     brandPalette: { ...brandPalette, enabled: true },
     clientProfile: {
@@ -1590,7 +1544,7 @@ async function createAccountConfig(body = {}, session = null, req = null) {
       businessType: String(body.businessType || contentProfile.niche).trim(),
       plan: ['starter', 'professional', 'agency'].includes(body.plan) ? body.plan : 'starter',
       status: 'onboarding',
-      approvalMode: body.approvalMode === 'approval' ? 'approval' : 'automatic',
+      approvalMode: body.approvalMode === 'automatic' ? 'automatic' : 'approval',
       monthlyPrice: Math.max(0, Number(body.monthlyPrice) || 0),
       startedAt: new Date().toISOString()
     },
@@ -1599,27 +1553,29 @@ async function createAccountConfig(body = {}, session = null, req = null) {
       inviteCreatedAt: new Date().toISOString(),
       inviteExpiresInHours: 48
     },
-    scheduleUtc: Array.isArray(source.scheduleUtc) ? source.scheduleUtc : [],
+    scheduleUtc,
     ...(session && !isOwner(session) ? { ownerEmail: session.email } : {})
   };
 
   accountsFile.data.push(newAccount);
   contentFile.data.push({
     account: accountKey,
-    packs: buildInitialPacksForProfile(contentProfile, brandName || accountKey)
+    packs: starterPacks(contentProfile, brandName || accountKey)
   });
   if (!queueFile.data.some((item) => item.account === accountKey)) {
     queueFile.data.push({ account: accountKey, posts: [] });
   }
 
-  await writeGithubConfig(ACCOUNTS_FILE_PATH, accountsFile.data, accountsFile.sha, `Add Instagram account ${accountKey}`);
-  await writeGithubConfig(CONTENT_FILE_PATH, contentFile.data, contentFile.sha, `Add content packs for ${accountKey}`);
-  await writeGithubConfig(SCHEDULED_FILE_PATH, queueFile.data, queueFile.sha, `Add scheduled queue for ${accountKey}`);
+  const inviteToken = createSignedOnboardingToken({ account: accountKey, email: newAccount.clientProfile.email });
+  await commitConfigBatch(githubJson, parent, [
+    { path: ACCOUNTS_FILE_PATH, data: accountsFile.data },
+    { path: CONTENT_FILE_PATH, data: contentFile.data },
+    { path: SCHEDULED_FILE_PATH, data: queueFile.data }
+  ], `Add Instagram account ${accountKey}`);
   const users = session && !isOwner(session)
     ? await addAccountToPanelUser(session.email, accountKey)
     : null;
 
-  const inviteToken = createSignedOnboardingToken({ account: accountKey, email: newAccount.clientProfile.email });
   const inviteUrl = `${req ? publicBaseUrl(req) : 'https://cliente-x-instagram.vercel.app'}/ativar?token=${encodeURIComponent(inviteToken)}`;
 
   return {
