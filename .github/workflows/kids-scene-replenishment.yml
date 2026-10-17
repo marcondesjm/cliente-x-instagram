@@ -37,7 +37,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git pull --rebase origin main
+          git pull --rebase origin test/kids-api-copy-validation-20261017
       - run: npm ci --ignore-scripts
       - name: Calibrate or review new scenes with persisted usage receipts
         env:
@@ -79,7 +79,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git pull --rebase origin main
+          git pull --rebase origin test/kids-api-copy-validation-20261017
       - run: npm ci --ignore-scripts
       - run: npx playwright install --with-deps chromium
       - name: Assemble and render approved selections

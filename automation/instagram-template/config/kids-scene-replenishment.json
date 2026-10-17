@@ -3,12 +3,12 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-haiku-4.5",
-  "health": "review_completed",
-  "message": "1 pauta(s) examinada(s); somente seleções aprovadas seguem para montagem.",
+  "health": "isolated_validation",
+  "message": "Piloto isolado de uma pauta; nenhum estado ou aprovação enviado para main.",
   "policy": {
-    "maxCallsPerDay": 67,
+    "maxCallsPerDay": 74,
     "maxInputTokensPerCall": 120000,
-    "maxInputTokensPerDay": 4500000,
+    "maxInputTokensPerDay": 3562198,
     "maxPacksPerRun": 1,
     "readyStockTarget": 24
   },
@@ -1264,7 +1264,7 @@
       }
     ]
   },
-  "validationBudgetNote": "Testes encerrados; limites operacionais26 chamadas/dia e1,5M tokens restaurados. Consumo sem recibo permanece contado pelo máximo.",
+  "validationBudgetNote": "Branch isolada: até 9 chamadas adicionais ao histórico de 65; máximo total 3.562.198 tokens, sem ativação ou publicação.",
   "semanticValidation": {
     "version": "editorial-grounding-v1",
     "checkedAt": "2026-10-17T22:03:34.128Z",

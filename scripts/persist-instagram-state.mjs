@@ -39,8 +39,8 @@ export function persistState(paths, assets = []) {
   const temp=mkdtempSync(join(tmpdir(),'instagram-state-'));
   try {
     for(let attempt=0;attempt<5;attempt++) {
-      git(['fetch','origin','main']);
-      const parent=git(['rev-parse','origin/main']);
+      git(['fetch','origin','test/kids-api-copy-validation-20261017']);
+      const parent=git(['rev-parse','origin/test/kids-api-copy-validation-20261017']);
       const env={...process.env,GIT_INDEX_FILE:join(temp,`index-${attempt}`)};
       git(['read-tree',parent],{env});
       for(const item of saved) {
@@ -56,7 +56,7 @@ export function persistState(paths, assets = []) {
       const tree=git(['write-tree'],{env});
       if(tree===git(['rev-parse',`${parent}^{tree}`])) { remember();console.log('State already persisted.'); return; }
       const commit=git(['commit-tree',tree,'-p',parent,'-m','Update Instagram schedule state']);
-      try { git(['push','origin',`${commit}:refs/heads/main`]); remember();console.log(`State persisted: ${commit}`); return; }
+      try { git(['push','origin',`${commit}:refs/heads/test/kids-api-copy-validation-20261017`]); remember();console.log(`State persisted: ${commit}`); return; }
       catch(error) { if(attempt===4) throw error; }
     }
   } finally { rmSync(temp,{recursive:true,force:true}); }
