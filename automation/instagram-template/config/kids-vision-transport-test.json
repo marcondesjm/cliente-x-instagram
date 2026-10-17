@@ -26,11 +26,17 @@
     {
       "id": "9112feb3-e1a3-4ff3-9303-dac368fcb790",
       "day": "2026-10-17",
-      "status": "reserved",
+      "status": "completed",
       "stage": "base64-json:scene-b",
       "startedAt": "2026-10-17T22:33:06.122Z",
       "imageHash": "f737b6d98af0266e3bf8afaa4328833fd140944824df0a780dbb1a0e9cc29ae2",
-      "imageBytes": 85354
+      "imageBytes": 85354,
+      "completedAt": "2026-10-17T22:33:18.153Z",
+      "reportedInputTokens": 30240,
+      "inputTokens": 30240,
+      "outputTokens": 103,
+      "usageStatus": "provider_reported",
+      "stopReason": "end_turn"
     }
   ],
   "entries": [
@@ -49,11 +55,32 @@
       "checkedAt": "2026-10-17T22:33:00.073Z",
       "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/01_FB_Zacchaeus_1024.jpg?1724237549",
       "imageHash": "1f303ac73e6d06422d9012dcff3c20b0198240b3df9f4240aa61ca26a58e637b"
+    },
+    {
+      "id": "base64-json:scene-b",
+      "mode": "base64-json",
+      "fixture": "scene-b",
+      "model": "claude-sonnet-4.6",
+      "passed": true,
+      "value": {
+        "personInTree": true,
+        "openBooks": false,
+        "style": "illustration",
+        "description": "Ilustração colorida mostrando uma pessoa vestindo túnica amarela e azul subindo em uma árvore frondosa de tronco marrom. Abaixo da árvore, um grupo de pessoas com turbantes e roupas coloridas observa a cena. Ao fundo, há construções de pedra com janelas arqueadas e uma tenda vermelha. A vegetação é verde vibrante."
+      },
+      "expected": {
+        "personInTree": true,
+        "openBooks": false,
+        "style": "illustration"
+      },
+      "checkedAt": "2026-10-17T22:33:18.153Z",
+      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/04_FB_Zacchaeus_1024.jpg?1724237549",
+      "imageHash": "f737b6d98af0266e3bf8afaa4328833fd140944824df0a780dbb1a0e9cc29ae2"
     }
   ],
   "circuit": null,
   "health": "awaiting_test",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T22:33:06.122Z",
+  "checkedAt": "2026-10-17T22:33:18.153Z",
   "workflowRun": "39075446351"
 }
