@@ -1403,11 +1403,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "json",
       "startedAt": "2026-10-17T23:57:57.907Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 10013,
       "imageFingerprint": null,
-      "promptFingerprint": "32a869547ce2b5f17e153852ae53da517b3ab1c8b7233818a2f821f881b813a0"
+      "promptFingerprint": "32a869547ce2b5f17e153852ae53da517b3ab1c8b7233818a2f821f881b813a0",
+      "completedAt": "2026-10-17T23:58:24.828Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 905,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "end_turn"
     }
   ],
   "entries": [
@@ -1510,7 +1516,7 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T23:57:57.907Z",
+  "checkedAt": "2026-10-17T23:58:24.828Z",
   "lastRun": "39080825099",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -1696,69 +1702,79 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "verify:kids-biblia-27",
+    "stage": "select:kids-biblia-27",
     "value": {
-      "decision": "reject",
       "cards": [
         {
-          "position": 1,
-          "observationId": "36ce414d3821afc1",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true,
-          "verse": "4:39",
-          "reason": "A capa mostra Jesus com braços erguidos repreendendo o vento e as ondas, compatível com Marcos 4:39. O evento do título corresponde à ação observada na passagem."
+          "card": 1,
+          "options": [
+            {
+              "scene": 9,
+              "verse": "4:39",
+              "reason": "A capa exige o evento do título 'Jesus e os discípulos na tempestade'. A cena mostra Jesus com braços erguidos repreendendo o vento e as ondas em um barco balançado, ilustrando diretamente o clímax da história descrita no título."
+            }
+          ],
+          "reason": "Apenas a cena 9 retrata explicitamente a ação central de Jesus acalmando a tempestade, que é o foco do título da capa. Outras cenas mostram etapas anteriores ou reações, não o evento titular principal."
         },
         {
-          "position": 2,
-          "observationId": "8e150ed2cdf55de4",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true,
-          "verse": "4:37",
-          "reason": "Cartão narrativo retrata o barco inclinado por ondas agitadas e pessoas temerosas, compatível com Marcos 4:37 onde o barco estava sendo enchido pelas ondas durante a tempestade."
+          "card": 2,
+          "options": [
+            {
+              "scene": 1,
+              "verse": "4:37",
+              "reason": "O resumo menciona 'Durante uma tempestade'. A cena mostra pessoas em embarcação inclinada por ondas agitadas, compatível com Marcos 4:37 onde as ondas batiam no barco e ele já se enchia."
+            },
+            {
+              "scene": 8,
+              "verse": "4:37",
+              "reason": "O resumo menciona a tempestade. A cena mostra pessoas em barco inclinado em águas agitadas sob céu nublado, ilustrando visualmente a violência da tempestade descrita em Marcos 4:37."
+            }
+          ],
+          "reason": "As cenas 1 e 8 ilustram adequadamente a parte do resumo sobre a tempestade e o perigo enfrentado pelos discípulos, conforme Marcos 4:37."
         },
         {
-          "position": 3,
-          "observationId": "f123e875a5e0eaa7",
-          "passageMatch": false,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": false,
-          "verse": "",
-          "reason": "A observação descreve um homem tocando o ombro de outro sentado, mas o contexto editorial refere-se ao momento após a calma quando Jesus questiona a fé dos discípulos (Marcos 4:40). A ação observada não corresponde semanticamente ao texto da fonte nem aos versículos da passagem que tratam de Jesus falando sobre medo e fé, não tocando ombros."
+          "card": 3,
+          "options": [
+            {
+              "scene": 6,
+              "verse": "4:40",
+              "reason": "A lição trata do 'poder de Jesus e a confiança dos discípulos'. A cena mostra Jesus tocando o ombro de um discípulo após a calma, momento em que Ele questiona a falta de fé (Marcos 4:40), conectando poder divino à necessidade de confiança."
+            }
+          ],
+          "reason": "A cena 6 captura o momento pedagógico pós-milagre onde Jesus aborda a questão da fé, alinhando-se ao tema da lição sobre confiança e poder divino."
         },
         {
-          "position": 4,
-          "observationId": "db49c0a40d7f9418",
-          "passageMatch": false,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": false,
-          "verse": "",
-          "reason": "A observação mostra pessoas navegando em águas agitadas, mas o contexto editorial descreve Jesus dormindo tranquilamente no fundo do barco antes da tempestade (Marcos 4:38). Há incompatibilidade entre águas agitadas na imagem e o contexto de calma inicial descrito na fonte."
+          "card": 4,
+          "options": [
+            {
+              "scene": 5,
+              "verse": "4:38",
+              "reason": "A atividade pede para desenhar o barco. A cena mostra o grupo navegando em barco a vela, fornecendo referência visual clara da embarcação mencionada na passagem (Marcos 4:36-38) para auxiliar no desenho infantil."
+            }
+          ],
+          "reason": "A cena 5 oferece uma visão clara do barco e dos discípulos, servindo como referência visual adequada para a atividade de desenho solicitada, sem encenar a atividade como fato bíblico."
         },
         {
-          "position": 5,
-          "observationId": "5af00209f38a4d84",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true,
-          "verse": "4:35",
-          "reason": "Cartão de leitura mostra Jesus gesticulando à beira da água com barcos ao fundo, compatível com Marcos 4:35 onde Jesus diz aos discípulos para irem para o outro lado após um dia de ensino."
+          "card": 5,
+          "options": [
+            {
+              "scene": 4,
+              "verse": "4:35",
+              "reason": "A leitura convida a ler Marcos 4:35–41. A cena mostra Jesus gesticulando à beira da água com barcos ao fundo, ilustrando o início da narrativa em Marcos 4:35 quando Jesus propõe ir para o outro lado."
+            }
+          ],
+          "reason": "A cena 4 estabelece o contexto inicial da passagem (Marcos 4:35), sendo pertinente como ilustração introdutória para o cartão que incentiva a leitura completa do texto."
         },
         {
-          "position": 6,
-          "observationId": "710fa5ba86eb086b",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true,
-          "verse": "4:41",
-          "reason": "Story mostra discípulos conversando juntos perto da água, compatível com Marcos 4:41 onde eles perguntam uns aos outros quem é Jesus que até o vento e o mar lhe obedecem."
+          "card": 6,
+          "options": [
+            {
+              "scene": 3,
+              "verse": "4:41",
+              "reason": "O Story exige cena diferente relacionada à passagem. A cena mostra discípulos conversando juntos perto da água, ilustrando Marcos 4:41 onde eles perguntam uns aos outros 'Quem é este?', fechando a narrativa com reflexão sobre a identidade de Jesus."
+            }
+          ],
+          "reason": "A cena 3 é distinta das anteriores e ilustra adequadamente a reação final dos discípulos em Marcos 4:41, proporcionando fechamento reflexivo para o Story."
         }
       ]
     }
