@@ -1,3 +1,12 @@
+## 2026-10-17 — orientação de conta profissional no briefing
+
+- Branch feat/briefing-professional-20261017 alinhada ao origin/main db840683; implementação 277ced01 enviada ao main, preservando atualizações operacionais concorrentes.
+- /briefing mostra aviso junto à identificação do Instagram: conexão/publicação requer conta profissional Empresa ou Criador; conta pessoal pode preencher o briefing e converter antes da conexão.
+- Guia expansível com passos no aplicativo, aviso de variação dos menus, busca por tipo de conta e link à Central de Ajuda oficial. Formatos disponíveis ficam sujeitos à conferência na conexão e revisão; nenhuma garantia universal de formatos por tipo de conta.
+- Mudança de orientação HTML, sem alteração de autorização, cadastro, agenda ou publicador. validate-client-briefing e git diff --check aprovados.
+
+- Produção READY: dpl_GkwU88957bNUBhuERxnocMWJvaD7, código 277ced01; alias https://cliente-x-instagram.vercel.app. Aviso e abertura do guia confirmados no navegador, incluindo os cinco passos e o link oficial. Evidência local: output/client-briefing/conta-profissional.png.
+
 ## 2026-10-17 — logotipo anexado no briefing
 
 - Branch feat/briefing-logo-20261017, base 5c154b92; implementação c8164a8c enviada ao origin/main.
