@@ -16,7 +16,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: instagram-feed-sabedoria-kids-automatic
+  group: kids-scene-replenishment
   cancel-in-progress: false
 jobs:
   replenish:
@@ -46,12 +46,6 @@ jobs:
           else
             node scripts/replenish-kids-scenes.mjs --persist
           fi
-      - name: Install render browser
-        if: inputs.mode != 'calibrate'
-        run: npx playwright install --with-deps chromium
-      - name: Assemble and render approved selections
-        if: inputs.mode != 'calibrate'
-        run: node scripts/assemble-kids-scenes.mjs --persist
       - name: Save review evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -60,5 +54,36 @@ jobs:
           path: |
             output/kids-replenishment/
             automation/instagram-template/config/kids-scene-replenishment.json
+          if-no-files-found: ignore
+  assemble:
+    needs: replenish
+    if: always() && inputs.mode != 'calibrate' && needs.replenish.result != 'cancelled'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    concurrency:
+      group: instagram-feed-sabedoria-kids-automatic
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Refresh reviewed state
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git pull --rebase origin main
+      - run: npm ci --ignore-scripts
+      - run: npx playwright install --with-deps chromium
+      - name: Assemble and render approved selections
+        run: node scripts/assemble-kids-scenes.mjs --persist
+      - name: Save render evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kids-replenished-scene-renders
+          path: |
             automation/instagram-template/runs/sabedoria-kids/
+            automation/instagram-template/config/kids-scene-automation.json
           if-no-files-found: ignore
