@@ -9,6 +9,10 @@
 - Testes: montagem idempotente, licença/termos/cena alterados, arquivos corrompidos, downloads simulados, Story distinto, bloqueio de texto, e integração Git real local com conta concorrente + asset passaram. Busca, padrão bíblico, merge e scheduled guard passaram. Falta neste checkpoint verificar execução real na nuvem.
 
 
+- Verificação real: run 39063975194 / job 117487618716, Success em 1m41s. Três montagens ready, zero bloqueios; renderVerified=true em cada recibo e publicationTriggered=false. Commit remoto 67693415 preservou acervo/recibos. Artefato kids-reviewed-scene-renders 12111978271 contém 4,75 MB de evidências de render.
+- Segunda chamada local com rede deliberadamente indisponível reutilizou os três recibos íntegros, sem downloads nem render repetido; arquivos de estado do teste restaurados.
+- Painel deploy READY dpl_GrHoMN6B9cjaudhQnd2BNDzTK9mD, código b1cbc925; HTTP 200 contém controles da montagem automática. Autenticação do painel não foi contornada.
+
 ## 2026-10-17 — cenas selecionadas, conferidas e montadas
 
 - Continuação pedida para as cenas após busca automática. Selecionadas 18 ilustrações Sweet Publishing / FreeBibleimages CC BY-SA 3.0 para três pautas existentes inéditas: José/irmãos (Gênesis 45:1–15), Moisés/sarça (Êxodo 3:1–12) e maná (contexto ampliado para Êxodo 16:1–18). Cinco cenas no Feed e outra no Story por pauta, com créditos e licença nas legendas e CREDITOS.txt.
