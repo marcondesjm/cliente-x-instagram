@@ -18,8 +18,8 @@ function hasUsableSecret(value) {
   return Boolean(value && !String(value).includes('cole_') && String(value).trim().length > 8);
 }
 
-async function graphGet(path, params = {}) {
-  const url = new URL(`${IG_BASE}${path}`);
+async function requestGraphGet(path, params = {}, base = IG_BASE) {
+  const url = new URL(`${base}${path}`);
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined && value !== null) url.searchParams.set(key, value);
   });
@@ -150,7 +150,7 @@ async function summarizePerformanceLearning(accountKey) {
   }
 }
 
-export default async function handler(req, res) {
+async function handlePrivateMetrics(req, res) {
   const session = requireAdmin(req, res);
   if (!session) return;
 
@@ -166,6 +166,8 @@ export default async function handler(req, res) {
   }
   const accounts = readJson(ACCOUNTS_PATH);
   const account = requireConfiguredAccount(accounts, accountKey);
+  const graphBase = account.instagramLogin === 'instagram' ? 'https://graph.instagram.com/v23.0' : IG_BASE;
+  const graphGet = (path, params) => requestGraphGet(path, params, graphBase);
 
   const credentials = [
     { label: 'Token Instagram', env: account.accessTokenEnv, configured: hasUsableSecret(process.env[account.accessTokenEnv]) },
@@ -259,4 +261,12 @@ export default async function handler(req, res) {
   result.growthFocus = growthFocus({ recentMedia, latestInsights: result.insights });
 
   res.status(200).json(result);
+}
+
+export default async function handler(req, res) {
+  try { await handlePrivateMetrics(req, res); }
+  catch {
+    res.setHeader('cache-control', 'no-store');
+    res.status(502).json({ error: 'Não foi possível consultar os dados desta conta no Instagram. Tente atualizar.' });
+  }
 }
