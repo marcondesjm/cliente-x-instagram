@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {matchSceneOptions,matchingSchema,matchingPrompt} from '../lib/kids-scene-matching.js';
+import {bindVerificationObservations} from '../lib/kids-scene-vision.js';
 const option=scene=>({scene,verse:'19:6',reason:'A cena representa a acolhida descrita no cartão.'});
 const matrix=lists=>({cards:lists.map((list,i)=>({card:i+1,options:list.map(option),reason:'Opções avaliadas contra o texto e a passagem.'}))});
 // Greedy [1,2] would fail: card 2 has only scene 1. Assignment must backtrack.
@@ -13,4 +14,13 @@ assert.throws(()=>matchSceneOptions(matrix([[1],[2],[3]]),3,3,['19:5']),/passage
 const reordered=matrix([[1],[2],[3]]);reordered.cards.reverse();assert.throws(()=>matchSceneOptions(reordered,3,3,['19:6']),/Posição/);
 assert.equal(matchingSchema(8,6).properties.cards.items.properties.options.minItems,undefined,'Abstention must remain valid');
 assert.match(matchingPrompt('{}',[]),/não uma etapa anterior/);
+const observations=[{id:'0123456789abcdef',observedEvent:'Pessoas atravessam a água em um barco.'},{id:'fedcba9876543210',observedEvent:'Um homem conversa com seus companheiros.'}];
+const review={decision:'reject',cards:[{position:2,observationId:observations[1].id,passageMatch:false},{position:1,observationId:observations[0].id,passageMatch:true}]};
+const bound=bindVerificationObservations(review,observations);
+assert.deepEqual(bound.cards.map(c=>c.observedEvent),observations.map(o=>o.observedEvent));
+assert.equal(bound.decision,'reject','Binding never changes the editorial decision');
+assert.equal(Object.hasOwn(review.cards[0],'observedEvent'),false,'Provider response must remain immutable');
+const switched=structuredClone(review);switched.cards[0].observationId=observations[0].id;assert.throws(()=>bindVerificationObservations(switched,observations),/identidade/);
+const rewritten=structuredClone(review);rewritten.cards[0].observedEvent='An invented event';assert.throws(()=>bindVerificationObservations(rewritten,observations),/reescrever/);
+const repeated=structuredClone(review);repeated.cards[0].position=1;assert.throws(()=>bindVerificationObservations(repeated,observations),/identidade/);
 console.log('PASS: complete distinct assignment, unavailable cover, Hall conflict, invalid/duplicate options, verse bounds and explicit abstention. No API calls.');
