@@ -77,7 +77,7 @@ async function getScene(scene) {
   return {...scene,bytes,sourceScene,sha256:hash(bytes),visualHash:await visualSignature(bytes),mirrorHash:await visualSignature(bytes,true)};
 }
 function context(pack,passage) {
-  return JSON.stringify({reference:pack.biblicalReference,passage:passage.verses,cards:pack.slides.map((s,i)=>({index:i+1,title:s.title,body:s.body})),story:'Uma cena diferente relacionada à mesma passagem; leitura com um adulto.'});
+  return JSON.stringify({reference:pack.biblicalReference,passage:passage.verses,caption:(pack.caption || '').split('\n\nIlustrações:')[0],cards:pack.slides.map((s,i)=>({index:i+1,title:s.title,body:s.body})),story:'Uma cena diferente relacionada à mesma passagem; leitura com um adulto.'});
 }
 async function reviewPack(pack,candidate,known,{attempt=0,feedback=null}={}) {
   const source=licensedScenes(await fetchSource(candidate.sourceUrl),candidate.sourceUrl);
@@ -171,7 +171,7 @@ async function replenish() {
       state.entries=state.entries.filter(e=>e.id!==pack.id);state.entries.push(result);save([STATE,RECIPES],assets);
     } catch(error) {
       result={...result,status:'rejected',message:String(error.message).slice(0,350)};
-      state.rejections[fingerprint]={reason:result.message,checkedAt:now(),...(state.circuit==='provider_temporarily_unavailable'?{retryAfter:state.retryAfter}:{})};
+      state.rejections[fingerprint]={reason:result.message,checkedAt:now(),...(state.circuit==='provider_temporarily_unavailable'?{retryAfter:state.retryAfter}:error.code==='DAILY_LIMIT'?{retryAfter:new Date(Date.now()+6*60*60*1000).toISOString()}:{})};
       state.entries=state.entries.filter(e=>e.id!==pack.id);state.entries.push(result);save();
       if(state.circuit)throw error;
     }
