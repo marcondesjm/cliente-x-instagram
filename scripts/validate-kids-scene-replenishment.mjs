@@ -10,6 +10,7 @@ const now=new Date('2026-10-18T01:00:00Z');assert.equal(callAllowance(state,now)
 state.calls=[{day:'2026-10-17',status:'reserved'}];assert.throws(()=>callAllowance(state,now),/sem recibo/);
 state.calls=[{day:'2026-10-17',status:'completed',inputTokens:100}];assert.throws(()=>callAllowance(state,now),/tokens/);
 state.calls=[{day:'2026-10-17',status:'failed'},{day:'2026-10-17',status:'completed'}];assert.throws(()=>callAllowance(state,now),/chamadas/);
+state.calls=[{day:'2026-10-17',status:'completed'}];assert.throws(()=>callAllowance(state,now,2),/chamadas/);
 state.calls=[];state.circuit='pixel_reading_not_confirmed';assert.throws(()=>callAllowance(state,now),/pausada/);
 assert.throws(()=>parseObject('not json'));assert.throws(()=>parseObject('[]'));assert.deepEqual(parseObject('```json\n{"ok":true}\n```'),{ok:true});
 assert.deepEqual(passageRanges('Gênesis 6:9–22; 7:1–9'),[{book:'GEN',chapter:6,start:9,end:22},{book:'GEN',chapter:7,start:1,end:9}]);
@@ -32,6 +33,9 @@ const response=await sendVision({key:'fake-test-key',model:'claude-haiku-4.5',im
  return new Response(JSON.stringify({content:[{type:'text',text:'{"ok":true}'}],usage:{input_tokens:500,output_tokens:10},stop_reason:'end_turn'}));
 }});
 assert.equal(requests,1);assert.equal(response.value.ok,true);
+const invalid=await sendVision({key:'fake-test-key',model:'claude-haiku-4.5',image,prompt:'test',fetchImpl:async()=>new Response(JSON.stringify({content:[{type:'text',text:'Invalid JSON fake-test-key'}],usage:{input_tokens:700,output_tokens:20},stop_reason:'end_turn'}))});
+assert.equal(invalid.value,null);assert.equal(invalid.usage.inputTokens,700);assert.equal(invalid.invalidResponseText.includes('fake-test-key'),false);
+await assert.rejects(sendVision({key:'x',model:'claude-haiku-4.5',image,prompt:'x',fetchImpl:async()=>new Response('',{status:429})}),e=>e.httpStatus===429);
 await assert.rejects(sendVision({key:'x',model:'other-host',image,prompt:'x'}),/modelo/);
 const auto=structuredClone(recipe);auto.status='automatically-reviewed';
 auto.selected=auto.selected.map((s,i)=>({...s,visualHash:String(i).padStart(16,'0'),mirrorHash:String(i+10).padStart(16,'0')}));
