@@ -1,3 +1,12 @@
+## 2026-10-17 — formatos no briefing do cliente
+
+- Branch feat/briefing-formats-20261017; base 45fd4c24; implementação 80a4d77f enviada ao origin/main.
+- /briefing permite selecionar Feed (imagem/carrossel), Reels (vídeo curto) e Stories, com seleção múltipla obrigatória para novos formulários. Quantidade diária explicitada como total entre os formatos; distribuição por formato/horário fica para revisão antes da ativação.
+- JSON e briefing importado preservam formatos. Arquivos anteriores sem formatos continuam aceitos com indicação A combinar. Nenhuma mudança no publicador ou ativação automática.
+- validate-client-briefing aprovado com seleção múltipla, roundtrip, rejeição de formatos inválidos/vazios e compatibilidade anterior; validate-account-onboarding, sintaxe JS e git diff --check aprovados.
+
+- Produção confirmada em 17/10/2026: dpl_7e9DK7FZjRHMnhB7LJnB2bZKwo4X; alias https://cliente-x-instagram.vercel.app. Navegador confirmou as três caixas selecionáveis e quantidade total 3. Evidência local: output/client-briefing/formatos-publicados.png. Sem cadastro ou publicação de teste.
+
 ## 2026-10-17 11:37 BRT — formulário compartilhável de briefing
 
 - Branch feat/client-briefing-20261017, base 077c951b; implementação d88b8b00 enviada ao origin/main.
