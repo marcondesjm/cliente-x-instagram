@@ -1130,11 +1130,17 @@
       "stage": "cover:kids-biblia-29",
       "model": "claude-sonnet-4.6",
       "startedAt": "2026-10-17T23:29:34.381Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 5853,
       "imageFingerprint": null,
-      "promptFingerprint": "4508aa616825fa2947fee8e598db5b00e3e657ff3efcb8d29397f80ff8a64255"
+      "promptFingerprint": "4508aa616825fa2947fee8e598db5b00e3e657ff3efcb8d29397f80ff8a64255",
+      "completedAt": "2026-10-17T23:29:51.717Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 1,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -1229,7 +1235,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T23:29:34.382Z",
+  "checkedAt": "2026-10-17T23:29:51.717Z",
   "lastRun": "39079043542",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -1402,71 +1408,21 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "verify:kids-biblia-29",
+    "stage": "cover:kids-biblia-29",
     "value": {
-      "cards": [
-        {
-          "scene": 1,
-          "observedEvent": "Um homem sentado segura um copo enquanto outro homem de pé gesticula com a mão em direção a ele, ambos conversando em um ambiente interno.",
-          "reason": "A observação descreve dois homens conversando em ambiente interno, mas não retrata especificamente Zaqueu declarando sua intenção de restituir (Lucas 19:8). O target 'Zaqueu recebeu Jesus em sua casa' refere-se ao recebimento alegre mencionado em Lucas 19:6, não à declaração de restituição. A cena interna poderia representar o momento em que Jesus ficou na casa de Zaqueu, mas a descrição é genérica demais para confirmar passagem específica. Não há elemento visual que identifique claramente Zaqueu ou Jesus, nem a ação de receber alegremente. A composição é distinta das outras cenas. Para crianças, a imagem é adequada, mas a correspondência semântica com o target é fraca pois não mostra claramente o recebimento de Jesus.",
-          "verse": "19:5-6",
-          "passageMatch": false,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": false
-        },
+      "decision": "approve",
+      "candidates": [
         {
           "scene": 2,
-          "observedEvent": "Um homem sentado nos galhos de uma árvore olha para baixo enquanto um grupo de pessoas reunidas ao redor da árvore olha para cima na direção dele.",
-          "reason": "Esta observação corresponde perfeitamente a Lucas 19:4, onde Zaqueu subiu numa árvore sicômoro para ver Jesus. O target 'O que a Bíblia conta' menciona explicitamente 'Zaqueu subiu em uma árvore para ver Jesus'. Há compatibilidade semântica direta entre a observação visual e o texto do target. A passagem é claramente identificada. A cena é apropriada para crianças e distinta das demais posições.",
-          "verse": "19:4",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true
-        },
-        {
-          "scene": 3,
-          "observedEvent": "Um grupo de homens em trajes antigos conversando e gesticulando entre si em um ambiente externo iluminado",
-          "reason": "A observação mostra homens conversando externamente, o que poderia relacionar-se a Lucas 19:7 (murmuração da multidão) ou 19:9-10 (declaração de Jesus sobre salvação). O target 'Uma lição para o nosso dia' fala sobre mudança de atitude, conectando-se tematicamente à transformação de Zaqueu. No entanto, a descrição é muito genérica - não identifica claramente Jesus, Zaqueu ou a ação específica de qualquer versículo. A compatibilidade com a passagem é ambígua. Semanticamente, há alguma conexão temática com o target, mas não é forte o suficiente para copyMatch=true dada a falta de especificidade visual.",
-          "verse": "19:7-10",
-          "passageMatch": false,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": false
-        },
-        {
-          "scene": 4,
-          "observedEvent": "Um grupo de homens com barbas observa outro homem conversando com uma terceira pessoa na entrada de um edifício de pedra.",
-          "reason": "Esta cena pode representar Lucas 19:7, onde as pessoas murmuram porque Jesus entrou na casa de um pecador, ou Lucas 19:5-6 quando Jesus chega à casa de Zaqueu. O target 'Vamos fazer juntos?' propõe conversar sobre devolver algo e reparar prejuízo, conectando-se à declaração de Zaqueu em Lucas 19:8. A observação mostra interação na entrada de um edifício, o que é pertinente ao contexto de Jesus entrando na casa de Zaqueu. A passagem está presente, embora a descrição seja genérica. Para crianças, é adequada. É distinta das outras cenas. A compatibilidade semântica com o target existe, pois a cena de entrada na casa precede a declaração de restituição.",
-          "verse": "19:5-7",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true
+          "verse": "19:6-8",
+          "reason": "Ambiente interno com dois homens interagindo representa Zaqueu recebendo Jesus em sua casa e declarando suas intenções de reparação, conforme Lucas 19:6-8."
         },
         {
           "scene": 5,
-          "observedEvent": "Um homem caminha à frente de um grupo de três homens em uma paisagem rural ao ar livre",
-          "reason": "Esta observação corresponde a Lucas 19:1, onde Jesus entrava e passava por Jericó, possivelmente com seus discípulos. O target 'Continue essa conversa em família' instrui a ler Lucas 19:1-10, então a cena introdutória da passagem é semanticamente compatível como ponto de partida. A passagem está presente (início da narrativa). É apropriada para crianças e distinta das demais composições. A compatibilidade semântica com o target é válida, pois representa o início da jornada mencionada na leitura sugerida.",
-          "verse": "19:1",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true
-        },
-        {
-          "scene": 6,
-          "observedEvent": "Um homem de túnica azul e manto amarelo estende a mão e toca o ombro de outro homem vestido de amarelo, enquanto ambos estão cercados por um grupo de pessoas em um ambiente ao ar livre.",
-          "reason": "Esta cena pode representar Jesus tocando ou se dirigindo a Zaqueu, possivelmente em Lucas 19:5 quando Jesus olha para cima e fala com Zaqueu, ou antes disso quando Zaqueu tentava ver Jesus através da multidão (Lucas 19:3). O sourceContext menciona Zaqueu querendo ver Jesus mas sendo impedido pela multidão. O target é do tipo 'story' com texto 'Uma cena diferente relacionada à mesma passagem; leitura com um adulto.' Como é uma cena diferente, esta composição deve ser distinta das anteriores. A passagem está presente. É adequada para crianças. A compatibilidade semântica com o target story é válida, pois representa uma cena alternativa da mesma narrativa bíblica.",
-          "verse": "19:3-5",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true
+          "verse": "19:5-7",
+          "reason": "Entrada de edifício de pedra com interação entre homens e observadores representa Jesus sendo recebido na casa de Zaqueu enquanto outros murmuram, conforme Lucas 19:5-7."
         }
-      ],
-      "decision": "reject"
+      ]
     }
   },
   "lastFactualEvaluation": {
