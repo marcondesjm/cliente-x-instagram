@@ -254,6 +254,106 @@
         "Implementar CTAs diretas em todos os posts."
       ],
       "publicationTriggered": false
+    },
+    {
+      "account": "sabedoria-kids",
+      "checkedAt": "2026-10-17T22:06:24.127Z",
+      "status": "advisory",
+      "snapshotFingerprint": "fe4606d2b6593c46e6618d0e9bc8318e8b72ccd85f80c33111643c88837e1c9b",
+      "snapshot": {
+        "account": "sabedoria-kids",
+        "niche": "Evangélico infantil: histórias e ensinamentos da Bíblia para crianças, com referências bíblicas e linguagem infantil",
+        "visualStandard": "illustrated-bible",
+        "connection": "connected",
+        "scheduleSlots": 12,
+        "curatedOnly": true,
+        "packCount": 37,
+        "illustratedPacks": 12,
+        "samples": [
+          {
+            "id": "kids-biblia-01",
+            "reference": "Gênesis 1:1–31",
+            "cards": [
+              {
+                "title": "Deus criou um mundo cheio de vida",
+                "body": "Vamos aprender em família.\nGênesis 1:1–31"
+              },
+              {
+                "title": "O que a Bíblia conta",
+                "body": "A Bíblia apresenta Deus como o Criador da luz, dos mares, das plantas e dos seres vivos."
+              },
+              {
+                "title": "Uma lição para o nosso dia",
+                "body": "Cuidar da criação é uma forma de tratar com carinho o que recebemos."
+              },
+              {
+                "title": "Vamos fazer juntos?",
+                "body": "Observe uma planta com um adulto e desenhe suas folhas."
+              },
+              {
+                "title": "Continue essa conversa em família",
+                "body": "Leia Gênesis 1:1–31 com um adulto.\nSalve para a próxima leitura."
+              }
+            ]
+          },
+          {
+            "id": "kids-biblia-02",
+            "reference": "Gênesis 2:1–3",
+            "cards": [
+              {
+                "title": "O descanso também faz parte da semana",
+                "body": "Vamos aprender em família.\nGênesis 2:1–3"
+              },
+              {
+                "title": "O que a Bíblia conta",
+                "body": "Depois da criação, Deus descansou no sétimo dia, abençoando esse dia."
+              },
+              {
+                "title": "Uma lição para o nosso dia",
+                "body": "Nossa rotina precisa de momentos para parar e descansar."
+              },
+              {
+                "title": "Vamos fazer juntos?",
+                "body": "Com sua família, separe um momento tranquilo sem telas."
+              },
+              {
+                "title": "Continue essa conversa em família",
+                "body": "Leia Gênesis 2:1–3 com um adulto.\nSalve para a próxima leitura."
+              }
+            ]
+          }
+        ]
+      },
+      "summary": "O conteúdo demonstra coerência temática e linguagem apropriada para o público infantil evangélico. As amostras apresentam estrutura clara com referências bíblicas verificáveis (Gênesis 1-2). Recomenda-se reforçar a distinção visual entre texto narrativo e atividades práticas, além de otimizar as chamadas para engajamento familiar.",
+      "findings": [
+        {
+          "severity": "info",
+          "detail": "A estrutura de 5 cards por pack mantém consistência narrativa: introdução, contexto bíblico, aplicação prática, atividade interativa e chamada para continuidade.",
+          "suggestion": "Mantenha este padrão em todos os packs para criar expectativa familiar."
+        },
+        {
+          "severity": "warning",
+          "detail": "As chamadas 'Salve para a próxima leitura' são genéricas e não destacam valor específico do conteúdo salvo.",
+          "suggestion": "Personalize CTAs mencionando benefício concreto: 'Salve para revisar Gênesis 1 durante a semana'."
+        },
+        {
+          "severity": "info",
+          "detail": "Linguagem acessível e adequada para crianças, com instruções claras para mediação adulta.",
+          "suggestion": "Considere adicionar faixa etária sugerida para cada pack (ex: 4-7 anos, 8-12 anos)."
+        },
+        {
+          "severity": "warning",
+          "detail": "Atividades propostas ('observe uma planta', 'momento sem telas') são simples mas carecem de suporte visual descrito nas amostras.",
+          "suggestion": "Garanta que ilustrações complementem diretamente cada atividade proposta nos cards visuais."
+        }
+      ],
+      "nextSteps": [
+        "Padronizar chamadas para ação com benefícios específicos por tema bíblico",
+        "Adicionar indicação de faixa etária recomendada em cada pack",
+        "Revisar coerência entre ilustrações descritas no visualStandard e atividades dos cards",
+        "Criar template visual que diferencie claramente seções narrativas das interativas"
+      ],
+      "publicationTriggered": false
     }
   ],
   "regression": {
@@ -321,7 +421,7 @@
       "https://bible-api.com/data/web/JHN/6"
     ]
   },
-  "checkedAt": "2026-10-17T22:06:22.618Z",
+  "checkedAt": "2026-10-17T22:06:24.127Z",
   "workflowRun": "39073598254",
   "health": "blocked",
   "message": "Achado editorial inválido.",
