@@ -1,3 +1,15 @@
+## 2026-10-17 — cadastro replicável por nicho
+
+- Branch feat/multiaccount-onboarding-20261017; base c455fa39; implementação enviada ao origin/main em 13456434.
+- Cadastro aceita @ ou URL de perfil e gera chave quando omitida. Bloqueia perfil repetido e chaves que colidam nos nomes de credenciais.
+- Agenda inicial própria, recebida em BRT, ou vazia; não herda horários da conta selecionada. Novo perfil fica onboarding/awaiting_connection, com acervo preparado e aprovação como padrão.
+- Conteúdo inicial acompanha nicho, público e oferta; removido template fixo sobre IA. Credenciais Instagram individuais; hospedagem de mídia usa infraestrutura IMGBB da plataforma.
+- Conta, acervo e fila salvos em um commit GitHub, com leitura do mesmo SHA e atualização sem force. Conflitos não deixam cadastro parcialmente visível.
+- Testes aprovados: validate-account-onboarding (50 identidades fictícias, não 50 publicações reais, conflito e handler autenticado), validate-publication-access, validate-kids-onboarding, node --check e git diff --check. Nenhuma conta fictícia criada na produção.
+- Produção ainda não atualizada: HTTP 200 do painel, mas HTML não contém newAccountTimes; token local Vercel recebe HTTP 403 forbidden. Renovação de login em andamento.
+- Sabedoria Kids: última publicação confirmada permanece DemShwemsHk; rotina começa em 18/10 às 07h BRT. Nenhuma execução futura pode ser considerada comprovada hoje.
+- Pendências de escala: aprovação Meta para clientes externos, credenciais dinâmicas no publicador, filas/limites/monitoramento para 50 contas e teste de carga real.
+
 ## 2026-10-17 11:09 BRT — carrossel ilustrado publicado e rotina autorizada
 
 - Usuário autorizou publicar e continuar amanhã. Publicado Jesus acolhe as crianças, cinco slides ilustrados com créditos Gavin Thomson / Little Zebra Books, CC BY 4.0.
