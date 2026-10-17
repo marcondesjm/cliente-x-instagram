@@ -63,7 +63,7 @@ jobs:
           if-no-files-found: ignore
   assemble:
     needs: replenish
-    if: always() && inputs.mode != 'calibrate' && needs.replenish.result != 'cancelled'
+    if: inputs.mode != 'calibrate' && needs.replenish.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     concurrency:
