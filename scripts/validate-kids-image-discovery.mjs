@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { pathToFileURL } from 'node:url';
 import { englishReference, safeSourceUrl, searchResults, licensedScenes, fetchSource } from '../lib/kids-image-discovery.js';
 assert.equal(englishReference('Êxodo 3:1–12'),'Exodus 3:1-12');
 assert.equal(englishReference('1 Samuel 3:1–10'),'1 Samuel 3:1-10');
@@ -47,7 +48,7 @@ try {
   fs.writeFileSync(path.join(temp,config+'kids-image-discovery.json'),JSON.stringify({...state,entries:[old]}));
   fs.writeFileSync(path.join(temp,'network.mjs'),`globalThis.fetch=async url=>String(url).includes('/search/')?new Response(${JSON.stringify(`<div data-stories="${encoded}"></div>`)},{headers:{'content-type':'text/html'}}):new Response('temporarily unavailable',{status:503});`);
   let exitStatus=0;
-  try {execFileSync(process.execPath,['--import',path.join(temp,'network.mjs'),'scripts/discover-kids-images.mjs','--limit=1'],{cwd:temp,stdio:'pipe'});}catch(error){exitStatus=error.status;}
+  try {execFileSync(process.execPath,['--import',pathToFileURL(path.join(temp,'network.mjs')).href,'scripts/discover-kids-images.mjs','--limit=1'],{cwd:temp,stdio:'pipe'});}catch(error){exitStatus=error.status;assert.match(String(error.stderr),/HTTP 503/);}
   assert.equal(exitStatus,1);
   const after=JSON.parse(fs.readFileSync(path.join(temp,config+'kids-image-discovery.json')));
   assert.equal(after.health,'error');assert.equal(after.entries[0].status,'error');
