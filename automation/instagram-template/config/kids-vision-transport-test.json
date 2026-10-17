@@ -116,11 +116,17 @@
     {
       "id": "2f473fe2-0d73-4d7a-9c41-07c6310d4c77",
       "day": "2026-10-17",
-      "status": "reserved",
+      "status": "completed",
       "stage": "haiku-base64-json:scene-b",
       "startedAt": "2026-10-17T22:35:11.473Z",
       "imageHash": "f737b6d98af0266e3bf8afaa4328833fd140944824df0a780dbb1a0e9cc29ae2",
-      "imageBytes": 85354
+      "imageBytes": 85354,
+      "completedAt": "2026-10-17T22:35:22.277Z",
+      "reportedInputTokens": 30254,
+      "inputTokens": 30254,
+      "outputTokens": 126,
+      "usageStatus": "provider_reported",
+      "stopReason": "end_turn"
     }
   ],
   "entries": [
@@ -265,11 +271,32 @@
       "checkedAt": "2026-10-17T22:35:08.386Z",
       "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/01_FB_Zacchaeus_1024.jpg?1724237549",
       "imageHash": "1f303ac73e6d06422d9012dcff3c20b0198240b3df9f4240aa61ca26a58e637b"
+    },
+    {
+      "id": "haiku-base64-json:scene-b",
+      "mode": "haiku-base64-json",
+      "fixture": "scene-b",
+      "model": "claude-haiku-4.5",
+      "passed": true,
+      "value": {
+        "personInTree": true,
+        "openBooks": false,
+        "style": "illustration",
+        "description": "Ilustração colorida mostrando uma pessoa subindo em uma árvore frondosa de tronco marrom e folhagem verde vibrante. A pessoa veste túnica amarela com detalhes azuis e um gorro vermelho. Abaixo da árvore, há um grupo de pessoas vistas de costas, usando túnicas vermelhas e chapéus/turbantes claros. Ao fundo, há construções de pedra claras com janelas arqueadas e uma tenda ou cobertura listrada em vermelho."
+      },
+      "expected": {
+        "personInTree": true,
+        "openBooks": false,
+        "style": "illustration"
+      },
+      "checkedAt": "2026-10-17T22:35:22.277Z",
+      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/04_FB_Zacchaeus_1024.jpg?1724237549",
+      "imageHash": "f737b6d98af0266e3bf8afaa4328833fd140944824df0a780dbb1a0e9cc29ae2"
     }
   ],
   "circuit": null,
   "health": "awaiting_test",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T22:35:11.473Z",
+  "checkedAt": "2026-10-17T22:35:22.277Z",
   "workflowRun": "39075446351"
 }
