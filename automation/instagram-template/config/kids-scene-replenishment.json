@@ -3,8 +3,8 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "daily_limit",
-  "message": "Limite diário atingido; montagens já aprovadas continuam e novas avaliações aguardam o próximo dia.",
+  "health": "blocked",
+  "message": "Ativação bloqueada: falso positivo factual na revisão de Lucas24:1-12. Exige controle adicional validado.",
   "policy": {
     "maxCallsPerDay": 40,
     "maxInputTokensPerCall": 120000,
@@ -505,8 +505,8 @@
       "title": "Jesus ressuscitou",
       "fingerprint": "02715bcc443c1a9b5a220cfd32212943efe04ac3c8ff58b82467a37837d1aa8f",
       "checkedAt": "2026-10-17T21:43:11.024Z",
-      "status": "reviewed",
-      "message": "Seleção e segunda avaliação aprovadas; montagem e render oficial ainda obrigatórios."
+      "status": "rejected",
+      "message": "Conferência visual detectou Jesus aparecendo às mulheres, evento ausente de Lucas24:1-12; revisão automática deu falso positivo."
     }
   ],
   "calibration": {
@@ -517,7 +517,7 @@
     "passed": true,
     "challengeHash": "ad02f2bd52f0f48705bf10ca8a9338df51d52140a9c50a7c264a0b827dd36d47"
   },
-  "circuit": null,
+  "circuit": "semantic_false_positive",
   "publicationTriggered": false,
   "checkedAt": "2026-10-17T21:44:54.441Z",
   "lastRun": "39072053494",
