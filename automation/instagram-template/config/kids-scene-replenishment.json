@@ -3,13 +3,13 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-haiku-4.5",
-  "health": "blocked",
-  "message": "Reposição não ativada: provedor descreveu objeto inexistente e, no modelo alternativo, recusou leitura de imagem já anexada. É necessário corrigir o suporte de visão no serviço.",
+  "health": "awaiting_blind_pilot",
+  "message": "Piloto final de recuperação automática: descarte de imagens sem leitura confirmada.",
   "policy": {
-    "maxCallsPerDay": 26,
+    "maxCallsPerDay": 63,
     "maxInputTokensPerCall": 120000,
-    "maxInputTokensPerDay": 1500000,
-    "maxPacksPerRun": 3,
+    "maxInputTokensPerDay": 4000000,
+    "maxPacksPerRun": 1,
     "readyStockTarget": 24
   },
   "calls": [
@@ -883,7 +883,7 @@
     "passed": true,
     "challengeHash": "f9cf4f9f861e4e0017e4a4bc1cf4f312f73f8f7c0f2d44294c5eddfd0b4e7f84"
   },
-  "circuit": "vision_validation_failed",
+  "circuit": null,
   "publicationTriggered": false,
   "checkedAt": "2026-10-17T22:49:10.701Z",
   "lastRun": "39076470290",
@@ -1145,16 +1145,16 @@
     "transport": "haiku-base64-json",
     "passedFixtures": 2,
     "previousCircuit": "vision_validation_failed",
-    "maxAdditionalCalls": 19,
+    "maxAdditionalCalls": 21,
     "restorePolicy": {
       "maxCallsPerDay": 26,
       "maxInputTokensPerDay": 1500000,
       "maxPacksPerRun": 3
     },
-    "completedAt": "2026-10-17T22:50:07.601Z",
+    "completedAt": null,
     "holdoutRun": "39076244962",
     "finalPilot": "39076470290",
-    "outcome": "blocked_provider_image_reading_inconsistent"
+    "outcome": "testing_automatic_image_abstention"
   },
   "responseFormat": "json"
 }
