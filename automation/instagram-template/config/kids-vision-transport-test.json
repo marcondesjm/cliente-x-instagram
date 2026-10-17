@@ -101,11 +101,17 @@
     {
       "id": "5e7552ab-fef4-49a1-9864-316ad5bcad91",
       "day": "2026-10-17",
-      "status": "reserved",
+      "status": "completed",
       "stage": "haiku-base64-json:scene-a",
       "startedAt": "2026-10-17T22:35:00.488Z",
       "imageHash": "1f303ac73e6d06422d9012dcff3c20b0198240b3df9f4240aa61ca26a58e637b",
-      "imageBytes": 67208
+      "imageBytes": 67208,
+      "completedAt": "2026-10-17T22:35:08.386Z",
+      "reportedInputTokens": 24205,
+      "inputTokens": 24205,
+      "outputTokens": 135,
+      "usageStatus": "provider_reported",
+      "stopReason": "end_turn"
     }
   ],
   "entries": [
@@ -229,11 +235,32 @@
       "checkedAt": "2026-10-17T22:34:57.150Z",
       "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/04_FB_Zacchaeus_1024.jpg?1724237549",
       "imageHash": "f737b6d98af0266e3bf8afaa4328833fd140944824df0a780dbb1a0e9cc29ae2"
+    },
+    {
+      "id": "haiku-base64-json:scene-a",
+      "mode": "haiku-base64-json",
+      "fixture": "scene-a",
+      "model": "claude-haiku-4.5",
+      "passed": true,
+      "value": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration",
+        "description": "Ilustração colorida mostrando quatro homens caminhando ao ar livre em um caminho de terra cercado por vegetação verde. O homem à frente veste túnica amarelo-claro com faixa vermelha transversal e segura um pequeno objeto na mão direita. Os três homens atrás vestem túnicas azuis e amarelas com faixas coloridas na cintura e headbands decorados. Todos têm barba e cabelos escuros. O cenário é um campo aberto com grama verde e arbustos ao fundo."
+      },
+      "expected": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration"
+      },
+      "checkedAt": "2026-10-17T22:35:08.386Z",
+      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/01_FB_Zacchaeus_1024.jpg?1724237549",
+      "imageHash": "1f303ac73e6d06422d9012dcff3c20b0198240b3df9f4240aa61ca26a58e637b"
     }
   ],
   "circuit": null,
   "health": "awaiting_test",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T22:35:00.488Z",
+  "checkedAt": "2026-10-17T22:35:08.386Z",
   "workflowRun": "39075446351"
 }
