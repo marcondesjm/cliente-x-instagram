@@ -1,3 +1,11 @@
+## 2026-10-17 — composição dos cartões internos sem fotografia
+
+- Pedido: usuário apontou vazio central no cartão Entenda a matéria · 5 de cliente-x e pediu imagem complementar mais atraente.
+- Branch fix/cliente-x-inner-card-composition, base origin/main ddf74825. Cartões internos curtos de notícias de IA/tecnologia de cliente-x sem foto verificada recebem ilustração SVG editorial conceitual identificada, com duas variações; título, arte e texto distribuídos no quadro. Retirado pseudo-elemento vazio da nota. Fotos verificadas mantêm prioridade; nenhuma imagem irrelevante, foto repetida ou afirmação factual acrescentada.
+- Escopo preserva capa, fechamento, cartões com foto e Sabedoria Kids. Cartões com títulos longos mantêm composição anterior. Texto escuro sobre cartão claro também em tema escuro.
+- QA: validate-editorial-support-layout gera Feed claro/escuro e Reel, valida separação título/ilustração/texto/progresso e cor legível; previews output/cliente-x-inner-cards. validate-photo-title-fit, validate-visual-agent e --validate-copy cliente-x aprovados. Ajustes iniciais de especificidade/contraste corrigidos antes da entrega.
+- Mudança destinada a novos renders/publicações. Nenhum post existente excluído, alterado ou republicado.
+
 ## 2026-10-17 14:39 BRT — execução da correção confirmada
 
 - Run 39054271599 publicou o próximo slot atrasado (5, original 13:30 BRT): Empresas de IA são incapazes de controlar seus modelos, alerta ex-pesquisador da OpenAI. Carrossel ID 17975613105154212, Story ID 18018183179953359, https://www.instagram.com/p/DemqcyDAYZr/ ; publicado 2026-10-17T17:39:01.714Z.

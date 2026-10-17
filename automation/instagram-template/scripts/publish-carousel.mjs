@@ -2289,7 +2289,7 @@ function researchSourceCardHtml(source = '', sourceTitle = '', sourceUrl = '', s
   return `<div class="context-photo news-context${sourceImage ? ' has-source-image' : ''}"${imageStyle}><span>FONTE OFICIAL</span><strong>${name}</strong><small>${title}</small><em>${linkStatus}</em><i></i></div>`;
 }
 
-function anatexSlideHtml(slide, index, total, account, style, renderContext = {}) {
+export function anatexSlideHtml(slide, index, total, account, style, renderContext = {}) {
   const slideStyle = styleForSlide(style, index);
   const title = anatexTitle(slide.title || '');
   const body = applyAnatexCopyRules(slide.body || '');
@@ -2333,6 +2333,20 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   // Only replace the visual with the source card when the article image was
   // actually downloaded. Otherwise keep the safe photographic rotation.
   const showNewsContext = Boolean(index === 1 && useSectorPhoto && researchSource && researchImage);
+  const editorialSupport = account.account === 'cliente-x' && index > 1 && index < total
+    && Boolean(researchSource) && !sectorPhotoImage && String(slide.title || '').length <= 64
+    && /\bia\b|intelig|artificial|modelo|tecnolog/iu.test(`${slide.researchTitle || ''} ${slide.body || ''}`);
+  const supportGraphic = editorialSupport ? `<figure class="editorial-support" aria-label="Ilustração editorial de uma rede de inteligência artificial">
+    <svg viewBox="0 0 900 300" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+      <path opacity=".35" d="M130 80H270L340 150M130 220H270L340 150M560 150L630 80H770M560 150L630 220H770"/>
+      <circle cx="130" cy="80" r="36" opacity=".45"/><circle cx="130" cy="220" r="36" opacity=".45"/>
+      <circle cx="770" cy="80" r="36" opacity=".45"/><circle cx="770" cy="220" r="36" opacity=".45"/>
+      <rect x="340" y="40" width="220" height="220" rx="48" fill="currentColor" fill-opacity=".07"/>
+      <path d="M380 20V40M425 20V40M475 20V40M520 20V40M380 260V280M425 260V280M475 260V280M520 260V280M320 80H340M320 125H340M320 175H340M320 220H340M560 80H580M560 125H580M560 175H580M560 220H580"/>
+      ${index % 2 ? '<path d="M450 88l58 22v48c0 38-58 62-58 62s-58-24-58-62v-48l58-22Z"/><path d="M425 152l18 18 34-38"/>' : '<circle cx="450" cy="150" r="52"/><path d="M416 150h68M450 98v104M414 114l72 72M414 186l72-72"/>'}
+      <circle cx="130" cy="80" r="8" fill="currentColor"/><circle cx="770" cy="220" r="8" fill="currentColor"/>
+    </svg><figcaption>ILUSTRAÇÃO EDITORIAL · IA</figcaption>
+  </figure>` : '';
   const sectorPhotoClass = sectorPhotoImage || researchImage ? ' has-sector-photo' : '';
   const imageLayoutClass = isImpact && sectorPhotoImage && ['book-hero', 'book-split', 'book-editorial'].includes(slide.imageLayout)
     ? ` ${slide.imageLayout}`
@@ -2354,6 +2368,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     isReelMode ? 'reel-mode' : '',
     researchImage ? 'has-research-image' : '',
     isImpact ? 'impact-carousel' : '',
+    editorialSupport ? 'with-editorial-support' : '',
     (slide.imageLayout === 'bible-illustration' || account.account === 'sabedoria-kids') && sectorPhotoImage ? 'bible-illustration' : '',
     headlineLengthClass,
     index % 2 === 0 ? 'slide-even' : 'slide-odd'
@@ -3137,6 +3152,20 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     .s1 { right: 400px; top: 170px; }
     .s2 { right: 126px; bottom: 108px; }
     footer { position: absolute; right: 58px; bottom: 58px; z-index: 3; color: ${accent}; font-size: 27px; font-weight: 900; }
+    /* A conceptual illustration fills the photo gap without claiming source evidence. */
+    main.with-editorial-support:is(.role-value,.role-proof):not(.has-sector-photo) .panel, main.with-editorial-support:is(.role-value,.role-proof):not(.has-sector-photo) .bubble { display:none; }
+    main.with-editorial-support:is(.role-value,.role-proof):not(.has-sector-photo) .headline { margin:175px 0 0;max-width:930px;font-size:58px;line-height:1.08;text-align:left; }
+    main.with-editorial-support:is(.role-value,.role-proof):not(.has-sector-photo) .editorial-support { position:absolute;left:82px;right:82px;top:365px;height:325px;margin:0;color:${accent}; }
+    main.with-editorial-support:is(.role-value,.role-proof):not(.has-sector-photo) .editorial-support svg { width:100%;height:280px; }
+    main.with-editorial-support:is(.role-value,.role-proof):not(.has-sector-photo) .editorial-support figcaption { margin-top:8px;font-size:18px;letter-spacing:3px;text-align:center;color:${slideStyle.text};opacity:.7; }
+    main.with-editorial-support:is(.role-value,.role-proof):not(.has-sector-photo) .note { left:82px;top:745px;width:916px;min-height:340px;padding:44px 48px;display:flex;flex-direction:column;justify-content:center;border:0;border-radius:28px;background:rgba(255,250,246,.96);color:#132238; }
+    main.with-editorial-support:is(.role-value,.role-proof):not(.has-sector-photo) .note::before, main.with-editorial-support:is(.role-value,.role-proof):not(.has-sector-photo) .note::after {display:none;}
+    main.with-editorial-support:is(.role-value,.role-proof):not(.has-sector-photo) .note .lead, main.with-editorial-support:is(.role-value,.role-proof):not(.has-sector-photo) .note .emphasis, main.with-editorial-support:is(.role-value,.role-proof):not(.has-sector-photo) .note .close {font-size:34px;line-height:1.26;min-height:0;padding:0;background:transparent;}
+    main.with-editorial-support:is(.role-value,.role-proof):not(.has-sector-photo) .note .emphasis,
+    main.with-editorial-support:is(.role-value,.role-proof):not(.has-sector-photo) .note .close {color:#132238;}
+    main.with-editorial-support:is(.role-value,.role-proof):not(.has-sector-photo).reel-mode .editorial-support {top:480px;height:480px;}
+    main.with-editorial-support:is(.role-value,.role-proof):not(.has-sector-photo).reel-mode .editorial-support svg {height:420px;}
+    main.with-editorial-support:is(.role-value,.role-proof):not(.has-sector-photo).reel-mode .note {top:1060px;min-height:440px;padding:60px;}
     /* Licensed Bible illustrations keep the whole scene visible. */
     body main.bible-illustration.has-sector-photo .headline { position:absolute;left:58px;right:58px;top:180px;width:auto;max-width:964px;margin:0;font-size:66px;line-height:1.06;text-align:left; }
     body main.bible-illustration.has-sector-photo .note { left:58px;right:58px;top:365px;bottom:auto;width:auto;height:auto;min-height:0;max-width:964px;padding:22px 28px;transform:none; }
@@ -3157,7 +3186,8 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     ${swipeCue}
     ${saveCue}
     ${showNewsContext ? researchSourceCardHtml(researchSource, researchTitle, researchUrl, researchImage) : (sectorPhotoImage ? '<div class="context-photo"></div>' : '')}
-    ${sectorPhotoImage || showNewsContext ? '' : sectorVisualHtml(visualCue)}
+    ${supportGraphic}
+    ${sectorPhotoImage || showNewsContext || editorialSupport ? '' : sectorVisualHtml(visualCue)}
     <div class="panel${avatarClass}"></div>
     <div class="spark s1">*</div>
     <div class="spark s2">*</div>
