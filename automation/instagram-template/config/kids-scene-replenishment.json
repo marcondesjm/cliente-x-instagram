@@ -1203,11 +1203,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "json",
       "startedAt": "2026-10-17T23:44:05.501Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 6273,
       "imageFingerprint": null,
-      "promptFingerprint": "0acb4c160c41d3d8d5f11678a82f1ce812fbc107531a3f40e73f2e04549bb1ea"
+      "promptFingerprint": "0acb4c160c41d3d8d5f11678a82f1ce812fbc107531a3f40e73f2e04549bb1ea",
+      "completedAt": "2026-10-17T23:44:33.002Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 1204,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "end_turn"
     }
   ],
   "entries": [
@@ -1302,7 +1308,7 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T23:44:05.501Z",
+  "checkedAt": "2026-10-17T23:44:33.002Z",
   "lastRun": "39079987099",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -1475,12 +1481,101 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-27:5dd9d7d4026efee7",
+    "stage": "select:kids-biblia-27",
     "value": {
-      "visible": true,
-      "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Um grupo de pessoas na margem observa uma embarcação com várias pessoas a bordo navegando sobre a água."
+      "cards": [
+        {
+          "card": 1,
+          "options": [
+            {
+              "scene": 1,
+              "verse": "4:37",
+              "reason": "A capa exige o evento do título 'Jesus e os discípulos na tempestade'. A cena 1 mostra pessoas em uma embarcação inclinada por ondas agitadas, representando visualmente o clímax da tempestade descrita em Marcos 4:37, onde as ondas batiam no barco."
+            },
+            {
+              "scene": 5,
+              "verse": "4:37",
+              "reason": "A cena 5 retrata um grupo navegando em águas agitadas, compatível com o título da capa que foca na tempestade. Embora a fonte mencione clima calmo na partida, a imagem visual de águas agitadas atende ao requisito ilustrativo do título para a capa."
+            }
+          ],
+          "reason": "A posição 1 é a CAPA e deve retratar o evento do título. As cenas 1 e 5 são as únicas que mostram visualmente a tempestade ou águas agitadas, elementos centrais do título."
+        },
+        {
+          "card": 2,
+          "options": [
+            {
+              "scene": 6,
+              "verse": "4:39-40",
+              "reason": "O resumo narra que Jesus repreendeu o vento e o mar se acalmou. A cena 6 mostra Jesus tocando um discípulo após a calma, alinhando-se com o momento pós-milagre descrito no resumo editorial."
+            },
+            {
+              "scene": 1,
+              "verse": "4:37",
+              "reason": "O resumo menciona 'Durante uma tempestade'. A cena 1 ilustra claramente a situação de perigo com ondas agitadas, compatível com a primeira parte do resumo narrativo."
+            }
+          ],
+          "reason": "Cartão narrativo que resume a história. As opções devem refletir os eventos chave mencionados: a tempestade e a acalmação."
+        },
+        {
+          "card": 3,
+          "options": [
+            {
+              "scene": 3,
+              "verse": "4:41",
+              "reason": "A lição fala sobre o poder de Jesus e a confiança (ou falta dela). A cena 3 mostra os discípulos conversando/amazados, refletindo a reação de temor e questionamento sobre quem era Jesus após o milagre, conforme Marcos 4:41."
+            },
+            {
+              "scene": 6,
+              "verse": "4:40",
+              "reason": "A lição aborda a confiança dos discípulos. A cena 6 mostra Jesus interagindo com eles após a calma, momento em que Ele questiona a fé deles ('Onde está a vossa fé?'), conectando-se diretamente ao tema da lição."
+            }
+          ],
+          "reason": "Cartão de lição focado no poder de Jesus e na fé. As cenas selecionadas mostram a reação dos discípulos e a interação de Jesus que fundamentam a lição teológica."
+        },
+        {
+          "card": 4,
+          "options": [
+            {
+              "scene": 7,
+              "verse": "4:36",
+              "reason": "A atividade pede para desenhar o barco. A cena 7 mostra uma embarcação sendo observada da margem, oferecendo uma visão clara e completa do barco e das pessoas, ideal como referência visual para a atividade de desenho sem encenar a atividade em si."
+            },
+            {
+              "scene": 5,
+              "verse": "4:36",
+              "reason": "A cena 5 mostra o barco a vela com as pessoas a bordo, fornecendo detalhes visuais da embarcação mencionada na atividade familiar, sem representar a ação de desenhar."
+            }
+          ],
+          "reason": "Cartão de atividade familiar. As imagens devem servir de inspiração visual para o desenho solicitado, mostrando o barco claramente."
+        },
+        {
+          "card": 5,
+          "options": [
+            {
+              "scene": 4,
+              "verse": "4:35",
+              "reason": "O cartão de leitura convida a ler a passagem. A cena 4 mostra Jesus falando aos discípulos à beira d'água antes de embarcar, representando o início da narrativa (Marcos 4:35), convidando o leitor a descobrir o que aconteceu depois."
+            },
+            {
+              "scene": 7,
+              "verse": "4:36",
+              "reason": "A cena 7 mostra a partida do barco, deixando as multidões para trás. É um ponto de entrada tranquilo para a leitura da passagem completa, estabelecendo o contexto inicial da viagem."
+            }
+          ],
+          "reason": "Cartão de leitura. As cenas devem ser pertinentes à passagem geral, servindo como convite visual para a leitura bíblica."
+        },
+        {
+          "card": 6,
+          "options": [
+            {
+              "scene": 2,
+              "verse": "4:38",
+              "reason": "O Story exige uma cena diferente relacionada à passagem. A cena 2 mostra homens ajudando alguém deitado, que visualmente pode ser interpretada como os discípulos acordando Jesus (que estava dormindo na popa), um detalhe específico e humano da narrativa distinto das cenas de tempestade ou calma já usadas."
+            }
+          ],
+          "reason": "Posição do Story. Deve ser uma cena pertinente e diferente. A cena 2 foca no momento íntimo de Jesus dormindo sendo acordado, adicionando uma camada narrativa distinta das outras posições."
+        }
+      ]
     }
   },
   "lastFactualEvaluation": {
