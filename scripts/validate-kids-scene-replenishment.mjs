@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import sharp from 'sharp';
-import {callAllowance,calibrationImage,visualSignature,similarScenes,contactSheet,sendVision,parseObject,recoverTransientCalls,promptSceneDescription} from '../lib/kids-scene-vision.js';
+import {callAllowance,calibrationImage,visualSignature,similarScenes,contactSheet,sendVision,parseObject,recoverTransientCalls,promptSceneDescription,selectionSchema,verificationSchema} from '../lib/kids-scene-vision.js';
 import {reviewBinding,assertAutomaticReview,verseIsWithin} from '../lib/kids-scene-review-proof.js';
 import {passageRanges,loadPassage} from '../lib/kids-bible-passage.js';
 import {validateRecipe,hash} from '../lib/kids-scene-assembly.js';
@@ -41,6 +41,14 @@ const response=await sendVision({key:'fake-test-key',model:'claude-haiku-4.5',im
  return new Response(JSON.stringify({content:[{type:'text',text:'{"ok":true}'}],usage:{input_tokens:500,output_tokens:10},stop_reason:'end_turn'}));
 }});
 assert.equal(requests,1);assert.equal(response.value.ok,true);
+const schema=selectionSchema(12,5);assert.equal(schema.properties.evidence.minItems,6);assert.equal(verificationSchema(6).properties.cards.minItems,6);
+const structured=await sendVision({key:'test-key',model:'claude-sonnet-4.6',image,prompt:'test',schema,fetchImpl:async(url,options)=>{
+ const body=JSON.parse(options.body);assert.equal(body.tools.length,1);assert.equal(body.tools[0].name,'submit_scene_review');
+ return new Response(JSON.stringify({content:[{type:'tool_use',name:'submit_scene_review',input:{decision:'reject'}}],usage:{input_tokens:500,output_tokens:10},stop_reason:'tool_use'}));
+}});
+assert.equal(structured.structured,true);assert.equal(structured.value.decision,'reject');
+const unknown=await sendVision({key:'test-key',model:'claude-sonnet-4.6',image,prompt:'test',schema,fetchImpl:async()=>new Response(JSON.stringify({content:[{type:'tool_use',name:'run_shell',input:{command:'never execute'}}],usage:{input_tokens:500,output_tokens:10},stop_reason:'tool_use'}))});
+assert.equal(unknown.value,null);
 const invalid=await sendVision({key:'fake-test-key',model:'claude-haiku-4.5',image,prompt:'test',fetchImpl:async()=>new Response(JSON.stringify({content:[{type:'text',text:'Invalid JSON fake-test-key'}],usage:{input_tokens:700,output_tokens:20},stop_reason:'end_turn'}))});
 assert.equal(invalid.value,null);assert.equal(invalid.usage.inputTokens,700);assert.equal(invalid.invalidResponseText.includes('fake-test-key'),false);
 await assert.rejects(sendVision({key:'x',model:'claude-haiku-4.5',image,prompt:'x',fetchImpl:async()=>new Response('',{status:429})}),e=>e.httpStatus===429);
