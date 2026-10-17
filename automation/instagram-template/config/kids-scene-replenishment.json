@@ -3,8 +3,8 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-haiku-4.5",
-  "health": "awaiting_calibration",
-  "message": "Conferência real de pixels e limite de consumo pendentes.",
+  "health": "calibrated",
+  "message": "Leitura real dos pixels confirmada com desafio aleatório; aguarda piloto bíblico.",
   "policy": {
     "maxCallsPerDay": 4,
     "maxInputTokensPerCall": 18000,
@@ -28,9 +28,16 @@
     }
   ],
   "entries": [],
-  "calibration": null,
+  "calibration": {
+    "version": "kids-scene-review-v1",
+    "model": "claude-haiku-4.5",
+    "provider": "claude-ss",
+    "checkedAt": "2026-10-17T20:45:42.963Z",
+    "passed": true,
+    "challengeHash": "91b419461861a802c539a47a4dcb8827d615f8e5231ac93d45f38a56ce649475"
+  },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T20:45:41.112Z",
+  "checkedAt": "2026-10-17T20:45:42.964Z",
   "lastRun": "39067997056"
 }
