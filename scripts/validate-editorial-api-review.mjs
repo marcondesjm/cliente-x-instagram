@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import {assertGrounding,inspectGrounding,groundingPrompt,groundingFingerprint} from '../lib/editorial-grounding.js';
-import {accountEditorialSnapshot,validateRecommendation,normalizeProviderUsage} from '../lib/platform-editorial-validation.js';
+import {accountEditorialSnapshot,validateRecommendation,constrainRecommendation,normalizeProviderUsage} from '../lib/platform-editorial-validation.js';
 import {callAllowance} from '../lib/kids-scene-vision.js';
 import {sendVision} from '../lib/kids-scene-vision.js';
 const task={sources:[{id:'24:6',text:'He is not here, but is risen.'}],claims:[{id:'scene-1',text:'An angel reports that Jesus is risen.'}]};
@@ -29,6 +29,8 @@ const receiptState={circuit:null,policy,calls:[{...zero,day:'2026-10-17',status:
 assert.equal(callAllowance(receiptState,new Date('2026-10-17T20:00:00Z')),'2026-10-17');
 receiptState.calls.push({...zero,day:'2026-10-17',status:'completed'});assert.throws(()=>callAllowance(receiptState,new Date('2026-10-17T20:00:00Z')),/tokens/);
 const report={account:'account-a',summary:'Diagnóstico desta amostra editorial.',findings:[],nextSteps:[]};
+const constrained=constrainRecommendation(snapshot,{...report,summary:'Zero imagens significa um design ruim.',findings:[{severity:'warning',detail:'Zero packs ilustrados comprova ausência de identidade visual.',suggestion:'Criar uma paleta.'},{severity:'info',detail:'O cartão não contém uma chamada para ação.',suggestion:'Adicionar convite para salvar o conteúdo.'}],nextSteps:['Criar um template visual.','Revisar a chamada para ação.']});
+assert.equal(constrained.findings.length,1);assert.equal(constrained.nextSteps.length,1);assert.equal(constrained.constraints.suppressedFindings,1);assert.equal(constrained.summary.includes('design ruim'),false);
 assert.equal(validateRecommendation('account-a',report),report);assert.throws(()=>validateRecommendation('account-b',report),/outra conta/);
 assert.equal(validateRecommendation('account-a',{...report,findings:[{detail:'Achado consultivo',suggestion:'Conferir a composição'}]}).findings[0].severity,'info');
 assert.throws(()=>validateRecommendation('account-a',{...report,findings:[{severity:'approved',detail:'Achado consultivo',suggestion:'Conferir a composição'}]}));

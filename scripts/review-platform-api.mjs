@@ -4,7 +4,7 @@ import {persistState} from './persist-instagram-state.mjs';
 import {sendVision,callAllowance} from '../lib/kids-scene-vision.js';
 import {loadPassage} from '../lib/kids-bible-passage.js';
 import {GROUNDING_VERSION,groundingPrompt,groundingSchema,inspectGrounding,groundingFingerprint} from '../lib/editorial-grounding.js';
-import {accountEditorialSnapshot,recommendationSchema,recommendationPrompt,validateRecommendation,snapshotHash,normalizeProviderUsage} from '../lib/platform-editorial-validation.js';
+import {accountEditorialSnapshot,recommendationSchema,recommendationPrompt,validateRecommendation,constrainRecommendation,snapshotHash,normalizeProviderUsage} from '../lib/platform-editorial-validation.js';
 const C='automation/instagram-template/config/',PATH=C+'editorial-api-validation.json';
 const read=p=>JSON.parse(fs.readFileSync(p,'utf8').replace(/^\uFEFF/,''));
 const state=read(PATH),key=process.env.KIDS_VISION_ANTHROPIC_API_KEY;
@@ -51,13 +51,16 @@ try {
   for(const a of queue) {
     const snapshot=accountEditorialSnapshot(a,groups.find(g=>g.account===a.account)?.packs || [],{assetExists:p=>fs.existsSync(p)});
     const existing=state.entries.find(e=>e.account===a.account);
-    if(existing?.snapshotFingerprint===snapshotHash(snapshot) && Date.now()-Date.parse(existing.checkedAt)<24*60*60*1000)continue;
+    if(existing?.snapshotFingerprint===snapshotHash(snapshot) && Date.now()-Date.parse(existing.checkedAt)<24*60*60*1000){
+      if(!existing.constraints){Object.assign(existing,constrainRecommendation(snapshot,existing));save();}
+      continue;
+    }
     const stage='account:'+a.account,prompt=recommendationPrompt(snapshot);
     const prior=state.calls.findLast(c=>c.stage===stage && c.status==='completed' && c.promptFingerprint===snapshotHash(prompt));
     const recover=state.lastResponse?.stage===stage && prior && Date.now()-Date.parse(prior.completedAt)<24*60*60*1000;
     if(!recover)try{callAllowance(state);}catch(e){if(e.code!=='DAILY_LIMIT')throw e;limited=true;break;}
-    const recommendation=validateRecommendation(a.account,recover?state.lastResponse.value:await request(stage,prompt,recommendationSchema()));
-    state.entries=state.entries.filter(e=>e.account!==a.account);state.entries.push({account:a.account,checkedAt:new Date().toISOString(),status:'advisory',snapshotFingerprint:snapshotHash(snapshot),snapshot,summary:recommendation.summary,findings:recommendation.findings,nextSteps:recommendation.nextSteps,publicationTriggered:false});save();
+    const recommendation=constrainRecommendation(snapshot,validateRecommendation(a.account,recover?state.lastResponse.value:await request(stage,prompt,recommendationSchema())));
+    state.entries=state.entries.filter(e=>e.account!==a.account);state.entries.push({account:a.account,checkedAt:new Date().toISOString(),status:'advisory',snapshotFingerprint:snapshotHash(snapshot),snapshot,summary:recommendation.summary,findings:recommendation.findings,nextSteps:recommendation.nextSteps,constraints:recommendation.constraints,publicationTriggered:false});save();
   }
   state.health=limited?'daily_limit':'review_completed';state.message=limited?'Limite diário atingido; contas restantes aguardam nova execução.':'Auditoria consultiva concluída; recomendações não alteram conteúdo, permissões nem disparos.';save();
 }catch(e){state.health='blocked';state.message=String(e.message).slice(0,500);save();process.exitCode=1;}
