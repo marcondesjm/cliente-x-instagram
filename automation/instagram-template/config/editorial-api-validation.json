@@ -153,73 +153,6 @@
   ],
   "entries": [
     {
-      "account": "radioieqpc",
-      "checkedAt": "2026-10-17T22:06:43.379Z",
-      "status": "advisory",
-      "snapshotFingerprint": "161122c0b78556ab0477d83964ce46631623eb77ad2f1a7d19a4d7e051452d44",
-      "snapshot": {
-        "account": "radioieqpc",
-        "niche": "Evangélico",
-        "visualStandard": null,
-        "connection": "awaiting_connection",
-        "scheduleSlots": 0,
-        "curatedOnly": true,
-        "packCount": 1,
-        "illustratedPacks": 0,
-        "samples": [
-          {
-            "id": null,
-            "reference": null,
-            "cards": [
-              {
-                "title": "Um espaço para falar de Evangélico",
-                "body": "Conteúdo pensado para Evangélicos."
-              },
-              {
-                "title": "somos uma rádio evangélica que está no ar pela internet oferecemos música, entrevistas e vários programas na grade",
-                "body": "Informação, conversa e novos conteúdos por aqui."
-              },
-              {
-                "title": "O que você gostaria de aprender?",
-                "body": "Conte nos comentários qual assunto você quer ver nas próximas publicações."
-              }
-            ]
-          }
-        ]
-      },
-      "summary": "A conta apresenta identidade genérica e falta de coerência visual. Os textos são vagos, sem chamada clara para ação ou valor específico. A ausência de padrão visual definido compromete a legibilidade e o reconhecimento da marca no nicho evangélico.",
-      "findings": [
-        {
-          "severity": "warning",
-          "detail": "Títulos genéricos como 'Um espaço para falar de Evangélico' não comunicam proposta única. Falta diferenciação em relação a outras rádios ou páginas do nicho.",
-          "suggestion": "Defina um posicionamento claro (ex: foco em louvor contemporâneo, entrevistas com pastores, estudos bíblicos) e reflita isso nos títulos."
-        },
-        {
-          "severity": "warning",
-          "detail": "Corpo dos textos é vago ('Conteúdo pensado para Evangélicos') e não gera engajamento específico. Não há chamada para salvar ou compartilhar conteúdo.",
-          "suggestion": "Crie textos com valor prático imediato (ex: versículo do dia com aplicação, playlist semanal) e inclua CTAs claros como 'Salve para ouvir depois'."
-        },
-        {
-          "severity": "info",
-          "detail": "Não há padrão visual definido (visualStandard: null). Isso prejudica a composição e a coerência entre texto e imagem, essenciais para feeds organizados.",
-          "suggestion": "Estabeleça uma paleta de cores e tipografia consistentes alinhadas ao tom da rádio (ex: tons quentes para acolhimento, fontes legíveis para letras de músicas)."
-        },
-        {
-          "severity": "info",
-          "detail": "A pergunta 'O que você gostaria de aprender?' é aberta demais para o nicho. Pode gerar baixa participação por falta de direcionamento.",
-          "suggestion": "Ofereça opções específicas nos comentários (ex: 'Quer estudo sobre Salmos ou dicas de louvor? Vote abaixo') para facilitar a interação."
-        }
-      ],
-      "nextSteps": [
-        "Definir identidade visual com paleta e fontes específicas para o nicho evangélico/rádio.",
-        "Reescrever títulos e corpos com propostas de valor claras e diferenciadas.",
-        "Incluir chamadas para ação úteis (salvar playlists, compartilhar versículos).",
-        "Criar exemplos reais de posts com formato consistente (carrossel, estático, reels).",
-        "Validar coerência entre texto e imagem em amostras antes de publicar."
-      ],
-      "publicationTriggered": false
-    },
-    {
       "account": "cliente-x",
       "checkedAt": "2026-10-17T22:12:33.310Z",
       "status": "advisory",
@@ -513,6 +446,81 @@
         "Planejar uso de Stories para atividades complementares não exploradas nos packs atuais."
       ],
       "publicationTriggered": false
+    },
+    {
+      "account": "radioieqpc",
+      "checkedAt": "2026-10-17T22:13:39.835Z",
+      "status": "advisory",
+      "snapshotFingerprint": "a5a292a0dbb3cbf1cb0df67b06dfc1015eb88796d82666c620f8d87dbc5591d2",
+      "snapshot": {
+        "account": "radioieqpc",
+        "niche": "Evangélico",
+        "visualStandard": null,
+        "visualDirection": "anatex-editorial",
+        "brandPaletteConfigured": true,
+        "imageInspection": "not_performed",
+        "connection": "awaiting_connection",
+        "scheduleSlots": 0,
+        "curatedOnly": true,
+        "packCount": 1,
+        "illustratedPacks": 0,
+        "samples": [
+          {
+            "id": null,
+            "reference": null,
+            "cards": [
+              {
+                "title": "Um espaço para falar de Evangélico",
+                "body": "Conteúdo pensado para Evangélicos."
+              },
+              {
+                "title": "somos uma rádio evangélica que está no ar pela internet oferecemos música, entrevistas e vários programas na grade",
+                "body": "Informação, conversa e novos conteúdos por aqui."
+              },
+              {
+                "title": "O que você gostaria de aprender?",
+                "body": "Conte nos comentários qual assunto você quer ver nas próximas publicações."
+              }
+            ]
+          }
+        ]
+      },
+      "summary": "A conta apresenta identidade clara como rádio evangélica, mas carece de estrutura editorial consistente. As amostras mostram títulos genéricos e falta de hierarquia visual. Recomenda-se desenvolver uma grade temática definida, aprimorar a coerência entre texto e imagem com paleta configurada, e criar chamadas mais específicas para engajamento. A ausência de packs ilustrados completos limita a presença visual no feed.",
+      "findings": [
+        {
+          "severity": "warning",
+          "detail": "Títulos das amostras são genéricos ('Um espaço para falar de Evangélico') sem diferenciação clara da proposta única da rádio.",
+          "suggestion": "Desenvolva títulos que destaquem programas específicos, horários ou convidados reais para criar expectativa e autoridade no nicho."
+        },
+        {
+          "severity": "info",
+          "detail": "Corpo dos textos é vago ('Conteúdo pensado para Evangélicos') sem especificar valor concreto para o público-alvo.",
+          "suggestion": "Especifique temas abordados (ex: 'Entrevista sobre adoração contemporânea às 19h'), benefícios claros e linguagem que ressoe com a comunidade evangélica local ou online."
+        },
+        {
+          "severity": "warning",
+          "detail": "Chamada para ação genérica ('Conte nos comentários qual assunto você quer ver') não direciona engajamento qualificado.",
+          "suggestion": "Use CTAs específicas por tipo de conteúdo: 'Salve para ouvir depois' para entrevistas, 'Compartilhe com quem precisa ouvir isso hoje' para mensagens inspiracionais."
+        },
+        {
+          "severity": "info",
+          "detail": "Zero illustratedPacks indica ausência de conteúdo visual completo pronto para publicação, apesar de brandPaletteConfigured=true.",
+          "suggestion": "Crie pelo menos 3-5 packs completos (imagem + Story) usando a paleta configurada para estabelecer consistência visual antes de ampliar o volume de posts."
+        },
+        {
+          "severity": "info",
+          "detail": "Formato das amostras sugere cards isolados sem narrativa sequencial ou conexão temática entre publicações.",
+          "suggestion": "Estruture séries temáticas (ex: 'Terça da Palavra', 'Quinta do Louvor') com identidade visual recorrente para facilitar reconhecimento e fidelização."
+        }
+      ],
+      "nextSteps": [
+        "Definir grade semanal com 3-4 pilares temáticos fixos (ex: música, ensino, testemunho, entrevista) para criar previsibilidade editorial.",
+        "Produzir 5 packs ilustrados completos utilizando a paleta de marca configurada, garantindo coerência entre tipografia, cores e mensagem em cada peça.",
+        "Reescrever as próximas 10 legendas com CTAs específicas por objetivo (salvar, compartilhar, comentar) e incluir informações concretas como horários, nomes de programas ou temas bíblicos abordados.",
+        "Implementar template visual para Stories que destaque programação ao vivo ou destaques da semana, aproveitando o formato anatex-editorial para hierarquia clara de informação.",
+        "Criar exemplo hipotético de estudo de caso mostrando transformação através de conteúdo da rádio, identificando claramente como ilustrativo até que casos reais sejam documentados com autorização."
+      ],
+      "publicationTriggered": false
     }
   ],
   "regression": {
@@ -580,7 +588,7 @@
       "https://bible-api.com/data/web/JHN/6"
     ]
   },
-  "checkedAt": "2026-10-17T22:13:38.113Z",
+  "checkedAt": "2026-10-17T22:13:39.835Z",
   "workflowRun": "39074021721",
   "health": "review_completed",
   "message": "Auditoria consultiva concluída; recomendações não alteram conteúdo, permissões nem disparos.",
