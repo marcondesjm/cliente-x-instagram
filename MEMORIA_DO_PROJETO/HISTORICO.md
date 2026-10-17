@@ -1,3 +1,12 @@
+
+## 2026-10-17 — Sabedoria Kids: slot 8 recuperado e persistência concorrente
+
+- Estoque ampliado com quatro pautas inéditas ilustradas e licenciadas: Noé, arco-íris, Davi/Jônatas e Daniel. Guardas visuais preservadas; 7 de 37 pautas possuem composição ilustrada.
+- Run 39060499980 publicou Davi/Jônatas em 17/10 às 16:01 BRT: Feed 17988373710098613, Story 18388568455228554, https://www.instagram.com/p/Demz88IoH7T/ . Primeiro comentário não solicitado (IDs/erro nulos).
+- A etapa Meta foi bem-sucedida; a gravação posterior falhou por conflito concorrente em watchdog-errors.json. IDs recuperados dos logs; histórico, slot 8 e resolução persistidos em 72ed18b8, sem republicação.
+- Kids usa agora persist-instagram-state.mjs: reconciliação de JSON com três versões e push sem force, repetindo quando main avança; mantém histórico/erros de outras contas. Teste validate-instagram-state-merge passou.
+- Restam três pautas inéditas ilustradas deste lote; não afirmar estoque para amanhã nem 37 pautas prontas. Permissão de insights/alcance permanece separada e pendente. Cliente X apresenta esgotamento visual próprio; não foi tratado nesta recuperação Kids.
+
 ## 2026-10-17 — reposição ilustrada para recuperar slot 8 de Sabedoria Kids
 
 - Incidente informado: run 39058049685, job 117470011708, Publish feed and story falhou: conteúdo bíblico inédito esgotado, stage unknown. Acervo ilustrado já publicado; bloqueio preservou padrão e antirrepetição, não indicou falha de token.

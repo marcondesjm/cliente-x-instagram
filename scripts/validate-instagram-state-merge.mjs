@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import { mergeState } from './persist-instagram-state.mjs';
+const base=[{key:'kids-slot-8',status:'open'}];
+const local=[{key:'kids-slot-8',status:'resolved',resolvedRun:'39060499980'}];
+const remote=[...base,{key:'cliente-x-slot-8',status:'open'}];
+assert.deepEqual(mergeState(base,local,remote),[...local,remote[1]]);
+assert.deepEqual(mergeState({kids:[]},{kids:[{mediaId:'1'}]},{kids:[],other:[{mediaId:'2'}]}),{kids:[{mediaId:'1'}],other:[{mediaId:'2'}]});
+assert.deepEqual(mergeState([{account:'kids',date:'2026-10-17',slotIndex:8,status:'pending'}],[{account:'kids',date:'2026-10-17',slotIndex:8,status:'published'}],[{account:'kids',date:'2026-10-17',slotIndex:8,status:'failed'}])[0].status,'published');
+assert.throws(()=>mergeState([1],[2],[3]),/unkeyed/);
+console.log('Concurrent state merge: passed');
