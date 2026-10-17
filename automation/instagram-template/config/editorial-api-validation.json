@@ -8,7 +8,7 @@
     "maxInputTokensPerCall": 120000,
     "maxInputTokensPerDay": 1500000
   },
-  "circuit": "invalid_usage_receipt",
+  "circuit": null,
   "calls": [
     {
       "id": "ac092fea-7563-4b58-a6b6-4e3b6913fe8f",
@@ -18,15 +18,17 @@
       "startedAt": "2026-10-17T21:59:49.396Z",
       "promptFingerprint": "d150f86fe0499a052af652319f7ee8077107e1d24c4d27dd037e702f79b353eb",
       "completedAt": "2026-10-17T22:00:17.461Z",
-      "inputTokens": 0,
+      "inputTokens": null,
       "outputTokens": 26,
-      "stopReason": "tool_use"
+      "stopReason": "tool_use",
+      "reportedInputTokens": 0,
+      "usageStatus": "unconfirmed_counted_at_maximum"
     }
   ],
   "entries": [],
   "regression": null,
   "checkedAt": "2026-10-17T22:00:18.973Z",
   "workflowRun": "39073111772",
-  "health": "blocked",
-  "message": "Consumo ou recibo fora do limite."
+  "health": "awaiting_validation",
+  "message": "Provedor informou zero tokens de entrada; contabilização máxima aplicada. Auditoria consultiva limitada ao plano fixo confirmado."
 }
