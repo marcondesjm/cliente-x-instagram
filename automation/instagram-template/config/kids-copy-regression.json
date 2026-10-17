@@ -53,10 +53,16 @@
     {
       "id": "06991c3d-d3a6-48c8-8680-3917edfab5b3",
       "day": "2026-10-17",
-      "status": "reserved",
+      "status": "completed",
       "stage": "incompatible-house-v2",
       "startedAt": "2026-10-17T23:18:17.685Z",
-      "promptHash": "a587bb2a71f63908b91e04c41497e87f698739e6021abececfb1c19077223884"
+      "promptHash": "a587bb2a71f63908b91e04c41497e87f698739e6021abececfb1c19077223884",
+      "completedAt": "2026-10-17T23:18:30.647Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 39,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -158,12 +164,45 @@
         ]
       },
       "promptHash": "af9b7b234c0f546186b3ced375f33dd74fb933d3234fe29a634c361889e6ea6a"
+    },
+    {
+      "id": "incompatible-house-v2",
+      "expectedCopyMatch": false,
+      "passed": true,
+      "syntheticTextFixture": true,
+      "imageInspection": false,
+      "value": {
+        "decision": "reject",
+        "cards": [
+          {
+            "scene": 1,
+            "observedEvent": "Uma pessoa sobe em uma árvore enquanto outras pessoas observam do chão.",
+            "passageMatch": true,
+            "childSuitable": true,
+            "distinct": true,
+            "copyMatch": false,
+            "verse": "19:4",
+            "reason": "A cena retrata Zaqueu subindo na árvore (Lucas 19:4), evento compatível com a passagem. No entanto, esta observação não corresponde semanticamente ao cartão index 1 cujo título é 'Zaqueu recebeu Jesus em sua casa' e corpo 'Zaqueu desceu depressa e recebeu Jesus com alegria em sua casa'. A ação de subir na árvore é distinta da ação de receber Jesus em casa."
+          },
+          {
+            "scene": 2,
+            "observedEvent": "Um homem recebe outro homem com alegria na entrada da sua casa.",
+            "passageMatch": true,
+            "childSuitable": true,
+            "distinct": true,
+            "copyMatch": true,
+            "verse": "19:6",
+            "reason": "A cena retrata Zaqueu recebendo Jesus com alegria (Lucas 19:6), que corresponde exatamente ao cartão index 1: 'Zaqueu recebeu Jesus em sua casa' com corpo 'Zaqueu desceu depressa e recebeu Jesus com alegria em sua casa'. A observação é semanticamente compatível com o copy editorial do cartão."
+          }
+        ]
+      },
+      "promptHash": "a587bb2a71f63908b91e04c41497e87f698739e6021abececfb1c19077223884"
     }
   ],
   "circuit": null,
   "passed": false,
   "health": "awaiting_v2",
-  "checkedAt": "2026-10-17T23:18:17.685Z",
+  "checkedAt": "2026-10-17T23:18:30.647Z",
   "run": "39078414452",
   "message": "Primeiro par distinguiu copyMatch corretamente; Story genérico produziu inconsistência. Novo par usa descrição auxiliar explícita."
 }
