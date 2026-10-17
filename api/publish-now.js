@@ -138,7 +138,8 @@ export default async function handler(req, res) {
     await dispatchWorkflow({
       account,
       dry_run: 'false',
-      slot_index: String(Number.isInteger(body.packIndex) ? body.packIndex : 0),
+      // Explicit content is independent of the workflow's 0..12 schedule slots.
+      slot_index: packJson ? '0' : String(Number.isInteger(body.packIndex) ? body.packIndex : 0),
       publish_mode: ['story-only', 'feed-only', 'reel-only', 'reel-and-story'].includes(body.mode) ? body.mode : 'feed-and-story',
       scheduled_only: 'false',
       pack_json: packJson
