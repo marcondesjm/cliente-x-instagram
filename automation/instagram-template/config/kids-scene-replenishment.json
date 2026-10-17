@@ -511,11 +511,17 @@
       "day": "2026-10-17",
       "stage": "select:kids-biblia-29",
       "startedAt": "2026-10-17T22:12:22.742Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 61135,
       "promptChars": 5396,
       "imageFingerprint": "e30641f717f36c5b6adb2c3211cbb2eb02999fb993fdec4993b8410abdbc8514",
-      "promptFingerprint": "2ba550def4103324687b6e47d3770e66cf243bc0f9d629fda98f989cf8ac2edb"
+      "promptFingerprint": "2ba550def4103324687b6e47d3770e66cf243bc0f9d629fda98f989cf8ac2edb",
+      "completedAt": "2026-10-17T22:12:43.570Z",
+      "reportedInputTokens": 23487,
+      "inputTokens": 23487,
+      "outputTokens": 388,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -610,7 +616,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T22:12:22.742Z",
+  "checkedAt": "2026-10-17T22:12:43.570Z",
   "lastRun": "39074036137",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -742,5 +748,60 @@
     "taskFingerprint": "f7252a23193714e02af224b8b21db4c85eaf84182f865020b10e7c3e33fc0f10",
     "passedCases": 4,
     "previousCircuit": "semantic_false_positive"
+  },
+  "lastResponse": {
+    "stage": "select:kids-biblia-29",
+    "value": {
+      "decision": "approve",
+      "feed": [
+        4,
+        6,
+        3,
+        5,
+        2
+      ],
+      "story": 1,
+      "childSuitable": true,
+      "distinct": true,
+      "referenceAccurate": true,
+      "evidence": [
+        {
+          "card": 1,
+          "scene": 4,
+          "verse": "19:2",
+          "reason": "Jesus no centro de uma multidão em Jericó; Zaqueu, homem baixo com roupas coloridas, destaca-se na frente, correspondendo à introdução do cobrador de impostos rico que queria ver Jesus."
+        },
+        {
+          "card": 2,
+          "scene": 6,
+          "verse": "19:4",
+          "reason": "Zaqueu subindo em um sicômoro verde e frondoso para enxergar acima da multidão, enquanto Jesus olha para cima em direção a ele, ilustrando o momento exato de Lucas 19:4."
+        },
+        {
+          "card": 3,
+          "scene": 3,
+          "verse": "19:5",
+          "reason": "Jesus parado sob a árvore apontando para Zaqueu e falando com ele, enquanto Zaqueu ainda está no galho, representando visualmente o convite 'desce depressa' de Lucas 19:5."
+        },
+        {
+          "card": 4,
+          "scene": 5,
+          "verse": "19:7-8",
+          "reason": "Zaqueu em pé diante de Jesus dentro de uma casa, gesticulando como quem faz uma promessa solene, enquanto pessoas ao fundo murmuram, retratando a declaração de restituição e as murmurações da multidão."
+        },
+        {
+          "card": 5,
+          "scene": 2,
+          "verse": "19:8",
+          "reason": "Zaqueu de pé, erguendo a mão em gesto de juramento perante Jesus sentado, detalhe visual concreto que corresponde à fala sobre dar metade dos bens aos pobres e restituir quatro vezes mais."
+        },
+        {
+          "card": 6,
+          "scene": 1,
+          "verse": "19:9-10",
+          "reason": "Jesus com a mão levantada em bênção dirigindo-se a Zaqueu e aos discípulos reunidos, cena distinta das anteriores que ilustra a declaração final de salvação e o propósito do Filho do Homem de buscar e salvar o perdido."
+        }
+      ]
+    }
   }
 }
