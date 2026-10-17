@@ -19,3 +19,21 @@ main[data-active-view="growth"] > aside { display: none; }
 #growthPanel textarea { width: 100%; min-height: 118px; font-size: 16px; }
 #growthPanel small { display: block; line-height: 1.5; font-size: 14px; }
 @media(max-width: 760px) { .growth-columns, .growth-templates { grid-template-columns: minmax(0, 1fr); } .growth-template p { min-height: 0; } }
+
+.growth-evidence-summary {margin:24px 0;padding:22px;border:1px solid var(--line);border-radius:16px;background:var(--surface,#fff);}
+.growth-evidence-heading {display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.growth-evidence-status {padding:7px 12px;border-radius:20px;background:#fff5d9;color:#674b08;font-size:13px;font-weight:700;}
+.growth-evidence-cards {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0;}
+.growth-evidence-cards article {border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0;}
+.growth-evidence-cards strong {display:block;margin:10px 0;font-size:22px;overflow-wrap:anywhere;}
+.growth-evidence-cards article:first-child strong {font-size:17px;}
+.growth-evidence-goals {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:20px 0;}
+.growth-evidence-progress span {display:flex;justify-content:space-between;gap:12px;font-size:14px;}
+.growth-evidence-progress progress {width:100%;height:12px;margin-top:10px;accent-color:#245c4d;}
+.growth-evidence-details,.growth-evidence-period,.growth-evidence-group {padding:18px;border:1px solid var(--line);border-radius:12px;margin:16px 0;}
+.growth-evidence-details summary {cursor:pointer;font-weight:700;}
+.growth-evidence-details li {margin:10px 0;line-height:1.6;}
+.growth-evidence-empty {padding:16px;border-left:4px solid #c38a26;background:#fff8e8;color:#4d3a16;border-radius:8px;}
+.growth-evidence-group h4 {margin:0 0 8px;}
+@media(max-width:1000px){.growth-evidence-cards{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:760px){.growth-evidence-goals,.growth-evidence-cards{grid-template-columns:minmax(0,1fr);}.growth-evidence-summary{padding:16px;}}

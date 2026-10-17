@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {collectionHistory,retainPerformanceSamples,educationCollectionDiagnostics} from '../lib/education-collection.js';
+const now=Date.parse('2026-10-17T18:00:00Z');
+const lesson={mediaId:'lesson',publishedAt:'2026-09-20T18:00:00Z',mediaProductType:'FEED',education:{strategy:'educacao-negocios-v1',kind:'tutorial',lessonId:'serie-6'},observations:[]};
+const news=Array.from({length:140},(_,i)=>({mediaId:`news-${i}`,publishedAt:new Date(now-(140-i)*3600000).toISOString()}));
+assert.equal(retainPerformanceSamples([lesson,...news],new Set(),now).length,141);
+assert.ok(retainPerformanceSamples([lesson,...news],new Set(),now).some(x=>x.mediaId==='lesson'));
+assert.ok(collectionHistory([lesson,...news],new Set(),now).some(x=>x.mediaId==='lesson'));
+assert.ok(!retainPerformanceSamples([lesson,...news],new Set(['lesson']),now).some(x=>x.mediaId==='lesson'));
+const expired={...lesson,mediaId:'expired',publishedAt:'2026-08-01T18:00:00Z'};
+assert.ok(!retainPerformanceSamples([expired,...news],new Set(),now).some(x=>x.mediaId==='expired'));
+const missing=educationCollectionDiagnostics([], [lesson],now);assert.equal(missing.publishedTutorials,1);assert.equal(missing.missingFromSamples,1);
+const late={...lesson,observations:[{windowHours:24,ageHours:600,collectedAt:'2026-10-15T18:00:00Z',metrics:{reach:100,saved:3,shares:2,comments:1}}]};
+assert.equal(educationCollectionDiagnostics([late],[lesson],now).reasons.missingWindow,1,'Never reconstruct a missed 24h window using current metrics');
+const valid={...lesson,observations:[{windowHours:24,ageHours:24,collectedAt:'2026-09-21T18:00:00Z',metrics:{reach:100,saved:0,shares:0,comments:0}}]};
+assert.equal(educationCollectionDiagnostics([valid],[lesson],now).reasons.missingWindow,0);
+assert.equal(educationCollectionDiagnostics([{...valid,observations:[{...valid.observations[0],metrics:{reach:null,saved:0,shares:0,comments:0}}]}],[lesson],now).reasons.missingMetrics,1);
+console.log('PASS: 28-day comparison and 42-day educational retention, exclusions and lost-window/missing-metric diagnostics.');

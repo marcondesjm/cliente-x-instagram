@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { collectionHistory, retainPerformanceSamples } from '../lib/education-collection.js';
 import { brtDate, upsertFollowerSnapshot, followerSummary, seriesPerformance } from '../lib/follower-growth.js';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
@@ -473,7 +474,7 @@ async function main() {
     }
   }
 
-  for (const entry of history.filter((item) => item.mediaId && item.publishedAt && !exclusions.has(String(item.mediaId))).slice(-60)) {
+  for (const entry of collectionHistory(history, exclusions, now)) {
     const ageHours = (now - Date.parse(entry.publishedAt)) / 3600000;
     if (ageHours < 1.5 || ageHours > 24 * 10) continue;
     const sample = sampleMap.get(String(entry.mediaId)) || {
@@ -560,10 +561,7 @@ async function main() {
     sampleMap.set(sample.mediaId, sample);
   }
 
-  accountState.samples = [...sampleMap.values()]
-    .filter((sample) => !exclusions.has(String(sample.mediaId)))
-    .sort((a, b) => Date.parse(a.publishedAt) - Date.parse(b.publishedAt))
-    .slice(-120);
+  accountState.samples = retainPerformanceSamples([...sampleMap.values()], exclusions, now);
   for (const sample of accountState.samples) {
     sample.audience ||= audienceSegment(sample);
     sample.hook ||= hookArchetype(sample);

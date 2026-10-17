@@ -1,3 +1,4 @@
+import { educationCollectionDiagnostics } from '../lib/education-collection.js';
 import { visualReadyPacks, requiresBibleIllustrations } from '../lib/bible-visual-standard.js';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -22,7 +23,7 @@ import { analyzeBrandDocument } from '../lib/brand-analysis.js';
 import { EDITORIAL_SOURCES, normalizeEditorialSources, researchFreshEditorialPacks } from '../lib/editorial-research.js';
 import Stripe from 'stripe';
 import { loadRadarCollectionHealth } from '../lib/radar-health.js';
-import { GROWTH_FILE, updateGrowthRecord } from '../lib/growth-plan.js';
+import { GROWTH_FILE, updateGrowthRecord, normalizeGrowthPlan } from '../lib/growth-plan.js';
 import { educationEnabled, educationPreview } from '../lib/education-strategy.js';
 import { educationEvidence } from '../lib/education-evidence.js';
 import { loadPerformanceInsights } from './private-metrics.js';
@@ -2479,9 +2480,14 @@ export default async function handler(req, res) {
         if (body.action === 'load-growth-plan' && educationEnabled(account)) {
           try {
             const insights = await loadPerformanceInsights();
-            const summary = educationEvidence(insights.stored.accounts?.[account.account]?.samples || [], account.educationStrategy.startDate, insights.stored.updatedAt);
+            const comparisonStart = normalizeGrowthPlan({startDate:body.comparisonStartDate || record?.plan?.startDate || account.educationStrategy.startDate}).startDate;
+            const samples = insights.stored.accounts?.[account.account]?.samples || [];
+            const summary = educationEvidence(samples, comparisonStart, insights.stored.updatedAt);
+            let history = [];
+            try { history = (await readGithubConfig(PUBLICATION_HISTORY_FILE_PATH)).data[account.account] || []; } catch { history = readJson(PUBLICATION_HISTORY_PATH)[account.account] || []; }
+            const diagnostics = educationCollectionDiagnostics(samples, history);
             const {observations, ...report} = summary;
-            evidence = { ...report, live: insights.live, dataSource: insights.dataSource, learning: educationLearningModel(insights.stored.accounts?.[account.account]?.samples || [], insights.live ? insights.stored.updatedAt : null) };
+            evidence = { ...report, diagnostics, live: insights.live, dataSource: insights.dataSource, learning: educationLearningModel(insights.stored.accounts?.[account.account]?.samples || [], insights.live ? insights.stored.updatedAt : null) };
           } catch { evidenceError = 'Coletas automáticas indisponíveis nesta consulta. Seu plano continua acessível.'; }
         }
         res.status(200).json({ record, evidence, evidenceError, strategy: account.educationStrategy || null, scheduleCount: account.scheduleUtc?.length || 0 });
