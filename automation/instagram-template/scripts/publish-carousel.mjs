@@ -2340,7 +2340,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const outputHeight = isReelMode ? STORY_HEIGHT : FEED_HEIGHT;
   const swipeCue = index === 1 && !isReelMode ? '<div class="swipe-cue">arraste para ver</div>' : '';
   const commentKeyword = `${title} ${body}`.match(/\bcomente\s+([\p{L}\p{N}_-]+)/iu)?.[1];
-  const finalCue = commentKeyword ? `comente ${commentKeyword}` : /\bcomente\b/i.test(`${title} ${body}`) ? 'comente IA' : 'link na bio';
+  const finalCue = account.account === 'sabedoria-kids' ? 'salve para ler em família' : commentKeyword ? `comente ${commentKeyword}` : /\bcomente\b/i.test(`${title} ${body}`) ? 'comente IA' : 'link na bio';
   const saveCue = index === total ? `<div class="save-cue">${finalCue}</div>` : index === 3 ? '<div class="save-cue">salve este passo</div>' : '';
   // A capa usa duas colunas previsiveis. O antigo layout de canto reduzia a
   // foto para um selo e quebrava a proporcao em relacao aos demais cartoes.
@@ -2354,7 +2354,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     isReelMode ? 'reel-mode' : '',
     researchImage ? 'has-research-image' : '',
     isImpact ? 'impact-carousel' : '',
-    slide.imageLayout === 'bible-illustration' && sectorPhotoImage ? 'bible-illustration' : '',
+    (slide.imageLayout === 'bible-illustration' || account.account === 'sabedoria-kids') && sectorPhotoImage ? 'bible-illustration' : '',
     headlineLengthClass,
     index % 2 === 0 ? 'slide-even' : 'slide-odd'
   ].join(' ');
@@ -3989,7 +3989,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
   </style>
 </head>
 <body>
-  <main class="mode-${mode}${titleClass}${impactClass}${storyPhotoClass}${researchPhotoClass}${slide.imageLayout === 'bible-illustration' && storyVisualImage ? ' bible-illustration' : ''}">
+  <main class="mode-${mode}${titleClass}${impactClass}${storyPhotoClass}${researchPhotoClass}${(slide.imageLayout === 'bible-illustration' || account.account === 'sabedoria-kids') && storyVisualImage ? ' bible-illustration' : ''}">
     <div class="brand">${usernameDisplay}</div>
     <div class="badge">${eyebrow}</div>
     <h1>${title.replace(/\s+IA\b/i, ' <strong>IA</strong>')}</h1>
