@@ -7,6 +7,8 @@
 - Renderização das duas pautas aprovada com cinco slides + Story; guardas de imagem/limites/sobreposição mantidas. QA visual identificou e corrigiu corte da cena e sobreposição inicial de marca/badge. validate-kids-onboarding, sintaxe e git diff --check aprovados.
 - Prévia estática: docs/generated/sabedoria-kids/previa-bondade-ilustrada-20261017. Somente prévia; nenhuma republicação solicitada ou disparada. Post já publicado continua DemlNycIInI. Acervo total continua 37, agora com duas pautas ilustradas; demais 35 ainda não receberam imagens. Sem busca indiscriminada/automática em todos os sites e sem enfraquecer antirrepetição.
 
+- Implementação enviada ao origin/main em d70807d4 após rebase sobre a462298c. Deploy READY dpl_GbHpwacHG3UAt5k1qLRVY3h2ef5x, alias cliente-x-instagram.vercel.app. Capa, Story e CREDITOS.txt da prévia retornam HTTP 200 com SHA-256 idêntico aos arquivos revisados. Validação de copy dos 37 packs e guardas de antirrepetição também aprovada.
+
 ## 2026-10-17 — aviso de radar adaptado ao acervo bíblico
 
 - Branch fix/kids-biblical-radar-label-20261017, base 44d586a1; implementação ff69dce6 enviada ao origin/main.
