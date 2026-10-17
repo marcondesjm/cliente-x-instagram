@@ -1,15 +1,4 @@
 
-## 2026-10-17 — preparação automática de ilustrações Kids, aguardando ativação
-
-- Pedido: automatizar criação de ilustrações para Sabedoria Kids. Implementada rotina diária kids-illustrations.yml às 05h35 BRT, separada dos watchdogs de publicação, com seis cenas distintas por pauta e Story próprio.
-- OpenAI Images API, GPT Image 2, quality medium, 1536x1024 PNG. Requer secret KIDS_OPENAI_API_KEY e variável KIDS_AI_MAX_IMAGES_PER_DAY (1–12); vazio/zero bloqueia chamadas pagas. Nenhuma chave local presente e nenhuma chamada paga feita neste turno. Usuário foi consultado sobre chave; resposta pendente.
-- Catálogo inicial de roteiros: Rute/Noemi (Rute 1:6–18), Moisés bebê (Êxodo 2:1–10), Samuel (1 Samuel 3:1–10), seis cenas por roteiro. Apenas pautas inéditas sem ilustrações prontas. Não significa reposição infinita nem 12 conteúdos novos/dia.
-- Reserva de tentativa persistida antes da API; falhas/tentativas interrompidas não são repetidas automaticamente. Imagens concluídas têm hash e são preservadas na fila, com arquivos em docs/illustrations/sabedoria-kids/generated/.
-- Imagens novas ficam pending_review. Aprovação exige lote, digest dos arquivos/textos e confirmação bíblica/visual por operador GitHub; workflow renderiza antes de ativar a pauta no acervo. Nenhum disparo Meta neste fluxo. Guard visual recusa geração não revisada, sem afetar outras contas.
-- Painel Agenda/acervo mostra lotes, imagens e código de revisão. Guia docs/ilustracoes-kids.html explica API/faturamento, secrets, limite diário e aprovação. Não solicitar chave por conversa/briefing.
-- Testes: validate-kids-illustration-generation (API simulada + integração real Git em bare repo local), state merge, padrão visual bíblico, scheduled content guard e validate-copy Kids passaram. Teste real de geração depende da chave e limite; não declarar gerador ativo até validação real.
-
-
 ## 2026-10-17 — Sabedoria Kids: slot 8 recuperado e persistência concorrente
 
 - Estoque ampliado com quatro pautas inéditas ilustradas e licenciadas: Noé, arco-íris, Davi/Jônatas e Daniel. Guardas visuais preservadas; 7 de 37 pautas possuem composição ilustrada.

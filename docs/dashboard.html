@@ -3151,7 +3151,6 @@
         appState.scheduleBrt = state.scheduleBrt || [];
         appState.calendarPublications = state.calendarPublications || [];
         appState.biblicalResearch = state.biblicalResearch || null;
-        appState.biblicalIllustrationQueue = state.biblicalIllustrationQueue || null;
         appState.visualReadiness = state.visualReadiness || null;
         appState.dailyPlan = state.dailyPlan || [];
         appState.tomorrowPreview = state.tomorrowPreview || { date: '', items: [] };
@@ -5717,7 +5716,6 @@
         appState.scheduleBrt = state.scheduleBrt || [];
         appState.calendarPublications = state.calendarPublications || [];
         appState.biblicalResearch = state.biblicalResearch || null;
-        appState.biblicalIllustrationQueue = state.biblicalIllustrationQueue || null;
         appState.visualReadiness = state.visualReadiness || null;
         appState.dailyPlan = state.dailyPlan || appState.dailyPlan;
         DATA.schedulesUtc = state.account?.scheduleUtc || DATA.schedulesUtc;
@@ -6610,16 +6608,6 @@
       }).join('');
     }
 
-    function renderBibleIllustrationQueue() {
-      if (appState.selectedAccount !== 'sabedoria-kids') return '';
-      const statuses={preparing:'Em preparação',pending_review:'Aguardando sua revisão',approved:'Revisado e no acervo',needs_attention:'Precisa de atenção'};
-      const batches=(appState.biblicalIllustrationQueue || []).map(batch=>{
-        const pictures=(batch.images || []).map((image,index)=>`<a href="/${escapeHtml(image.path)}" target="_blank" rel="noopener noreferrer"><img src="/${escapeHtml(image.path)}" alt="${escapeHtml(image.scene || '')}" loading="lazy" style="width:160px;height:110px;object-fit:contain;background:#fff;border-radius:8px"><br>${index===(batch.images.length-1) && batch.status==='pending_review'?'Story':'Cena '+(index+1)}</a>`).join('');
-        const review=batch.status==='pending_review'?`<p>Lote: <code>${escapeHtml(batch.id)}</code></p><p style="overflow-wrap:anywhere">Código de revisão: <code>${escapeHtml(batch.digest)}</code></p><p>Confira cada imagem ampliada e a passagem antes de aprovar na rotina abaixo.</p>`:'';
-        return `<section style="margin-top:18px"><strong>${escapeHtml(batch.title)} · ${escapeHtml(statuses[batch.status] || batch.status)}</strong><p>${escapeHtml(batch.reference)} · ${batch.images?.length || 0} imagens preparadas</p><div style="display:flex;gap:10px;flex-wrap:wrap">${pictures}</div>${review}${batch.error?`<p>${escapeHtml(batch.error)}</p>`:''}</section>`;
-      }).join('');
-      return `<details><summary>Criação automática de ilustrações · revisão antes de publicar</summary><p>A rotina prepara cenas para o carrossel e um Story diferente, às 05h35 de Brasília, sujeito à fila do GitHub. Gerar imagens não publica no Instagram. O lote entra no acervo após revisão bíblica e visual.</p><p>Sem chave e limite diário configurados, nenhuma geração paga é realizada.</p><p><a href="/docs/ilustracoes-kids.html" target="_blank" rel="noopener noreferrer">Como ativar e revisar ↗</a> · <a href="https://github.com/marcondesjm/cliente-x-instagram/actions/workflows/kids-illustrations.yml" target="_blank" rel="noopener noreferrer">Abrir rotina de ilustrações ↗</a></p>${batches || '<p>Nenhum lote gerado por IA registrado ainda.</p>'}</details>`;
-    }
     function renderNewsRadar() {
       const container = document.getElementById('newsRadar');
       const label = document.getElementById('newsRadarButtonLabel');
@@ -6637,7 +6625,6 @@
           <strong>${biblical ? 'Esta conta usa conteúdo bíblico infantil, sem radar de notícias.' : 'Esta conta usa o acervo editorial preparado, sem radar de notícias.'}</strong>
           <p>${packs} conteúdos no acervo. A seleção automática verifica repetição no momento de publicar. Esta informação não confirma publicações futuras.</p>
           ${visual?.required ? `<p><strong>Padrão ilustrado obrigatório:</strong> ${visual.ready} pautas com ilustrações revisadas e ${visual.pending} aguardando imagens. Pautas sem ilustração ficam fora da seleção; se as ilustradas já foram publicadas, o horário aguarda conteúdo novo.</p>` : ''}
-          ${renderBibleIllustrationQueue()}
           ${biblical ? `<p>Pesquisa bíblica: ${topics.length} temas encontrados${research?.checkedAt ? ` · última consulta: ${escapeHtml(formatDateTime(research.checkedAt))}` : ''}. São sugestões para desenvolver e revisar antes de incluir no acervo.</p>
           <strong>Fontes de referência cadastradas</strong>
           <div class="radar-sources">${references.map(source => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.name)} ↗</a>`).join('')}</div>
