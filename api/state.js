@@ -2891,6 +2891,16 @@ export default async function handler(req, res) {
   let biblicalImageDiscovery = null;
   let biblicalSceneAutomation = null;
   let biblicalSceneReplenishment = null;
+  let editorialApiReview = null;
+  try {
+    const review = (await readGithubConfig('automation/instagram-template/config/editorial-api-validation.json')).data;
+    const entry = review.entries?.find(item => item.account === accountKey);
+    editorialApiReview = {
+      account: accountKey, health: review.health || 'awaiting_review',
+      regression: review.regression ? { passed: review.regression.passed, checkedAt: review.regression.checkedAt, passedCases: review.regression.cases?.filter(c => c.passed).length || 0, totalCases: review.regression.cases?.length || 0 } : null,
+      report: entry ? { account: entry.account, checkedAt: entry.checkedAt, status: entry.status, summary: entry.summary, findings: entry.findings, nextSteps: entry.nextSteps } : null
+    };
+  } catch { editorialApiReview = null; }
   if (accountKey === 'sabedoria-kids') {
     try { biblicalResearch = (await readGithubConfig('automation/instagram-template/config/sabedoria-kids-sources.json')).data; } catch { biblicalResearch = null; }
     try { biblicalImageDiscovery = (await readGithubConfig('automation/instagram-template/config/kids-image-discovery.json')).data; } catch { biblicalImageDiscovery = null; }
@@ -2941,6 +2951,7 @@ export default async function handler(req, res) {
     biblicalImageDiscovery,
     biblicalSceneAutomation,
     biblicalSceneReplenishment,
+    editorialApiReview,
     visualReadiness: { required: requiresBibleIllustrations(account), total: packs.length, ready: readyPacks.length, pending: packs.length - readyPacks.length },
     calendarPublications: (publicationHistory[accountKey] || [])
       .filter(entry => entry.mediaId && entry.publishedAt)

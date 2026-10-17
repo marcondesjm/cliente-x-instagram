@@ -3154,6 +3154,7 @@
         appState.biblicalImageDiscovery = state.biblicalImageDiscovery || null;
         appState.biblicalSceneAutomation = state.biblicalSceneAutomation || null;
         appState.biblicalSceneReplenishment = state.biblicalSceneReplenishment || null;
+        appState.editorialApiReview = state.editorialApiReview || null;
         appState.visualReadiness = state.visualReadiness || null;
         appState.dailyPlan = state.dailyPlan || [];
         appState.tomorrowPreview = state.tomorrowPreview || { date: '', items: [] };
@@ -3224,7 +3225,24 @@
       headerVersion.textContent = `Versão atual: ${appVersion}`;
     }
 
+    function renderEditorialApiReview() {
+      let panel = document.getElementById('editorialApiReviewPanel');
+      if (!panel) {
+        const parent = document.getElementById('systemCapabilitiesPanel');
+        if (!parent) return;
+        panel = document.createElement('section');
+        panel.id = 'editorialApiReviewPanel';
+        panel.style.cssText = 'margin-top:20px;padding:18px;border:1px solid #dce5df;border-radius:12px;background:#f7faf8';
+        parent.appendChild(panel);
+      }
+      const review = appState.editorialApiReview;
+      const report = review?.account === appState.selectedAccount && review?.report?.account === appState.selectedAccount ? review.report : null;
+      const test = review?.regression;
+      panel.innerHTML = `<h3>Revisão editorial com API</h3><p>Diagnóstico da conta selecionada. As recomendações não alteram os posts ou a programação.</p>${test ? `<p>Teste factual: ${escapeHtml(String(test.passedCases))} de ${escapeHtml(String(test.totalCases))} casos conferidos. ${test.passed ? 'Casos de teste aprovados; isso não garante ausência de erros em conteúdos futuros.' : 'Teste ainda não aprovado.'}</p>` : ''}${report ? `<p><strong>${escapeHtml(report.summary)}</strong></p><p>Atualizado em ${escapeHtml(new Date(report.checkedAt).toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo'}))} (Brasília). Amostra consultiva de conteúdo; conexão Meta e publicação exigem verificação própria.</p>${(report.findings || []).map(f => `<div style="margin:12px 0"><strong>${escapeHtml(f.detail)}</strong><p>${escapeHtml(f.suggestion)}</p></div>`).join('')}<h4>Próximas melhorias sugeridas</h4><ul>${(report.nextSteps || []).map(s => `<li>${escapeHtml(s)}</li>`).join('')}</ul>` : '<p>Esta conta ainda não tem relatório concluído.</p>'}<p><a href="https://github.com/marcondesjm/cliente-x-instagram/actions/workflows/platform-editorial-api-validation.yml" target="_blank" rel="noopener noreferrer">Ver validações com API ↗</a></p>`;
+    }
+
     function renderSystemCapabilities() {
+      renderEditorialApiReview();
       const grid = document.getElementById('systemCapabilitiesGrid');
       const status = document.getElementById('systemCapabilitiesStatus');
       if (!grid || !status) return;
@@ -5722,6 +5740,7 @@
         appState.biblicalImageDiscovery = state.biblicalImageDiscovery || null;
         appState.biblicalSceneAutomation = state.biblicalSceneAutomation || null;
         appState.biblicalSceneReplenishment = state.biblicalSceneReplenishment || null;
+        appState.editorialApiReview = state.editorialApiReview || null;
         appState.visualReadiness = state.visualReadiness || null;
         appState.dailyPlan = state.dailyPlan || appState.dailyPlan;
         DATA.schedulesUtc = state.account?.scheduleUtc || DATA.schedulesUtc;

@@ -1,0 +1,33 @@
+name: Plataforma - validar contas com API
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: platform-editorial-api-validation
+  cancel-in-progress: false
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Refresh state
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git pull --rebase origin main
+      - run: npm ci --ignore-scripts
+      - name: Validate factual regression and registered accounts
+        env:
+          KIDS_VISION_ANTHROPIC_API_KEY: ${{ secrets.KIDS_VISION_ANTHROPIC_API_KEY }}
+        run: node scripts/review-platform-api.mjs --persist
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: platform-editorial-api-validation
+          path: automation/instagram-template/config/editorial-api-validation.json
