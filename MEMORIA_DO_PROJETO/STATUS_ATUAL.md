@@ -1,3 +1,7 @@
+## 2026-10-17 — conferência visual nova pendente de credencial
+
+Usuário informou que ainda não possui chave de API com faturamento. Nenhuma chamada paga ou seleção visual autônoma foi ativada. Painel agora distingue essa pendência da busca e da montagem já existentes; guia conferencia-cenas.html explica cadastro seguro do segredo proposto KIDS_VISION_OPENAI_API_KEY. O segredo sozinho não ativa nada: integração de visão, controle de consumo e teste real ainda necessários. Não reportar a integração como pronta.
+
 
 ## 2026-10-17 — montagem automática das cenas revisadas
 
