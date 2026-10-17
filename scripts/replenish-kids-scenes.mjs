@@ -141,7 +141,7 @@ async function replenish() {
   }
   let processed=0;
   const referenceLength=e=>passageRanges(e.reference).reduce((n,r)=>n+r.end-r.start+1,0);
-  const candidates=discovery.entries.filter(e=>e.status==='found').sort((a,b)=>Number(referenceLength(b)>=6)-Number(referenceLength(a)>=6));
+  const candidates=discovery.entries.filter(e=>e.status==='found').sort((a,b)=>referenceLength(b)-referenceLength(a));
   for(const entry of candidates) {
     const pack=packs.find(p=>p.id===entry.id);
     if(!pack || published(pack) || recipes.some(r=>r.id===pack.id) || pack.slides.every(s=>s.imagePath))continue;
