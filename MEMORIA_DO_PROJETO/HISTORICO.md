@@ -1,3 +1,15 @@
+## 2026-10-17 — reposição de cenas novas em validação real
+
+Usuário confirmou plano fixo sem cobrança extra por uso no claude-ss.ia.br. Integração mantém host HTTPS fixo, Bearer no segredo GitHub existente, sem exposição de credencial e sem retries de rede no mesmo ciclo. Modelo anunciado claude-sonnet-4.6 passou desafio real de pixels (código aleatório e cores); isso não comprova identidade do modelo.
+
+Implementados descoberta licenciada, passagem bíblica integral, duas avaliações visuais com evidência por cartão e Story, detecção de cópias/espelhamentos, vínculo criptográfico entre texto/cenas/revisão, download íntegro e render oficial obrigatório. Uma remarcação limitada é permitida após reprovação semântica. Conteúdo reprovado não recebe aprovação implícita. Workflows de visão e publicação usam filas distintas; montagem segue a fila Kids existente. Não há chamadas Meta no repositor.
+
+Rotina preparada para 05h40,11h40,17h40,23h40 BRT, até três pautas por execução,26 chamadas/dia e1,5M tokens de entrada informados/dia. Estoque alvo24 é limitado por pautas inéditas e fontes compatíveis; não é promessa de publicação infinita. Aprovação automática permanece desativada até piloto com receita nova e render íntegro. Tentativas anteriores revelaram reprovações semânticas e erros de protocolo; nenhuma foi convertida em aprovação.
+
+Corrigido persistState para gravações sucessivas no mesmo processo sem tratar sua própria alteração de arrays como conflito concorrente. Teste com repositórios Git locais comprova preservação de edição concorrente de outra conta e HEAD inalterado. Commit62b05608. Piloto após correção: run39071797266, em acompanhamento. Resultado final deve ser registrado abaixo.
+
+Painel e guia/PDF versão1.1 publicados, deploy READY dpl_78bJ5mUNKxyfKCDhi9CemXuBdE3x. HTTP200 do guia e PDF de produção com hash idêntico ao arquivo local. Validações de reposição, montagem, fontes, padrão bíblico, guard e merge passaram; chamadas dos testes locais são simuladas. Não confundir sucesso técnico com estoque novo ou publicação.
+
 ## 2026-10-17 — servidor Claude intermediario autorizado e teste de imagem
 
 Usuário forneceu configuração ANTHROPIC_BASE_URL=https://claude-ss.ia.br + ANTHROPIC_AUTH_TOKEN e autorizou explicitamente o envio da credencial GitHub e de uma imagem pública a esse serviço. Não reutilizar a chave exposta no chat nem registrá-la em código. Diagnóstico manual agora permite escolha fechada anthropic/claude-ss, host fixo, Bearer só no proxy, x-api-key só na Anthropic, redirects proibidos, sem retries. Nenhuma alteração nos publicadores, aprovação editorial ou agendamentos.
