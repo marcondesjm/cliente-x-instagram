@@ -1,12 +1,15 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import sharp from 'sharp';
-import {callAllowance,calibrationImage,visualSignature,similarScenes,contactSheet,sendVision,parseObject,recoverTransientCalls,promptSceneDescription,selectionSchema,verificationSchema,individualSceneImage,assertBlindScene,BLIND_SCENE_PROMPT} from '../lib/kids-scene-vision.js';
+import {callAllowance,calibrationImage,visualSignature,similarScenes,contactSheet,sendVision,parseObject,recoverTransientCalls,promptSceneDescription,selectionSchema,verificationSchema,reviewPoolLimit,individualSceneImage,assertBlindScene,BLIND_SCENE_PROMPT} from '../lib/kids-scene-vision.js';
 import {reviewBinding,assertAutomaticReview,verseIsWithin} from '../lib/kids-scene-review-proof.js';
 import {passageRanges,loadPassage} from '../lib/kids-bible-passage.js';
 import {validateRecipe,hash} from '../lib/kids-scene-assembly.js';
 import {sceneGroundingTask,groundingFingerprint} from '../lib/editorial-grounding.js';
 const state={calls:[],circuit:null,policy:{maxCallsPerDay:2,maxInputTokensPerDay:100,maxInputTokensPerCall:100}};
+assert.equal(reviewPoolLimit({maxCallsPerDay:26,maxInputTokensPerDay:1500000,maxInputTokensPerCall:120000}),9);
+assert.equal(reviewPoolLimit({maxCallsPerDay:40,maxInputTokensPerDay:3000000,maxInputTokensPerCall:120000}),12);
+assert.equal(reviewPoolLimit({maxCallsPerDay:8,maxInputTokensPerDay:3000000,maxInputTokensPerCall:120000}),5);
 const now=new Date('2026-10-18T01:00:00Z');assert.equal(callAllowance(state,now),'2026-10-17');
 state.calls=[{day:'2026-10-17',status:'reserved'}];assert.throws(()=>callAllowance(state,now),/sem recibo/);
 state.calls=[{day:'2026-10-17',status:'completed',inputTokens:100}];assert.throws(()=>callAllowance(state,now),/tokens/);

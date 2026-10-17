@@ -1,3 +1,15 @@
+## 2026-10-17 - correção v3 e bloqueio confirmado do serviço de visão
+
+Pedido: automatizar revisão das cenas na nuvem, sem validação recorrente do usuário ou computador ligado. Branch fix/kids-illustrated-stock-slot8, worktree kids-profile-20261017 alinhada com origin/main. Nenhuma chave foi lida ou exibida; apenas o segredo GitHub existente foi usado no destino já autorizado.
+
+Diagnóstico39075446351 comparou Sonnet base64/JSON (1 de2 verificações básicas), URL/JSON (1 de2, descrição errada), base64/resposta estruturada (2 de2) e Haiku base64/JSON (2 de2). Esses números não são aprovação semântica geral. Holdout39076244962: Haiku descreveu corretamente três imagens novas conferidas contra JPEGs originais; na quarta informou não conseguir ver. Não inferir precisão permanente por casos iniciais.
+
+Implementada prova v3-blind: leitura de cada JPEG individual sem passagem, legenda ou nomes; seleção textual apenas das observações; outra comparação com cartões e passagem integral sem reescrever a observação; conferência factual literal. Prova exige observação vinculada ao SHA original e ao hash/tamanho da imagem enviada. Provas v2 antigas não autorizam receitas novas. Rejeições antigas não contaminam feedback de outra versão/modelo. Imagens sem leitura confirmada são descartadas; respostas nulas podem ser descartadas exclusivamente na leitura individual, nunca na seleção ou no controle factual.
+
+Piloto39075839941 rejeitou seleção ainda feita em prancha. Seleção foi migrada para observações individuais. Piloto39076050174 cancelado: Sonnet descreveu uma pessoa deitada em cama inexistente na cena08 de Zaqueu. Piloto39076470290 com Haiku/JSON recusou cena07 já anexada e pediu envio da imagem; log sanitizado confirma. Nenhuma nova receita automaticamente aprovada, nenhum render novo aprovado, nenhuma ativação e nenhuma chamada Meta deste fluxo. Serviços de visão atuais permanecem inconsistentes; não pedir conferência manual recorrente como solução. Falta suporte confiável de visão no serviço/modelo e novo piloto integral.
+
+Estado final enabled=false/circuit=vision_validation_failed; orçamento temporário restaurado26 chamadas/dia,1,5M entrada/dia,3 pautas/run. Reserva cancelada permanece contada pelo máximo. Auditorias textuais das quatro contas preservadas. Guia/PDF v1.5 atualizado e renderizado. Testes locais de transporte, limites/prova v3, montagem e auditoria textual passaram; são simulações e não comprovam precisão da API real. Atualizar evidência de deploy abaixo após publicação do guia.
+
 ## 2026-10-17 — verificação final publicada
 
 Deploy final dpl_61r1kasecVjFpYynEi7XHmVxRyFN READY em cliente-x-instagram.vercel.app. Painel autenticado real verificado: quatro relatórios próprios, limpeza imediata ao trocar contas e indicador Carregando até a resposta correta. Evidência output/kids-scenes/validacao-api-contas-painel-final.png. HTTP200 do painel/guia e PDF versão1.4 com hash idêntico ao local. Testes de API consultiva, privacidade, citações/prova factual, montagem, busca, guard de publicação e sintaxe passaram. Conteúdo/agenda não foram alterados pelas recomendações; o bloqueio da visão Kids permanece ativo.
