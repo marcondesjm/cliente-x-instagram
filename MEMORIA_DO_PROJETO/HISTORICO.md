@@ -1,3 +1,10 @@
+## 2026-10-17 09:55 BRT — entrega da correção de carrosséis
+
+- Código enviado para origin/main no commit 027f328e; confirmado por git ls-remote. Próximas execuções do workflow recebem a correção; nenhuma publicação executada nesta sessão.
+- Dois renders finais aprovados com comparação integral do texto no DOM e limites da área visível: 18 e 10 slides, ambos com cobertura dos 42 trechos. ZIPs Carrossel-IA-{18,10}-slides-20261017.zip entregues na pasta de runs. Teste de cobertura incluído no workflow de publicação.
+- Deploy manual do painel recusado pela Vercel com Not authorized. Verificação HTTPS: novo PDF retorna 404 e dashboard ainda apresenta o link anterior. PDF local atualizado e código do painel enviados ao GitHub; atualização pública depende de restaurar a autorização Vercel.
+- Sem exclusão, agendamento ou republicação do post existente. IDs/permalink novos não existem nesta sessão.
+
 ## 2026-10-17 09:46 BRT — carrossel com cobertura completa
 
 - Base origin/main c0eb5e30; worktree cliente-x-instagram-carousel-20261017; branch fix/carrossel-cobertura-20261017. Alterações preexistentes em cliente-x-instagram-modern preservadas.
