@@ -32,7 +32,10 @@ for(const pack of pending.slice(0,limit)) {
         const details=licensedScenes(cache.get(result.sourceUrl),result.sourceUrl);
         candidates.push({...result,...details,checkedAt:now,reviewStatus:'pending'});
         if(candidates.length>=2)break;
-      } catch(error) {rejected.push({id:result.id,sourceUrl:result.sourceUrl,reason:error.message});}
+      } catch(error) {
+        if(error.code!=='license-unconfirmed')throw error;
+        rejected.push({id:result.id,sourceUrl:result.sourceUrl,reason:error.message});
+      }
     }
     entry={...entry,searchUrl,checkedAt:now,status:candidates.length?'found':'no_eligible_source',candidates,rejected,error:null};successful++;
     console.log(`${pack.id}: ${candidates.length} conjuntos licenciados; ${candidates.reduce((sum,x)=>sum+x.scenes.length,0)} cenas localizadas, aguardando revisão.`);

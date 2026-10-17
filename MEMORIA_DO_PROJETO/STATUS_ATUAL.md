@@ -10,6 +10,10 @@
 - Testes de parser, licenças, URL/SSRF, repetição/créditos, limites de leitura e falhas passaram, junto com padrão bíblico, state merge e scheduled guard. Persistência usa helper concorrente existente. Falta neste checkpoint inicial verificar primeira execução na nuvem e deploy do painel.
 
 
+- Validação final da busca: run 39062379350, job 117482818373, Success (1m03s), estado persistido em 55fd45ea. Após teste local + execução remota: 12 conjuntos, 236 cenas sugeridas para 11 pautas; uma das 12 consultadas não teve licença compatível confirmada. Nenhuma pauta promovida/publicada.
+- Painel deploy READY dpl_HddHAAbDnLCQ4bedqiuEMhQLErCu (f5d243df), HTTP 200 com nova área. Login de produção solicitou autenticação; layout conferido em prévia local com dados reais e mesma função de renderização, sem contornar login.
+- Falhas de rede/formato ao consultar conjunto preservam resultados anteriores e sinalizam erro; ausência de permissão/licença rejeita o conjunto.
+
 ## 2026-10-17 — decisão: usar sites licenciados, sem geração por IA
 
 - Usuário interrompeu a implementação de geração de imagens: “DEIXA ENTAO ESSA PARTE VAMOS PROCURARR EM SITES”. Commit 2068dd01 integralmente revertido em 053566cc: workflow de IA, catálogo, API/controles e guia removidos. Nenhuma chamada paga realizada e nenhuma chave cadastrada. Não retomar IA sem novo pedido.
