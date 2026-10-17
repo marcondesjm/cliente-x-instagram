@@ -1,3 +1,13 @@
+## 2026-10-17 — aviso de radar adaptado ao acervo bíblico
+
+- Branch fix/kids-biblical-radar-label-20261017, base 44d586a1; implementação ff69dce6 enviada ao origin/main.
+- Causa do aviso mostrado pelo usuário: renderNewsRadar interpretava radar propositalmente desativado em curatedOnly como falha de notícias, exibindo atualização de notícias/60 dias/fake news na conta bíblica.
+- Perfis com acervo preparado agora mostram status do acervo em vez do alerta de notícias. Sabedoria Kids mostra quantidade de conteúdos, temas da pesquisa com data, fontes bíblicas cadastradas e distinção entre referência e site efetivamente consultado.
+- Temas encontrados continuam sugestões para desenvolver/revisar; número de conteúdos não é prova de publicação futura. Nenhuma ativação do radar de notícias nem alteração de agenda/publicador.
+- validate-account-onboarding (inclui sintaxe do JS do painel) e git diff --check aprovados.
+
+- Produção READY: dpl_67idTaWfBFYXNd3DgnkHzzpV9sU9, código ff69dce6, alias cliente-x-instagram.vercel.app. Conferido no navegador autenticado, conta sabedoria-kids, Agenda: Acervo bíblico preparado, 37 conteúdos, 59 temas (consulta 17/10 às 10:58 BRT), sete fontes e guia de revisão; botão de notícias ausente neste modo. Evidência local output/sabedoria-kids/acervo-biblico-painel.png.
+
 ## 2026-10-17 — início de Sabedoria Kids antecipado a pedido do titular
 
 - Usuário confirmou antecipar para hoje e monitorar uma publicação real. Branch ops/kids-start-today-20261017; implementação 51c0b315 enviada ao origin/main.
