@@ -6610,6 +6610,25 @@
       const container = document.getElementById('newsRadar');
       const label = document.getElementById('newsRadarButtonLabel');
       const details = document.getElementById('newsRadarDetails');
+      if (appState.account?.contentProfile?.curatedOnly) {
+        const biblical = appState.selectedAccount === 'sabedoria-kids';
+        const research = biblical ? appState.biblicalResearch : null;
+        const packs = appState.packs?.length || 0;
+        const topics = Array.isArray(research?.entries) ? research.entries : [];
+        const references = (appState.account.contentProfile.biblicalSources || []).filter(source => source?.name && /^https:\/\//i.test(source?.url || ''));
+        container.classList.toggle('is-fallback', !packs);
+        label.textContent = biblical ? (packs ? 'Acervo bíblico preparado' : 'Acervo bíblico pendente') : (packs ? 'Acervo editorial preparado' : 'Acervo editorial pendente');
+        details.innerHTML = `
+          <strong>${biblical ? 'Esta conta usa conteúdo bíblico infantil, sem radar de notícias.' : 'Esta conta usa o acervo editorial preparado, sem radar de notícias.'}</strong>
+          <p>${packs} conteúdos no acervo. A seleção automática verifica repetição no momento de publicar. Esta informação não confirma publicações futuras.</p>
+          ${biblical ? `<p>Pesquisa bíblica: ${topics.length} temas encontrados${research?.checkedAt ? ` · última consulta: ${escapeHtml(formatDateTime(research.checkedAt))}` : ''}. São sugestões para desenvolver e revisar antes de incluir no acervo.</p>
+          <strong>Fontes de referência cadastradas</strong>
+          <div class="radar-sources">${references.map(source => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.name)} ↗</a>`).join('')}</div>
+          <p>As fontes cadastradas são referências; isso não significa que todos os sites foram consultados nesta pesquisa. Confira a passagem bíblica, a linguagem infantil e a licença das imagens antes do uso.</p>
+          ${topics.length ? `<details><summary>Ver temas encontrados na pesquisa</summary><ul>${topics.map(topic => `<li>${escapeHtml(topic.title || 'Tema sem título')}</li>`).join('')}</ul></details>` : ''}` : ''}
+        `;
+        return;
+      }
       const radar = appState.editorialRadar || {};
       const working = radar.status === 'working';
       container.classList.toggle('is-fallback', !working);
