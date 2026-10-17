@@ -1,15 +1,15 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import sharp from 'sharp';
-import {callAllowance,calibrationImage,visualSignature,similarScenes,contactSheet,sendVision,parseObject,recoverTransientCalls,promptSceneDescription,selectionSchema,verificationSchema,reviewPoolLimit,individualSceneImage,assertBlindScene,BLIND_SCENE_PROMPT} from '../lib/kids-scene-vision.js';
+import {callAllowance,calibrationImage,visualSignature,similarScenes,contactSheet,sendVision,parseObject,recoverTransientCalls,promptSceneDescription,selectionSchema,verificationSchema,reviewPoolLimit,individualSceneImage,assertBlindScene,BLIND_SCENE_PROMPT,assertCoverCandidates} from '../lib/kids-scene-vision.js';
 import {reviewBinding,assertAutomaticReview,verseIsWithin} from '../lib/kids-scene-review-proof.js';
 import {passageRanges,loadPassage} from '../lib/kids-bible-passage.js';
 import {validateRecipe,hash} from '../lib/kids-scene-assembly.js';
 import {sceneGroundingTask,groundingFingerprint} from '../lib/editorial-grounding.js';
 const state={calls:[],circuit:null,policy:{maxCallsPerDay:2,maxInputTokensPerDay:100,maxInputTokensPerCall:100}};
-assert.equal(reviewPoolLimit({maxCallsPerDay:26,maxInputTokensPerDay:1500000,maxInputTokensPerCall:120000}),9);
+assert.equal(reviewPoolLimit({maxCallsPerDay:26,maxInputTokensPerDay:1500000,maxInputTokensPerCall:120000}),8);
 assert.equal(reviewPoolLimit({maxCallsPerDay:40,maxInputTokensPerDay:3000000,maxInputTokensPerCall:120000}),12);
-assert.equal(reviewPoolLimit({maxCallsPerDay:8,maxInputTokensPerDay:3000000,maxInputTokensPerCall:120000}),5);
+assert.equal(reviewPoolLimit({maxCallsPerDay:8,maxInputTokensPerDay:3000000,maxInputTokensPerCall:120000}),4);
 const now=new Date('2026-10-18T01:00:00Z');assert.equal(callAllowance(state,now),'2026-10-17');
 state.calls=[{day:'2026-10-17',status:'reserved'}];assert.throws(()=>callAllowance(state,now),/sem recibo/);
 state.calls=[{day:'2026-10-17',status:'completed',inputTokens:100}];assert.throws(()=>callAllowance(state,now),/tokens/);
@@ -85,3 +85,7 @@ const forged=structuredClone(auto);forged.automaticReview.factualReview.result.c
 const wrongText=structuredClone(auto);wrongText.automaticReview.verification.cards[0].observedEvent='Evento visual alterado';wrongText.automaticReview.binding=reviewBinding(wrongText);assert.throws(()=>validateRecipe(wrongText,pack),/pixels|fonte factual/);
 const wrongScope=structuredClone(auto);wrongScope.automaticReview.factualReview.task.sources[0].text='A different passage';wrongScope.automaticReview.factualReview.fingerprint=groundingFingerprint(wrongScope.automaticReview.factualReview.task);assert.throws(()=>validateRecipe(wrongScope,pack),/passagem integral/);
 console.log('PASS: call limits/interruption, BRT day, full scripture completeness, real image processing, mirrored duplicates, bounded payload, provider request, two-pass proof, stale/missing/negative review blocking. Simulated API only.');
+
+assert.deepEqual(assertCoverCandidates({decision:'approve',candidates:[{scene:5,verse:'19:5-6',reason:'A cena mostra a recepção da visita em casa.'}]},8,['19:5','19:6']),[5]);
+for(const result of [{decision:'reject',candidates:[]},{decision:'approve',candidates:[{scene:9,verse:'19:6',reason:'A cena mostra a recepção da visita em casa.'}]},{decision:'approve',candidates:[{scene:5,verse:'20:1',reason:'A cena mostra a recepção da visita em casa.'}]}])assert.throws(()=>assertCoverCandidates(result,8,['19:5','19:6']));
+console.log('PASS: cover gate rejects missing, out-of-range and out-of-passage candidates.');

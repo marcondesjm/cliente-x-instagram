@@ -3,9 +3,9 @@
   "model": "claude-sonnet-4.6",
   "billingMode": "fixed_plan_user_confirmed",
   "policy": {
-    "maxCallsPerDay": 2,
+    "maxCallsPerDay": 4,
     "maxInputTokensPerCall": 120000,
-    "maxInputTokensPerDay": 240000
+    "maxInputTokensPerDay": 480000
   },
   "calls": [
     {
@@ -107,7 +107,8 @@
   ],
   "circuit": null,
   "passed": false,
-  "health": "rejected",
+  "health": "awaiting_v2",
   "checkedAt": "2026-10-17T23:16:35.821Z",
-  "run": "39078284213"
+  "run": "39078284213",
+  "message": "Primeiro par distinguiu copyMatch corretamente; Story genérico produziu inconsistência. Novo par usa descrição auxiliar explícita."
 }
