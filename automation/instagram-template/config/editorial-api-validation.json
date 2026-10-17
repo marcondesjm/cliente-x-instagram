@@ -368,6 +368,73 @@
         "Criar template visual que diferencie claramente seções narrativas das interativas"
       ],
       "publicationTriggered": false
+    },
+    {
+      "account": "radioieqpc",
+      "checkedAt": "2026-10-17T22:06:43.379Z",
+      "status": "advisory",
+      "snapshotFingerprint": "161122c0b78556ab0477d83964ce46631623eb77ad2f1a7d19a4d7e051452d44",
+      "snapshot": {
+        "account": "radioieqpc",
+        "niche": "Evangélico",
+        "visualStandard": null,
+        "connection": "awaiting_connection",
+        "scheduleSlots": 0,
+        "curatedOnly": true,
+        "packCount": 1,
+        "illustratedPacks": 0,
+        "samples": [
+          {
+            "id": null,
+            "reference": null,
+            "cards": [
+              {
+                "title": "Um espaço para falar de Evangélico",
+                "body": "Conteúdo pensado para Evangélicos."
+              },
+              {
+                "title": "somos uma rádio evangélica que está no ar pela internet oferecemos música, entrevistas e vários programas na grade",
+                "body": "Informação, conversa e novos conteúdos por aqui."
+              },
+              {
+                "title": "O que você gostaria de aprender?",
+                "body": "Conte nos comentários qual assunto você quer ver nas próximas publicações."
+              }
+            ]
+          }
+        ]
+      },
+      "summary": "A conta apresenta identidade genérica e falta de coerência visual. Os textos são vagos, sem chamada clara para ação ou valor específico. A ausência de padrão visual definido compromete a legibilidade e o reconhecimento da marca no nicho evangélico.",
+      "findings": [
+        {
+          "severity": "warning",
+          "detail": "Títulos genéricos como 'Um espaço para falar de Evangélico' não comunicam proposta única. Falta diferenciação em relação a outras rádios ou páginas do nicho.",
+          "suggestion": "Defina um posicionamento claro (ex: foco em louvor contemporâneo, entrevistas com pastores, estudos bíblicos) e reflita isso nos títulos."
+        },
+        {
+          "severity": "warning",
+          "detail": "Corpo dos textos é vago ('Conteúdo pensado para Evangélicos') e não gera engajamento específico. Não há chamada para salvar ou compartilhar conteúdo.",
+          "suggestion": "Crie textos com valor prático imediato (ex: versículo do dia com aplicação, playlist semanal) e inclua CTAs claros como 'Salve para ouvir depois'."
+        },
+        {
+          "severity": "info",
+          "detail": "Não há padrão visual definido (visualStandard: null). Isso prejudica a composição e a coerência entre texto e imagem, essenciais para feeds organizados.",
+          "suggestion": "Estabeleça uma paleta de cores e tipografia consistentes alinhadas ao tom da rádio (ex: tons quentes para acolhimento, fontes legíveis para letras de músicas)."
+        },
+        {
+          "severity": "info",
+          "detail": "A pergunta 'O que você gostaria de aprender?' é aberta demais para o nicho. Pode gerar baixa participação por falta de direcionamento.",
+          "suggestion": "Ofereça opções específicas nos comentários (ex: 'Quer estudo sobre Salmos ou dicas de louvor? Vote abaixo') para facilitar a interação."
+        }
+      ],
+      "nextSteps": [
+        "Definir identidade visual com paleta e fontes específicas para o nicho evangélico/rádio.",
+        "Reescrever títulos e corpos com propostas de valor claras e diferenciadas.",
+        "Incluir chamadas para ação úteis (salvar playlists, compartilhar versículos).",
+        "Criar exemplos reais de posts com formato consistente (carrossel, estático, reels).",
+        "Validar coerência entre texto e imagem em amostras antes de publicar."
+      ],
+      "publicationTriggered": false
     }
   ],
   "regression": {
@@ -435,7 +502,7 @@
       "https://bible-api.com/data/web/JHN/6"
     ]
   },
-  "checkedAt": "2026-10-17T22:06:41.855Z",
+  "checkedAt": "2026-10-17T22:06:43.379Z",
   "workflowRun": "39073598254",
   "health": "blocked",
   "message": "Achado editorial inválido.",
