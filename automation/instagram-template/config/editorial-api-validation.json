@@ -167,6 +167,79 @@
         "Padronizar a identidade visual para reforçar a autoridade no nicho de IA para negócios."
       ],
       "publicationTriggered": false
+    },
+    {
+      "account": "cliente-turismo",
+      "checkedAt": "2026-10-17T22:06:01.974Z",
+      "status": "advisory",
+      "snapshotFingerprint": "011ff5db677f402dff078bec578f53d5d7e7f6fdaf8add34447a5bea3dc96181",
+      "snapshot": {
+        "account": "cliente-turismo",
+        "niche": "turismo, turismo sc",
+        "visualStandard": null,
+        "connection": "not_verified_by_this_audit",
+        "scheduleSlots": 13,
+        "curatedOnly": false,
+        "packCount": 1,
+        "illustratedPacks": 0,
+        "samples": [
+          {
+            "id": null,
+            "reference": null,
+            "cards": [
+              {
+                "title": "Mapa Turismo: onde a IA pode gerar resultado?",
+                "body": "Antes de escolher ferramenta, entenda a rotina que mais pesa para viajantes, aposentados."
+              },
+              {
+                "title": "O contexto muda tudo em turismo, turismo sc.",
+                "body": "A comunicação precisa falar da dor real, da decisão e do risco que esse público já sente."
+              },
+              {
+                "title": "planejamento viagens precisa parecer prático.",
+                "body": "Mostre aplicação, consequência e próximo passo. Conteúdo bonito sem clareza não gera conversa."
+              },
+              {
+                "title": "Tom consultivo, com prova e direção.",
+                "body": "Cada post deve ensinar algo útil e abrir uma porta para atendimento, diagnóstico ou reunião."
+              },
+              {
+                "title": "A automação começa pelo posicionamento.",
+                "body": "Com nicho, público e oferta definidos, a IA cria posts mais específicos e menos genéricos."
+              }
+            ]
+          }
+        ]
+      },
+      "summary": "A conta 'cliente-turismo' apresenta um tom consultivo, porém desconectado da experiência visual e prática do nicho de turismo em Santa Catarina. É necessário transitar da teoria sobre IA para a aplicação prática no planejamento de viagens, utilizando recursos visuais que evoquem o destino e estruturando o texto para maior legibilidade e conversão.",
+      "findings": [
+        {
+          "detail": "O conteúdo atual foca excessivamente em metalinguagem sobre IA, afastando-se da experiência turística em SC.",
+          "severity": "warning",
+          "suggestion": "Substitua o foco em 'como usar IA' por 'como a IA facilita o planejamento de roteiros específicos em SC'."
+        },
+        {
+          "detail": "Falta de elementos visuais que conectem o texto ao destino (turismo SC).",
+          "suggestion": "Utilize fotos autorais ou de alta qualidade dos destinos citados, mantendo a identidade visual consistente.",
+          "severity": "info"
+        },
+        {
+          "suggestion": "Adicione frases como 'Salve este roteiro para sua próxima viagem' ou 'Compartilhe com quem vai viajar com você'.",
+          "detail": "Ausência de CTAs (Call to Action) claras para engajamento ou salvamento.",
+          "severity": "info"
+        },
+        {
+          "detail": "O texto está denso e pouco escaneável para o formato de carrossel.",
+          "suggestion": "Aplique hierarquia visual: títulos curtos, bullet points e frases de impacto em destaque.",
+          "severity": "info"
+        }
+      ],
+      "nextSteps": [
+        "Criar um calendário editorial focado em destinos específicos de SC.",
+        "Desenvolver um template visual que destaque a utilidade prática do roteiro.",
+        "Implementar CTAs diretas em todos os posts."
+      ],
+      "publicationTriggered": false
     }
   ],
   "regression": {
@@ -234,8 +307,8 @@
       "https://bible-api.com/data/web/JHN/6"
     ]
   },
-  "checkedAt": "2026-10-17T22:03:49.357Z",
-  "workflowRun": "39073425934",
+  "checkedAt": "2026-10-17T22:06:01.974Z",
+  "workflowRun": "39073598254",
   "health": "blocked",
   "message": "Achado editorial inválido.",
   "lastResponse": {
@@ -249,15 +322,18 @@
         },
         {
           "detail": "Falta de elementos visuais que conectem o texto ao destino (turismo SC).",
-          "suggestion": "Utilize fotos autorais ou de alta qualidade dos destinos citados, mantendo a identidade visual consistente."
+          "suggestion": "Utilize fotos autorais ou de alta qualidade dos destinos citados, mantendo a identidade visual consistente.",
+          "severity": "info"
         },
         {
           "suggestion": "Adicione frases como 'Salve este roteiro para sua próxima viagem' ou 'Compartilhe com quem vai viajar com você'.",
-          "detail": "Ausência de CTAs (Call to Action) claras para engajamento ou salvamento."
+          "detail": "Ausência de CTAs (Call to Action) claras para engajamento ou salvamento.",
+          "severity": "info"
         },
         {
           "detail": "O texto está denso e pouco escaneável para o formato de carrossel.",
-          "suggestion": "Aplique hierarquia visual: títulos curtos, bullet points e frases de impacto em destaque."
+          "suggestion": "Aplique hierarquia visual: títulos curtos, bullet points e frases de impacto em destaque.",
+          "severity": "info"
         }
       ],
       "nextSteps": [
