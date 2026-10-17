@@ -5,6 +5,7 @@ import {callAllowance,calibrationImage,visualSignature,similarScenes,contactShee
 import {reviewBinding,assertAutomaticReview,verseIsWithin} from '../lib/kids-scene-review-proof.js';
 import {passageRanges,loadPassage} from '../lib/kids-bible-passage.js';
 import {validateRecipe,hash} from '../lib/kids-scene-assembly.js';
+import {sceneGroundingTask,groundingFingerprint} from '../lib/editorial-grounding.js';
 const state={calls:[],circuit:null,policy:{maxCallsPerDay:2,maxInputTokensPerDay:100,maxInputTokensPerCall:100}};
 const now=new Date('2026-10-18T01:00:00Z');assert.equal(callAllowance(state,now),'2026-10-17');
 state.calls=[{day:'2026-10-17',status:'reserved'}];assert.throws(()=>callAllowance(state,now),/sem recibo/);
@@ -55,7 +56,9 @@ await assert.rejects(sendVision({key:'x',model:'claude-haiku-4.5',image,prompt:'
 await assert.rejects(sendVision({key:'x',model:'other-host',image,prompt:'x'}),/modelo/);
 const auto=structuredClone(recipe);auto.status='automatically-reviewed';
 auto.selected=auto.selected.map((s,i)=>({...s,visualHash:String(i).padStart(16,'0'),mirrorHash:String(i+10).padStart(16,'0')}));
-auto.automaticReview={version:'kids-scene-review-v1',calibrationPassed:true,scriptureHash:'f'.repeat(64),reviewedAt:new Date().toISOString(),verseIds:['45:1'],selection:{decision:'approve',feed:auto.selected.slice(0,-1).map(s=>s.id),story:auto.selected.at(-1).id,childSuitable:true,distinct:true,referenceAccurate:true},verification:{decision:'approve',cards:auto.selected.map(s=>({id:s.id,passageMatch:true,childSuitable:true,distinct:true,copyMatch:true,verse:'45:1',reason:'A cena mostra uma família reunida.'}))},binding:reviewBinding(auto)};
+const fixturePassage={reference:auto.reference,translation:'World English Bible',license:'Public Domain',urls:['https://bible-api.com/data/web/GEN/45'],verses:[{id:'45:1',text:'Then Joseph could not control himself before all those who stood before him.'}]};
+const task=sceneGroundingTask(auto.selected,fixturePassage);
+auto.automaticReview={version:'kids-scene-review-v2-grounded',calibrationPassed:true,scriptureHash:hash(fixturePassage),scriptureSources:fixturePassage.urls,reviewedAt:new Date().toISOString(),verseIds:['45:1'],factualReview:{task,fingerprint:groundingFingerprint(task),result:{claims:task.claims.map(c=>({id:c.id,supported:true,reason:'Justificativa simulada para verificar o vínculo da prova.',evidence:[{sourceId:'45:1',quote:'Then Joseph could not control himself'}]}))}},selection:{decision:'approve',feed:auto.selected.slice(0,-1).map(s=>s.id),story:auto.selected.at(-1).id,childSuitable:true,distinct:true,referenceAccurate:true},verification:{decision:'approve',cards:auto.selected.map(s=>({id:s.id,passageMatch:true,childSuitable:true,distinct:true,copyMatch:true,verse:'45:1',reason:'A cena mostra uma família reunida.'}))},binding:reviewBinding(auto)};
 auto.automaticReview.selection.evidence=auto.selected.map((s,i)=>({id:s.id,card:i+1,verse:'45:1',reason:'A cena mostra o reencontro da família.'}));
 assert.equal(verseIsWithin('45:1–2',['45:1','45:2']),true);assert.equal(verseIsWithin('45:1–3',['45:1','45:2']),false);
 assertAutomaticReview(auto);
@@ -65,4 +68,9 @@ const changed=structuredClone(auto);changed.selected[0].sha256='0'.repeat(64);as
 const unreviewed=structuredClone(auto);delete unreviewed.automaticReview;assert.throws(()=>validateRecipe(unreviewed,pack),/ausente/);
 const wrong=structuredClone(auto);wrong.automaticReview.verification.cards[2].passageMatch=false;assert.throws(()=>validateRecipe(wrong,pack),/avaliação/);
 const verse=structuredClone(auto);verse.automaticReview.verification.cards[0].verse='99:99';assert.throws(()=>validateRecipe(verse,pack),/avaliação/);
+const noFacts=structuredClone(auto);delete noFacts.automaticReview.factualReview;assert.throws(()=>validateRecipe(noFacts,pack),/factual/);
+const falseFacts=structuredClone(auto);falseFacts.automaticReview.factualReview.result.claims[0].supported=false;assert.throws(()=>validateRecipe(falseFacts,pack),/não sustenta/);
+const forged=structuredClone(auto);forged.automaticReview.factualReview.result.claims[0].evidence[0].quote='Jesus appeared to the women.';assert.throws(()=>validateRecipe(forged,pack),/inventada/);
+const wrongText=structuredClone(auto);wrongText.selected[0].description='Evento alterado';wrongText.automaticReview.binding=reviewBinding(wrongText);assert.throws(()=>validateRecipe(wrongText,pack),/fonte factual/);
+const wrongScope=structuredClone(auto);wrongScope.automaticReview.factualReview.task.sources[0].text='A different passage';wrongScope.automaticReview.factualReview.fingerprint=groundingFingerprint(wrongScope.automaticReview.factualReview.task);assert.throws(()=>validateRecipe(wrongScope,pack),/passagem integral/);
 console.log('PASS: call limits/interruption, BRT day, full scripture completeness, real image processing, mirrored duplicates, bounded payload, provider request, two-pass proof, stale/missing/negative review blocking. Simulated API only.');

@@ -8,6 +8,7 @@ import {safeSourceUrl,fetchSource,licensedScenes} from '../lib/kids-image-discov
 import {loadPassage,passageRanges} from '../lib/kids-bible-passage.js';
 import {visualReadyPacks} from '../lib/bible-visual-standard.js';
 import {reviewBinding,verseIsWithin} from '../lib/kids-scene-review-proof.js';
+import {sceneGroundingTask,groundingPrompt,groundingSchema,assertGrounding,groundingFingerprint} from '../lib/editorial-grounding.js';
 import {VISION_VERSION,callAllowance,sendVision,calibrationImage,CALIBRATION_PROMPT,visualSignature,similarScenes,contactSheet,recoverTransientCalls,promptSceneDescription,selectionSchema,verificationSchema} from '../lib/kids-scene-vision.js';
 
 const ROOT=resolve(dirname(fileURLToPath(import.meta.url)),'..');process.chdir(ROOT);
@@ -21,14 +22,20 @@ function save(paths=[STATE],assets=[]) {
   state.checkedAt=now();state.lastRun=process.env.GITHUB_RUN_ID || null;
   fs.writeFileSync(STATE,JSON.stringify(state,null,2)+'\n');
   if(paths.includes(RECIPES))fs.writeFileSync(RECIPES,JSON.stringify(recipes,null,2)+'\n');
-  if(persist)persistState(paths,assets);
+  if(persist) {
+    persistState(paths,assets);
+    // A concurrently applied emergency block must latch before any next request.
+    const remote=read(STATE);
+    if(remote.circuit){state.circuit=remote.circuit;state.enabled=false;}
+  }
 }
 async function paidCall(stage,image,prompt,maxOutputTokens=2200,schema=null) {
   if(!persist)throw new Error('Chamadas reais exigem recibo persistido antes do envio.');
   const day=callAllowance(state);
   if(!key)throw new Error('Segredo de visão ausente.');
-  const call={id:randomUUID(),day,stage,startedAt:now(),status:'reserved',payloadBytes:image.length,promptChars:prompt.length,imageFingerprint:hash(image),promptFingerprint:hash(prompt)};
+  const call={id:randomUUID(),day,stage,startedAt:now(),status:'reserved',payloadBytes:image?.length || 0,promptChars:prompt.length,imageFingerprint:image?hash(image):null,promptFingerprint:hash(prompt)};
   state.calls.push(call);save();
+  if(state.circuit){call.status='cancelled_before_send';save();throw new Error('Bloqueio concorrente aplicado antes do envio à API.');}
   let result;
   try {result=await sendVision({key,model:state.model,image,prompt,maxOutputTokens,schema});}
   catch(error) {
@@ -106,6 +113,13 @@ async function reviewPack(pack,candidate,known,{attempt=0,feedback=null}={}) {
   if(new Set(labels).size!==labels.length || labels.some(n=>!Number.isInteger(n) || n<1 || n>pool.length))throw new Error('Resposta de seleção contém cenas inválidas ou repetidas.');
   if(!Array.isArray(selection.evidence) || selection.evidence.length!==labels.length || selection.evidence.some((e,i)=>e.card!==i+1 || e.scene!==labels[i]))throw new Error('Seleção sem justificativa coerente por cartão.');
   const selected=labels.map(n=>pool[n-1]);
+  const factualTask=sceneGroundingTask(selected,passage);
+  const factualResult=await paidCall('facts:'+pack.id,null,groundingPrompt(factualTask),3000,groundingSchema(selected.length));
+  state.lastFactualEvaluation={packId:pack.id,fingerprint:groundingFingerprint(factualTask),result:factualResult};save();
+  try {assertGrounding(factualTask,factualResult);}catch(error) {
+    if(attempt===0){callAllowance(state,new Date(),3);return reviewPack(pack,candidate,known,{attempt:1,feedback:{stage:'facts',result:factualResult}});}
+    throw error;
+  }
   fs.writeFileSync(`output/kids-replenishment/${pack.id}-selection-${attempt+1}.json`,JSON.stringify({reference:pack.biblicalReference,selection,selected:selected.map(({bytes,...s})=>s)},null,2));
   const selectedSheet=await contactSheet(selected);
   fs.writeFileSync(`output/kids-replenishment/${pack.id}-selected-${attempt+1}.jpg`,selectedSheet);
@@ -115,7 +129,7 @@ async function reviewPack(pack,candidate,known,{attempt=0,feedback=null}={}) {
   state.lastEvaluation={packId:pack.id,...audit};save();
   if(verification.decision!=='approve' || !Array.isArray(verification.cards) || verification.cards.length!==selected.length || verification.cards.some((c,i)=>c.scene!==i+1 || !['passageMatch','childSuitable','distinct','copyMatch'].every(k=>c[k]===true) || !verseIsWithin(c.verse,passage.verses.map(v=>v.id)) || typeof c.reason!=='string' || c.reason.length<12)) {
     if(attempt===0 && audit.cards.length===selected.length) {
-      callAllowance(state,new Date(),2);
+      callAllowance(state,new Date(),3);
       return reviewPack(pack,candidate,known,{attempt:1,feedback:audit});
     }
     const failed=audit.cards.find(c=>!c.passageMatch || !c.childSuitable || !c.distinct || !c.copyMatch);
@@ -123,7 +137,7 @@ async function reviewPack(pack,candidate,known,{attempt=0,feedback=null}={}) {
   }
   const folder=`${pack.id}-auto`,reviewedAt=now();
   const recipe={id:pack.id,folder,feed:selected.slice(0,-1).map(s=>s.sourceScene),story:selected.at(-1).sourceScene,url:candidate.sourceUrl,license:source.license,licenseUrl:source.licenseUrl,termsHash:source.termsHash,selected:selected.map(({bytes,...s},i)=>({...s,path:`docs/illustrations/sabedoria-kids/${folder}/${String(i+1).padStart(2,'0')}-${s.id}.jpg`})),status:'automatically-reviewed',reference:pack.biblicalReference,reviewedAt,reviewMethod:'Seleção por pixels e segunda avaliação com passagem integral; hashes perceptuais e render oficial obrigatórios.',copyFingerprint:copyFingerprint(pack)};
-  recipe.automaticReview={version:VISION_VERSION,provider:state.provider,model:state.model,calibrationPassed:true,reviewedAt,scriptureHash:hash(passage),scriptureSources:passage.urls,verseIds:passage.verses.map(v=>v.id),selection:{...selection,feed:selected.slice(0,-1).map(s=>s.id),story:selected.at(-1).id,evidence:selection.evidence.map((e,i)=>({...e,id:selected[i].id}))},verification:{...verification,cards:verification.cards.map((c,i)=>({...c,id:selected[i].id}))},binding:reviewBinding(recipe)};
+  recipe.automaticReview={version:VISION_VERSION,provider:state.provider,model:state.model,calibrationPassed:true,reviewedAt,scriptureHash:hash(passage),scriptureSources:passage.urls,verseIds:passage.verses.map(v=>v.id),factualReview:{task:factualTask,result:factualResult,fingerprint:groundingFingerprint(factualTask)},selection:{...selection,feed:selected.slice(0,-1).map(s=>s.id),story:selected.at(-1).id,evidence:selection.evidence.map((e,i)=>({...e,id:selected[i].id}))},verification:{...verification,cards:verification.cards.map((c,i)=>({...c,id:selected[i].id}))},binding:reviewBinding(recipe)};
   validateRecipe(recipe,pack);
   const fresh=licensedScenes(await fetchSource(candidate.sourceUrl),candidate.sourceUrl);
   if(fresh.termsHash!==recipe.termsHash || !selected.every(s=>fresh.scenes.some(f=>f.id===s.id)))throw new Error('Fonte mudou durante a avaliação.');
@@ -161,7 +175,7 @@ async function replenish() {
     const choice=entry.candidates.filter(c=>c.scenes.length>=pack.slides.length+1).map(candidate=>({candidate,fingerprint:hash({copy:copyFingerprint(pack),terms:candidate.termsHash,scenes:candidate.scenes.map(s=>s.id),version:VISION_VERSION,parameters:'pool12-independent-pixels-v5'})})).find(c=>!state.rejections[c.fingerprint] || Date.parse(state.rejections[c.fingerprint].retryAfter)<=Date.now());
     if(!choice)continue;
     const {candidate,fingerprint}=choice;
-    try {callAllowance(state,new Date(),2);}catch(error){
+    try {callAllowance(state,new Date(),3);}catch(error){
       if(error.code!=='DAILY_LIMIT')throw error;
       state.health='daily_limit';state.message='Limite diário atingido; montagens já aprovadas continuam e novas avaliações aguardam o próximo dia.';save();return;
     }
