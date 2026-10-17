@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { chromium } from 'playwright';
+import { canPublishAccount } from '../../../lib/publication-access.js';
 import { seriesForSlot, seriesPacks } from '../../../lib/follower-series.js';
 import { educationEnabled, educationKind, educationLessons, nextEducationPack, isBusinessAINews, newsWithPracticalExercise, educationPreview, educationDayBlocked, educationIntegrated, educationSlotIndex, educationForSlot } from '../../../lib/education-strategy.js';
 import { normalizeContentFingerprint, packContentFingerprint } from '../../../lib/scheduled-content-guard.js';
@@ -5078,7 +5079,7 @@ async function main() {
   const { account, packs: localPacks, styles } = loadConfig(args.configDir, args.account);
   IG_BASE = account.instagramLogin === 'instagram' ? 'https://graph.instagram.com/v23.0' : 'https://graph.facebook.com/v21.0';
   const { radar, options: radarOptions } = radarResearchOptions(account);
-  if (!args.renderOnly && !args.dryRun && !args.validateCopy && account.clientProfile && account.clientProfile.status !== 'active') {
+  if (!args.renderOnly && !args.dryRun && !args.validateCopy && !canPublishAccount(account, env)) {
     const billingStatus = account.clientProfile.billing?.status || account.clientProfile.status || 'onboarding';
     throw new Error(`Publicacao bloqueada para ${account.account}: cliente ${billingStatus}. Regularize ou ative o contrato antes de publicar.`);
   }

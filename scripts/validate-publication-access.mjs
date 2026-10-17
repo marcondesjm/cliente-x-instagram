@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import { canPublishAccount } from '../lib/publication-access.js';
+const account = { clientProfile: { status: 'onboarding' }, onboarding: { status: 'connected' } };
+const env = { INSTAGRAM_TEMPLATE_AUTOMATIC_RUN: 'false', INSTAGRAM_TEMPLATE_PACK_JSON: JSON.stringify({ slides: [{ title: 'Example' }], caption: 'Reviewed example' }) };
+assert.equal(canPublishAccount(account, env), true);
+assert.equal(canPublishAccount(account, { ...env, INSTAGRAM_TEMPLATE_AUTOMATIC_RUN: 'true' }), false);
+assert.equal(canPublishAccount(account, { ...env, INSTAGRAM_TEMPLATE_AUTOMATIC_RUN: undefined }), false);
+assert.equal(canPublishAccount(account, { ...env, INSTAGRAM_TEMPLATE_PACK_JSON: '' }), false);
+assert.equal(canPublishAccount(account, { ...env, INSTAGRAM_TEMPLATE_PACK_JSON: '{}' }), false);
+assert.equal(canPublishAccount({ ...account, onboarding: { status: 'awaiting_connection' } }, env), false);
+for (const status of ['paused', 'suspended']) assert.equal(canPublishAccount({ ...account, clientProfile: { status } }, env), false);
+assert.equal(canPublishAccount({ ...account, clientProfile: { status: 'onboarding', billing: { status: 'past_due' } } }, env), false);
+assert.equal(canPublishAccount({ clientProfile: { status: 'active' } }, {}), true);
+console.log('PASS: connected manual example allowed; automation, missing packs, disconnected, paused and billing blocks preserved.');
