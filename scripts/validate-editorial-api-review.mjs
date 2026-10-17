@@ -30,6 +30,8 @@ assert.equal(callAllowance(receiptState,new Date('2026-10-17T20:00:00Z')),'2026-
 receiptState.calls.push({...zero,day:'2026-10-17',status:'completed'});assert.throws(()=>callAllowance(receiptState,new Date('2026-10-17T20:00:00Z')),/tokens/);
 const report={account:'account-a',summary:'Diagnóstico desta amostra editorial.',findings:[],nextSteps:[]};
 assert.equal(validateRecommendation('account-a',report),report);assert.throws(()=>validateRecommendation('account-b',report),/outra conta/);
+assert.equal(validateRecommendation('account-a',{...report,findings:[{detail:'Achado consultivo',suggestion:'Conferir a composição'}]}).findings[0].severity,'info');
+assert.throws(()=>validateRecommendation('account-a',{...report,findings:[{severity:'approved',detail:'Achado consultivo',suggestion:'Conferir a composição'}]}));
 let calls=0;
 const response=await sendVision({key:'fixture-key',model:'claude-sonnet-4.6',prompt:'text only',fetchImpl:async(url,options)=>{
  calls++;assert.equal(url,'https://claude-ss.ia.br/v1/messages');assert.equal(options.redirect,'error');
