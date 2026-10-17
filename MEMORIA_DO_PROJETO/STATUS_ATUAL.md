@@ -1,3 +1,10 @@
+## 2026-10-17 10:58 BRT — fontes bíblicas conferidas e pesquisa atualizada
+
+- Pedido: usar fontes bíblicas nas postagens da Sabedoria Kids. Confirmadas as fontes cadastradas em accounts.json: Bíblia para Crianças (pautas infantis) e Bíblia Online NVI (conferência das passagens).
+- Coletor executado com TLS do sistema; retornou 59 temas. Catálogo atualizado em sabedoria-kids-sources.json; publicationEnabled=false e curatedOnly=true preservados.
+- Workflow de pesquisa diário já cadastrado às 05:20 BRT. A coleta oferece sugestões; não transforma automaticamente cada tema em post. Os 36 packs preparados continuam como acervo de publicação.
+- Nenhuma nova publicação nem ativação da rotina nesta etapa. Próximo passo: desenvolver pautas do catálogo com passagem verificada, texto original e revisão infantil.
+
 ## 2026-10-17 10:52 BRT — primeiro exemplo publicado na Sabedoria Kids
 
 - Pedido explícito: pode postar exemplo. Carrossel de cinco slides Deus criou um mundo cheio de vida, Gênesis 1:1–31, revisado visualmente antes do envio; publicação somente no feed.
