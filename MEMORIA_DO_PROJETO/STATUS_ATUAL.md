@@ -1,3 +1,7 @@
+## 2026-10-17 — teste manual Claude recusado (401)
+
+Segredo KIDS_VISION_ANTHROPIC_API_KEY cadastrado pelo usuário no GitHub (valor não lido). Diagnóstico manual kids-claude-test.yml / scripts/test-kids-claude.mjs, commit 24f9792a: GET /v1/models primeiro; uma imagem e até 160 tokens de saída somente após autenticação, sem retries ou publicação. Run 39066056216 / job 117493855321 terminou em 57s com authentication=false, vision=false, invalid_credentials, HTTP401 às 17h18 BRT. Nenhuma chamada Messages enviada. Necessário substituir credencial no GitHub; não presumir chave válida ou integração visual ativa. Testes simulados de segredo ausente,401,hash inválido e chamada única passaram.
+
 ## 2026-10-17 — conferência visual nova pendente de credencial
 
 Usuário informou que ainda não possui chave de API com faturamento. Nenhuma chamada paga ou seleção visual autônoma foi ativada. Painel agora distingue essa pendência da busca e da montagem já existentes; guia conferencia-cenas.html explica cadastro seguro do segredo proposto KIDS_VISION_OPENAI_API_KEY. O segredo sozinho não ativa nada: integração de visão, controle de consumo e teste real ainda necessários. Não reportar a integração como pronta.
