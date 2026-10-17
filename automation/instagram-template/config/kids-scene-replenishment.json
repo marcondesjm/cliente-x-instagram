@@ -3,8 +3,8 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-haiku-4.5",
-  "health": "review_completed",
-  "message": "1 pauta(s) examinada(s); somente seleções aprovadas seguem para montagem.",
+  "health": "blocked",
+  "message": "Falha ou resposta não verificável do provedor. Sem nova tentativa paga automática.",
   "policy": {
     "maxCallsPerDay": 6,
     "maxInputTokensPerCall": 120000,
@@ -70,7 +70,7 @@
   },
   "circuit": "provider_response_unconfirmed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T20:51:33.520Z",
+  "checkedAt": "2026-10-17T20:51:34.860Z",
   "lastRun": "39068393961",
   "billingMode": "fixed_plan_user_confirmed"
 }
