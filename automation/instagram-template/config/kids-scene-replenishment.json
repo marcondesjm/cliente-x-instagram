@@ -1363,11 +1363,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "json",
       "startedAt": "2026-10-17T23:56:55.520Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 7121,
       "imageFingerprint": null,
-      "promptFingerprint": "97813b0e0899e16ea8fc9b1e4a4454dab48deaa0d2d720cdb69486b0339b081d"
+      "promptFingerprint": "97813b0e0899e16ea8fc9b1e4a4454dab48deaa0d2d720cdb69486b0339b081d",
+      "completedAt": "2026-10-17T23:57:26.528Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 1336,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "end_turn"
     }
   ],
   "entries": [
@@ -1470,7 +1476,7 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T23:56:55.520Z",
+  "checkedAt": "2026-10-17T23:57:26.528Z",
   "lastRun": "39080825099",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -1655,12 +1661,111 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-27:fcfaceb1142d58f3",
+    "stage": "select:kids-biblia-27",
     "value": {
-      "visible": true,
-      "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Uma seta vermelha aponta de um ponto marcado na margem norte para o interior de um corpo d'água em forma de lago."
+      "cards": [
+        {
+          "card": 1,
+          "options": [
+            {
+              "scene": 9,
+              "verse": "4:39",
+              "reason": "A capa exige o evento do título 'Jesus e os discípulos na tempestade'. A cena mostra a figura central (Jesus) com braços erguidos em uma embarcação balançada por ondas, representando visualmente o clímax da história onde Ele acalma a tempestade, que é o foco principal do título."
+            },
+            {
+              "scene": 8,
+              "verse": "4:37",
+              "reason": "Retrata pessoas em um barco inclinado em águas agitadas sob céu nublado, ilustrando diretamente a 'tempestade' mencionada no título. É uma representação fiel do contexto de perigo que define a narrativa da capa."
+            }
+          ],
+          "reason": "A capa deve retratar o evento principal do título. As cenas 9 e 8 mostram a tempestade e a ação de Jesus, que são os elementos centrais da identidade visual da história."
+        },
+        {
+          "card": 2,
+          "options": [
+            {
+              "scene": 1,
+              "verse": "4:37",
+              "reason": "O resumo menciona 'Durante uma tempestade'. A cena mostra pessoas em uma embarcação inclinada por ondas agitadas, com água entrando, ilustrando concretamente o momento de crise descrito no corpo do cartão narrativo."
+            },
+            {
+              "scene": 9,
+              "verse": "4:39",
+              "reason": "O resumo diz 'Ele repreendeu o vento e o mar se acalmou'. A cena mostra a figura central com braços erguidos dando ordens ao vento e às ondas, correspondendo exatamente à ação de repreensão descrita."
+            },
+            {
+              "scene": 6,
+              "verse": "4:39-40",
+              "reason": "Ilustra o momento após a calma, onde Jesus toca ou fala com os discípulos. Corresponde à parte do resumo sobre a interação após o milagre, embora a cena 9 seja mais direta para a ação de acalmar."
+            }
+          ],
+          "reason": "O cartão narrativo resume a ação principal. As opções devem mostrar a tempestade ou o ato de acalmá-la, conforme descrito no texto editorial."
+        },
+        {
+          "card": 3,
+          "options": [
+            {
+              "scene": 6,
+              "verse": "4:40",
+              "reason": "A lição trata do 'poder de Jesus e a confiança dos discípulos'. A cena mostra Jesus interagindo calmamente com os discípulos após a tempestade, questionando sua fé ('Why were you so afraid?'), o que ilustra o ensino sobre confiança."
+            },
+            {
+              "scene": 3,
+              "verse": "4:41",
+              "reason": "Os discípulos conversam entre si admirados ('Who is this?'). Isso reflete a lição sobre reconhecer o poder de Jesus, embora seja mais sobre o espanto deles do que a lição direta de confiança."
+            }
+          ],
+          "reason": "A lição foca no poder de Jesus e na confiança. A cena 6 mostra Jesus ensinando sobre a fé após o milagre, sendo a mais adequada para ilustrar o ponto educativo."
+        },
+        {
+          "card": 4,
+          "options": [
+            {
+              "scene": 5,
+              "verse": "4:36-38",
+              "reason": "A atividade pede para 'Desenhe o barco'. A cena mostra um grupo navegando em um barco a vela, oferecendo uma visão clara da embarcação para inspirar o desenho, sem retratar a atividade familiar como fato bíblico."
+            },
+            {
+              "scene": 7,
+              "verse": "4:36",
+              "reason": "Mostra uma embarcação com várias pessoas a bordo, partindo. Fornece uma referência visual simples do barco mencionado na atividade, compatível com a passagem."
+            }
+          ],
+          "reason": "A atividade envolve desenhar o barco. As cenas devem mostrar o barco de forma clara para servir de modelo visual, sem encenar o desenho em si."
+        },
+        {
+          "card": 5,
+          "options": [
+            {
+              "scene": 4,
+              "verse": "4:35",
+              "reason": "A leitura convida a ler Marcos 4:35-41. A cena mostra Jesus falando aos discípulos à beira da água antes de partir ('Let’s go over to the other side'), estabelecendo o início da passagem que será lida."
+            },
+            {
+              "scene": 10,
+              "verse": "4:35",
+              "reason": "Mostra a rota através do lago mencionada no versículo 35. Embora seja um mapa/seta, contextualiza geograficamente a viagem descrita na passagem a ser lida."
+            }
+          ],
+          "reason": "O cartão de leitura refere-se à passagem completa. A cena 4 introduz o comando de Jesus para cruzar, iniciando a narrativa bíblica referenciada."
+        },
+        {
+          "card": 6,
+          "options": [
+            {
+              "scene": 3,
+              "verse": "4:41",
+              "reason": "O Story exige uma cena diferente relacionada à passagem. A cena mostra os discípulos conversando entre si, perguntando 'Quem é este?', que é a conclusão reflexiva da história, distinta das cenas de ação usadas anteriormente."
+            },
+            {
+              "scene": 2,
+              "verse": "4:38",
+              "reason": "Mostra os discípulos acordando Jesus. É uma cena específica da passagem que pode não ter sido usada nas posições anteriores se estas tiverem focado na tempestade e na calma, oferecendo uma perspectiva diferente da narrativa."
+            }
+          ],
+          "reason": "O Story deve ser uma cena pertinente e diferente. A cena 3 foca na reação final dos discípulos, fechando a história com a pergunta sobre a identidade de Jesus, adequada para reflexão final."
+        }
+      ]
     }
   },
   "lastFactualEvaluation": {
