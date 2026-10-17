@@ -1,3 +1,11 @@
+## 2026-10-17 - resultado final: reposição v3 não ativada
+
+Runs posteriores:39076836345 concluiu leituras individuais (sete confirmadas e uma descartada) mas reprovou o mapa;39077206295 reaproveitou leituras vinculadas a hashes e usou Sonnet para seleção textual, sem aprovação;39077433339 acrescentou identificação editorial da fonte, mantendo observação dos pixels e conferência bíblica independentes, e também rejeitou o mapa. Não atribuir a falha atual apenas ao transporte de imagem: o teste completo de correspondência com capa/texto/passagem não foi validado. Não houve nova receita automaticamente aprovada nem publicação.
+
+Código v3 preserva leitura cega individual, descarte de respostas nulas somente nessa leitura, seleção/comparação/factual em modelo textual separado, fonte como contexto de identificação sem substituir pixels ou passagem, cache positivo de24h vinculado a modelo/versão/prompt/SHA original e imagem enviada, e limites que reservam espaço para comparação e controle factual. Leituras do run39076836345 foram recuperadas dos recibos Git, conferindo novamente hash do JPEG enviado, prompt e fonte original. Cache permite evitar repetir chamadas já confirmadas. Nenhuma aprovação foi criada manualmente.
+
+Estado final enabled=false/circuit=vision_validation_failed, zero chamadas reservadas. Limites operacionais26/1,5M/3 restaurados. Guia/PDF v1.5 informa resultado completo, sem confundir Actions verde com cenas aprovadas. Deploy intermediário dpl_FWJQaipwkKQkiBDNx2GmNd8LB3F8 READY, guia/PDF200 e hash conferido. Anexar confirmação do deploy final após este registro. Falta um modelo/configuração de serviço que passe no piloto integral; não transferir a conferência recorrente ao usuário nem prometer continuidade de todos os horários.
+
 ## 2026-10-17 - correção v3 e bloqueio confirmado do serviço de visão
 
 Pedido: automatizar revisão das cenas na nuvem, sem validação recorrente do usuário ou computador ligado. Branch fix/kids-illustrated-stock-slot8, worktree kids-profile-20261017 alinhada com origin/main. Nenhuma chave foi lida ou exibida; apenas o segredo GitHub existente foi usado no destino já autorizado.

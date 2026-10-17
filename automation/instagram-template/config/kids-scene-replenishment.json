@@ -3,13 +3,13 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-haiku-4.5",
-  "health": "review_completed",
-  "message": "1 pauta(s) examinada(s); somente seleções aprovadas seguem para montagem.",
+  "health": "blocked",
+  "message": "Reposição não ativada: o teste completo ainda não confirmou correspondência confiável entre imagens, capa e passagem. Seleções reprovadas não entram na agenda.",
   "policy": {
-    "maxCallsPerDay": 67,
+    "maxCallsPerDay": 26,
     "maxInputTokensPerCall": 120000,
-    "maxInputTokensPerDay": 4500000,
-    "maxPacksPerRun": 1,
+    "maxInputTokensPerDay": 1500000,
+    "maxPacksPerRun": 3,
     "readyStockTarget": 24
   },
   "calls": [
@@ -1107,7 +1107,7 @@
     "passed": true,
     "challengeHash": "f9cf4f9f861e4e0017e4a4bc1cf4f312f73f8f7c0f2d44294c5eddfd0b4e7f84"
   },
-  "circuit": null,
+  "circuit": "vision_validation_failed",
   "publicationTriggered": false,
   "checkedAt": "2026-10-17T23:03:23.611Z",
   "lastRun": "39077433339",
@@ -1426,7 +1426,9 @@
       "sceneId": "98834c32e024c944",
       "reason": "Solicitou anexar imagem embora recebida no bloco de imagem base64.",
       "stage": "pixels:kids-biblia-29:98834c32e024c944"
-    }
+    },
+    "latestSemanticRun": "39077433339",
+    "latestSemanticReason": "Seleção recusada, com proposta de cena de árvore para capa sobre acolhimento em casa; nenhuma receita automática aprovada."
   },
   "repairDiagnostic": {
     "date": "2026-10-17",
@@ -1440,10 +1442,10 @@
       "maxInputTokensPerDay": 1500000,
       "maxPacksPerRun": 3
     },
-    "completedAt": null,
+    "completedAt": "2026-10-17T23:04:08.721Z",
     "holdoutRun": "39076244962",
-    "finalPilot": "39076470290",
-    "outcome": "testing_hybrid_reasoning"
+    "finalPilot": "39077433339",
+    "outcome": "blocked_complete_scene_mapping_not_validated"
   },
   "responseFormat": "json",
   "pixelCache": {
