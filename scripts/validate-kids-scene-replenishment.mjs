@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import sharp from 'sharp';
-import {callAllowance,calibrationImage,visualSignature,similarScenes,contactSheet,sendVision,parseObject,recoverTransientCalls} from '../lib/kids-scene-vision.js';
+import {callAllowance,calibrationImage,visualSignature,similarScenes,contactSheet,sendVision,parseObject,recoverTransientCalls,promptSceneDescription} from '../lib/kids-scene-vision.js';
 import {reviewBinding,assertAutomaticReview,verseIsWithin} from '../lib/kids-scene-review-proof.js';
 import {passageRanges,loadPassage} from '../lib/kids-bible-passage.js';
 import {validateRecipe,hash} from '../lib/kids-scene-assembly.js';
@@ -13,6 +13,8 @@ state.calls=[{day:'2026-10-17',status:'failed'},{day:'2026-10-17',status:'comple
 state.calls=[{day:'2026-10-17',status:'completed'}];assert.throws(()=>callAllowance(state,now,2),/chamadas/);
 state.calls=[];state.circuit='pixel_reading_not_confirmed';assert.throws(()=>callAllowance(state,now),/pausada/);
 assert.throws(()=>parseObject('not json'));assert.throws(()=>parseObject('[]'));assert.deepEqual(parseObject('```json\n{"ok":true}\n```'),{ok:true});
+assert.equal(promptSceneDescription('The father embraced his son. – Slide 16'),'The father embraced his son.');
+assert.equal(promptSceneDescription('Read Luke 15:20.'),'Read Luke 15:20.');
 const recovery={billingMode:'fixed_plan_user_confirmed',calls:[{status:'reserved',startedAt:'2026-10-18T00:00:00Z'}],circuit:null};
 assert.equal(recoverTransientCalls(recovery,new Date('2026-10-18T00:20:00Z')),false);
 assert.equal(recoverTransientCalls(recovery,new Date('2026-10-18T00:35:00Z')),true);assert.equal(recovery.calls[0].status,'interrupted');assert.equal(recovery.circuit,'provider_temporarily_unavailable');
