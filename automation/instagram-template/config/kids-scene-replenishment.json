@@ -3,12 +3,12 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-haiku-4.5",
-  "health": "blocked",
-  "message": "Falha ou resposta não verificável do provedor. Sem nova tentativa paga automática.",
+  "health": "manual_repair_pilot",
+  "message": "Piloto em outras fontes após timeout; falhas anteriores continuam contadas pelo consumo máximo.",
   "policy": {
-    "maxCallsPerDay": 12,
+    "maxCallsPerDay": 26,
     "maxInputTokensPerCall": 120000,
-    "maxInputTokensPerDay": 500000,
+    "maxInputTokensPerDay": 1500000,
     "maxPacksPerRun": 3,
     "readyStockTarget": 24
   },
@@ -148,7 +148,7 @@
     "passed": true,
     "challengeHash": "91b419461861a802c539a47a4dcb8827d615f8e5231ac93d45f38a56ce649475"
   },
-  "circuit": "provider_response_unconfirmed",
+  "circuit": null,
   "publicationTriggered": false,
   "checkedAt": "2026-10-17T21:02:37.352Z",
   "lastRun": "39069009564",
