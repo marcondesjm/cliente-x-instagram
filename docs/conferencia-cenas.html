@@ -10,28 +10,28 @@
 </head>
 <body><main>
   <a href="/">← Voltar ao painel</a>
-  <h1>Conferência automática de cenas novas</h1>
-  <p class="notice"><strong>Pendente de configuração e teste.</strong> Você informou que ainda não possui uma chave de API com faturamento. A avaliação visual de cenas novas não está ativa. Este guia não ativa cobranças.</p>
-  <section>
-    <h2>O que continua funcionando</h2>
-    <p>A busca encontra imagens nos sites permitidos e registra origem e licença. A montagem automática usa as seleções já revisadas. Encontrar uma imagem não aprova seu uso: histórias novas continuam aguardando conferência.</p>
-    <p>As imagens vêm dos sites. A etapa planejada de IA serve para ler e avaliar essas imagens, sem gerar ilustrações.</p>
-  </section>
-  <section>
-    <h2>Como preparar a chave</h2>
-    <ol>
-      <li>Acesse a <a href="https://platform.openai.com/" target="_blank" rel="noopener noreferrer">plataforma da OpenAI</a> com sua conta e crie um projeto para esta automação.</li>
-      <li>Confira o <a href="https://platform.openai.com/settings/organization/billing/overview" target="_blank" rel="noopener noreferrer">faturamento da API</a> e os preços antes de adicionar pagamento. A assinatura do ChatGPT tem cobrança separada da API.</li>
-      <li>Crie uma chave na área de <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">API keys</a>. Não envie a chave pelo chat, briefing ou formulário do painel.</li>
-      <li>No repositório, abra <a href="https://github.com/marcondesjm/cliente-x-instagram/settings/secrets/actions" target="_blank" rel="noopener noreferrer">Settings → Secrets and variables → Actions</a>. Em <strong>New repository secret</strong>, use o nome <code>KIDS_VISION_OPENAI_API_KEY</code> e coloque a chave apenas no campo secreto.</li>
-      <li>Avise que o segredo foi cadastrado, sem revelar seu valor. Antes da ativação, precisamos definir o limite de uso, concluir a integração e testar uma história completa.</li>
-    </ol>
-    <p><strong>Cadastrar o segredo sozinho não ativa a conferência.</strong> Ainda faltam a integração de leitura visual, o controle de consumo e a validação real.</p>
-  </section>
-  <section>
-    <h2>O que deve ser validado antes de ativar</h2>
-    <p>Correspondência com a passagem bíblica e o texto de cada cartão; adequação infantil; cenas diferentes entre os cartões e o Story, inclusive sem repetições espelhadas; licença e arquivos preservados; e prévia final do carrossel e do Story.</p>
-    <p>Uma avaliação incerta deve manter a pauta pendente. A IA pode errar; a primeira execução precisa ser conferida antes de liberar a seleção autônoma para a agenda.</p>
-  </section>
-  <footer>Fontes: <a href="https://help.openai.com/en/articles/9039756-managing-billing-for-chatgpt-and-the-api-platform">faturamento da OpenAI</a> · <a href="https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets">segredos do GitHub Actions</a>. Atualizado em 17/10/2026.</footer>
+  <h1>Reposição automática de cenas</h1>
+  <p class="notice"><strong>O estado atual aparece no painel.</strong> Uma imagem encontrada só fica disponível para a agenda depois da conferência e da montagem com prévia. Este guia descreve o fluxo; não confirma uma publicação.</p>
+  <p><a href="/docs/reports/Sabedoria-Kids-Reposicao-Cenas-v1.pdf" download="Sabedoria-Kids-Reposicao-Cenas-v1.pdf">Baixar guia atualizado em PDF</a></p>
+  <section><h2>Da busca à pauta pronta</h2>
+  <ol>
+    <li>A busca encontra conjuntos em sites permitidos e confirma licença, autoria e possibilidade de adaptação.</li>
+    <li>Um desafio aleatório com cores e código verifica se o servidor realmente lê os pixels.</li>
+    <li>A seleção compara até 12 cenas com a passagem bíblica integral e os textos já preparados. As imagens de análise são reduzidas; os arquivos originais são preservados para publicação.</li>
+    <li>Uma segunda avaliação confere cada cena escolhida e um Story diferente. Dúvida sobre a passagem, adequação infantil ou repetição reprova a seleção.</li>
+    <li>A montagem verifica arquivos, licença e vínculo com o texto, gera o carrossel e o Story e executa o render oficial. Só depois o material entra no acervo disponível.</li>
+  </ol>
+  <p>As imagens vêm dos sites, sem geração por IA. A passagem integral usada na avaliação é da World English Bible, em domínio público. A legenda continua em português e identifica autor, fonte, licença e adaptações.</p></section>
+  <section><h2>Rotina na nuvem</h2>
+  <p>Horários de Brasília, sujeitos à fila do GitHub: busca às <strong>05h35, 11h35, 17h35 e 23h35</strong>; reposição às <strong>05h40, 11h40, 17h40 e 23h40</strong>; montagem às <strong>05h50, 11h50, 17h50 e 23h50</strong>.</p>
+  <p>A ativação exige um piloto com revisão automática e render oficial pronto. Após ativada, a rotina examina até três pautas por execução, com limite de 26 chamadas diárias e estoque-alvo de 24 pautas prontas. A programação de publicação da conta é mantida.</p>
+  <p>O catálogo é finito. Falta de cenas adequadas, rejeições ou indisponibilidade dos serviços podem deixar horários sem conteúdo. A rotina não aprova conteúdo genérico para preencher uma lacuna. A revisão por IA também pode errar.</p></section>
+  <section><h2>Consumo e credencial</h2>
+  <p>O titular autorizou o servidor intermediário <strong>claude-ss.ia.br</strong> e informou plano fixo, sem cobrança extra por uso. Esse servidor recebe as imagens e os textos usados na conferência. Os números de tokens exibidos são os informados por ele.</p>
+  <p>Cada chamada tem reserva persistida antes do envio e recibo após a resposta. Chamada sem recibo, falha no teste de pixels ou consumo acima dos limites bloqueiam novas chamadas para conferência. Não há repetição paga automática após uma falha incerta.</p>
+  <p>A chave fica no segredo <code>KIDS_VISION_ANTHROPIC_API_KEY</code> do GitHub. Para trocá-la, abra <a href="https://github.com/marcondesjm/cliente-x-instagram/settings/secrets/actions">Settings → Secrets and variables → Actions</a> e edite esse segredo. Não envie a chave pelo chat, briefing ou formulário do painel.</p></section>
+  <section><h2>Como acompanhar</h2>
+  <p>No painel da conta Sabedoria Kids, veja <strong>Reposição de cenas novas</strong> e <strong>Montagem automática das cenas revisadas</strong>. Seleção aprovada e montagem pronta são etapas diferentes. Confirmação de postagem exige o registro de publicação e o link do Instagram.</p>
+  <p><a href="https://github.com/marcondesjm/cliente-x-instagram/actions/workflows/kids-scene-replenishment.yml">Ver execuções da reposição</a> · <a href="https://github.com/marcondesjm/cliente-x-instagram/actions/workflows/kids-scene-assembly.yml">Ver montagens</a></p></section>
+  <footer>Versão 1.0, 17/10/2026. Referências: <a href="https://bible-api.com/">Bible API</a> · <a href="https://platform.claude.com/docs/en/build-with-claude/vision">análise de imagens</a> · <a href="https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets">segredos do GitHub</a>.</footer>
 </main></body></html>
