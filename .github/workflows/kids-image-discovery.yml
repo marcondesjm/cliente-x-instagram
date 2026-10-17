@@ -1,0 +1,32 @@
+name: Sabedoria Kids - buscar imagens em sites
+on:
+  workflow_dispatch:
+  schedule:
+    # 05h35, 11h35, 17h35 e 23h35 de Brasilia. Sem geracao de IA.
+    - cron: '35 2,8,14,20 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: sabedoria-kids-image-research
+  cancel-in-progress: false
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Refresh latest state
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git pull --rebase origin main
+      - run: npm ci --ignore-scripts
+      - name: Find licensed scenes for pending Bible lessons
+        run: node scripts/discover-kids-images.mjs
+      - name: Save findings without publishing
+        if: always()
+        run: node scripts/persist-instagram-state.mjs automation/instagram-template/config/kids-image-discovery.json

@@ -3151,6 +3151,7 @@
         appState.scheduleBrt = state.scheduleBrt || [];
         appState.calendarPublications = state.calendarPublications || [];
         appState.biblicalResearch = state.biblicalResearch || null;
+        appState.biblicalImageDiscovery = state.biblicalImageDiscovery || null;
         appState.visualReadiness = state.visualReadiness || null;
         appState.dailyPlan = state.dailyPlan || [];
         appState.tomorrowPreview = state.tomorrowPreview || { date: '', items: [] };
@@ -5716,6 +5717,7 @@
         appState.scheduleBrt = state.scheduleBrt || [];
         appState.calendarPublications = state.calendarPublications || [];
         appState.biblicalResearch = state.biblicalResearch || null;
+        appState.biblicalImageDiscovery = state.biblicalImageDiscovery || null;
         appState.visualReadiness = state.visualReadiness || null;
         appState.dailyPlan = state.dailyPlan || appState.dailyPlan;
         DATA.schedulesUtc = state.account?.scheduleUtc || DATA.schedulesUtc;
@@ -6608,6 +6610,16 @@
       }).join('');
     }
 
+    function renderBiblicalImageDiscovery() {
+      if(appState.selectedAccount !== 'sabedoria-kids')return '';
+      const data=appState.biblicalImageDiscovery;
+      const entries=data?.entries || [];
+      const sets=entries.reduce((sum,entry)=>sum+(entry.candidates?.length || 0),0);
+      const scenes=entries.reduce((sum,entry)=>sum+(entry.candidates || []).reduce((count,set)=>count+(set.scenes?.length || 0),0),0);
+      const health=data?.health==='ok'?'Última busca concluída':data?.health==='partial'?'Busca parcialmente concluída':data?.health==='error'?'A última busca teve falha; confira os detalhes':'Aguardando primeira busca';
+      const details=entries.map(entry=>`<details style="margin-top:14px"><summary>${escapeHtml(entry.title)} · ${(entry.candidates || []).length} conjuntos encontrados</summary><p>${escapeHtml(entry.reference)} · ${entry.checkedAt?escapeHtml(formatDateTime(entry.checkedAt)):'ainda não consultado'}</p>${entry.error?`<p>Não foi possível atualizar: ${escapeHtml(entry.error)}. Resultados anteriores podem estar desatualizados.</p>`:''}${(entry.candidates || []).map(set=>`<section><p><a href="${escapeHtml(set.sourceUrl)}" target="_blank" rel="noopener noreferrer"><strong>${escapeHtml(set.title)} ↗</strong></a><br>${escapeHtml(set.reference)} · ${escapeHtml(set.license)} · ${escapeHtml(set.creator)}</p><p>Licença identificada. Confira a cena e a passagem antes de usar; encontrar uma imagem não aprova uma postagem.</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px">${(set.scenes || []).slice(0,6).map(scene=>`<a href="${escapeHtml(scene.imageUrl)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(scene.description)}"><img src="${escapeHtml(scene.thumbnailUrl)}" alt="${escapeHtml(scene.description)}" loading="lazy" referrerpolicy="no-referrer" style="width:100%;height:130px;object-fit:contain;background:#fff;border-radius:8px"></a>`).join('')}</div><p>${set.scenes?.length || 0} cenas disponíveis. <a href="${escapeHtml(set.sourceUrl)}" target="_blank" rel="noopener noreferrer">Ver todas na fonte</a> · <a href="${escapeHtml(set.licenseUrl)}" target="_blank" rel="noopener noreferrer">Condições da licença</a></p></section>`).join('')}${entry.status==='no_eligible_source'?'<p>Nenhum conjunto com licença compatível foi confirmado nesta consulta.</p>':''}</details>`).join('');
+      return `<section style="margin:18px 0;padding:16px;border:1px solid #d6e2da;border-radius:14px"><strong>Busca automática de ilustrações em sites</strong><p>${health}${data?.lastAttemptAt?' · '+escapeHtml(formatDateTime(data.lastAttemptAt)):''}. ${sets} conjuntos e ${scenes} cenas localizados para ${entries.filter(e=>e.candidates?.length).length} pautas.</p><p>A busca roda na nuvem às 05h35, 11h35, 17h35 e 23h35 de Brasília, sujeita à fila do GitHub. Pesquisa as pautas inéditas sem imagens, começando pelas menos consultadas. Não usa geração por IA e não publica os resultados automaticamente.</p><p><a href="https://github.com/marcondesjm/cliente-x-instagram/actions/workflows/kids-image-discovery.yml" target="_blank" rel="noopener noreferrer">Ver execuções ou buscar agora ↗</a></p><details><summary>Ver imagens encontradas para as pautas</summary>${details || '<p>Nenhuma pesquisa de imagens registrada ainda.</p>'}</details></section>`;
+    }
     function renderNewsRadar() {
       const container = document.getElementById('newsRadar');
       const label = document.getElementById('newsRadarButtonLabel');
@@ -6625,6 +6637,7 @@
           <strong>${biblical ? 'Esta conta usa conteúdo bíblico infantil, sem radar de notícias.' : 'Esta conta usa o acervo editorial preparado, sem radar de notícias.'}</strong>
           <p>${packs} conteúdos no acervo. A seleção automática verifica repetição no momento de publicar. Esta informação não confirma publicações futuras.</p>
           ${visual?.required ? `<p><strong>Padrão ilustrado obrigatório:</strong> ${visual.ready} pautas com ilustrações revisadas e ${visual.pending} aguardando imagens. Pautas sem ilustração ficam fora da seleção; se as ilustradas já foram publicadas, o horário aguarda conteúdo novo.</p>` : ''}
+          ${renderBiblicalImageDiscovery()}
           ${biblical ? `<p>Pesquisa bíblica: ${topics.length} temas encontrados${research?.checkedAt ? ` · última consulta: ${escapeHtml(formatDateTime(research.checkedAt))}` : ''}. São sugestões para desenvolver e revisar antes de incluir no acervo.</p>
           <strong>Fontes de referência cadastradas</strong>
           <div class="radar-sources">${references.map(source => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.name)} ↗</a>`).join('')}</div>

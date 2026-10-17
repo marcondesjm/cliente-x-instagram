@@ -1,4 +1,15 @@
 
+## 2026-10-17 — busca automática de imagens em sites para Sabedoria Kids
+
+- Pedido explícito: automatizar achar ilustrações em sites. Implementada descoberta de cenas licenciadas no FreeBibleimages, sem IA, chave de API ou disparos Meta.
+- Rotina kids-image-discovery.yml: 05h35, 11h35, 17h35 e 23h35 BRT, oito pautas por execução, priorizando as menos consultadas, somente inéditas ainda sem padrão ilustrado completo. Usa a busca pública por referência bíblica traduzida e confere páginas de conjuntos.
+- Fontes limitadas a originais Sweet Publishing com CC BY-SA 3.0/4.0, permissão comercial e adaptações verificadas e crédito social explícito. Rejeita licença incompatível, criador não autorizado, redirecionamento, host/caminho externo, página inválida e cartões finais de crédito; remove URLs duplicadas.
+- Resultados em config/kids-image-discovery.json: cenas, miniaturas, referência, origem, licença, hash dos termos e data da consulta. Cada resultado permanece pending de revisão e publicationEnabled=false; não adiciona imagens automaticamente às pautas nem altera histórico/horários.
+- Painel Agenda/acervo exibe contagens, execução, cenas sugeridas e links à fonte/licença. Falhas preservam pesquisa anterior com aviso; mudança de texto/referência invalida candidatos antigos.
+- Primeiro teste de rede: quatro pautas, quatro conjuntos, 89 cenas; Moisés sarça, mar Vermelho, José reencontro e descanso/criação. Total pendente pesquisável 26; não confundir cenas localizadas com pautas ilustradas aptas (estas continuam nove).
+- Testes de parser, licenças, URL/SSRF, repetição/créditos, limites de leitura e falhas passaram, junto com padrão bíblico, state merge e scheduled guard. Persistência usa helper concorrente existente. Falta neste checkpoint inicial verificar primeira execução na nuvem e deploy do painel.
+
+
 ## 2026-10-17 — decisão: usar sites licenciados, sem geração por IA
 
 - Usuário interrompeu a implementação de geração de imagens: “DEIXA ENTAO ESSA PARTE VAMOS PROCURARR EM SITES”. Commit 2068dd01 integralmente revertido em 053566cc: workflow de IA, catálogo, API/controles e guia removidos. Nenhuma chamada paga realizada e nenhuma chave cadastrada. Não retomar IA sem novo pedido.
