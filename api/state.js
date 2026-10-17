@@ -25,7 +25,7 @@ import Stripe from 'stripe';
 import { loadRadarCollectionHealth } from '../lib/radar-health.js';
 import { GROWTH_FILE, updateGrowthRecord, normalizeGrowthPlan } from '../lib/growth-plan.js';
 import { educationEnabled, educationPreview } from '../lib/education-strategy.js';
-import { educationEvidence } from '../lib/education-evidence.js';
+import { educationEvidence, recentComparisonStartDate } from '../lib/education-evidence.js';
 import { loadPerformanceInsights } from './private-metrics.js';
 import { educationLearningModel } from '../lib/education-learning.js';
 import { saveInstagramGithubSecrets } from '../lib/github-secrets.js';
@@ -2480,7 +2480,7 @@ export default async function handler(req, res) {
         if (body.action === 'load-growth-plan' && educationEnabled(account)) {
           try {
             const insights = await loadPerformanceInsights();
-            const comparisonStart = normalizeGrowthPlan({startDate:body.comparisonStartDate || record?.plan?.startDate || account.educationStrategy.startDate}).startDate;
+            const comparisonStart = normalizeGrowthPlan({startDate:body.comparisonStartDate || recentComparisonStartDate()}).startDate;
             const samples = insights.stored.accounts?.[account.account]?.samples || [];
             const summary = educationEvidence(samples, comparisonStart, insights.stored.updatedAt);
             let history = [];

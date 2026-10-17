@@ -1,3 +1,11 @@
+## 2026-10-17 — resultados de crescimento somente automáticos
+
+- Pedido explícito: retirar o manual e deixar só automático. Removidos tabela editável de resultados, data do experimento e botão de escolha do período da interface. Seção 4 Resultados automáticos exibe somente coletas, progresso, datas correntes e tabelas por formato/janela, com Atualizar resultados.
+- Período padrão da API agora usa os últimos 14 dias completos em BRT, comparados aos 14 anteriores, independentemente da antiga data salva em setembro. Avança a cada dia. Não inventa visitas, conversas ou vendas quando não coletadas.
+- Plano de preparação do perfil/bio preservado; botão renomeado Salvar plano. Valores manuais antigos permanecem armazenados e são preservados ao salvar o plano, sem campos editáveis ou apresentação como métricas automáticas. Isolamento de contas e proteção contra respostas atrasadas mantidos.
+- QA local via CUA: zero campos manuais/data, quatro tabelas automáticas, atualizar resultados funciona. Salvar plano em fixture manteve reach=123 de registro antigo; não ocorreu gravação no plano real. Testes de período completo/meia-noite BRT e validate-growth-plan aprovados; validate-education-learning também aprovado.
+- Nenhum disparo ou mudança na agenda, publicações ou critérios de aprendizado.
+
 ## 2026-10-17 — melhoria do acompanhamento e comparação de crescimento
 
 - Entrega: código 206d94d2 em origin/main. Run cloud 39058775476 completed/success com novas validações. Deploy READY dpl_2feCQQf7PnDNM3MjSXHKVPaAzqRv, alias cliente-x-instagram.vercel.app. Asset de produção /docs/growth-panel.js retornou HTTP 200 e contém a nova área e seletor de período. Login do painel não foi refeito; QA visual ocorreu na prévia local com snapshot identificado. Sem alteração da agenda, plano salvo, critérios de aprendizado ou novas publicações.
