@@ -3620,7 +3620,7 @@
 
     async function switchAccount(event) {
       appState.selectedAccount = event.target.value || '';
-      appState.editorialApiReview = null;
+      appState.editorialApiReview = { account: appState.selectedAccount, loading: true };
       renderEditorialApiReview();
       accountViewVersion++;
       privateMetricsRequest = null;
