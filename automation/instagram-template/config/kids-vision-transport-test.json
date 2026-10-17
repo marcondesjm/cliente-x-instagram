@@ -56,11 +56,17 @@
     {
       "id": "d6e7ad72-5d52-4f22-94b2-5ab929073d2b",
       "day": "2026-10-17",
-      "status": "reserved",
+      "status": "completed",
       "stage": "url-json:scene-b",
       "startedAt": "2026-10-17T22:33:34.196Z",
       "imageHash": "f737b6d98af0266e3bf8afaa4328833fd140944824df0a780dbb1a0e9cc29ae2",
-      "imageBytes": 85354
+      "imageBytes": 85354,
+      "completedAt": "2026-10-17T22:33:41.786Z",
+      "reportedInputTokens": 1807,
+      "inputTokens": 1807,
+      "outputTokens": 96,
+      "usageStatus": "provider_reported",
+      "stopReason": "end_turn"
     }
   ],
   "entries": [
@@ -121,11 +127,32 @@
       "checkedAt": "2026-10-17T22:33:31.315Z",
       "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/01_FB_Zacchaeus_1024.jpg?1724237549",
       "imageHash": "1f303ac73e6d06422d9012dcff3c20b0198240b3df9f4240aa61ca26a58e637b"
+    },
+    {
+      "id": "url-json:scene-b",
+      "mode": "url-json",
+      "fixture": "scene-b",
+      "model": "claude-sonnet-4.6",
+      "passed": true,
+      "value": {
+        "personInTree": true,
+        "openBooks": false,
+        "style": "illustration",
+        "description": "Ilustração mostrando uma pessoa de cabelos castanhos e barba, vestindo túnica marrom, agarrada ao tronco de uma árvore robusta com galhos. A pessoa está posicionada no tronco, olhando para a direita. Ao fundo, há outras árvores menores e um céu azul claro com nuvens brancas."
+      },
+      "expected": {
+        "personInTree": true,
+        "openBooks": false,
+        "style": "illustration"
+      },
+      "checkedAt": "2026-10-17T22:33:41.786Z",
+      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/04_FB_Zacchaeus_1024.jpg?1724237549",
+      "imageHash": "f737b6d98af0266e3bf8afaa4328833fd140944824df0a780dbb1a0e9cc29ae2"
     }
   ],
   "circuit": null,
   "health": "awaiting_test",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T22:33:34.196Z",
+  "checkedAt": "2026-10-17T22:33:41.786Z",
   "workflowRun": "39075446351"
 }
