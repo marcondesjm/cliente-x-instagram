@@ -933,11 +933,17 @@
       "day": "2026-10-17",
       "stage": "select:kids-biblia-29",
       "startedAt": "2026-10-17T22:55:35.405Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 5184,
       "imageFingerprint": null,
-      "promptFingerprint": "a196d11bc1a6018f631172a2e4fd31d993733d0446dc5c3ad986b7ce234500e8"
+      "promptFingerprint": "a196d11bc1a6018f631172a2e4fd31d993733d0446dc5c3ad986b7ce234500e8",
+      "completedAt": "2026-10-17T22:55:48.948Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 451,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "end_turn"
     }
   ],
   "entries": [
@@ -1032,7 +1038,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T22:55:35.406Z",
+  "checkedAt": "2026-10-17T22:55:48.948Z",
   "lastRun": "39076836345",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -1183,12 +1189,58 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-29:7fe1505874703f57",
+    "stage": "select:kids-biblia-29",
     "value": {
-      "visible": true,
-      "style": "illustration",
+      "decision": "approve",
+      "feed": [
+        2,
+        5,
+        4,
+        7,
+        3
+      ],
+      "story": 6,
       "childSuitable": true,
-      "observedEvent": "Um homem de túnica azul e manto amarelo estende a mão e toca o ombro de outro homem vestido de amarelo, enquanto ambos estão cercados por um grupo de pessoas em um ambiente ao ar livre."
+      "distinct": true,
+      "referenceAccurate": true,
+      "evidence": [
+        {
+          "card": 1,
+          "scene": 2,
+          "verse": "19:4",
+          "reason": "Um homem sentado nos galhos de uma árvore olha para baixo enquanto um grupo de pessoas reunidas ao redor da árvore olha para cima na direção dele."
+        },
+        {
+          "card": 2,
+          "scene": 5,
+          "verse": "19:4",
+          "reason": "Uma pessoa sobe em uma árvore frondosa enquanto um grupo de pessoas observa do chão ao redor da base da árvore, ilustrando o esforço de Zaqueu para ver Jesus."
+        },
+        {
+          "card": 3,
+          "scene": 4,
+          "verse": "19:7",
+          "reason": "Um grupo de homens com barbas observa outro homem conversando com uma terceira pessoa na entrada de um edifício de pedra, representando a murmuração ao ver Jesus entrar na casa de Zaqueu."
+        },
+        {
+          "card": 4,
+          "scene": 7,
+          "verse": "19:5-6",
+          "reason": "Um homem de túnica azul e manto amarelo estende a mão e toca o ombro de outro homem vestido de amarelo, enquanto ambos estão cercados por um grupo de pessoas, mostrando o encontro pessoal entre Jesus e Zaqueu."
+        },
+        {
+          "card": 5,
+          "scene": 3,
+          "verse": "19:8",
+          "reason": "Um homem de túnica clara conversa com um grupo de homens que o cercam em ambiente ao ar livre, representando Zaqueu declarando sua mudança de atitude e reparação diante do Senhor e das testemunhas."
+        },
+        {
+          "card": 6,
+          "scene": 6,
+          "verse": "19:1",
+          "reason": "Um homem caminha à frente de um grupo de três homens em uma paisagem rural ao ar livre, representando Jesus entrando e passando por Jerico, contexto geral da passagem para leitura familiar."
+        }
+      ]
     }
   },
   "lastFactualEvaluation": {
