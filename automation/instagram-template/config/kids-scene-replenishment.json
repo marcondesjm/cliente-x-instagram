@@ -3,8 +3,8 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "awaiting_grounded_pilot",
-  "message": "Controle factual passou4 casos reais; piloto v2 de uma pauta ainda obrigatório. Aprovação recorrente desativada.",
+  "health": "calibrated",
+  "message": "Leitura real dos pixels confirmada com desafio aleatório; aguarda piloto bíblico.",
   "policy": {
     "maxCallsPerDay": 40,
     "maxInputTokensPerCall": 120000,
@@ -550,16 +550,16 @@
     }
   ],
   "calibration": {
-    "version": "kids-scene-review-v1",
+    "version": "kids-scene-review-v2-grounded",
     "model": "claude-sonnet-4.6",
     "provider": "claude-ss",
-    "checkedAt": "2026-10-17T21:07:22.439Z",
+    "checkedAt": "2026-10-17T22:08:46.198Z",
     "passed": true,
-    "challengeHash": "ad02f2bd52f0f48705bf10ca8a9338df51d52140a9c50a7c264a0b827dd36d47"
+    "challengeHash": "0b7ec60b9a4308dcd844c422ee2ef46cc86991769d376775e51eba73385eb04f"
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T22:08:44.491Z",
+  "checkedAt": "2026-10-17T22:08:46.198Z",
   "lastRun": "39073772550",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
