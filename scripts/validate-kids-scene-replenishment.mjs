@@ -5,7 +5,7 @@ import {callAllowance,calibrationImage,visualSignature,similarScenes,contactShee
 import {reviewBinding,assertAutomaticReview} from '../lib/kids-scene-review-proof.js';
 import {passageRanges,loadPassage} from '../lib/kids-bible-passage.js';
 import {validateRecipe,hash} from '../lib/kids-scene-assembly.js';
-const state={calls:[],circuit:null,policy:{maxCallsPerDay:2,maxInputTokensPerDay:100}};
+const state={calls:[],circuit:null,policy:{maxCallsPerDay:2,maxInputTokensPerDay:100,maxInputTokensPerCall:100}};
 const now=new Date('2026-10-18T01:00:00Z');assert.equal(callAllowance(state,now),'2026-10-17');
 state.calls=[{day:'2026-10-17',status:'reserved'}];assert.throws(()=>callAllowance(state,now),/sem recibo/);
 state.calls=[{day:'2026-10-17',status:'completed',inputTokens:100}];assert.throws(()=>callAllowance(state,now),/tokens/);

@@ -149,7 +149,11 @@ async function replenish() {
     const choice=entry.candidates.filter(c=>c.scenes.length>=pack.slides.length+1).map(candidate=>({candidate,fingerprint:hash({copy:copyFingerprint(pack),terms:candidate.termsHash,scenes:candidate.scenes.map(s=>s.id),version:VISION_VERSION,parameters:'pool12-jpeg-adaptive-json-receipt-v2'})})).find(c=>!state.rejections[c.fingerprint]);
     if(!choice)continue;
     const {candidate,fingerprint}=choice;
-    callAllowance(state,new Date(),2);processed++;
+    try {callAllowance(state,new Date(),2);}catch(error){
+      if(error.code!=='DAILY_LIMIT')throw error;
+      state.health='daily_limit';state.message='Limite diário atingido; montagens já aprovadas continuam e novas avaliações aguardam o próximo dia.';save();return;
+    }
+    processed++;
     let result={id:pack.id,title:pack.slides[0].title,fingerprint,checkedAt:now()};
     try {
       const {assets,recipe}=await reviewPack(pack,candidate,known);
