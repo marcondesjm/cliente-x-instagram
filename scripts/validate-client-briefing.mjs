@@ -17,6 +17,15 @@ assert.deepEqual(normalizeBriefing(JSON.parse(JSON.stringify(selected))),selecte
 assert.match(briefingNotes(selected),/Feed \(imagem ou carrossel\), Reels \(vídeo curto\), Stories/);
 assert.match(briefingNotes(data),/Onde publicar.*A combinar/);
 for (const formats of [[], 'feed', ['invalid']]) assert.throws(()=>normalizeBriefing({...sample,formats}));
+const logoAttachment = {name:'logo.png',dataUrl:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aD1sAAAAASUVORK5CYII='};
+const withLogo = normalizeBriefing({...sample,logoAttachment});
+assert.equal(withLogo.logoAttachment.type,'image/png');
+assert.deepEqual(normalizeBriefing(JSON.parse(JSON.stringify(withLogo))),withLogo);
+assert.match(briefingNotes(withLogo),/Anexo: logo.png/);
+assert.equal(normalizeBriefing(sample).logoAttachment,undefined);
+for (const dataUrl of ['data:image/svg+xml;base64,PHN2Zz48L3N2Zz4=', 'data:image/png;base64,SGVsbG8=', 'data:image/png;base64,' + 'A'.repeat(1400000)]) assert.throws(()=>normalizeBriefing({...sample,logoAttachment:{name:'bad',dataUrl}}));
+const webp = Buffer.concat([Buffer.from('RIFF'),Buffer.alloc(4),Buffer.from('WEBPVP8 ')]).toString('base64');
+assert.equal(normalizeBriefing({...sample,logoAttachment:{name:'logo.webp',dataUrl:'data:image/webp;base64,'+webp}}).logoAttachment.type,'image/webp');
 const page=readFileSync('docs/briefing.html','utf8');
 for (const key of ['username','brand','niche','audience','offer','postsPerDay','times','preferences','sources','logo']) assert.ok(page.includes(`name="${key}"`));
 const dashboard=readFileSync('docs/dashboard.html','utf8');

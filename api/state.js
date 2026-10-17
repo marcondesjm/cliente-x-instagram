@@ -15,6 +15,7 @@ import {
 } from '../lib/auth.js';
 import { accountFromQuery, normalizeAccountKey, requireConfiguredAccount } from '../lib/accounts.js';
 import { onboardingIdentity, starterPacks } from '../lib/account-onboarding.js';
+import { normalizeBriefingLogo } from '../docs/briefing-logo.js';
 import { commitConfigBatch } from '../lib/github-config-batch.js';
 import { analyzeBrandDocument } from '../lib/brand-analysis.js';
 import { EDITORIAL_SOURCES, normalizeEditorialSources, researchFreshEditorialPacks } from '../lib/editorial-research.js';
@@ -1494,8 +1495,12 @@ async function testInstagramAccountConnection(account = {}) {
 }
 
 async function createAccountConfig(body = {}, session = null, req = null) {
+  let logoAttachment;
+  try { logoAttachment = normalizeBriefingLogo(body.logoAttachment); }
+  catch (error) { throw userError(error.message); }
   if (String(body.editorialBriefing || '').length > 30000) throw userError('O briefing deve ter no máximo 30.000 caracteres.');
   const contentProfile = {
+    ...(logoAttachment ? { logoAttachment } : {}),
     editorialBriefing: String(body.editorialBriefing || '').trim(),
     niche: String(body.niche || '').trim(),
     audience: String(body.audience || '').trim(),

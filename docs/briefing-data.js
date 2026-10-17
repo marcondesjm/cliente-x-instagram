@@ -1,6 +1,9 @@
+import { normalizeBriefingLogo } from './briefing-logo.js';
+
 export function normalizeBriefing(input) {
   if (input?.schema !== 'instagram-client-briefing' || input.version !== 1) throw new Error('Arquivo de briefing inválido ou versão incompatível.');
   const data = { schema: input.schema, version: 1 };
+  if (input.logoAttachment != null) data.logoAttachment = normalizeBriefingLogo(input.logoAttachment);
   for (const key of ['username','brand','contact','email','whatsapp','niche','audience','offer','preferences','sources','logo','colors']) {
     data[key] = String(input[key] || '').trim();
     if (data[key].length > 5000) throw new Error('Um dos campos ultrapassa o limite de 5.000 caracteres.');
@@ -34,5 +37,6 @@ export function normalizeBriefing(input) {
 
 export function briefingNotes(data) {
   const names = { feed: 'Feed (imagem ou carrossel)', reels: 'Reels (vídeo curto)', stories: 'Stories' };
-  return [`BRIEFING — ${data.brand}`, `Instagram: @${data.username}`, `Onde publicar (preferência a revisar): ${(data.formats || []).map(value => names[value]).join(', ') || 'A combinar'}`, `Publicações desejadas por dia (total entre os formatos): ${data.postsPerDay}`, `Horários (Brasília): ${data.times.join(', ') || 'A combinar'}`, `Distribuição por formato e horário: a definir na revisão da programação.`, `Logotipo: ${data.logo || 'Não informado'}`, `Cores: ${data.colors || 'A combinar'}`, `Fontes indicadas pelo cliente (revisar licença e adequação):\n${data.sources || 'Não informadas'}`, `Preferências e assuntos a evitar:\n${data.preferences || 'Não informados'}`].join('\n\n');
+  const logo = data.logoAttachment ? `Anexo: ${data.logoAttachment.name}${data.logo ? `; link: ${data.logo}` : ''}` : data.logo || 'Não informado';
+  return [`BRIEFING — ${data.brand}`, `Instagram: @${data.username}`, `Onde publicar (preferência a revisar): ${(data.formats || []).map(value => names[value]).join(', ') || 'A combinar'}`, `Publicações desejadas por dia (total entre os formatos): ${data.postsPerDay}`, `Horários (Brasília): ${data.times.join(', ') || 'A combinar'}`, `Distribuição por formato e horário: a definir na revisão da programação.`, `Logotipo: ${logo}`, `Cores: ${data.colors || 'A combinar'}`, `Fontes indicadas pelo cliente (revisar licença e adequação):\n${data.sources || 'Não informadas'}`, `Preferências e assuntos a evitar:\n${data.preferences || 'Não informados'}`].join('\n\n');
 }

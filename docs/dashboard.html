@@ -2666,6 +2666,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
             </div>
             <label>Importar briefing preenchido (.json)<input type="file" id="importClientBriefing" accept=".json,application/json"></label>
             <p id="clientBriefingStatus" role="status" aria-live="polite"></p>
+            <div id="clientLogoAttachmentBox" hidden><p id="clientLogoAttachmentName"></p><img id="clientLogoAttachmentPreview" alt="Logotipo importado do briefing" style="max-width:220px;max-height:160px;object-fit:contain"><button type="button" id="removeClientLogoAttachment">Remover logotipo anexado</button></div>
           </div>
           <div class="access-manager">
             <div class="form-section-title"><span>1</span>Responsável e identificação</div>
@@ -4007,12 +4008,22 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       }
     }
 
+    let importedClientLogo = null;
+    function setClientBriefingLogo(logo) {
+      importedClientLogo = logo || null;
+      document.getElementById('clientLogoAttachmentBox').hidden = !logo;
+      document.getElementById('clientLogoAttachmentName').textContent = logo ? 'Logotipo anexado: ' + logo.name : '';
+      const image = document.getElementById('clientLogoAttachmentPreview');
+      if (logo) image.src = logo.dataUrl;
+      else image.removeAttribute('src');
+    }
+
     async function importClientBriefing(event) {
       const status = document.getElementById('clientBriefingStatus');
       const file = event.target.files[0];
       if (!file) return;
       try {
-        if (file.size > 100000) throw new Error('O arquivo deve ter no máximo 100 KB.');
+        if (file.size > 1600000) throw new Error('O briefing com logotipo deve ter no máximo 1,6 MB.');
         const { normalizeBriefing, briefingNotes } = await import('/docs/briefing-data.js');
         const data = normalizeBriefing(JSON.parse(await file.text()));
         const fields = {newAccountUsername:data.username,newAccountBrand:data.brand,newAccountFooter:data.brand,newClientContact:data.contact,newClientEmail:data.email,newClientWhatsapp:data.whatsapp,newAccountNiche:data.niche,newAccountAudience:data.audience,newAccountOffer:data.offer,newAccountTone:data.tone,newAccountGoal:data.goal,newAccountTimes:data.times.join(', '),newAccountBriefingTemplate:briefingNotes(data)};
@@ -4023,6 +4034,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         document.getElementById('newBrandBackground').value = '#f4f7f5';
         document.getElementById('newClientPlan').value = 'starter';
         document.getElementById('newClientApprovalMode').value = 'approval';
+        setClientBriefingLogo(data.logoAttachment);
         status.textContent = 'Briefing importado. Revise o cadastro, as referências e os horários antes de criar a empresa. ' + (data.times.length ? '' : 'Os horários ainda precisam ser definidos para a programação.');
       } catch (error) { status.textContent = 'Não foi possível importar: ' + error.message; }
       finally { event.target.value = ''; }
@@ -4069,6 +4081,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
           method: 'POST',
           body: JSON.stringify({
             action: 'create-account',
+            logoAttachment: importedClientLogo,
             editorialBriefing: document.getElementById('newAccountBriefingTemplate').value.trim(),
             account,
             expectedUsername,
@@ -4116,6 +4129,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
         document.getElementById('newBrandSecondary').value = '#0e7c5a';
         document.getElementById('newBrandBackground').value = '#f4f7f5';
         document.getElementById('newAccountBriefingTemplate').value = '';
+        setClientBriefingLogo(null);
         result.textContent = payload.message || 'Conta criada.';
         document.getElementById('onboardingInviteUrl').value = payload.inviteUrl || '';
         document.getElementById('onboardingInviteResult').textContent = payload.inviteUrl
@@ -7659,6 +7673,7 @@ O primeiro ganho costuma estar na rotina repetitiva que ninguém aguenta mais co
       document.getElementById('downloadBrandBriefing').addEventListener('click', downloadBrandBriefingTemplate);
       document.getElementById('clientBriefingUrl').value = location.origin + '/briefing';
       document.getElementById('importClientBriefing').addEventListener('change', importClientBriefing);
+      document.getElementById('removeClientLogoAttachment').addEventListener('click', () => setClientBriefingLogo(null));
       document.getElementById('copyClientBriefingLink').addEventListener('click', async () => {
         const status = document.getElementById('clientBriefingStatus');
         try { await navigator.clipboard.writeText(location.origin + '/briefing'); status.textContent = 'Link copiado. Envie ao futuro cliente.'; }
