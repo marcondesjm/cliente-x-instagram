@@ -1,5 +1,7 @@
 ## 2026-10-17 — melhoria do acompanhamento e comparação de crescimento
 
+- Entrega: código 206d94d2 em origin/main. Run cloud 39058775476 completed/success com novas validações. Deploy READY dpl_2feCQQf7PnDNM3MjSXHKVPaAzqRv, alias cliente-x-instagram.vercel.app. Asset de produção /docs/growth-panel.js retornou HTTP 200 e contém a nova área e seletor de período. Login do painel não foi refeito; QA visual ocorreu na prévia local com snapshot identificado. Sem alteração da agenda, plano salvo, critérios de aprendizado ou novas publicações.
+
 - Pedido: aprimorar seção Melhorar Instagram, coletas automáticas e períodos de 14 dias de cliente-x.
 - Diagnóstico em origin/main fb91c207: 120 amostras mantidas, zero tutoriais na amostra e nove publicações educativas/tutoriais no histórico. Coorte inicial 13–26/09 já encerrada. Limite fixo de 120 podia remover tanto aulas quanto amostras necessárias para duas janelas de 14 dias.
 - Branch feat/growth-evidence-clarity. Novo lib/education-collection.js preserva últimas 120 amostras como piso, todas as disponíveis dos últimos 28 dias e educativas dos últimos 42 dias; mantém exclusões e datas reais. Seleção de coleta inclui aulas recentes, mantendo limite de idade de requisição já existente no coletor. Não recupera métricas antigas nem fabrica observações de 24h.
