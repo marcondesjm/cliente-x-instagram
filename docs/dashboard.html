@@ -3255,7 +3255,8 @@
       const deliveries = Array.isArray(appState.directAutomation?.deliveries) ? appState.directAutomation.deliveries.length : 0;
       const bioLinks = Array.isArray(appState.bioPage?.links) ? appState.bioPage.links.filter((link) => link?.title && link?.url).length : 0;
       const accounts = appState.accounts || [];
-      const connectedAccounts = accounts.filter((account) => account.onboarding?.status === 'connected' || account.account === 'cliente-x').length;
+      const connectedAccounts = accounts.filter((account) => account.onboarding?.status === 'connected').length;
+      const readiness = appState.visualReadiness || {};
       const openWatchdogError = (appState.watchdogErrors || []).some((error) => error.status === 'open');
       const capabilities = [
         {
@@ -3265,16 +3266,16 @@
           state: radar.status === 'working' ? 'Pesquisando fontes' : 'Requer atenção'
         },
         {
-          good: DATA.packCount >= DATA.schedulesUtc.length,
+          good: DATA.packCount > 0 && (!readiness.required || readiness.ready > 0),
           title: 'Conteúdo e criativos',
-          body: `${DATA.packCount} conteúdos disponíveis para ${DATA.schedulesUtc.length} horários, com formatos definidos pela estratégia da conta, Story complementar e identidade da marca.`,
-          state: 'Criação automática'
+          body: `${DATA.packCount} pautas cadastradas para ${DATA.schedulesUtc.length} horários.${readiness.required ? ` ${readiness.ready || 0} atendem ao padrão de ilustrações e ${readiness.pending || 0} aguardam preparação.` : ' A quantidade cadastrada não comprova revisão editorial ou postagem.'}`,
+          state: readiness.required ? 'Prontidão visual do acervo' : 'Acervo cadastrado'
         },
         {
-          good: !openWatchdogError,
+          good: !openWatchdogError && DATA.schedulesUtc.length > 0,
           title: 'Agenda e publicação',
-          body: 'Agenda em BRT, publicação na nuvem, workflow principal e vigia reserva para recuperar horários atrasados.',
-          state: openWatchdogError ? 'Erro aberto' : 'Automação ativa'
+          body: 'Horários em Brasília e acompanhamento dos disparos na nuvem. Confirmação de postagem exige registro e link do Instagram.',
+          state: openWatchdogError ? 'Erro aberto' : DATA.schedulesUtc.length ? 'Agenda cadastrada; confira os disparos' : 'Sem horários cadastrados'
         },
         {
           good: activeAutomations > 0,
@@ -3292,7 +3293,7 @@
           good: connectedAccounts > 0,
           title: 'Clientes e onboarding',
           body: `${accounts.length} empresa(s) cadastrada(s), convite seguro, conexão Meta sem compartilhar senha e usuários separados por conta.`,
-          state: `${connectedAccounts} conexão(ões) ativa(s)`
+          state: `${connectedAccounts} conexão(ões) registrada(s); teste Meta separado`
         }
       ];
       const attentionCount = capabilities.filter((item) => !item.good).length;
