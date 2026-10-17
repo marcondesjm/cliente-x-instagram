@@ -11,17 +11,40 @@
     {
       "id": "7e56439d-a1e3-4596-836f-0342155c48df",
       "day": "2026-10-17",
-      "status": "reserved",
+      "status": "completed",
       "stage": "base64-json:scene-a",
       "startedAt": "2026-10-17T22:32:51.149Z",
       "imageHash": "1f303ac73e6d06422d9012dcff3c20b0198240b3df9f4240aa61ca26a58e637b",
-      "imageBytes": 67208
+      "imageBytes": 67208,
+      "completedAt": "2026-10-17T22:33:00.073Z",
+      "reportedInputTokens": 24191,
+      "inputTokens": 24191,
+      "outputTokens": 49,
+      "usageStatus": "provider_reported",
+      "stopReason": "end_turn"
     }
   ],
-  "entries": [],
+  "entries": [
+    {
+      "id": "base64-json:scene-a",
+      "mode": "base64-json",
+      "fixture": "scene-a",
+      "model": "claude-sonnet-4.6",
+      "passed": false,
+      "value": null,
+      "expected": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration"
+      },
+      "checkedAt": "2026-10-17T22:33:00.073Z",
+      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/01_FB_Zacchaeus_1024.jpg?1724237549",
+      "imageHash": "1f303ac73e6d06422d9012dcff3c20b0198240b3df9f4240aa61ca26a58e637b"
+    }
+  ],
   "circuit": null,
   "health": "awaiting_test",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T22:32:51.149Z",
+  "checkedAt": "2026-10-17T22:33:00.073Z",
   "workflowRun": "39075446351"
 }
