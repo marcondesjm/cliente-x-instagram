@@ -1,5 +1,7 @@
 ## 2026-10-17 — composição dos cartões internos sem fotografia
 
+- Código 9f374579 enviado a origin/main. Deploy READY dpl_AUKoBA7pqSYQS7cn53HNMjNMzeEZ, alias cliente-x-instagram.vercel.app. Prévia aprovada por inspeção local; nenhuma nova publicação disparada neste ajuste.
+
 - Pedido: usuário apontou vazio central no cartão Entenda a matéria · 5 de cliente-x e pediu imagem complementar mais atraente.
 - Branch fix/cliente-x-inner-card-composition, base origin/main ddf74825. Cartões internos curtos de notícias de IA/tecnologia de cliente-x sem foto verificada recebem ilustração SVG editorial conceitual identificada, com duas variações; título, arte e texto distribuídos no quadro. Retirado pseudo-elemento vazio da nota. Fotos verificadas mantêm prioridade; nenhuma imagem irrelevante, foto repetida ou afirmação factual acrescentada.
 - Escopo preserva capa, fechamento, cartões com foto e Sabedoria Kids. Cartões com títulos longos mantêm composição anterior. Texto escuro sobre cartão claro também em tema escuro.
