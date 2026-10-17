@@ -86,11 +86,17 @@
     {
       "id": "e7cf7a68-cc7f-441c-9597-9e0bf969be03",
       "day": "2026-10-17",
-      "status": "reserved",
+      "status": "completed",
       "stage": "base64-tool:scene-b",
       "startedAt": "2026-10-17T22:34:29.962Z",
       "imageHash": "f737b6d98af0266e3bf8afaa4328833fd140944824df0a780dbb1a0e9cc29ae2",
-      "imageBytes": 85354
+      "imageBytes": 85354,
+      "completedAt": "2026-10-17T22:34:57.150Z",
+      "reportedInputTokens": 30271,
+      "inputTokens": 30271,
+      "outputTokens": 94,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -193,11 +199,32 @@
       "checkedAt": "2026-10-17T22:34:26.784Z",
       "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/01_FB_Zacchaeus_1024.jpg?1724237549",
       "imageHash": "1f303ac73e6d06422d9012dcff3c20b0198240b3df9f4240aa61ca26a58e637b"
+    },
+    {
+      "id": "base64-tool:scene-b",
+      "mode": "base64-tool",
+      "fixture": "scene-b",
+      "model": "claude-sonnet-4.6",
+      "passed": true,
+      "value": {
+        "personInTree": true,
+        "openBooks": false,
+        "style": "illustration",
+        "description": "Ilustração colorida mostrando uma pessoa vestindo túnica amarela e azul escalando um galho de árvore frondosa. Abaixo, um grupo de pessoas com turbantes observa a cena em frente a edifícios de pedra claros com telhados vermelhos. O estilo é desenho animado com traços visíveis e cores vibrantes."
+      },
+      "expected": {
+        "personInTree": true,
+        "openBooks": false,
+        "style": "illustration"
+      },
+      "checkedAt": "2026-10-17T22:34:57.150Z",
+      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/04_FB_Zacchaeus_1024.jpg?1724237549",
+      "imageHash": "f737b6d98af0266e3bf8afaa4328833fd140944824df0a780dbb1a0e9cc29ae2"
     }
   ],
   "circuit": null,
   "health": "awaiting_test",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T22:34:29.962Z",
+  "checkedAt": "2026-10-17T22:34:57.150Z",
   "workflowRun": "39075446351"
 }
