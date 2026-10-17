@@ -10,6 +10,11 @@ on:
           - calibrate
           - pilot
           - replenish
+      pilot_pack:
+        description: ID de uma pauta para piloto (opcional; não publica)
+        type: string
+        required: false
+        default: ''
   schedule:
     # Entre descoberta e montagem: 05h40, 11h40, 17h40 e 23h40 BRT.
     - cron: '40 2,8,14,20 * * *'
@@ -38,6 +43,7 @@ jobs:
         env:
           KIDS_VISION_ANTHROPIC_API_KEY: ${{ secrets.KIDS_VISION_ANTHROPIC_API_KEY }}
           REVIEW_MODE: ${{ inputs.mode || 'replenish' }}
+          KIDS_SCENE_PILOT_PACK_ID: ${{ inputs.pilot_pack || '' }}
         run: |
           if [ "$REVIEW_MODE" = calibrate ]; then
             node scripts/replenish-kids-scenes.mjs --calibrate --persist

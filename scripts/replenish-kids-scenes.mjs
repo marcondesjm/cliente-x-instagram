@@ -16,6 +16,8 @@ const C='automation/instagram-template/config/',STATE=C+'kids-scene-replenishmen
 const read=p=>JSON.parse(fs.readFileSync(p,'utf8').replace(/^\uFEFF/,''));
 const state=read(STATE),recipes=read(RECIPES),persist=process.argv.includes('--persist');
 const manual=process.argv.includes('--pilot') || process.argv.includes('--calibrate');
+const pilotPackId=process.argv.includes('--pilot')?String(process.env.KIDS_SCENE_PILOT_PACK_ID || ''):'';
+if(pilotPackId && !/^kids-biblia-[0-9]{2}$/.test(pilotPackId))throw new Error('ID de pauta inválido para o piloto.');
 const key=process.env.KIDS_VISION_ANTHROPIC_API_KEY;
 const now=()=>new Date().toISOString();
 function save(paths=[STATE],assets=[]) {
@@ -167,7 +169,7 @@ async function replenish() {
   const referenceLength=e=>passageRanges(e.reference).reduce((n,r)=>n+r.end-r.start+1,0);
   const attempts=e=>state.calls.filter(c=>c.stage==='select:'+e.id).length;
   const interrupted=e=>!state.entries.some(r=>r.id===e.id) && state.calls.some(c=>c.stage==='verify:'+e.id && c.status==='completed');
-  const candidates=discovery.entries.filter(e=>e.status==='found').sort((a,b)=>Number(interrupted(b))-Number(interrupted(a)) || attempts(a)-attempts(b) || referenceLength(b)-referenceLength(a));
+  const candidates=discovery.entries.filter(e=>e.status==='found' && (!pilotPackId || e.id===pilotPackId)).sort((a,b)=>Number(interrupted(b))-Number(interrupted(a)) || attempts(a)-attempts(b) || referenceLength(b)-referenceLength(a));
   for(const entry of candidates) {
     const pack=packs.find(p=>p.id===entry.id);
     if(!pack || published(pack) || recipes.some(r=>r.id===pack.id) || pack.slides.every(s=>s.imagePath))continue;
