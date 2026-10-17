@@ -2,14 +2,14 @@
   "account": "sabedoria-kids",
   "enabled": false,
   "provider": "claude-ss",
-  "model": "claude-sonnet-4.6",
-  "health": "blocked",
-  "message": "Teste de cena inédita falhou: descrição de uma cama inexistente. Reposição de novas cenas bloqueada.",
+  "model": "claude-haiku-4.5",
+  "health": "awaiting_blind_pilot",
+  "message": "Piloto com modelo leve, resposta simples e descarte automático de imagens sem leitura confirmada.",
   "policy": {
-    "maxCallsPerDay": 26,
+    "maxCallsPerDay": 61,
     "maxInputTokensPerCall": 120000,
-    "maxInputTokensPerDay": 1500000,
-    "maxPacksPerRun": 3,
+    "maxInputTokensPerDay": 3755149,
+    "maxPacksPerRun": 1,
     "readyStockTarget": 24
   },
   "calls": [
@@ -832,7 +832,7 @@
     "passed": true,
     "challengeHash": "6bd1a2d3d932e3100792dcaba0fc467e865d23073e7a5b8e3c0b522acb881273"
   },
-  "circuit": "vision_validation_failed",
+  "circuit": null,
   "publicationTriggered": false,
   "checkedAt": "2026-10-17T22:42:48.781Z",
   "lastRun": "39076050174",
@@ -1085,7 +1085,7 @@
   "repairDiagnostic": {
     "date": "2026-10-17",
     "workflow": "39075446351",
-    "transport": "base64-tool",
+    "transport": "haiku-base64-json",
     "passedFixtures": 2,
     "previousCircuit": "vision_validation_failed",
     "maxAdditionalCalls": 19,
@@ -1094,6 +1094,8 @@
       "maxInputTokensPerDay": 1500000,
       "maxPacksPerRun": 3
     },
-    "completedAt": "2026-10-17T22:43:10.735Z"
-  }
+    "completedAt": null,
+    "holdoutRun": "39076244962"
+  },
+  "responseFormat": "json"
 }
