@@ -3,13 +3,13 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "review_completed",
-  "message": "1 pauta(s) examinada(s); somente seleções aprovadas seguem para montagem.",
+  "health": "blocked",
+  "message": "Teste de cena inédita falhou: descrição de uma cama inexistente. Reposição de novas cenas bloqueada.",
   "policy": {
-    "maxCallsPerDay": 61,
+    "maxCallsPerDay": 26,
     "maxInputTokensPerCall": 120000,
-    "maxInputTokensPerDay": 3755149,
-    "maxPacksPerRun": 1,
+    "maxInputTokensPerDay": 1500000,
+    "maxPacksPerRun": 3,
     "readyStockTarget": 24
   },
   "calls": [
@@ -732,11 +732,14 @@
       "day": "2026-10-17",
       "stage": "pixels:kids-biblia-29:0213f4524b345be9",
       "startedAt": "2026-10-17T22:42:48.781Z",
-      "status": "reserved",
+      "status": "interrupted",
       "payloadBytes": 67278,
       "promptChars": 659,
       "imageFingerprint": "0e68d89f3b06e81914792cf90b2e067b890038d0529d6b9579fc219f5e7cf478",
-      "promptFingerprint": "8757f8af2d72f56ed83bcbd4da7166c7c5186e2a50a019a9ee0803cf91ed29fc"
+      "promptFingerprint": "8757f8af2d72f56ed83bcbd4da7166c7c5186e2a50a019a9ee0803cf91ed29fc",
+      "inputTokens": null,
+      "completedAt": "2026-10-17T22:43:10.735Z",
+      "error": "Piloto cancelado após erro de leitura visual; consumo contado pelo máximo."
     }
   ],
   "entries": [
@@ -829,7 +832,7 @@
     "passed": true,
     "challengeHash": "6bd1a2d3d932e3100792dcaba0fc467e865d23073e7a5b8e3c0b522acb881273"
   },
-  "circuit": null,
+  "circuit": "vision_validation_failed",
   "publicationTriggered": false,
   "checkedAt": "2026-10-17T22:42:48.781Z",
   "lastRun": "39076050174",
@@ -1073,11 +1076,11 @@
     }
   },
   "visualValidationIncident": {
-    "checkedAt": "2026-10-17T22:20:07.749Z",
-    "workflowRun": "39074391132",
-    "packId": "kids-biblia-29",
-    "reason": "Verificador descreveu crianças lendo/desenhando e cenas domésticas genéricas; conferência local dos oito originais confirmou somente cenas bíblicas de Zaqueu. Segunda tentativa rejeitou corretamente a capa incompatível. Nenhuma seleção passou pelo conjunto de controles.",
-    "evidenceImage": "output/kids-scenes/zaqueu-conjunto-fonte-conferido.jpg"
+    "workflowRun": "39076050174",
+    "sourceScene": 8,
+    "sourceId": "6654943ac38eff87",
+    "reason": "Imagem mostra um grupo de homens; a API descreveu uma pessoa deitada numa cama inexistente.",
+    "checkedAt": "2026-10-17T22:43:10.734Z"
   },
   "repairDiagnostic": {
     "date": "2026-10-17",
@@ -1090,6 +1093,7 @@
       "maxCallsPerDay": 26,
       "maxInputTokensPerDay": 1500000,
       "maxPacksPerRun": 3
-    }
+    },
+    "completedAt": "2026-10-17T22:43:10.735Z"
   }
 }
