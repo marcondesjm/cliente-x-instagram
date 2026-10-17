@@ -20,6 +20,13 @@ for(const recipe of recipes) {
   const pack=packs.find(p=>p.id===recipe.id);if(!pack)continue;
   const previous=state.entries.find(e=>e.id===recipe.id),now=new Date().toISOString();
   let entry={id:recipe.id,title:pack.slides[0].title,recipeFingerprint:hash(recipe),checkedAt:now,workflowRun:process.env.GITHUB_RUN_ID || null};
+  if(recipe.status==='review-rejected') {
+    entry={...entry,status:'blocked',renderVerified:false,message:recipe.rejectionReason || 'Seleção em quarentena; não montar nem publicar.'};
+    if(pack.illustrationSource)pack.illustrationSource.sceneAutomation={status:'blocked',reason:entry.message};
+    const index=state.entries.findIndex(e=>e.id===entry.id);if(index<0)state.entries.push(entry);else state.entries[index]=entry;
+    console.log(`${recipe.id}: quarentena preservada, sem downloads, render ou publicação.`);
+    continue;
+  }
   try {
     validateRecipe(recipe,pack);
     if(history.some(e=>e.feedFingerprint===packContentFingerprint(pack) || e.coverTitle===pack.slides[0].title)) {

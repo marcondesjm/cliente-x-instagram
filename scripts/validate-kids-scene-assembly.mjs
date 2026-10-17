@@ -8,6 +8,7 @@ const changed=structuredClone(pack);changed.slides[1].body+=' Mudança.';assert.
 const repeated=structuredClone(recipe);repeated.selected[1].sha256=repeated.selected[0].sha256;assert.throws(()=>validateRecipe(repeated,pack),/repetidas/);
 assert.throws(()=>validateRecipe({...recipe,selected:recipe.selected.slice(1)},pack),/incompleto/);
 const source={termsHash:recipe.termsHash,license:recipe.license,licenseUrl:recipe.licenseUrl,scenes:recipe.selected};
+assert.throws(()=>validateRecipe({...recipe,status:'review-rejected'},pack),/revisão/);
 const options={readAsset:p=>fs.readFileSync(p),verifySource:async()=>source};
 const first=await assembleReviewedPack(recipe,pack,options);const again=await assembleReviewedPack(recipe,first.pack,options);
 assert.deepEqual(first.pack,again.pack);assert.equal(copyFingerprint(first.pack),recipe.copyFingerprint);assert.equal(first.pack.caption.split('Ilustrações:').length,2);assert.notEqual(first.pack.storySlide.imagePath,first.pack.slides[0].imagePath);
