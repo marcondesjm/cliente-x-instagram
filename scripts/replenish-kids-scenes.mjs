@@ -8,7 +8,7 @@ import {safeSourceUrl,fetchSource,licensedScenes} from '../lib/kids-image-discov
 import {loadPassage,passageRanges} from '../lib/kids-bible-passage.js';
 import {visualReadyPacks} from '../lib/bible-visual-standard.js';
 import {reviewBinding} from '../lib/kids-scene-review-proof.js';
-import {VISION_VERSION,callAllowance,sendVision,calibrationImage,CALIBRATION_PROMPT,visualSignature,similarScenes,contactSheet} from '../lib/kids-scene-vision.js';
+import {VISION_VERSION,callAllowance,sendVision,calibrationImage,CALIBRATION_PROMPT,visualSignature,similarScenes,contactSheet,recoverTransientCalls} from '../lib/kids-scene-vision.js';
 
 const ROOT=resolve(dirname(fileURLToPath(import.meta.url)),'..');process.chdir(ROOT);
 const C='automation/instagram-template/config/',STATE=C+'kids-scene-replenishment.json',RECIPES=C+'kids-reviewed-scenes.json';
@@ -127,9 +127,7 @@ async function reviewPack(pack,candidate,known) {
 }
 async function replenish() {
   if(!state.enabled && !manual){state.health='awaiting_activation';state.message='Rotina preparada, aguardando piloto e ativação.';save();return;}
-  if(state.billingMode==='fixed_plan_user_confirmed' && state.circuit==='provider_temporarily_unavailable' && Date.parse(state.retryAfter)<=Date.now()) {
-    state.circuit=null;delete state.retryAfter;state.message='Nova janela após falha transitória; chamada anterior permanece contada pelo limite máximo.';save();
-  }
+  if(recoverTransientCalls(state)){state.message='Nova janela após falha transitória; chamada anterior permanece contada pelo limite máximo.';save();}
   if(!state.calibration?.passed || state.calibration.version!==VISION_VERSION || state.calibration.model!==state.model)await calibrate();
   if(process.argv.includes('--calibrate'))return;
   const groups=read(C+'content-packs.json'),packs=groups.find(g=>g.account==='sabedoria-kids').packs,history=read(C+'publication-history.json')['sabedoria-kids'] || [];
