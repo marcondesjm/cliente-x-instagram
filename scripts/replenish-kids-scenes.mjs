@@ -6,6 +6,7 @@ import {persistState} from './persist-instagram-state.mjs';
 import {hash,copyFingerprint,validateRecipe} from '../lib/kids-scene-assembly.js';
 import {safeSourceUrl,fetchSource,licensedScenes} from '../lib/kids-image-discovery.js';
 import {loadPassage,passageRanges} from '../lib/kids-bible-passage.js';
+import {visualReadyPacks} from '../lib/bible-visual-standard.js';
 import {reviewBinding} from '../lib/kids-scene-review-proof.js';
 import {VISION_VERSION,callAllowance,sendVision,calibrationImage,CALIBRATION_PROMPT,visualSignature,similarScenes,contactSheet} from '../lib/kids-scene-vision.js';
 
@@ -80,7 +81,7 @@ async function reviewPack(pack,candidate,known) {
   const ranked=[...source.scenes].sort((a,b)=>score(b)-score(a));
   let downloaded=0;
   for(const scene of ranked.slice(0,30)) {
-    if(pool.length>=18)break;
+    if(pool.length>=12)break;
     const item=await getScene(scene);downloaded+=item.bytes.length;
     if(downloaded>30_000_000)throw new Error('Conjunto excede limite de download.');
     if([...known,...pool].some(other=>similarScenes(item,other)))continue;
@@ -116,7 +117,8 @@ async function replenish() {
   const groups=read(C+'content-packs.json'),packs=groups.find(g=>g.account==='sabedoria-kids').packs,history=read(C+'publication-history.json')['sabedoria-kids'] || [];
   const discovery=read(C+'kids-image-discovery.json');
   const published=pack=>history.some(h=>h.coverTitle===pack.slides[0].title);
-  const ready=packs.filter(p=>!published(p) && p.slides.every(s=>s.imagePath) && p.storySlide?.imagePath).length;
+  const account=read(C+'accounts.json').find(a=>a.account==='sabedoria-kids');
+  const ready=visualReadyPacks(packs,account,p=>fs.existsSync(p)).filter(p=>!published(p)).length;
   if(ready>=state.policy.readyStockTarget){state.health='stock_sufficient';state.message='Estoque de cenas suficiente para a meta configurada.';save();return;}
   const known=[];
   for(const p of packs)for(const s of [...p.slides,p.storySlide].filter(Boolean)) {
@@ -131,7 +133,7 @@ async function replenish() {
     if(!pack || published(pack) || recipes.some(r=>r.id===pack.id) || pack.slides.every(s=>s.imagePath))continue;
     if(processed>=state.policy.maxPacksPerRun)break;
     const candidate=entry.candidates.find(c=>c.scenes.length>=pack.slides.length+1);if(!candidate)continue;
-    const fingerprint=hash({copy:copyFingerprint(pack),terms:candidate.termsHash,scenes:candidate.scenes.map(s=>s.id),version:VISION_VERSION});
+    const fingerprint=hash({copy:copyFingerprint(pack),terms:candidate.termsHash,scenes:candidate.scenes.map(s=>s.id),version:VISION_VERSION,parameters:'pool12-jpeg-adaptive-v1'});
     if(state.entries.some(e=>e.id===pack.id && e.fingerprint===fingerprint && ['rejected','reviewed'].includes(e.status)))continue;
     callAllowance(state);processed++;
     let result={id:pack.id,title:pack.slides[0].title,fingerprint,checkedAt:now()};
@@ -149,6 +151,21 @@ async function replenish() {
   state.health=state.circuit?'blocked':processed?'review_completed':'awaiting_candidates';
   state.message=state.circuit?'Circuito de consumo ou visão bloqueado.':`${processed} pauta(s) examinada(s); somente seleções aprovadas seguem para montagem.`;save();
 }
-try {await replenish();}
+function activate() {
+  if(state.circuit || !state.calibration?.passed || state.calibration.version!==VISION_VERSION || state.billingMode!=='fixed_plan_user_confirmed')throw new Error('Calibração, consumo ou plano ainda não confirmados para ativação.');
+  const packs=read(C+'content-packs.json').find(g=>g.account==='sabedoria-kids').packs;
+  const assembled=read(C+'kids-scene-automation.json');
+  const passed=recipes.some(recipe=>{
+    if(recipe.status!=='automatically-reviewed')return false;
+    const pack=packs.find(p=>p.id===recipe.id),receipt=assembled.entries.find(e=>e.id===recipe.id);
+    try{validateRecipe(recipe,pack);}catch{return false;}
+    return receipt?.status==='ready' && receipt.renderVerified===true && receipt.packFingerprint===hash(pack) && recipe.selected.every(s=>fs.existsSync(s.path) && hash(fs.readFileSync(s.path))===s.sha256);
+  });
+  if(!passed)throw new Error('Nenhuma pauta com revisão automática e render oficial pronto; ativação bloqueada.');
+  state.enabled=true;state.activatedAt=now();
+  Object.assign(state.policy,{maxCallsPerDay:26,maxInputTokensPerDay:1500000,maxPacksPerRun:3});
+  state.health='active';state.message='Reposição automática ativa: até três pautas por execução, com dupla avaliação e montagem obrigatória.';save();
+}
+try {if(process.argv.includes('--activate'))activate();else await replenish();}
 catch(error){state.health='blocked';state.message=String(error.message).slice(0,350);save();process.exitCode=1;}
 console.log(JSON.stringify({health:state.health,message:state.message,enabled:state.enabled,circuit:state.circuit,reviewed:state.entries.filter(e=>e.status==='reviewed').length,publicationTriggered:false}));
