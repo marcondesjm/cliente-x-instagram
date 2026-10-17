@@ -1,3 +1,9 @@
+## 2026-10-17 — resultado do piloto: bloqueio factual mantido
+
+Run39071797266 comprovou correção da persistência; rejeitou pães/peixes por capa incompatível e Story fora da referência. Run39072053494 produziu seleção automática para ressurreição, mas conferência do render local detectou falso positivo: Jesus aparecendo às mulheres foi associado incorretamente a Lucas24:6; esse encontro não consta de Lucas24:1-12. Receita kids-biblia-32 em review-rejected, montagem bloqueada, nenhuma ativação ou chamada Meta deste fluxo. Run10 cancelado, montagem não executada. Chamada interrompida sem recibo conserva contabilização máxima. Limite temporário40 do piloto restaurado26; enabled=false e circuito semantic_false_positive. Não remover esse circuito só por um teste de conexão ou render bem-sucedido. Nova liberação exige controle factual adicional demonstrado em casos positivos e negativos. Outras três receitas previamente revisadas permanecem.
+
+Persistência, prévia, painel e documentação foram implementados, mas o objetivo de reposição sem conferência humana NÃO foi concluído: a revisão semântica do provedor atual falhou no teste real. Não afirmar que há estoque automaticamente aprovado, publicação nova ou continuidade ilimitada.
+
 ## 2026-10-17 — reposição de cenas novas em validação real
 
 Usuário confirmou plano fixo sem cobrança extra por uso no claude-ss.ia.br. Integração mantém host HTTPS fixo, Bearer no segredo GitHub existente, sem exposição de credencial e sem retries de rede no mesmo ciclo. Modelo anunciado claude-sonnet-4.6 passou desafio real de pixels (código aleatório e cores); isso não comprova identidade do modelo.
