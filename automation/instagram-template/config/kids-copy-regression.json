@@ -3,9 +3,9 @@
   "model": "claude-sonnet-4.6",
   "billingMode": "fixed_plan_user_confirmed",
   "policy": {
-    "maxCallsPerDay": 6,
+    "maxCallsPerDay": 8,
     "maxInputTokensPerCall": 120000,
-    "maxInputTokensPerDay": 720000
+    "maxInputTokensPerDay": 960000
   },
   "calls": [
     {
@@ -295,8 +295,8 @@
   ],
   "circuit": null,
   "passed": false,
-  "health": "rejected",
+  "health": "awaiting_explicit_targets_v4",
   "checkedAt": "2026-10-17T23:20:57.121Z",
   "run": "39078535131",
-  "message": "Teste v2 expôs mapeamento ambíguo do Story: não existe cartão Feed para última posição. Prompt agora mapeia Story explicitamente e exige decisão coerente com os campos."
+  "message": "V3 retornou justificativa compatível com booleano falso. V4 fornece target explícito por posição e ordena justificativa antes dos campos/decisão."
 }
