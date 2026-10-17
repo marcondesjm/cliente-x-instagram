@@ -1,0 +1,33 @@
+name: Sabedoria Kids - diagnosticar transporte visual
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: kids-vision-transport-test
+  cancel-in-progress: false
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Refresh state
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git pull --rebase origin main
+      - run: npm ci --ignore-scripts
+      - name: Compare public images without changing approval or publishing
+        env:
+          KIDS_VISION_ANTHROPIC_API_KEY: ${{ secrets.KIDS_VISION_ANTHROPIC_API_KEY }}
+        run: node scripts/test-kids-vision-transport.mjs --persist
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kids-vision-transport-test
+          path: automation/instagram-template/config/kids-vision-transport-test.json
