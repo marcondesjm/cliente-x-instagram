@@ -3144,6 +3144,8 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
     body main.bible-illustration.has-sector-photo .context-photo {display:block;left:58px;right:58px;top:570px;width:auto;height:620px;transform:none;background-color:white;background-size:contain;border:0;border-radius:24px;opacity:1;box-shadow:none;}
     body main.bible-illustration.has-sector-photo .context-photo::after {display:none;}
     body main.bible-illustration.has-sector-photo .panel, body main.bible-illustration.has-sector-photo .bubble, body main.bible-illustration.has-sector-photo .spark {display:none;}
+    body main.bible-illustration.has-sector-photo .note::before, body main.bible-illustration.has-sector-photo .note::after {display:none;}
+    body main.bible-illustration.has-sector-photo .progress {bottom:108px;}
     body main.bible-illustration.has-sector-photo .note .close {min-height:0;padding:0;margin-top:8px;background:transparent;color:inherit;}
   </style>
 </head>
