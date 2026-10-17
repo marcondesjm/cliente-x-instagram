@@ -3620,6 +3620,8 @@
 
     async function switchAccount(event) {
       appState.selectedAccount = event.target.value || '';
+      appState.editorialApiReview = null;
+      renderEditorialApiReview();
       accountViewVersion++;
       privateMetricsRequest = null;
       resetLatestPost('Carregando publicações desta conta...');
