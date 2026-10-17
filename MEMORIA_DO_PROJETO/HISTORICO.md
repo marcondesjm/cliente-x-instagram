@@ -1,3 +1,11 @@
+## 2026-10-17 09:59 BRT — carrossel corrigido publicado
+
+- Pedido explícito do usuário: poste no instagram. Carrossel de 10 slides publicado em @marcondes.machado.oficial; cobertura dos 42 trechos confirmada.
+- Run 39034591742 concluído com sucesso; permalink https://www.instagram.com/p/DemKhweld57/; Feed ID 18098498537539858; publicação em 17/10/2026 às 09:59:49 BRT. Ledger publication-history.json persistido em origin/main 3bcbb3ff.
+- Primeiro comentário recusado pela Meta, OAuthException #10 (permissão). Fonte, título e link permanecem na legenda. Story não solicitado nem publicado (feed-only). Reel anterior preservado.
+- Primeira tentativa 39034376439 bloqueada antes da Meta por reutilização da foto original. Correção aafbf450 permite reutilizar a foto exclusivamente em revisão manual vinculada ao ID e à URL da mesma matéria; automação e duplicação de fotos entre slides mantêm proteções. Testes de cobertura, autorização de revisão e agente visual aprovados.
+- Próximo passo: acompanhar a publicação pelo permalink; corrigir permissões de comentários em tarefa própria se solicitado.
+
 ## 2026-10-17 09:55 BRT — entrega da correção de carrosséis
 
 - Código enviado para origin/main no commit 027f328e; confirmado por git ls-remote. Próximas execuções do workflow recebem a correção; nenhuma publicação executada nesta sessão.
