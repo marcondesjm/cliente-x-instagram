@@ -105,6 +105,8 @@ jobs:
       INSTAGRAM_TEMPLATE_AUTOMATIC_RUN: ${{ github.event_name != 'workflow_dispatch' }}
       CLIENTE_X_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.CLIENTE_X_INSTAGRAM_ACCESS_TOKEN }}
       CLIENTE_X_INSTAGRAM_USER_ID: ${{ secrets.CLIENTE_X_INSTAGRAM_USER_ID }}
+      SABEDORIA_KIDS_INSTAGRAM_ACCESS_TOKEN: ${{ github.event.inputs.account == 'sabedoria-kids' && secrets.SABEDORIA_KIDS_INSTAGRAM_ACCESS_TOKEN || '' }}
+      SABEDORIA_KIDS_INSTAGRAM_USER_ID: ${{ github.event.inputs.account == 'sabedoria-kids' && secrets.SABEDORIA_KIDS_INSTAGRAM_USER_ID || '' }}
       IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
