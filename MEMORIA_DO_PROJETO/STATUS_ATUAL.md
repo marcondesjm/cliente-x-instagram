@@ -1,3 +1,11 @@
+## 2026-10-17 — correção da prévia na troca de conta
+
+- Branch fix/account-post-preview-20261017; implementação 07cd4223 enviada ao origin/main após rebase sobre ae5cd9e2, preservando atualizações operacionais concorrentes.
+- Causa: cartão mantinha DOM/links da conta anterior e loadPrivateMetrics reutilizava uma promessa global em andamento. Falhas/ausência de mídia não limpavam a imagem anterior.
+- Troca de conta limpa imagem, slides, links, legenda e horário imediatamente; incrementa versão da visualização e invalida deduplicação da consulta anterior. Respostas tardias de métricas e estado de outra seleção são ignoradas.
+- Sem mídia, erro ou perfil divergente não reutiliza publicação anterior. Imagens reaparecem em consultas bem-sucedidas; removidos exemplos fixos do HTML inicial.
+- validate-account-post-preview aprovado: respostas fora de ordem, troca, ausência de mídia, perfil divergente e erro; validate-account-onboarding/sintaxe e git diff --check aprovados. Sem alteração de publicação, agenda ou credenciais.
+
 ## 2026-10-17 — orientação de conta profissional no briefing
 
 - Branch feat/briefing-professional-20261017 alinhada ao origin/main db840683; implementação 277ced01 enviada ao main, preservando atualizações operacionais concorrentes.
