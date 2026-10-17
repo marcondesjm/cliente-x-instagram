@@ -3,8 +3,8 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "awaiting_blind_pilot",
-  "message": "Piloto v3: leitura cega individual; aprovação automática ainda desativada.",
+  "health": "calibrated",
+  "message": "Leitura real dos pixels confirmada com desafio aleatório; aguarda piloto bíblico.",
   "policy": {
     "maxCallsPerDay": 61,
     "maxInputTokensPerCall": 120000,
@@ -726,16 +726,16 @@
     }
   ],
   "calibration": {
-    "version": "kids-scene-review-v2-grounded",
+    "version": "kids-scene-review-v3-blind",
     "model": "claude-sonnet-4.6",
     "provider": "claude-ss",
-    "checkedAt": "2026-10-17T22:08:46.198Z",
+    "checkedAt": "2026-10-17T22:38:49.982Z",
     "passed": true,
-    "challengeHash": "0b7ec60b9a4308dcd844c422ee2ef46cc86991769d376775e51eba73385eb04f"
+    "challengeHash": "6bd1a2d3d932e3100792dcaba0fc467e865d23073e7a5b8e3c0b522acb881273"
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T22:38:48.595Z",
+  "checkedAt": "2026-10-17T22:38:49.982Z",
   "lastRun": "39075839941",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
