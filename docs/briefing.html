@@ -24,7 +24,14 @@
       <label class="wide">Conteúdo, produto ou serviço principal *<textarea name="offer" required maxlength="5000" placeholder="O que seu perfil oferece ao público?"></textarea></label>
       <label>Objetivo<select name="goal"><option value="authority">Fortalecer a marca</option><option value="leads">Atrair contatos</option><option value="offer">Divulgar produtos ou serviços</option><option value="personalBrand">Construir marca pessoal</option><option value="reactivation">Reativar o perfil</option></select></label>
       <label>Tom de voz<select name="tone"><option value="educativo">Educativo</option><option value="consultivo">Consultivo</option><option value="autoridade">Autoridade</option><option value="provocativo">Provocativo</option></select></label>
-      <label>Publicações desejadas por dia *<input name="postsPerDay" type="number" min="1" max="24" required value="1"><small>A programação será revisada antes da ativação.</small></label>
+      <fieldset class="wide" style="border:1px solid #dce5df;border-radius:10px;padding:16px"><legend><strong>Onde deseja publicar? *</strong></legend>
+        <small>Selecione um ou mais formatos.</small>
+        <label><input type="checkbox" name="formats" value="feed" style="width:auto;margin-right:8px">Feed — imagem ou carrossel</label>
+        <label><input type="checkbox" name="formats" value="reels" style="width:auto;margin-right:8px">Reels — vídeo curto</label>
+        <label><input type="checkbox" name="formats" value="stories" style="width:auto;margin-right:8px">Stories — conteúdo de 24 horas</label>
+        <small>A distribuição por formato e horário será combinada antes da ativação. Esta escolha registra sua preferência.</small>
+      </fieldset>
+      <label>Publicações desejadas por dia (total) *<input name="postsPerDay" type="number" min="1" max="24" required value="1"><small>Total entre os formatos escolhidos. Ex.: 3 = 1 no Feed, 1 Reel e 1 Story. A programação será revisada antes da ativação.</small></label>
       <label>Horários preferidos (Brasília)<input name="times" maxlength="200" placeholder="07:00, 12:00, 18:00"><small>Deixe em branco se quiser combinar depois.</small></label>
     </div></section>
     <section><h2>3. Referências e preferências</h2><div class="grid">

@@ -3,7 +3,8 @@ document.getElementById('briefingForm').addEventListener('submit', event => {
   event.preventDefault();
   const status = document.getElementById('status');
   try {
-    const data = normalizeBriefing({ ...Object.fromEntries(new FormData(event.target)), schema: 'instagram-client-briefing', version: 1 });
+    const fields = new FormData(event.target);
+    const data = normalizeBriefing({ ...Object.fromEntries(fields), formats: fields.getAll('formats'), schema: 'instagram-client-briefing', version: 1 });
     const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
     const link = document.createElement('a');
     link.href = url;

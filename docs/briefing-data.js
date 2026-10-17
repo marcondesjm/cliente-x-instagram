@@ -17,6 +17,9 @@ export function normalizeBriefing(input) {
   data.goal = ['authority','leads','offer','personalBrand','reactivation'].includes(input.goal) ? input.goal : 'authority';
   data.tone = ['consultivo','autoridade','educativo','provocativo'].includes(input.tone) ? input.tone : 'educativo';
   data.postsPerDay = Number(input.postsPerDay);
+  const allowedFormats = ['feed', 'reels', 'stories'];
+  if (input.formats !== undefined && (!Array.isArray(input.formats) || !input.formats.length || input.formats.some(value => !allowedFormats.includes(value)))) throw new Error('Escolha onde deseja publicar: Feed, Reels ou Stories.');
+  if (input.formats !== undefined) data.formats = [...new Set(input.formats)];
   if (!Number.isInteger(data.postsPerDay) || data.postsPerDay < 1 || data.postsPerDay > 24) throw new Error('Informe de 1 a 24 publicações por dia.');
   data.times = (Array.isArray(input.times) ? input.times : String(input.times || '').split(/[,;\n]+/)).map(value => String(value).trim()).filter(Boolean);
   if (data.times.length > 24 || data.times.some(value => !/^([01]\d|2[0-3]):[0-5]\d$/.test(value)) || new Set(data.times).size !== data.times.length) throw new Error('Use horários únicos no formato 07:00, 12:00.');
@@ -30,5 +33,6 @@ export function normalizeBriefing(input) {
 }
 
 export function briefingNotes(data) {
-  return [`BRIEFING — ${data.brand}`, `Instagram: @${data.username}`, `Publicações desejadas por dia: ${data.postsPerDay}`, `Horários (Brasília): ${data.times.join(', ') || 'A combinar'}`, `Logotipo: ${data.logo || 'Não informado'}`, `Cores: ${data.colors || 'A combinar'}`, `Fontes indicadas pelo cliente (revisar licença e adequação):\n${data.sources || 'Não informadas'}`, `Preferências e assuntos a evitar:\n${data.preferences || 'Não informados'}`].join('\n\n');
+  const names = { feed: 'Feed (imagem ou carrossel)', reels: 'Reels (vídeo curto)', stories: 'Stories' };
+  return [`BRIEFING — ${data.brand}`, `Instagram: @${data.username}`, `Onde publicar (preferência a revisar): ${(data.formats || []).map(value => names[value]).join(', ') || 'A combinar'}`, `Publicações desejadas por dia (total entre os formatos): ${data.postsPerDay}`, `Horários (Brasília): ${data.times.join(', ') || 'A combinar'}`, `Distribuição por formato e horário: a definir na revisão da programação.`, `Logotipo: ${data.logo || 'Não informado'}`, `Cores: ${data.colors || 'A combinar'}`, `Fontes indicadas pelo cliente (revisar licença e adequação):\n${data.sources || 'Não informadas'}`, `Preferências e assuntos a evitar:\n${data.preferences || 'Não informados'}`].join('\n\n');
 }
