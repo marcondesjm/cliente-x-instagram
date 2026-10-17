@@ -39,8 +39,8 @@ async function paidCall(stage,image,prompt,maxOutputTokens=2200,schema=null,allo
   const day=callAllowance(state);
   if(!key)throw new Error('Segredo de visão ausente.');
   const model=stage==='calibration' || stage.startsWith('pixels:')?state.model:(state.reasoningModel || state.model);
-  const plain=state.responseFormat==='json' && stage.startsWith('pixels:');
-  const call={id:randomUUID(),...(state.pilotRun?.status==='running'?{pilotId:state.pilotRun.id}:{}),day,stage,model,startedAt:now(),status:'reserved',payloadBytes:image?.length || 0,promptChars:prompt.length,imageFingerprint:image?hash(image):null,promptFingerprint:hash(prompt)};
+  const plain=state.responseFormat==='json';
+  const call={id:randomUUID(),...(state.pilotRun?.status==='running'?{pilotId:state.pilotRun.id}:{}),day,stage,model,responseFormat:plain?'json':'tool',startedAt:now(),status:'reserved',payloadBytes:image?.length || 0,promptChars:prompt.length,imageFingerprint:image?hash(image):null,promptFingerprint:hash(prompt)};
   state.calls.push(call);save();
   if(reviewCircuitBlocked(state)){call.status='cancelled_before_send';save();throw new Error('Bloqueio concorrente aplicado antes do envio à API.');}
   let result;
@@ -92,7 +92,8 @@ async function getScene(scene) {
   return {...scene,bytes,sourceScene,sha256:hash(bytes),visualHash:await visualSignature(bytes),mirrorHash:await visualSignature(bytes,true)};
 }
 function context(pack,passage) {
-  return JSON.stringify({reference:pack.biblicalReference,passage:passage.verses,caption:(pack.caption || '').split('\n\nIlustrações:')[0],cards:pack.slides.map((s,i)=>({index:i+1,title:s.title,body:s.body})),story:'Uma cena diferente relacionada à mesma passagem; leitura com um adulto.'});
+  const roles=['cover','narrative','lesson','family_activity','reading'];
+  return JSON.stringify({reference:pack.biblicalReference,passage:passage.verses,caption:(pack.caption || '').split('\n\nIlustrações:')[0],cards:pack.slides.map((s,i)=>({index:i+1,role:roles[i] || 'narrative',illustrationRequirement:i===0?'Retratar o evento do título da capa.':i>=2?'Cena da passagem relacionada à lição; não retratar literalmente atividade ou leitura familiar.':'Retratar um dos eventos do resumo.',title:s.title,body:s.body})),story:'Uma cena diferente relacionada à mesma passagem; leitura com um adulto.'});
 }
 const blindCache=new Map();
 async function reviewPack(pack,candidate,known,{attempt=0,feedback=null}={}) {
@@ -146,7 +147,7 @@ async function reviewPack(pack,candidate,known,{attempt=0,feedback=null}={}) {
   console.log(JSON.stringify({packId:pack.id,decision:selection.decision==='approve'?'approve':'reject',feed:Array.isArray(selection.feed)?selection.feed.map(Number):[],story:Number(selection.story),evidenceCount:selection.evidence?.length || 0,cardLabels:selection.evidence?.map(e=>Number(e.card)) || []}));
   // Preserve rejections too: an API success does not establish editorial approval.
   fs.writeFileSync(`output/kids-replenishment/${pack.id}-selection-${attempt+1}.json`,JSON.stringify({reference:pack.biblicalReference,selection,candidates:pool.map(({bytes,...scene},i)=>({...scene,scene:i+1,observation:blindCache.get(scene.sha256)}))},null,2));
-  if(selection.decision!=='approve' || !['childSuitable','distinct','referenceAccurate'].every(k=>selection[k]===true) || !Array.isArray(selection.feed) || selection.feed.length!==pack.slides.length)throw new Error('Seleção visual não aprovada.');
+  if(selection.decision!=='approve' || !['childSuitable','distinct','referenceAccurate'].every(k=>selection[k]===true) || !Array.isArray(selection.feed) || selection.feed.length!==pack.slides.length)throw new Error('Seleção visual não aprovada. '+(selection.reason || '')+' '+matching.cards.filter(c=>!c.options.length).map(c=>'Cartão '+c.card+': '+c.reason).join('; '));
   const labels=[...selection.feed,selection.story];
   if(new Set(labels).size!==labels.length || labels.some(n=>!Number.isInteger(n) || n<1 || n>pool.length))throw new Error('Resposta de seleção contém cenas inválidas ou repetidas.');
   if(!Array.isArray(selection.evidence) || selection.evidence.length!==labels.length || selection.evidence.some((e,i)=>e.card!==i+1 || e.scene!==labels[i]))throw new Error('Seleção sem justificativa coerente por cartão.');
@@ -211,7 +212,7 @@ async function replenish() {
     const pack=packs.find(p=>p.id===entry.id);
     if(!pack || published(pack) || recipes.some(r=>r.id===pack.id) || pack.slides.every(s=>s.imagePath))continue;
     if(processed>=state.policy.maxPacksPerRun)break;
-    const choice=entry.candidates.filter(c=>c.scenes.length>=pack.slides.length+1).map(candidate=>({candidate,fingerprint:hash({copy:copyFingerprint(pack),terms:candidate.termsHash,scenes:candidate.scenes.map(s=>s.id),version:VISION_VERSION,model:state.model,reasoningModel:state.reasoningModel,responseFormat:state.responseFormat,parameters:'blind-hybrid-card-options-v1'})})).find(c=>!state.rejections[c.fingerprint] || Date.parse(state.rejections[c.fingerprint].retryAfter)<=Date.now());
+    const choice=entry.candidates.filter(c=>c.scenes.length>=pack.slides.length+1).map(candidate=>({candidate,fingerprint:hash({copy:copyFingerprint(pack),terms:candidate.termsHash,scenes:candidate.scenes.map(s=>s.id),version:VISION_VERSION,model:state.model,reasoningModel:state.reasoningModel,responseFormat:state.responseFormat,parameters:'blind-hybrid-card-options-json-roles-v2'})})).find(c=>!state.rejections[c.fingerprint] || Date.parse(state.rejections[c.fingerprint].retryAfter)<=Date.now());
     if(!choice)continue;
     const {candidate,fingerprint}=choice;
     try {callAllowance(state,new Date(),3);}catch(error){
