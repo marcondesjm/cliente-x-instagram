@@ -1,3 +1,18 @@
+## 2026-10-17 14:39 BRT — execução da correção confirmada
+
+- Run 39054271599 publicou o próximo slot atrasado (5, original 13:30 BRT): Empresas de IA são incapazes de controlar seus modelos, alerta ex-pesquisador da OpenAI. Carrossel ID 17975613105154212, Story ID 18018183179953359, https://www.instagram.com/p/DemqcyDAYZr/ ; publicado 2026-10-17T17:39:01.714Z.
+- Validação cloud aprovou foto pertinente inédita; reserva revisada não precisou ser usada. Estado persistido em origin/main 8e4ffe18. Slots 4 e 5 recuperados sequencialmente pela nuvem, sem envio manual local.
+- Primeiro comentário também não autorizado pela Meta (código 10), nenhum ID de comentário. Testes e deploy não constituíram a comprovação: IDs de carrossel/Story e histórico persistido constituem.
+
+## 2026-10-17 14:36 BRT — incidente 39052686174 resolvido com publicação real
+
+- Watchdog 39054210999 concluiu success às 14:35 BRT. A nova coleta encontrou matéria Nossa IA com imagem inédita pertinente; recuperação ocorreu pela seleção normal de notícias, sem usar a reserva adicionada em baf55f7b.
+- Reel A Grande Aposta de Mark Zuckerberg: Entre o Fracasso do Metaverso e a Corrida Frenética pela IA: ID 18005483804793255; Story ID 17872024878646010; https://www.instagram.com/reel/DemqA56E_mc/ ; publicado 2026-10-17T17:35:34.428Z, slot 4 de 17/10, horário original 12:10 BRT.
+- Histórico e published-slots persistidos em origin/main 5aad03fe; watchdog-errors do run informado e demais falhas desse slot marcados resolved pelo run 39054210999. A execução histórica falhada continua vermelha no GitHub; resolução não altera seu resultado passado.
+- Primeiro comentário não publicado: Meta código 10, Application does not have permission for this action. Não é falha de Feed/Reel ou Story; requer tratamento próprio de permissão.
+- Instagram público verificado na conta marcondes.machado.oficial, evidência output/cliente-x-recovery/reel-publicado-1435.png. Deploy READY dpl_33tp3EFks3tjCLm9qpu1jYqrBgSY, alias cliente-x-instagram.vercel.app, código baf55f7b.
+- Run push 39054271599 da correção em acompanhamento; a reserva revisada é proteção adicional e permanece sujeita a novidade, disponibilidade e guardas.
+
 ## 2026-10-17 14:35 BRT — recuperação do radar visual de cliente-x
 
 - Incidente informado: watchdog 39052686174, Publish feed and story; bloqueio antes da Meta, sem publicação nessa tentativa. Duas pautas Tecnoblog elegíveis com todas as imagens identificadas no histórico, inclusive variantes de tamanho.
