@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { chromium } from 'playwright';
-import { assertBibleVisualStandard, visualReadyPacks } from '../../../lib/bible-visual-standard.js';
+import { assertBibleVisualStandard, visualReadyPacks, requiresBibleIllustrations } from '../../../lib/bible-visual-standard.js';
 import { canPublishAccount } from '../../../lib/publication-access.js';
 import { seriesForSlot, seriesPacks } from '../../../lib/follower-series.js';
 import { educationEnabled, educationKind, educationLessons, nextEducationPack, isBusinessAINews, newsWithPracticalExercise, educationPreview, educationDayBlocked, educationIntegrated, educationSlotIndex, educationForSlot } from '../../../lib/education-strategy.js';
@@ -5145,7 +5145,7 @@ async function main() {
   const packs = mergePacks(supabasePacks, localPacks);
   validatePacks(packs);
   const illustratedPacks = visualReadyPacks(packs, account, path => existsSync(resolve(ROOT, path)));
-  if (!illustratedPacks.length && !args.validateCopy) throw Object.assign(new Error('Acervo aguardando ilustrações bíblicas aprovadas; nenhum cartão vazio será publicado.'), {stage:'bible-visual-standard'});
+  if (requiresBibleIllustrations(account) && !illustratedPacks.length && !args.validateCopy) throw Object.assign(new Error('Acervo aguardando ilustrações bíblicas aprovadas; nenhum cartão vazio será publicado.'), {stage:'bible-visual-standard'});
 
   const today = args.planDate || todaySaoPaulo();
   if (args.planDay) {
