@@ -5,7 +5,7 @@ import {fileURLToPath} from 'node:url';
 import {persistState} from './persist-instagram-state.mjs';
 import {hash,copyFingerprint,validateRecipe} from '../lib/kids-scene-assembly.js';
 import {safeSourceUrl,fetchSource,licensedScenes} from '../lib/kids-image-discovery.js';
-import {loadPassage} from '../lib/kids-bible-passage.js';
+import {loadPassage,passageRanges} from '../lib/kids-bible-passage.js';
 import {reviewBinding} from '../lib/kids-scene-review-proof.js';
 import {VISION_VERSION,callAllowance,sendVision,calibrationImage,CALIBRATION_PROMPT,visualSignature,similarScenes,contactSheet} from '../lib/kids-scene-vision.js';
 
@@ -124,7 +124,9 @@ async function replenish() {
     const bytes=fs.readFileSync(s.imagePath);known.push({sha256:hash(bytes),visualHash:await visualSignature(bytes),mirrorHash:await visualSignature(bytes,true)});
   }
   let processed=0;
-  for(const entry of discovery.entries.filter(e=>e.status==='found')) {
+  const referenceLength=e=>passageRanges(e.reference).reduce((n,r)=>n+r.end-r.start+1,0);
+  const candidates=discovery.entries.filter(e=>e.status==='found').sort((a,b)=>Number(referenceLength(b)>=6)-Number(referenceLength(a)>=6));
+  for(const entry of candidates) {
     const pack=packs.find(p=>p.id===entry.id);
     if(!pack || published(pack) || recipes.some(r=>r.id===pack.id) || pack.slides.every(s=>s.imagePath))continue;
     if(processed>=state.policy.maxPacksPerRun)break;

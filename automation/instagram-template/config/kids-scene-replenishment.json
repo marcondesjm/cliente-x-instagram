@@ -6,9 +6,9 @@
   "health": "calibrated",
   "message": "Leitura real dos pixels confirmada com desafio aleatório; aguarda piloto bíblico.",
   "policy": {
-    "maxCallsPerDay": 4,
-    "maxInputTokensPerCall": 18000,
-    "maxInputTokensPerDay": 60000,
+    "maxCallsPerDay": 6,
+    "maxInputTokensPerCall": 90000,
+    "maxInputTokensPerDay": 300000,
     "maxPacksPerRun": 1,
     "readyStockTarget": 24
   },
@@ -39,5 +39,6 @@
   "circuit": null,
   "publicationTriggered": false,
   "checkedAt": "2026-10-17T20:45:42.964Z",
-  "lastRun": "39067997056"
+  "lastRun": "39067997056",
+  "billingMode": "fixed_plan_user_confirmed"
 }
