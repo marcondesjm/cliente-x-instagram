@@ -1,3 +1,13 @@
+## 2026-10-17 09:46 BRT — carrossel com cobertura completa
+
+- Base origin/main c0eb5e30; worktree cliente-x-instagram-carousel-20261017; branch fix/carrossel-cobertura-20261017. Alterações preexistentes em cliente-x-instagram-modern preservadas.
+- Extração percorre os parágrafos e listas, sem o corte em cinco fatos. Paginação conserva o final; cobertura registra os trechos representados. Adaptações que não cabem são recusadas em vez de truncadas. Resumo de feed não recebe cobertura integral da matéria.
+- Layout de notícia conserva todas as frases, com verificação do texto no DOM e da área visível. Método de engajamento preserva adaptações completas.
+- Coluna de Alessandra Montini no Olhar Digital de 17/10: adaptação própria em 18 slides para o aplicativo e versão reorganizada em 10 para a API. 42/42 trechos mapeados nas duas versões. Hash exige revisão se a fonte mudar.
+- Documentação da Meta consultada por HTTPS: carrossel da API limitado a 10; aplicativo aceita até 20. Guardas impedem descarte silencioso ou envio de excedentes.
+- Verificações: validate-copy (21 packs, 54 automáticos, 75 seleções), teste de extração/paginação/conclusão/IHC/limites, dois renders reais (18 e 10 slides), inspeção visual e comparação texto/DOM. PDF de quatro páginas atualizado com adendo; botão e headers ajustados.
+- Nenhuma mídia apagada, substituída, agendada ou republicada. Arquivos JPG em automation/instagram-template/runs/2026-10-17-materia-agentes-{18,10}-slides. Aplicação na produção e próxima publicação ainda precisam de evidência própria.
+
 ## 2026-09-19 — Story alinhado ao feed
 
 - Base origin/main 34604723; worktree cliente-x-instagram-story-consistency-20260919, branch fix/story-feed-consistency-20260919.

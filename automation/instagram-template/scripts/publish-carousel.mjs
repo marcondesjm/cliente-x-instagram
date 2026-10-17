@@ -890,7 +890,7 @@ function estimateTextLines(text = '', width = 400, fontSize = 30) {
   return lines;
 }
 
-function splitCreativeDescription(text = '') {
+function splitCreativeDescription(text = '', preserveAllSentences = false) {
   const clean = applyAnatexCopyRules(text).replace(/\s+/g, ' ').trim();
   const sentences = clean.split(/(?<=[.!])\s+/).filter(Boolean);
   const first = sentences[0] || clean;
@@ -912,7 +912,9 @@ function splitCreativeDescription(text = '') {
   // A explicação inteira continua na legenda; no cartão fica somente o
   // fechamento da primeira frase, que é legível em fonte grande no celular.
   let close = closeWords.join(' ').trim();
-  if (close.split(' ').filter(Boolean).length < 4 && rest) {
+  if (preserveAllSentences) {
+    close = [close, rest].filter(Boolean).join(' ');
+  } else if (close.split(' ').filter(Boolean).length < 4 && rest) {
     close = rest.split(/(?<=[.!])\s+/)[0].trim();
   }
   return { lead, emphasis, close };
@@ -1241,6 +1243,7 @@ function applyBottiniVoice(enhancement, account = {}) {
 }
 
 function preparePackForPublication(pack, dateString, slotIndex, account = {}, publishMode = 'feed-and-story', options = {}) {
+  if (pack.research?.coverage?.complete) return { pack: JSON.parse(JSON.stringify(pack)), intelligence: { enabled: true, strategy: 'materia-com-cobertura-completa', sourceCopyPreserved: true } };
   if (pack.editorialSeries) return { pack: JSON.parse(JSON.stringify(pack)), intelligence: { enabled: true, strategy: 'serie-autoral-aprovada', sourceCopyPreserved: true } };
   let enhancement;
   if (options.allowIhc !== false && isIhcHanahEnabled(account)) {
@@ -2281,7 +2284,7 @@ function anatexSlideHtml(slide, index, total, account, style, renderContext = {}
   const slideStyle = styleForSlide(style, index);
   const title = anatexTitle(slide.title || '');
   const body = applyAnatexCopyRules(slide.body || '');
-  const creativeBody = splitCreativeDescription(body);
+  const creativeBody = splitCreativeDescription(body, Boolean(slide.researchSource || slide.preserveEngagementCopy));
   const eyebrow = applyAnatexCopyRules(slide.eyebrow || 'Pra saber');
   const accent = slideStyle.accent || '#a7563d';
   const accentText = contrastColor(accent);
@@ -3321,6 +3324,12 @@ function validatePack(pack) {
     throw new Error(`Legenda excede o limite seguro do Instagram (${String(pack.caption || '').length}/${INSTAGRAM_CAPTION_MAX_LENGTH}).`);
   }
   if (!Array.isArray(pack.slides) || pack.slides.length < 2) throw new Error('Cada pack precisa de pelo menos 2 slides.');
+  if (pack.slides.length > 20) throw new Error('Carrossel acima de 20 slides: adapte o conteúdo sem descartar a conclusão.');
+  if (pack.research?.coverage) {
+    const facts = pack.research.sourceFacts || [];
+    const covered = new Set(pack.slides.flatMap((slide) => slide.sourceFactIndices || []));
+    if (!facts.length || facts.some((_, index) => !covered.has(index))) throw new Error('Carrossel incompleto: contexto factual ausente ou trechos da matéria sem slide.');
+  }
   for (const slide of pack.slides) {
     const hasImage = Boolean(slide.imagePath || slide.imageUrl);
     const text = `${slide.eyebrow}\n${slide.title}\n${slide.body}`;
@@ -3763,6 +3772,20 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
     });
     if (overlapCheck.collisions.length) {
       throw new Error(`Slide ${index + 1} rejeitado: sobreposicao entre imagem e blocos de conteudo (${overlapCheck.collisions.join(', ')}).`);
+    }
+    if (slide.researchSource) {
+      const renderedCopy = await page.evaluate(() => {
+        const parts = [...document.querySelectorAll('.note .lead, .note .emphasis, .note .close')];
+        if (!parts.length) return null;
+        return {
+          text: parts.map(part => part.textContent.trim()).filter(Boolean).join(' '),
+          outsideFrame: parts.some(part => part.getBoundingClientRect().bottom > innerHeight - 30)
+        };
+      });
+      if (renderedCopy && (renderedCopy.text.replace(/\s+/g, ' ').trim() !== applyAnatexCopyRules(slide.body || '').replace(/\s+/g, ' ').trim() || renderedCopy.outsideFrame)) {
+        await browser.close();
+        throw new Error(`Slide ${index + 1} rejeitado: texto da matéria ausente ou fora da área visível.`);
+      }
     }
     await page.screenshot({ path: imagePath, type: 'jpeg', quality: 94, fullPage: false });
     imagePaths.push(imagePath);
@@ -5353,8 +5376,10 @@ async function main() {
         storyMethod: { ihcHanahEnabled: true }
       }
     };
-    const ihcReelProbe = preparePackForPublication(researchIntegrityProbe, today, slotIndex, ihcProbeAccount, 'reel-and-story').pack;
-    const ihcCarouselProbe = preparePackForPublication(researchIntegrityProbe, today, slotIndex, ihcProbeAccount, 'feed-and-story').pack;
+    const ihcInput = structuredClone(researchIntegrityProbe);
+    delete ihcInput.research.coverage;
+    const ihcReelProbe = preparePackForPublication(ihcInput, today, slotIndex, ihcProbeAccount, 'reel-and-story').pack;
+    const ihcCarouselProbe = preparePackForPublication(ihcInput, today, slotIndex, ihcProbeAccount, 'feed-and-story').pack;
     validatePack(ihcReelProbe);
     validatePack(ihcCarouselProbe);
     if (ihcReelProbe.slides.length !== 9 || ihcCarouselProbe.slides.length !== 10) {
@@ -5417,7 +5442,7 @@ async function main() {
       articleFacts: articleFactsProbe
     }, validationNow, { niche: 'automação com IA para empresas', keywords: radarKeywords });
     const continuedSlideCopy = continuedResearchProbe.slides.map((slide) => `${slide.title}\n${slide.body}`).join('\n');
-    if (articleFactsProbe.length < 3 || !continuedSlideCopy.includes(articleFactsProbe[1].slice(0, 48)) || !continuedResearchProbe.caption.includes(articleFactsProbe[2])) {
+    if (articleFactsProbe.length < 3 || !continuedSlideCopy.includes(articleFactsProbe[1]) || !continuedSlideCopy.includes(articleFactsProbe[2])) {
       throw new Error('Continuidade factual entre matéria, slide 3 e legenda falhou.');
     }
     if (continuedResearchProbe.slides.slice(1, 4).some((slide) => /\.\.\.$/.test(String(slide.title || '').trim()))) {
@@ -5922,6 +5947,7 @@ async function main() {
   const enhancement = preparePackForPublication(pack, today, generationSlotIndex, account, publishMode, { allowIhc: methodAllowed });
   pack = enhancement.pack;
   pack.caption = fitInstagramCaption(pack.caption, pack);
+  assertCarouselPublishingLimit(pack, publishMode, args);
   const historyPack = JSON.parse(JSON.stringify(pack));
   // A mesma janela de publicação pode gerar várias pautas. A fonte e o tema
   // precisam participar da identidade visual para que capas de notícias
@@ -6229,7 +6255,16 @@ async function main() {
   console.log(JSON.stringify(result, null, 2));
 }
 
-main().catch((error) => {
+export function assertCarouselPublishingLimit(pack, publishMode, args = {}) {
+  const carousel = !['story-only', 'reel-only', 'reel-and-story'].includes(publishMode);
+  if (carousel && !args.renderOnly && !args.dryRun && pack.slides.length > 10) {
+    throw new Error(`Carrossel com ${pack.slides.length} slides preservados. A API da Meta aceita até 10; use a exportação para publicação pelo aplicativo (até 20). Nenhum slide foi descartado.`);
+  }
+}
+
+export { validatePack, preparePackForPublication, renderSlides, loadConfig, splitCreativeDescription };
+
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main().catch((error) => {
   const args = parseArgs(process.argv);
   const scheduledPostId = process.env.INSTAGRAM_TEMPLATE_ACTIVE_SCHEDULED_POST_ID;
   if (scheduledPostId) {
