@@ -1,3 +1,11 @@
+## 2026-10-17 — Sabedoria Kids: nicho evangélico confirmado
+
+- Branch: fix/kids-profile-20261017; base alinhada com origin/main 39fceb67.
+- Perfil sabedoria-kids atualizado para evangélico infantil, público de famílias e educadores evangélicos; briefing em docs/sabedoria-kids-operacao.md.
+- Validação local: JSON válido, demais contas idênticas, 12 horários, 36 pautas com referência e estados onboarding/awaiting_connection preservados; git diff --check aprovado.
+- Conexão: última tentativa retornou Meta 100 ao consultar o perfil. Convite de testador preparado no navegador, sem envio confirmado. Nenhuma publicação executada.
+- Próximo passo: resolver autorização e validar identidade/permissões, criativo e publicação real antes da ativação. Escala de 50 contas ainda não validada.
+
 ## 2026-10-17 09:59 BRT — carrossel corrigido publicado
 
 - Pedido explícito do usuário: poste no instagram. Carrossel de 10 slides publicado em @marcondes.machado.oficial; cobertura dos 42 trechos confirmada.
