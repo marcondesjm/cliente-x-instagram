@@ -1,3 +1,16 @@
+## 2026-10-17 — início de Sabedoria Kids antecipado a pedido do titular
+
+- Usuário confirmou antecipar para hoje e monitorar uma publicação real. Branch ops/kids-start-today-20261017; implementação 51c0b315 enviada ao origin/main.
+- automaticScheduleStartsAt alterado de 18/10 às 07h BRT para 17/10 às 13h BRT (2026-10-17T16:00:00Z). Preservados os 12 horários e modo automático; horários anteriores da manhã não são recuperados.
+- Seletor real confirmou has_due=true, slot_index=6, slot_date=2026-10-17, scheduled_at=16:00Z. validate-kids-onboarding e git diff --check aprovados.
+- Rotina agendada anterior 39050429887 havia pulado publicação por ainda não haver slot liberado no checkout. Vigia da própria conta acionado após a mudança: run 39051179904, automático com seleção de pendência e marcação de ledger; não é publicação manual de pack fixo.
+- Em acompanhamento até histórico persistido, Feed/Reel e Story IDs e primeiro comentário; ainda sem afirmar nova publicação nesta etapa.
+
+- Resultado confirmado: run 39051179904 terminou success, etapa Publish feed and story success. Publicado Bondade é um fruto que podemos cultivar em 17/10/2026 às 13:53:13 BRT (16:53:13Z).
+- Feed ID 17969893599165135; permalink https://www.instagram.com/p/DemlNycIInI/; Story ID 18142193101604169. Primeiro comentário sem ID e sem erro registrado (não confirmado/enviado).
+- publication-history.json e published-slots.json persistidos no origin/main 560d50fb. Slot 6 de 17/10, agendado para 13h BRT, marcado published às 13:53:13, workflowRun 39051179904. Não recuperar slots anteriores ao início autorizado.
+- Produção alinhada ao início de hoje: deploy READY dpl_FBtbJmFNkWc25uo7UqpZ6sDE2ZW9, código 51c0b315, alias cliente-x-instagram.vercel.app. Próximo horário da agenda: 14h BRT, ainda sem afirmar sua publicação.
+
 ## 2026-10-17 — correção da prévia na troca de conta
 
 - Branch fix/account-post-preview-20261017; implementação 07cd4223 enviada ao origin/main após rebase sobre ae5cd9e2, preservando atualizações operacionais concorrentes.
