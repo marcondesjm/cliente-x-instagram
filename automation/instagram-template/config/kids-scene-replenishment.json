@@ -664,11 +664,17 @@
       "day": "2026-10-17",
       "stage": "pixels:kids-biblia-29:6654943ac38eff87",
       "startedAt": "2026-10-17T22:41:55.331Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 66332,
       "promptChars": 659,
       "imageFingerprint": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817",
-      "promptFingerprint": "8757f8af2d72f56ed83bcbd4da7166c7c5186e2a50a019a9ee0803cf91ed29fc"
+      "promptFingerprint": "8757f8af2d72f56ed83bcbd4da7166c7c5186e2a50a019a9ee0803cf91ed29fc",
+      "completedAt": "2026-10-17T22:42:06.219Z",
+      "reportedInputTokens": 23978,
+      "inputTokens": 23978,
+      "outputTokens": 39,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -763,7 +769,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T22:41:55.331Z",
+  "checkedAt": "2026-10-17T22:42:06.219Z",
   "lastRun": "39076050174",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -910,58 +916,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "select:kids-biblia-29",
+    "stage": "pixels:kids-biblia-29:6654943ac38eff87",
     "value": {
-      "decision": "reject",
-      "feed": [
-        5,
-        3,
-        8,
-        2,
-        7
-      ],
-      "story": 1,
+      "visible": true,
+      "style": "illustration",
       "childSuitable": true,
-      "distinct": true,
-      "referenceAccurate": true,
-      "evidence": [
-        {
-          "card": 1,
-          "scene": 5,
-          "verse": "19:6",
-          "reason": "Cena mostra Zaqueu recebendo Jesus em casa com mesa posta, correspondendo ao título 'Zaqueu recebeu Jesus em sua casa' (Lucas 19:6), resolvendo o desacordo da avaliação anterior."
-        },
-        {
-          "card": 2,
-          "scene": 3,
-          "verse": "19:4-5",
-          "reason": "Jesus olha para cima apontando para Zaqueu na árvore sicômoro, ilustrando visualmente Zaqueu subindo na árvore para ver Jesus conforme descrito no corpo do cartão."
-        },
-        {
-          "card": 3,
-          "scene": 8,
-          "verse": "19:3",
-          "reason": "Zaqueu pequeno entre multidão alta tentando ver Jesus, representando concretamente o obstáculo que gera a necessidade de mudança de atitude mencionada no cartão."
-        },
-        {
-          "card": 4,
-          "scene": 2,
-          "verse": "19:8",
-          "reason": "Zaqueu declarando restituição com mão levantada diante de Jesus, simbolizando reparar erros e devolver algo, alinhado à atividade familiar proposta no cartão."
-        },
-        {
-          "card": 5,
-          "scene": 7,
-          "verse": "19:1",
-          "reason": "Jesus caminhando com discípulos por Jericó, cena introdutória adequada para convidar à leitura completa da passagem Lucas 19:1–10 com um adulto."
-        },
-        {
-          "card": 6,
-          "scene": 1,
-          "verse": "19:9-10",
-          "reason": "Jesus falando sobre salvação chegando àquela casa, oferecendo uma cena diferente das anteriores relacionada à mesma passagem para estudo em família."
-        }
-      ]
+      "observedEvent": "Uma pessoa deitada em uma cama sendo observada por outra pessoa em pé ao lado"
     }
   },
   "lastFactualEvaluation": {
