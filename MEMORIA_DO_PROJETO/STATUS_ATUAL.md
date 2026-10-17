@@ -1,3 +1,13 @@
+## 2026-10-17 — padrão ilustrado obrigatório em Sabedoria Kids
+
+- Incidente: usuário mostrou Abraão deu o primeiro passo sem imagem após aprovação do padrão ilustrado. Causa confirmada: kids-biblia-05 ainda tinha typographicOnly=true e nenhum imagePath; apenas duas das 37 pautas tinham ilustração completa. Salvar preferência não implementou exigência de qualidade na seleção.
+- Branch fix/kids-enforce-illustrated-standard, base 4a685016. contentProfile.visualStandard=illustrated-bible; filtro central retém apenas pautas com imagens existentes em todos os cartões, layout ilustrado, Story distinto da capa e fonte/licença/revisão. Guarda final também bloqueia packs explícitos/manuais sem esses requisitos antes de render/upload/Meta.
+- Ilustrado Abraão com seis imagens individuais Sweet Publishing / FreeBibleimages, CC BY-SA 3.0, conjunto abraham-canaan. Fonte/atribuição/licença registradas; cenas e mapa inspecionados. Nenhuma substituição ou republicação do post já publicado DempTZ9msno.
+- Estado real: três de 37 pautas ilustradas; 34 pendentes. As três já constam no histórico, portanto não afirmar que existem 12 publicações novas disponíveis. Pautas sem imagens deixam de ser selecionadas; horários podem aguardar novas pautas ilustradas inéditas. Antirrepetição mantida.
+- Painel/API passam a mostrar contagem ilustradas/pendentes e explicar o bloqueio de pautas sem imagens. Acervo editável mantém todos os índices originais; prévia automática usa apenas elegíveis.
+- Testes: validate-bible-visual-standard (imagem ausente/arquivo ausente/licença/Story repetido bloqueados; outras contas preservadas), --validate-copy sabedoria-kids (37 packs, três elegíveis), validate-editorial-support-layout, validate-photo-title-fit e sintaxe dashboard/API/publisher aprovados.
+- Render-only 2026-10-17-150639-slot-0-render-only: cinco cartões e Story gerados; capa/fechamento/Story inspecionados. Prévia local, sem publicação.
+
 ## 2026-10-17 — composição dos cartões internos sem fotografia
 
 - Código 9f374579 enviado a origin/main. Deploy READY dpl_AUKoBA7pqSYQS7cn53HNMjNMzeEZ, alias cliente-x-instagram.vercel.app. Prévia aprovada por inspeção local; nenhuma nova publicação disparada neste ajuste.

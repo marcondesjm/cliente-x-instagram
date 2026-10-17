@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { chromium } from 'playwright';
+import { assertBibleVisualStandard, visualReadyPacks } from '../../../lib/bible-visual-standard.js';
 import { canPublishAccount } from '../../../lib/publication-access.js';
 import { seriesForSlot, seriesPacks } from '../../../lib/follower-series.js';
 import { educationEnabled, educationKind, educationLessons, nextEducationPack, isBusinessAINews, newsWithPracticalExercise, educationPreview, educationDayBlocked, educationIntegrated, educationSlotIndex, educationForSlot } from '../../../lib/education-strategy.js';
@@ -5143,6 +5144,8 @@ async function main() {
   const supabasePacks = account.contentProfile?.curatedOnly ? [] : await loadSupabasePacks(env, args.account);
   const packs = mergePacks(supabasePacks, localPacks);
   validatePacks(packs);
+  const illustratedPacks = visualReadyPacks(packs, account, path => existsSync(resolve(ROOT, path)));
+  if (!illustratedPacks.length && !args.validateCopy) throw Object.assign(new Error('Acervo aguardando ilustrações bíblicas aprovadas; nenhum cartão vazio será publicado.'), {stage:'bible-visual-standard'});
 
   const today = args.planDate || todaySaoPaulo();
   if (args.planDay) {
@@ -5162,7 +5165,7 @@ async function main() {
       date: today,
       dailyPlan: plannedNews.length
         ? planForNewsSlots(account, plannedNews, today)
-        : planForAutomaticSlots(account, packs, today)
+        : planForAutomaticSlots(account, illustratedPacks, today)
     }, null, 2));
     return;
   }
@@ -5181,7 +5184,7 @@ async function main() {
   const generationSlotIndex = slotIndex;
   const creativeBatchRemaining = creativeBatchSize - (publicationHistory.length % creativeBatchSize);
   const profilePacks = buildProfileContentPacks(account, today, generationSlotIndex);
-  const autoPacks = account.contentProfile?.curatedOnly ? packs : profilePacks.length ? profilePacks : buildAutoContentPacks(today, generationSlotIndex);
+  const autoPacks = account.contentProfile?.curatedOnly ? illustratedPacks : profilePacks.length ? profilePacks : buildAutoContentPacks(today, generationSlotIndex);
   let editorialResearch = { packs: [], items: [], failures: [], researchedAt: new Date().toISOString() };
   if (!args.validateCopy && radar.enabled && radar.sources.length && (!educationalRun || educationalKind === 'news')) {
     try {
@@ -5221,7 +5224,7 @@ async function main() {
       console.warn(`Pauta Radar rejeitada: ${JSON.stringify(rejection)}`);
     }
   );
-  const baseSelectionPacks = profilePacks.length ? mergePacks(profilePacks, packs) : packs;
+  const baseSelectionPacks = profilePacks.length ? mergePacks(profilePacks, illustratedPacks) : illustratedPacks;
   let useResearchThisSlot = radar.enabled && editorialResearch.packs.length > 0;
   let usedEditorialReserveThisSlot = false;
   let automaticSelectionPacks = useResearchThisSlot
@@ -6023,6 +6026,7 @@ async function main() {
     : selectionMode === 'explore' ? 'candidate-novelty' : selectionMode === 'exploit' ? 'performance' : 'manual';
   const organicPotential = organicPotentialScore(pack, today, publicationHistory, selectionLearningContext);
   const methodAllowed = !dashboardPack && !scheduledPost && !seriesSelection;
+  assertBibleVisualStandard(pack, account, path => existsSync(resolve(ROOT, path)));
   const enhancement = preparePackForPublication(pack, today, generationSlotIndex, account, publishMode, { allowIhc: methodAllowed });
   pack = enhancement.pack;
   pack.caption = fitInstagramCaption(pack.caption, pack);

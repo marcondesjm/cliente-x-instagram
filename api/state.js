@@ -1,3 +1,4 @@
+import { visualReadyPacks, requiresBibleIllustrations } from '../lib/bible-visual-standard.js';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -2859,6 +2860,7 @@ export default async function handler(req, res) {
   const weeklyProgramGroup = weeklyProgramGroups.find((item) => item.account === accountKey);
   const directAutomationGroup = directAutomationGroups.find((item) => item.account === accountKey);
   const packs = group?.packs || [];
+  const readyPacks = visualReadyPacks(packs, account);
   const scheduleBrt = account?.scheduleUtc?.map(cronToBrtTime) || [];
   const scheduledPosts = scheduledGroup?.posts || [];
   const weeklyPrograms = weeklyProgramGroup?.programs || [];
@@ -2866,9 +2868,9 @@ export default async function handler(req, res) {
   try {
     plan = await publisherDailyPlan(accountKey, todaySaoPaulo(), account, publicationHistory[accountKey] || []);
   } catch {
-    plan = editorialDailyPlan(scheduleBrt, account, packs, scheduledPosts);
+    plan = editorialDailyPlan(scheduleBrt, account, readyPacks, scheduledPosts);
   }
-  if (!plan.length) plan = dailyPlan(scheduleBrt, packs, scheduledPosts);
+  if (!plan.length) plan = dailyPlan(scheduleBrt, readyPacks, scheduledPosts);
   plan = mergeProgramItems(plan, weeklyPrograms);
   plan = synchronizeDailyPlan(plan, publishedSlots, publicationHistory, accountKey, todaySaoPaulo());
   const tomorrowDate = tomorrowSaoPaulo();
@@ -2876,7 +2878,7 @@ export default async function handler(req, res) {
   try {
     tomorrowPlan = await publisherDailyPlan(accountKey, tomorrowDate, account, publicationHistory[accountKey] || []);
   } catch {
-    tomorrowPlan = editorialDailyPlan(scheduleBrt, account, packs, scheduledPosts, tomorrowDate);
+    tomorrowPlan = editorialDailyPlan(scheduleBrt, account, readyPacks, scheduledPosts, tomorrowDate);
   }
   tomorrowPlan = mergeProgramItems(tomorrowPlan, weeklyPrograms, tomorrowDate);
   let biblicalResearch = null;
@@ -2924,6 +2926,7 @@ export default async function handler(req, res) {
     secrets: session ? secretStatuses(accounts) : [],
     scheduleBrt,
     biblicalResearch,
+    visualReadiness: { required: requiresBibleIllustrations(account), total: packs.length, ready: readyPacks.length, pending: packs.length - readyPacks.length },
     calendarPublications: (publicationHistory[accountKey] || [])
       .filter(entry => entry.mediaId && entry.publishedAt)
       .map(entry => ({ date: brtDateAndTime(entry.publishedAt).date, title: entry.coverTitle || 'Publicado', permalink: entry.permalink || '', mediaId: entry.mediaId, storyMediaId: entry.storyMediaId || '' })),

@@ -3151,6 +3151,7 @@
         appState.scheduleBrt = state.scheduleBrt || [];
         appState.calendarPublications = state.calendarPublications || [];
         appState.biblicalResearch = state.biblicalResearch || null;
+        appState.visualReadiness = state.visualReadiness || null;
         appState.dailyPlan = state.dailyPlan || [];
         appState.tomorrowPreview = state.tomorrowPreview || { date: '', items: [] };
         appState.editorialRadar = state.editorialRadar || { status: 'fallback', label: 'Radar indisponível', sources: [], safeguards: [] };
@@ -5715,6 +5716,7 @@
         appState.scheduleBrt = state.scheduleBrt || [];
         appState.calendarPublications = state.calendarPublications || [];
         appState.biblicalResearch = state.biblicalResearch || null;
+        appState.visualReadiness = state.visualReadiness || null;
         appState.dailyPlan = state.dailyPlan || appState.dailyPlan;
         DATA.schedulesUtc = state.account?.scheduleUtc || DATA.schedulesUtc;
         document.getElementById('contentNote').textContent = `${DATA.schedulesUtc.length} horários ativos`;
@@ -6616,11 +6618,13 @@
         const packs = appState.packs?.length || 0;
         const topics = Array.isArray(research?.entries) ? research.entries : [];
         const references = (appState.account.contentProfile.biblicalSources || []).filter(source => source?.name && /^https:\/\//i.test(source?.url || ''));
-        container.classList.toggle('is-fallback', !packs);
-        label.textContent = biblical ? (packs ? 'Acervo bíblico preparado' : 'Acervo bíblico pendente') : (packs ? 'Acervo editorial preparado' : 'Acervo editorial pendente');
+        const visual = appState.visualReadiness;
+        container.classList.toggle('is-fallback', !packs || Boolean(visual?.required && visual.pending));
+        label.textContent = biblical ? (visual?.required ? `${visual.ready} pautas ilustradas · ${visual.pending} pendentes` : (packs ? 'Acervo bíblico preparado' : 'Acervo bíblico pendente')) : (packs ? 'Acervo editorial preparado' : 'Acervo editorial pendente');
         details.innerHTML = `
           <strong>${biblical ? 'Esta conta usa conteúdo bíblico infantil, sem radar de notícias.' : 'Esta conta usa o acervo editorial preparado, sem radar de notícias.'}</strong>
           <p>${packs} conteúdos no acervo. A seleção automática verifica repetição no momento de publicar. Esta informação não confirma publicações futuras.</p>
+          ${visual?.required ? `<p><strong>Padrão ilustrado obrigatório:</strong> ${visual.ready} pautas com ilustrações revisadas e ${visual.pending} aguardando imagens. Pautas sem ilustração ficam fora da seleção; se as ilustradas já foram publicadas, o horário aguarda conteúdo novo.</p>` : ''}
           ${biblical ? `<p>Pesquisa bíblica: ${topics.length} temas encontrados${research?.checkedAt ? ` · última consulta: ${escapeHtml(formatDateTime(research.checkedAt))}` : ''}. São sugestões para desenvolver e revisar antes de incluir no acervo.</p>
           <strong>Fontes de referência cadastradas</strong>
           <div class="radar-sources">${references.map(source => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.name)} ↗</a>`).join('')}</div>
