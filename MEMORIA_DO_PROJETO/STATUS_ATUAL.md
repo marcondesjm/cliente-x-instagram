@@ -1,3 +1,7 @@
+## 2026-10-17 — verificação final publicada
+
+Deploy final dpl_61r1kasecVjFpYynEi7XHmVxRyFN READY em cliente-x-instagram.vercel.app. Painel autenticado real verificado: quatro relatórios próprios, limpeza imediata ao trocar contas e indicador Carregando até a resposta correta. Evidência output/kids-scenes/validacao-api-contas-painel-final.png. HTTP200 do painel/guia e PDF versão1.4 com hash idêntico ao local. Testes de API consultiva, privacidade, citações/prova factual, montagem, busca, guard de publicação e sintaxe passaram. Conteúdo/agenda não foram alterados pelas recomendações; o bloqueio da visão Kids permanece ativo.
+
 ## 2026-10-17 — validação editorial por API nas quatro contas
 
 Pedido explícito do usuário: usar API para validar e aprimorar a plataforma nas contas cadastradas. Criado workflow manual platform-editorial-api-validation.yml, com segredo existente no GitHub, host claude-ss fixo e nenhuma chamada Meta. Dossiê por conta exclui contatos, briefing, logos anexos, tokens e dados de clientes. Não salva/aplica recomendações no conteúdo ou agenda.
