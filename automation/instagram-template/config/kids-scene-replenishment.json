@@ -968,11 +968,17 @@
       "stage": "pixels:kids-biblia-29:6654943ac38eff87",
       "model": "claude-haiku-4.5",
       "startedAt": "2026-10-17T22:59:47.822Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 66332,
       "promptChars": 659,
       "imageFingerprint": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817",
-      "promptFingerprint": "8757f8af2d72f56ed83bcbd4da7166c7c5186e2a50a019a9ee0803cf91ed29fc"
+      "promptFingerprint": "8757f8af2d72f56ed83bcbd4da7166c7c5186e2a50a019a9ee0803cf91ed29fc",
+      "completedAt": "2026-10-17T22:59:57.811Z",
+      "reportedInputTokens": 24071,
+      "inputTokens": 24071,
+      "outputTokens": 50,
+      "usageStatus": "provider_reported",
+      "stopReason": "end_turn"
     }
   ],
   "entries": [
@@ -1067,7 +1073,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T22:59:47.822Z",
+  "checkedAt": "2026-10-17T22:59:57.811Z",
   "lastRun": "39077206295",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -1224,71 +1230,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "verify:kids-biblia-29",
+    "stage": "pixels:kids-biblia-29:6654943ac38eff87",
     "value": {
-      "decision": "reject",
-      "cards": [
-        {
-          "scene": 1,
-          "observedEvent": "Um homem sentado nos galhos de uma árvore olha para baixo enquanto um grupo de pessoas reunidas ao redor da árvore olha para cima na direção dele.",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true,
-          "verse": "19:3-4",
-          "reason": "A cena retrata visualmente Zaqueu subido na árvore para ver Jesus, conforme descrito em Lucas 19:3-4. A composição é adequada para crianças e corresponde diretamente ao evento textual."
-        },
-        {
-          "scene": 2,
-          "observedEvent": "Uma pessoa sobe em uma árvore frondosa enquanto um grupo de pessoas observa do chão ao redor da base da árvore",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": false,
-          "copyMatch": false,
-          "verse": "19:4",
-          "reason": "Embora corresponda à passagem (Zaqueu subindo na árvore), esta cena não é distinta da cena 1. Ambas retratam o mesmo momento básico da narrativa com composições muito similares, violando o requisito de que 'distinct exige composições diferentes'."
-        },
-        {
-          "scene": 3,
-          "observedEvent": "Um grupo de homens com barbas observa outro homem conversando com uma terceira pessoa na entrada de um edifício de pedra.",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": false,
-          "verse": "19:5-7",
-          "reason": "A cena pode representar Jesus chegando à casa de Zaqueu e sendo observado/murmurado pela multidão (Lucas 19:5-7). É adequada para crianças e distinta das cenas anteriores, mas a descrição observada não copia literalmente nenhuma observação fornecida no contexto original."
-        },
-        {
-          "scene": 4,
-          "observedEvent": "Um homem de túnica azul e manto amarelo estende a mão e toca o ombro de outro homem vestido de amarelo, enquanto ambos estão cercados por um grupo de pessoas em um ambiente ao ar livre.",
-          "passageMatch": false,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": false,
-          "verse": "",
-          "reason": "Esta cena não corresponde claramente a nenhum evento específico da passagem de Lucas 19:1-10. O texto não descreve Jesus tocando o ombro de Zaqueu ou qualquer interação física específica deste tipo. O encontro é verbal ('hurry and come down'). Portanto, não há correspondência clara com a passagem."
-        },
-        {
-          "scene": 5,
-          "observedEvent": "Um homem de túnica clara conversa com um grupo de homens que o cercam em ambiente ao ar livre",
-          "passageMatch": false,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": false,
-          "verse": "",
-          "reason": "Esta cena é ambígua e não corresponde especificamente a nenhum evento distinto da passagem. Pode ser interpretada de várias formas, mas não retrata claramente Zaqueu fazendo sua declaração de restituição (que ocorre dentro de casa/contexto privado) nem outro momento específico. É muito genérica e não se alinha precisamente com o texto."
-        },
-        {
-          "scene": 6,
-          "observedEvent": "Um homem caminha à frente de um grupo de três homens em uma paisagem rural ao ar livre",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": false,
-          "verse": "19:1",
-          "reason": "Pode representar Jesus entrando e passando por Jericó (Lucas 19:1). É distinta das outras cenas e adequada para crianças, mas a descrição observada não copia literalmente nenhuma observação fornecida no contexto original."
-        }
-      ]
+      "visible": true,
+      "style": "illustration",
+      "childSuitable": true,
+      "observedEvent": "Um grupo de homens em trajes antigos conversando e gesticulando entre si em um ambiente externo iluminado"
     }
   },
   "lastFactualEvaluation": {
