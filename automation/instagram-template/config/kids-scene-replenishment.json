@@ -986,11 +986,17 @@
       "stage": "select:kids-biblia-29",
       "model": "claude-sonnet-4.6",
       "startedAt": "2026-10-17T23:00:00.556Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 8626,
       "imageFingerprint": null,
-      "promptFingerprint": "c4ccbc66eabea2463aee2536ea4c2139d454e4ec2579b59d01f7ca9842ffa0eb"
+      "promptFingerprint": "c4ccbc66eabea2463aee2536ea4c2139d454e4ec2579b59d01f7ca9842ffa0eb",
+      "completedAt": "2026-10-17T23:00:20.987Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 36,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -1085,7 +1091,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T23:00:00.556Z",
+  "checkedAt": "2026-10-17T23:00:20.987Z",
   "lastRun": "39077206295",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -1242,12 +1248,58 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-29:6654943ac38eff87",
+    "stage": "select:kids-biblia-29",
     "value": {
-      "visible": true,
-      "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Um grupo de homens em trajes antigos conversando e gesticulando entre si em um ambiente externo iluminado"
+      "decision": "reject",
+      "feed": [
+        3,
+        6,
+        2,
+        7,
+        1
+      ],
+      "story": 5,
+      "childSuitable": false,
+      "distinct": false,
+      "referenceAccurate": false,
+      "evidence": [
+        {
+          "card": 1,
+          "reason": "O título da capa é 'Zaqueu recebeu Jesus em sua casa'. A cena 3 mostra Zaqueu na árvore (Lucas 19:3-4), que é um evento ANTERIOR ao recebimento de Jesus. Nenhuma das cenas disponíveis retrata claramente Zaqueu recebendo Jesus em sua casa (evento dos versículos 5-6). A cena 2 pode sugerir uma conversa interna, mas não corresponde claramente ao momento específico do encontro.",
+          "scene": 3,
+          "verse": "19:3-4"
+        },
+        {
+          "card": 2,
+          "reason": "O cartão descreve Zaqueu subindo na árvore E depois recebendo Jesus. As cenas 3 e 6 mostram apenas o momento da árvore, sendo muito similares entre si (não distintas). Não há cena clara mostrando ambos os eventos ou a sequência completa descrita no cartão.",
+          "scene": 6,
+          "verse": "19:4"
+        },
+        {
+          "card": 3,
+          "reason": "O cartão fala sobre mudança de atitude e reparação de erros (versículos 8-9). Nenhuma das cenas disponíveis retrata claramente Zaqueu fazendo sua declaração de restituição. A cena 2 (ambiente interno com conversa) é ambígua e não especificamente identificável como o momento da declaração.",
+          "scene": 2,
+          "verse": "19:8"
+        },
+        {
+          "card": 4,
+          "reason": "Este cartão é sobre atividade familiar (conversar sobre devolver algo), não sobre evento bíblico direto. Pode ser acompanhado por qualquer cena relevante, mas não há evidência visual específica necessária aqui.",
+          "scene": 7,
+          "verse": "19:1"
+        },
+        {
+          "card": 5,
+          "reason": "Cartão sobre continuar conversa em família e ler a passagem. Não requer cena específica do evento bíblico.",
+          "scene": 1,
+          "verse": "19:1-10"
+        },
+        {
+          "card": 6,
+          "reason": "Story precisa de cena diferente relacionada à passagem. As cenas disponíveis são limitadas e muitas já foram usadas. A cena 5 pode representar Jesus sendo observado/murmurado pela multidão (19:7), mas é ambígua. Além disso, há problemas de distinção: cenas 3 e 6 são muito similares (ambas mostram árvore), e cenas 1, 4, 5, 7, 8 são genéricas ou não correspondem precisamente aos eventos específicos.",
+          "scene": 5,
+          "verse": "19:7"
+        }
+      ]
     }
   },
   "lastFactualEvaluation": {
