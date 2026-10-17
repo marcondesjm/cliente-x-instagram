@@ -1,4 +1,14 @@
 
+## 2026-10-17 — cenas selecionadas, conferidas e montadas
+
+- Continuação pedida para as cenas após busca automática. Selecionadas 18 ilustrações Sweet Publishing / FreeBibleimages CC BY-SA 3.0 para três pautas existentes inéditas: José/irmãos (Gênesis 45:1–15), Moisés/sarça (Êxodo 3:1–12) e maná (contexto ampliado para Êxodo 16:1–18). Cinco cenas no Feed e outra no Story por pauta, com créditos e licença nas legendas e CREDITOS.txt.
+- Fonte Samuel descartada deste lote: várias cenas do mesmo episódio eram iguais ou espelhadas, apesar de hashes JPEG diferentes. Não confundir hash distinto com composição distinta. Arquivos rejeitados ficaram somente em output/kids-scenes/samuel-rejected-repetition.
+- Manifesto kids-reviewed-scenes.json registra URLs, cenas de origem, descrições, hashes de arquivos e termos, referência e revisão editorial assistida. Não autoriza aprovação automática de cenas futuras. A busca automática continua pesquisa; estas três montagens foram conferidas neste turno.
+- Inventário agora 12/37 pautas ilustradas, não significa 12 inéditas disponíveis. Cadência e histórico preservados; nenhum disparo manual de publicação feito neste turno.
+- Renderizações de cinco cartões + Story: 2026-10-17-163833 (José), 163841 (sarça), 163846 (maná), slot-0-render-only. Revisão visual das 18 fontes e 18 artes finais; validate-copy, padrão bíblico e scheduled guard passaram. Prévia output/kids-scenes/previas-cenas-revisadas.png.
+- output/ excluído do deploy Vercel: prévias locais, arquivos de pesquisa e cenas rejeitadas não devem ser publicados junto com o site.
+
+
 ## 2026-10-17 — busca automática de imagens em sites para Sabedoria Kids
 
 - Pedido explícito: automatizar achar ilustrações em sites. Implementada descoberta de cenas licenciadas no FreeBibleimages, sem IA, chave de API ou disparos Meta.
