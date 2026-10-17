@@ -3,12 +3,12 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-haiku-4.5",
-  "health": "review_completed",
-  "message": "1 pauta(s) examinada(s); somente seleções aprovadas seguem para montagem.",
+  "health": "awaiting_blind_pilot",
+  "message": "Piloto híbrido: leitura individual existente e comparação com modelo textual mais forte.",
   "policy": {
-    "maxCallsPerDay": 63,
+    "maxCallsPerDay": 66,
     "maxInputTokensPerCall": 120000,
-    "maxInputTokensPerDay": 4000000,
+    "maxInputTokensPerDay": 4500000,
     "maxPacksPerRun": 1,
     "readyStockTarget": 24
   },
@@ -1385,7 +1385,7 @@
     "transport": "haiku-base64-json",
     "passedFixtures": 2,
     "previousCircuit": "vision_validation_failed",
-    "maxAdditionalCalls": 21,
+    "maxAdditionalCalls": 24,
     "restorePolicy": {
       "maxCallsPerDay": 26,
       "maxInputTokensPerDay": 1500000,
@@ -1394,7 +1394,136 @@
     "completedAt": null,
     "holdoutRun": "39076244962",
     "finalPilot": "39076470290",
-    "outcome": "testing_automatic_image_abstention"
+    "outcome": "testing_hybrid_reasoning"
   },
-  "responseFormat": "json"
+  "responseFormat": "json",
+  "pixelCache": {
+    "b4291db45aacafd3b1d3948b73a2faa6415222f4636ebf15ddb9f67d3b96cd1b": {
+      "version": "kids-scene-review-v3-blind",
+      "model": "claude-haiku-4.5",
+      "promptHash": "8757f8af2d72f56ed83bcbd4da7166c7c5186e2a50a019a9ee0803cf91ed29fc",
+      "checkedAt": "2026-10-17T22:55:19.850Z",
+      "recoveredFromRun": "39076836345",
+      "callId": "4a3d39d8-3927-4f6c-8e8e-07a8acc07452",
+      "observation": {
+        "id": "9ce49c775a44acf7",
+        "sha256": "b4291db45aacafd3b1d3948b73a2faa6415222f4636ebf15ddb9f67d3b96cd1b",
+        "imageHash": "1f303ac73e6d06422d9012dcff3c20b0198240b3df9f4240aa61ca26a58e637b",
+        "imageBytes": 67208,
+        "visible": true,
+        "style": "illustration",
+        "childSuitable": true,
+        "observedEvent": "Um homem caminha à frente de um grupo de três homens em uma paisagem rural ao ar livre"
+      }
+    },
+    "b53cd154cfc24580312fc276624cd59a448bd5e536dc8a107668dceb907cf357": {
+      "version": "kids-scene-review-v3-blind",
+      "model": "claude-haiku-4.5",
+      "promptHash": "8757f8af2d72f56ed83bcbd4da7166c7c5186e2a50a019a9ee0803cf91ed29fc",
+      "checkedAt": "2026-10-17T22:54:42.591Z",
+      "recoveredFromRun": "39076836345",
+      "callId": "165e0ec8-4aa7-4b63-a38b-f6dd9501d88f",
+      "observation": {
+        "id": "e64874ce7ad7e208",
+        "sha256": "b53cd154cfc24580312fc276624cd59a448bd5e536dc8a107668dceb907cf357",
+        "imageHash": "894e763a3e8dbb83f5cd562e20984e1d489054fba1a9b085e6edce1a6c6f49a0",
+        "imageBytes": 74218,
+        "visible": true,
+        "style": "illustration",
+        "childSuitable": true,
+        "observedEvent": "Um homem de túnica clara conversa com um grupo de homens que o cercam em ambiente ao ar livre"
+      }
+    },
+    "9306d38eb00b7e308023db4ed200b8251fbc80d5482f113dc135062ae084ffda": {
+      "version": "kids-scene-review-v3-blind",
+      "model": "claude-haiku-4.5",
+      "promptHash": "8757f8af2d72f56ed83bcbd4da7166c7c5186e2a50a019a9ee0803cf91ed29fc",
+      "checkedAt": "2026-10-17T22:55:33.662Z",
+      "recoveredFromRun": "39076836345",
+      "callId": "184d8cc9-6051-4913-83b0-a03fec7931a6",
+      "observation": {
+        "id": "7fe1505874703f57",
+        "sha256": "9306d38eb00b7e308023db4ed200b8251fbc80d5482f113dc135062ae084ffda",
+        "imageHash": "4c42a6c5b3bf4941452773ee2e4545ee2b7a6a7386238e4b581870df4757a508",
+        "imageBytes": 68371,
+        "visible": true,
+        "style": "illustration",
+        "childSuitable": true,
+        "observedEvent": "Um homem de túnica azul e manto amarelo estende a mão e toca o ombro de outro homem vestido de amarelo, enquanto ambos estão cercados por um grupo de pessoas em um ambiente ao ar livre."
+      }
+    },
+    "15dc1f5975c87bf8f0caae31a7b7f683dc5c76a6dc867c7b29d46413263ccd00": {
+      "version": "kids-scene-review-v3-blind",
+      "model": "claude-haiku-4.5",
+      "promptHash": "8757f8af2d72f56ed83bcbd4da7166c7c5186e2a50a019a9ee0803cf91ed29fc",
+      "checkedAt": "2026-10-17T22:55:08.724Z",
+      "recoveredFromRun": "39076836345",
+      "callId": "d258527c-ae0c-4fb8-b6e7-e6ac7247f0a3",
+      "observation": {
+        "id": "d3c9e973465ce4fc",
+        "sha256": "15dc1f5975c87bf8f0caae31a7b7f683dc5c76a6dc867c7b29d46413263ccd00",
+        "imageHash": "f737b6d98af0266e3bf8afaa4328833fd140944824df0a780dbb1a0e9cc29ae2",
+        "imageBytes": 85354,
+        "visible": true,
+        "style": "illustration",
+        "childSuitable": true,
+        "observedEvent": "Uma pessoa sobe em uma árvore frondosa enquanto um grupo de pessoas observa do chão ao redor da base da árvore"
+      }
+    },
+    "5410c5a270bdfcba39d953675b71b580d63ca0ce63c03e3fc61372e94ef11fea": {
+      "version": "kids-scene-review-v3-blind",
+      "model": "claude-haiku-4.5",
+      "promptHash": "8757f8af2d72f56ed83bcbd4da7166c7c5186e2a50a019a9ee0803cf91ed29fc",
+      "checkedAt": "2026-10-17T22:54:27.728Z",
+      "recoveredFromRun": "39076836345",
+      "callId": "86bd10cb-712f-4fff-97e7-ce79fff2f415",
+      "observation": {
+        "id": "0d7ed7a02e4a2584",
+        "sha256": "5410c5a270bdfcba39d953675b71b580d63ca0ce63c03e3fc61372e94ef11fea",
+        "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572",
+        "imageBytes": 84542,
+        "visible": true,
+        "style": "illustration",
+        "childSuitable": true,
+        "observedEvent": "Um homem sentado nos galhos de uma árvore olha para baixo enquanto um grupo de pessoas reunidas ao redor da árvore olha para cima na direção dele."
+      }
+    },
+    "a14f4afe546cf4d42a9b0160485ac1675a0e8c65c57a4968898ec04e106c508f": {
+      "version": "kids-scene-review-v3-blind",
+      "model": "claude-haiku-4.5",
+      "promptHash": "8757f8af2d72f56ed83bcbd4da7166c7c5186e2a50a019a9ee0803cf91ed29fc",
+      "checkedAt": "2026-10-17T22:54:57.278Z",
+      "recoveredFromRun": "39076836345",
+      "callId": "c2312cb3-e365-4864-8f62-1db3cef1c97f",
+      "observation": {
+        "id": "0213f4524b345be9",
+        "sha256": "a14f4afe546cf4d42a9b0160485ac1675a0e8c65c57a4968898ec04e106c508f",
+        "imageHash": "0e68d89f3b06e81914792cf90b2e067b890038d0529d6b9579fc219f5e7cf478",
+        "imageBytes": 67278,
+        "visible": true,
+        "style": "illustration",
+        "childSuitable": true,
+        "observedEvent": "Um grupo de homens com barbas observa outro homem conversando com uma terceira pessoa na entrada de um edifício de pedra."
+      }
+    },
+    "6523f9cfd66a4aa911456ff1feb23b169d76d48cfc046f362f42a367bb4cebbf": {
+      "version": "kids-scene-review-v3-blind",
+      "model": "claude-haiku-4.5",
+      "promptHash": "8757f8af2d72f56ed83bcbd4da7166c7c5186e2a50a019a9ee0803cf91ed29fc",
+      "checkedAt": "2026-10-17T22:54:14.401Z",
+      "recoveredFromRun": "39076836345",
+      "callId": "ce0a07e3-e04e-4152-9ab6-f3d1487e9b5d",
+      "observation": {
+        "id": "98834c32e024c944",
+        "sha256": "6523f9cfd66a4aa911456ff1feb23b169d76d48cfc046f362f42a367bb4cebbf",
+        "imageHash": "34169359e67f7acc29d673c680eab8f7cc3bbe6cf27019b69da83c755945902e",
+        "imageBytes": 57096,
+        "visible": true,
+        "style": "illustration",
+        "childSuitable": true,
+        "observedEvent": "Um homem sentado segura um copo enquanto outro homem de pé gesticula com a mão em direção a ele, ambos conversando em um ambiente interno."
+      }
+    }
+  },
+  "reasoningModel": "claude-sonnet-4.6"
 }

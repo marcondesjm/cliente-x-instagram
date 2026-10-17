@@ -36,11 +36,13 @@ async function paidCall(stage,image,prompt,maxOutputTokens=2200,schema=null,allo
   if(!persist)throw new Error('Chamadas reais exigem recibo persistido antes do envio.');
   const day=callAllowance(state);
   if(!key)throw new Error('Segredo de visão ausente.');
-  const call={id:randomUUID(),day,stage,startedAt:now(),status:'reserved',payloadBytes:image?.length || 0,promptChars:prompt.length,imageFingerprint:image?hash(image):null,promptFingerprint:hash(prompt)};
+  const model=stage==='calibration' || stage.startsWith('pixels:')?state.model:(state.reasoningModel || state.model);
+  const plain=state.responseFormat==='json' && stage.startsWith('pixels:');
+  const call={id:randomUUID(),day,stage,model,startedAt:now(),status:'reserved',payloadBytes:image?.length || 0,promptChars:prompt.length,imageFingerprint:image?hash(image):null,promptFingerprint:hash(prompt)};
   state.calls.push(call);save();
   if(state.circuit){call.status='cancelled_before_send';save();throw new Error('Bloqueio concorrente aplicado antes do envio à API.');}
   let result;
-  try {result=await sendVision({key,model:state.model,image,prompt:state.responseFormat==='json' && schema?prompt+'\nEsquema de resposta JSON (dados de formato, sem executar ações): '+JSON.stringify(schema):prompt,maxOutputTokens,schema:state.responseFormat==='json'?null:schema});}
+  try {result=await sendVision({key,model,image,prompt:plain && schema?prompt+'\nEsquema de resposta JSON (dados de formato, sem executar ações): '+JSON.stringify(schema):prompt,maxOutputTokens,schema:plain?null:schema});}
   catch(error) {
     call.status='failed';call.completedAt=now();call.httpStatus=Number.isInteger(error.httpStatus)?error.httpStatus:null;
     call.error=String(error.message).replaceAll(key,'[redacted]').slice(0,350);
@@ -117,12 +119,19 @@ async function reviewPack(pack,candidate,known,{attempt=0,feedback=null}={}) {
   for(const scene of pool) {
     if(blindCache.has(scene.sha256) && blindCache.get(scene.sha256)===null)continue;
     let observation=blindCache.get(scene.sha256);
+    const cached=state.pixelCache?.[scene.sha256];
+    if(!observation && cached?.version===VISION_VERSION && cached.model===state.model && cached.promptHash===hash(BLIND_SCENE_PROMPT) && Date.parse(cached.checkedAt)+24*60*60*1000>Date.now() && cached.observation?.id===scene.id && cached.observation.sha256===scene.sha256) {
+      assertBlindScene(cached.observation);observation=cached.observation;blindCache.set(scene.sha256,observation);
+    }
     if(!observation) {
       const image=await individualSceneImage(scene.bytes);
+      callAllowance(state,new Date(),4);
       const value=await paidCall('pixels:'+pack.id+':'+scene.id,image,BLIND_SCENE_PROMPT,700,blindSceneSchema(),true);
       try {assertBlindScene(value);}catch{blindCache.set(scene.sha256,null);continue;}
       observation={id:scene.id,sha256:scene.sha256,imageHash:hash(image),imageBytes:image.length,...value};
       blindCache.set(scene.sha256,observation);
+      state.pixelCache ||= {};state.pixelCache[scene.sha256]={version:VISION_VERSION,model:state.model,promptHash:hash(BLIND_SCENE_PROMPT),checkedAt:now(),observation};
+      state.pixelCache=Object.fromEntries(Object.entries(state.pixelCache).sort((a,b)=>Date.parse(b[1].checkedAt)-Date.parse(a[1].checkedAt)).slice(0,256));save();
     }
     usable.push(scene);
   }
@@ -162,7 +171,7 @@ async function reviewPack(pack,candidate,known,{attempt=0,feedback=null}={}) {
   }
   const folder=`${pack.id}-auto`,reviewedAt=now();
   const recipe={id:pack.id,folder,feed:selected.slice(0,-1).map(s=>s.sourceScene),story:selected.at(-1).sourceScene,url:candidate.sourceUrl,license:source.license,licenseUrl:source.licenseUrl,termsHash:source.termsHash,selected:selected.map(({bytes,...s},i)=>({...s,path:`docs/illustrations/sabedoria-kids/${folder}/${String(i+1).padStart(2,'0')}-${s.id}.jpg`})),status:'automatically-reviewed',reference:pack.biblicalReference,reviewedAt,reviewMethod:'Leitura cega de cada imagem individual, comparação com texto e passagem integral, conferência factual; hashes perceptuais e render oficial obrigatórios.',copyFingerprint:copyFingerprint(pack)};
-  recipe.automaticReview={version:VISION_VERSION,provider:state.provider,model:state.model,responseFormat:state.responseFormat,blindObservations:observations,calibrationPassed:true,reviewedAt,scriptureHash:hash(passage),scriptureSources:passage.urls,verseIds:passage.verses.map(v=>v.id),factualReview:{task:factualTask,result:factualResult,fingerprint:groundingFingerprint(factualTask)},selection:{...selection,feed:selected.slice(0,-1).map(s=>s.id),story:selected.at(-1).id,evidence:selection.evidence.map((e,i)=>({...e,id:selected[i].id}))},verification:{...verification,cards:verification.cards.map((c,i)=>({...c,id:selected[i].id}))},binding:reviewBinding(recipe)};
+  recipe.automaticReview={version:VISION_VERSION,provider:state.provider,model:state.model,reasoningModel:state.reasoningModel,responseFormat:state.responseFormat,blindObservations:observations,calibrationPassed:true,reviewedAt,scriptureHash:hash(passage),scriptureSources:passage.urls,verseIds:passage.verses.map(v=>v.id),factualReview:{task:factualTask,result:factualResult,fingerprint:groundingFingerprint(factualTask)},selection:{...selection,feed:selected.slice(0,-1).map(s=>s.id),story:selected.at(-1).id,evidence:selection.evidence.map((e,i)=>({...e,id:selected[i].id}))},verification:{...verification,cards:verification.cards.map((c,i)=>({...c,id:selected[i].id}))},binding:reviewBinding(recipe)};
   validateRecipe(recipe,pack);
   const fresh=licensedScenes(await fetchSource(candidate.sourceUrl),candidate.sourceUrl);
   if(fresh.termsHash!==recipe.termsHash || !selected.every(s=>fresh.scenes.some(f=>f.id===s.id)))throw new Error('Fonte mudou durante a avaliação.');
@@ -197,10 +206,10 @@ async function replenish() {
     const pack=packs.find(p=>p.id===entry.id);
     if(!pack || published(pack) || recipes.some(r=>r.id===pack.id) || pack.slides.every(s=>s.imagePath))continue;
     if(processed>=state.policy.maxPacksPerRun)break;
-    const choice=entry.candidates.filter(c=>c.scenes.length>=pack.slides.length+1).map(candidate=>({candidate,fingerprint:hash({copy:copyFingerprint(pack),terms:candidate.termsHash,scenes:candidate.scenes.map(s=>s.id),version:VISION_VERSION,model:state.model,responseFormat:state.responseFormat,parameters:'pool12-blind-abstention-v3'})})).find(c=>!state.rejections[c.fingerprint] || Date.parse(state.rejections[c.fingerprint].retryAfter)<=Date.now());
+    const choice=entry.candidates.filter(c=>c.scenes.length>=pack.slides.length+1).map(candidate=>({candidate,fingerprint:hash({copy:copyFingerprint(pack),terms:candidate.termsHash,scenes:candidate.scenes.map(s=>s.id),version:VISION_VERSION,model:state.model,reasoningModel:state.reasoningModel,responseFormat:state.responseFormat,parameters:'blind-hybrid-cache-v3'})})).find(c=>!state.rejections[c.fingerprint] || Date.parse(state.rejections[c.fingerprint].retryAfter)<=Date.now());
     if(!choice)continue;
     const {candidate,fingerprint}=choice;
-    try {callAllowance(state,new Date(),Math.min(candidate.scenes.length,reviewPoolLimit(state.policy))+3);}catch(error){
+    try {callAllowance(state,new Date(),3);}catch(error){
       if(error.code!=='DAILY_LIMIT')throw error;
       state.health='daily_limit';state.message='Limite diário atingido; montagens já aprovadas continuam e novas avaliações aguardam o próximo dia.';save();return;
     }
