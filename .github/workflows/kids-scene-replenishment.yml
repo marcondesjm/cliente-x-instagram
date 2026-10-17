@@ -7,6 +7,7 @@ on:
         type: choice
         default: calibrate
         options:
+          - copy-regression
           - calibrate
           - pilot
           - replenish
@@ -45,7 +46,9 @@ jobs:
           REVIEW_MODE: ${{ inputs.mode || 'replenish' }}
           KIDS_SCENE_PILOT_PACK_ID: ${{ inputs.pilot_pack || '' }}
         run: |
-          if [ "$REVIEW_MODE" = calibrate ]; then
+          if [ "$REVIEW_MODE" = copy-regression ]; then
+            node scripts/test-kids-copy-api.mjs --persist
+          elif [ "$REVIEW_MODE" = calibrate ]; then
             node scripts/replenish-kids-scenes.mjs --calibrate --persist
           elif [ "$REVIEW_MODE" = pilot ]; then
             node scripts/replenish-kids-scenes.mjs --pilot --persist
@@ -59,11 +62,12 @@ jobs:
           name: kids-scene-replenishment-evidence
           path: |
             output/kids-replenishment/
+            automation/instagram-template/config/kids-copy-regression.json
             automation/instagram-template/config/kids-scene-replenishment.json
           if-no-files-found: ignore
   assemble:
     needs: replenish
-    if: always() && inputs.mode != 'calibrate' && needs.replenish.result != 'cancelled'
+    if: always() && inputs.mode != 'calibrate' && inputs.mode != 'copy-regression' && needs.replenish.result != 'cancelled'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     concurrency:
