@@ -95,10 +95,16 @@
     {
       "id": "4aa02d70-4cf0-494b-a390-f3ee4d988ced",
       "day": "2026-10-17",
-      "status": "reserved",
+      "status": "completed",
       "stage": "compatible-tree-v4",
       "startedAt": "2026-10-17T23:22:22.695Z",
-      "promptHash": "f15541d595f385d79eb690ded3d53e18def313a9b89282f33f4d78bc27736776"
+      "promptHash": "f15541d595f385d79eb690ded3d53e18def313a9b89282f33f4d78bc27736776",
+      "completedAt": "2026-10-17T23:22:37.716Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 274,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -299,12 +305,45 @@
         ]
       },
       "promptHash": "daacdd676cb5429022a8b1e23e16e50b9dd0f7851b9e84eabc9db518df0238a9"
+    },
+    {
+      "id": "compatible-tree-v4",
+      "expectedCopyMatch": true,
+      "passed": true,
+      "syntheticTextFixture": true,
+      "imageInspection": false,
+      "value": {
+        "cards": [
+          {
+            "scene": 1,
+            "observedEvent": "Uma pessoa sobe em uma árvore enquanto outras pessoas observam do chão.",
+            "reason": "A observação descreve alguém subindo em uma árvore para ver, o que corresponde semanticamente ao título e corpo do cartão Feed índice 1 sobre Zaqueu subindo na árvore para ver Jesus. Lucas 19:4 confirma este evento. A cena é adequada para crianças, distinta da segunda posição, e há compatibilidade semântica entre a ação observada e o target.",
+            "verse": "19:4",
+            "passageMatch": true,
+            "childSuitable": true,
+            "distinct": true,
+            "copyMatch": true
+          },
+          {
+            "scene": 2,
+            "observedEvent": "Um homem recebe outro homem com alegria na entrada da sua casa.",
+            "reason": "A observação descreve uma recepção alegre na entrada de uma casa, que corresponde semanticamente ao Story target sobre Zaqueu receber Jesus com alegria. Lucas 19:6 confirma explicitamente este evento. A composição é distinta da cena 1 (que mostra a árvore), é adequada para crianças, e há compatibilidade semântica completa com o target do Story.",
+            "verse": "19:6",
+            "passageMatch": true,
+            "childSuitable": true,
+            "distinct": true,
+            "copyMatch": true
+          }
+        ],
+        "decision": "approve"
+      },
+      "promptHash": "f15541d595f385d79eb690ded3d53e18def313a9b89282f33f4d78bc27736776"
     }
   ],
   "circuit": null,
   "passed": false,
   "health": "awaiting_explicit_targets_v4",
-  "checkedAt": "2026-10-17T23:22:22.695Z",
+  "checkedAt": "2026-10-17T23:22:37.717Z",
   "run": "39078704818",
   "message": "V3 retornou justificativa compatível com booleano falso. V4 fornece target explícito por posição e ordena justificativa antes dos campos/decisão."
 }
