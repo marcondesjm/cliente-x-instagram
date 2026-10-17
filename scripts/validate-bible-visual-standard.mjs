@@ -7,7 +7,7 @@ const packs=JSON.parse(fs.readFileSync('automation/instagram-template/config/con
 const ready=visualReadyPacks(packs,kids,p=>fs.existsSync(p));
 const abraham=packs.find(p=>p.id==='kids-biblia-05');
 assert.equal(bibleVisualIssues(abraham,p=>fs.existsSync(p)).length,0);
-assert.equal(ready.length,3);
+assert.ok(ready.length>=7);
 const missing=structuredClone(abraham);delete missing.slides[2].imagePath;
 assert.throws(()=>assertBibleVisualStandard(missing,kids),/cartão 3/);
 assert.equal(visualReadyPacks([missing],kids).length,0);

@@ -39,12 +39,13 @@ function insightValue(insights, name) {
   return typeof value === 'number' ? value : null;
 }
 
-function growthFocus({ recentMedia = [], latestInsights = null } = {}) {
+export function growthFocus({ account = null, recentMedia = [], latestInsights = null } = {}) {
   const likes = recentMedia.reduce((total, item) => total + (Number(item.like_count) || 0), 0);
   const comments = recentMedia.reduce((total, item) => total + (Number(item.comments_count) || 0), 0);
   const activePosts = recentMedia.filter((item) => (Number(item.like_count) || 0) + (Number(item.comments_count) || 0) > 0).length;
   const reach = Number(latestInsights?.reach) || 0;
   const saved = Number(latestInsights?.saved) || 0;
+  if (account?.account === 'sabedoria-kids') return { signal: 'leitura em família', action: 'manter cenas bíblicas ilustradas e propor uma pergunta simples e uma atividade para conversar com um adulto e salvar para a próxima leitura' };
   if (comments === 0) return { signal: 'comentarios', action: 'usar uma pergunta especifica e simples, ligada ao problema real do post' };
   if (saved === 0) return { signal: 'salvamentos', action: 'entregar checklist, passo a passo ou criterio que mereca consulta posterior' };
   if (reach > 0 && likes + comments < Math.max(2, Math.ceil(reach * 0.03))) return { signal: 'relevancia inicial', action: 'abrir com dor concreta e beneficio claro para um publico bem definido' };
@@ -258,7 +259,7 @@ async function handlePrivateMetrics(req, res) {
     }
   }
 
-  result.growthFocus = growthFocus({ recentMedia, latestInsights: result.insights });
+  result.growthFocus = growthFocus({ account, recentMedia, latestInsights: result.insights });
 
   res.status(200).json(result);
 }

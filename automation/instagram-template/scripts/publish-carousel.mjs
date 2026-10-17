@@ -5932,7 +5932,7 @@ async function main() {
           }
         }
         if (!radar.enabled) {
-          if (account.contentProfile?.curatedOnly) throw new Error('Conteúdo bíblico inédito esgotado. Adicione novas pautas revisadas; nenhum conteúdo genérico será publicado.');
+          if (account.contentProfile?.curatedOnly) throw Object.assign(new Error('Conteúdo bíblico ilustrado inédito esgotado. Adicione novas pautas revisadas com imagens; nenhum conteúdo genérico será publicado.'), {stage:'bible-content-selection'});
           const autoFresh = pickFreshPack(autoPacks, today, generationSlotIndex, recentMedia, publicationHistory, randomInt, selectionLearningContext);
           if (!autoFresh.pack) {
             const fallbackPacks = Array.from({ length: creativeBatchSize }, (_, offset) => buildLastResortPack(today, generationSlotIndex + offset));

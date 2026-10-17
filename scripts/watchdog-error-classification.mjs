@@ -16,6 +16,9 @@ export function isMetaCredentialError(errorText = '', stage = '') {
 
 export function solutionForWatchdogError(errorText = '', stage = '') {
   const text = `${stage} ${errorText}`.toLowerCase();
+  if (/conte[uú]do b[ií]blico.*esgotado|padr[aã]o ilustrado b[ií]blico obrigat[oó]rio|acervo aguardando ilustra/.test(text)) {
+    return 'Adicionar pautas bíblicas inéditas com ilustrações revisadas em todos os cartões, Story e créditos. O vigia retoma o horário pendente após a revisão; não repetir posts, voltar a cartões vazios ou renovar token por esse erro de conteúdo.';
+  }
   if (isDuplicateContentError(errorText)) {
     return 'A fila verifica o historico, registra o conteudo ja utilizado e segue para a proxima pauta elegivel sem republicar. Conteudos agendados ficam reservados fora do rodizio de Stories.';
   }

@@ -1,3 +1,13 @@
+## 2026-10-17 — reposição ilustrada para recuperar slot 8 de Sabedoria Kids
+
+- Incidente informado: run 39058049685, job 117470011708, Publish feed and story falhou: conteúdo bíblico inédito esgotado, stage unknown. Acervo ilustrado já publicado; bloqueio preservou padrão e antirrepetição, não indicou falha de token.
+- Branch fix/kids-illustrated-stock-slot8, base 39b3e6fd. Ilustradas quatro pautas existentes ainda inéditas: kids-biblia-03 Noé, 04 arco-íris, 14 Davi/Jônatas, 17 Daniel. Total elegível sete de 37, quatro inéditas antes da recuperação, 30 ainda sem ilustração completa. Cobertura adicional de quatro publicações, não prometer acervo infinito ou amanhã completo.
+- 24 imagens individuais Sweet Publishing / FreeBibleimages CC BY-SA 3.0, conjuntos noah-ark, david-jonathan, daniel-lions. Referências ampliadas quando necessário para incluir contexto das cenas. Cenas originais, legendas-fonte, capas, cartões e Stories inspecionados; sem agressão gráfica. Cinco cartões distintos e Story diferente da capa em cada pack; atribuição/licença/adaptações na legenda e CREDITOS.txt.
+- Padrão visual preservado: cena inteira em destaque, identificação discreta, pergunta/atividade e leitura em família, sem livro gigante ou cartão vazio. Nenhuma pauta antiga republicada.
+- Falta de estoque passa a registrar bible-content-selection e solução orienta adicionar conteúdo bíblico ilustrado inédito. Não recomendar token ou conteúdo genérico para esse bloqueio. Foco orgânico Kids adaptado para leitura bíblica em família; demais contas preservadas. Alcance/insights são questão separada, não reparada com esta reposição.
+- Testes: validate-bible-visual-standard (7 elegíveis), validate-copy Kids, validate-scheduled-content-guard, classificação de erro legado unknown e recomendação por conta aprovados. Quatro renders-only 15:56 BRT e Stories revisados. Dry-run automático slot 8 2026-10-17-155805-slot-8 passou, sem envio à Meta.
+- Aguardando execução cloud com mídia, Story, permalink e histórico. Dry-run, push e render não comprovam publicação. Reposição não marca erro resolved manualmente.
+
 ## 2026-10-17 — resultados de crescimento somente automáticos
 
 - Produção confirmada: código 952868d0, deploy READY dpl_4PJAMn9AzvuHeSQ5TL3C4FHnko1o, alias cliente-x-instagram.vercel.app. Asset HTTP 200 conferido sem campos manuais/data e com Resultados automáticos. Screenshot local output/growth-evidence-preview/automatic-only.png. Servidor de prévia encerrado; nenhum plano real alterado nos testes.
