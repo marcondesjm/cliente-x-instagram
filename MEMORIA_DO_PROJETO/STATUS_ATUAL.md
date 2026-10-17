@@ -1,4 +1,13 @@
 
+## 2026-10-17 — decisão: usar sites licenciados, sem geração por IA
+
+- Usuário interrompeu a implementação de geração de imagens: “DEIXA ENTAO ESSA PARTE VAMOS PROCURARR EM SITES”. Commit 2068dd01 integralmente revertido em 053566cc: workflow de IA, catálogo, API/controles e guia removidos. Nenhuma chamada paga realizada e nenhuma chave cadastrada. Não retomar IA sem novo pedido.
+- Reposição por fontes existentes: FreeBibleimages / Sweet Publishing, conjuntos ruth-1 e baby-moses, licenças CC BY-SA 3.0 verificadas em páginas individuais; uso social/comercial e adaptações com atribuição/share-alike.
+- Preparadas kids-biblia-11 (Rute 1:6–18) e kids-biblia-07 (Êxodo 2:1–10), cada uma com cinco cenas distintas no Feed e outra no Story. JPEGs originais e CREDITOS.txt em docs/illustrations/sabedoria-kids/ruth-naomi/ e baby-moses/.
+- Mantidos padrão ilustrado, leitura com adulto, atividade/pergunta em família e créditos na legenda. Inventário: 9/37 pautas ilustradas, não implica nove inéditas disponíveis; bloqueios de histórico preservados.
+- QA: duas renderizações completas Feed/Story e inspeção visual da galeria; validate-bible-visual-standard, scheduled guard e validate-copy. Imagens adicionadas ao acervo, sem disparar postagem nem alterar horários.
+
+
 ## 2026-10-17 — Sabedoria Kids: slot 8 recuperado e persistência concorrente
 
 - Estoque ampliado com quatro pautas inéditas ilustradas e licenciadas: Noé, arco-íris, Davi/Jônatas e Daniel. Guardas visuais preservadas; 7 de 37 pautas possuem composição ilustrada.
