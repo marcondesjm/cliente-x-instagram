@@ -3,8 +3,8 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-haiku-4.5",
-  "health": "manual_repair_pilot",
-  "message": "Piloto após correção de diagnóstico; chamada anterior permanece contada no limite.",
+  "health": "review_completed",
+  "message": "1 pauta(s) examinada(s); somente seleções aprovadas seguem para montagem.",
   "policy": {
     "maxCallsPerDay": 6,
     "maxInputTokensPerCall": 120000,
@@ -96,7 +96,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T20:55:02.295Z",
+  "checkedAt": "2026-10-17T20:55:03.809Z",
   "lastRun": "39068610378",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17"
