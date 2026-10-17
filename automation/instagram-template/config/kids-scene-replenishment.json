@@ -630,11 +630,17 @@
       "day": "2026-10-17",
       "stage": "calibration",
       "startedAt": "2026-10-17T22:38:38.743Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 4093,
       "promptChars": 418,
       "imageFingerprint": "6bd1a2d3d932e3100792dcaba0fc467e865d23073e7a5b8e3c0b522acb881273",
-      "promptFingerprint": "1899afb49c740cb4ae56aa02c5ff6a25febd6c880af1a386065420905a36d75d"
+      "promptFingerprint": "1899afb49c740cb4ae56aa02c5ff6a25febd6c880af1a386065420905a36d75d",
+      "completedAt": "2026-10-17T22:38:48.595Z",
+      "reportedInputTokens": 3142,
+      "inputTokens": 3142,
+      "outputTokens": 18,
+      "usageStatus": "provider_reported",
+      "stopReason": "end_turn"
     }
   ],
   "entries": [
@@ -729,7 +735,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T22:38:38.743Z",
+  "checkedAt": "2026-10-17T22:38:48.595Z",
   "lastRun": "39075839941",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -872,70 +878,14 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "verify:kids-biblia-29",
+    "stage": "calibration",
     "value": {
-      "decision": "reject",
-      "cards": [
-        {
-          "scene": 1,
-          "observedEvent": "Jesus de túnica vermelha caminha entre um grupo de homens em vestes antigas, alguns usando turbantes coloridos.",
-          "passageMatch": false,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": false,
-          "verse": "19:1-2",
-          "reason": "A imagem retrata Jesus caminhando na multidão (Lucas 19:1), mas o título do cartão é 'Zaqueu recebeu Jesus em sua casa'. A cena visual não corresponde ao texto do cartão, que descreve a recepção na casa, nem ilustra Zaqueu."
-        },
-        {
-          "scene": 2,
-          "observedEvent": "Um homem pequeno sobe em uma árvore frondosa enquanto uma multidão passa abaixo por uma rua com casas de pedra.",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true,
-          "verse": "19:3-4",
-          "reason": "A cena ilustra corretamente Zaqueu subindo na sicômoro para ver Jesus devido à multidão e à sua baixa estatura, conforme descrito no corpo do cartão."
-        },
-        {
-          "scene": 3,
-          "observedEvent": "Jesus olha para cima apontando para um homem sentado nos galhos de uma árvore, cercado por observadores.",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": false,
-          "verse": "19:5",
-          "reason": "Visualmente corresponde a Lucas 19:5 (Jesus chamando Zaqueu da árvore). No entanto, o copyMatch é falso pois o cartão 3 trata de 'Uma lição para o nosso dia' (aplicação moral), e a imagem mostra um fato narrativo específico, não uma representação abstrata de mudança de atitude."
-        },
-        {
-          "scene": 4,
-          "observedEvent": "Homens em trajes bíblicos conversam em um pátio ou corredor com arcos de pedra, em tom de murmuração ou discussão.",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": false,
-          "verse": "19:7",
-          "reason": "A imagem retrata a murmuração da multidão (Lucas 19:7). O cartão 4 é uma chamada para atividade familiar ('Converse com um adulto sobre devolver algo'), portanto a imagem narrativa não corresponde ao texto instrucional do cartão."
-        },
-        {
-          "scene": 5,
-          "observedEvent": "Dois homens sentados à mesa compartilham uma refeição; um veste vermelho e branco, o outro azul, em ambiente interno.",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": false,
-          "verse": "19:6",
-          "reason": "Ilustra Zaqueu recebendo Jesus em casa (Lucas 19:6). O cartão 5 pede 'Leia Lucas 19:1–10 com um adulto', sendo um convite à leitura, não uma ilustração da ceia. Há desacordo entre imagem narrativa e texto funcional."
-        },
-        {
-          "scene": 6,
-          "observedEvent": "Jesus e Zaqueu estão juntos rodeados por outras pessoas; Zaqueu gesticula com a mão levantada em sinal de declaração pública.",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": false,
-          "verse": "19:8-9",
-          "reason": "Representa Zaqueu declarando restituição e Jesus anunciando salvação (Lucas 19:8-9). O Story pede 'Uma cena diferente relacionada à mesma passagem; leitura com um adulto', mas a imagem é uma cena narrativa direta, não uma representação conceitual de leitura ou estudo bíblico em família."
-        }
+      "code": "396649",
+      "colors": [
+        "red",
+        "green",
+        "blue",
+        "yellow"
       ]
     }
   },
