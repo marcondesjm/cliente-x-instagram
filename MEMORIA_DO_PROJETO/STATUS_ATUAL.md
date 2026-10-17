@@ -1,3 +1,11 @@
+## 2026-10-17 11:04 BRT — prévia com ilustrações licenciadas
+
+- Bíblia para Crianças informa uso não comercial. Para o teste de Marcos 10:13–16, selecionadas cinco ilustrações de Gavin Thomson / Little Zebra Books via FreeBibleimages, conjunto zb-jesus-children, CC BY 4.0 e uso em redes sociais com atribuição indicado na página.
+- Fonte visual adicionada ao perfil, com exigência de verificar licença por conjunto. Créditos e licença incluídos na legenda do pack de teste e CREDITOS.txt. Imagens originais não redistribuídas no ZIP de carrossel.
+- Publicador: flag opcional imageAsIllustration=true mantém texto e diagramação ao inserir imagem; envio de banners prontos preservado quando a flag não está presente.
+- Render-only concluído e cinco slides inspecionados; node --check e git diff --check aprovados. ZIP em output/sabedoria-kids/teste-fontes-marcos-10/carrossel-ilustrado.zip. Nenhuma nova publicação nem rotina ativada.
+- Limite: seleção e licença verificadas de forma assistida; não há busca automática genérica de imagens licenciadas.
+
 ## 2026-10-17 11:01 BRT — teste das seis fontes e prévia de Marcos 10
 
 - Teste HTTP das seis fontes: cinco acessíveis; SBB retornou HTTP 403 na consulta direta pelo Node. Não contornar bloqueio; fonte permanece como referência para consulta assistida.

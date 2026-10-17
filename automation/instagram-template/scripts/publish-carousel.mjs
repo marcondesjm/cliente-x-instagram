@@ -3616,7 +3616,7 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
       const downloadedImagePath = await downloadExternalSlideImage(slide.imageUrl, runDir, index + 1);
       slide = { ...slide, imagePath: downloadedImagePath, imageUrl: '' };
     }
-    if (slide.imagePath && !String(style.name || '').startsWith('impact-carousel')) {
+    if (slide.imagePath && slide.imageAsIllustration !== true && !String(style.name || '').startsWith('impact-carousel')) {
       const source = resolve(ROOT, String(slide.imagePath).replace(/^\/+/, ''));
       if (!existsSync(source)) throw new Error(`Imagem do slide ${index + 1} nao encontrada: ${slide.imagePath}`);
       await assertDistinctPhoto(source, index);
