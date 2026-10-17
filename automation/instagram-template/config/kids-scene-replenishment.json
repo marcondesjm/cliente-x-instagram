@@ -6,7 +6,7 @@
   "health": "daily_limit",
   "message": "Limite diário atingido; montagens já aprovadas continuam e novas avaliações aguardam o próximo dia.",
   "policy": {
-    "maxCallsPerDay": 26,
+    "maxCallsPerDay": 40,
     "maxInputTokensPerCall": 120000,
     "maxInputTokensPerDay": 1500000,
     "maxPacksPerRun": 3,
@@ -550,5 +550,6 @@
         "reason": "A imagem mostra Jesus sozinho orando no monte ao entardecer, que corresponde a João 6:15 ('retirou-se outra vez para o monte, ele só'), versículo fora do intervalo solicitado João 6:1–13. A descrição original cita esta cena, mas ela excede os limites da passagem referenciada no conjunto."
       }
     ]
-  }
+  },
+  "validationBudgetNote": "Limite temporário de 40 chamadas para concluir piloto de 17/10; ativação restaura26. Plano fixo informado pelo usuário."
 }
