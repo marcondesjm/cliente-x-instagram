@@ -528,11 +528,17 @@
       "day": "2026-10-17",
       "stage": "facts:kids-biblia-29",
       "startedAt": "2026-10-17T22:12:45.191Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 3496,
       "imageFingerprint": null,
-      "promptFingerprint": "df21c43382a7e78cd44bb1f528a7afa22996517c674f187b4e65b8cb70fbaf07"
+      "promptFingerprint": "df21c43382a7e78cd44bb1f528a7afa22996517c674f187b4e65b8cb70fbaf07",
+      "completedAt": "2026-10-17T22:13:11.005Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 1,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -627,7 +633,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T22:12:45.191Z",
+  "checkedAt": "2026-10-17T22:13:11.005Z",
   "lastRun": "39074036137",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -761,56 +767,86 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "select:kids-biblia-29",
+    "stage": "facts:kids-biblia-29",
     "value": {
-      "decision": "approve",
-      "feed": [
-        4,
-        6,
-        3,
-        5,
-        2
-      ],
-      "story": 1,
-      "childSuitable": true,
-      "distinct": true,
-      "referenceAccurate": true,
-      "evidence": [
+      "claims": [
         {
-          "card": 1,
-          "scene": 4,
-          "verse": "19:2",
-          "reason": "Jesus no centro de uma multidão em Jericó; Zaqueu, homem baixo com roupas coloridas, destaca-se na frente, correspondendo à introdução do cobrador de impostos rico que queria ver Jesus."
+          "id": "e64874ce7ad7e208",
+          "supported": false,
+          "reason": "A alegação contém elementos não presentes nas fontes: 'large crowd of people, many of whom wanted to see Him' não é afirmado literalmente (19:3 menciona apenas 'the crowd' impedindo Zacchaeus de ver); 'tax collectors had a bad reputation for gaining money by corruption' é conhecimento externo não presente em nenhuma fonte fornecida.",
+          "evidence": [
+            {
+              "sourceId": "19:2",
+              "quote": "There was a man named Zacchaeus. He was a chief tax collector, and he was rich."
+            },
+            {
+              "sourceId": "19:3",
+              "quote": "He was trying to see who Jesus was, and couldn't because of the crowd, because he was short."
+            }
+          ]
         },
         {
-          "card": 2,
-          "scene": 6,
-          "verse": "19:4",
-          "reason": "Zaqueu subindo em um sicômoro verde e frondoso para enxergar acima da multidão, enquanto Jesus olha para cima em direção a ele, ilustrando o momento exato de Lucas 19:4."
+          "id": "d3c9e973465ce4fc",
+          "supported": true,
+          "reason": "A fonte 19:4 afirma exatamente que ele correu à frente e subiu numa árvore sicômoro para ver Jesus.",
+          "evidence": [
+            {
+              "sourceId": "19:4",
+              "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
+            }
+          ]
         },
         {
-          "card": 3,
-          "scene": 3,
-          "verse": "19:5",
-          "reason": "Jesus parado sob a árvore apontando para Zaqueu e falando com ele, enquanto Zaqueu ainda está no galho, representando visualmente o convite 'desce depressa' de Lucas 19:5."
+          "id": "0d7ed7a02e4a2584",
+          "supported": true,
+          "reason": "A fonte 19:5 confirma que Jesus olhou para cima e disse a Zacchaeus para descer rapidamente porque deveria ficar em sua casa naquele dia.",
+          "evidence": [
+            {
+              "sourceId": "19:5",
+              "quote": "When Jesus came to the place, he looked up and saw him, and said to him,\n\"Zacchaeus, hurry and come down, for today I must stay at your house.\""
+            }
+          ]
         },
         {
-          "card": 4,
-          "scene": 5,
-          "verse": "19:7-8",
-          "reason": "Zaqueu em pé diante de Jesus dentro de uma casa, gesticulando como quem faz uma promessa solene, enquanto pessoas ao fundo murmuram, retratando a declaração de restituição e as murmurações da multidão."
+          "id": "0213f4524b345be9",
+          "supported": false,
+          "reason": "Elementos não suportados: 'Zacchaeus was delighted' não está no texto (19:6 diz 'received him joyfully', referindo-se à recepção, não ao estado emocional prévio); 'Teachers like Jesus usually avoided tax collectors' é conhecimento externo ausente das fontes; 'This man has gone as a guest to the home of a sinner!' difere da citação exata em 19:7 que diz 'He has gone in to lodge with a man who is a sinner.'",
+          "evidence": [
+            {
+              "sourceId": "19:6",
+              "quote": "He hurried, came down, and received him joyfully."
+            },
+            {
+              "sourceId": "19:7",
+              "quote": "When they saw it, they all murmured, saying, \"He has gone in to lodge with a man who is a sinner.\""
+            }
+          ]
         },
         {
-          "card": 5,
-          "scene": 2,
-          "verse": "19:8",
-          "reason": "Zaqueu de pé, erguendo a mão em gesto de juramento perante Jesus sentado, detalhe visual concreto que corresponde à fala sobre dar metade dos bens aos pobres e restituir quatro vezes mais."
+          "id": "98834c32e024c944",
+          "supported": true,
+          "reason": "A fonte 19:8 confirma que Zacchaeus disse que daria metade dos seus bens aos pobres e restituiria quatro vezes mais se tivesse defraudado alguém.",
+          "evidence": [
+            {
+              "sourceId": "19:8",
+              "quote": "Zacchaeus stood and said to the Lord, \"Behold, Lord, half of my goods I give to the poor. If I have wrongfully exacted anything of anyone, I restore four times as much.\""
+            }
+          ]
         },
         {
-          "card": 6,
-          "scene": 1,
-          "verse": "19:9-10",
-          "reason": "Jesus com a mão levantada em bênção dirigindo-se a Zaqueu e aos discípulos reunidos, cena distinta das anteriores que ilustra a declaração final de salvação e o propósito do Filho do Homem de buscar e salvar o perdido."
+          "id": "6654943ac38eff87",
+          "supported": false,
+          "reason": "A frase 'This man is a Jew also' não aparece em nenhuma fonte fornecida. A fonte 19:9 diz 'because he also is a son of Abraham', que é diferente de afirmar explicitamente que ele é judeu. Além disso, 'a person has been saved' difere ligeiramente de 'salvation has come to this house'.",
+          "evidence": [
+            {
+              "sourceId": "19:9",
+              "quote": "Jesus said to him,\n\"Today, salvation has come to this house, because he also is a son of Abraham."
+            },
+            {
+              "sourceId": "19:10",
+              "quote": "For the Son of Man came to seek and to save that which was lost.\""
+            }
+          ]
         }
       ]
     }
