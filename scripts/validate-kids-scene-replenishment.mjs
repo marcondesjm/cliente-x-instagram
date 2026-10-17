@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import sharp from 'sharp';
-import {callAllowance,calibrationImage,visualSignature,similarScenes,contactSheet,sendVision,parseObject,recoverTransientCalls,promptSceneDescription,selectionSchema,verificationSchema,reviewPoolLimit,individualSceneImage,assertBlindScene,BLIND_SCENE_PROMPT,assertCoverCandidates} from '../lib/kids-scene-vision.js';
+import {callAllowance,calibrationImage,visualSignature,similarScenes,contactSheet,sendVision,parseObject,recoverTransientCalls,promptSceneDescription,selectionSchema,verificationSchema,reviewPoolLimit,individualSceneImage,assertBlindScene,BLIND_SCENE_PROMPT,assertCoverCandidates,continuationSelectionSchema,attachReviewedCover} from '../lib/kids-scene-vision.js';
 import {reviewBinding,assertAutomaticReview,verseIsWithin} from '../lib/kids-scene-review-proof.js';
 import {passageRanges,loadPassage} from '../lib/kids-bible-passage.js';
 import {validateRecipe,hash} from '../lib/kids-scene-assembly.js';
@@ -89,3 +89,11 @@ console.log('PASS: call limits/interruption, BRT day, full scripture completenes
 assert.deepEqual(assertCoverCandidates({decision:'approve',candidates:[{scene:5,verse:'19:5-6',reason:'A cena mostra a recepção da visita em casa.'}]},8,['19:5','19:6']),[5]);
 for(const result of [{decision:'reject',candidates:[]},{decision:'approve',candidates:[{scene:9,verse:'19:6',reason:'A cena mostra a recepção da visita em casa.'}]},{decision:'approve',candidates:[{scene:5,verse:'20:1',reason:'A cena mostra a recepção da visita em casa.'}]}])assert.throws(()=>assertCoverCandidates(result,8,['19:5','19:6']));
 console.log('PASS: cover gate rejects missing, out-of-range and out-of-passage candidates.');
+
+const continuation=continuationSelectionSchema(8,5,2);
+assert.equal(continuation.properties.feed.minItems,4);
+assert.equal(continuation.properties.feed.items.enum.includes(2),false);
+assert.equal(continuation.properties.story.enum.includes(2),false);
+const attached=attachReviewedCover({feed:[6,4,5,1],story:7,evidence:[{card:2,scene:6}]},{scene:2,verse:'19:6',reason:'Cena já conferida em contexto da casa.'});
+assert.deepEqual(attached.feed,[2,6,4,5,1]);assert.equal(attached.evidence[0].scene,2);assert.equal(attached.evidence[1].card,2);
+console.log('PASS: continuation excludes fixed cover and preserves approved cover evidence.');
