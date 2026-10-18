@@ -74,7 +74,14 @@ try{
   const generated=repair?null:await request('generate:'+topic.id,prompt+(growth?'\n'+GROWTH_EDITORIAL_BRIEF+'\nPossível ângulo de abertura, sujeito à verificação de novidade e ao briefing: '+(GROWTH_ANGLES[topic.id]||'uma dúvida concreta da rotina empresarial'):''),draftSchema());
   const entry=repair||{id:'draft-'+topic.id,topic:topic.id,account:'cliente-x',version:RESERVE_VERSION,status:'draft',generationCallId:generated.callId,createdAt:new Date().toISOString()};if(!repair)state.entries.push(entry);save();
   try{
-   const pack=repair?entry.pack:buildAuthorialPack(generated.value,topic,{growth});validatePack(pack);
+   let draft=generated?.value;
+   if(draft && (draft.caption.length<220 || draft.caption.length>1050)) {
+    callAllowance(budget,new Date(),2);
+    const revised=await request("revise-caption:"+topic.id,"Reescreva somente a legenda do rascunho fornecido, preservando o procedimento, a pergunta e o convite para acompanhar o perfil. Devolva o rascunho completo com slides e storySlide inalterados. A legenda atual tem "+draft.caption.length+" caracteres e foi bloqueada. A nova legenda deve ter entre trezentos e quinhentos caracteres, em no máximo cinco frases curtas. Não acrescente fatos, fontes, números ou promessas. Dados: "+JSON.stringify({brief:topic.brief,draft}),draftSchema());
+    if(JSON.stringify(revised.value.slides)!==JSON.stringify(draft.slides)||JSON.stringify(revised.value.storySlide)!==JSON.stringify(draft.storySlide))throw Error("Revisão de legenda alterou os cartões.");
+    entry.captionRevisionCallId=revised.callId;draft=revised.value;save();
+   }
+   const pack=repair?entry.pack:buildAuthorialPack(draft,topic,{growth});validatePack(pack);
    if(!pickFreshPack([pack],'2000-01-01',0,[],[...history,...state.entries.filter(e=>e!==entry&&e.pack).map(e=>({coverTitle:e.pack.slides[0].title,caption:e.pack.caption}))],()=>0).pack)throw Error('Pauta bloqueada por repetição.');
    Object.assign(entry,{id:pack.id,pack,packHash:digest(pack)});save();
    const paths=[pack.slides[0].imagePath,pack.storySlide.imagePath];
