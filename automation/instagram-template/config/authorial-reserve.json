@@ -7404,7 +7404,7 @@
       "topic": "fila-prioridade-v4",
       "account": "cliente-x",
       "version": "claude-authorial-reserve-v1",
-      "status": "draft",
+      "status": "ready",
       "generationCallId": "b82b5759-229d-413b-9a54-e8c03fb08e8d",
       "learningContext": {
         "version": "claude-observed-editorial-v1",
@@ -7541,59 +7541,494 @@
         "docs/illustrations/cliente-x/authorial-5b692398910a9207/slide-3.png": "72d08b292c1d9346d49c7b7d2cf4e13de761b588d0703e8d36a7431852862fef",
         "docs/illustrations/cliente-x/authorial-5b692398910a9207/slide-4.png": "dddc737219d7b710598a2a29f07bd2476a83aa42967b343f073e6d15b610a890",
         "docs/illustrations/cliente-x/authorial-5b692398910a9207/story.png": "1d0eeb8870068cf4c11a42b308ecd877f9ad1937931fd00264ce8e8ab2a35830"
+      },
+      "reviewCandidate": {
+        "claims": [
+          {
+            "id": "slide-1",
+            "supported": true,
+            "reason": "A claim descreve o cenário fictício da escola e a pergunta central sobre prioridade, alinhando-se ao briefing que propõe um exercício educativo com solicitações fictícias de horários e inscrições.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "slide-2",
+            "supported": true,
+            "reason": "A claim instrui a definição de critérios explícitos como prazo e tipo de solicitação, correspondendo exatamente à orientação do briefing para estabelecer regras antes de classificar.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "slide-3",
+            "supported": true,
+            "reason": "A claim orienta pedir justificativa à IA e comparar com critérios definidos, seguindo a prescrição do briefing de solicitar sugestão de classificação acompanhada de explicação.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "slide-4",
+            "supported": true,
+            "reason": "A claim determina a revisão manual de casos ambíguos antes de alterar a fila, conforme explicitado no briefing como etapa obrigatória do exercício.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "caption",
+            "supported": true,
+            "reason": "O texto resume o fluxo educativo proposto (critérios, IA com justificativa, comparação, revisão) e inclui o aviso de conteúdo fictício, atendendo às restrições de não prometer resultados nem inferir urgência pessoal.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              },
+              {
+                "sourceId": "label"
+              }
+            ]
+          },
+          {
+            "id": "story",
+            "supported": true,
+            "reason": "A capa abre com uma pergunta específica sobre a rotina operacional de priorização, aplicando o experimento editorial de alterar o eixo hook para uma situação empresarial reconhecível.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "art-1",
+            "supported": true,
+            "reason": "Os rótulos 'prazo definido', 'tipo de solicitação' e 'fila de espera' são elementos visuais do exemplo fictício descrito no briefing para ilustrar a triagem na escola.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "art-2",
+            "supported": true,
+            "reason": "Os rótulos 'critérios escritos', 'triagem clara' e 'regras visíveis' representam visualmente a etapa de definição de regras antes da classificação, conforme o briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "art-3",
+            "supported": true,
+            "reason": "Os rótulos 'sugestão da IA', 'justificativa dada' e 'comparação feita' ilustram o fluxo de conferência solicitado no briefing, onde a IA deve justificar sua classificação.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "art-4",
+            "supported": true,
+            "reason": "Os rótulos 'casos ambíguos', 'revisão manual' e 'ordem ajustada' correspondem à etapa final de revisão humana prescrita no briefing para situações duvidosas.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "art-5",
+            "supported": true,
+            "reason": "Os rótulos 'mensagens recebidas', 'prioridade definida' e 'atendimento iniciado' compõem a ilustração da capa (Story), representando visualmente a rotina operacional questionada no hook experimental.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          }
+        ],
+        "decision": "approve",
+        "supported": true,
+        "novel": true,
+        "practical": true,
+        "visualMatch": true,
+        "reason": "O lote apresenta um exercício educativo completo e coerente com o briefing, utilizando um cenário fictício de escola para ensinar priorização de filas com IA. O experimento editorial foi aplicado corretamente na capa (Story), que abre com uma pergunta situacional específica sobre rotina operacional. Todas as claims possuem suporte nas fontes fornecidas, incluindo os rótulos das ilustrações que refletem fielmente as etapas do fluxo proposto. O conteúdo é prático, executável e evita promessas de resultados ou viés pessoal, atendendo aos critérios de crescimento e às restrições editoriais.",
+        "experimentApplied": true,
+        "growth": {
+          "hookSpecific": true,
+          "payoffDelivered": true,
+          "followReason": true,
+          "shareReason": true
+        }
+      },
+      "review": {
+        "claims": [
+          {
+            "id": "slide-1",
+            "supported": true,
+            "reason": "A claim descreve o cenário fictício da escola e a pergunta central sobre prioridade, alinhando-se ao briefing que propõe um exercício educativo com solicitações fictícias de horários e inscrições.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-2",
+            "supported": true,
+            "reason": "A claim instrui a definição de critérios explícitos como prazo e tipo de solicitação, correspondendo exatamente à orientação do briefing para estabelecer regras antes de classificar.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-3",
+            "supported": true,
+            "reason": "A claim orienta pedir justificativa à IA e comparar com critérios definidos, seguindo a prescrição do briefing de solicitar sugestão de classificação acompanhada de explicação.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-4",
+            "supported": true,
+            "reason": "A claim determina a revisão manual de casos ambíguos antes de alterar a fila, conforme explicitado no briefing como etapa obrigatória do exercício.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "caption",
+            "supported": true,
+            "reason": "O texto resume o fluxo educativo proposto (critérios, IA com justificativa, comparação, revisão) e inclui o aviso de conteúdo fictício, atendendo às restrições de não prometer resultados nem inferir urgência pessoal.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              },
+              {
+                "sourceId": "label",
+                "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+              }
+            ]
+          },
+          {
+            "id": "story",
+            "supported": true,
+            "reason": "A capa abre com uma pergunta específica sobre a rotina operacional de priorização, aplicando o experimento editorial de alterar o eixo hook para uma situação empresarial reconhecível.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-1",
+            "supported": true,
+            "reason": "Os rótulos 'prazo definido', 'tipo de solicitação' e 'fila de espera' são elementos visuais do exemplo fictício descrito no briefing para ilustrar a triagem na escola.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-2",
+            "supported": true,
+            "reason": "Os rótulos 'critérios escritos', 'triagem clara' e 'regras visíveis' representam visualmente a etapa de definição de regras antes da classificação, conforme o briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-3",
+            "supported": true,
+            "reason": "Os rótulos 'sugestão da IA', 'justificativa dada' e 'comparação feita' ilustram o fluxo de conferência solicitado no briefing, onde a IA deve justificar sua classificação.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-4",
+            "supported": true,
+            "reason": "Os rótulos 'casos ambíguos', 'revisão manual' e 'ordem ajustada' correspondem à etapa final de revisão humana prescrita no briefing para situações duvidosas.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-5",
+            "supported": true,
+            "reason": "Os rótulos 'mensagens recebidas', 'prioridade definida' e 'atendimento iniciado' compõem a ilustração da capa (Story), representando visualmente a rotina operacional questionada no hook experimental.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          }
+        ],
+        "decision": "approve",
+        "supported": true,
+        "novel": true,
+        "practical": true,
+        "visualMatch": true,
+        "reason": "O lote apresenta um exercício educativo completo e coerente com o briefing, utilizando um cenário fictício de escola para ensinar priorização de filas com IA. O experimento editorial foi aplicado corretamente na capa (Story), que abre com uma pergunta situacional específica sobre rotina operacional. Todas as claims possuem suporte nas fontes fornecidas, incluindo os rótulos das ilustrações que refletem fielmente as etapas do fluxo proposto. O conteúdo é prático, executável e evita promessas de resultados ou viés pessoal, atendendo aos critérios de crescimento e às restrições editoriais.",
+        "experimentApplied": true,
+        "growth": {
+          "hookSpecific": true,
+          "payoffDelivered": true,
+          "followReason": true,
+          "shareReason": true
+        },
+        "bindingVersion": "exact-source-id-v1",
+        "callId": "2e4cf6a0-c902-4e86-8839-e5db6ebe8d94",
+        "packHash": "11c3136ebfd34b8df7f8c8acdb61160adcfc6e35e7f4edb03a9bd1b3c747ed4b",
+        "checkedAt": "2026-10-18T20:02:54.965Z",
+        "groundingTask": {
+          "scope": "Exercício educativo fictício. Orientações são propostas, não resultados ou notícias.",
+          "sources": [
+            {
+              "id": "brief",
+              "text": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+            },
+            {
+              "id": "label",
+              "text": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            }
+          ],
+          "claims": [
+            {
+              "id": "slide-1",
+              "text": "Prioridade na fila. Qual solicitação atender primeiro?. Uma escola recebe mensagens sobre horários e inscrições com prazos diferentes para responder."
+            },
+            {
+              "id": "slide-2",
+              "text": "Critérios claros. Defina regras antes de classificar. Estabeleça critérios explícitos como prazo informado e tipo de solicitação para orientar a triagem."
+            },
+            {
+              "id": "slide-3",
+              "text": "Conferência da IA. Peça justificativa à inteligência artificial. Solicite que a IA sugira classificação com justificativa e compare essa explicação com seus critérios definidos."
+            },
+            {
+              "id": "slide-4",
+              "text": "Revisão humana. Analise casos ambíguos manualmente. Revise manualmente situações duvidosas antes de alterar a ordem da fila de atendimento operacional."
+            },
+            {
+              "id": "caption",
+              "text": "Como sua equipe decide qual mensagem responder primeiro quando várias chegam simultaneamente?\n\nDefina critérios objetivos como prazo e tipo de solicitação. Peça à IA uma sugestão de classificação com justificativa. Compare a explicação gerada com suas regras estabelecidas. Revise casos ambíguos antes de mudar a fila. Esse exercício ajuda a organizar o atendimento sem inferir urgência por características pessoais.\n\nAcompanhe o perfil para aprender aplicações práticas de IA em empresas.\n\nConteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            },
+            {
+              "id": "story",
+              "text": "Rotina operacional. Como você prioriza as mensagens hoje?. Você usa critérios definidos ou decide na hora qual solicitação atender primeiro no atendimento?"
+            },
+            {
+              "id": "art-1",
+              "text": "Rótulos de ilustração fictícia: prazo definido. tipo de solicitação. fila de espera"
+            },
+            {
+              "id": "art-2",
+              "text": "Rótulos de ilustração fictícia: critérios escritos. triagem clara. regras visíveis"
+            },
+            {
+              "id": "art-3",
+              "text": "Rótulos de ilustração fictícia: sugestão da IA. justificativa dada. comparação feita"
+            },
+            {
+              "id": "art-4",
+              "text": "Rótulos de ilustração fictícia: casos ambíguos. revisão manual. ordem ajustada"
+            },
+            {
+              "id": "art-5",
+              "text": "Rótulos de ilustração fictícia: mensagens recebidas. prioridade definida. atendimento iniciado"
+            }
+          ]
+        }
+      },
+      "render": {
+        "version": "authorial-layout-v3",
+        "packHash": "11c3136ebfd34b8df7f8c8acdb61160adcfc6e35e7f4edb03a9bd1b3c747ed4b",
+        "verifiedAt": "2026-10-18T20:02:54.965Z",
+        "feedCount": 4,
+        "story": true,
+        "runDir": "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-18-170210-slot-1-render-only",
+        "imageHashes": [
+          "54b57d5b85da03518068b8e5469cb699cd2daa4433e527484bf71e5818fe2e27",
+          "3fb4767e935e5b47547731f257909754304d72c7f7cf5f8b571f4f58e2afc57f",
+          "b858615f4530100d20143f2b73537d3a3dd49aa258c9346190e7bc26389b3c8f",
+          "5dc6506f90fcf2b8eded56b5577d705f9c3e70ab2beaef8329aa20f3864ae5b7",
+          "edb7cde34e21b68432abbfdbc35503cae63eb12321556f728d9fa7b9ecf317f7"
+        ]
       }
     }
   ],
-  "checkedAt": "2026-10-18T20:02:11.435Z",
+  "checkedAt": "2026-10-18T20:02:56.968Z",
   "workflowRun": "39161134821",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "art-direction:fila-prioridade-v4",
-    "callId": "475fff18-5c20-4944-9289-460bf464b7ec",
+    "stage": "review:fila-prioridade-v4",
+    "callId": "2e4cf6a0-c902-4e86-8839-e5db6ebe8d94",
     "value": {
-      "palette": "ocean",
-      "frames": [
+      "claims": [
         {
-          "layout": "workspace",
-          "labels": [
-            "prazo definido",
-            "tipo de solicitação",
-            "fila de espera"
+          "id": "slide-1",
+          "supported": true,
+          "reason": "A claim descreve o cenário fictício da escola e a pergunta central sobre prioridade, alinhando-se ao briefing que propõe um exercício educativo com solicitações fictícias de horários e inscrições.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "critérios escritos",
-            "triagem clara",
-            "regras visíveis"
+          "id": "slide-2",
+          "supported": true,
+          "reason": "A claim instrui a definição de critérios explícitos como prazo e tipo de solicitação, correspondendo exatamente à orientação do briefing para estabelecer regras antes de classificar.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "sugestão da IA",
-            "justificativa dada",
-            "comparação feita"
+          "id": "slide-3",
+          "supported": true,
+          "reason": "A claim orienta pedir justificativa à IA e comparar com critérios definidos, seguindo a prescrição do briefing de solicitar sugestão de classificação acompanhada de explicação.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "casos ambíguos",
-            "revisão manual",
-            "ordem ajustada"
+          "id": "slide-4",
+          "supported": true,
+          "reason": "A claim determina a revisão manual de casos ambíguos antes de alterar a fila, conforme explicitado no briefing como etapa obrigatória do exercício.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "decision",
-          "labels": [
-            "mensagens recebidas",
-            "prioridade definida",
-            "atendimento iniciado"
+          "id": "caption",
+          "supported": true,
+          "reason": "O texto resume o fluxo educativo proposto (critérios, IA com justificativa, comparação, revisão) e inclui o aviso de conteúdo fictício, atendendo às restrições de não prometer resultados nem inferir urgência pessoal.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            },
+            {
+              "sourceId": "label"
+            }
+          ]
+        },
+        {
+          "id": "story",
+          "supported": true,
+          "reason": "A capa abre com uma pergunta específica sobre a rotina operacional de priorização, aplicando o experimento editorial de alterar o eixo hook para uma situação empresarial reconhecível.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-1",
+          "supported": true,
+          "reason": "Os rótulos 'prazo definido', 'tipo de solicitação' e 'fila de espera' são elementos visuais do exemplo fictício descrito no briefing para ilustrar a triagem na escola.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-2",
+          "supported": true,
+          "reason": "Os rótulos 'critérios escritos', 'triagem clara' e 'regras visíveis' representam visualmente a etapa de definição de regras antes da classificação, conforme o briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-3",
+          "supported": true,
+          "reason": "Os rótulos 'sugestão da IA', 'justificativa dada' e 'comparação feita' ilustram o fluxo de conferência solicitado no briefing, onde a IA deve justificar sua classificação.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-4",
+          "supported": true,
+          "reason": "Os rótulos 'casos ambíguos', 'revisão manual' e 'ordem ajustada' correspondem à etapa final de revisão humana prescrita no briefing para situações duvidosas.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-5",
+          "supported": true,
+          "reason": "Os rótulos 'mensagens recebidas', 'prioridade definida' e 'atendimento iniciado' compõem a ilustração da capa (Story), representando visualmente a rotina operacional questionada no hook experimental.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         }
-      ]
+      ],
+      "decision": "approve",
+      "supported": true,
+      "novel": true,
+      "practical": true,
+      "visualMatch": true,
+      "reason": "O lote apresenta um exercício educativo completo e coerente com o briefing, utilizando um cenário fictício de escola para ensinar priorização de filas com IA. O experimento editorial foi aplicado corretamente na capa (Story), que abre com uma pergunta situacional específica sobre rotina operacional. Todas as claims possuem suporte nas fontes fornecidas, incluindo os rótulos das ilustrações que refletem fielmente as etapas do fluxo proposto. O conteúdo é prático, executável e evita promessas de resultados ou viés pessoal, atendendo aos critérios de crescimento e às restrições editoriais.",
+      "experimentApplied": true,
+      "growth": {
+        "hookSpecific": true,
+        "payoffDelivered": true,
+        "followReason": true,
+        "shareReason": true
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
