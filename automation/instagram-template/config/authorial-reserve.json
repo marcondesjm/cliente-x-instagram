@@ -801,40 +801,40 @@
       "reason": "Pauta de crescimento precisa explicar por que acompanhar o perfil."
     }
   ],
-  "checkedAt": "2026-10-18T18:02:02.438Z",
+  "checkedAt": "2026-10-18T18:02:33.793Z",
   "workflowRun": "39152211919",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "revise-draft:extracao-campos-v1",
-    "callId": "ad550a08-191f-4ba4-bd2c-f66481a2d689",
+    "stage": "generate:pedido-duplicado-v1",
+    "callId": "b8124842-1388-4c9d-8fe1-3bd970a1927a",
     "value": {
       "slides": [
         {
-          "eyebrow": "Mensagem ambígua",
-          "title": "O pedido veio sem quantidade definida",
-          "body": "Um cliente envia mensagem pedindo grampos e envelopes, mas não informa quantas unidades de cada item deseja. A IA pode preencher com suposições e gerar erro no estoque."
+          "eyebrow": "Pedido duplicado",
+          "title": "Como evitar tarefas repetidas no atendimento?",
+          "body": "Uma loja fictícia recebe pedidos por mensagem. Sem um identificador único, o mesmo pedido pode gerar várias tarefas para a equipe."
         },
         {
-          "eyebrow": "Procedimento claro",
-          "title": "Defina campos obrigatórios antes de pedir à IA",
-          "body": "Estabeleça produto, quantidade e prazo como campos essenciais. Instrua a IA a montar uma tabela mantendo apenas o que foi informado na mensagem original do cliente."
+          "eyebrow": "Procedimento",
+          "title": "Atribua um identificador ao pedido recebido",
+          "body": "Antes de criar uma tarefa, consulte se esse identificador já foi registrado. Se existir, encaminhe para conferência em vez de duplicar o trabalho."
         },
         {
-          "eyebrow": "Conferência necessária",
-          "title": "Marque ausentes e compare com a fonte",
-          "body": "Qualquer campo não mencionado deve receber a marcação não informado. Antes de cadastrar, confira cada linha da tabela contra a mensagem recebida para evitar inclusões indevidas."
+          "eyebrow": "Conferência",
+          "title": "Teste reenviando o mesmo pedido",
+          "body": "Verifique se o sistema reconhece o identificador existente. A regra depende da implementação e dos testes realizados pela equipe técnica."
         },
         {
-          "eyebrow": "Ação prática",
-          "title": "Teste com um pedido fictício hoje mesmo",
-          "body": "Crie uma mensagem simulada com dados incompletos. Peça à IA a tabela estruturada e verifique se os campos faltantes foram sinalizados. Ajuste as instruções até obter consistência."
+          "eyebrow": "Exercício",
+          "title": "Mapeie seus pontos de entrada de pedidos",
+          "body": "Liste os canais que recebem solicitações. Defina um identificador simples para cada uma e teste o fluxo de conferência antes de automatizar."
         }
       ],
-      "caption": "Pedidos por mensagem costumam chegar com informações incompletas. Quando a IA completa sozinha o que falta, o risco de erro no cadastro aumenta.\n\nDefina quais campos são essenciais, peça uma tabela que preserve apenas o recebido e marque como não informado tudo que estiver ausente. Compare cada campo com a mensagem original antes de registrar. Quer aprender aplicações práticas de IA em empresas? Siga o perfil para receber exercícios como este.",
+      "caption": "Pedidos chegam por vários canais e podem se repetir sem aviso. Este exercício propõe atribuir um identificador a cada solicitação e consultar se ele já existe antes de criar uma nova tarefa.\n\nSe o identificador já estiver registrado, o caminho é a conferência, não a duplicação. Teste reenviando o mesmo pedido para verificar se o registro funciona como esperado. Qual canal de pedidos mais sofre com repetições na sua operação? Siga o perfil para aprender aplicações práticas de IA em empresas.",
       "storySlide": {
-        "eyebrow": "Rotina operacional",
-        "title": "Sua equipe confere pedidos antes de cadastrar?",
-        "body": "Veja no feed um exercício para organizar a extração de dados de mensagens com IA, evitando suposições que geram retrabalho."
+        "eyebrow": "Rotina",
+        "title": "Seu time cria tarefas duplicadas?",
+        "body": "Você já percebeu pedidos repetidos gerando trabalho extra? Veja no feed um exercício para organizar essa etapa antes de automatizar."
       }
     },
     "structured": true,
