@@ -9552,7 +9552,7 @@
       "topic": "teste-variacoes-v5",
       "account": "cliente-x",
       "version": "claude-authorial-reserve-v1",
-      "status": "draft",
+      "status": "ready",
       "generationCallId": "4e2dbbfb-9a1c-470b-bea3-9f3659dd0ab9",
       "learningContext": {
         "version": "claude-observed-editorial-v1",
@@ -9822,10 +9822,234 @@
           "followReason": true,
           "shareReason": true
         }
+      },
+      "review": {
+        "claims": [
+          {
+            "id": "slide-1",
+            "supported": true,
+            "reason": "A fonte brief descreve exatamente o cenário fictício de uma oficina com solicitações contendo abreviação e palavra digitada incorretamente pela pressa do dia.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma oficina fictícia, com solicitações de orçamento e acompanhamento de serviço. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-2",
+            "supported": true,
+            "reason": "O briefing orienta explicitamente a execução do mesmo rascunho de instrução em cada versão (original, abreviado, erro, dado faltante) para comparar resultados.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma oficina fictícia, com solicitações de orçamento e acompanhamento de serviço. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-3",
+            "supported": true,
+            "reason": "A fonte brief determina que se comparem os campos extraídos e se anotem as divergências onde a extração falhou em cada variação.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma oficina fictícia, com solicitações de orçamento e acompanhamento de serviço. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-4",
+            "supported": true,
+            "reason": "O briefing prescreve corrigir o rascunho com base nas divergências e repetir o teste antes de usar na rotina, conforme indicado no slide 4.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma oficina fictícia, com solicitações de orçamento e acompanhamento de serviço. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "caption",
+            "supported": true,
+            "reason": "O texto da legenda resume fielmente o exercício proposto no briefing: criar variações de pedido fictício, testar extração, anotar divergências e ajustar antes da automação.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma oficina fictícia, com solicitações de orçamento e acompanhamento de serviço. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              },
+              {
+                "sourceId": "label",
+                "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+              }
+            ]
+          },
+          {
+            "id": "story",
+            "supported": true,
+            "reason": "A narrativa da capa reflete o contexto descrito no briefing sobre clientes que escrevem com pressa, abreviam termos e cometem erros, servindo como gancho para o exercício.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma oficina fictícia, com solicitações de orçamento e acompanhamento de serviço. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-1",
+            "supported": true,
+            "reason": "Os rótulos visuais correspondem aos elementos descritos no briefing para a etapa de pedido fictício (orçamento oficina, mensagem digitada, campo vazio).",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma oficina fictícia, com solicitações de orçamento e acompanhamento de serviço. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-2",
+            "supported": true,
+            "reason": "Os rótulos visuais alinham-se à instrução do briefing de executar o mesmo rascunho em versões original, abreviada e com erro de digitação.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma oficina fictícia, com solicitações de orçamento e acompanhamento de serviço. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-3",
+            "supported": true,
+            "reason": "Os rótulos visuais representam corretamente a fase de conferência descrita no briefing: rascunho instrução, executar extração e comparar campos.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma oficina fictícia, com solicitações de orçamento e acompanhamento de serviço. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-4",
+            "supported": true,
+            "reason": "Os rótulos visuais refletem a etapa de ação prescrita no briefing: anotar divergências, corrigir rascunho e repetir teste.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma oficina fictícia, com solicitações de orçamento e acompanhamento de serviço. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-5",
+            "supported": true,
+            "reason": "Os rótulos visuais sintetizam o objetivo educativo do briefing: testar mensagens variadas antes de automatizar, sem prometer resultados reais.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma oficina fictícia, com solicitações de orçamento e acompanhamento de serviço. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              },
+              {
+                "sourceId": "label",
+                "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+              }
+            ]
+          }
+        ],
+        "decision": "approve",
+        "supported": true,
+        "novel": true,
+        "practical": true,
+        "visualMatch": true,
+        "reason": "Todas as claims possuem suporte direto no briefing e na label. O conteúdo é um exercício educativo fictício executável, com começo (cenário), desenvolvimento (teste comparativo) e conclusão (ajuste pré-automação). A abordagem de testar variações textuais antes de automatizar é concreta e diferenciada dos títulos anteriores do histórico. Os renders são diagramas autorais legíveis e pertinentes ao tema, sem cortes ou sobreposições prejudiciais.",
+        "experimentApplied": true,
+        "growth": {
+          "hookSpecific": true,
+          "payoffDelivered": true,
+          "followReason": true,
+          "shareReason": true
+        },
+        "bindingVersion": "exact-source-id-v1",
+        "callId": "2a23585e-793e-4066-8308-f55d723276a7",
+        "packHash": "eb892a38c1fcaa87ebd7f33ffaeb9ad0b3523767d9ea53b3a442867e8f0ec65f",
+        "checkedAt": "2026-10-18T20:44:51.069Z",
+        "groundingTask": {
+          "scope": "Exercício educativo fictício. Orientações são propostas, não resultados ou notícias.",
+          "sources": [
+            {
+              "id": "brief",
+              "text": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma oficina fictícia, com solicitações de orçamento e acompanhamento de serviço. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+            },
+            {
+              "id": "label",
+              "text": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            }
+          ],
+          "claims": [
+            {
+              "id": "slide-1",
+              "text": "Pedido. O que acontece quando o cliente escreve errado?. Um cliente envia solicitação de orçamento com abreviação e palavra digitada incorretamente pela pressa do dia."
+            },
+            {
+              "id": "slide-2",
+              "text": "Teste. Execute o mesmo rascunho em cada versão do texto. Use a mesma instrução de extração nos textos original, abreviado, com erro e com dado faltante para comparar resultados."
+            },
+            {
+              "id": "slide-3",
+              "text": "Conferência. Compare os campos extraídos e anote as diferenças. Verifique quais informações foram capturadas corretamente e registre onde a extração falhou em cada variação apresentada."
+            },
+            {
+              "id": "slide-4",
+              "text": "Ação. Corrija a instrução e repita antes de usar na rotina. Ajuste o rascunho com base nas divergências encontradas e teste novamente até obter extração consistente em todos os casos."
+            },
+            {
+              "id": "caption",
+              "text": "Uma oficina recebe pedidos por mensagem com abreviações, erros e dados faltantes. Como testar se a instrução para IA extrai corretamente cada variação?\n\nEscreva um pedido fictício completo e crie versões com erro de digitação e informação ausente. Execute o mesmo rascunho em cada caso e compare os campos extraídos. Anote divergências e ajuste antes de usar na rotina.\n\nVocê já conferiu como variações no texto afetam a extração automática? Siga o perfil para aprender aplicações práticas de IA em empresas.\n\nConteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado.\n\n#IAparaEmpresas #Automacao #GestaoDeNegocios #Produtividade"
+            },
+            {
+              "id": "story",
+              "text": "Rotina. Seu atendimento recebe mensagens variadas?. Clientes escrevem com pressa, abreviam termos e cometem erros. Você testa como a IA lida com essas variações antes de automatizar?"
+            },
+            {
+              "id": "art-1",
+              "text": "Rótulos de ilustração fictícia: orçamento oficina. mensagem digitada. campo vazio"
+            },
+            {
+              "id": "art-2",
+              "text": "Rótulos de ilustração fictícia: texto original. versão abreviada. erro de digitação"
+            },
+            {
+              "id": "art-3",
+              "text": "Rótulos de ilustração fictícia: rascunho instrução. executar extração. comparar campos"
+            },
+            {
+              "id": "art-4",
+              "text": "Rótulos de ilustração fictícia: anotar divergências. corrigir rascunho. repetir teste"
+            },
+            {
+              "id": "art-5",
+              "text": "Rótulos de ilustração fictícia: mensagens variadas. testar antes. automatizar depois"
+            }
+          ]
+        }
+      },
+      "render": {
+        "version": "authorial-layout-v3",
+        "packHash": "eb892a38c1fcaa87ebd7f33ffaeb9ad0b3523767d9ea53b3a442867e8f0ec65f",
+        "verifiedAt": "2026-10-18T20:44:51.069Z",
+        "feedCount": 4,
+        "story": true,
+        "runDir": "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-18-174420-slot-1-render-only",
+        "imageHashes": [
+          "739499c961e92c873d3d3f76ef2d0e78606f10baf98fb07fca9c2366b439559e",
+          "02d39744107e63aefa9e2c8c3e8230d5950b7799c5894455fb63ac0e84942429",
+          "c6bd787b8d8aff5c9a7e7f18d88aee82aad50e74bd46af21091576cbbe13b50e",
+          "0fdac7951f7337f7c6f02274eae8853d194f53fb908ec99e3d6b01dc351baa09",
+          "4f060a2900b7c001d677eb4762fbbc3dd0336cea838cdb119c54fdc30884ab22"
+        ]
       }
     }
   ],
-  "checkedAt": "2026-10-18T20:44:49.458Z",
+  "checkedAt": "2026-10-18T20:44:51.070Z",
   "workflowRun": "39164475597",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
