@@ -61,12 +61,13 @@ try{
  const available=readyAuthorialPacks(state,'cliente-x',asset,budget.calls).filter(pack=>pickFreshPack([pack],'2000-01-01',0,[],history,()=>0).pack);
  if(available.length>=state.targetReady){state.health='stock_ready';state.message='Estoque autoral revisado suficiente; nenhuma chamada à API.';save();process.exit(0);}
  const needsRepair=e=>e.status==='render_revision_required'||e.status==='ready'&&e.render?.version!==RESERVE_RENDER_VERSION;
- callAllowance(budget,new Date(),(state.entries.some(needsRepair)?1:2)+(authorialRegressionFresh(state,budget.model)?0:1));await regression();
+ const firstRepair=state.entries.find(needsRepair);
+ callAllowance(budget,new Date(),(firstRepair?(firstRepair.pack?.businessArt?1:2):3)+(authorialRegressionFresh(state,budget.model)?0:1));await regression();
  let accepted=0;
  const batchLimit=Math.min(state.entries.some(needsRepair)?1:state.maxPacksPerRun,state.targetReady-available.length);
  for(let index=0;index<batchLimit;index++){
   const repair=state.entries.find(needsRepair);
-  callAllowance(budget,new Date(),repair?1:2);
+  callAllowance(budget,new Date(),repair?(repair.pack?.businessArt?1:2):3);
   const topic=repair?authorialTopic(repair.topic):nextAuthorialTopic(state.entries);
   if(!topic){state.health='topics_exhausted';state.message='Pautas autorais previstas já avaliadas; amplie o catálogo revisado sem repetir temas.';break;}
   const context=recentContext(history,state.entries.filter(e=>e!==repair));

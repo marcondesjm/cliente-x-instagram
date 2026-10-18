@@ -86,7 +86,7 @@ assert.equal(pendingAuthorialShortages({errors:[{...error,scheduledPostId:'manua
 assert.equal(authorialRegressionFresh(state,budget.model,now),true);
 assert.equal(authorialRegressionFresh({...state,regression:{...state.regression,fingerprint:'changed'}},budget.model,now),false);
 assert.equal(authorialRegressionFresh(state,budget.model,tomorrow),true);
-const nearlySpent={...spent,calls:spent.calls.slice(0,10)};
-assert.equal(plan({budget:nearlySpent}).run,true,'A fresh regression needs two calls, not three');
-assert.equal(plan({budget:{...spent,calls:spent.calls.slice(0,11)}}).phase,'waiting_daily_budget');
+const nearlySpent={...spent,calls:spent.calls.slice(0,9)};
+assert.equal(plan({budget:nearlySpent}).run,true,'A fresh regression reserves generation, art direction and review');
+assert.equal(plan({budget:{...spent,calls:spent.calls.slice(0,10)}}).phase,'waiting_daily_budget');
 console.log('PASS: previous-day shortage only, ledger exclusion, future/old-date guards and exact regression budget.');
