@@ -6,13 +6,18 @@
   "health": "daily_limit",
   "message": "Saldo interno insuficiente para revisão completa; aguarda a renovação diária sem iniciar novas leituras.",
   "policy": {
-    "maxCallsPerDay": 100,
+    "maxCallsPerDay": 250,
     "maxInputTokensPerCall": 120000,
-    "maxInputTokensPerDay": 12000000,
+    "maxInputTokensPerDay": 30000000,
     "maxPacksPerRun": 3,
     "readyStockTarget": 12,
     "dailyCallOverrides": {},
-    "dailyInputTokenOverrides": {}
+    "dailyInputTokenOverrides": {},
+    "providerPlanReference": {
+      "dailyTokens": 50000000,
+      "checkedAt": "2026-10-18",
+      "source": "Captura do painel fornecida pelo usuário; referência informativa, sem sincronização do saldo."
+    }
   },
   "calls": [
     {
@@ -3678,7 +3683,8 @@
       "reason": "Saldo interno insuficiente para novas leituras e revisão completa; nenhuma nova leitura paga foi iniciada.",
       "kind": "temporary",
       "checkedAt": "2026-10-18T19:41:40.344Z",
-      "retryAfter": "2026-10-19T03:00:00.000Z"
+      "retryAfter": "2026-10-18T19:45:48.384Z",
+      "budgetRaisedAt": "2026-10-18T19:45:48.384Z"
     }
   },
   "lastEvaluation": {
@@ -5453,8 +5459,9 @@
   },
   "activatedAt": "2026-10-18T15:01:37.221Z",
   "budgetAdjustment": {
-    "at": "2026-10-18T19:12:50.745Z",
-    "reason": "Reposição Kids bloqueada pelo teto interno; limite alinhado ao controle administrativo, sem alterar revisão ou proteção bíblica."
+    "at": "2026-10-18T19:45:48.415Z",
+    "reason": "Usuário autorizou ampliar o limite interno diante do saldo mostrado no Claude Gateway.",
+    "providerBalanceSynced": false
   },
   "reserve": {
     "target": 12,

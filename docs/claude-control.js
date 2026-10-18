@@ -5,10 +5,10 @@
  <div class="panel-head"><div><div class="section-label">Inteligência artificial</div><h2>Controle do Claude</h2></div><span class="status-pill warn" id="claudeStatus">Consultar</span></div>
  <p id="claudeConsumption"></p><p id="claudeConnection"></p><p id="claudeBudgetScope"></p><p id="claudeTokens"></p>
  <form id="claudeSettings" style="display:flex;flex-wrap:wrap;gap:16px;align-items:end">
- <label>Limite diário normal<br><input id="claudeDailyLimit" type="number" min="1" max="100" required style="width:130px"></label>
- <label>Limite total só para hoje<br><input id="claudeTodayLimit" type="number" min="1" max="100" placeholder="Usar normal" style="width:150px"></label>
+ <label>Limite interno diário de chamadas<br><input id="claudeDailyLimit" type="number" min="1" max="250" required style="width:130px"></label>
+ <label>Limite total só para hoje<br><input id="claudeTodayLimit" type="number" min="1" max="250" placeholder="Usar normal" style="width:150px"></label>
  <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="claudeEnabled" style="width:auto;margin:0"> Reposição automática ativa</label><button class="btn" type="submit">Salvar controles</button></form>
- <p>Limites maiores permitem mais chamadas e consumo no provedor. O teto de tokens acompanha o número de chamadas. Deixe o limite de hoje vazio para usar o normal. Salve as alterações antes de executar.</p>
+ <p>Este é o limite interno da plataforma, separado do saldo do Claude Gateway. Aumentá-lo permite mais chamadas e consumo no provedor. O teto de tokens acompanha o número de chamadas. Deixe o limite de hoje vazio para usar o normal. Salve as alterações antes de executar.</p>
  <p id="claudeHealth"></p><div style="display:flex;flex-wrap:wrap;gap:10px"><button class="btn" id="claudeRefresh" type="button">Atualizar dados</button><button class="btn" id="claudeRun" type="button">Repor conteúdo</button><button class="btn" id="claudeAudit" type="button">Executar auditoria editorial</button><button class="btn" id="claudeCalibrate" type="button">Executar calibração visual</button></div>
  <p id="claudeRunNote"></p><p>Auditoria e calibração também consomem chamadas. Não publicam conteúdo.</p><button class="btn" id="claudeLearn" type="button">Analisar desempenho com Claude</button><p id="claudeStrategy" style="white-space:pre-line;overflow-wrap:anywhere"></p><p id="claudeFeedback" role="status" aria-live="polite"></p>
  <details><summary>Chamadas recentes</summary><ul id="claudeHistory" style="overflow-wrap:anywhere"></ul></details>
