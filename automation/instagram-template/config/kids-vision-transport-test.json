@@ -221,11 +221,17 @@
     {
       "id": "bef9f070-6fa9-40ff-85dc-57e030f8659b",
       "day": "2026-10-18",
-      "status": "reserved",
+      "status": "completed",
       "stage": "sonnet-forced-holdout:holdout-3",
       "startedAt": "2026-10-18T13:08:34.375Z",
       "imageHash": "0e68d89f3b06e81914792cf90b2e067b890038d0529d6b9579fc219f5e7cf478",
-      "imageBytes": 67278
+      "imageBytes": 67278,
+      "completedAt": "2026-10-18T13:08:43.553Z",
+      "reportedInputTokens": 24245,
+      "inputTokens": 24245,
+      "outputTokens": 124,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -517,12 +523,33 @@
       "checkedAt": "2026-10-18T13:08:32.197Z",
       "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/07_FB_Zacchaeus_1024.jpg?1724237549",
       "imageHash": "34169359e67f7acc29d673c680eab8f7cc3bbe6cf27019b69da83c755945902e"
+    },
+    {
+      "id": "sonnet-forced-holdout:holdout-3",
+      "mode": "sonnet-forced-holdout",
+      "fixture": "holdout-3",
+      "model": "claude-sonnet-4.6",
+      "passed": true,
+      "value": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration",
+        "description": "Ilustração em estilo de desenho animado mostrando um grupo de homens com barbas e turbantes coloridos (vermelho, amarelo, verde) observando dois personagens ao fundo: um homem de túnica vermelha e outro de túnica azul segurando um pequeno objeto. O cenário é uma rua estreita com construções de pedra clara e arcos arquitetônicos típicos do Oriente Médio antigo. Não há árvores nem livros abertos visíveis na cena."
+      },
+      "expected": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration"
+      },
+      "checkedAt": "2026-10-18T13:08:43.554Z",
+      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/06_FB_Zacchaeus_1024.jpg?1724237549",
+      "imageHash": "0e68d89f3b06e81914792cf90b2e067b890038d0529d6b9579fc219f5e7cf478"
     }
   ],
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:08:34.375Z",
+  "checkedAt": "2026-10-18T13:08:43.554Z",
   "workflowRun": "39130135749",
   "summary": [
     {
