@@ -4417,11 +4417,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-18T22:07:22.093Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 90874,
       "promptChars": 793,
       "imageFingerprint": "d653f245ff6c16e84eb5767b8ef2f03db7a4318ddbaf2400352d0d389536f270",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-18T22:08:01.700Z",
+      "reportedInputTokens": 32192,
+      "inputTokens": 32192,
+      "outputTokens": 105,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -4564,7 +4570,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T22:07:22.093Z",
+  "checkedAt": "2026-10-18T22:08:01.700Z",
   "lastRun": "39170079691",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -4839,12 +4845,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-18:4d4270c39e1389eb",
+    "stage": "pixels:kids-biblia-18:5eb2b10cd714a28f",
     "value": {
       "visible": true,
       "style": "illustration",
       "childSuitable": true,
-      "observedEvent": "Ilustração de um homem com barba e faixa azul na cabeça, posicionado à esquerda em primeiro plano, gesticulando com a mão direita estendida em direção a um grupo de cinco pessoas reunidas ao centro e à direita; ao fundo, estruturas retangulares de cor clara sob céu azul."
+      "observedEvent": "Ilustração colorida de quatro pessoas sentadas em assentos amarelos: uma mulher à esquerda segura um cálice dourado, um homem atrás dela despeja líquido de uma jarra no cálice, um homem ao centro com túnica amarela e faixa vermelha segura outro cálice, e uma mulher à direita olha para ele; todos usam faixas na cabeça e vestimentas antigas."
     }
   },
   "lastFactualEvaluation": {
@@ -6845,6 +6851,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 14,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-18T22:07:22.093Z"
+    "checkedAt": "2026-10-18T22:08:01.700Z"
   }
 }
