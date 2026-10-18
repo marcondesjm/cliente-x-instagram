@@ -3,8 +3,8 @@
   "enabled": true,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "review_completed",
-  "message": "3 pauta(s) examinada(s); somente seleções aprovadas seguem para montagem.",
+  "health": "reviewing",
+  "message": "Revisando cenas da pauta kids-biblia-21; aprovação bíblica, visual e render ainda obrigatórios.",
   "policy": {
     "maxCallsPerDay": 250,
     "maxInputTokensPerCall": 120000,
@@ -4086,6 +4086,19 @@
       "outputTokens": 30,
       "usageStatus": "unconfirmed_counted_at_maximum",
       "stopReason": "tool_use"
+    },
+    {
+      "id": "d89d58d6-a8e5-4359-9b4a-db6cc3408db3",
+      "day": "2026-10-18",
+      "stage": "pixels:kids-biblia-21:0b9184aaefa8cf6e",
+      "model": "claude-sonnet-4.6",
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-18T21:57:49.371Z",
+      "status": "reserved",
+      "payloadBytes": 83936,
+      "promptChars": 793,
+      "imageFingerprint": "b638471a76e60fb140ba09623c75051e81ffbcda81edbf7a514dae74c782d1a2",
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
     }
   ],
   "entries": [
@@ -4228,8 +4241,8 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T20:00:38.683Z",
-  "lastRun": "39160300496",
+  "checkedAt": "2026-10-18T21:57:49.371Z",
+  "lastRun": "39170079691",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -6714,7 +6727,7 @@
     }
   },
   "accuracyGate": {
-    "checkedAt": "2026-10-18T19:47:22.531Z",
+    "checkedAt": "2026-10-18T21:57:42.714Z",
     "visualCases": 4,
     "factualCases": 6,
     "diversityCases": 2,
@@ -6731,12 +6744,12 @@
     "target": 12,
     "available": 0,
     "shortfall": 12,
-    "checkedAt": "2026-10-18T19:47:22.531Z"
+    "checkedAt": "2026-10-18T21:57:42.714Z"
   },
   "economy": {
     "reusedPixelReads": 0,
-    "newPixelReads": 33,
+    "newPixelReads": 0,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-18T20:00:38.683Z"
+    "checkedAt": "2026-10-18T21:57:49.371Z"
   }
 }
