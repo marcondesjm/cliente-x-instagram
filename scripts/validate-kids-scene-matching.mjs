@@ -1,9 +1,14 @@
 import {rejectedSceneIds} from '../lib/kids-scene-matching.js';
 import assert from 'node:assert/strict';
-import {matchSceneOptions,matchingSchema,matchingPrompt} from '../lib/kids-scene-matching.js';
+import {matchSceneOptions,matchingSchema,matchingPrompt,completeSceneMatching} from '../lib/kids-scene-matching.js';
 import {bindVerificationObservations} from '../lib/kids-scene-vision.js';
 const option=scene=>({scene,verse:'19:6',reason:'A cena representa a acolhida descrita no cartão.'});
 const matrix=lists=>({cards:lists.map((list,i)=>({card:i+1,options:list.map(option),reason:'Opções avaliadas contra o texto e a passagem.'}))});
+let requests=0;
+const repaired=await completeSceneMatching(async()=>++requests===1?{cards:[]}:matrix([[1],[2]]),2,2,['19:6']);
+assert.equal(requests,2);assert.equal(repaired.selection.decision,'approve');
+requests=0;const refused=await completeSceneMatching(async()=>{requests++;return matrix([[],[]]);},2,2,['19:6']);assert.equal(requests,1);assert.equal(refused.selection.decision,'reject','Negative editorial review never triggers schema retry');
+requests=0;await assert.rejects(()=>completeSceneMatching(async()=>{requests++;return {cards:[]};},2,2,['19:6']),e=>e.code==='MATCHING_SCHEMA');assert.equal(requests,2,'Malformed replies remain blocked after one retry');
 // Greedy [1,2] would fail: card 2 has only scene 1. Assignment must backtrack.
 const result=matchSceneOptions(matrix([[1,2],[1],[2,3]]),3,3,['19:6']);
 assert.deepEqual(result.feed,[2,1]);assert.equal(result.story,3);

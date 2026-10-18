@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import {labelledReviewImages,reviewImageManifest} from '../lib/kids-scene-vision.js';
 import {assertSceneActivation} from '../lib/kids-scene-activation.js';
 import {randomUUID} from 'node:crypto';
-import {matchingSchema,matchingPrompt,matchSceneOptions} from '../lib/kids-scene-matching.js';
+import {matchingSchema,matchingPrompt,matchSceneOptions,completeSceneMatching} from '../lib/kids-scene-matching.js';
 import {beginDiagnosticPilot,endDiagnosticPilot,reviewCircuitBlocked,bindVerificationObservations,cachedBlindObservation,assertVisionReadiness} from '../lib/kids-scene-vision.js';
 import {resolve,dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -154,9 +154,13 @@ async function reviewPack(pack,candidate,known,{attempt=0,feedback=null,excluded
   pool.splice(0,pool.length,...usable);
   if(pool.length<pack.slides.length+1)throw new Error('Faltam seis cenas com leitura individual confirmada.');
   fs.writeFileSync(`output/kids-replenishment/${pack.id}-candidates.jpg`,await contactSheet(pool));
-  const matching=await paidCall('select:'+pack.id,null,matchingPrompt(ctx,pool.map((s,i)=>({scene:i+1,observationId:s.id,observedEvent:blindCache.get(s.sha256).observedEvent,sourceContext:promptSceneDescription(s.description)})),feedback),8000,matchingSchema(pool.length,pack.slides.length+1));
-  fs.writeFileSync(`output/kids-replenishment/${pack.id}-matching-${attempt+1}.json`,JSON.stringify(matching,null,2));
-  const selection=matchSceneOptions(matching,pool.length,pack.slides.length+1,passage.verses.map(v=>v.id),{scenes:pool,feedback});
+  const {selection,result:matching}=await completeSceneMatching(async({attempt:schemaAttempt,failure})=>{
+    if(schemaAttempt)callAllowance(state,new Date(),3);
+    const matrixRules=`\nFormato obrigatório: exatamente ${pack.slides.length+1} posições (incluindo Story), cada uma com exatamente ${pool.length} assessments em ordem. Mesmo sem cenas compatíveis, retorne todas as posições com allowed=false e verse vazio nos pares negados. cards nunca pode ser vazio. Justificativas breves, entre doze e cem caracteres. Não force aprovação.`;
+    const result=await paidCall('select:'+pack.id,null,matchingPrompt(ctx,pool.map((s,i)=>({scene:i+1,observationId:s.id,observedEvent:blindCache.get(s.sha256).observedEvent,sourceContext:promptSceneDescription(s.description)})),feedback)+matrixRules+(failure?'\nA resposta anterior tinha formato inválido: '+failure+'. Reavalie a matriz completa com as mesmas observações, sem inventar pares permitidos.':''),8000,matchingSchema(pool.length,pack.slides.length+1));
+    fs.writeFileSync(`output/kids-replenishment/${pack.id}-matching-${attempt+1}-schema-${schemaAttempt+1}.json`,JSON.stringify(result,null,2));
+    return result;
+  },pool.length,pack.slides.length+1,passage.verses.map(v=>v.id),{scenes:pool,feedback});
   console.log(JSON.stringify({packId:pack.id,decision:selection.decision==='approve'?'approve':'reject',feed:Array.isArray(selection.feed)?selection.feed.map(Number):[],story:Number(selection.story),evidenceCount:selection.evidence?.length || 0,cardLabels:selection.evidence?.map(e=>Number(e.card)) || []}));
   // Preserve rejections too: an API success does not establish editorial approval.
   fs.writeFileSync(`output/kids-replenishment/${pack.id}-selection-${attempt+1}.json`,JSON.stringify({reference:pack.biblicalReference,selection,candidates:pool.map(({bytes,...scene},i)=>({...scene,scene:i+1,observation:blindCache.get(scene.sha256)}))},null,2));
