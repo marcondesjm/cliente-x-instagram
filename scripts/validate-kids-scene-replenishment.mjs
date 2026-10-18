@@ -5,7 +5,7 @@ import {callAllowance,calibrationImage,visualSignature,similarScenes,contactShee
 import {reviewBinding,assertAutomaticReview,verseIsWithin} from '../lib/kids-scene-review-proof.js';
 import {passageRanges,loadPassage} from '../lib/kids-bible-passage.js';
 import {validateRecipe,hash} from '../lib/kids-scene-assembly.js';
-import {beginDiagnosticPilot,endDiagnosticPilot,reviewCircuitBlocked,cachedBlindObservation,VISION_VERSION} from '../lib/kids-scene-vision.js';
+import {beginDiagnosticPilot,endDiagnosticPilot,reviewCircuitBlocked,cachedBlindObservation,VISION_VERSION,assertVisionReadiness} from '../lib/kids-scene-vision.js';
 import {sceneGroundingTask,groundingFingerprint} from '../lib/editorial-grounding.js';
 const state={calls:[],circuit:null,policy:{maxCallsPerDay:2,maxInputTokensPerDay:100,maxInputTokensPerCall:100}};
 assert.equal(reviewPoolLimit({maxCallsPerDay:26,maxInputTokensPerDay:1500000,maxInputTokensPerCall:120000}),9);
@@ -124,3 +124,12 @@ const noVisualReview=structuredClone(auto);delete noVisualReview.automaticReview
 const wrongPixelMatch=structuredClone(auto);wrongPixelMatch.automaticReview.verification.cards[0].pixelMatch=false;assert.throws(()=>assertAutomaticReview(wrongPixelMatch),/avaliação/);
 const inventedEvent=structuredClone(auto);inventedEvent.automaticReview.verification.cards[0].depictedEvent='Jesus apareceu pessoalmente às mulheres.';assert.throws(()=>assertAutomaticReview(inventedEvent),/fonte factual/);
 const wrongReviewOrder=structuredClone(auto);wrongReviewOrder.automaticReview.visualReview.positions.reverse();assert.throws(()=>assertAutomaticReview(wrongReviewOrder),/pixels/);
+
+const gateState={model:'claude-sonnet-4.6',reasoningModel:'claude-sonnet-4.6'};
+const diagnostics={entries:Array.from({length:4},(_,i)=>({fixture:'holdout-'+i,mode:'sonnet-forced-holdout',model:gateState.model,passed:true,checkedAt:now.toISOString()})),eventGrounding:{version:'depicted-event-v2',model:gateState.reasoningModel,passed:true,checkedAt:now.toISOString(),cases:Array.from({length:6},(_,i)=>({passed:true,expected:i%2===0,supported:i%2===0}))}};
+assert.equal(assertVisionReadiness(gateState,diagnostics,now).factualCases,6);
+const failedGate=structuredClone(diagnostics);failedGate.entries[0].passed=false;assert.throws(()=>assertVisionReadiness(gateState,failedGate,now),/visual/);
+assert.throws(()=>assertVisionReadiness(gateState,diagnostics,new Date(now.getTime()+25*60*60*1000)),/visual/);
+const missingNegative=structuredClone(diagnostics);missingNegative.eventGrounding.cases.pop();assert.throws(()=>assertVisionReadiness(gateState,missingNegative,now),/factual/);
+const falseNegative=structuredClone(diagnostics);falseNegative.eventGrounding.cases[1].supported=true;assert.throws(()=>assertVisionReadiness(gateState,falseNegative,now),/factual/);
+console.log('PASS: independent pixel proof, immutable depicted-event binding and fresh positive/negative accuracy gate.');
