@@ -4919,41 +4919,56 @@
       "createdAt": "2026-10-18T19:45:46.330Z"
     }
   ],
-  "checkedAt": "2026-10-18T19:45:47.708Z",
+  "checkedAt": "2026-10-18T19:45:56.549Z",
   "workflowRun": "39159975467",
   "message": "2 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "generate:fila-prioridade-v3",
-    "callId": "47104d1a-2c51-41da-a30e-2131d2f37058",
+    "stage": "art-direction:fila-prioridade-v3",
+    "callId": "a7693b2d-0a43-468c-890e-ffbb2658e2e4",
     "value": {
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "eyebrow": "Rotina",
-          "title": "Como priorizar pedidos sem viés?",
-          "body": "Uma distribuidora fictícia recebe consultas comerciais e solicitações internas simultaneamente todos os dias úteis."
+          "layout": "workspace",
+          "labels": [
+            "prazo informado",
+            "tipo solicitação",
+            "fila atendimento"
+          ]
         },
         {
-          "eyebrow": "Critérios",
-          "title": "Defina regras claras de prioridade",
-          "body": "Estabeleça critérios explícitos como prazo informado pelo cliente e tipo específico da solicitação recebida pela equipe."
+          "layout": "conversation",
+          "labels": [
+            "critérios claros",
+            "consulta comercial",
+            "solicitação interna"
+          ]
         },
         {
-          "eyebrow": "Conferência",
-          "title": "Peça justificativa à inteligência artificial",
-          "body": "Solicite que a IA sugira uma classificação acompanhada da justificativa para comparar com seus critérios definidos previamente."
+          "layout": "workflow",
+          "labels": [
+            "sugestão IA",
+            "justificativa",
+            "comparação"
+          ]
         },
         {
-          "eyebrow": "Ação",
-          "title": "Revise casos ambíguos antes de mudar",
-          "body": "Analise manualmente as situações pouco claras antes de alterar a fila de atendimento estabelecida pela sua operação atual."
+          "layout": "checklist",
+          "labels": [
+            "casos ambíguos",
+            "revisão manual",
+            "alteração fila"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "tudo urgente",
+            "prioridade equipe",
+            "atendimento diário"
+          ]
         }
-      ],
-      "caption": "Como sua equipe decide qual pedido atender primeiro quando tudo parece urgente ao mesmo tempo?\n\nDefina critérios objetivos como prazo e tipo de solicitação. Peça à IA uma sugestão com justificativa. Compare essa justificativa com suas regras. Revise os casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais.\n\nQuer aprender aplicações práticas de IA em empresas? Acompanhe o perfil para receber exercícios como este.",
-      "storySlide": {
-        "eyebrow": "Rotina",
-        "title": "Qual pedido você atende primeiro?",
-        "body": "Quando tudo parece urgente, como sua equipe define prioridades no atendimento diário da empresa?"
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
