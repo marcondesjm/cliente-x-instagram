@@ -8,7 +8,7 @@ const state=read(P),previous=JSON.stringify(state),errors=read(C+'watchdog-error
 const prior=state.automaticRecovery;
 state.automaticRecovery={...state.automaticRecovery,...plan,checkedAt:new Date().toISOString(),workflowRun:process.env.GITHUB_RUN_ID||null};
 if(prior&&['pending','pendingSlot','available','recoveryReady','run','phase','nextAttemptAt'].every(k=>JSON.stringify(prior[k])===JSON.stringify(plan[k])))state.automaticRecovery=prior;
-if(plan.phase==='waiting_daily_budget'){state.health='daily_limit';state.message='Reposição automática aguarda a renovação diária da cota; será retomada pelo agendamento, sem ação manual.';}
+if(plan.phase==='waiting_daily_budget'){state.health='daily_limit';state.message='Reposição automática aguarda a renovação do limite interno diário; será retomada pelo agendamento, sem ação manual.';}
 for(const e of errors)if(isAuthorialShortage(e))e.solution=solutionForWatchdogError(e.error,e.stage);
 const changed=[];if(JSON.stringify(state)!==previous)changed.push(P);
 if(JSON.stringify(errors)!==oldErrors)changed.push(C+'watchdog-errors.json');

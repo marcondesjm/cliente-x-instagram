@@ -4,14 +4,15 @@
   "model": "claude-sonnet-4.6",
   "billingMode": "fixed_plan_user_confirmed",
   "policy": {
-    "maxCallsPerDay": 12,
+    "maxCallsPerDay": 100,
     "maxInputTokensPerCall": 120000,
-    "maxInputTokensPerDay": 1500000,
-    "dailyCallOverrides": {
-      "2026-10-18": 20
-    },
-    "dailyInputTokenOverrides": {
-      "2026-10-18": 2400000
+    "maxInputTokensPerDay": 12000000,
+    "dailyCallOverrides": {},
+    "dailyInputTokenOverrides": {},
+    "providerPlanReference": {
+      "dailyTokens": 50000000,
+      "checkedAt": "2026-10-18",
+      "source": "Painel autenticado Claude Gateway; referencia informativa, nao telemetria sincronizada."
     }
   },
   "circuit": null,
