@@ -2305,8 +2305,8 @@ function researchSourceCardHtml(source = '', sourceTitle = '', sourceUrl = '', s
 
 export function anatexSlideHtml(slide, index, total, account, style, renderContext = {}) {
   const slideStyle = styleForSlide(style, index);
-  const title = anatexTitle(slide.title || '');
-  const body = applyAnatexCopyRules(slide.body || '');
+  const title = renderContext.businessArt ? String(slide.title || '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;') : anatexTitle(slide.title || '');
+  const body = renderContext.businessArt ? String(slide.body || '') : applyAnatexCopyRules(slide.body || '');
   const creativeBody = splitCreativeDescription(body, Boolean(slide.researchSource || slide.preserveEngagementCopy));
   const eyebrow = applyAnatexCopyRules(slide.eyebrow || 'Pra saber');
   const accent = slideStyle.accent || '#a7563d';
@@ -3896,8 +3896,8 @@ function carouselFallbackRenderContext(renderContext = {}) {
 
 function anatexStoryHtml(slide, account, style, renderContext = {}) {
   const slideStyle = styleForSlide(style, 1);
-  const title = anatexTitle(slide.title || '');
-  const body = applyAnatexCopyRules(slide.body || '');
+  const title = renderContext.businessArt ? String(slide.title || '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;') : anatexTitle(slide.title || '');
+  const body = renderContext.businessArt ? String(slide.body || '') : applyAnatexCopyRules(slide.body || '');
   // O Story tem menos area util que o carrossel. Mostra a primeira ideia
   // completa e deixa a explicacao integral para a legenda/carrossel, evitando
   // que um segundo periodo avance sobre a fotografia.
