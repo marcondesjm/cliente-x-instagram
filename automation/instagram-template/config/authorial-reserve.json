@@ -9692,56 +9692,144 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T20:44:21.407Z",
+  "checkedAt": "2026-10-18T20:44:47.862Z",
   "workflowRun": "39164475597",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "art-direction:teste-variacoes-v5",
-    "callId": "4c6d184c-6463-4b38-a20a-19ac7908a617",
+    "stage": "review:teste-variacoes-v5",
+    "callId": "2a23585e-793e-4066-8308-f55d723276a7",
     "value": {
-      "palette": "copper",
-      "frames": [
+      "claims": [
         {
-          "layout": "workspace",
-          "labels": [
-            "orçamento oficina",
-            "mensagem digitada",
-            "campo vazio"
+          "id": "slide-1",
+          "supported": true,
+          "reason": "A fonte brief descreve exatamente o cenário fictício de uma oficina com solicitações contendo abreviação e palavra digitada incorretamente pela pressa do dia.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "texto original",
-            "versão abreviada",
-            "erro de digitação"
+          "id": "slide-2",
+          "supported": true,
+          "reason": "O briefing orienta explicitamente a execução do mesmo rascunho de instrução em cada versão (original, abreviado, erro, dado faltante) para comparar resultados.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "rascunho instrução",
-            "executar extração",
-            "comparar campos"
+          "id": "slide-3",
+          "supported": true,
+          "reason": "A fonte brief determina que se comparem os campos extraídos e se anotem as divergências onde a extração falhou em cada variação.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "anotar divergências",
-            "corrigir rascunho",
-            "repetir teste"
+          "id": "slide-4",
+          "supported": true,
+          "reason": "O briefing prescreve corrigir o rascunho com base nas divergências e repetir o teste antes de usar na rotina, conforme indicado no slide 4.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "decision",
-          "labels": [
-            "mensagens variadas",
-            "testar antes",
-            "automatizar depois"
+          "id": "caption",
+          "supported": true,
+          "reason": "O texto da legenda resume fielmente o exercício proposto no briefing: criar variações de pedido fictício, testar extração, anotar divergências e ajustar antes da automação.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            },
+            {
+              "sourceId": "label"
+            }
+          ]
+        },
+        {
+          "id": "story",
+          "supported": true,
+          "reason": "A narrativa da capa reflete o contexto descrito no briefing sobre clientes que escrevem com pressa, abreviam termos e cometem erros, servindo como gancho para o exercício.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-1",
+          "supported": true,
+          "reason": "Os rótulos visuais correspondem aos elementos descritos no briefing para a etapa de pedido fictício (orçamento oficina, mensagem digitada, campo vazio).",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-2",
+          "supported": true,
+          "reason": "Os rótulos visuais alinham-se à instrução do briefing de executar o mesmo rascunho em versões original, abreviada e com erro de digitação.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-3",
+          "supported": true,
+          "reason": "Os rótulos visuais representam corretamente a fase de conferência descrita no briefing: rascunho instrução, executar extração e comparar campos.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-4",
+          "supported": true,
+          "reason": "Os rótulos visuais refletem a etapa de ação prescrita no briefing: anotar divergências, corrigir rascunho e repetir teste.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-5",
+          "supported": true,
+          "reason": "Os rótulos visuais sintetizam o objetivo educativo do briefing: testar mensagens variadas antes de automatizar, sem prometer resultados reais.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            },
+            {
+              "sourceId": "label"
+            }
           ]
         }
-      ]
+      ],
+      "decision": "approve",
+      "supported": true,
+      "novel": true,
+      "practical": true,
+      "visualMatch": true,
+      "reason": "Todas as claims possuem suporte direto no briefing e na label. O conteúdo é um exercício educativo fictício executável, com começo (cenário), desenvolvimento (teste comparativo) e conclusão (ajuste pré-automação). A abordagem de testar variações textuais antes de automatizar é concreta e diferenciada dos títulos anteriores do histórico. Os renders são diagramas autorais legíveis e pertinentes ao tema, sem cortes ou sobreposições prejudiciais.",
+      "experimentApplied": true,
+      "growth": {
+        "hookSpecific": true,
+        "payoffDelivered": true,
+        "followReason": true,
+        "shareReason": true
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
