@@ -3,8 +3,8 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-haiku-4.5",
-  "health": "awaiting_activation",
-  "message": "Rotina preparada, aguardando piloto e ativação.",
+  "health": "pilot_running",
+  "message": "Piloto diagnóstico da pauta kids-biblia-27 em execução; reposição recorrente permanece bloqueada.",
   "policy": {
     "maxCallsPerDay": 26,
     "maxInputTokensPerCall": 120000,
@@ -1616,8 +1616,8 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T12:47:32.400Z",
-  "lastRun": "39128702876",
+  "checkedAt": "2026-10-18T12:49:58.396Z",
+  "lastRun": "39128872463",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -2309,13 +2309,12 @@
   },
   "reasoningModel": "claude-sonnet-4.6",
   "pilotRun": {
-    "id": "a8fbd6a2-5c4b-4a1f-a318-2b70cea25407",
+    "id": "0d58c39b-2511-4bc2-b274-a7f522ab14d8",
     "packId": "kids-biblia-27",
-    "status": "rejected",
-    "startedAt": "2026-10-18T00:03:26.340Z",
-    "expiresAt": "2026-10-18T00:28:26.340Z",
+    "status": "running",
+    "startedAt": "2026-10-18T12:49:58.396Z",
+    "expiresAt": "2026-10-18T13:14:58.396Z",
     "maxCalls": 10,
-    "maxInputTokens": 1200000,
-    "completedAt": "2026-10-18T00:06:08.930Z"
+    "maxInputTokens": 1200000
   }
 }
