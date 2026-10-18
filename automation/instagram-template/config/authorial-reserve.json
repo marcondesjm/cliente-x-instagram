@@ -11092,41 +11092,56 @@
       "createdAt": "2026-10-18T21:31:32.904Z"
     }
   ],
-  "checkedAt": "2026-10-18T21:31:35.087Z",
+  "checkedAt": "2026-10-18T21:31:48.982Z",
   "workflowRun": "39168074303",
   "message": "2 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "generate:extracao-campos-v6",
-    "callId": "1433ed97-62bb-42cb-8b2e-471ba8c56e0f",
+    "stage": "art-direction:extracao-campos-v6",
+    "callId": "d281f75b-ac02-4583-9b3d-68acb181706d",
     "value": {
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "eyebrow": "Pedido incompleto",
-          "title": "A IA preenche sozinha o que falta?",
-          "body": "Mensagens vagas chegam ao time administrativo sem todos os dados necessários para processar o pedido corretamente."
+          "layout": "workspace",
+          "labels": [
+            "Mensagem vaga",
+            "Campos vazios",
+            "Dados ausentes"
+          ]
         },
         {
-          "eyebrow": "Estrutura clara",
-          "title": "Defina campos antes de pedir à IA",
-          "body": "Estabeleça produto, quantidade e prazo como campos obrigatórios para qualquer solicitação que precise ser cadastrada no sistema."
+          "layout": "conversation",
+          "labels": [
+            "Produto",
+            "Quantidade",
+            "Prazo"
+          ]
         },
         {
-          "eyebrow": "Conferência essencial",
-          "title": "Compare cada campo com a mensagem original",
-          "body": "Verifique se cada informação extraída corresponde exatamente ao que foi escrito antes de registrar o pedido na plataforma interna."
+          "layout": "workflow",
+          "labels": [
+            "Extrair dados",
+            "Comparar original",
+            "Registrar pedido"
+          ]
         },
         {
-          "eyebrow": "Exercício prático",
-          "title": "Marque não informado quando faltar dado",
-          "body": "Peça uma tabela preservando apenas o recebido e marque ausente qualquer campo faltante sem completar por suposição pessoal."
+          "layout": "checklist",
+          "labels": [
+            "Campo presente?",
+            "Valor correto?",
+            "Marcar ausente"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Dado faltante",
+            "Não completar",
+            "Solicitar info"
+          ]
         }
-      ],
-      "caption": "Uma equipe administrativa recebe mensagens internas com solicitações variadas. Como garantir que nenhum dado seja inventado durante o processo?\n\nDefina os campos essenciais antes de pedir ajuda à IA. Compare cada informação extraída com o texto original. Marque como não informado tudo que estiver ausente, sem completar por conta própria.\n\nQual campo costuma faltar mais nas solicitações da sua equipe? Siga para aprender aplicações práticas de IA em empresas.",
-      "storySlide": {
-        "eyebrow": "Rotina real",
-        "title": "Sua equipe marca dados faltantes?",
-        "body": "Como vocês lidam com informações ausentes nas solicitações que chegam pelo WhatsApp ou e-mail corporativo?"
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
