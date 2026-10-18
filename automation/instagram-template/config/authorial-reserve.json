@@ -1833,139 +1833,40 @@
       "previousRejection": "Invalid reviewed asset path"
     }
   ],
-  "checkedAt": "2026-10-18T18:38:49.921Z",
+  "checkedAt": "2026-10-18T18:39:09.474Z",
   "workflowRun": "39155003407",
   "message": "Prévia da direção de arte com Claude renderizada e revisada; não liberada para a agenda nem publicada.",
   "lastResponse": {
-    "stage": "review:fila-prioridade-v1",
-    "callId": "14b4512c-24a4-44db-8305-12f22a004ebd",
+    "stage": "generate:teste-variacoes-v1",
+    "callId": "876f69e5-19f2-4a05-aec7-e824ccf93770",
     "value": {
-      "claims": [
+      "slides": [
         {
-          "id": "slide-1",
-          "supported": true,
-          "reason": "A claim descreve o cenário fictício de loja com mensagens de prazos diferentes e a necessidade de definir critérios, alinhando-se exatamente ao briefing que propõe um exercício educativo com solicitações fictícias sobre prioridade.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Mensagem incompleta",
+          "title": "O pedido chegou sem o prazo de entrega",
+          "body": "Na loja fictícia, um cliente envia mensagem pedindo resmas de papel e canetas, mas não informa quando precisa do material. A equipe fica em dúvida sobre prioridade e estoque."
         },
         {
-          "id": "slide-2",
-          "supported": true,
-          "reason": "A claim instrui a definição prévia de critérios e a comparação da sugestão da IA com essas regras, correspondendo diretamente à prescrição do briefing de pedir classificação justificada e comparar antes de aceitar.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Teste com variações",
+          "title": "Escreva versões diferentes do mesmo pedido",
+          "body": "Crie o pedido original completo. Depois faça uma versão abreviada, outra com erro de digitação e uma terceira sem a informação de prazo. Aplique a mesma instrução de extração em cada uma."
         },
         {
-          "id": "slide-3",
-          "supported": true,
-          "reason": "A claim orienta a revisão manual de casos ambíguos (sem prazo ou pedidos combinados) antes de alterar a fila, refletindo fielmente a etapa de conferência descrita no briefing para situações não claras.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Compare os resultados",
+          "title": "Anote quais campos faltaram ou mudaram",
+          "body": "Verifique se a IA preencheu dados ausentes, ignorou erros ou interpretou abreviações de forma distinta. Registre as divergências entre as quatro execuções para entender o comportamento."
         },
         {
-          "id": "slide-4",
-          "supported": true,
-          "reason": "A claim propõe testar o procedimento com três mensagens fictícias, definindo critérios e conferindo decisões, o que materializa o exercício prático solicitado pelo briefing sem inferir resultados reais.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "caption",
-          "supported": true,
-          "reason": "O texto da legenda resume o método estruturado de priorização com IA em cenário fictício e inclui o aviso de conteúdo educativo autoral, estando totalmente sustentado pelas definições de escopo e label.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            },
-            {
-              "sourceId": "label"
-            }
-          ]
-        },
-        {
-          "id": "story",
-          "supported": true,
-          "reason": "A story introduz o exercício como uma proposta de método estruturado para organizar fila de mensagens, coerente com o briefing que define o conteúdo como exercício educativo fictício e não como notícia.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-1",
-          "supported": true,
-          "reason": "Os rótulos 'Prazo definido', 'Tipo de pedido' e 'Fila organizada' são elementos visuais do cenário fictício de loja descrito no briefing, servindo como ilustração editorial do problema de prioridade.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-2",
-          "supported": true,
-          "reason": "Os rótulos 'Critérios claros', 'Sugestão da IA' e 'Justificativa visível' representam visualmente o procedimento de definição de regras e validação da IA prescrito no briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-3",
-          "supported": true,
-          "reason": "Os rótulos 'Mensagem ambígua', 'Revisão manual' e 'Fila ajustada' ilustram a etapa de conferência de casos excepcionais exigida pelo briefing antes da alteração da fila de atendimento.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-4",
-          "supported": true,
-          "reason": "Os rótulos 'Três mensagens', 'Classificação feita' e 'Decisão conferida' correspondem visualmente ao exercício de teste com mensagens fictícias detalhado no briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-5",
-          "supported": true,
-          "reason": "Os rótulos 'Critério aplicado', 'Urgência real' e 'Ordem definida' sintetizam o resultado esperado do método estruturado proposto no briefing para organização da fila de mensagens.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Ajuste e repita",
+          "title": "Corrija a instrução antes de usar na rotina",
+          "body": "Refine a instrução com base nas falhas encontradas. Repita o teste até que os campos sejam extraídos com consistência. Só então aplique no fluxo real de atendimento da empresa."
         }
       ],
-      "decision": "approve",
-      "supported": true,
-      "novel": true,
-      "practical": true,
-      "visualMatch": true,
-      "reason": "Todas as claims estão estritamente fundamentadas no briefing e na label de conteúdo educativo fictício. O conteúdo apresenta um exercício executável completo (definição de critérios, sugestão da IA, revisão de ambiguidades e teste prático), diferindo claramente dos títulos do histórico por focar em metodologia de priorização interna e não em notícias de mercado ou lançamentos de produtos. Os renders exibem textos legíveis e composição coerente com o tema, atendendo aos critérios de crescimento com gancho específico, payoff entregue e utilidade de compartilhamento.",
-      "growth": {
-        "hookSpecific": true,
-        "payoffDelivered": true,
-        "followReason": true,
-        "shareReason": true
+      "caption": "Pedidos chegam incompletos por mensagem? Teste como sua instrução de IA lida com abreviações, erros e dados ausentes antes de colocar em produção.\n\nCrie quatro versões do mesmo pedido fictício e compare os campos extraídos. Ajuste a instrução com base nas divergências. Quer aprender aplicações práticas de IA em empresas? Siga o perfil para conteúdos assim.",
+      "storySlide": {
+        "eyebrow": "Rotina prática",
+        "title": "Sua IA trata pedidos incompletos?",
+        "body": "Teste com variações reais antes de automatizar. Veja o exercício completo no feed e aprenda a aplicar IA no dia a dia da sua empresa."
       }
     },
     "structured": true,
