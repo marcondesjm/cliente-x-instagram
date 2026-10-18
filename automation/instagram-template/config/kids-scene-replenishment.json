@@ -1563,11 +1563,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "json",
       "startedAt": "2026-10-18T12:54:20.722Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 11090,
       "imageFingerprint": null,
-      "promptFingerprint": "4befdfc87ffa737dea4935764035325e6207386d792fa3f0f9d8dd94e39d9bba"
+      "promptFingerprint": "4befdfc87ffa737dea4935764035325e6207386d792fa3f0f9d8dd94e39d9bba",
+      "completedAt": "2026-10-18T12:54:50.189Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 1146,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "end_turn"
     }
   ],
   "entries": [
@@ -1670,7 +1676,7 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T12:54:20.722Z",
+  "checkedAt": "2026-10-18T12:54:50.189Z",
   "lastRun": "39128997063",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -1870,69 +1876,99 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "verify:kids-biblia-27",
+    "stage": "select:kids-biblia-27",
     "value": {
-      "decision": "reject",
       "cards": [
         {
-          "position": 1,
-          "observationId": "b0f0500ff2339ced",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true,
-          "verse": "4:37",
-          "reason": "Capa retrata barco inclinado em águas agitadas sob céu nublado, compatível com Marcos 4:37 (tempestade violenta). Título e corpo indicam o evento corretamente."
+          "card": 1,
+          "options": [
+            {
+              "scene": 8,
+              "verse": "4:37",
+              "reason": "Barco inclinado em águas agitadas sob céu nublado ilustra diretamente a tempestade violenta descrita em Marcos 4:37, onde as ondas batiam no barco. Adequado para capa com título sobre tempestade."
+            },
+            {
+              "scene": 1,
+              "verse": "4:37",
+              "reason": "Embarcação inclinada por ondas, com pessoa se agarrando à lateral, retrata o perigo iminente e o barco sendo inundado conforme Marcos 4:37. Visualmente forte para capa."
+            }
+          ],
+          "reason": "A capa exige o evento do título (tempestade). As cenas 8 e 1 mostram claramente o barco em perigo nas ondas, compatíveis com Marcos 4:37."
         },
         {
-          "position": 2,
-          "observationId": "8e150ed2cdf55de4",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true,
-          "verse": "4:37",
-          "reason": "Barco inclinado por ondas, pessoas se agarrando — corresponde ao barco sendo inundado pelas ondas em Marcos 4:37. Compatível com o resumo narrativo."
+          "card": 2,
+          "options": [
+            {
+              "scene": 9,
+              "verse": "4:39",
+              "reason": "Figura central de braços erguidos em embarcação balançada representa Jesus repreendendo o vento e o mar ('Peace! Be still!') em Marcos 4:39. Ilustra o clímax do resumo narrativo."
+            },
+            {
+              "scene": 6,
+              "verse": "4:39-40",
+              "reason": "Homem de túnica vermelha tocando ombro de outro em barco com velas pode representar Jesus acalmando a situação ou falando aos discípulos após a tempestade cessar (Marcos 4:39-40). Pertinente ao resumo."
+            }
+          ],
+          "reason": "O cartão narrativo resume: discípulos chamaram Jesus, ele repreendeu vento/mar. Cena 9 mostra a ação de repreensão; cena 6 mostra interação pós-acalmia."
         },
         {
-          "position": 3,
-          "observationId": "36ce414d3821afc1",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true,
-          "verse": "4:39",
-          "reason": "Figura central de braços erguidos em barco balançado representa Jesus repreendendo o vento e o mar (Marcos 4:39). Cena pertinente à lição sobre o poder de Jesus."
+          "card": 3,
+          "options": [
+            {
+              "scene": 3,
+              "verse": "4:41",
+              "reason": "Grupo de homens barbados conversando junto à água ilustra os discípulos questionando 'Quem é este?' após a tempestade (Marcos 4:41). Pertinente à lição sobre poder de Jesus e reação dos discípulos."
+            },
+            {
+              "scene": 6,
+              "verse": "4:40",
+              "reason": "Interação entre homem de túnica e discípulo sentado pode ilustrar Jesus questionando a fé dos discípulos ('Why are you so afraid?') em Marcos 4:40. Liga-se à lição sobre confiança."
+            }
+          ],
+          "reason": "Lições sobre poder de Jesus e confiança podem usar cenas de reação dos discípulos (cena 3) ou diálogo com Jesus (cena 6), ambas sustentadas pela passagem."
         },
         {
-          "position": 4,
-          "observationId": "db49c0a40d7f9418",
-          "passageMatch": false,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": false,
-          "verse": "",
-          "reason": "Observação descreve barco a vela sobre águas agitadas, mas sourceContext refere-se ao momento calmo quando partiram e Jesus dormia (Marcos 4:35-38). Há contradição entre observação (águas agitadas) e contexto editorial (tempo calmo na partida). Além disso, não há barcos a vela mencionados na passagem; os discípulos eram pescadores com barcos típicos da Galileia."
+          "card": 4,
+          "options": [
+            {
+              "scene": 5,
+              "verse": "4:35-36",
+              "reason": "Grupo navegando em barco sobre águas (contexto editorial menciona partida calma antes da tempestade) ilustra o início da jornada em Marcos 4:35-36. Pertinente à história sem encenar atividade familiar."
+            },
+            {
+              "scene": 7,
+              "verse": "4:36",
+              "reason": "Pessoas na margem observando embarcação partindo ilustra 'Leaving the multitude... in the boat' de Marcos 4:36. Cena concreta da passagem, adequada para cartão de atividade."
+            }
+          ],
+          "reason": "Cartão de atividade não deve mostrar desenhar/conversar. Cenas 5 e 7 mostram momentos da narrativa bíblica (partida/embarque) pertinentes à história."
         },
         {
-          "position": 5,
-          "observationId": "5af00209f38a4d84",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true,
-          "verse": "4:35",
-          "reason": "Homem gesticulando à beira d'água com barcos ao fundo corresponde a Jesus dizendo 'Vamos para o outro lado' (Marcos 4:35). Cena pertinente ao cartão de leitura que pede ler a passagem."
+          "card": 5,
+          "options": [
+            {
+              "scene": 4,
+              "verse": "4:35",
+              "reason": "Homem gesticulando à beira d'água com barcos ao fundo ilustra Jesus dizendo 'Let's go over to the other side' em Marcos 4:35. Cena pertinente ao convite para ler a passagem completa."
+            },
+            {
+              "scene": 10,
+              "verse": "4:35",
+              "reason": "Seta indicando travessia do lago ilustra geograficamente a jornada mencionada em Marcos 4:35 ('go over to the other side'). Apoio visual para leitura da passagem."
+            }
+          ],
+          "reason": "Cartão de leitura pede ler Marcos 4:35-41. Cena 4 mostra o comando inicial; cena 10 mostra a rota. Ambas sustentam o contexto da passagem."
         },
         {
-          "position": 6,
-          "observationId": "b267a6846f705117",
-          "passageMatch": false,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": false,
-          "verse": "",
-          "reason": "Observação descreve dois homens ajudando um terceiro deitado em cama ou leito, o que é incompatível com Marcos 4:35-41. Na passagem, Jesus está no barco, dormindo numa almofada na popa, e os discípulos o acordam — não há cena de homem deitado em cama sendo ajudado. Esta observação parece referir-se a outra passagem (possivelmente cura de paralítico ou enfermo), não à tempestade acalmada."
+          "card": 6,
+          "options": [
+            {
+              "scene": 2,
+              "verse": "4:38",
+              "reason": "Embora a observação mencione 'cama/leito', o sourceContext refere-se a Jesus dormindo na almofada na popa e sendo acordado (Marcos 4:38). Se interpretada como Jesus sendo despertado no barco, pode servir como cena diferente das demais, focando no momento do despertar."
+            }
+          ],
+          "reason": "Story exige cena diferente relacionada à passagem. Cena 2 é ambígua (observação diz cama, contexto diz barco), mas se considerada como despertar de Jesus, é única restante não usada. Se rejeitada por contradição, options fica vazio."
         }
       ]
     }
