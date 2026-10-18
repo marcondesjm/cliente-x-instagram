@@ -4797,11 +4797,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-18T22:17:55.324Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 13068,
       "imageFingerprint": null,
-      "promptFingerprint": "d96d6594b7c922b40e79ae178e3b3cc24c1526510762cc87178b57314897b9d6"
+      "promptFingerprint": "d96d6594b7c922b40e79ae178e3b3cc24c1526510762cc87178b57314897b9d6",
+      "completedAt": "2026-10-18T22:19:04.284Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 30,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -4952,7 +4958,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T22:17:55.324Z",
+  "checkedAt": "2026-10-18T22:19:04.284Z",
   "lastRun": "39170079691",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -5232,12 +5238,478 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-16:c4eed64bcc2c8284",
+    "stage": "select:kids-biblia-16",
     "value": {
-      "visible": true,
-      "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Ilustração mostrando dois personagens em roupas de época: à esquerda, um homem barbudo com túnica amarela e faixa vermelha estende o braço direito em direção a uma figura à direita vestida com manto branco; ao centro, mãos seguram um recipiente vermelho do qual escorre uma substância branca granulada sobre a palma aberta da figura à direita; fundo em tons amarelados com tigela coberta visível no canto inferior esquerdo."
+      "cards": [
+        {
+          "card": 1,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena mostra mulher segurando recipiente; capa exige evento do título sobre compartilhar alimento."
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Close-up da viúva ao ar livre não retrata o evento central de compartilhar alimento."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Elias pedindo água/pão à viúva é etapa anterior, não o evento principal do título."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena de adoração a falsos deuses fora da passagem 1 Reis 17:8-16 especificada."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa topográfico não ilustra o evento de compartilhar alimento descrito no título."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Retrato do rei Acabe não pertence à passagem nem ao evento do título."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Elias olhando colinas é momento anterior, não o evento de compartilhar alimento."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Filho doente/morto está fora da passagem 1 Reis 17:8-16 (acontece depois)."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Elias orando pelo filho morto está fora da passagem especificada."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Ressurreição do filho está fora da passagem 1 Reis 17:8-16."
+            },
+            {
+              "scene": 11,
+              "allowed": true,
+              "verse": "17:15",
+              "reason": "Três pessoas comendo juntas ilustram diretamente o evento de compartilhar alimento do título."
+            },
+            {
+              "scene": 12,
+              "allowed": false,
+              "verse": "",
+              "reason": "Farina/azeite sendo derramados mostram milagre, não o ato de compartilhar em si."
+            }
+          ],
+          "reason": "Capa exige evento do título: compartilhar alimento. Apenas cena 11 retrata isso diretamente."
+        },
+        {
+          "card": 2,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "17:13",
+              "reason": "Mulher preparando alimento conforme ordem de Elias corresponde ao resumo narrativo."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "17:12",
+              "reason": "Viúva reunindo gravetos antes de preparar última refeição integra o relato resumido."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "17:10-11",
+              "reason": "Encontro inicial entre Elias e viúva na porta da cidade faz parte do resumo da história."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Adoração a falsos deuses não pertence à passagem 1 Reis 17:8-16 do resumo."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa não ilustra evento narrativo da história de Elias e da viúva."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Rei Acabe não aparece na passagem 1 Reis 17:8-16 do resumo."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Elias contemplando paisagem é momento anterior, não parte do núcleo narrativo."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Filho doente/morto ocorre após a passagem especificada no resumo."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Oração pela ressurreição está fora da passagem do resumo editorial."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Ressurreição do filho acontece depois dos versículos do resumo."
+            },
+            {
+              "scene": 11,
+              "allowed": true,
+              "verse": "17:15",
+              "reason": "Família comendo junta ilustra consequência direta do resumo sobre provisão contínua."
+            },
+            {
+              "scene": 12,
+              "allowed": true,
+              "verse": "17:16",
+              "reason": "Farina e azeite não se esgotando ilustra evento central do resumo bíblico."
+            }
+          ],
+          "reason": "Cartão narrativo aceita múltiplas cenas pertinentes aos eventos descritos no resumo."
+        },
+        {
+          "card": 3,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "17:13-14",
+              "reason": "Preparação do pão ilustra cuidado divino e provisão, tema educativo da lição."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "17:12",
+              "reason": "Situação difícil da viúva sustenta reflexão sobre cuidado em adversidade."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "17:10-11",
+              "reason": "Pedido de Elias demonstra confiança em Deus, pertinente à lição sobre provisão."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Contexto de idolatria não se conecta claramente à lição de cuidado e provisão."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa geográfico não oferece conexão educativa clara com a lição proposta."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Retrato de Acabe não sustenta reflexão sobre cuidado e provisão divina."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Elias observando paisagem não ilustra concretamente tema de cuidado/provisão."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Tragédia do filho está fora da passagem e não conecta à lição de provisão."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Oração por ressurreição não se relaciona com tema de cuidado cotidiano."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Milagre da ressurreição é tema diferente da lição sobre provisão diária."
+            },
+            {
+              "scene": 11,
+              "allowed": true,
+              "verse": "17:15",
+              "reason": "Refeição compartilhada ilustra cuidado mútuo e provisão, tema da lição."
+            },
+            {
+              "scene": 12,
+              "allowed": true,
+              "verse": "17:16",
+              "reason": "Milagre da farinha/azeite sustenta reflexão sobre provisão divina contínua."
+            }
+          ],
+          "reason": "Lições aceitam cenas pertinentes à passagem com conexão educativa justificável."
+        },
+        {
+          "card": 4,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "17:13",
+              "reason": "Viúva obedecendo e preparando alimento modela ajuda responsável para atividade familiar."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "17:12",
+              "reason": "Generosidade da viúva mesmo em escassez inspira reflexão sobre ajudar outros."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "17:10-11",
+              "reason": "Interação entre Elias e viúva mostra acolhimento, pertinente à atividade de ajudar."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena de idolatria não oferece modelo positivo para atividade de ajudar alguém."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa não ilustra ação concreta de ajuda para discussão familiar."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Rei Acabe não modela comportamento de ajuda responsável para família."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Elias contemplando não oferece exemplo concreto de ajuda para atividade."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Situação trágica do filho não modela ajuda responsável para atividade familiar."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Oração de Elias não ilustra diretamente ação de ajudar alguém responsavelmente."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Ressurreição é milagre específico, não modelo geral de ajuda cotidiana."
+            },
+            {
+              "scene": 11,
+              "allowed": true,
+              "verse": "17:15",
+              "reason": "Compartilhar refeição modela diretamente ajudar alguém de forma responsável."
+            },
+            {
+              "scene": 12,
+              "allowed": true,
+              "verse": "17:16",
+              "reason": "Provisão contínua inspira confiança para praticar generosidade com outros."
+            }
+          ],
+          "reason": "Atividade familiar aceita cenas que modelam ou inspiram ajuda responsável."
+        },
+        {
+          "card": 5,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "17:13-14",
+              "reason": "Cena da preparação do alimento contextualiza leitura da passagem completa."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "17:12",
+              "reason": "Viúva em situação difícil convida à leitura atenta do texto bíblico."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "17:10-11",
+              "reason": "Encontro inicial entre personagens motiva leitura detalhada da narrativa."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Idolatria não pertence à passagem indicada para leitura familiar."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa geográfico não sustenta diretamente leitura do texto narrativo."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Rei Acabe não faz parte da passagem 1 Reis 17:8-16 para leitura."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Elias observando paisagem não conecta claramente à leitura proposta."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Evento do filho doente está fora da passagem designada para leitura."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Oração pela ressurreição não está nos versículos indicados para leitura."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Ressurreição ocorre após a passagem especificada para leitura familiar."
+            },
+            {
+              "scene": 11,
+              "allowed": true,
+              "verse": "17:15",
+              "reason": "Refeição compartilhada ilustra desfecho positivo que motiva leitura completa."
+            },
+            {
+              "scene": 12,
+              "allowed": true,
+              "verse": "17:16",
+              "reason": "Milagre da provisão contínua é clímax da passagem para leitura familiar."
+            }
+          ],
+          "reason": "Cartão de leitura aceita cenas pertinentes que contextualizam ou motivam a leitura."
+        },
+        {
+          "card": 6,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "17:13",
+              "reason": "Preparação do alimento é cena pertinente à passagem, diferente das anteriores."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "17:12",
+              "reason": "Viúva reunindo gravetos pertence à passagem e pode ser usada no Story."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "17:10",
+              "reason": "Encontro na porta da cidade é cena válida da passagem para Story."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Adoração a falsos deuses não pertence à passagem 1 Reis 17:8-16."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa não é ilustração narrativa pertinente para Story da passagem."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Rei Acabe não aparece na passagem especificada para o Story."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "17:9",
+              "reason": "Elias recebendo instrução para ir a Sarepta pertence à passagem inicial."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Filho doente está fora da passagem 1 Reis 17:8-16 do Story."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Oração pela ressurreição ocorre após os versículos do Story."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Ressurreição do filho não está na passagem designada para o Story."
+            },
+            {
+              "scene": 11,
+              "allowed": true,
+              "verse": "17:15",
+              "reason": "Refeição em família é cena pertinente e diferente para encerrar o Story."
+            },
+            {
+              "scene": 12,
+              "allowed": true,
+              "verse": "17:16",
+              "reason": "Milagre da provisão contínua fecha adequadamente a narrativa do Story."
+            }
+          ],
+          "reason": "Story aceita qualquer cena pertinente à passagem, desde que diferente das demais posições."
+        }
+      ]
     }
   },
   "lastFactualEvaluation": {
@@ -7545,6 +8017,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 33,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-18T22:17:55.324Z"
+    "checkedAt": "2026-10-18T22:19:04.284Z"
   }
 }
