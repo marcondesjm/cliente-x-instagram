@@ -2583,11 +2583,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-18T14:37:50.161Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 14631,
       "imageFingerprint": null,
-      "promptFingerprint": "30fcec319af684b5b14045fa1bf6aae5cd1d38160a625477a15b93e02d515b5a"
+      "promptFingerprint": "30fcec319af684b5b14045fa1bf6aae5cd1d38160a625477a15b93e02d515b5a",
+      "completedAt": "2026-10-18T14:38:58.976Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 32,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -2690,7 +2696,7 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T14:37:50.161Z",
+  "checkedAt": "2026-10-18T14:38:58.976Z",
   "lastRun": "39136687927",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -2938,12 +2944,478 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-33:f2ffd440d1ff3a18",
+    "stage": "select:kids-biblia-33",
     "value": {
-      "visible": true,
-      "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Três figuras vestidas com túnicas e coberturas de cabeça em um ambiente interior com paredes de pedra; a figura central, de túnica amarela, estende ambos os braços abertos em direção às outras duas pessoas posicionadas à esquerda e à direita."
+      "cards": [
+        {
+          "card": 1,
+          "reason": "Capa exige retratar o evento do título 'Dois discípulos caminharam para Emaús'. Apenas a cena 8 mostra dois homens caminhando em ambiente desértico/estrada, compatível com Lucas 24:13.",
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena mostra grupo reunido em círculo ao redor de figura central sentada, não corresponde ao título da capa sobre caminhada para Emaús."
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Três homens alinhados lado a lado em busto, não representa dois discípulos caminhando para Emaús como exige o título da capa."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Três figuras com uma de costas, enquadramento estático sem movimento de caminhada, incompatível com título da capa."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Três homens em pé ao ar livre, homem central gesticulando, não retrata dois discípulos caminhando para Emaús."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Dois homens em primeiro plano mas em ambiente interno sugerido por vigas, não representa caminhada para Emaús."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Três figuras conversando em ambiente aberto, não mostra dois discípulos caminhando especificamente para Emaús."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Quatro homens em ambiente interno, um segurando objetos junto à boca, totalmente incompatível com título da capa."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "24:13",
+              "reason": "Dois homens barbudos com vestes coloridas caminham lado a lado em ambiente desértico, retratando exatamente o evento do título: dois discípulos caminhando para Emaús."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Três homens em close-up conversando, não representa dois discípulos caminhando para Emaús como exige o título da capa."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Três homens em close-up com céu ao fundo, sem representação de caminhada ou jornada para Emaús."
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Três homens em ambiente interno com pães, representa momento da ceia, não a caminhada inicial para Emaús."
+            },
+            {
+              "scene": 12,
+              "allowed": false,
+              "verse": "",
+              "reason": "Três figuras em ambiente interior com braços abertos, representa convite para ficar, não a caminhada para Emaús."
+            }
+          ]
+        },
+        {
+          "card": 2,
+          "reason": "Cartão narrativo 'O que a Bíblia conta' resume: Jesus caminhou com discípulos, explicou Escrituras e foi reconhecido ao partir pão. Múltiplas cenas são pertinentes a eventos do resumo.",
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo em círculo ao redor de figura sentada não corresponde claramente aos três eventos principais do resumo (caminhar, explicar, partir pão)."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "24:15",
+              "reason": "Três homens juntos retrata Jesus caminhando com os dois discípulos, evento central do resumo bíblico."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Três figuras com uma de costas não ilustra claramente nenhum dos três eventos específicos do resumo."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "24:25-26",
+              "reason": "Homem central gesticulando enquanto fala com outros dois representa Jesus explicando as Escrituras aos discípulos no caminho."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Dois homens sorrindo em ambiente interno não retrata claramente os eventos do resumo (caminhada, explicação ou reconhecimento ao partir pão)."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "24:17",
+              "reason": "Três figuras conversando retrata o momento em que Jesus pergunta aos discípulos sobre o que conversavam, parte da narrativa resumida."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Quatro homens com um segurando peixe representa episódio posterior fora da passagem Lucas 24:13-35."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "24:13-14",
+              "reason": "Dois discípulos caminhando retrata o início da narrativa resumida, antes da chegada de Jesus."
+            },
+            {
+              "scene": 9,
+              "allowed": true,
+              "verse": "24:19-20",
+              "reason": "Três homens conversando em close-up representa os discípulos explicando a Jesus sobre sua crucificação, parte do resumo."
+            },
+            {
+              "scene": 10,
+              "allowed": true,
+              "verse": "24:27",
+              "reason": "Três homens com figura central coberta representa Jesus explicando as Escrituras, evento central do resumo."
+            },
+            {
+              "scene": 11,
+              "allowed": true,
+              "verse": "24:30-31",
+              "reason": "Homem central segurando pães representa o momento em que Jesus partiu o pão e foi reconhecido, evento final do resumo."
+            },
+            {
+              "scene": 12,
+              "allowed": true,
+              "verse": "24:28-29",
+              "reason": "Figura central com braços abertos em ambiente interior representa o convite para Jesus ficar com eles em Emaús, parte da narrativa."
+            }
+          ]
+        },
+        {
+          "card": 3,
+          "reason": "Cartão de lição 'Uma lição para o nosso dia' tem texto sobre discípulos aprenderem ouvindo explicação das Escrituras. whole_passage permite qualquer cena pertinente à passagem com conexão educativa.",
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo em círculo com figura sentada não ilustra claramente o ensino das Escrituras mencionado no texto do cartão."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "24:15",
+              "reason": "Jesus caminhando com discípulos é contexto onde ocorreu o ensino das Escrituras, pertinente à lição sobre aprendizado."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Três figuras com uma de costas não estabelece conexão clara com o ensino das Escrituras descrito no cartão."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "24:25-27",
+              "reason": "Jesus gesticulando enquanto fala representa diretamente o ensino das Escrituras, conexão educativa clara com o texto do cartão."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Dois homens sorrindo não ilustra o momento de aprendizado através da explicação das Escrituras."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "24:17-18",
+              "reason": "Conversa entre Jesus e discípulos é prelúdio ao ensino, pertinente à reflexão sobre aprendizado das Escrituras."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Episódio do peixe ocorre fora da passagem Lucas 24:13-35, não é pertinente."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "24:13-14",
+              "reason": "Discípulos caminhando e conversando é contexto onde posteriormente receberam ensino, pertinente à lição."
+            },
+            {
+              "scene": 9,
+              "allowed": true,
+              "verse": "24:19-21",
+              "reason": "Discípulos relatando eventos a Jesus é parte do diálogo que levou ao ensino das Escrituras, pertinente à lição."
+            },
+            {
+              "scene": 10,
+              "allowed": true,
+              "verse": "24:27",
+              "reason": "Jesus explicando as Escrituras é exatamente o evento educativo referido no texto do cartão de lição."
+            },
+            {
+              "scene": 11,
+              "allowed": true,
+              "verse": "24:30-31",
+              "reason": "Reconhecimento ao partir pão é culminação do aprendizado, pertinente à lição sobre descoberta dos discípulos."
+            },
+            {
+              "scene": 12,
+              "allowed": true,
+              "verse": "24:28-29",
+              "reason": "Convite para ficar em Emaús precedeu o ensino e reconhecimento, pertinente ao contexto educativo da passagem."
+            }
+          ]
+        },
+        {
+          "card": 4,
+          "reason": "Cartão de atividade familiar 'Vamos fazer juntos?' pede conversar sobre o que discípulos descobriram. whole_passage permite cena pertinente com conexão educativa justificável.",
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo em círculo não ilustra claramente a descoberta dos discípulos mencionada no texto da atividade."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "24:15",
+              "reason": "Jesus caminhando com discípulos é contexto da jornada de descoberta, pertinente à conversa familiar proposta."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Três figuras com uma de costas não estabelece conexão clara com a descoberta dos discípulos."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "24:25-27",
+              "reason": "Jesus ensinando representa o momento da revelação, pertinente à discussão familiar sobre descobertas."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "24:32",
+              "reason": "Dois discípulos expressando alegria representa o resultado da descoberta, pertinente à conversa proposta."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "24:17-18",
+              "reason": "Diálogo inicial entre Jesus e discípulos é parte da jornada de descoberta, pertinente à atividade."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Episódio do peixe está fora da passagem Lucas 24:13-35, não é pertinente."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "24:13-14",
+              "reason": "Discípulos caminhando e conversando é início da jornada de descoberta, pertinente à reflexão familiar."
+            },
+            {
+              "scene": 9,
+              "allowed": true,
+              "verse": "24:19-21",
+              "reason": "Discípulos relatando esperanças frustradas é parte do processo de descoberta, pertinente à conversa."
+            },
+            {
+              "scene": 10,
+              "allowed": true,
+              "verse": "24:27",
+              "reason": "Explicação das Escrituras é o meio pelo qual os discípulos descobriram a verdade, pertinente à atividade."
+            },
+            {
+              "scene": 11,
+              "allowed": true,
+              "verse": "24:30-31",
+              "reason": "Reconhecimento ao partir pão é a descoberta final, altamente pertinente à conversa familiar proposta."
+            },
+            {
+              "scene": 12,
+              "allowed": true,
+              "verse": "24:28-29",
+              "reason": "Convite para ficar em Emaús precedeu a revelação, pertinente ao contexto da descoberta dos discípulos."
+            }
+          ]
+        },
+        {
+          "card": 5,
+          "reason": "Cartão de leitura 'Continue essa conversa em família' pede ler Lucas 24:13-35. whole_passage permite qualquer cena pertinente à passagem integral.",
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo em círculo com figura sentada não representa claramente nenhum evento específico da passagem Lucas 24:13-35."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "24:15",
+              "reason": "Jesus caminhando com dois discípulos é evento central da passagem referenciada no cartão de leitura."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Três figuras com uma de costas não ilustra claramente evento específico da passagem Lucas 24:13-35."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "24:25-27",
+              "reason": "Jesus explicando as Escrituras aos discípulos é evento central da passagem referenciada."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "24:32",
+              "reason": "Discípulos comentando sobre corações ardendo é parte da passagem Lucas 24:13-35."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "24:17-18",
+              "reason": "Conversa inicial entre Jesus e discípulos é parte da passagem referenciada no cartão."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Episódio do peixe ocorre após Lucas 24:35, fora da passagem referenciada."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "24:13-14",
+              "reason": "Dois discípulos caminhando para Emaús é o início da passagem Lucas 24:13-35 referenciada."
+            },
+            {
+              "scene": 9,
+              "allowed": true,
+              "verse": "24:19-21",
+              "reason": "Discípulos explicando crucificação a Jesus é parte da passagem Lucas 24:13-35."
+            },
+            {
+              "scene": 10,
+              "allowed": true,
+              "verse": "24:27",
+              "reason": "Jesus explicando profetas é evento central da passagem referenciada no cartão de leitura."
+            },
+            {
+              "scene": 11,
+              "allowed": true,
+              "verse": "24:30-31",
+              "reason": "Partir do pão e reconhecimento é clímax da passagem Lucas 24:13-35 referenciada."
+            },
+            {
+              "scene": 12,
+              "allowed": true,
+              "verse": "24:28-29",
+              "reason": "Chegada a Emaús e convite para ficar é parte da passagem Lucas 24:13-35 referenciada."
+            }
+          ]
+        },
+        {
+          "card": 6,
+          "reason": "Story aceita uma cena diferente relacionada à mesma passagem Lucas 24:13-35, leitura com adulto. Deve ser pertinente mas diferente das demais posições.",
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo em círculo não representa claramente evento específico da passagem Lucas 24:13-35."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "24:15",
+              "reason": "Jesus caminhando com discípulos é evento pertinente à passagem Lucas 24:13-35."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Três figuras com uma de costas não ilustra claramente evento da passagem Lucas 24:13-35."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "24:25-27",
+              "reason": "Jesus ensinando é evento pertinente à passagem Lucas 24:13-35."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "24:32",
+              "reason": "Discípulos comentando sobre experiência é evento pertinente à passagem Lucas 24:13-35."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "24:17-18",
+              "reason": "Conversa inicial é evento pertinente à passagem Lucas 24:13-35."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Episódio do peixe está fora da passagem Lucas 24:13-35."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "24:13-14",
+              "reason": "Caminhada para Emaús é evento pertinente à passagem Lucas 24:13-35."
+            },
+            {
+              "scene": 9,
+              "allowed": true,
+              "verse": "24:19-21",
+              "reason": "Relato da crucificação é evento pertinente à passagem Lucas 24:13-35."
+            },
+            {
+              "scene": 10,
+              "allowed": true,
+              "verse": "24:27",
+              "reason": "Explicação das Escrituras é evento pertinente à passagem Lucas 24:13-35."
+            },
+            {
+              "scene": 11,
+              "allowed": true,
+              "verse": "24:30-31",
+              "reason": "Partir do pão e reconhecimento é evento pertinente à passagem Lucas 24:13-35."
+            },
+            {
+              "scene": 12,
+              "allowed": true,
+              "verse": "24:28-29",
+              "reason": "Convite para ficar em Emaús é evento pertinente à passagem Lucas 24:13-35."
+            }
+          ]
+        }
+      ]
     }
   },
   "lastFactualEvaluation": {
