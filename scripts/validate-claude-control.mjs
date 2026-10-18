@@ -1,0 +1,55 @@
+import assert from 'node:assert/strict';
+import {controlSummary,applyControlSettings,assertCanRun} from '../lib/claude-control.js';
+import {callAllowance} from '../lib/kids-scene-vision.js';
+import {createClaudeHandler} from '../lib/claude-api.js';
+const at=new Date('2026-10-18T18:00:00Z');
+const budget=()=>({model:'claude-sonnet-4.6',circuit:null,calls:Array.from({length:12},(_,i)=>({id:String(i),day:'2026-10-18',status:'completed',inputTokens:null,prompt:'PRIVATE PROMPT',completedAt:at.toISOString()})),policy:{maxCallsPerDay:12,maxInputTokensPerCall:120000,maxInputTokensPerDay:1500000}});
+const stock=()=>({enabled:true,entries:[]});
+const b=budget(),s=stock();
+applyControlSettings(b,s,{dailyLimit:12,todayLimit:18,enabled:true},at);
+const summary=controlSummary(b,s,at);
+assert.equal(summary.usage.remaining,6);assert.equal(summary.usage.inputTokensAccounted,1440000);
+assert.equal(summary.usage.inputTokenLimit,2160000);assert.equal(summary.usage.estimatedCalls,12);
+assert.equal(JSON.stringify(summary).includes('PRIVATE PROMPT'),false);
+assertCanRun(summary);assert.equal(callAllowance(b,at,6),'2026-10-18');assert.throws(()=>callAllowance(b,at,7),/chamadas/);
+assert.equal(controlSummary(b,s,new Date('2026-10-19T03:00:00Z')).usage.limit,12,'Extra allowance expires at BRT midnight');
+assert.throws(()=>applyControlSettings(b,s,{dailyLimit:2,todayLimit:null,enabled:true},at),/consumo/);
+assert.throws(()=>applyControlSettings(b,s,{dailyLimit:101,todayLimit:null,enabled:true},at),/limites/);
+assert.throws(()=>applyControlSettings(b,s,{dailyLimit:12,todayLimit:18,enabled:true,key:'SECRET'},at),/desconhecido/);
+assert.throws(()=>assertCanRun({...summary,circuit:'provider_response_unconfirmed'}),/bloqueio/);
+assert.throws(()=>assertCanRun({...summary,enabled:false}),/Ative/);
+const pending=budget();pending.calls[0].status='reserved';assert.throws(()=>applyControlSettings(pending,s,{dailyLimit:12,todayLimit:18,enabled:false},at),/andamento/);
+const mockRes=()=>({code:200,headers:{},setHeader(k,v){this.headers[k]=v;},status(c){this.code=c;return this;},json(v){this.data=v;return this;}});
+let requests=[],writes=[],conflict=false,active=false,hasBudget=false;
+const fakeFetch=async(url,options={})=>{
+ requests.push({url,method:options.method||'GET'});
+ const p=url.split('cliente-x-instagram/')[1];
+ const ok=data=>({ok:true,status:200,json:async()=>data});
+ if(p==='git/ref/heads/main')return ok({object:{sha:'head1'}});
+ if(p.startsWith('contents/')){const b=budget();if(hasBudget)b.calls=[];return ok({content:Buffer.from(JSON.stringify(p.includes('editorial-api-validation')?b:stock())).toString('base64')});}
+ if(p==='git/commits/head1')return ok({tree:{sha:'tree0'}});
+ if(p==='git/trees'){writes=JSON.parse(options.body).tree;return ok({sha:'tree1'});}
+ if(p==='git/commits')return ok({sha:'commit1'});
+ if(p==='git/refs/heads/main')return conflict?{ok:false,status:422}:ok({});
+ if(p.includes('/runs?'))return ok({workflow_runs:active?[{id:10,status:'in_progress',html_url:'https://github.com/marcondesjm/cliente-x-instagram/actions/runs/10'}]:[]});
+ if(p.endsWith('/dispatches'))return {ok:true,status:204};
+ throw Error('Unexpected route '+p);
+};
+const owner={role:'owner',email:'owner@example.test'};
+const req=(method='GET',body)=>({method,query:{scope:'cliente-x'},headers:{host:'platform.test',origin:'https://platform.test'},body});
+async function invoke(session,request=req()){
+ const res=mockRes();await createClaudeHandler({fetchImpl:fakeFetch,sessionFor:()=>session,tokenFor:()=> 'PRIVATE KEY',now:()=>at})(request,res);return res;
+}
+let response=await invoke(null);assert.equal(response.code,401);assert.equal(requests.length,0);
+response=await invoke({role:'user'});assert.equal(response.code,403);assert.equal(requests.length,0);
+response=await invoke(owner,{...req('POST',{}),headers:{host:'platform.test',origin:'https://evil.test'}});assert.equal(response.code,403);
+response=await invoke(owner);assert.equal(response.code,200);assert.equal(response.data.revision,'head1');assert.equal(JSON.stringify(response.data).includes('PRIVATE'),false);
+response=await invoke(owner,req('POST',{scope:'cliente-x',action:'settings',revision:'stale',dailyLimit:12,todayLimit:18,enabled:true}));assert.equal(response.code,409);
+const settings={scope:'cliente-x',action:'settings',revision:'head1',dailyLimit:12,todayLimit:18,enabled:false};
+response=await invoke(owner,req('POST',settings));assert.equal(response.code,200);assert.equal(writes.length,3);assert.equal(JSON.parse(writes[0].content).policy.dailyCallOverrides['2026-10-18'],18);assert.equal(JSON.parse(writes[1].content).enabled,false);
+conflict=true;response=await invoke(owner,req('POST',settings));assert.equal(response.code,409);conflict=false;
+hasBudget=true;active=true;response=await invoke(owner,req('POST',{scope:'cliente-x',action:'audit',revision:'head1'}));assert.equal(response.code,409);active=false;
+response=await invoke(owner,req('POST',{scope:'cliente-x',action:'run',revision:'head1'}));assert.equal(response.code,202);assert.equal(requests.at(-1).method,'POST');assert.match(requests.at(-1).url,/authorial-reserve.yml\/dispatches$/);
+response=await invoke(owner,req('POST',{scope:'cliente-x',action:'calibrate',revision:'head1'}));assert.equal(response.code,400);
+response=await invoke(owner,req('POST',{scope:'__proto__',action:'settings'}));assert.equal(response.code,400);
+console.log('PASS: owner permissions, origin, no secret/prompt exposure, BRT expiry, usage estimates, live quota enforcement, bounds, pause, atomic writes and concurrent-state conflicts. No paid calls or publication.');

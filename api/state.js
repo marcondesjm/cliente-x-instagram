@@ -1,3 +1,4 @@
+import claudeControlHandler from "../lib/claude-api.js";
 import { educationCollectionDiagnostics } from '../lib/education-collection.js';
 import { visualReadyPacks, requiresBibleIllustrations } from '../lib/bible-visual-standard.js';
 import { readFileSync } from 'node:fs';
@@ -2426,6 +2427,7 @@ async function publishThreadsTest(account, text) {
 }
 
 export default async function handler(req, res) {
+  if (req.query?.claudeControl === "1") return claudeControlHandler(req, res);
   if (req.method === 'POST') {
     try {
       const { body, raw } = await readBody(req);

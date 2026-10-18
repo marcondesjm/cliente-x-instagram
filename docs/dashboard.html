@@ -2888,6 +2888,7 @@
   </div>
 
   <link rel="stylesheet" href="/docs/growth-panel.css?v=20261017-automatic-only">
+  <script src="/docs/claude-control.js?v=20261018-1"></script>
   <script src="/docs/growth-panel.js?v=20261017-automatic-only"></script>
   <script>
     const DATA = {
@@ -3178,6 +3179,7 @@
         renderUsers();
         renderVersion(state.activeVersion);
         renderMaintenance(state.maintenance);
+        window.ClaudeControl.load(appState.selectedAccount, appState.sessionRole);
         renderWatchdog();
         renderSystemCapabilities();
         renderSchedule();
