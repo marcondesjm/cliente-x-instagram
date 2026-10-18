@@ -4,7 +4,7 @@
   "enabled": true,
   "targetReady": 13,
   "maxPacksPerRun": 3,
-  "health": "review_rejected",
+  "health": "stock_ready",
   "entries": [
     {
       "id": "authorial-7822d0ca002cba49",
@@ -2304,7 +2304,7 @@
       "topic": "medicao-rascunho-v1",
       "account": "cliente-x",
       "version": "claude-authorial-reserve-v1",
-      "status": "draft",
+      "status": "ready",
       "generationCallId": "4509b201-16f4-448a-ba4b-45b1c7664756",
       "createdAt": "2026-10-18T18:50:46.903Z",
       "artDirectionCallId": "493096b4-3a0b-44f4-bdd3-c5a9b7a0f695",
@@ -2408,139 +2408,395 @@
         "docs/illustrations/cliente-x/authorial-78e55e7e8d636ff0/slide-3.png": "5baae1d979c93467820f8fd3858a7b892d1ee04ab59320adaf2f90e6daca0b79",
         "docs/illustrations/cliente-x/authorial-78e55e7e8d636ff0/slide-4.png": "8598c295a740147296bb2fa9e9eb492b4d85b5c2c6ddd0fb914e7fb6ccec0e46",
         "docs/illustrations/cliente-x/authorial-78e55e7e8d636ff0/story.png": "3908935eda7a595de17c8cc6d9ff77691ec3c39494fb4dd21945407258db4dfc"
+      },
+      "reviewCandidate": {
+        "claims": [
+          {
+            "reason": "O slide apresenta o tema de atendimento e o cenário fictício de uma loja de materiais com cliente enviando mensagem incompleta.",
+            "id": "slide-1",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ],
+            "supported": true
+          },
+          {
+            "id": "slide-2",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ],
+            "supported": true,
+            "reason": "O slide define a necessidade de estabelecer critérios de clareza, correção e verificação de dados ausentes."
+          },
+          {
+            "reason": "O slide propõe a comparação de rascunhos com os critérios definidos para identificar lacunas.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ],
+            "supported": true,
+            "id": "slide-3"
+          },
+          {
+            "id": "slide-4",
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ],
+            "reason": "O slide orienta o registro de correções e a decisão sobre testar o fluxo em etapa limitada."
+          },
+          {
+            "id": "caption",
+            "reason": "A legenda resume o exercício proposto de forma educativa e sem promessas de resultados.",
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ],
+            "reason": "O story questiona a rotina da equipe sobre a conferência de dados antes de responder.",
+            "id": "story",
+            "supported": true
+          },
+          {
+            "reason": "Os rótulos descrevem os problemas de uma mensagem incompleta conforme o cenário.",
+            "id": "art-1",
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "art-2",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ],
+            "supported": true,
+            "reason": "Os rótulos listam os critérios de avaliação da resposta."
+          },
+          {
+            "id": "art-3",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ],
+            "supported": true,
+            "reason": "Os rótulos detalham o processo de conferência."
+          },
+          {
+            "id": "art-4",
+            "reason": "Os rótulos indicam as ações de revisão e teste.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ],
+            "supported": true
+          },
+          {
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ],
+            "reason": "Os rótulos resumem o fluxo operacional de verificação.",
+            "id": "art-5",
+            "supported": true
+          }
+        ],
+        "decision": "approve",
+        "supported": true,
+        "novel": true,
+        "practical": true,
+        "visualMatch": true,
+        "reason": "O conteúdo apresenta um exercício educativo coerente e bem estruturado sobre a revisão de respostas de atendimento com IA, seguindo todas as diretrizes do briefing sem promessas de resultados ou dados externos.",
+        "growth": {
+          "hookSpecific": true,
+          "followReason": true,
+          "shareReason": true,
+          "payoffDelivered": true
+        }
+      },
+      "review": {
+        "claims": [
+          {
+            "reason": "O slide apresenta o tema de atendimento e o cenário fictício de uma loja de materiais com cliente enviando mensagem incompleta.",
+            "id": "slide-1",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escolher respostas fictícias de atendimento; definir critérios de correção, clareza e informações ausentes; comparar rascunhos com esses critérios; anotar correções necessárias e trabalho de revisão; decidir se vale testar o fluxo em uma etapa limitada. Não inventar percentuais, clientes, estudos ou economia comprovada. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "supported": true
+          },
+          {
+            "id": "slide-2",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escolher respostas fictícias de atendimento; definir critérios de correção, clareza e informações ausentes; comparar rascunhos com esses critérios; anotar correções necessárias e trabalho de revisão; decidir se vale testar o fluxo em uma etapa limitada. Não inventar percentuais, clientes, estudos ou economia comprovada. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "supported": true,
+            "reason": "O slide define a necessidade de estabelecer critérios de clareza, correção e verificação de dados ausentes."
+          },
+          {
+            "reason": "O slide propõe a comparação de rascunhos com os critérios definidos para identificar lacunas.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escolher respostas fictícias de atendimento; definir critérios de correção, clareza e informações ausentes; comparar rascunhos com esses critérios; anotar correções necessárias e trabalho de revisão; decidir se vale testar o fluxo em uma etapa limitada. Não inventar percentuais, clientes, estudos ou economia comprovada. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "supported": true,
+            "id": "slide-3"
+          },
+          {
+            "id": "slide-4",
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escolher respostas fictícias de atendimento; definir critérios de correção, clareza e informações ausentes; comparar rascunhos com esses critérios; anotar correções necessárias e trabalho de revisão; decidir se vale testar o fluxo em uma etapa limitada. Não inventar percentuais, clientes, estudos ou economia comprovada. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "reason": "O slide orienta o registro de correções e a decisão sobre testar o fluxo em etapa limitada."
+          },
+          {
+            "id": "caption",
+            "reason": "A legenda resume o exercício proposto de forma educativa e sem promessas de resultados.",
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escolher respostas fictícias de atendimento; definir critérios de correção, clareza e informações ausentes; comparar rascunhos com esses critérios; anotar correções necessárias e trabalho de revisão; decidir se vale testar o fluxo em uma etapa limitada. Não inventar percentuais, clientes, estudos ou economia comprovada. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escolher respostas fictícias de atendimento; definir critérios de correção, clareza e informações ausentes; comparar rascunhos com esses critérios; anotar correções necessárias e trabalho de revisão; decidir se vale testar o fluxo em uma etapa limitada. Não inventar percentuais, clientes, estudos ou economia comprovada. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "reason": "O story questiona a rotina da equipe sobre a conferência de dados antes de responder.",
+            "id": "story",
+            "supported": true
+          },
+          {
+            "reason": "Os rótulos descrevem os problemas de uma mensagem incompleta conforme o cenário.",
+            "id": "art-1",
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escolher respostas fictícias de atendimento; definir critérios de correção, clareza e informações ausentes; comparar rascunhos com esses critérios; anotar correções necessárias e trabalho de revisão; decidir se vale testar o fluxo em uma etapa limitada. Não inventar percentuais, clientes, estudos ou economia comprovada. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-2",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escolher respostas fictícias de atendimento; definir critérios de correção, clareza e informações ausentes; comparar rascunhos com esses critérios; anotar correções necessárias e trabalho de revisão; decidir se vale testar o fluxo em uma etapa limitada. Não inventar percentuais, clientes, estudos ou economia comprovada. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "supported": true,
+            "reason": "Os rótulos listam os critérios de avaliação da resposta."
+          },
+          {
+            "id": "art-3",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escolher respostas fictícias de atendimento; definir critérios de correção, clareza e informações ausentes; comparar rascunhos com esses critérios; anotar correções necessárias e trabalho de revisão; decidir se vale testar o fluxo em uma etapa limitada. Não inventar percentuais, clientes, estudos ou economia comprovada. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "supported": true,
+            "reason": "Os rótulos detalham o processo de conferência."
+          },
+          {
+            "id": "art-4",
+            "reason": "Os rótulos indicam as ações de revisão e teste.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escolher respostas fictícias de atendimento; definir critérios de correção, clareza e informações ausentes; comparar rascunhos com esses critérios; anotar correções necessárias e trabalho de revisão; decidir se vale testar o fluxo em uma etapa limitada. Não inventar percentuais, clientes, estudos ou economia comprovada. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "supported": true
+          },
+          {
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escolher respostas fictícias de atendimento; definir critérios de correção, clareza e informações ausentes; comparar rascunhos com esses critérios; anotar correções necessárias e trabalho de revisão; decidir se vale testar o fluxo em uma etapa limitada. Não inventar percentuais, clientes, estudos ou economia comprovada. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "reason": "Os rótulos resumem o fluxo operacional de verificação.",
+            "id": "art-5",
+            "supported": true
+          }
+        ],
+        "decision": "approve",
+        "supported": true,
+        "novel": true,
+        "practical": true,
+        "visualMatch": true,
+        "reason": "O conteúdo apresenta um exercício educativo coerente e bem estruturado sobre a revisão de respostas de atendimento com IA, seguindo todas as diretrizes do briefing sem promessas de resultados ou dados externos.",
+        "growth": {
+          "hookSpecific": true,
+          "followReason": true,
+          "shareReason": true,
+          "payoffDelivered": true
+        },
+        "bindingVersion": "exact-source-id-v1",
+        "callId": "4acdb278-2a8a-499d-8df0-ec49e5d795bd",
+        "packHash": "7ef8e66b92a2a504e45c86d1b87e6531aa3a1231984ffff9a836a2f84bb71c54",
+        "checkedAt": "2026-10-18T18:51:38.753Z",
+        "groundingTask": {
+          "scope": "Exercício educativo fictício. Orientações são propostas, não resultados ou notícias.",
+          "sources": [
+            {
+              "id": "brief",
+              "text": "Proposta de exercício educativo: escolher respostas fictícias de atendimento; definir critérios de correção, clareza e informações ausentes; comparar rascunhos com esses critérios; anotar correções necessárias e trabalho de revisão; decidir se vale testar o fluxo em uma etapa limitada. Não inventar percentuais, clientes, estudos ou economia comprovada. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+            },
+            {
+              "id": "label",
+              "text": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            }
+          ],
+          "claims": [
+            {
+              "id": "slide-1",
+              "text": "Atendimento. Resposta pronta pode omitir dados do pedido?. Um cliente envia mensagem com itens e endereço incompletos para uma loja fictícia de materiais."
+            },
+            {
+              "id": "slide-2",
+              "text": "Critérios. Defina clareza, correção e campos ausentes antes. Estabeleça critérios simples de clareza, correção factual e verificação de informações ausentes nos rascunhos."
+            },
+            {
+              "id": "slide-3",
+              "text": "Conferência. Compare cada rascunho com os critérios definidos. Analise cada resposta proposta confrontando ponto a ponto com os critérios estabelecidos para identificar lacunas."
+            },
+            {
+              "id": "slide-4",
+              "text": "Exercício. Anote correções e decida testar em etapa limitada. Registre as correções necessárias, avalie o esforço de revisão e decida se vale testar esse fluxo operacional limitado."
+            },
+            {
+              "id": "caption",
+              "text": "Como sua equipe lida com mensagens incompletas de clientes? Este exercício propõe definir critérios claros de clareza, correção e campos ausentes antes de responder. Compare rascunhos com esses parâmetros, anote ajustes e avalie se faz sentido testar o processo em uma etapa pequena da operação.\n\nA prática ajuda a organizar o atendimento sem prometer resultados imediatos. Siga o perfil para aprender aplicações práticas de IA em empresas, com exercícios que você pode adaptar à sua rotina.\n\nConteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            },
+            {
+              "id": "story",
+              "text": "Rotina. Sua equipe confere dados antes de responder?. Você já notou respostas enviadas sem verificar se todas as informações do pedido estavam presentes na mensagem do cliente?"
+            },
+            {
+              "id": "art-1",
+              "text": "Rótulos de ilustração fictícia: Mensagem incompleta. Itens faltantes. Endereço parcial"
+            },
+            {
+              "id": "art-2",
+              "text": "Rótulos de ilustração fictícia: Clareza da resposta. Correção factual. Dados ausentes"
+            },
+            {
+              "id": "art-3",
+              "text": "Rótulos de ilustração fictícia: Ler critérios. Confrontar rascunho. Identificar lacunas"
+            },
+            {
+              "id": "art-4",
+              "text": "Rótulos de ilustração fictícia: Anotar correções. Avaliar revisão. Decidir teste"
+            },
+            {
+              "id": "art-5",
+              "text": "Rótulos de ilustração fictícia: Verificar dados. Antes de enviar. Fluxo limitado"
+            }
+          ]
+        }
+      },
+      "render": {
+        "version": "authorial-layout-v3",
+        "packHash": "7ef8e66b92a2a504e45c86d1b87e6531aa3a1231984ffff9a836a2f84bb71c54",
+        "verifiedAt": "2026-10-18T18:51:38.753Z",
+        "feedCount": 4,
+        "story": true,
+        "runDir": "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-18-155106-slot-1-render-only",
+        "imageHashes": [
+          "f00866539cf3da00d18cc14d5df883f6fadf5aaa231b43d95196ff8e623f29fc",
+          "25ef212b5640f270a1fc74b70adbc5b99acb85e864afbb0eb264eb0218122fe5",
+          "8b8e2c0eb499859870b09d2c1cb2e18a0d54fce0c71c513817435a29c4922f17",
+          "1b373c1931a0b3b1085bd63ab34fd855bb78dc8e84bd399d11a2b73a6fda8a37",
+          "0a02e8a2cc984ff01fa74499e7efb58b13ee3f24811ed550cd5112f4711fe3ec"
+        ]
       }
+    },
+    {
+      "id": "draft-resumo-transferencia-v1",
+      "topic": "resumo-transferencia-v1",
+      "account": "cliente-x",
+      "version": "claude-authorial-reserve-v1",
+      "status": "rejected",
+      "generationCallId": "bceaf559-264c-496e-a2ae-fc04e1e7f6bf",
+      "createdAt": "2026-10-18T18:51:53.868Z",
+      "draftRevisionCallId": "fa565be4-72b5-4ea1-af05-25e205eb2745",
+      "reason": "Pauta de crescimento precisa explicar por que acompanhar o perfil."
     }
   ],
-  "checkedAt": "2026-10-18T18:51:36.016Z",
+  "checkedAt": "2026-10-18T18:52:12.061Z",
   "workflowRun": "39155831978",
-  "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
+  "message": "2 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "review:medicao-rascunho-v1",
-    "callId": "4acdb278-2a8a-499d-8df0-ec49e5d795bd",
+    "stage": "revise-draft:resumo-transferencia-v1",
+    "callId": "fa565be4-72b5-4ea1-af05-25e205eb2745",
     "value": {
-      "claims": [
+      "slides": [
         {
-          "reason": "O slide apresenta o tema de atendimento e o cenário fictício de uma loja de materiais com cliente enviando mensagem incompleta.",
-          "id": "slide-1",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "supported": true
+          "eyebrow": "Pedido incompleto",
+          "title": "O cliente esqueceu detalhes do pedido",
+          "body": "Um cliente envia mensagem pedindo material de escritório sem informar quantidade ou endereço de entrega."
         },
         {
-          "id": "slide-2",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "supported": true,
-          "reason": "O slide define a necessidade de estabelecer critérios de clareza, correção e verificação de dados ausentes."
+          "eyebrow": "Separe as informações",
+          "title": "Peça resumo com confirmados e pendências",
+          "body": "Solicite um resumo separado listando dados confirmados pelo cliente e itens que ainda faltam ser informados."
         },
         {
-          "reason": "O slide propõe a comparação de rascunhos com os critérios definidos para identificar lacunas.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "supported": true,
-          "id": "slide-3"
+          "eyebrow": "Conferência final",
+          "title": "Compare o resumo com a conversa original",
+          "body": "Verifique se todas as informações marcadas como confirmadas realmente aparecem na troca de mensagens com o cliente."
         },
         {
-          "id": "slide-4",
-          "supported": true,
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "O slide orienta o registro de correções e a decisão sobre testar o fluxo em etapa limitada."
-        },
-        {
-          "id": "caption",
-          "reason": "A legenda resume o exercício proposto de forma educativa e sem promessas de resultados.",
-          "supported": true,
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "O story questiona a rotina da equipe sobre a conferência de dados antes de responder.",
-          "id": "story",
-          "supported": true
-        },
-        {
-          "reason": "Os rótulos descrevem os problemas de uma mensagem incompleta conforme o cenário.",
-          "id": "art-1",
-          "supported": true,
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-2",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "supported": true,
-          "reason": "Os rótulos listam os critérios de avaliação da resposta."
-        },
-        {
-          "id": "art-3",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "supported": true,
-          "reason": "Os rótulos detalham o processo de conferência."
-        },
-        {
-          "id": "art-4",
-          "reason": "Os rótulos indicam as ações de revisão e teste.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "supported": true
-        },
-        {
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "Os rótulos resumem o fluxo operacional de verificação.",
-          "id": "art-5",
-          "supported": true
+          "eyebrow": "Encaminhe o essencial",
+          "title": "Envie apenas contexto necessário ao colega",
+          "body": "Transfira para quem dará continuidade somente o resumo validado, omitindo conversas paralelas ou dados irrelevantes."
         }
       ],
-      "decision": "approve",
-      "supported": true,
-      "novel": true,
-      "practical": true,
-      "visualMatch": true,
-      "reason": "O conteúdo apresenta um exercício educativo coerente e bem estruturado sobre a revisão de respostas de atendimento com IA, seguindo todas as diretrizes do briefing sem promessas de resultados ou dados externos.",
-      "growth": {
-        "hookSpecific": true,
-        "followReason": true,
-        "shareReason": true,
-        "payoffDelivered": true
+      "caption": "Imagine receber um pedido por mensagem sem quantidade nem endereço. Como evitar retrabalho?\n\nPeça um resumo separando o que foi confirmado do que falta. Confira cada item contra a conversa original antes de repassar. Assim, quem assume o atendimento já tem o essencial. Esse exercício ajuda a organizar fluxos de atendimento com mais clareza. Quer aprender outras aplicações práticas de IA em empresas? Acompanhe o perfil para conteúdos assim.",
+      "storySlide": {
+        "eyebrow": "Rotina prática",
+        "title": "Como você lida com pedidos incompletos?",
+        "body": "Se um cliente não informa todos os dados, qual sua primeira ação para evitar retrabalho na equipe?"
       }
     },
     "structured": true,
@@ -2597,14 +2853,14 @@
   "automaticRecovery": {
     "pending": false,
     "pendingSlot": null,
-    "available": 0,
+    "available": 2,
     "recoveryReady": false,
     "run": true,
     "phase": "maintain_stock",
     "budgetRenewsAt": "2026-10-19T03:00:00.000Z",
-    "nextAttemptAt": "2026-10-18T18:48:40.019Z",
-    "checkedAt": "2026-10-18T18:48:40.487Z",
-    "workflowRun": "39155831978",
+    "nextAttemptAt": "2026-10-18T18:52:52.134Z",
+    "checkedAt": "2026-10-18T18:52:52.355Z",
+    "workflowRun": "39155841344",
     "retryAfter": null
   }
 }
