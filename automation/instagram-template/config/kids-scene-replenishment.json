@@ -4759,11 +4759,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-18T22:16:55.300Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 74779,
       "promptChars": 793,
       "imageFingerprint": "6084c87dbeed83ac179bdc76a19f35271a483cfc54f056d2615cd6d53b3c1fbe",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-18T22:17:23.408Z",
+      "reportedInputTokens": 26827,
+      "inputTokens": 26827,
+      "outputTokens": 92,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -4914,7 +4920,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T22:16:55.300Z",
+  "checkedAt": "2026-10-18T22:17:23.408Z",
   "lastRun": "39170079691",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -5194,12 +5200,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-16:c9bbb5674aedb059",
+    "stage": "pixels:kids-biblia-16:5ccdaca6de66a447",
     "value": {
       "visible": true,
       "style": "illustration",
       "childSuitable": true,
-      "observedEvent": "Uma ilustração mostra um homem barbudo com túnica amarela e manto vermelho carregando nos braços uma criança de camiseta amarela, enquanto uma mulher vestida com túnica bege e véu branco se aproxima estendendo as mãos; ao fundo há paredes claras e vegetação verde em ambiente externo."
+      "observedEvent": "Ilustração de três pessoas sentadas à mesa comendo: um homem barbudo com faixa vermelha na cabeça segura um pedaço de alimento, uma criança em camisa amarela bebe de um copo e uma terceira pessoa com véu branco está ao lado; sobre a mesa há pratos com vegetais verdes, copos e uma jarra."
     }
   },
   "lastFactualEvaluation": {
@@ -7473,6 +7479,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 31,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-18T22:16:55.300Z"
+    "checkedAt": "2026-10-18T22:17:23.408Z"
   }
 }
