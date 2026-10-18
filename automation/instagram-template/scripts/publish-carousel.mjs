@@ -4679,7 +4679,7 @@ function selectWithControlledExploration(candidates = [], dateString = '', slotI
   return selected ? { ...selected, selectionMode: mode, experimentAxis } : null;
 }
 
-function pickFreshPack(packs, dateString, slotIndex, recentMedia = [], publicationHistory = [], chooseIndex = randomInt, learningContext = {}) {
+export function pickFreshPack(packs, dateString, slotIndex, recentMedia = [], publicationHistory = [], chooseIndex = randomInt, learningContext = {}) {
   const candidates = balanceResearchPacksByHistory(packs, publicationHistory, dateString, slotIndex);
   const freshCandidates = candidates.filter(({ pack }) => !findDuplicateSelection(pack, recentMedia, publicationHistory));
   const researchCandidates = freshCandidates.filter(({ pack }) => pack?.research?.source);
