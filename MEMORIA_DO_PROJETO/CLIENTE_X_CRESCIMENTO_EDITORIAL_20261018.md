@@ -29,3 +29,5 @@ Snapshot de performance atualizado em 18/10 às 15:57 UTC: 2.615 seguidores; var
 ## Validação e limite operacional
 
 Testes de critérios de crescimento, retenção das provas/hash, rejeição por falta de resposta ou convite, bloqueio de incentivo artificial, briefing, sintaxe do painel/API e validate-copy passaram localmente. A cota editorial de 18/10 já terminou: nenhuma nova chamada paga foi feita para esta alteração. Validação semântica real do novo conjunto growth aguarda renovação da cota e próximo ciclo programado; não afirmar novas pautas aprovadas ou crescimento causado por esta mudança.
+
+Implementação 6132c2a9 e testes de importação/geração c7c245e0 enviados a main. Deploy de produção dpl_AhmvCDLssfMFbMaqVFntbKPuLTzm READY, alias https://cliente-x-instagram.vercel.app . Conferência pública às 13:11 BRT: dashboard, briefing e normalizador HTTP200 com opção growth; configuração remota da conta confirma goal=growth. Evidência local output/growth-release-proof.json. A versão visual existente e o PDF Kids foram preservados.
