@@ -3590,3 +3590,12 @@ Conclusao de ativacao:
 - Inspeção local de ativação confirmou hashes de todos os originais, manifesto da revisão, recibos do mesmo piloto e fingerprints do pack/render. Ativação concluída em https://github.com/marcondesjm/cliente-x-instagram/actions/runs/39138510305 ; enabled=true, circuito sem bloqueio, activationEvidence persistida. Não foram liberadas as cenas ambíguas de Zaqueu nem a pauta 32 em quarentena.
 - A reposição e os testes diários executam em GitHub Actions, sem depender do computador ligado. Cotas normais mantidas: 26 chamadas e 1,5 milhão de tokens por dia; recibos sem contagem são debitados pelo máximo. A agenda de 12 horários permanece, sem promessa de 12 materiais elegíveis por dia ou meta de 24 já atingida.
 - Painel preparado em v6.10 e guia em v1.8. Deploy e prova do download serão registrados no checkpoint final. As publicações reais da rotina existente continuam sendo conferidas separadamente no histórico; os pilotos não publicam diretamente.
+
+
+### 2026-10-18 12:08 BRT — entrega v6.10/v1.8 concluída
+- Commit de painel/guia: 06d7c7d7, sincronizado com main. Produção READY: dpl_oNVsukhFdyesNiM51dLnx66QgdVG, https://cliente-x-instagram.vercel.app.
+- Raiz pública HTTP 200 com v6.10 e link PDF v1.8; guia HTML HTTP 200 com aviso de reposição ativada. PDF HTTP 200 application/pdf, attachment, 1106625 bytes, SHA256 ccd951a54245225aceaa39e6f1f353672d1b31c412a00fcfe2448dc6d129c56d, idêntico ao PDF local visualmente conferido. Prova: output/release-verification.json.
+- Caminho normal executado após ativação: https://github.com/marcondesjm/cliente-x-instagram/actions/runs/39138773922 , etapas de reposição e montagem concluídas com sucesso. Estado final enabled=true, health=daily_limit. A cota de 18/10 foi atingida durante a validação; novas avaliações aguardam o próximo dia/ciclo, sem aumentar os limites nem exigir o computador ligado. Montagens aprovadas e agenda permanecem independentes dessa pausa de avaliação.
+- Próximo passo operacional: execução automática com orçamento renovado; pautas sem seis cenas confiáveis continuam aguardando material. Grade de 12 horários preservada, sem afirmar 12 novos conteúdos prontos por dia.
+- Emaús está com seleção e render comprovados; ainda não havia publicação correspondente no histórico sincronizado nesta conferência.
+- Resíduo local preservado: output/ com scripts auxiliares, artefatos e prévias. Nenhum segredo foi gravado nessas evidências.
