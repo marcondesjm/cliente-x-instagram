@@ -1372,11 +1372,10 @@
       "topic": "fila-prioridade-v1",
       "account": "cliente-x",
       "version": "claude-authorial-reserve-v1",
-      "status": "render_revision_required",
+      "status": "rejected",
       "generationCallId": "d5989ea7-4e80-4858-8901-4e8d7c98bc35",
       "createdAt": "2026-10-18T18:19:05.581Z",
       "draftRevisionCallId": "ff9d4227-8aeb-4ffc-bae2-8531f3a73684",
-      "reason": "Texto autoral fora dos limites.",
       "pack": {
         "id": "authorial-58ae900b583f44cd",
         "authorialTopic": "fila-prioridade-v1",
@@ -1611,10 +1610,231 @@
           "payoffDelivered": true,
           "shareReason": true
         }
-      }
+      },
+      "review": {
+        "claims": [
+          {
+            "id": "slide-1",
+            "supported": true,
+            "reason": "A claim descreve o cenário fictício de loja e a necessidade de critérios para priorizar mensagens, alinhando-se ao briefing que propõe definir critérios explícitos.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-2",
+            "supported": true,
+            "reason": "A claim instrui a definição de critérios antes da sugestão da IA, conforme explicitado no briefing sobre pedir classificação justificada e comparar com regras.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-3",
+            "supported": true,
+            "reason": "A claim orienta a revisão manual de casos ambíguos, atendendo à instrução do briefing de revisar casos antes de mudar a fila.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-4",
+            "supported": true,
+            "reason": "A claim propõe um exercício prático com três mensagens fictícias, seguindo a orientação do briefing de desenvolver uma situação específica não coberta no histórico.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "caption",
+            "supported": true,
+            "reason": "O caption resume o exercício educativo autoral e fictício, em total conformidade com as fontes 'brief' e 'label'.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              },
+              {
+                "sourceId": "label",
+                "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+              }
+            ]
+          },
+          {
+            "id": "story",
+            "supported": true,
+            "reason": "A story introduz o exercício como método estruturado para organizar a fila, refletindo o conteúdo educativo proposto nas fontes.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-1",
+            "supported": true,
+            "reason": "Os rótulos da ilustração (Prazo definido, Tipo de pedido, Fila organizada) são consistentes com os critérios de prioridade mencionados no briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-2",
+            "supported": true,
+            "reason": "Os rótulos (Critérios claros, Sugestão da IA, Justificativa visível) refletem o procedimento de comparação sugerido no briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-3",
+            "supported": true,
+            "reason": "Os rótulos (Mensagem ambígua, Revisão manual, Fila ajustada) correspondem à etapa de conferência de casos ambíguos descrita no briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-4",
+            "supported": true,
+            "reason": "Os rótulos (Três mensagens, Classificação feita, Decisão conferida) alinham-se à proposta de exercício com três mensagens fictícias do briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-5",
+            "supported": true,
+            "reason": "Os rótulos (Critério aplicado, Urgência real, Ordem definida) sintetizam o resultado esperado do exercício de priorização descrito nas fontes.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          }
+        ],
+        "decision": "approve",
+        "supported": true,
+        "novel": true,
+        "practical": true,
+        "visualMatch": true,
+        "reason": "O conteúdo é um exercício educativo fictício bem estruturado, com critérios claros, procedimento passo a passo e aplicação prática. As alegações são totalmente sustentadas pelo briefing e pela label de conteúdo autoral. O material é novel em relação ao histórico fornecido, pois foca em metodologia de priorização de atendimento, diferindo dos títulos anteriores. Os critérios de crescimento foram atendidos: a situação é reconhecível (loja/pedidos), o payoff é entregue (método completo), há motivo para seguir (aplicações práticas) e utilidade para compartilhar (exercício adaptável).",
+        "growth": {
+          "followReason": true,
+          "hookSpecific": true,
+          "payoffDelivered": true,
+          "shareReason": true
+        },
+        "bindingVersion": "exact-source-id-v1",
+        "callId": "7ca53bbe-a2c8-4d05-829a-b1fa32e144ac",
+        "packHash": "1bf3aabb71fdb1d7780aa41c3dd6c39801da71fd17fd41f62fd1ae6eb54487a4",
+        "checkedAt": "2026-10-18T18:35:00.253Z",
+        "groundingTask": {
+          "scope": "Exercício educativo fictício. Orientações são propostas, não resultados ou notícias.",
+          "sources": [
+            {
+              "id": "brief",
+              "text": "Proposta de exercício educativo com solicitações fictícias: definir critérios explícitos de prioridade, como prazo informado e tipo de solicitação; pedir à IA uma sugestão de classificação acompanhada da justificativa; comparar a justificativa com os critérios; revisar casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais nem prometer ganho de produtividade. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+            },
+            {
+              "id": "label",
+              "text": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            }
+          ],
+          "claims": [
+            {
+              "id": "slide-1",
+              "text": "Prioridade. Qual pedido atende primeiro?. Em uma loja fictícia, mensagens chegam com prazos e pedidos diferentes. Sem critérios definidos, a equipe precisa decidir qual atendimento vem primeiro."
+            },
+            {
+              "id": "slide-2",
+              "text": "Procedimento. Defina critérios antes da IA sugerir. Defina critérios de prazo e tipo de solicitação. Peça à IA uma classificação justificada e compare a sugestão com essas regras antes de aceitá-la."
+            },
+            {
+              "id": "slide-3",
+              "text": "Conferência. Revise os casos ambíguos. Se a mensagem não informar o prazo ou combinar pedidos diferentes, revise o caso manualmente antes de alterar a fila de atendimento."
+            },
+            {
+              "id": "slide-4",
+              "text": "Exercício. Teste com três mensagens fictícias. Escolha mensagens fictícias. Defina critérios, peça uma classificação justificada à IA e confira cada decisão antes de testar o procedimento na equipe."
+            },
+            {
+              "id": "caption",
+              "text": "Como você decide qual atendimento resolver primeiro quando várias mensagens chegam simultaneamente?\n\nEste exercício propõe definir critérios objetivos de prioridade, pedir sugestão à IA com justificativa e comparar antes de agir. Teste com situações fictícias da sua rotina para ajustar o processo gradualmente. Acompanhe o perfil para aprender aplicações práticas de IA em empresas, com exercícios adaptáveis à sua operação diária.\n\nConteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            },
+            {
+              "id": "story",
+              "text": "Rotina. Como você prioriza atendimentos hoje?. Você usa critérios definidos ou decide na hora? Veja no feed um exercício prático para organizar a fila de mensagens com ajuda da IA, focando em método estruturado."
+            },
+            {
+              "id": "art-1",
+              "text": "Rótulos de ilustração fictícia: Prazo definido. Tipo de pedido. Fila organizada"
+            },
+            {
+              "id": "art-2",
+              "text": "Rótulos de ilustração fictícia: Critérios claros. Sugestão da IA. Justificativa visível"
+            },
+            {
+              "id": "art-3",
+              "text": "Rótulos de ilustração fictícia: Mensagem ambígua. Revisão manual. Fila ajustada"
+            },
+            {
+              "id": "art-4",
+              "text": "Rótulos de ilustração fictícia: Três mensagens. Classificação feita. Decisão conferida"
+            },
+            {
+              "id": "art-5",
+              "text": "Rótulos de ilustração fictícia: Critério aplicado. Urgência real. Ordem definida"
+            }
+          ]
+        }
+      },
+      "render": {
+        "version": "authorial-layout-v3",
+        "packHash": "1bf3aabb71fdb1d7780aa41c3dd6c39801da71fd17fd41f62fd1ae6eb54487a4",
+        "verifiedAt": "2026-10-18T18:35:00.253Z",
+        "feedCount": 4,
+        "story": true,
+        "runDir": "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-18-153259-slot-0-render-only",
+        "imageHashes": [
+          "4ccba43b1999da09eba39473b7aa61653d766fcbba37d251c5c66cfebf553cc3",
+          "b12cc387d3937d85091faff00aa39564b122d3da74da20c30a5719e4e85b02f0",
+          "49470aabce1612461def8dd0d5ff2a407fe17532b4a0e5a8d9bda77a34de8039",
+          "a2357c740d411273c0a61ca933dae583d999d51d7e20e0fdced2858960ecc964",
+          "db4654e548fa4a39c56a76ff2c6e2c0340f54296708ea7f4c6bcca42b675db95"
+        ]
+      },
+      "previousRejection": "Texto autoral fora dos limites.",
+      "reason": "Invalid reviewed asset path"
     }
   ],
-  "checkedAt": "2026-10-18T18:34:58.698Z",
+  "checkedAt": "2026-10-18T18:35:00.577Z",
   "workflowRun": "39154544317",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
