@@ -3,8 +3,8 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "blocked",
-  "message": "Matriz completa de pares inválida ou fora da passagem.",
+  "health": "pilot_running",
+  "message": "Piloto diagnóstico da pauta kids-biblia-29 em execução; reposição recorrente permanece bloqueada.",
   "policy": {
     "maxCallsPerDay": 26,
     "maxInputTokensPerCall": 120000,
@@ -2176,8 +2176,8 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:37:35.019Z",
-  "lastRun": "39132072064",
+  "checkedAt": "2026-10-18T13:43:12.521Z",
+  "lastRun": "39132710148",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -3150,13 +3150,12 @@
   },
   "reasoningModel": "claude-sonnet-4.6",
   "pilotRun": {
-    "id": "be00852c-f3c7-45a0-8f4c-d7580b8fb76e",
+    "id": "67a791d4-4b43-4fbc-9ffe-381c6c27d5c6",
     "packId": "kids-biblia-29",
-    "status": "rejected",
-    "startedAt": "2026-10-18T13:34:31.477Z",
-    "expiresAt": "2026-10-18T13:59:31.477Z",
+    "status": "running",
+    "startedAt": "2026-10-18T13:43:12.521Z",
+    "expiresAt": "2026-10-18T14:08:12.521Z",
     "maxCalls": 10,
-    "maxInputTokens": 1200000,
-    "completedAt": "2026-10-18T13:37:35.019Z"
+    "maxInputTokens": 1200000
   }
 }
