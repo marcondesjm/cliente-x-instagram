@@ -1663,10 +1663,30 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-18T13:08:22.494Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 66332,
       "promptChars": 793,
       "imageFingerprint": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817",
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-18T13:08:32.827Z",
+      "reportedInputTokens": 24011,
+      "inputTokens": 24011,
+      "outputTokens": 95,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
+    },
+    {
+      "id": "e77c95ee-fa32-421f-9107-cba1b78a39b5",
+      "pilotId": "73030b35-d972-48ba-9779-343198390523",
+      "day": "2026-10-18",
+      "stage": "pixels:kids-biblia-29:98834c32e024c944",
+      "model": "claude-sonnet-4.6",
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-18T13:08:38.866Z",
+      "status": "reserved",
+      "payloadBytes": 57096,
+      "promptChars": 793,
+      "imageFingerprint": "34169359e67f7acc29d673c680eab8f7cc3bbe6cf27019b69da83c755945902e",
       "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
     }
   ],
@@ -1770,7 +1790,7 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:08:22.494Z",
+  "checkedAt": "2026-10-18T13:08:38.866Z",
   "lastRun": "39130137477",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -1978,15 +1998,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "calibration",
+    "stage": "pixels:kids-biblia-29:6654943ac38eff87",
     "value": {
-      "code": "567557",
-      "colors": [
-        "red",
-        "green",
-        "blue",
-        "yellow"
-      ]
+      "visible": true,
+      "style": "illustration",
+      "childSuitable": true,
+      "observedEvent": "Ilustração colorida mostrando um grupo de seis homens com vestimentas e turbantes tradicionais reunidos em círculo; o homem central, de túnica vermelha, gesticula com a mão direita levantada enquanto os demais observam ou conversam entre si, em ambiente externo claro com arco arquitetônico ao fundo."
     }
   },
   "lastFactualEvaluation": {
@@ -2110,6 +2127,22 @@
   },
   "responseFormat": "json",
   "pixelCache": {
+    "8dbedeafddff03fa6d585f7c4acb81503f20e32f855266e2cccce2530fa043dd": {
+      "version": "kids-scene-review-v4-visual",
+      "model": "claude-sonnet-4.6",
+      "promptHash": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "checkedAt": "2026-10-18T13:08:37.372Z",
+      "observation": {
+        "id": "6654943ac38eff87",
+        "sha256": "8dbedeafddff03fa6d585f7c4acb81503f20e32f855266e2cccce2530fa043dd",
+        "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817",
+        "imageBytes": 66332,
+        "visible": true,
+        "style": "illustration",
+        "childSuitable": true,
+        "observedEvent": "Ilustração colorida mostrando um grupo de seis homens com vestimentas e turbantes tradicionais reunidos em círculo; o homem central, de túnica vermelha, gesticula com a mão direita levantada enquanto os demais observam ou conversam entre si, em ambiente externo claro com arco arquitetônico ao fundo."
+      }
+    },
     "e08dfae91079a9ed413ec1ea518ac231e0063f7f2575f3c8f3e233333aff4e1e": {
       "version": "kids-scene-review-v3-blind",
       "model": "claude-haiku-4.5",
@@ -2268,22 +2301,6 @@
         "style": "illustration",
         "childSuitable": true,
         "observedEvent": "Pessoas em uma embarcação inclinada por ondas agitadas, com uma pessoa se agarrando à lateral do barco e outras permanecendo a bordo"
-      }
-    },
-    "8dbedeafddff03fa6d585f7c4acb81503f20e32f855266e2cccce2530fa043dd": {
-      "version": "kids-scene-review-v3-blind",
-      "model": "claude-haiku-4.5",
-      "promptHash": "8757f8af2d72f56ed83bcbd4da7166c7c5186e2a50a019a9ee0803cf91ed29fc",
-      "checkedAt": "2026-10-17T22:59:59.149Z",
-      "observation": {
-        "id": "6654943ac38eff87",
-        "sha256": "8dbedeafddff03fa6d585f7c4acb81503f20e32f855266e2cccce2530fa043dd",
-        "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817",
-        "imageBytes": 66332,
-        "visible": true,
-        "style": "illustration",
-        "childSuitable": true,
-        "observedEvent": "Um grupo de homens em trajes antigos conversando e gesticulando entre si em um ambiente externo iluminado"
       }
     },
     "9306d38eb00b7e308023db4ed200b8251fbc80d5482f113dc135062ae084ffda": {
