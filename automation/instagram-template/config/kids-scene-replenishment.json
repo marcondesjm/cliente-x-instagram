@@ -3,8 +3,8 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "pilot_running",
-  "message": "Piloto diagnóstico da pauta kids-biblia-29 em execução; reposição recorrente permanece bloqueada.",
+  "health": "calibrated",
+  "message": "Leitura real dos pixels confirmada com desafio aleatório; aguarda piloto bíblico.",
   "policy": {
     "maxCallsPerDay": 26,
     "maxInputTokensPerCall": 120000,
@@ -1747,16 +1747,16 @@
     }
   ],
   "calibration": {
-    "version": "kids-scene-review-v3-blind",
-    "model": "claude-haiku-4.5",
+    "version": "kids-scene-review-v4-visual",
+    "model": "claude-sonnet-4.6",
     "provider": "claude-ss",
-    "checkedAt": "2026-10-17T22:48:25.780Z",
+    "checkedAt": "2026-10-18T13:08:17.387Z",
     "passed": true,
-    "challengeHash": "f9cf4f9f861e4e0017e4a4bc1cf4f312f73f8f7c0f2d44294c5eddfd0b4e7f84"
+    "challengeHash": "695b8e040e170590676379d497155343c47a297353bad9921ba60f57ff3e5602"
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:08:15.815Z",
+  "checkedAt": "2026-10-18T13:08:17.387Z",
   "lastRun": "39130137477",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
