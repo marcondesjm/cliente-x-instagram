@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import sharp from 'sharp';
 import {randomUUID,createHash} from 'node:crypto';
-import {sendVision,callAllowance} from '../lib/kids-scene-vision.js';
+import {sendVision,callAllowance,labelledReviewImages,reviewImageManifest} from '../lib/kids-scene-vision.js';
 import {normalizeProviderUsage} from '../lib/platform-editorial-validation.js';
 import {loadPassage} from '../lib/kids-bible-passage.js';
 import {groundingPrompt,groundingSchema,inspectGrounding,groundingFingerprint} from '../lib/editorial-grounding.js';
@@ -38,6 +38,22 @@ try {
     state.entries=state.entries.filter(e=>e.id!==id);state.entries.push({id,mode:mode.id,fixture:fixture.id,model:mode.model,passed,value,...(r.value===null?{responseExcerpt:r.invalidResponseText}:{}),expected:fixture.expected,checkedAt:new Date().toISOString(),sourceUrl:fixture.scene.imageUrl,imageHash:call.imageHash});
     if(blocked)state.circuit='invalid_usage_receipt';save();if(blocked)throw new Error('Recibo inválido no diagnóstico.');
   }
+  if(state.visualDiversity?.version!=='visual-diversity-v1' || Date.now()-Date.parse(state.visualDiversity?.checkedAt || 0)>=24*60*60*1000) {
+    const originals=await Promise.all([source.scenes[3],source.scenes[4]].map(async s=>{const r=await fetch(s.imageUrl,{redirect:'error',signal:AbortSignal.timeout(25000)});if(!r.ok)throw new Error('Fonte do teste de composição indisponível.');return Buffer.from(await r.arrayBuffer());}));
+    const cases=[];
+    for(const expected of [true,false]) {
+      const raw=expected?originals:[originals[0],await sharp(originals[0]).flop().jpeg().toBuffer()];
+      const images=await labelledReviewImages(raw.map(bytes=>({bytes,id:randomUUID().replaceAll('-','').slice(0,16)})));
+      const day=callAllowance(state),call={id:randomUUID(),day,status:'reserved',stage:expected?'diversity-distinct':'diversity-mirror',startedAt:new Date().toISOString(),images:reviewImageManifest(images)};state.calls.push(call);save();
+      let result;
+      try {result=await sendVision({key,model:'claude-sonnet-4.6',images,prompt:'Compare SOMENTE os pixels das duas imagens individuais. distinct=false se representam o mesmo desenho, inclusive espelho, recorte ou compressão diferente. distinct=true se são ilustrações com ações, posições ou enquadramentos concretamente diferentes. O mesmo personagem, lugar ou tema não significa duplicação. Descreva a diferença visual concreta sem presumir história ou referência bíblica. Se não puder ver ambas, distinct=false e explique.',schema:{type:'object',additionalProperties:false,required:['distinct','reason'],properties:{distinct:{type:'boolean'},reason:{type:'string',minLength:12,maxLength:500}}},forceTool:true,maxOutputTokens:700});}
+      catch(error){call.status='failed';call.completedAt=new Date().toISOString();state.circuit='request_failed';save();throw new Error('Teste de composição interrompido; sem repetição automática.');}
+      const {blocked,...usage}=normalizeProviderUsage(result.usage,state.policy,state.billingMode);Object.assign(call,{status:'completed',completedAt:new Date().toISOString(),...usage});
+      cases.push({expected,distinct:result.value?.distinct,reason:result.value?.reason,passed:!blocked && result.value?.distinct===expected && typeof result.value?.reason==='string' && result.value.reason.length>=12});
+      state.visualDiversity={version:'visual-diversity-v1',model:'claude-sonnet-4.6',checkedAt:new Date().toISOString(),cases};save();
+      if(blocked)throw new Error('Recibo do teste de composição inválido.');
+    }
+  }
   const regressionVersion='depicted-event-v3';
   if(state.eventGrounding?.version!==regressionVersion || Date.now()-Date.parse(state.eventGrounding?.checkedAt || 0)>=24*60*60*1000) {
     const passages=await Promise.all(['Lucas 24:1–12','Lucas 19:1–10','Marcos 4:35–41'].map(reference=>loadPassage(reference)));
@@ -61,7 +77,7 @@ try {
     if(!passed)throw new Error('Regressão de vínculo visual/bíblico reprovada.');
   }
   const activeCases=state.entries.filter(e=>e.mode==='sonnet-forced-holdout');
-  if(activeCases.length!==4 || activeCases.some(e=>!e.passed) || !state.eventGrounding?.passed)throw new Error('Conferência visual ou factual reprovada; ativação bloqueada.');
+  if(activeCases.length!==4 || activeCases.some(e=>!e.passed) || !state.eventGrounding?.passed || state.visualDiversity?.cases?.length!==2 || state.visualDiversity.cases.some(c=>!c.passed))throw new Error('Conferência visual, factual ou de composição reprovada; ativação bloqueada.');
   state.health='completed';state.summary=modes.map(m=>({mode:m.id,passed:state.entries.filter(e=>e.mode===m.id && e.passed).length,total:m.holdout?holdoutFixtures.length:fixtures.length}));save();
 }catch(e){state.health='blocked';state.message=String(e.message).slice(0,350);save();process.exitCode=1;}
 console.log(JSON.stringify({health:state.health,summary:state.summary,publicationTriggered:false}));

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import sharp from 'sharp';
-import {callAllowance,calibrationImage,visualSignature,similarScenes,contactSheet,sendVision,parseObject,recoverTransientCalls,promptSceneDescription,selectionSchema,verificationSchema,reviewPoolLimit,individualSceneImage,assertBlindScene,BLIND_SCENE_PROMPT} from '../lib/kids-scene-vision.js';
+import {callAllowance,calibrationImage,visualSignature,similarScenes,contactSheet,sendVision,parseObject,recoverTransientCalls,promptSceneDescription,selectionSchema,verificationSchema,reviewPoolLimit,individualSceneImage,labelledReviewImages,reviewImageManifest,assertBlindScene,BLIND_SCENE_PROMPT} from '../lib/kids-scene-vision.js';
 import {reviewBinding,assertAutomaticReview,verseIsWithin} from '../lib/kids-scene-review-proof.js';
 import {passageRanges,loadPassage} from '../lib/kids-bible-passage.js';
 import {validateRecipe,hash} from '../lib/kids-scene-assembly.js';
@@ -96,7 +96,8 @@ const auto=structuredClone(recipe);auto.status='automatically-reviewed';
 auto.selected=auto.selected.map((s,i)=>({...s,visualHash:String(i).padStart(16,'0'),mirrorHash:String(i+10).padStart(16,'0')}));
 const fixturePassage={reference:auto.reference,translation:'World English Bible',license:'Public Domain',urls:['https://bible-api.com/data/web/GEN/45'],verses:[{id:'45:1',text:'Then Joseph could not control himself before all those who stood before him.'}]};
 const task=sceneGroundingTask(auto.selected,fixturePassage,auto.selected.map(()=>({observedEvent:'Família reunida com José na casa.',depictedEvent:'Família reunida com José na casa.'})));
-auto.automaticReview={version:VISION_VERSION,calibrationPassed:true,scriptureHash:hash(fixturePassage),scriptureSources:fixturePassage.urls,reviewedAt:new Date().toISOString(),verseIds:['45:1'],factualReview:{task,fingerprint:groundingFingerprint(task),result:{claims:task.claims.map(c=>({id:c.id,supported:true,reason:'Justificativa simulada para verificar o vínculo da prova.',evidence:[{sourceId:'45:1',quote:'Then Joseph could not control himself'}]}))}},selection:{decision:'approve',feed:auto.selected.slice(0,-1).map(s=>s.id),story:auto.selected.at(-1).id,childSuitable:true,distinct:true,referenceAccurate:true},visualReview:{imageHash:hash(image),imageBytes:image.length,positions:auto.selected.map(s=>s.id)},verification:{decision:'approve',cards:auto.selected.map(s=>({id:s.id,observedEvent:'Família reunida com José na casa.',depictedEvent:'Família reunida com José na casa.',pixelMatch:true,passageMatch:true,childSuitable:true,distinct:true,copyMatch:true,verse:'45:1',reason:'A cena mostra uma família reunida.'}))},binding:reviewBinding(auto)};
+const fixtureManifest=reviewImageManifest(auto.selected.map(s=>({id:s.id,bytes:image})));
+auto.automaticReview={version:VISION_VERSION,calibrationPassed:true,scriptureHash:hash(fixturePassage),scriptureSources:fixturePassage.urls,reviewedAt:new Date().toISOString(),verseIds:['45:1'],factualReview:{task,fingerprint:groundingFingerprint(task),result:{claims:task.claims.map(c=>({id:c.id,supported:true,reason:'Justificativa simulada para verificar o vínculo da prova.',evidence:[{sourceId:'45:1',quote:'Then Joseph could not control himself'}]}))}},selection:{decision:'approve',feed:auto.selected.slice(0,-1).map(s=>s.id),story:auto.selected.at(-1).id,childSuitable:true,distinct:true,referenceAccurate:true},visualReview:{mode:'labelled-images-v1',inputs:fixtureManifest,imageHash:hash(fixtureManifest),imageBytes:fixtureManifest.reduce((n,s)=>n+s.bytes,0),positions:auto.selected.map(s=>s.id)},verification:{decision:'approve',cards:auto.selected.map(s=>({id:s.id,observedEvent:'Família reunida com José na casa.',depictedEvent:'Família reunida com José na casa.',pixelMatch:true,passageMatch:true,childSuitable:true,distinct:true,copyMatch:true,verse:'45:1',reason:'A cena mostra uma família reunida.'}))},binding:reviewBinding(auto)};
 auto.automaticReview.selection.evidence=auto.selected.map((s,i)=>({id:s.id,card:i+1,verse:'45:1',reason:'A cena mostra o reencontro da família.'}));
 assert.equal(verseIsWithin('45:1–2',['45:1','45:2']),true);assert.equal(verseIsWithin('45:1–3',['45:1','45:2']),false);
 auto.automaticReview.blindObservations=auto.selected.map(s=>({id:s.id,sha256:s.sha256,imageHash:hash(photo),imageBytes:50000,visible:true,style:'illustration',childSuitable:true,observedEvent:'Família reunida com José na casa.'}));
@@ -127,17 +128,17 @@ const inventedEvent=structuredClone(auto);inventedEvent.automaticReview.verifica
 const wrongReviewOrder=structuredClone(auto);wrongReviewOrder.automaticReview.visualReview.positions.reverse();assert.throws(()=>assertAutomaticReview(wrongReviewOrder),/pixels/);
 
 const gateState={model:'claude-sonnet-4.6',reasoningModel:'claude-sonnet-4.6'};
-const diagnostics={entries:Array.from({length:4},(_,i)=>({fixture:'holdout-'+i,mode:'sonnet-forced-holdout',model:gateState.model,passed:true,checkedAt:now.toISOString()})),eventGrounding:{version:'depicted-event-v3',model:gateState.reasoningModel,passed:true,checkedAt:now.toISOString(),cases:Array.from({length:6},(_,i)=>({passed:true,expected:i%2===0,supported:i%2===0}))}};
+const diagnostics={visualDiversity:{version:'visual-diversity-v1',model:gateState.reasoningModel,checkedAt:now.toISOString(),cases:[{distinct:true,expected:true,passed:true},{distinct:false,expected:false,passed:true}]},entries:Array.from({length:4},(_,i)=>({fixture:'holdout-'+i,mode:'sonnet-forced-holdout',model:gateState.model,passed:true,checkedAt:now.toISOString()})),eventGrounding:{version:'depicted-event-v3',model:gateState.reasoningModel,passed:true,checkedAt:now.toISOString(),cases:Array.from({length:6},(_,i)=>({passed:true,expected:[false,true,true,false,true,false][i],supported:[false,true,true,false,true,false][i]}))}};
 assert.equal(assertVisionReadiness(gateState,diagnostics,now).factualCases,6);
 const failedGate=structuredClone(diagnostics);failedGate.entries[0].passed=false;assert.throws(()=>assertVisionReadiness(gateState,failedGate,now),/visual/);
 assert.throws(()=>assertVisionReadiness(gateState,diagnostics,new Date(now.getTime()+25*60*60*1000)),/visual/);
 const missingNegative=structuredClone(diagnostics);missingNegative.eventGrounding.cases.pop();assert.throws(()=>assertVisionReadiness(gateState,missingNegative,now),/factual/);
-const falseNegative=structuredClone(diagnostics);falseNegative.eventGrounding.cases[1].supported=true;assert.throws(()=>assertVisionReadiness(gateState,falseNegative,now),/factual/);
+const falseNegative=structuredClone(diagnostics);falseNegative.eventGrounding.cases[0].supported=true;assert.throws(()=>assertVisionReadiness(gateState,falseNegative,now),/factual/);
 console.log('PASS: independent pixel proof, immutable depicted-event binding and fresh positive/negative accuracy gate.');
 const activationNow=new Date(),activationRecipe=structuredClone(auto);
 activationRecipe.reviewedAt=new Date(activationNow.getTime()-60000).toISOString();
 const activationState={...gateState,billingMode:'fixed_plan_user_confirmed',circuit:'vision_validation_failed',calibration:{passed:true,version:VISION_VERSION,model:gateState.model},pilotRun:{id:'passed-pilot',packId:auto.id,status:'reviewed',startedAt:new Date(activationNow.getTime()-120000).toISOString()},calls:[{pilotId:'passed-pilot',status:'completed',stage:'verify:'+auto.id,imageFingerprint:auto.automaticReview.visualReview.imageHash},{pilotId:'passed-pilot',status:'completed',stage:'facts:'+auto.id,promptFingerprint:hash(groundingPrompt(auto.automaticReview.factualReview.task))}]};
-const activationDiagnostics=structuredClone(diagnostics);activationDiagnostics.entries.forEach(e=>e.checkedAt=activationNow.toISOString());activationDiagnostics.eventGrounding.checkedAt=activationNow.toISOString();
+const activationDiagnostics=structuredClone(diagnostics);activationDiagnostics.entries.forEach(e=>e.checkedAt=activationNow.toISOString());activationDiagnostics.eventGrounding.checkedAt=activationNow.toISOString();activationDiagnostics.visualDiversity.checkedAt=activationNow.toISOString();
 const activationInput={state:activationState,recipes:[activationRecipe],packs:[pack],diagnostics:activationDiagnostics,assembled:{entries:[{id:auto.id,status:'ready',renderVerified:true,recipeFingerprint:hash(activationRecipe),packFingerprint:hash(pack),verifiedAt:new Date(activationNow.getTime()-30000).toISOString()}]},readAsset:p=>fs.readFileSync(p),now:activationNow};
 assert.equal(assertSceneActivation(activationInput).recipeId,auto.id);
 const publishedReceipt=structuredClone(activationInput.assembled);publishedReceipt.entries[0].status='already_published';assert.equal(assertSceneActivation({...activationInput,assembled:publishedReceipt}).recipeId,auto.id);
@@ -153,3 +154,16 @@ const typographicTask={sources:[{id:'quote',text:'He said, “Go now.”'}],clai
 const quoteResult={claims:[{id:'q',supported:true,reason:'A citação conserva todas as palavras da fonte.',evidence:[{sourceId:'quote',quote:'He said, "Go now."'}]}]};
 assert.equal(inspectGrounding(typographicTask,quoteResult).approved,true);
 quoteResult.claims[0].evidence[0].quote='He said, "Go soon."';assert.throws(()=>inspectGrounding(typographicTask,quoteResult),/Citação/);
+
+const multiImages=await labelledReviewImages([{id:'0123456789abcdef',bytes:photo},{id:'fedcba9876543210',bytes:mirror}]);
+assert.equal(multiImages.reduce((n,s)=>n+s.bytes.length,0)<=100000,true);
+await sendVision({key:'test',model:'claude-sonnet-4.6',images:multiImages,prompt:'Compare',schema:{type:'object',properties:{ok:{type:'boolean'}}},forceTool:true,fetchImpl:async(url,options)=>{
+ const body=JSON.parse(options.body),content=body.messages[0].content;
+ assert.match(content[0].text,/Cena 1.*0123456789abcdef/);assert.equal(content[1].type,'image');assert.match(content[2].text,/Cena 2.*fedcba9876543210/);assert.equal(content[3].type,'image');
+ return new Response(JSON.stringify({content:[{type:'tool_use',name:'submit_scene_review',input:{ok:true}}],usage:{input_tokens:500,output_tokens:20},stop_reason:'tool_use'}));
+}});
+await assert.rejects(sendVision({key:'test',model:'claude-sonnet-4.6',image,images:multiImages,prompt:'x'}),/Conjunto/);
+await assert.rejects(sendVision({key:'test',model:'claude-sonnet-4.6',images:[{id:'0123456789abcdef',bytes:Buffer.alloc(100001)}],prompt:'x'}),/Conjunto/);
+const tamperedManifest=structuredClone(auto);tamperedManifest.automaticReview.visualReview.inputs[0].sha256='0'.repeat(64);assert.throws(()=>assertAutomaticReview(tamperedManifest),/Manifesto/);
+const missingMirror=structuredClone(diagnostics);missingMirror.visualDiversity.cases.pop();assert.throws(()=>assertVisionReadiness(gateState,missingMirror,now),/composições/);
+console.log('PASS: separately labelled image blocks, combined payload cap, immutable pixel manifest and distinct/mirrored regression gate.');
