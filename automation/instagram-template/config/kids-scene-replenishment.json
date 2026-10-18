@@ -3,8 +3,8 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "blocked",
-  "message": "Faltam seis cenas distintas e inéditas para esta pauta.",
+  "health": "pilot_running",
+  "message": "Piloto diagnóstico da pauta kids-biblia-33 em execução; reposição recorrente permanece bloqueada.",
   "policy": {
     "maxCallsPerDay": 26,
     "maxInputTokensPerCall": 120000,
@@ -2416,8 +2416,8 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T14:20:34.681Z",
-  "lastRun": "39135225596",
+  "checkedAt": "2026-10-18T14:29:37.881Z",
+  "lastRun": "39136156193",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -3133,13 +3133,12 @@
   },
   "reasoningModel": "claude-sonnet-4.6",
   "pilotRun": {
-    "id": "127039e8-0571-496c-9d76-5b499c74f3f9",
-    "packId": "kids-biblia-29",
-    "status": "rejected",
-    "startedAt": "2026-10-18T14:17:07.847Z",
-    "expiresAt": "2026-10-18T14:42:07.847Z",
+    "id": "62d67f3c-7354-4baa-b05a-e54ade4e0bcd",
+    "packId": "kids-biblia-33",
+    "status": "running",
+    "startedAt": "2026-10-18T14:29:37.881Z",
+    "expiresAt": "2026-10-18T14:54:37.881Z",
     "maxCalls": 10,
-    "maxInputTokens": 1200000,
-    "completedAt": "2026-10-18T14:20:34.681Z"
+    "maxInputTokens": 1200000
   }
 }
