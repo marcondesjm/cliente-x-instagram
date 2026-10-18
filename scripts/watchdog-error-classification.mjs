@@ -17,7 +17,7 @@ export function isMetaCredentialError(errorText = '', stage = '') {
 export function solutionForWatchdogError(errorText = '', stage = '') {
   const text = `${stage} ${errorText}`.toLowerCase();
   if (/radar visual sem foto in[eé]dita|reserva autoral esgotada/.test(text)) {
-    return 'Repor matérias com foto pertinente inédita ou executar Cliente X - repor reserva autoral com Claude. A reserva só é liberada após revisão do texto, novidade, arte e renders de Feed/Story, dentro da cota editorial. O vigia recupera o horário pendente quando houver conteúdo aprovado; não repetir fotos nem renovar token por esse erro.';
+    return 'A reposição automática com Claude tenta criar e revisar conteúdo inédito para recuperar este horário. Se a cota diária terminou, aguarda a renovação e retoma pelo agendamento, sem botão ou pedido manual. O vigia só publica após aprovação factual, visual e contra repetição; o alerta permanece aberto até a publicação confirmada.';
   }
   if (/conte[uú]do b[ií]blico.*esgotado|padr[aã]o ilustrado b[ií]blico obrigat[oó]rio|acervo aguardando ilustra/.test(text)) {
     return 'Adicionar pautas bíblicas inéditas com ilustrações revisadas em todos os cartões, Story e créditos. O vigia retoma o horário pendente após a revisão; não repetir posts, voltar a cartões vazios ou renovar token por esse erro de conteúdo.';

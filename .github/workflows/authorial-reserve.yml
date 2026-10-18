@@ -2,8 +2,15 @@ name: Cliente X - repor reserva autoral com Claude
 on:
   workflow_dispatch:
   schedule:
-    # 06h35 e 15h35 BRT; compartilha o teto da auditoria editorial, sem ampliá-lo.
-    - cron: '35 9,18 * * *'
+    # Verificação horária, inclusive após a renovação da cota às 00h BRT.
+    # Preflight sem API evita instalações e chamadas quando não há orçamento.
+    - cron: '35 * * * *'
+  workflow_run:
+    workflows:
+      - Instagram Feed Cliente X
+      - Instagram Watchdog Backup
+    branches: [main]
+    types: [completed]
 permissions:
   contents: write
 concurrency:
@@ -13,6 +20,8 @@ jobs:
   replenish:
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    outputs:
+      recovery_ready: ${{ steps.result.outputs.recovery_ready }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -24,12 +33,22 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git pull --rebase origin main
-      - run: npm ci --ignore-scripts
-      - run: npx playwright install --with-deps chromium
+      - name: Plan automatic recovery without paid calls
+        id: plan
+        run: node scripts/plan-authorial-recovery.mjs --persist
+      - if: steps.plan.outputs.run == 'true'
+        run: npm ci --ignore-scripts
+      - if: steps.plan.outputs.run == 'true' && steps.plan.outputs.recovery_ready != 'true'
+        run: npx playwright install --with-deps chromium
       - name: Generate, render and independently review authorial reserve
+        if: steps.plan.outputs.run == 'true' && steps.plan.outputs.recovery_ready != 'true'
         env:
           KIDS_VISION_ANTHROPIC_API_KEY: ${{ secrets.KIDS_VISION_ANTHROPIC_API_KEY }}
         run: node scripts/replenish-authorial-reserve.mjs --persist
+      - name: Confirm eligible stock before automatic publication recovery
+        id: result
+        if: success() && steps.plan.outputs.run == 'true'
+        run: node scripts/plan-authorial-recovery.mjs --persist
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -38,3 +57,8 @@ jobs:
             output/authorial-reserve/
             automation/instagram-template/config/authorial-reserve.json
             automation/instagram-template/runs/cliente-x/
+  recover:
+    needs: replenish
+    if: needs.replenish.outputs.recovery_ready == 'true'
+    uses: ./.github/workflows/instagram-watchdog-backup.yml
+    secrets: inherit
