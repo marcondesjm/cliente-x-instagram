@@ -3,8 +3,8 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "blocked",
-  "message": "Seleção visual não aprovada. Não há combinação completa de cenas compatíveis e distintas para todos os cartões e Story. ",
+  "health": "pilot_running",
+  "message": "Piloto diagnóstico da pauta kids-biblia-29 em execução; reposição recorrente permanece bloqueada.",
   "policy": {
     "maxCallsPerDay": 26,
     "maxInputTokensPerCall": 120000,
@@ -1736,8 +1736,8 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T12:59:44.099Z",
-  "lastRun": "39129415731",
+  "checkedAt": "2026-10-18T13:07:57.344Z",
+  "lastRun": "39130137477",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -2457,13 +2457,12 @@
   },
   "reasoningModel": "claude-sonnet-4.6",
   "pilotRun": {
-    "id": "7df4d1b9-b004-4f20-b5b6-b5e09aeedeea",
-    "packId": "kids-biblia-27",
-    "status": "rejected",
-    "startedAt": "2026-10-18T12:57:58.456Z",
-    "expiresAt": "2026-10-18T13:22:58.456Z",
+    "id": "73030b35-d972-48ba-9779-343198390523",
+    "packId": "kids-biblia-29",
+    "status": "running",
+    "startedAt": "2026-10-18T13:07:57.344Z",
+    "expiresAt": "2026-10-18T13:32:57.344Z",
     "maxCalls": 10,
-    "maxInputTokens": 1200000,
-    "completedAt": "2026-10-18T12:59:44.098Z"
+    "maxInputTokens": 1200000
   }
 }
