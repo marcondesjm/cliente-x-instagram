@@ -2385,6 +2385,7 @@ export function anatexSlideHtml(slide, index, total, account, style, renderConte
     isImpact ? 'impact-carousel' : '',
     editorialSupport ? 'with-editorial-support' : '',
     authorialIllustration ? 'authorial-illustration' : '',
+    renderContext.businessArt ? 'authorial-business-art' : '',
     (slide.imageLayout === 'bible-illustration' || account.account === 'sabedoria-kids') && sectorPhotoImage ? 'bible-illustration' : '',
     headlineLengthClass,
     index % 2 === 0 ? 'slide-even' : 'slide-odd'
@@ -3188,6 +3189,17 @@ export function anatexSlideHtml(slide, index, total, account, style, renderConte
     main.authorial-illustration.with-editorial-support:not(.reel-mode) .editorial-support {top:440px;height:285px;}
     main.authorial-illustration.with-editorial-support:not(.reel-mode) .editorial-support svg {height:240px;}
     main.authorial-illustration.with-editorial-support .note :is(.lead,.emphasis,.close) {color:#132238 !important;}
+    /* Every business illustration remains visible, including the conclusion. */
+    body main.authorial-business-art.has-sector-photo .headline {position:absolute;left:60px;right:60px;top:180px;width:auto;max-width:960px;text-align:left;font-size:66px;line-height:1.08;margin:0;}
+    body main.authorial-business-art.has-sector-photo .context-photo {display:block!important;position:absolute;left:60px;right:60px;top:410px;width:auto;height:608px;transform:none;background-size:contain!important;background-color:transparent;border:0;border-radius:24px;opacity:1;box-shadow:none;}
+    body main.authorial-business-art.has-sector-photo .context-photo::after {display:none;}
+    body main.authorial-business-art.has-sector-photo .note {position:absolute;left:60px;right:60px;top:1040px!important;display:block!important;bottom:auto;width:auto;max-width:960px;min-height:0;height:auto;padding:22px 26px;transform:none;text-align:left;}
+    body main.authorial-business-art.has-sector-photo .note :is(.lead,.emphasis,.close) {display:inline!important;font-size:30px!important;line-height:1.2!important;text-align:left;margin:0!important;padding:0!important;background:transparent!important;}
+    body main.authorial-business-art.has-sector-photo .panel,body main.authorial-business-art.has-sector-photo .bubble,body main.authorial-business-art.has-sector-photo .spark {display:none;}
+    body main.authorial-business-art .business-copy {font-size:30px!important;line-height:1.2!important;text-align:left;margin:0!important;color:#111;}
+    body main.authorial-business-art .note {max-height:none!important;overflow:visible!important;}
+    body main.authorial-business-art .progress {bottom:38px!important;}
+    body main.authorial-business-art :is(.save-cue,.swipe-cue) {bottom:82px!important;}
     /* Licensed Bible illustrations keep the whole scene visible. */
     body main.bible-illustration.has-sector-photo .headline { position:absolute;left:58px;right:58px;top:180px;width:auto;max-width:964px;margin:0;font-size:66px;line-height:1.06;text-align:left; }
     body main.bible-illustration.has-sector-photo .note { left:58px;right:58px;top:365px;bottom:auto;width:auto;height:auto;min-height:0;max-width:964px;padding:22px 28px;transform:none; }
@@ -3216,7 +3228,7 @@ export function anatexSlideHtml(slide, index, total, account, style, renderConte
     <section>
       <h1 class="headline">${headline}</h1>
     </section>
-    <div class="note"><span class="lead">${creativeBody.lead}</span><span class="emphasis">${creativeBody.emphasis}</span><span class="close">${creativeBody.close}</span></div>
+    <div class="note">${renderContext.businessArt ? `<p class="business-copy">${String(body).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')}</p>` : `<span class="lead">${creativeBody.lead}</span><span class="emphasis">${creativeBody.emphasis}</span><span class="close">${creativeBody.close}</span>`}</div>
     <div class="bubble"></div>
     <div class="progress">${progressItems}</div>
     <footer>${index}/${total}</footer>
@@ -6155,6 +6167,7 @@ async function main() {
     avatarRotationStart,
     researchSourceImagePath,
     authorialTopic: pack.authorialTopic || null,
+    businessArt: pack.businessArt || null,
     researchSlideImagePaths,
     researchVisualSources,
     visualAgent,

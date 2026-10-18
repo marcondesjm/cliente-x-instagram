@@ -1,3 +1,4 @@
+import {businessArtSchema,validateBusinessArt,applyBusinessArt,businessArtPaths,businessArtSvg} from '../lib/business-editorial-art.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import {randomUUID} from 'node:crypto';
@@ -85,9 +86,14 @@ try{
    }
    validatePack(pack);
    if(!pickFreshPack([pack],'2000-01-01',0,[],[...history,...state.entries.filter(e=>e!==entry&&e.pack).map(e=>({coverTitle:e.pack.slides[0].title,caption:e.pack.caption}))],()=>0).pack)throw Error('Pauta bloqueada por repetição.');
+   if(!pack.businessArt){
+    callAllowance(budget,new Date(),2);
+    const art=await request('art-direction:'+topic.id,'Você é o diretor de arte de um perfil sobre IA aplicada a empresas. Planeje cinco ilustrações editoriais fictícias, uma por cartão e a última para Story. Use cada layout exatamente uma vez: workspace obrigatoriamente na capa, conversation, workflow, checklist e decision nas outras posições. Cada frame precisa de três rótulos muito curtos, preferencialmente até dezoito caracteres, no máximo trinta e dois. Os rótulos devem ser passos ou objetos sustentados pelo briefing e pelo cartão, sem números, estatísticas, marcas ou promessas. Faça uma narrativa visual pertinente, com situações de trabalho reconhecíveis. O Story deve ter composição diferente. Não invente resultados ou fatos. Dados: '+JSON.stringify({brief:topic.brief,cards:pack.slides,story:pack.storySlide}),businessArtSchema());
+    validateBusinessArt(art.value);applyBusinessArt(pack,art.value);entry.artDirectionCallId=art.callId;
+   }
    Object.assign(entry,{id:pack.id,pack,packHash:digest(pack)});save();
-   const paths=[pack.slides[0].imagePath,pack.storySlide.imagePath];
-   for(const [i,p]of paths.entries()){fs.mkdirSync(path.dirname(p),{recursive:true});await sharp(Buffer.from(conceptSvg(topic,i===1))).png().toFile(p);}
+   const paths=businessArtPaths(pack);
+   for(const [i,p]of paths.entries()){fs.mkdirSync(path.dirname(p),{recursive:true});await sharp(Buffer.from(pack.businessArt?businessArtSvg(pack.businessArt,i):conceptSvg(topic,i===1))).png().toFile(p);}
    const {receipt,images}=await render(pack,index);
    entry.assets=Object.fromEntries(paths.map(p=>[p,digest(asset(p))]));
    const task={scope:'Exercício educativo fictício. Orientações são propostas, não resultados ou notícias.',sources:[{id:'brief',text:topic.brief},{id:'label',text:'Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado.'}],claims:packClaims(pack)};
@@ -101,8 +107,8 @@ try{
    entry.review={...bound,bindingVersion:SOURCE_BINDING_VERSION,callId:reviewed.callId,packHash:entry.packHash,checkedAt:new Date().toISOString(),groundingTask:task};
    if(!grounded.approved||reviewed.value.decision!=='approve'||!['supported','novel','practical','visualMatch'].every(k=>reviewed.value[k]===true)||pack.audienceGrowth&&!['hookSpecific','payoffDelivered','followReason','shareReason'].every(k=>reviewed.value.growth?.[k]===true))throw Error('Revisão rejeitou o lote: '+String(reviewed.value.reason).slice(0,300));
    entry.render={version:RESERVE_RENDER_VERSION,packHash:entry.packHash,verifiedAt:new Date().toISOString(),feedCount:4,story:true,runDir:receipt.runDir,imageHashes:[...receipt.imagePaths,receipt.storyImagePath].map(p=>digest(asset(p)))};
-   entry.status='ready';if(entry.reason)entry.previousRejection=entry.reason;delete entry.reason;
-   if(!reserveApproved(entry,asset))throw Error('Prova de aprovação autoral inválida.');
+   entry.status=process.env.AUTHORIAL_PREVIEW_ONLY==='true'?'preview_ready':'ready';if(entry.reason)entry.previousRejection=entry.reason;delete entry.reason;
+   if(!reserveApproved({...entry,status:'ready'},asset))throw Error('Prova de aprovação autoral inválida.');
    save(paths);accepted++;
   }catch(e){entry.status='rejected';entry.reason=String(e.message).replaceAll(key||'__absent__','[redacted]').slice(0,650);save();if(budget.circuit)throw e;}
  }

@@ -1,6 +1,11 @@
 name: Cliente X - repor reserva autoral com Claude
 on:
   workflow_dispatch:
+    inputs:
+      preview_only:
+        description: Gerar e revisar prévia sem liberar estoque ou publicação
+        type: boolean
+        default: false
   schedule:
     # Verificação horária, inclusive após a renovação da cota às 00h BRT.
     # Preflight sem API evita instalações e chamadas quando não há orçamento.
@@ -44,6 +49,7 @@ jobs:
         if: steps.plan.outputs.run == 'true' && steps.plan.outputs.recovery_ready != 'true'
         env:
           KIDS_VISION_ANTHROPIC_API_KEY: ${{ secrets.KIDS_VISION_ANTHROPIC_API_KEY }}
+          AUTHORIAL_PREVIEW_ONLY: ${{ inputs.preview_only || 'false' }}
         run: node scripts/replenish-authorial-reserve.mjs --persist
       - name: Confirm eligible stock before automatic publication recovery
         id: result
@@ -59,6 +65,6 @@ jobs:
             automation/instagram-template/runs/cliente-x/
   recover:
     needs: replenish
-    if: needs.replenish.outputs.recovery_ready == 'true'
+    if: needs.replenish.outputs.recovery_ready == 'true' && inputs.preview_only != true
     uses: ./.github/workflows/instagram-watchdog-backup.yml
     secrets: inherit
