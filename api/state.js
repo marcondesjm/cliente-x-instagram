@@ -60,10 +60,10 @@ const VERCEL_PROJECT_NAME = process.env.VERCEL_PROJECT_NAME || 'cliente-x-instag
 const ACTIVE_VERSION = {
   name: 'nerion-social-stable',
   label: 'Versão estável',
-  appVersion: 'v6.09',
+  appVersion: 'v6.10',
   status: 'funcionando',
-  stableCommit: 'b0a0b45',
-  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/b0a0b45',
+  stableCommit: 'a7757cfd',
+  stableCommitUrl: 'https://github.com/marcondesjm/cliente-x-instagram/commit/a7757cfd',
   description: 'Plataforma estável com agenda sincronizada, Radar oficial, vigia em nuvem e aprendizado adaptativo v1.2 com evidência de distribuição.'
 };
 const MAINTENANCE = {
