@@ -1,3 +1,4 @@
+import {rejectedSceneIds} from '../lib/kids-scene-matching.js';
 import {bindVerifiedPassage} from '../lib/kids-scene-vision.js';
 import fs from 'node:fs';
 import {labelledReviewImages,reviewImageManifest} from '../lib/kids-scene-vision.js';
@@ -17,7 +18,7 @@ import {sceneGroundingTask,groundingPrompt,groundingSchema,assertGrounding,groun
 import {normalizeProviderUsage} from '../lib/platform-editorial-validation.js';
 import {VISION_VERSION,callAllowance,sendVision,calibrationImage,CALIBRATION_PROMPT,visualSignature,similarScenes,contactSheet,recoverTransientCalls,promptSceneDescription,selectionSchema,verificationSchema,reviewPoolLimit,BLIND_SCENE_PROMPT,blindSceneSchema,assertBlindScene,individualSceneImage} from '../lib/kids-scene-vision.js';
 
-const MATCHING_VERSION='independent-pair-verse-bound-v9';
+const MATCHING_VERSION='independent-pair-exclusion-v10';
 const ROOT=resolve(dirname(fileURLToPath(import.meta.url)),'..');process.chdir(ROOT);
 const C='automation/instagram-template/config/',STATE=C+'kids-scene-replenishment.json',RECIPES=C+'kids-reviewed-scenes.json';
 const read=p=>JSON.parse(fs.readFileSync(p,'utf8').replace(/^\uFEFF/,''));
@@ -102,7 +103,8 @@ function context(pack,passage) {
   return JSON.stringify({reference:pack.biblicalReference,passage:passage.verses,caption:(pack.caption || '').split('\n\nIlustrações:')[0],cards:pack.slides.map((s,i)=>({index:i+1,role:roles[i] || 'narrative',illustrationScope:i>=2?'whole_passage':i===0?'title_event':'summary_event',illustrationRequirement:i===0?'Retratar o evento do título da capa.':i>=2?'Qualquer cena concretamente sustentada pela passagem e pertinente à história, com conexão educativa justificável. Texto é reflexão/atividade/leitura, não um evento que precise aparecer literalmente nos pixels. Não limite opções ao ato de restituir, desenhar ou ler. Nenhum episódio fora da passagem é aceito.':'Retratar um dos eventos do resumo.',title:s.title,body:s.body})),story:'Uma cena diferente relacionada à mesma passagem; leitura com um adulto.'});
 }
 const blindCache=new Map();
-async function reviewPack(pack,candidate,known,{attempt=0,feedback=null}={}) {
+async function reviewPack(pack,candidate,known,{attempt=0,feedback=null,excludedSceneIds=[]}={}) {
+  const excluded=new Set([...excludedSceneIds,...rejectedSceneIds(feedback)]);
   const source=licensedScenes(await fetchSource(candidate.sourceUrl),candidate.sourceUrl);
   if(source.termsHash!==candidate.termsHash)throw new Error('Termos da fonte mudaram; aguardar nova descoberta.');
   const passage=await loadPassage(pack.biblicalReference),pool=[];
@@ -115,6 +117,7 @@ async function reviewPack(pack,candidate,known,{attempt=0,feedback=null}={}) {
   const newReadLimit=reviewPoolLimit({...poolPolicy,maxCallsPerDay:poolPolicy.maxCallsPerDay-usedPilotCalls});
   let downloaded=0,newReads=0;
   for(const scene of ranked.slice(0,30)) {
+    if(excluded.has(scene.id))continue;
     if(pool.length>=12)break;
     const item=await getScene(scene);downloaded+=item.bytes.length;
     if(downloaded>30_000_000)throw new Error('Conjunto excede limite de download.');
@@ -173,9 +176,9 @@ async function reviewPack(pack,candidate,known,{attempt=0,feedback=null}={}) {
   fs.writeFileSync(`output/kids-replenishment/${pack.id}-verification-${attempt+1}.json`,JSON.stringify(audit,null,2));
   state.lastEvaluation={version:VISION_VERSION,matchingVersion:MATCHING_VERSION,packId:pack.id,...audit};save();
   if(verification.decision!=='approve' || !Array.isArray(verification.cards) || verification.cards.length!==selected.length || verification.cards.some((c,i)=>c.scene!==i+1 || !['pixelMatch','passageMatch','childSuitable','distinct','copyMatch'].every(k=>c[k]===true) || !verseIsWithin(c.verse,passage.verses.map(v=>v.id)) || typeof c.reason!=='string' || c.reason.length<12 || typeof c.observedEvent!=='string' || c.observedEvent.length<12 || typeof c.depictedEvent!=='string' || c.depictedEvent.length<1)) {
-    if(attempt===0 && audit.cards.length===selected.length) {
+    if(attempt<2 && audit.cards.length===selected.length) {
       callAllowance(state,new Date(),3);
-      return reviewPack(pack,candidate,known,{attempt:1,feedback:audit});
+      return reviewPack(pack,candidate,known,{attempt:attempt+1,feedback:audit,excludedSceneIds:[...excluded]});
     }
     const failed=audit.cards.find(c=>!c.pixelMatch || !c.passageMatch || !c.childSuitable || !c.distinct || !c.copyMatch);
     throw new Error('Segunda avaliação reprovada ou incompleta.'+(failed?' Cena '+failed.scene+': '+failed.reason:''));
@@ -184,7 +187,7 @@ async function reviewPack(pack,candidate,known,{attempt=0,feedback=null}={}) {
   const factualResult=await paidCall('facts:'+pack.id,null,groundingPrompt(factualTask),3000,groundingSchema(selected.length));
   state.lastFactualEvaluation={packId:pack.id,fingerprint:groundingFingerprint(factualTask),result:factualResult};save();
   try {assertGrounding(factualTask,factualResult);}catch(error) {
-    if(attempt===0){callAllowance(state,new Date(),3);return reviewPack(pack,candidate,known,{attempt:1,feedback:{stage:'facts',result:factualResult}});}
+    if(attempt<2){callAllowance(state,new Date(),3);return reviewPack(pack,candidate,known,{attempt:attempt+1,feedback:{stage:'facts',result:factualResult},excludedSceneIds:[...excluded]});}
     throw error;
   }
   const folder=`${pack.id}-auto`,reviewedAt=now();

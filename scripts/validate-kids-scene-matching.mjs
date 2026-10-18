@@ -1,3 +1,4 @@
+import {rejectedSceneIds} from '../lib/kids-scene-matching.js';
 import assert from 'node:assert/strict';
 import {matchSceneOptions,matchingSchema,matchingPrompt} from '../lib/kids-scene-matching.js';
 import {bindVerificationObservations} from '../lib/kids-scene-vision.js';
@@ -36,3 +37,8 @@ assert.deepEqual(matchSceneOptions(fullMatrix,3,3,['19:6']).feed,[2,1]);
 const incomplete=structuredClone(fullMatrix);incomplete.cards[0].assessments.pop();assert.throws(()=>matchSceneOptions(incomplete,3,3,['19:6']),/completa/);
 const duplicatedPair=structuredClone(fullMatrix);duplicatedPair.cards[0].assessments[1].scene=1;assert.throws(()=>matchSceneOptions(duplicatedPair,3,3,['19:6']),/completa/);
 const invalidNegative=structuredClone(fullMatrix);invalidNegative.cards[1].assessments[1].verse='19:6';assert.throws(()=>matchSceneOptions(invalidNegative,3,3,['19:6']),/completa/);
+
+assert.deepEqual(rejectedSceneIds({stage:'facts',result:{claims:[{id:'0123456789abcdef',supported:false},{id:'fedcba9876543210',supported:true}]}}),['0123456789abcdef']);
+assert.deepEqual(rejectedSceneIds({cards:[{observationId:'0123456789abcdef',passageMatch:false},{observationId:'fedcba9876543210',copyMatch:false,distinct:false}]}),['0123456789abcdef']);
+assert.deepEqual(rejectedSceneIds({cards:[{scene:1,pixelMatch:false}]}),[],'Position-only legacy rejection must never identify a source image');
+console.log('PASS: factual/pixel/passage failures exclude image identities globally; role and composition conflicts remain scoped to their cards.');
