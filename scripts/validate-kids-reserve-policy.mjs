@@ -1,4 +1,8 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import {execFileSync} from 'node:child_process';
 import {sourcePassageCoverage,retryAllowed,remainingSceneBudget} from '../lib/kids-reserve-policy.js';
 assert.equal(sourcePassageCoverage('1 Reis 17:8–16','1 Kings 17:7-18:1'),1);
 assert.equal(sourcePassageCoverage('1 Reis 17:8–16','1 Kings 17:1-9'),2/9);
@@ -14,4 +18,14 @@ const state={policy:{maxCallsPerDay:100,maxInputTokensPerCall:120000,maxInputTok
 assert.equal(remainingSceneBudget(state,new Date('2026-10-18T20:00:00Z')).maxCallsPerDay,5);
 assert.equal(remainingSceneBudget(state,new Date('2026-10-18T20:00:00Z')).maxInputTokensPerDay,600000);
 assert.equal(remainingSceneBudget(state,new Date('2026-10-19T03:00:00Z')).maxCallsPerDay,100);
+const temp=fs.mkdtempSync(path.join(os.tmpdir(),'kids-preflight-test-'));
+try{
+ for(const dir of ['lib','scripts','automation/instagram-template/config'])fs.mkdirSync(path.join(temp,dir),{recursive:true});
+ for(const file of ['scripts/plan-kids-reserve.mjs','lib/kids-reserve-policy.js','lib/bible-reference.js','lib/editorial-daily-budget.js','lib/scheduled-content-guard.js'])fs.copyFileSync(file,path.join(temp,file));
+ fs.writeFileSync(path.join(temp,'package.json'),'{"type":"module"}');
+ const C=path.join(temp,'automation/instagram-template/config');
+ for(const [file,data] of Object.entries({'kids-scene-replenishment.json':{enabled:true,circuit:null,policy:{maxCallsPerDay:1,maxInputTokensPerCall:120000,maxInputTokensPerDay:120000,readyStockTarget:12},calls:[]},'kids-reviewed-scenes.json':[],'kids-scene-automation.json':{entries:[]},'content-packs.json':[{account:'sabedoria-kids',packs:[]}],'publication-history.json':{}}))fs.writeFileSync(path.join(C,file),JSON.stringify(data));
+ const result=JSON.parse(execFileSync(process.execPath,['scripts/plan-kids-reserve.mjs'],{cwd:temp,encoding:'utf8',env:{...process.env,REVIEW_MODE:'replenish',GITHUB_OUTPUT:''}}));
+ assert.equal(result.review,false);assert.equal(result.assemble,false);assert.equal(result.paidCalls,0);
+}finally{assert(path.resolve(temp).startsWith(path.resolve(os.tmpdir())+path.sep));fs.rmSync(temp,{recursive:true,force:true});}
 console.log('PASS: source coverage priority, no unchanged editorial retries, temporary retry deadline, conservative remaining budget and BRT rollover. No API calls.');
