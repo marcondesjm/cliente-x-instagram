@@ -1368,89 +1368,40 @@
       "previousRejection": "Texto autoral fora dos limites."
     }
   ],
-  "checkedAt": "2026-10-18T18:18:44.600Z",
+  "checkedAt": "2026-10-18T18:19:03.831Z",
   "workflowRun": "39153353328",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "review:base-respostas-v1",
-    "callId": "9e6f6a56-d922-4f52-87cc-929f5e2d86ef",
+    "stage": "generate:fila-prioridade-v1",
+    "callId": "d5989ea7-4e80-4858-8901-4e8d7c98bc35",
     "value": {
-      "claims": [
+      "slides": [
         {
-          "id": "slide-1",
-          "supported": true,
-          "reason": "A fonte 'brief' descreve exatamente o cenário de uma loja fictícia com pedido urgente fora da política comercial e a necessidade de responder sem criar regras inexistentes.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Prioridade",
+          "title": "Qual pedido atende primeiro?",
+          "body": "Em uma loja de materiais de escritório, mensagens chegam sem ordem. Um cliente pede canetas para amanhã; outro questiona nota fiscal antiga. Sem critérios claros, a equipe escolhe por intuição e deixa pendências importantes para depois."
         },
         {
-          "id": "slide-2",
-          "supported": true,
-          "reason": "O briefing instrui explicitamente a pedir um rascunho baseado apenas na política e exigir a indicação do trecho usado para justificar a resposta.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Procedimento",
+          "title": "Defina critérios antes da IA sugerir",
+          "body": "Estabeleça regras objetivas: priorize pelo prazo informado e pelo tipo de solicitação. Peça à IA uma sugestão de classificação com justificativa. Compare essa justificativa com seus critérios definidos antes de aceitar a ordem proposta."
         },
         {
-          "id": "slide-3",
-          "supported": true,
-          "reason": "A fonte determina conferir se o trecho citado existe na política, verificar a data de revisão e marcar a dúvida quando a resposta não estiver na política.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "exebrow": "Conferência",
+          "title": "Revise os casos ambíguos",
+          "body": "Nem toda mensagem se encaixa facilmente. Se o prazo não estiver claro ou o tipo de pedido for misto, revise manualmente antes de mudar a fila. Não infira urgência por tom pessoal ou histórico do cliente. Mantenha a decisão baseada em dados objetivos."
         },
         {
-          "id": "slide-4",
-          "supported": true,
-          "reason": "O exercício proposto no briefing é pegar uma dúvida recente do atendimento, usar a política interna como base, conferir a referência e anotar onde faltou informação.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "caption",
-          "supported": true,
-          "reason": "O texto da legenda resume corretamente o procedimento educativo descrito nas fontes: usar a política como única fonte, pedir rascunho com trecho, conferir no original e marcar dúvidas.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            },
-            {
-              "sourceId": "label"
-            }
-          ]
-        },
-        {
-          "id": "story",
-          "supported": true,
-          "reason": "A fonte 'brief' propõe desenvolver um exercício simples para treinar a equipe sobre conferência de fontes, alinhado ao título da story.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Exercício",
+          "title": "Teste com três mensagens fictícias",
+          "body": "Pegue três pedidos hipotéticos da sua operação. Defina seus critérios de prioridade. Peça à IA para classificar e justificar. Compare as justificativas com suas regras. Ajuste os critérios se houver divergência relevante. Repita até sentir confiança no processo."
         }
       ],
-      "decision": "approve",
-      "supported": true,
-      "novel": true,
-      "practical": true,
-      "visualMatch": true,
-      "reason": "Todas as alegações dos slides e legendas estão integralmente sustentadas pelo briefing (fonte 'brief'), que define o cenário fictício, o procedimento passo a passo e o aviso de conteúdo educativo. O conteúdo é prático, executável e visualmente coerente com os renders apresentados. Não há promessas de resultado nem dados externos não autorizados. A proposta difere dos títulos do histórico por focar em metodologia de atendimento baseada em políticas internas, sem sobreposição temática direta.",
-      "growth": {
-        "hookSpecific": true,
-        "payoffDelivered": true,
-        "followReason": true,
-        "shareReason": true
+      "caption": "Como você decide qual atendimento resolver primeiro quando várias mensagens chegam ao mesmo tempo?\n\nEste exercício propõe um método simples: definir critérios objetivos de prioridade, pedir sugestão à IA com justificativa e comparar antes de agir. Teste com situações fictícias da sua rotina para ajustar o processo sem pressão.\n\nAcompanhe o perfil para aprender aplicações práticas de IA em empresas, com exercícios que você pode adaptar à sua operação.",
+      "storySlide": {
+        "eyebrow": "Rotina",
+        "title": "Como você prioriza atendimentos hoje?",
+        "body": "Você usa critérios definidos ou decide na hora? Veja no feed um exercício prático para organizar a fila de mensagens com ajuda da IA, sem promessas vazias."
       }
     },
     "structured": true,
