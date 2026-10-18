@@ -1663,11 +1663,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-18T13:08:22.494Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 66332,
       "promptChars": 793,
       "imageFingerprint": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-18T13:08:32.827Z",
+      "reportedInputTokens": 24011,
+      "inputTokens": 24011,
+      "outputTokens": 95,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -1770,7 +1776,7 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:08:22.494Z",
+  "checkedAt": "2026-10-18T13:08:32.827Z",
   "lastRun": "39130137477",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -1978,15 +1984,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "calibration",
+    "stage": "pixels:kids-biblia-29:6654943ac38eff87",
     "value": {
-      "code": "567557",
-      "colors": [
-        "red",
-        "green",
-        "blue",
-        "yellow"
-      ]
+      "visible": true,
+      "style": "illustration",
+      "childSuitable": true,
+      "observedEvent": "Ilustração colorida mostrando um grupo de seis homens com vestimentas e turbantes tradicionais reunidos em círculo; o homem central, de túnica vermelha, gesticula com a mão direita levantada enquanto os demais observam ou conversam entre si, em ambiente externo claro com arco arquitetônico ao fundo."
     }
   },
   "lastFactualEvaluation": {
