@@ -11301,40 +11301,40 @@
       "reason": "Pauta bloqueada por repetição."
     }
   ],
-  "checkedAt": "2026-10-18T23:12:47.090Z",
+  "checkedAt": "2026-10-18T23:13:10.997Z",
   "workflowRun": "39175475573",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "generate:fila-prioridade-v6",
-    "callId": "c6c994dd-97a2-47b3-9105-8461663fc2b1",
+    "stage": "generate:teste-variacoes-v6",
+    "callId": "deb5feed-b874-4974-ad8d-7833d53aedf5",
     "value": {
       "slides": [
         {
-          "eyebrow": "Prioridade",
-          "title": "Qual solicitação atender primeiro?",
-          "body": "A equipe recebe mensagens com prazos diferentes e tipos variados de pedidos administrativos internos."
+          "eyebrow": "Teste de instrução",
+          "title": "O pedido veio incompleto pelo WhatsApp?",
+          "body": "Crie um pedido fictício e versões com abreviação, erro e informação ausente para comparar extrações."
         },
         {
-          "eyebrow": "Critérios",
-          "title": "Defina regras claras antes de pedir ajuda à IA",
-          "body": "Estabeleça critérios objetivos como prazo informado e tipo de solicitação para orientar a classificação automática."
+          "eyebrow": "Procedimento",
+          "title": "Execute o mesmo rascunho em cada versão do pedido",
+          "body": "Aplique a mesma instrução de extração nas quatro variações e registre os campos obtidos em cada caso."
         },
         {
           "eyebrow": "Conferência",
-          "title": "Compare a justificativa da IA com seus critérios",
-          "body": "Peça à IA uma sugestão de ordem acompanhada da razão e verifique se ela respeita as regras definidas anteriormente."
+          "title": "Compare os campos extraídos e anote as divergências encontradas",
+          "body": "Identifique quais dados faltaram ou mudaram entre as versões e ajuste a instrução antes de aplicar na rotina."
         },
         {
           "eyebrow": "Exercício",
-          "title": "Revise casos ambíguos antes de alterar a fila",
-          "body": "Analise manualmente os itens onde a justificativa não se alinha claramente aos critérios estabelecidos pela sua equipe."
+          "title": "Corrija a instrução e repita o conjunto completo de testes",
+          "body": "Refine o prompt com base nas falhas observadas e execute novamente todas as variações para validar consistência."
         }
       ],
-      "caption": "Como sua equipe decide qual mensagem interna atender primeiro quando os prazos se cruzam?\n\nDefinir critérios explícitos de prioridade permite usar a IA como apoio na organização, sem substituir o julgamento humano em casos complexos. Peça uma sugestão de ordem com justificativa e compare com suas regras antes de agir.\n\nSiga o perfil para aprender aplicações práticas de IA em empresas que você pode testar na sua rotina operacional.",
+      "caption": "Como sua equipe lida quando um pedido chega incompleto pelo canal informal?\n\nEste exercício propõe criar um pedido fictício e testar versões com abreviação, erro de digitação e dado ausente. Execute a mesma instrução em cada variação, compare os resultados e ajuste o prompt antes de usar na operação real.\n\nQuer aprender aplicações práticas de IA em empresas? Siga o perfil para conteúdos que ajudam a organizar processos e evitar retrabalho no dia a dia.",
       "storySlide": {
-        "eyebrow": "Rotina",
-        "title": "Sua equipe já definiu critérios claros de prioridade?",
-        "body": "Descubra no feed como usar a IA para sugerir ordem de atendimento baseada em regras objetivas da sua operação."
+        "eyebrow": "Rotina administrativa",
+        "title": "Seu time confere pedidos incompletos antes de processar?",
+        "body": "Veja no feed um exercício prático para testar instruções de IA com variações de mensagens internas da equipe."
       }
     },
     "structured": true,
