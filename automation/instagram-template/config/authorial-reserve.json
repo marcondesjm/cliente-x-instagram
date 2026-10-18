@@ -1431,41 +1431,56 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T18:32:36.032Z",
+  "checkedAt": "2026-10-18T18:32:50.036Z",
   "workflowRun": "39154544317",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "revise-draft:fila-prioridade-v1",
-    "callId": "ff9d4227-8aeb-4ffc-bae2-8531f3a73684",
+    "stage": "art-direction:fila-prioridade-v1",
+    "callId": "cdab820f-b302-4d8e-8389-84125574b111",
     "value": {
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "eyebrow": "Prioridade",
-          "title": "Qual pedido atende primeiro?",
-          "body": "Em uma loja fictícia de materiais, mensagens chegam sem ordem definida. Um cliente solicita itens urgentes; outro tira dúvida sobre compra passada. Sem regras claras, a equipe decide por intuição e pode negligenciar demandas relevantes."
+          "layout": "workspace",
+          "labels": [
+            "Prazo definido",
+            "Tipo de pedido",
+            "Fila organizada"
+          ]
         },
         {
-          "eyebrow": "Procedimento",
-          "title": "Defina critérios antes da IA sugerir",
-          "body": "Estabeleça regras objetivas baseadas em prazo e tipo de solicitação. Peça à IA uma sugestão de classificação com justificativa clara. Compare essa justificativa com seus critérios antes de aceitar a ordem proposta pelo sistema."
+          "layout": "conversation",
+          "labels": [
+            "Critérios claros",
+            "Sugestão da IA",
+            "Justificativa visível"
+          ]
         },
         {
-          "eyebrow": "Conferência",
-          "title": "Revise os casos ambíguos",
-          "body": "Nem toda mensagem se encaixa facilmente nas regras. Se o prazo não estiver explícito ou o pedido for misto, revise manualmente antes de alterar a fila. Mantenha a decisão fundamentada em dados objetivos disponíveis."
+          "layout": "workflow",
+          "labels": [
+            "Mensagem ambígua",
+            "Revisão manual",
+            "Fila ajustada"
+          ]
         },
         {
-          "eyebrow": "Exercício",
-          "title": "Teste com três mensagens fictícias",
-          "body": "Selecione três pedidos hipotéticos da sua operação real. Defina critérios de prioridade claros. Peça à IA para classificar e justificar cada um. Compare as justificativas com suas regras e ajuste se necessário até ganhar confiança."
+          "layout": "checklist",
+          "labels": [
+            "Três mensagens",
+            "Classificação feita",
+            "Decisão conferida"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Critério aplicado",
+            "Urgência real",
+            "Ordem definida"
+          ]
         }
-      ],
-      "caption": "Como você decide qual atendimento resolver primeiro quando várias mensagens chegam simultaneamente?\n\nEste exercício propõe definir critérios objetivos de prioridade, pedir sugestão à IA com justificativa e comparar antes de agir. Teste com situações fictícias da sua rotina para ajustar o processo gradualmente. Acompanhe o perfil para aprender aplicações práticas de IA em empresas, com exercícios adaptáveis à sua operação diária.",
-      "storySlide": {
-        "eyebrow": "Rotina",
-        "title": "Como você prioriza atendimentos hoje?",
-        "body": "Você usa critérios definidos ou decide na hora? Veja no feed um exercício prático para organizar a fila de mensagens com ajuda da IA, focando em método estruturado."
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
