@@ -251,9 +251,14 @@
     {
       "id": "52439354-066b-43d6-bcb4-3a03a90a550f",
       "day": "2026-10-18",
-      "status": "reserved",
+      "status": "completed",
       "stage": "event-grounding-v2",
-      "startedAt": "2026-10-18T13:11:36.386Z"
+      "startedAt": "2026-10-18T13:11:36.386Z",
+      "completedAt": "2026-10-18T13:11:57.401Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 1,
+      "usageStatus": "unconfirmed_counted_at_maximum"
     }
   ],
   "entries": [
@@ -592,7 +597,7 @@
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:11:36.386Z",
+  "checkedAt": "2026-10-18T13:11:57.402Z",
   "workflowRun": "39130385082",
   "summary": [
     {
@@ -627,5 +632,238 @@
     }
   ],
   "activationEligible": false,
-  "semanticConclusion": "Resultados iniciais não se sustentaram no piloto completo. Sonnet inventou cama; Haiku recusou imagem anexada. Nenhuma ativação."
+  "semanticConclusion": "Resultados iniciais não se sustentaram no piloto completo. Sonnet inventou cama; Haiku recusou imagem anexada. Nenhuma ativação.",
+  "eventGrounding": {
+    "version": "depicted-event-v2",
+    "model": "claude-sonnet-4.6",
+    "passed": true,
+    "checkedAt": "2026-10-18T13:11:57.401Z",
+    "taskFingerprint": "24a3d96350ad5e68eec4ef675e4a33577dc5379d0b6c66576eea86e58d75a818",
+    "task": {
+      "scopeReference": "Trechos WEB fornecidos, sem ampliar o relato.",
+      "sources": [
+        {
+          "id": "p0:24:1",
+          "text": "But on the first day of the week, at early dawn, they and some others came to the tomb, bringing the spices which they had prepared."
+        },
+        {
+          "id": "p0:24:2",
+          "text": "They found the stone rolled away from the tomb."
+        },
+        {
+          "id": "p0:24:3",
+          "text": "They entered in, and didn’t find the Lord Jesus’ body."
+        },
+        {
+          "id": "p0:24:4",
+          "text": "While they were greatly perplexed about this, behold, two men stood by them in dazzling clothing."
+        },
+        {
+          "id": "p0:24:5",
+          "text": "Becoming terrified, they bowed their faces down to the earth.\nThey said to them, “Why do you seek the living among the dead?"
+        },
+        {
+          "id": "p0:24:6",
+          "text": "He isn’t here, but is risen. Remember what he told you when he was still in Galilee,"
+        },
+        {
+          "id": "p0:24:7",
+          "text": "saying that the Son of Man must be delivered up into the hands of sinful men, and be crucified, and the third day rise again?”"
+        },
+        {
+          "id": "p0:24:8",
+          "text": "They remembered his words,"
+        },
+        {
+          "id": "p0:24:9",
+          "text": "returned from the tomb, and told all these things to the eleven, and to all the rest."
+        },
+        {
+          "id": "p0:24:10",
+          "text": "Now they were Mary Magdalene, Joanna, and Mary the mother of James. The other women with them told these things to the apostles."
+        },
+        {
+          "id": "p0:24:11",
+          "text": "These words seemed to them to be nonsense, and they didn’t believe them."
+        },
+        {
+          "id": "p0:24:12",
+          "text": "But Peter got up and ran to the tomb. Stooping and looking in, he saw the strips of linen lying by themselves, and he departed to his home, wondering what had happened."
+        },
+        {
+          "id": "p1:19:1",
+          "text": "He entered and was passing through Jericho."
+        },
+        {
+          "id": "p1:19:2",
+          "text": "There was a man named Zacchaeus. He was a chief tax collector, and he was rich."
+        },
+        {
+          "id": "p1:19:3",
+          "text": "He was trying to see who Jesus was, and couldn’t because of the crowd, because he was short."
+        },
+        {
+          "id": "p1:19:4",
+          "text": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
+        },
+        {
+          "id": "p1:19:5",
+          "text": "When Jesus came to the place, he looked up and saw him, and said to him,\n“Zacchaeus, hurry and come down, for today I must stay at your house.”"
+        },
+        {
+          "id": "p1:19:6",
+          "text": "He hurried, came down, and received him joyfully."
+        },
+        {
+          "id": "p1:19:7",
+          "text": "When they saw it, they all murmured, saying, “He has gone in to lodge with a man who is a sinner.”"
+        },
+        {
+          "id": "p1:19:8",
+          "text": "Zacchaeus stood and said to the Lord, “Behold, Lord, half of my goods I give to the poor. If I have wrongfully exacted anything of anyone, I restore four times as much.”"
+        },
+        {
+          "id": "p1:19:9",
+          "text": "Jesus said to him,\n“Today, salvation has come to this house, because he also is a son of Abraham."
+        },
+        {
+          "id": "p1:19:10",
+          "text": "For the Son of Man came to seek and to save that which was lost.”"
+        },
+        {
+          "id": "p2:4:35",
+          "text": "On that day, when evening had come, he said to them,\n“Let’s go over to the other side.”"
+        },
+        {
+          "id": "p2:4:36",
+          "text": "Leaving the multitude, they took him with them, even as he was, in the boat. Other small boats were also with him."
+        },
+        {
+          "id": "p2:4:37",
+          "text": "A big wind storm arose, and the waves beat into the boat, so much that the boat was already filled."
+        },
+        {
+          "id": "p2:4:38",
+          "text": "He himself was in the stern, asleep on the cushion, and they woke him up, and told him, “Teacher, don’t you care that we are dying?”"
+        },
+        {
+          "id": "p2:4:39",
+          "text": "He awoke, and rebuked the wind, and said to the sea,\n“Peace! Be still!” The wind ceased, and there was a great calm."
+        },
+        {
+          "id": "p2:4:40",
+          "text": "He said to them,\n“Why are you so afraid? How is it that you have no faith?”"
+        },
+        {
+          "id": "p2:4:41",
+          "text": "They were greatly afraid, and said to one another, “Who then is this, that even the wind and the sea obey him?”"
+        }
+      ],
+      "claims": [
+        {
+          "id": "absent-appearance",
+          "text": "Jesus apareceu pessoalmente às mulheres diante do túmulo."
+        },
+        {
+          "id": "zacchaeus-house",
+          "text": "Zaqueu recebeu Jesus em sua casa.",
+          "visualObservation": "Um homem está de pé ao lado de outro sentado junto de uma mesa em um ambiente interno.",
+          "sourceContext": "Zacchaeus welcomed Jesus into his house."
+        },
+        {
+          "id": "tree-action",
+          "text": "Zaqueu subiu em uma árvore para ver Jesus.",
+          "visualObservation": "Um homem está nos galhos de uma árvore, acima de pessoas no chão.",
+          "sourceContext": "Zacchaeus climbed a sycamore tree to see Jesus."
+        },
+        {
+          "id": "wrong-table",
+          "text": "Zaqueu estava sentado à mesa com Jesus.",
+          "visualObservation": "Um homem está nos galhos de uma árvore, acima de pessoas no chão.",
+          "sourceContext": "Zacchaeus climbed a sycamore tree to see Jesus."
+        },
+        {
+          "id": "sleep-illustration",
+          "text": "Jesus dormia na parte de trás do barco.",
+          "visualObservation": "Um homem com túnica vermelha está deitado na popa de um barco, enquanto outros homens estão próximos.",
+          "sourceContext": "Jesus was asleep in the stern."
+        },
+        {
+          "id": "wrong-tree-action",
+          "text": "Zaqueu subiu em uma árvore para ver Jesus.",
+          "visualObservation": "Quatro homens caminham em uma estrada; ninguém está em árvore.",
+          "sourceContext": "People walking towards Jericho."
+        }
+      ]
+    },
+    "cases": [
+      {
+        "id": "absent-appearance",
+        "supported": false,
+        "reason": "As fontes não afirmam que Jesus apareceu pessoalmente às mulheres. Os versículos relatam que elas encontraram o túmulo vazio e dois homens em roupas resplandecentes que anunciaram a ressurreição, mas nenhuma aparição pessoal de Jesus é descrita neste trecho.",
+        "evidence": [],
+        "expected": false,
+        "passed": true
+      },
+      {
+        "id": "zacchaeus-house",
+        "supported": true,
+        "reason": "A fonte p1:19:5-6 afirma explicitamente que Jesus disse que ficaria na casa de Zaqueu e que ele desceu e o recebeu com alegria, confirmando o recebimento em sua casa.",
+        "evidence": [
+          {
+            "sourceId": "p1:19:5",
+            "quote": "When Jesus came to the place, he looked up and saw him, and said to him,\n“Zacchaeus, hurry and come down, for today I must stay at your house.”"
+          },
+          {
+            "sourceId": "p1:19:6",
+            "quote": "He hurried, came down, and received him joyfully."
+          }
+        ],
+        "expected": true,
+        "passed": true
+      },
+      {
+        "id": "tree-action",
+        "supported": true,
+        "reason": "A fonte p1:19:4 afirma que Zaqueu correu adiante e subiu em uma árvore sicômoro para ver Jesus, correspondendo exatamente à alegação e à observação visual.",
+        "evidence": [
+          {
+            "sourceId": "p1:19:4",
+            "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
+          }
+        ],
+        "expected": true,
+        "passed": true
+      },
+      {
+        "id": "wrong-table",
+        "supported": false,
+        "reason": "A alegação contradiz a observação visual fornecida. A visualObservation descreve um homem nos galhos de uma árvore, não sentado à mesa. Além disso, embora Zaqueu tenha recebido Jesus em sua casa, a descrição visual específica não corresponde a uma cena de mesa.",
+        "evidence": [],
+        "expected": false,
+        "passed": true
+      },
+      {
+        "id": "sleep-illustration",
+        "supported": true,
+        "reason": "A fonte p2:4:38 afirma explicitamente que Jesus estava na popa do barco, dormindo sobre uma almofada, correspondendo à alegação e à observação visual da ilustração.",
+        "evidence": [
+          {
+            "sourceId": "p2:4:38",
+            "quote": "He himself was in the stern, asleep on the cushion, and they woke him up, and told him, “Teacher, don’t you care that we are dying?”"
+          }
+        ],
+        "expected": true,
+        "passed": true
+      },
+      {
+        "id": "wrong-tree-action",
+        "supported": false,
+        "reason": "A alegação contradiz diretamente a observação visual fornecida. A visualObservation descreve quatro homens caminhando em uma estrada sem ninguém em árvore, enquanto a alegação afirma que Zaqueu subiu em uma árvore. Há incompatibilidade entre text e visualObservation.",
+        "evidence": [],
+        "expected": false,
+        "passed": true
+      }
+    ]
+  }
 }
