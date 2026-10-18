@@ -3,8 +3,8 @@
   "enabled": true,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "active",
-  "message": "Reposição automática ativa: revisão dos pixels, testes de precisão e montagem obrigatória.",
+  "health": "daily_limit",
+  "message": "Limite diário atingido; montagens já aprovadas continuam e novas avaliações aguardam o próximo dia.",
   "policy": {
     "maxCallsPerDay": 26,
     "maxInputTokensPerCall": 120000,
@@ -2736,8 +2736,8 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T15:01:37.221Z",
-  "lastRun": "39138510305",
+  "checkedAt": "2026-10-18T15:04:46.648Z",
+  "lastRun": "39138773922",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -3673,7 +3673,7 @@
     }
   },
   "accuracyGate": {
-    "checkedAt": "2026-10-18T15:01:37.215Z",
+    "checkedAt": "2026-10-18T15:04:45.510Z",
     "visualCases": 4,
     "factualCases": 6,
     "diversityCases": 2,
