@@ -1975,7 +1975,7 @@
         <div class="panel" id="performanceLearningPanel">
           <div class="panel-head">
             <div>
-              <div class="section-label">Aprendizado adaptativo · v1</div>
+              <div class="section-label">Aprendizado adaptativo · desempenho</div>
               <h2>Decisões assistidas por desempenho</h2>
             </div>
             <span class="status-pill warn" id="performanceLearningStatus">Carregando</span>
@@ -1984,6 +1984,7 @@
             <div class="capability-card warn"><strong>Aguardando dados</strong><span>Consultando as coletas de 2 h, 24 h e 72 h.</span><div class="capability-status">Aguarde</div></div>
           </div>
           <div class="message" id="performanceLearningMessage">O modelo preserva novidade e integridade editorial mesmo quando encontra um tema com bom resultado.</div>
+          <div class="message" id="claudeLearningDiagnosis" style="white-space:pre-line;overflow-wrap:anywhere" hidden></div>
         </div>
 
         <div class="panel">
@@ -4867,6 +4868,8 @@
     }
 
     function renderPerformanceLearning(learning, requestError = '') {
+      const previousDiagnosis=document.getElementById('claudeLearningDiagnosis');
+      if(previousDiagnosis){previousDiagnosis.hidden=true;previousDiagnosis.textContent='';}
       const status = document.getElementById('performanceLearningStatus');
       const grid = document.getElementById('performanceLearningGrid');
       const message = document.getElementById('performanceLearningMessage');
@@ -4879,7 +4882,7 @@
         return;
       }
 
-      const best = (items, fallback) => items?.[0]?.name || fallback;
+      const best = (items, fallback) => {const item=items?.find(i=>i.samples>=3&&i.confidence>=0.35);return item?`${item.name} · ${item.samples} amostras`:fallback;};
       const changeLabel = (value) => value == null ? 'base anterior insuficiente' : `${value > 0 ? '+' : ''}${value}% vs. semana anterior`;
       const card = (title, value, detail, tone = 'good') => `
         <div class="capability-card ${tone}">
@@ -4904,11 +4907,11 @@
         card('Saldo observado no dia', displayMetric(followers.dailyDelta), followers.comparisonFrom ? `Desde ${formatDateTime(followers.comparisonFrom)} · saldo parcial do perfil` : 'Aguardando coletas em dias consecutivos', 'warn'),
         card('Visitas ao perfil da conta', displayMetric(followers.profileVisits?.value), followers.profileVisits?.date ? `Dia ${followers.profileVisits.date} · quando fornecido pela Meta` : 'Métrica opcional', 'warn'),
         card('Série de automação prática', `${formatNumber(learning.seriesPerformance?.observedPosts || 0)} posts com coleta`, '14 episódios · sequência às 16h BRT · seguidores só com atribuição da Meta'),
-        card('Versão do modelo', learning.modelVersion || 'nerion-adaptive-v1.0.0', 'plataforma v6.03 estável'),
+        card('Motor de seleção', learning.modelVersion || 'Modelo não informado', 'pesos estatísticos; estratégia editorial analisada pelo Claude'),
         card('Atualização dos dados', liveData ? 'Contínua' : 'Snapshot do deploy', liveData ? 'estado vivo do GitHub main' : 'contingência temporária', liveData ? 'good' : 'warn'),
-        card('Confiança atual', confidence, `${formatNumber(learning.effectiveSamples)} amostras · alcance ${formatNumber(learning.effectiveReach)}`, confidence === 'initial' ? 'warn' : 'good'),
+        card('Confiança do histórico', confidence, `${formatNumber(learning.effectiveSamples)} amostras · alcance somado ${formatNumber(learning.effectiveReach)}; não comprova uma hipótese do Claude`, confidence === 'initial' ? 'warn' : 'good'),
         card('Modo operacional', stale ? 'Fallback editorial' : 'Aprendizado contínuo', stale ? 'dados antigos: tendências temporariamente desligadas' : 'Claude recebe resultados recentes ao criar novas pautas; confiança limita as conclusões', stale ? 'warn' : 'good'),
-        card('Testes controlados', `${formatNumber(modes.exploit)} / ${formatNumber(modes.explore)} / ${formatNumber(modes.experiment)}`, 'desempenho / exploração / experimento'),
+        card('Modos de seleção', `${formatNumber(modes.exploit)} / ${formatNumber(modes.explore)} / ${formatNumber(modes.experiment)}`, 'desempenho / exploração / experimento; não são grupos A/B'),
         card('Base acompanhada', `${formatNumber(learning.totalMedia)} mídias · ${formatNumber(learning.observedMedia)} com métricas`, `${formatNumber(learning.observationCount)} observações`),
         card('Fonte em destaque', best(learning.models?.sources, 'Amostra em formação'), 'por desempenho normalizado'),
         card('Tema em destaque', best(learning.models?.topics, 'Amostra em formação'), 'sem liberar repetição'),
@@ -4919,11 +4922,19 @@
         card('Retenção disponível', `${formatNumber(learning.retentionSamples)} de ${formatNumber(learning.effectiveSamples)} posts`, 'tempo assistido e abandono'),
         card('Alcance semanal', formatNumber(learning.weeklyGrowth?.current?.reach || 0), changeLabel(learning.weeklyGrowth?.change?.reach)),
         card('Interações semanais', formatNumber(learning.weeklyGrowth?.current?.interactions || 0), changeLabel(learning.weeklyGrowth?.change?.interactions)),
-        card('Visitas ao perfil', formatNumber(learning.weeklyGrowth?.current?.profileVisits || 0), changeLabel(learning.weeklyGrowth?.change?.profileVisits)),
+        card('Visitas atribuídas aos posts', displayMetric(learning.weeklyGrowth?.current?.profileVisits), 'diferentes das visitas totais da conta; dependem da atribuição da Meta'),
         card('Janelas de coleta', (learning.windowsHours || []).map((hours) => `${hours} h`).join(' · '), `atualizado ${updated}`)
       ].join('');
+      const diagnosis=document.getElementById('claudeLearningDiagnosis');
+      if(diagnosis){
+        const strategy=learning.claudeStrategy;
+        diagnosis.hidden=appState.selectedAccount!=='cliente-x';
+        diagnosis.textContent=strategy?`Análise editorial Claude · ${formatDateTime(strategy.createdAt)} · ${strategy.status==='active'?'hipótese exploratória':'hipótese expirada'}\n${strategy.diagnosis}\nHipótese: ${strategy.hypothesis}\nMétrica: ${strategy.metric} · formato da evidência: ${strategy.format} · eixo: ${strategy.axis}\nLimitações: ${strategy.limitations}`:'Diagnóstico Claude aguardando análise com dados atuais. A confiança do histórico é independente da avaliação de uma nova hipótese.';
+        const trials=learning.claudeExperiments||[];
+        diagnosis.textContent+='\n'+(trials.length?trials.map(t=>`${t.format} · ${t.metric}: controle ${t.control.posts} posts, variante ${t.variant.posts} posts. Ações por cem de alcance somado: ${t.control.perHundredReach==null?'indisponível':t.control.perHundredReach.toFixed(2)} / ${t.variant.perHundredReach==null?'indisponível':t.variant.perHundredReach.toFixed(2)}. Comparação exploratória, sem conclusão causal.`).join('\n'):'Comparações: aguardando publicações dos grupos e coleta madura de vinte e quatro horas.');
+      }
       message.textContent = stale
-        ? `Última atualização: ${updated}. A coleta ultrapassou a janela segura; a v6.03 desligou o peso aprendido e manteve a seleção editorial com originalidade, novidade e integridade.`
+        ? `Última atualização: ${updated}. A coleta ultrapassou a janela segura; o peso aprendido foi desligado e a seleção editorial mantém originalidade, novidade e integridade.`
         : liveData
           ? `Última atualização: ${updated}. O painel acompanha continuamente o estado persistido pela automação. Modelo ${learning.modelVersion || 'adaptativo v1'} com confiança ${confidence}; seleção 70% desempenho, 20% exploração e 10% experimento, sempre após as travas editoriais.`
           : `Última atualização disponível no deploy: ${updated}. A consulta ao estado vivo está temporariamente indisponível; o painel mantém este snapshot sem interromper a automação.`;

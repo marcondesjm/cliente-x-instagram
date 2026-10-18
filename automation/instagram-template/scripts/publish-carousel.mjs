@@ -4397,6 +4397,7 @@ function recordPublicationHistory(configDir, accountKey, pack, result) {
       learning: result.learningDecision || null,
       learningContext: result.learningContext || null,
       editorialSeries: pack.editorialSeries || null,
+      claudeExperiment: pack.claudeExperiment || null,
       education: pack.education || null,
       research: pack.research || null
     });

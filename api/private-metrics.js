@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { canAccessAccount, requireAdmin } from '../lib/auth.js';
 import { accountFromQuery, requireConfiguredAccount } from '../lib/accounts.js';
 import { summarizePerformanceLearning as computePerformanceReadiness } from '../lib/performance-learning.js';
+import {strategySummary,experimentResults} from '../lib/claude-editorial-strategy.js';
 
 const ROOT = process.cwd();
 const ACCOUNTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'accounts.json');
@@ -92,13 +93,20 @@ async function summarizePerformanceLearning(accountKey) {
     const observedSamples = samples.filter((sample) => Array.isArray(sample.observations) && sample.observations.length > 0);
     const matureObservations = observedSamples.map((sample) => [...sample.observations].sort((a, b) => b.windowHours - a.windowHours)[0]).filter(Boolean);
     const readiness = computePerformanceReadiness(learning, stored.updatedAt);
+    let claudeStrategy=null;
+    if(accountKey==='cliente-x'){
+      try{
+        const response=await fetch('https://raw.githubusercontent.com/marcondesjm/cliente-x-instagram/main/automation/instagram-template/config/authorial-reserve.json?v='+Date.now(),{cache:'no-store',signal:AbortSignal.timeout(5000)});
+        if(response.ok)claudeStrategy=strategySummary(await response.json());
+      }catch{}
+    }
     const summarizeModel = (model = {}) => Object.entries(model)
       .map(([name, value]) => ({
         name,
         samples: Number(value?.samples) || 0,
         reach: Number(value?.totalReach) || 0,
         confidence: Number(value?.confidence) || 0,
-        score: Number(value?.learnedScore) || 50
+        score: Number.isFinite(value?.learnedScore)?value.learnedScore:50
       }))
       .sort((a, b) => b.score - a.score || b.confidence - a.confidence)
       .slice(0, 3);
@@ -112,7 +120,7 @@ async function summarizePerformanceLearning(accountKey) {
       totalMedia: samples.length,
       observedMedia: observedSamples.length,
       observationCount: observedSamples.reduce((total, sample) => total + sample.observations.length, 0),
-      effectiveSamples: observedSamples.length,
+      effectiveSamples: readiness.effectiveSamples,
       retentionSamples: matureObservations.filter((item) => item.performance?.rates?.retention != null || item.performance?.rates?.skip != null).length,
       windowsHours: [2, 24, 72],
       readiness,
@@ -145,6 +153,8 @@ async function summarizePerformanceLearning(accountKey) {
         editorialIntegrity: true,
         confidenceProtected: true
       }
+      ,claudeStrategy,
+      claudeExperiments:experimentResults(samples)
     };
   } catch {
     return { available: false, reason: 'O arquivo de aprendizado ainda não está disponível.' };

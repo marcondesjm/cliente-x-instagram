@@ -1,0 +1,36 @@
+name: Cliente X - diagnóstico adaptativo Claude
+on:
+  schedule:
+    - cron: '45 */6 * * *'
+  workflow_run:
+    workflows: [Instagram Performance Learning]
+    branches: [main]
+    types: [completed]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: platform-editorial-api-validation
+  cancel-in-progress: false
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Refresh current metrics and budget
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git pull --rebase origin main
+      - run: npm ci --ignore-scripts
+      - name: Validate strategy boundaries
+        run: node scripts/validate-claude-strategy.mjs
+      - name: Analyze measured results without publishing
+        env:
+          KIDS_VISION_ANTHROPIC_API_KEY: ${{ secrets.KIDS_VISION_ANTHROPIC_API_KEY }}
+        run: node scripts/replenish-authorial-reserve.mjs --persist --analyze-only

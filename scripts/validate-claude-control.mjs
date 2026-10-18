@@ -55,6 +55,8 @@ response=await invoke(owner,req('POST',settings));assert.equal(response.code,200
 conflict=true;response=await invoke(owner,req('POST',settings));assert.equal(response.code,409);conflict=false;
 hasBudget=true;active=true;response=await invoke(owner,req('POST',{scope:'cliente-x',action:'audit',revision:'head1'}));assert.equal(response.code,409);active=false;
 response=await invoke(owner,req('POST',{scope:'cliente-x',action:'run',revision:'head1'}));assert.equal(response.code,202);assert.equal(requests.at(-1).method,'POST');assert.match(requests.at(-1).url,/authorial-reserve.yml\/dispatches$/);
+response=await invoke(owner,req('POST',{scope:'cliente-x',action:'learn',revision:'head1'}));assert.equal(response.code,202);assert.match(requests.at(-1).url,/claude-learning-review.yml\/dispatches$/);
+active=true;response=await invoke(owner,req('POST',{scope:'cliente-x',action:'learn',revision:'head1'}));assert.equal(response.code,409);active=false;
 response=await invoke(owner,req('POST',{scope:'cliente-x',action:'calibrate',revision:'head1'}));assert.equal(response.code,400);
 response=await invoke(owner,req('POST',{scope:'__proto__',action:'settings'}));assert.equal(response.code,400);
 console.log('PASS: owner permissions, origin, no secret/prompt exposure, BRT expiry, usage estimates, live quota enforcement, bounds, pause, atomic writes and concurrent-state conflicts. No paid calls or publication.');

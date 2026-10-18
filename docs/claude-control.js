@@ -10,7 +10,7 @@
  <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="claudeEnabled" style="width:auto;margin:0"> Reposição automática ativa</label><button class="btn" type="submit">Salvar controles</button></form>
  <p>Limites maiores permitem mais chamadas e consumo no provedor. O teto de tokens acompanha o número de chamadas. Deixe o limite de hoje vazio para usar o normal. Salve as alterações antes de executar.</p>
  <p id="claudeHealth"></p><div style="display:flex;flex-wrap:wrap;gap:10px"><button class="btn" id="claudeRefresh" type="button">Atualizar dados</button><button class="btn" id="claudeRun" type="button">Repor conteúdo</button><button class="btn" id="claudeAudit" type="button">Executar auditoria editorial</button><button class="btn" id="claudeCalibrate" type="button">Executar calibração visual</button></div>
- <p id="claudeRunNote"></p><p>Auditoria e calibração também consomem chamadas. Não publicam conteúdo.</p><p id="claudeFeedback" role="status" aria-live="polite"></p>
+ <p id="claudeRunNote"></p><p>Auditoria e calibração também consomem chamadas. Não publicam conteúdo.</p><button class="btn" id="claudeLearn" type="button">Analisar desempenho com Claude</button><p id="claudeStrategy" style="white-space:pre-line;overflow-wrap:anywhere"></p><p id="claudeFeedback" role="status" aria-live="polite"></p>
  <details><summary>Chamadas recentes</summary><ul id="claudeHistory" style="overflow-wrap:anywhere"></ul></details>
  <details><summary>Estoque e avaliações</summary><p id="claudeEntries" style="overflow-wrap:anywhere"></p></details>
  <details><summary>Execuções na nuvem</summary><ul id="claudeRuns"></ul></details><p><a id="claudeWorkflow" target="_blank" rel="noopener noreferrer">Abrir histórico completo no GitHub ↗</a> · <a href="https://github.com/marcondesjm/cliente-x-instagram/settings/secrets/actions" target="_blank" rel="noopener noreferrer">Gerenciar credencial no GitHub ↗</a></p>`;
@@ -39,6 +39,9 @@
   const balance=Number.isInteger(data.stock?.available)?`Estoque inédito elegível: ${data.stock.available}. Meta: ${data.stock.target||'não definida'}. Lote: até ${data.stock.batch||1}. Última checagem: ${time(data.stock.checkedAt)}. Pautas já publicadas não entram nesse saldo. `:'';
   el('claudeEntries').textContent=balance+(data.entries.length?data.entries.map(e=>`${e.id}: ${states[e.status]||e.status}`).join(' · '):'Nenhuma pauta registrada.');
   el('claudeWorkflow').href=data.workflowUrl;el('claudeAudit').hidden=scope!=='cliente-x';el('claudeCalibrate').hidden=scope!=='sabedoria-kids';
+  el('claudeLearn').hidden=scope!=='cliente-x';el('claudeStrategy').hidden=scope!=='cliente-x';
+  const strategy=data.learningStrategy;
+  el('claudeStrategy').textContent=strategy?`Diagnóstico Claude · ${time(strategy.createdAt)} · ${strategy.status==='active'?'hipótese em avaliação':'hipótese expirada'}\n${strategy.diagnosis}\nHipótese: ${strategy.hypothesis}\nEixo: ${strategy.axis} · variante: ${strategy.variant} · métrica: ${strategy.metric}\nLimitações: ${strategy.limitations}\nAnálises respeitam um intervalo mínimo de seis horas e a cota compartilhada. Não publicam conteúdo.`:'Diagnóstico aguardando análise. O Claude pode analisar dados atuais a cada seis horas; a hipótese recebe validade de um dia. Consome a cota compartilhada, sem publicação nesta ação.';
   el('claudeRuns').innerHTML=(data.runs||[]).map(r=>`<li><a href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">Execução ${esc(r.id)}</a> · ${esc(r.status)}${r.conclusion?' · '+esc(r.conclusion):''}</li>`).join('')||'<li>Nenhuma execução registrada.</li>';
  }
  async function load(account,role,force=false){
