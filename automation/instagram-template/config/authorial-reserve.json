@@ -4,7 +4,7 @@
   "enabled": true,
   "targetReady": 13,
   "maxPacksPerRun": 1,
-  "health": "stock_ready",
+  "health": "daily_limit",
   "entries": [
     {
       "id": "authorial-7822d0ca002cba49",
@@ -792,7 +792,7 @@
   ],
   "checkedAt": "2026-10-18T17:00:25.648Z",
   "workflowRun": "39147349239",
-  "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
+  "message": "Reposição automática aguarda a renovação diária da cota; será retomada pelo agendamento, sem ação manual.",
   "lastResponse": {
     "stage": "review:resumo-transferencia",
     "callId": "8301533c-e64e-47b1-b4fe-8793df0aec08",
@@ -927,16 +927,16 @@
     "pending": true,
     "pendingSlot": {
       "date": "2026-10-18",
-      "slotIndex": 2
+      "slotIndex": 3
     },
-    "available": 1,
-    "recoveryReady": true,
-    "run": true,
-    "phase": "recover_ready",
+    "available": 0,
+    "recoveryReady": false,
+    "run": false,
+    "phase": "waiting_daily_budget",
     "budgetRenewsAt": "2026-10-19T03:00:00.000Z",
-    "nextAttemptAt": "2026-10-18T17:00:27.017Z",
-    "checkedAt": "2026-10-18T17:00:27.111Z",
-    "workflowRun": "39147349239",
+    "nextAttemptAt": "2026-10-19T03:35:00.000Z",
+    "checkedAt": "2026-10-18T17:27:49.205Z",
+    "workflowRun": "39149656299",
     "retryAfter": null
   }
 }
