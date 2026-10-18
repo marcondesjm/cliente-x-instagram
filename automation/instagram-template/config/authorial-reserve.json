@@ -8560,56 +8560,146 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T20:07:34.103Z",
+  "checkedAt": "2026-10-18T20:08:01.287Z",
   "workflowRun": "39161431991",
   "message": "2 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "art-direction:medicao-rascunho-v4",
-    "callId": "1519d76d-b785-4514-91f2-879844dbbee5",
+    "stage": "review:medicao-rascunho-v4",
+    "callId": "75e5d942-deec-4f9c-ba35-1ea9a315c517",
     "value": {
-      "palette": "copper",
-      "frames": [
+      "claims": [
         {
-          "layout": "workspace",
-          "labels": [
-            "Grade de cursos",
-            "Lista oficial",
-            "Inscrições"
+          "id": "slide-1",
+          "supported": true,
+          "reason": "A imagem 1 exibe o título 'Dúvida recorrente' e a pergunta 'O horário do curso está na lista oficial?', além da legenda sobre escola fictícia com dúvidas de horários. O briefing confirma que é um exercício educativo fictício sobre uma escola de cursos livres.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            },
+            {
+              "sourceId": "label"
+            }
           ]
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Correção factual",
-            "Clareza textual",
-            "Dados ausentes"
+          "id": "slide-2",
+          "supported": true,
+          "reason": "A imagem 2 mostra os critérios 'Correção factual', 'Clareza textual' e 'Dados ausentes'. O briefing instrui a definir critérios de correção, clareza e informações ausentes, confirmando a correspondência.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Rascunhos prontos",
-            "Critérios definidos",
-            "Anotações feitas"
+          "id": "slide-3",
+          "supported": true,
+          "reason": "A imagem 3 apresenta o fluxo 'Receber > Organizar > Conferir' com as etapas descritas no briefing: comparar rascunhos com critérios definidos e anotar correções necessárias para revisão.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Padrão atingido",
-            "Revisão pendente",
-            "Canal único"
+          "id": "slide-4",
+          "supported": true,
+          "reason": "A imagem 4 contém o checklist 'Padrão atingido', 'Revisão pendente' e 'Canal único'. O briefing orienta testar o fluxo em uma etapa limitada (único canal) antes de expandir, validando o conteúdo visual.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "decision",
-          "labels": [
-            "Teste limitado",
-            "Expansão futura",
-            "Equipe operacional"
+          "id": "caption",
+          "supported": true,
+          "reason": "O texto da legenda resume corretamente o exercício proposto pelo briefing: criar critérios, comparar rascunhos, anotar correções e testar em etapa limitada. Inclui disclaimer de conteúdo fictício conforme exigido.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            },
+            {
+              "sourceId": "label"
+            }
+          ]
+        },
+        {
+          "id": "story",
+          "supported": true,
+          "reason": "A imagem 5 (Story) traz a pergunta 'Sua equipe confere respostas antes de enviar?' e direciona ao feed. O briefing define o cenário como exercício educativo fictício, compatível com a abordagem da capa.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            },
+            {
+              "sourceId": "label"
+            }
+          ]
+        },
+        {
+          "id": "art-1",
+          "supported": true,
+          "reason": "Os rótulos 'Grade de cursos', 'Lista oficial' e 'Inscrições' são visíveis na interface ilustrada da imagem 1, corroborando o cenário de escola fictícia descrito no briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-2",
+          "supported": true,
+          "reason": "Os rótulos 'Correção factual', 'Clareza textual' e 'Dados ausentes' aparecem explicitamente na ilustração da imagem 2, alinhados às instruções do briefing sobre definição de critérios.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-3",
+          "supported": true,
+          "reason": "Os rótulos 'Rascunhos prontos', 'Critérios definidos' e 'Anotações feitas' estão presentes na imagem 3, representando visualmente as etapas de conferência descritas no briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-4",
+          "supported": true,
+          "reason": "Os rótulos 'Padrão atingido', 'Revisão pendente' e 'Canal único' são legíveis na imagem 4, refletindo o checklist de teste em etapa limitada previsto no briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-5",
+          "supported": true,
+          "reason": "Os rótulos 'Teste limitado', 'Expansão futura' e 'Equipe operacional' constam na imagem 5, reforçando a mensagem da capa sobre aplicar o método antes de escalar, conforme o briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         }
-      ]
+      ],
+      "decision": "approve",
+      "supported": true,
+      "novel": true,
+      "practical": true,
+      "visualMatch": true,
+      "reason": "Todas as claims possuem suporte direto nas fontes brief e label. Os renders exibem textos legíveis, composição coerente com o briefing de exercício educativo fictício e ausência de cortes. O conteúdo é executável (define critérios, compara rascunhos, testa fluxo), difere dos títulos do histórico por abordar metodologia de conferência de atendimento em vez de notícias de IA, e atende aos critérios de crescimento com hook reconhecível, payoff claro e utilidade prática.",
+      "growth": {
+        "hookSpecific": true,
+        "payoffDelivered": true,
+        "followReason": true,
+        "shareReason": true
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
