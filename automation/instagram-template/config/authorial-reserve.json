@@ -9442,136 +9442,40 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T20:11:35.642Z",
+  "checkedAt": "2026-10-18T20:11:51.966Z",
   "workflowRun": "39161806176",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "review:extracao-campos-v5",
-    "callId": "f13cfcae-8090-4f94-be15-b8a0e1a059cd",
+    "stage": "generate:pedido-duplicado-v5",
+    "callId": "e43538c6-7f34-43e2-8c33-2b19b4e74c1a",
     "value": {
-      "claims": [
+      "slides": [
         {
-          "reason": "O briefing confirma o cenário de oficina fictícia e o problema de pedidos incompletos via WhatsApp sem quantidade ou prazo.",
-          "id": "slide-1",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "supported": true
+          "eyebrow": "Oficina fictícia",
+          "title": "O mesmo pedido gera duas tarefas na equipe?",
+          "body": "Um cliente envia orçamento por WhatsApp e depois repete a mensagem minutos depois sem perceber."
         },
         {
-          "supported": true,
-          "id": "slide-2",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "O briefing instrui a pedir à IA uma tabela com os campos produto, quantidade e prazo."
+          "eyebrow": "Identificador único",
+          "title": "Atribua código antes de criar qualquer tarefa nova",
+          "body": "Consulte se esse identificador já foi registrado no sistema antes de gerar nova demanda operacional."
         },
         {
-          "supported": true,
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "O briefing instrui a marcar como não informado o campo ausente sem completar por suposição.",
-          "id": "slide-3"
+          "eyebrow": "Conferência prévia",
+          "title": "Encaminhe para revisão quando encontrar duplicação",
+          "body": "Se o código já existe, direcione para conferência manual em vez de criar outra tarefa repetida."
         },
         {
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "O briefing instrui a comparar cada campo com a mensagem original antes de cadastrar.",
-          "supported": true,
-          "id": "slide-4"
-        },
-        {
-          "reason": "O texto da legenda reflete o conteúdo do exercício proposto no briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "supported": true,
-          "id": "caption"
-        },
-        {
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "id": "story",
-          "supported": true,
-          "reason": "O texto da story convida a ver como organizar solicitações incompletas usando IA."
-        },
-        {
-          "id": "art-1",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "supported": true,
-          "reason": "Os rótulos da ilustração correspondem ao cenário descrito no briefing."
-        },
-        {
-          "supported": true,
-          "reason": "Os rótulos da ilustração correspondem ao procedimento descrito no briefing.",
-          "id": "art-2",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "id": "art-3",
-          "reason": "Os rótulos da ilustração correspondem à etapa de conferência descrita no briefing.",
-          "supported": true
-        },
-        {
-          "supported": true,
-          "reason": "Os rótulos da ilustração correspondem à etapa de conferência descrita no briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "id": "art-4"
-        },
-        {
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "Os rótulos da ilustração correspondem às etapas de comparação e conferência descritas no briefing.",
-          "supported": true,
-          "id": "art-5"
+          "eyebrow": "Teste prático",
+          "title": "Reenvie o mesmo pedido e verifique o registro",
+          "body": "Simule reenvio idêntico e confirme que o sistema identifica a duplicação corretamente nesta situação."
         }
       ],
-      "decision": "approve",
-      "supported": true,
-      "novel": true,
-      "practical": true,
-      "visualMatch": true,
-      "reason": "O conteúdo apresenta um exercício educativo fictício coerente, prático e bem estruturado, seguindo todas as diretrizes do briefing sem prometer resultados ou usar dados reais.",
-      "growth": {
-        "payoffDelivered": true,
-        "shareReason": true,
-        "hookSpecific": true,
-        "followReason": true
+      "caption": "Uma oficina recebe solicitações de orçamento pelo WhatsApp. Quando um cliente envia a mesma mensagem duas vezes, como evitar que a equipe crie tarefas duplicadas?\n\nA solução passa por atribuir um identificador único a cada pedido e consultar se ele já existe antes de gerar nova tarefa. Se o código já estiver registrado, encaminhe para conferência em vez de criar trabalho repetido. Teste reenviando o mesmo pedido e verificando se o sistema identifica a duplicação.\n\nQue situação de duplicação você já enfrentou no seu atendimento? Siga o perfil para aprender aplicações práticas de IA em empresas.",
+      "storySlide": {
+        "eyebrow": "Rotina operacional",
+        "title": "Seu time cria tarefas duplicadas sem perceber?",
+        "body": "Descubra como identificar pedidos repetidos antes de sobrecarregar a equipe com trabalho desnecessário."
       }
     },
     "structured": true,
