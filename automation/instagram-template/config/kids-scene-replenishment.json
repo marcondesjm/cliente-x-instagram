@@ -3,8 +3,8 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "blocked",
-  "message": "Seleção visual não aprovada. Não há combinação completa de cenas compatíveis e distintas para todos os cartões e Story. ",
+  "health": "calibrated",
+  "message": "Leitura real dos pixels confirmada com desafio aleatório; aguarda piloto bíblico.",
   "policy": {
     "maxCallsPerDay": 26,
     "maxInputTokensPerCall": 120000,
@@ -1634,6 +1634,40 @@
       "outputTokens": 1282,
       "usageStatus": "unconfirmed_counted_at_maximum",
       "stopReason": "end_turn"
+    },
+    {
+      "id": "c875fbf2-a398-4cb3-8a36-013c6388ad93",
+      "pilotId": "73030b35-d972-48ba-9779-343198390523",
+      "day": "2026-10-18",
+      "stage": "calibration",
+      "model": "claude-sonnet-4.6",
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-18T13:07:59.021Z",
+      "status": "completed",
+      "payloadBytes": 3921,
+      "promptChars": 418,
+      "imageFingerprint": "695b8e040e170590676379d497155343c47a297353bad9921ba60f57ff3e5602",
+      "promptFingerprint": "1899afb49c740cb4ae56aa02c5ff6a25febd6c880af1a386065420905a36d75d",
+      "completedAt": "2026-10-18T13:08:15.815Z",
+      "reportedInputTokens": 3115,
+      "inputTokens": 3115,
+      "outputTokens": 15,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
+    },
+    {
+      "id": "9a7f3e41-e684-4345-8c24-17a2fac6a46a",
+      "pilotId": "73030b35-d972-48ba-9779-343198390523",
+      "day": "2026-10-18",
+      "stage": "pixels:kids-biblia-29:6654943ac38eff87",
+      "model": "claude-sonnet-4.6",
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-18T13:08:22.494Z",
+      "status": "reserved",
+      "payloadBytes": 66332,
+      "promptChars": 793,
+      "imageFingerprint": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817",
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
     }
   ],
   "entries": [
@@ -1727,17 +1761,17 @@
     }
   ],
   "calibration": {
-    "version": "kids-scene-review-v3-blind",
-    "model": "claude-haiku-4.5",
+    "version": "kids-scene-review-v4-visual",
+    "model": "claude-sonnet-4.6",
     "provider": "claude-ss",
-    "checkedAt": "2026-10-17T22:48:25.780Z",
+    "checkedAt": "2026-10-18T13:08:17.387Z",
     "passed": true,
-    "challengeHash": "f9cf4f9f861e4e0017e4a4bc1cf4f312f73f8f7c0f2d44294c5eddfd0b4e7f84"
+    "challengeHash": "695b8e040e170590676379d497155343c47a297353bad9921ba60f57ff3e5602"
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T12:59:44.099Z",
-  "lastRun": "39129415731",
+  "checkedAt": "2026-10-18T13:08:22.494Z",
+  "lastRun": "39130137477",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -1944,90 +1978,14 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "select:kids-biblia-27",
+    "stage": "calibration",
     "value": {
-      "cards": [
-        {
-          "card": 1,
-          "options": [
-            {
-              "scene": 9,
-              "verse": "4:39",
-              "reason": "A capa exige o evento do título 'Jesus e os discípulos na tempestade'. A cena mostra figura central (Jesus) de braços erguidos em embarcação balançada por ondas, acompanhada por outras pessoas (discípulos). Corresponde ao clímax da passagem (Marcos 4:39), quando Jesus se levanta e repreende o vento. Ilustração infantil segura e pertinente."
-            },
-            {
-              "scene": 8,
-              "verse": "4:37",
-              "reason": "Cena mostra pessoas em barco inclinado em águas agitadas sob céu nublado, retratando diretamente a tempestade mencionada no título. Compatível com Marcos 4:37, onde as ondas batiam no barco. Embora não mostre Jesus explicitamente agindo, ilustra o contexto central da história da tempestade."
-            }
-          ],
-          "reason": "Posição 1 é a CAPA e deve retratar o evento do título. As opções selecionadas mostram claramente a tempestade com Jesus e/ou discípulos no barco, eventos centrais de Marcos 4:35-41."
-        },
-        {
-          "card": 2,
-          "options": [
-            {
-              "scene": 1,
-              "verse": "4:37",
-              "reason": "Cartão narrative deve retratar evento do resumo. Cena mostra pessoas em embarcação inclinada por ondas, com uma pessoa agarrando a lateral, ilustrando concretamente o perigo da tempestade descrito em Marcos 4:37 ('as ondas batiam no barco, tanto que já se enchia'). Pertinente ao resumo sobre a tempestade."
-            },
-            {
-              "scene": 6,
-              "verse": "4:39-40",
-              "reason": "Cena mostra homem de túnica vermelha tocando ombro de outro sentado em barco, cercado por outros homens. Pode representar Jesus despertando ou conversando com os discípulos após acalmar a tempestade (Marcos 4:39-40), momento pertinente ao resumo que menciona Jesus repreendendo o vento."
-            }
-          ],
-          "reason": "Posição 2 é narrativa e deve retratar um dos eventos do resumo. As cenas mostram momentos concretos da tempestade ou interação pós-milagre, sustentados pela passagem."
-        },
-        {
-          "card": 3,
-          "options": [
-            {
-              "scene": 3,
-              "verse": "4:41",
-              "reason": "Cartão de lição pode usar cena pertinente sem encenar atividade familiar. Cena mostra grupo de homens barbados com turbantes conversando próximo a corpo d'água. Corresponde a Marcos 4:41, onde os discípulos perguntavam uns aos outros 'Quem é este?'. Ilustra a reflexão sobre a identidade e poder de Jesus, tema da lição."
-            }
-          ],
-          "reason": "Posição 3 é lição. A cena escolhida retrata os discípulos conversando entre si após o milagre, refletindo sobre quem é Jesus, conforme Marcos 4:41. Não encena atividade familiar."
-        },
-        {
-          "card": 4,
-          "options": [
-            {
-              "scene": 5,
-              "verse": "4:35-36",
-              "reason": "Family_activity pode usar cena pertinente. Mostra grupo navegando em barco a vela sobre águas agitadas com aves. Corresponde a Marcos 4:35-36, quando partiram deixando a multidão e foram com Jesus no barco. Ilustra o início da jornada, pertinente à história sem encenar desenho ou conversa."
-            }
-          ],
-          "reason": "Posição 4 é atividade familiar. A cena mostra a partida no barco, evento concreto da passagem (Marcos 4:35-36), sem representar a atividade de desenhar mencionada no texto editorial."
-        },
-        {
-          "card": 5,
-          "options": [
-            {
-              "scene": 4,
-              "verse": "4:35",
-              "reason": "Reading card pode usar cena pertinente. Mostra homem de barba gesticulando à beira d'água com barcos ao fundo. Corresponde a Marcos 4:35, quando Jesus disse 'Vamos para o outro lado' antes de embarcar. Cena diferente das anteriores (em terra firme), pertinente ao início da passagem."
-            }
-          ],
-          "reason": "Posição 5 é leitura. A cena retrata Jesus falando à beira do lago antes de embarcar (Marcos 4:35), composição distinta das cenas dentro do barco, adequada para encerrar o conjunto."
-        },
-        {
-          "card": 6,
-          "options": [
-            {
-              "scene": 10,
-              "verse": "4:35",
-              "reason": "Story é última posição, exige cena diferente relacionada à passagem. Mostra seta indicando travessia do lago de um ponto na margem norte. Representa geograficamente a jornada mencionada em Marcos 4:35 ('Vamos para o outro lado'), oferecendo perspectiva diferente (mapa/trajeto) das cenas narrativas anteriores."
-            },
-            {
-              "scene": 7,
-              "verse": "4:36",
-              "reason": "Cena mostra grupo na margem observando embarcação partindo. Corresponde a Marcos 4:36, quando deixaram a multidão e entraram no barco. Perspectiva externa diferente das cenas dentro do barco, pertinente à passagem e distinta das demais posições."
-            }
-          ],
-          "reason": "Posição 6 é Story, última posição. As opções oferecem perspectivas diferentes (trajeto geográfico ou partida vista da margem) relacionadas à mesma passagem, distintas das cenas anteriores focadas na tempestade ou diálogo interno ao barco."
-        }
+      "code": "567557",
+      "colors": [
+        "red",
+        "green",
+        "blue",
+        "yellow"
       ]
     }
   },
@@ -2457,13 +2415,12 @@
   },
   "reasoningModel": "claude-sonnet-4.6",
   "pilotRun": {
-    "id": "7df4d1b9-b004-4f20-b5b6-b5e09aeedeea",
-    "packId": "kids-biblia-27",
-    "status": "rejected",
-    "startedAt": "2026-10-18T12:57:58.456Z",
-    "expiresAt": "2026-10-18T13:22:58.456Z",
+    "id": "73030b35-d972-48ba-9779-343198390523",
+    "packId": "kids-biblia-29",
+    "status": "running",
+    "startedAt": "2026-10-18T13:07:57.344Z",
+    "expiresAt": "2026-10-18T13:32:57.344Z",
     "maxCalls": 10,
-    "maxInputTokens": 1200000,
-    "completedAt": "2026-10-18T12:59:44.098Z"
+    "maxInputTokens": 1200000
   }
 }
