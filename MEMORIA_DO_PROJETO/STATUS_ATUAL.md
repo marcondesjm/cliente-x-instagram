@@ -1739,3 +1739,10 @@ Resultado:
 - Pedido explícito: pautas que atraiam curtidas e pessoas para seguir o perfil. goal=growth na conta cliente-x, com ganchos específicos de rotina empresarial, resposta entregue no próprio post, exemplo fictício útil e motivo para acompanhar o perfil. Geração/revisão Claude incluem critérios editoriais de gancho, entrega, benefício de seguir e utilidade para salvar/enviar; sem previsão de viralização ou aumento garantido.
 - Seleção valoriza aplicação empresarial concreta; aprendizado continua comparando formato e janela. Curtidas, compartilhamentos e evolução líquida dos seguidores são sinais diferentes. Follows indisponível nos Reels não vira zero nem prova de conversão. Demais contas, agenda, fonte e proteções preservadas.
 - Main contém implementação 6132c2a9 e testes c7c245e0. Produção READY dpl_AhmvCDLssfMFbMaqVFntbKPuLTzm; painel/briefing HTTP200 com nova opção e configuração remota growth confirmados. Nenhuma nova chamada paga: o primeiro lote com os critérios growth aguarda renovação da cota. Detalhes em CLIENTE_X_CRESCIMENTO_EDITORIAL_20261018.md.
+
+
+## Correção da geração Claude — 18/10/2026 BRT
+
+Slot 2: run 39145840470 falhou na seleção por falta de foto inédita e reserva. A reserva pronta authorial-7170d58abcfb7faa já foi consumida no slot 1 (Feed 18017783831744794); não reutilizar. Última revisão de legenda retornou 1063 caracteres, acima de 1050. Geração e revisão agora pedem legenda curta com esquema 300–600 caracteres; diagnóstico local informa a extensão real. Limite final, revisão factual/visual e antirrepetição preservados.
+
+Validação: validate-authorial-reserve e validate-recovery-workflow passaram. Preflight real: 17 chamadas usadas de 18 autorizadas hoje; geração + revisão não cabem. waiting_daily_budget, primeira verificação prevista 19/10/2026 00:35 BRT. Não houve publicação nova nem liberação editorial nesta correção.

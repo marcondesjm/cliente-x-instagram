@@ -3608,3 +3608,10 @@ Conclusao de ativacao:
 ### 2026-10-18 13:11 BRT — diretriz de crescimento de público
 - A pedido do usuário, Cliente X passa a growth: situações empresariais reconhecíveis, ganchos específicos, conteúdo completo, motivo para seguir e utilidade para salvar/compartilhar. Claude gera e revisa quatro critérios editoriais adicionais; seleção e painel refletem o novo objetivo. Publicações anteriores e demais contas preservadas.
 - Testes locais de objetivo/briefing, provas factuais/hash, bloqueios e sintaxe passaram. Código 6132c2a9, testes c7c245e0, produção READY dpl_AhmvCDLssfMFbMaqVFntbKPuLTzm. Dashboard/briefing HTTP200 e goal=growth remoto conferidos. Sem novas chamadas pagas por cota esgotada; resultado editorial real e crescimento dependem dos próximos lotes/publicações e das métricas. Referências e linha de base em CLIENTE_X_CRESCIMENTO_EDITORIAL_20261018.md.
+
+
+## Correção da geração Claude — 18/10/2026 BRT
+
+Slot 2: run 39145840470 falhou na seleção por falta de foto inédita e reserva. A reserva pronta authorial-7170d58abcfb7faa já foi consumida no slot 1 (Feed 18017783831744794); não reutilizar. Última revisão de legenda retornou 1063 caracteres, acima de 1050. Geração e revisão agora pedem legenda curta com esquema 300–600 caracteres; diagnóstico local informa a extensão real. Limite final, revisão factual/visual e antirrepetição preservados.
+
+Validação: validate-authorial-reserve e validate-recovery-workflow passaram. Preflight real: 17 chamadas usadas de 18 autorizadas hoje; geração + revisão não cabem. waiting_daily_budget, primeira verificação prevista 19/10/2026 00:35 BRT. Não houve publicação nova nem liberação editorial nesta correção.
