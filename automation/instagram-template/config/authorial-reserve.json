@@ -4427,41 +4427,56 @@
       "createdAt": "2026-10-18T19:44:03.262Z"
     }
   ],
-  "checkedAt": "2026-10-18T19:44:04.658Z",
+  "checkedAt": "2026-10-18T19:44:12.870Z",
   "workflowRun": "39159975467",
   "message": "2 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "generate:base-respostas-v3",
-    "callId": "aad1f9a2-6540-462c-b431-991a8620bee3",
+    "stage": "art-direction:base-respostas-v3",
+    "callId": "248749e7-7f63-46ce-967a-3a4e83bc7c54",
     "value": {
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "eyebrow": "Rascunho sem fonte",
-          "title": "A citação gerada confere com a política?",
-          "body": "Um vendedor pede prazo especial que a política comercial fictícia não autoriza em nenhuma situação prevista."
+          "layout": "workspace",
+          "labels": [
+            "política aberta",
+            "pedido fora",
+            "sem autorização"
+          ]
         },
         {
-          "eyebrow": "Lista revisada",
-          "title": "Peça o rascunho baseado apenas na política",
-          "body": "Mantenha uma lista de respostas aprovadas com fonte oficial e data clara da última revisão feita pela equipe."
+          "layout": "conversation",
+          "labels": [
+            "rascunho pedido",
+            "base na política",
+            "trecho indicado"
+          ]
         },
         {
-          "eyebrow": "Conferência obrigatória",
-          "title": "Verifique o trecho citado na fonte original",
-          "body": "Exija que cada rascunho indique o trecho usado e confira se a citação gerada realmente consta na política vigente."
+          "layout": "workflow",
+          "labels": [
+            "citação gerada",
+            "conferir fonte",
+            "validar trecho"
+          ]
         },
         {
-          "eyebrow": "Marque a dúvida",
-          "title": "Sinalize quando a resposta não estiver na política",
-          "body": "Registre a questão pendente para revisão futura e evite responder com informação que não esteja documentada oficialmente."
+          "layout": "checklist",
+          "labels": [
+            "resposta ausente",
+            "dúvida marcada",
+            "revisão futura"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "consulta oficial",
+            "evitar memória",
+            "fonte vigente"
+          ]
         }
-      ],
-      "caption": "Uma distribuidora fictícia mantém políticas comerciais atualizadas para orientar sua equipe de vendas. Quando um cliente solicita condição fora do previsto, o vendedor precisa consultar a lista oficial antes de responder.\n\nPeça um rascunho baseado apenas nessa política, exija a indicação do trecho usado e confira na fonte. Se a resposta não estiver lá, marque a dúvida para revisão. Como sua equipe lida com consultas fora da política hoje? Siga para aprender aplicações práticas de IA em empresas.",
-      "storySlide": {
-        "eyebrow": "Rotina diária",
-        "title": "Seu time consulta a política antes de responder?",
-        "body": "Quando surge uma solicitação fora do padrão, vocês conferem a fonte oficial ou respondem de memória?"
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
