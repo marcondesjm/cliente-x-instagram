@@ -299,7 +299,7 @@
     {
       "id": "8e96820a-7813-4dbc-977d-04791bfbca80",
       "day": "2026-10-18",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-mirror",
       "startedAt": "2026-10-18T13:35:19.054Z",
       "images": [
@@ -313,7 +313,12 @@
           "sha256": "0881776f99cc2d4ceaeca8929b84afdccf60642f9b649c4f273540d3b62102f0",
           "bytes": 46048
         }
-      ]
+      ],
+      "completedAt": "2026-10-18T13:36:44.553Z",
+      "reportedInputTokens": 32616,
+      "inputTokens": 32616,
+      "outputTokens": 93,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -652,7 +657,7 @@
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:35:19.054Z",
+  "checkedAt": "2026-10-18T13:36:44.553Z",
   "workflowRun": "39132069734",
   "summary": [
     {
@@ -943,12 +948,18 @@
   "visualDiversity": {
     "version": "visual-diversity-v1",
     "model": "claude-sonnet-4.6",
-    "checkedAt": "2026-10-18T13:35:17.426Z",
+    "checkedAt": "2026-10-18T13:36:44.553Z",
     "cases": [
       {
         "expected": true,
         "distinct": true,
         "reason": "As imagens mostram o mesmo personagem em uma árvore, mas em momentos e ângulos diferentes. Na primeira imagem, o personagem está de costas, subindo na árvore, e o foco está na multidão abaixo. Na segunda imagem, o personagem está de frente, sentado na árvore, sorrindo, e o foco está na interação com uma figura masculina (Jesus) que aparece em primeiro plano à esquerda. As posições do corpo e o enquadramento da cena são distintos.",
+        "passed": true
+      },
+      {
+        "expected": false,
+        "distinct": false,
+        "reason": "As duas imagens representam o mesmo desenho com enquadramento espelhado horizontalmente: na Cena 1 a figura está no tronco à direita e o edifício à esquerda; na Cena 2 a figura está no tronco à esquerda e o edifício à direita. A composição, cores, personagens e elementos são idênticos, indicando apenas um espelhamento da mesma ilustração.",
         "passed": true
       }
     ]
