@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { normalizeBriefing, briefingNotes } from '../docs/briefing-data.js';
 const sample = {schema:'instagram-client-briefing',version:1,username:'https://www.instagram.com/fixture.cliente/',brand:'Marca teste',niche:'Educação',audience:'Famílias',offer:'Atividades',postsPerDay:2,times:'07:00, 18:00',sources:'https://example.com/fonte',preferences:'Evitar promessas',secret:'discard'};
 const data = normalizeBriefing(sample);
+assert.equal(normalizeBriefing({...sample,goal:'growth'}).goal,'growth');
 assert.equal(data.username,'fixture.cliente');
 assert.deepEqual(data.times,['07:00','18:00']);
 assert.equal(data.secret,undefined);

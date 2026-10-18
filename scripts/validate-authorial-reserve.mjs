@@ -34,6 +34,8 @@ assert.equal(growthDiscoveryStrategy('2026-10-18',1).id,growthDiscoveryStrategy(
 assert.equal(new Set([0,1,2].map(i=>growthDiscoveryStrategy('2026-10-18',i).id)).size,3);
 assert.ok(growthEditorialSignals({slides:[{title:'Confira o pedido antes de cadastrar.',body:'Teste com um pedido fictício e compare os campos.'}]}).adjustment>growthEditorialSignals({slides:[{title:'IA aprende a jogar Pokémon',body:'Um jogo foi usado em um teste.'}]}).adjustment);
 assert.throws(()=>assertGrowthCopy(pack));
+assert.throws(()=>buildAuthorialPack(draft,topic,{growth:true}));
+const growthPack=buildAuthorialPack({...draft,caption:draft.caption+' Siga o perfil para aprender aplicações de IA em empresas.'},topic,{growth:true});assert.equal(growthPack.audienceGrowth.version,AUDIENCE_GROWTH_VERSION);
 const growing=structuredClone(entry);growing.pack.caption+=' Siga o perfil para aprender aplicações de IA em empresas.';growing.pack.audienceGrowth={version:AUDIENCE_GROWTH_VERSION};growing.packHash=digest(growing.pack);growing.review.packHash=growing.packHash;growing.render.packHash=growing.packHash;growing.review.groundingTask.claims=packClaims(growing.pack);
 assertGrowthCopy(growing.pack);assert.equal(reserveApproved(growing,get),false);
 growing.review.growth={hookSpecific:true,payoffDelivered:true,followReason:true,shareReason:true};assert.equal(reserveApproved(growing,get),true);
