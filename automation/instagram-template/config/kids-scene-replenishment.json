@@ -4075,11 +4075,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-18T19:59:24.251Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 13024,
       "imageFingerprint": null,
-      "promptFingerprint": "1e3be37c9f4efafe16db4f000b9983cef1f5e467a3157e03e1616b0549016f96"
+      "promptFingerprint": "1e3be37c9f4efafe16db4f000b9983cef1f5e467a3157e03e1616b0549016f96",
+      "completedAt": "2026-10-18T20:00:35.010Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 30,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -4222,7 +4228,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T19:59:24.251Z",
+  "checkedAt": "2026-10-18T20:00:35.010Z",
   "lastRun": "39160300496",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -4502,154 +4508,154 @@
               "scene": 1,
               "allowed": false,
               "verse": "",
-              "reason": "Cena mostra entrega de túnica, não o pai recebendo e abraçando o filho como título exige."
+              "reason": "Cena mostra entrega da túnica, não o abraço do retorno ao lar"
             },
             {
               "scene": 2,
               "allowed": false,
               "verse": "",
-              "reason": "Pastor com ovelhas não representa o evento do título sobre acolhimento do filho."
+              "reason": "Pastor com ovelhas não representa evento do título da capa"
             },
             {
               "scene": 3,
               "allowed": false,
               "verse": "",
-              "reason": "Homens com sacos não ilustram o pai recebendo o filho de volta."
+              "reason": "Homens com sacos não retratam recebimento do filho"
             },
             {
               "scene": 4,
               "allowed": false,
               "verse": "",
-              "reason": "Dois homens conversando não retratam o encontro e abraço do título."
+              "reason": "Diálogo entre dois homens não é o evento principal do título"
             },
             {
               "scene": 5,
               "allowed": true,
               "verse": "15:20",
-              "reason": "Abraço entre dois homens ilustra diretamente o pai recebendo o filho."
+              "reason": "Abraço entre pai e filho corresponde ao título da capa"
             },
             {
               "scene": 6,
               "allowed": false,
               "verse": "",
-              "reason": "Homem sozinho pensativo não mostra o encontro descrito no título."
+              "reason": "Homem pensativo não retrata recebimento do filho"
             },
             {
               "scene": 7,
               "allowed": false,
               "verse": "",
-              "reason": "Conversa entre irmãos não representa o pai recebendo o filho."
+              "reason": "Conversa entre irmãos não é evento do título"
             },
             {
               "scene": 8,
               "allowed": true,
               "verse": "15:20",
-              "reason": "Pai estendendo braço ao filho ilustra o momento do retorno do título."
+              "reason": "Pai estendendo braço ao filho ilustra encontro do título"
             },
             {
               "scene": 9,
               "allowed": false,
               "verse": "",
-              "reason": "Cuidar de porcos é etapa anterior, não o acolhimento do título."
+              "reason": "Alimentação de porcos não retrata recebimento do filho"
             },
             {
               "scene": 10,
               "allowed": false,
               "verse": "",
-              "reason": "Rostos em close-up não ilustram o evento específico do título."
+              "reason": "Rostos em close-up não ilustram evento do título"
             },
             {
               "scene": 11,
               "allowed": false,
               "verse": "",
-              "reason": "Festa ao fundo não mostra o pai recebendo o filho como título exige."
+              "reason": "Festa vista à distância não é o abraço do título"
             },
             {
               "scene": 12,
               "allowed": false,
               "verse": "",
-              "reason": "Filho partindo é oposto ao retorno descrito no título da capa."
+              "reason": "Partida para terra distante contradiz retorno do título"
             }
           ],
-          "reason": "Capa exige evento do título: pai recebendo filho. Apenas cenas 5 e 8 mostram acolhimento direto."
+          "reason": "Capa exige evento do título: pai recebendo filho de volta. Apenas cenas 5 e 8 mostram esse momento específico."
         },
         {
           "card": 2,
           "assessments": [
             {
               "scene": 1,
-              "allowed": false,
-              "verse": "",
-              "reason": "Entrega de túnica é detalhe posterior, não resume voltar/abraçar do corpo."
+              "allowed": true,
+              "verse": "15:22",
+              "reason": "Entrega da melhor túnica é evento do resumo narrativo"
             },
             {
               "scene": 2,
               "allowed": false,
               "verse": "",
-              "reason": "Pastor com ovelhas não corresponde ao resumo de voltar e ser abraçado."
+              "reason": "Pastoreio não está no resumo que foca no retorno e abraço"
             },
             {
               "scene": 3,
               "allowed": false,
               "verse": "",
-              "reason": "Divisão de bens é início, não o retorno e abraço resumidos."
+              "reason": "Divisão da herança precede evento descrito no resumo"
             },
             {
               "scene": 4,
               "allowed": false,
               "verse": "",
-              "reason": "Conversa entre irmãos não ilustra filho voltando e sendo abraçado."
+              "reason": "Diálogo do pai com filho mais velho não está no resumo"
             },
             {
               "scene": 5,
               "allowed": true,
               "verse": "15:20",
-              "reason": "Abraço entre dois homens ilustra exatamente voltar e ser abraçado."
+              "reason": "Abraço entre pai e filho corresponde exatamente ao resumo"
             },
             {
               "scene": 6,
               "allowed": false,
               "verse": "",
-              "reason": "Reflexão solitária não mostra o encontro descrito no resumo."
+              "reason": "Filho faminto não é evento mencionado no resumo"
             },
             {
               "scene": 7,
               "allowed": false,
               "verse": "",
-              "reason": "Diálogo de irmãos não retrata o acolhimento do resumo."
+              "reason": "Reclamação do irmão mais velho não está no resumo"
             },
             {
               "scene": 8,
               "allowed": true,
               "verse": "15:20",
-              "reason": "Pai correndo ao encontro ilustra o retorno e acolhimento do resumo."
+              "reason": "Pai correndo ao encontro ilustra evento do resumo"
             },
             {
               "scene": 9,
               "allowed": false,
               "verse": "",
-              "reason": "Alimentar porcos é antes do retorno, não o abraço resumido."
+              "reason": "Alimentar porcos não faz parte do resumo apresentado"
             },
             {
               "scene": 10,
               "allowed": false,
               "verse": "",
-              "reason": "Rostos genéricos não ilustram a cena específica do resumo."
+              "reason": "Fariseus e cobradores não pertencem a esta passagem"
             },
             {
               "scene": 11,
               "allowed": false,
               "verse": "",
-              "reason": "Festa celebração é após o abraço, não o evento resumido."
+              "reason": "Festa e reação do irmão não estão no resumo focado no abraço"
             },
             {
               "scene": 12,
               "allowed": false,
               "verse": "",
-              "reason": "Partida do filho contradiz o retorno descrito no resumo."
+              "reason": "Partida contradiz retorno descrito no resumo"
             }
           ],
-          "reason": "Narrativa resume voltar e abraçar. Cenas 5 e 8 são as únicas compatíveis."
+          "reason": "Resumo menciona retorno, corrida do pai e abraço. Cenas 1, 5 e 8 são pertinentes."
         },
         {
           "card": 3,
@@ -4658,76 +4664,76 @@
               "scene": 1,
               "allowed": true,
               "verse": "15:22-23",
-              "reason": "Túnica e celebração ilustram acolhimento e reconciliação da lição."
+              "reason": "Restauração com túnica ilustra acolhimento e reconciliação"
             },
             {
               "scene": 2,
-              "allowed": false,
-              "verse": "",
-              "reason": "Pastor com ovelhas não conecta claramente à reconciliação proposta."
+              "allowed": true,
+              "verse": "15:18-19",
+              "reason": "Arrependimento do filho sustenta lição sobre reconciliação"
             },
             {
               "scene": 3,
               "allowed": false,
               "verse": "",
-              "reason": "Divisão de bens não ilustra acolhimento ou reconciliação educativa."
+              "reason": "Divisão de bens não conecta claramente com acolhimento"
             },
             {
               "scene": 4,
               "allowed": true,
               "verse": "15:31-32",
-              "reason": "Pai explicando ao irmão mais velho mostra reconciliação familiar."
+              "reason": "Pai explicando celebração ilustra reconciliação familiar"
             },
             {
               "scene": 5,
               "allowed": true,
               "verse": "15:20",
-              "reason": "Abraço ilustra diretamente acolhimento e reconciliação da lição."
+              "reason": "Abraço demonstra acolhimento diretamente na lição"
             },
             {
               "scene": 6,
-              "allowed": false,
-              "verse": "",
-              "reason": "Arrependimento solitário não mostra acolhimento mútuo da lição."
+              "allowed": true,
+              "verse": "15:17",
+              "reason": "Momento de reflexão do filho antecede reconciliação"
             },
             {
               "scene": 7,
               "allowed": false,
               "verse": "",
-              "reason": "Queixa do irmão não ilustra acolhimento, foco da lição."
+              "reason": "Queixa do irmão mais velho não ilustra acolhimento"
             },
             {
               "scene": 8,
               "allowed": true,
               "verse": "15:20",
-              "reason": "Pai correndo ao filho ilustra acolhimento e reconciliação."
+              "reason": "Encontro compassivo ilustra acolhimento e reconciliação"
             },
             {
               "scene": 9,
-              "allowed": false,
-              "verse": "",
-              "reason": "Cuidar de porcos é miséria, não acolhimento ou reconciliação."
+              "allowed": true,
+              "verse": "15:15-16",
+              "reason": "Situação extrema do filho contextualiza necessidade de acolhimento"
             },
             {
               "scene": 10,
               "allowed": false,
               "verse": "",
-              "reason": "Rostos sem contexto não conectam à reconciliação da parábola."
+              "reason": "Contexto dos fariseus não pertence à parábola do filho pródigo"
             },
             {
               "scene": 11,
-              "allowed": false,
-              "verse": "",
-              "reason": "Festa ao fundo não ilustra claramente acolhimento educativo."
+              "allowed": true,
+              "verse": "15:23-24",
+              "reason": "Celebração ilustra alegria da reconciliação mencionada"
             },
             {
               "scene": 12,
               "allowed": false,
               "verse": "",
-              "reason": "Partida do filho é oposta à reconciliação e acolhimento."
+              "reason": "Partida não ilustra acolhimento ou reconciliação"
             }
           ],
-          "reason": "Lição sobre acolhimento/reconciliação aceita cenas que ilustrem esses temas."
+          "reason": "Lições sobre acolhimento aceitam várias cenas da passagem com conexão educativa clara."
         },
         {
           "card": 4,
@@ -4735,77 +4741,77 @@
             {
               "scene": 1,
               "allowed": true,
-              "verse": "15:22-23",
-              "reason": "Celebração com túnica conecta à conversa sobre perdão e restauração."
+              "verse": "15:22",
+              "reason": "Restauração ilustra tema de perdão discutido na atividade"
             },
             {
               "scene": 2,
-              "allowed": false,
-              "verse": "",
-              "reason": "Pastor com ovelhas não facilita conversa sobre pedir perdão."
+              "allowed": true,
+              "verse": "15:18-19",
+              "reason": "Pedido de perdão do filho conecta com conversa sobre arrependimento"
             },
             {
               "scene": 3,
               "allowed": false,
               "verse": "",
-              "reason": "Divisão de bens não conecta à atividade de conversar sobre perdão."
+              "reason": "Divisão de herança não relaciona com pedir perdão"
             },
             {
               "scene": 4,
               "allowed": true,
               "verse": "15:31-32",
-              "reason": "Diálogo familiar ilustra contexto para conversar sobre perdão."
+              "reason": "Explicação do pai sobre perdão sustenta diálogo familiar"
             },
             {
               "scene": 5,
               "allowed": true,
-              "verse": "15:20",
-              "reason": "Abraço de reconciliação ilustra tema de pedir e receber perdão."
+              "verse": "15:20-21",
+              "reason": "Abraço após confissão ilustra resultado de pedir perdão"
             },
             {
               "scene": 6,
               "allowed": true,
-              "verse": "15:17-19",
-              "reason": "Arrependimento do filho conecta diretamente a pedir perdão."
+              "verse": "15:17",
+              "reason": "Reflexão do filho precede decisão de pedir perdão"
             },
             {
               "scene": 7,
               "allowed": false,
               "verse": "",
-              "reason": "Queixa do irmão não facilita conversa sobre pedir perdão."
+              "reason": "Reclamação não conecta com tema de pedir perdão"
             },
             {
               "scene": 8,
               "allowed": true,
               "verse": "15:20",
-              "reason": "Pai acolhendo ilustra resultado de pedir perdão na atividade."
+              "reason": "Pai correndo ao encontro ilustra resposta ao arrependimento"
             },
             {
               "scene": 9,
-              "allowed": false,
-              "verse": "",
-              "reason": "Cuidar de porcos não conecta à conversa familiar sobre perdão."
+              "allowed": true,
+              "verse": "15:15-16",
+              "reason": "Consequências do erro contextualizam necessidade de perdão"
             },
             {
               "scene": 10,
               "allowed": false,
               "verse": "",
-              "reason": "Rostos sem ação não facilitam atividade educativa sobre perdão."
+              "reason": "Fariseus não pertencem à narrativa do filho pródigo"
             },
             {
               "scene": 11,
-              "allowed": false,
-              "verse": "",
-              "reason": "Festa não ilustra claramente conversa sobre pedir perdão."
+              "allowed": true,
+              "verse": "15:23-24",
+              "reason": "Celebração mostra alegria pelo perdão concedido"
             },
             {
               "scene": 12,
               "allowed": false,
               "verse": "",
-              "reason": "Partida do filho não conecta à atividade de conversar sobre perdão."
+              "reason": "Partida não ilustra processo de pedir perdão"
             }
           ],
-          "reason": "Atividade familiar sobre pedir perdão aceita cenas pertinentes à passagem."
+          "reason": "Atividade sobre pedir perdão aceita cenas que mostrem arrependimento, perdão ou suas consequências."
         },
         {
           "card": 5,
@@ -4813,77 +4819,77 @@
             {
               "scene": 1,
               "allowed": true,
-              "verse": "15:22-24",
-              "reason": "Celebração final conecta à leitura contínua da passagem completa."
+              "verse": "15:22",
+              "reason": "Restauração completa ilustra passagem lida em família"
             },
             {
               "scene": 2,
-              "allowed": false,
-              "verse": "",
-              "reason": "Pastor com ovelhas não conecta à leitura da parábola do filho pródigo."
+              "allowed": true,
+              "verse": "15:18-19",
+              "reason": "Confissão do filho é parte central da passagem indicada"
             },
             {
               "scene": 3,
               "allowed": true,
-              "verse": "15:11-12",
-              "reason": "Início da história sustenta leitura da passagem completa mencionada."
+              "verse": "15:12",
+              "reason": "Pedido da herança inicia narrativa da passagem Lucas 15"
             },
             {
               "scene": 4,
               "allowed": true,
               "verse": "15:31-32",
-              "reason": "Desfecho familiar conecta à leitura integral da passagem."
+              "reason": "Diálogo final completa compreensão da passagem inteira"
             },
             {
               "scene": 5,
               "allowed": true,
-              "verse": "15:20",
-              "reason": "Encontro central ilustra passagem completa a ser lida em família."
+              "verse": "15:20-21",
+              "reason": "Encontro e confissão são momentos-chave da leitura"
             },
             {
               "scene": 6,
               "allowed": true,
-              "verse": "15:17-19",
-              "reason": "Arrependimento é parte essencial da passagem a ser lida."
+              "verse": "15:17",
+              "reason": "Momento de consciência integra narrativa da passagem"
             },
             {
               "scene": 7,
-              "allowed": false,
-              "verse": "",
-              "reason": "Queixa específica não representa bem a passagem completa."
+              "allowed": true,
+              "verse": "15:29-30",
+              "reason": "Reação do irmão mais velho faz parte da história completa"
             },
             {
               "scene": 8,
               "allowed": true,
               "verse": "15:20",
-              "reason": "Acolhimento do pai ilustra tema central da passagem completa."
+              "reason": "Compaixão do pai é tema central da passagem lida"
             },
             {
               "scene": 9,
               "allowed": true,
               "verse": "15:15-16",
-              "reason": "Miséria do filho é parte da narrativa a ser lida completamente."
+              "reason": "Situação do filho na terra distante integra narrativa"
             },
             {
               "scene": 10,
               "allowed": false,
               "verse": "",
-              "reason": "Rostos sem contexto não conectam à passagem específica mencionada."
+              "reason": "Fariseus e cobradores não pertencem a Lucas 15:11-24"
             },
             {
               "scene": 11,
               "allowed": true,
-              "verse": "15:25-32",
-              "reason": "Celebração e reação do irmão fazem parte da passagem completa."
+              "verse": "15:25-27",
+              "reason": "Retorno do irmão e festa completam a história lida"
             },
             {
               "scene": 12,
               "allowed": true,
               "verse": "15:13",
-              "reason": "Partida do filho é início da jornada narrada na passagem."
+              "reason": "Viagem à terra distante inicia desenvolvimento da parábola"
             }
           ],
-          "reason": "Leitura da passagem completa aceita qualquer cena pertinente ao relato."
+          "reason": "Leitura da passagem completa aceita qualquer cena pertinente à narrativa integral de Lucas 15:11-24."
         },
         {
           "card": 6,
@@ -4891,77 +4897,77 @@
             {
               "scene": 1,
               "allowed": true,
-              "verse": "15:22-23",
-              "reason": "Túnica e celebração são cena diferente pertinente à passagem do Story."
+              "verse": "15:22",
+              "reason": "Restauração com túnica é cena diferente pertinente à passagem"
             },
             {
               "scene": 2,
-              "allowed": false,
-              "verse": "",
-              "reason": "Pastor com ovelhas não é cena típica desta parábola específica."
+              "allowed": true,
+              "verse": "15:18-19",
+              "reason": "Arrependimento do filho conecta com história bíblica lida"
             },
             {
               "scene": 3,
               "allowed": true,
               "verse": "15:12",
-              "reason": "Divisão de bens é cena pertinente diferente das anteriores do Story."
+              "reason": "Início da parábola com divisão de bens é pertinente"
             },
             {
               "scene": 4,
               "allowed": true,
               "verse": "15:31-32",
-              "reason": "Pai falando com filho mais velho é cena pertinente e diferente."
+              "reason": "Explicação final do pai completa entendimento da história"
             },
             {
               "scene": 5,
               "allowed": false,
               "verse": "",
-              "reason": "Abraço já usado nas posições anteriores, Story pede cena diferente."
+              "reason": "Abraço já usado em outras posições; Story pede cena diferente"
             },
             {
               "scene": 6,
               "allowed": true,
               "verse": "15:17",
-              "reason": "Arrependimento solitário é cena pertinente diferente para Story."
+              "reason": "Reflexão do filho integra narrativa da passagem"
             },
             {
               "scene": 7,
               "allowed": true,
-              "verse": "15:30",
-              "reason": "Queixa do irmão é cena pertinente e diferente das usadas antes."
+              "verse": "15:29-30",
+              "reason": "Queixa do irmão mais velho é parte válida da história"
             },
             {
               "scene": 8,
               "allowed": false,
               "verse": "",
-              "reason": "Pai correndo já avaliado anteriormente, Story precisa de diferença."
+              "reason": "Encontro do pai já considerado; Story precisa de cena distinta"
             },
             {
               "scene": 9,
               "allowed": true,
               "verse": "15:15-16",
-              "reason": "Cuidar de porcos é cena pertinente e diferente para leitura."
+              "reason": "Situação extrema do filho é parte relevante da narrativa"
             },
             {
               "scene": 10,
               "allowed": false,
               "verse": "",
-              "reason": "Rostos sem contexto claro não conectam especificamente à passagem."
+              "reason": "Fariseus não pertencem à parábola do filho pródigo"
             },
             {
               "scene": 11,
               "allowed": true,
               "verse": "15:25-27",
-              "reason": "Irmão ouvindo festa é cena pertinente diferente para o Story."
+              "reason": "Festa e reação do irmão completam arco narrativo"
             },
             {
               "scene": 12,
               "allowed": true,
               "verse": "15:13",
-              "reason": "Filho partindo é cena inicial pertinente e diferente para Story."
+              "reason": "Partida para terra distante inicia jornada do personagem"
             }
           ],
-          "reason": "Story aceita cena pertinente diferente das demais posições já avaliadas."
+          "reason": "Story aceita cena pertinente à passagem, diferente das demais posições principais."
         }
       ]
     }
@@ -6726,6 +6732,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 33,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-18T19:59:24.251Z"
+    "checkedAt": "2026-10-18T20:00:35.010Z"
   }
 }
