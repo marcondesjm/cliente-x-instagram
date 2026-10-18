@@ -1,3 +1,4 @@
+import {watchdogQuotaWait} from '../lib/watchdog-quota-wait.js';
 import claudeControlHandler from "../lib/claude-api.js";
 import { educationCollectionDiagnostics } from '../lib/education-collection.js';
 import { visualReadyPacks, requiresBibleIllustrations } from '../lib/bible-visual-standard.js';
@@ -1319,6 +1320,17 @@ async function forceInstagramWatchdog(session) {
   const openError = [...(Array.isArray(errorsFile.data) ? errorsFile.data : [])]
     .reverse()
     .find((item) => item.status === 'open' && (!item.account || item.account === 'cliente-x'));
+
+  if(openError?.stage === 'content-selection') {
+    try {
+      const [reserve,budget]=await Promise.all([
+        readGithubConfig('automation/instagram-template/config/authorial-reserve.json'),
+        readGithubConfig('automation/instagram-template/config/editorial-api-validation.json')
+      ]);
+      const waiting=watchdogQuotaWait(openError,reserve.data,budget.data);
+      if(waiting)return waiting;
+    } catch { /* Preserve ordinary recovery when quota diagnostics are unavailable. */ }
+  }
 
   let previousRequest = null;
   try {

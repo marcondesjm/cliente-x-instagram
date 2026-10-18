@@ -4735,9 +4735,17 @@
           method: 'POST',
           body: JSON.stringify({ action: 'force-watchdog' })
         });
+        if(payload.waiting){
+          button.textContent='Aguardando cota';
+          appState.watchdogRecovery={waiting:true,nextAttemptAt:payload.nextAttemptAt};
+          updateHeaderHealth('checking','Aguardando cota do Claude',true);
+          setMessage(payload.message,'warn');
+          if(actionMessage){actionMessage.className='message';actionMessage.textContent=payload.message;}
+          return payload;
+        }
         button.textContent = 'Vigia acionado';
         appState.watchdogRecovery = { startedAt: new Date().toISOString(), automatic };
-        updateHeaderHealth('checking', automatic ? 'Correção automática em andamento' : 'Vigia acionado', true);
+        updateHeaderHealth('checking', automatic ? 'Correção solicitada' : 'Vigia acionado', true);
         setMessage(payload.message || 'Vigia acionado. Aguarde o GitHub Actions iniciar.', 'good');
         if (actionMessage) {
           actionMessage.className = 'message good';
@@ -7573,22 +7581,14 @@
 
         const openError = (appState.watchdogErrors || []).find((error) => error.status === 'open');
         let recoveryStarted = false;
+        let recoveryWait = null;
         if (openError && appState.sessionRole === 'owner') {
-          const recoveryKey = `watchdog-recovery:${openError.key || `${openError.date}:${openError.slotIndex}:${openError.failedAt}`}`;
-          if (!sessionStorage.getItem(recoveryKey)) {
-            appendHealthTerminal('[REPARO] Erro confirmado. Acionando nova tentativa automaticamente...', 'running');
-            try {
-              await forceWatchdog(document.getElementById('forceWatchdog'), { automatic: true });
-              sessionStorage.setItem(recoveryKey, new Date().toISOString());
-              recoveryStarted = true;
-              appendHealthTerminal('[OK] Correção automática enviada ao vigia.', 'good');
-            } catch (error) {
-              appendHealthTerminal(`[ERRO] A tentativa automática não iniciou: ${error.message}`, 'bad');
-            }
-          } else {
-            appendHealthTerminal('[REPARO] A correção deste erro já foi acionada nesta sessão.', 'running');
-            recoveryStarted = true;
-          }
+          appendHealthTerminal('[REPARO] Consultando as condições da recuperação...', 'running');
+          try {
+            const recoveryResult=await forceWatchdog(document.getElementById('forceWatchdog'),{automatic:true});
+            if(recoveryResult.waiting){recoveryWait=recoveryResult;appendHealthTerminal(recoveryWait.message,'running');}
+            else {recoveryStarted=true;appendHealthTerminal('[OK] Solicitação enviada ao vigia; aguardando resultado.','good');}
+          } catch(error){appendHealthTerminal(`[ERRO] A tentativa automática não iniciou: ${error.message}`,'bad');}
         }
 
         const checkCards = [...document.querySelectorAll('#checks .check')];
@@ -7603,17 +7603,17 @@
         }
 
         const hasError = checkCards.some((card) => card.querySelector('.dot.bad'));
-        healthStatus.textContent = hasError ? (recoveryStarted ? 'Corrigindo' : 'Erro') : 'OK';
-        healthStatus.className = `status-pill ${hasError ? (recoveryStarted ? 'warn' : 'bad') : 'good'}`;
+        healthStatus.textContent = recoveryWait ? 'Aguardando cota' : hasError ? (recoveryStarted ? 'Solicitado' : 'Erro') : 'OK';
+        healthStatus.className = `status-pill ${recoveryWait ? 'warn' : hasError ? (recoveryStarted ? 'warn' : 'bad') : 'good'}`;
         appendHealthTerminal(
           hasError
-            ? (recoveryStarted ? 'CORREÇÃO AUTOMÁTICA EM ANDAMENTO' : 'CHECKAGEM CONCLUÍDA: ERRO ENCONTRADO')
+            ? (recoveryWait ? 'AGUARDANDO COTA DO CLAUDE — HORÁRIO PENDENTE' : recoveryStarted ? 'CORREÇÃO SOLICITADA — AGUARDANDO RESULTADO' : 'CHECKAGEM CONCLUÍDA: ERRO ENCONTRADO')
             : 'CHECKAGEM CONCLUÍDA: TUDO OK',
-          `${hasError ? (recoveryStarted ? 'running' : 'bad') : 'good'} final`
+          `${hasError ? (recoveryWait || recoveryStarted ? 'running' : 'bad') : 'good'} final`
         );
         updateHeaderHealth(
-          hasError ? (recoveryStarted ? 'checking' : 'bad') : 'good',
-          hasError ? (recoveryStarted ? 'Correção automática em andamento' : 'Atenção necessária') : 'Checkagem: tudo OK',
+          hasError ? (recoveryWait || recoveryStarted ? 'checking' : 'bad') : 'good',
+          hasError ? (recoveryWait ? 'Aguardando cota do Claude' : recoveryStarted ? 'Correção solicitada' : 'Atenção necessária') : 'Checkagem: tudo OK',
           true
         );
       } catch (error) {
