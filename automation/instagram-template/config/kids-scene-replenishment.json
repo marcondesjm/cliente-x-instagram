@@ -3,8 +3,8 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "blocked",
-  "message": "Citação factual inventada ou fora das fontes.",
+  "health": "pilot_running",
+  "message": "Piloto diagnóstico da pauta kids-biblia-29 em execução; reposição recorrente permanece bloqueada.",
   "policy": {
     "maxCallsPerDay": 26,
     "maxInputTokensPerCall": 120000,
@@ -1934,6 +1934,20 @@
       "outputTokens": 26,
       "usageStatus": "unconfirmed_counted_at_maximum",
       "stopReason": "tool_use"
+    },
+    {
+      "id": "9f308b37-ed1c-46d7-be9a-e2e977c7ec1b",
+      "pilotId": "52512e1b-0273-4678-b1f0-1e0c7330e7ca",
+      "day": "2026-10-18",
+      "stage": "select:kids-biblia-29",
+      "model": "claude-sonnet-4.6",
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-18T13:24:11.962Z",
+      "status": "reserved",
+      "payloadBytes": 0,
+      "promptChars": 9716,
+      "imageFingerprint": null,
+      "promptFingerprint": "e8381f03940bdc998709364376b6ab8b5f9dee3540cbd831e0a6eb2c7c0c1844"
     }
   ],
   "entries": [
@@ -2036,8 +2050,8 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:20:12.978Z",
-  "lastRun": "39130751330",
+  "checkedAt": "2026-10-18T13:24:11.962Z",
+  "lastRun": "39131302669",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -2744,13 +2758,12 @@
   },
   "reasoningModel": "claude-sonnet-4.6",
   "pilotRun": {
-    "id": "1f6cf406-fb23-4a6d-9cd3-2b63760e17e5",
+    "id": "52512e1b-0273-4678-b1f0-1e0c7330e7ca",
     "packId": "kids-biblia-29",
-    "status": "rejected",
-    "startedAt": "2026-10-18T13:16:24.887Z",
-    "expiresAt": "2026-10-18T13:41:24.887Z",
+    "status": "running",
+    "startedAt": "2026-10-18T13:24:05.230Z",
+    "expiresAt": "2026-10-18T13:49:05.230Z",
     "maxCalls": 10,
-    "maxInputTokens": 1200000,
-    "completedAt": "2026-10-18T13:20:12.978Z"
+    "maxInputTokens": 1200000
   }
 }
