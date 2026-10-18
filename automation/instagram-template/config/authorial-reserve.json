@@ -8450,41 +8450,56 @@
       "createdAt": "2026-10-18T20:07:06.269Z"
     }
   ],
-  "checkedAt": "2026-10-18T20:07:07.782Z",
+  "checkedAt": "2026-10-18T20:07:17.838Z",
   "workflowRun": "39161431991",
   "message": "2 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "generate:medicao-rascunho-v4",
-    "callId": "a60f7059-fb09-488d-a30f-5e9709d92d56",
+    "stage": "art-direction:medicao-rascunho-v4",
+    "callId": "1519d76d-b785-4514-91f2-879844dbbee5",
     "value": {
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "eyebrow": "Dúvida recorrente",
-          "title": "O horário do curso está na lista oficial?",
-          "body": "Uma escola fictícia recebe perguntas frequentes sobre horários de cursos livres e inscrições fora da grade publicada."
+          "layout": "workspace",
+          "labels": [
+            "Grade de cursos",
+            "Lista oficial",
+            "Inscrições"
+          ]
         },
         {
-          "eyebrow": "Critérios claros",
-          "title": "Defina o que uma resposta precisa conter",
-          "body": "Estabeleça critérios de correção factual, clareza na linguagem e identificação de informações ausentes no pedido do aluno."
+          "layout": "conversation",
+          "labels": [
+            "Correção factual",
+            "Clareza textual",
+            "Dados ausentes"
+          ]
         },
         {
-          "eyebrow": "Conferência prática",
-          "title": "Compare rascunhos com os critérios definidos",
-          "body": "Analise cada resposta gerada verificando se atende aos padrões estabelecidos e anote as correções necessárias para revisão."
+          "layout": "workflow",
+          "labels": [
+            "Rascunhos prontos",
+            "Critérios definidos",
+            "Anotações feitas"
+          ]
         },
         {
-          "eyebrow": "Ação concreta",
-          "title": "Teste o fluxo em uma etapa limitada da operação",
-          "body": "Decida aplicar esse método de conferência em um único canal de atendimento antes de expandir para toda a equipe operacional."
+          "layout": "checklist",
+          "labels": [
+            "Padrão atingido",
+            "Revisão pendente",
+            "Canal único"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Teste limitado",
+            "Expansão futura",
+            "Equipe operacional"
+          ]
         }
-      ],
-      "caption": "Como sua equipe confere respostas antes de enviar ao aluno?\n\nEste exercício propõe criar critérios claros de qualidade e comparar rascunhos com esses padrões. Ao anotar correções necessárias, você organiza o trabalho de revisão e identifica se vale testar o fluxo em uma etapa limitada da operação.\n\nSiga o perfil para aprender aplicações práticas de inteligência artificial em empresas reais.",
-      "storySlide": {
-        "eyebrow": "Rotina real",
-        "title": "Sua equipe confere respostas antes de enviar?",
-        "body": "Pense em como definir critérios de qualidade e comparar rascunhos. O exercício completo está no feed para você aplicar na rotina."
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
