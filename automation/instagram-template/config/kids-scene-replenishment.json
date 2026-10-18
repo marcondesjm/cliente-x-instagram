@@ -4,7 +4,7 @@
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
   "health": "blocked",
-  "message": "Resposta visual sem JSON válido; seleção não aprovada.",
+  "message": "Faltam seis cenas distintas e inéditas para esta pauta.",
   "policy": {
     "maxCallsPerDay": 26,
     "maxInputTokensPerCall": 120000,
@@ -2214,6 +2214,106 @@
       "outputTokens": 71,
       "usageStatus": "unconfirmed_counted_at_maximum",
       "stopReason": "end_turn"
+    },
+    {
+      "id": "ce8d4c5b-1de1-438e-9050-65830cc89d58",
+      "pilotId": "127039e8-0571-496c-9d76-5b499c74f3f9",
+      "day": "2026-10-18",
+      "stage": "select:kids-biblia-29",
+      "model": "claude-sonnet-4.6",
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-18T14:17:13.127Z",
+      "status": "completed",
+      "payloadBytes": 0,
+      "promptChars": 9716,
+      "imageFingerprint": null,
+      "promptFingerprint": "e8381f03940bdc998709364376b6ab8b5f9dee3540cbd831e0a6eb2c7c0c1844",
+      "completedAt": "2026-10-18T14:18:13.632Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 1,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
+    },
+    {
+      "id": "c147ccfd-f12d-40f4-9079-aa9da757d74c",
+      "pilotId": "127039e8-0571-496c-9d76-5b499c74f3f9",
+      "day": "2026-10-18",
+      "stage": "verify:kids-biblia-29",
+      "model": "claude-sonnet-4.6",
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-18T14:18:15.251Z",
+      "status": "completed",
+      "payloadBytes": 98248,
+      "promptChars": 9692,
+      "imageFingerprint": "aba063004054f3667a39bb3f408238b2e8ef3098ae52b2b26c28802ce66b23ee",
+      "promptFingerprint": "254c84e7ccd679a06e6d910b4caf113324b27c7d8b1115e48b65ac9e2bed49c8",
+      "completedAt": "2026-10-18T14:18:48.137Z",
+      "reportedInputTokens": 37138,
+      "inputTokens": 37138,
+      "outputTokens": 655,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
+    },
+    {
+      "id": "5ccc2af5-e9d0-45ab-9fbe-23ac89610b1c",
+      "pilotId": "127039e8-0571-496c-9d76-5b499c74f3f9",
+      "day": "2026-10-18",
+      "stage": "facts:kids-biblia-29",
+      "model": "claude-sonnet-4.6",
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-18T14:18:50.862Z",
+      "status": "completed",
+      "payloadBytes": 0,
+      "promptChars": 5108,
+      "imageFingerprint": null,
+      "promptFingerprint": "2ef876207bde8bcefc66d4716a67569e1489a1e5380c6fb1e5c86d4a3aa9735f",
+      "completedAt": "2026-10-18T14:19:12.266Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 1,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
+    },
+    {
+      "id": "4a9340c4-5582-4a4b-8d3e-20801d079900",
+      "pilotId": "127039e8-0571-496c-9d76-5b499c74f3f9",
+      "day": "2026-10-18",
+      "stage": "select:kids-biblia-29",
+      "model": "claude-sonnet-4.6",
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-18T14:19:17.785Z",
+      "status": "completed",
+      "payloadBytes": 0,
+      "promptChars": 11159,
+      "imageFingerprint": null,
+      "promptFingerprint": "9b778e9e3f974525841ae3c6ca752d10c39647606b11d715de155142395038f9",
+      "completedAt": "2026-10-18T14:20:02.531Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 1,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
+    },
+    {
+      "id": "d54bdaeb-3dbc-40f8-ab79-9f6b988660ae",
+      "pilotId": "127039e8-0571-496c-9d76-5b499c74f3f9",
+      "day": "2026-10-18",
+      "stage": "verify:kids-biblia-29",
+      "model": "claude-sonnet-4.6",
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-18T14:20:04.242Z",
+      "status": "completed",
+      "payloadBytes": 99329,
+      "promptChars": 9569,
+      "imageFingerprint": "7162e68f414507cb0b58c29a638fcb32beea9948e07dcb570a371db898f03d60",
+      "promptFingerprint": "5297f938664af66c9bf36206330c3aa168af35d4b09e9d6e6f25a3485f6a2219",
+      "completedAt": "2026-10-18T14:20:27.317Z",
+      "reportedInputTokens": 37468,
+      "inputTokens": 37468,
+      "outputTokens": 853,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -2301,9 +2401,9 @@
       "id": "kids-biblia-29",
       "title": "Zaqueu recebeu Jesus em sua casa",
       "fingerprint": "8e5d178f102ef90e59cc5e96a23c02aeecec9d3335bc0a6c4ced661520436d48",
-      "checkedAt": "2026-10-18T13:50:44.892Z",
+      "checkedAt": "2026-10-18T14:17:10.280Z",
       "status": "rejected",
-      "message": "Resposta visual sem JSON válido; seleção não aprovada."
+      "message": "Faltam seis cenas distintas e inéditas para esta pauta."
     }
   ],
   "calibration": {
@@ -2316,8 +2416,8 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:51:03.169Z",
-  "lastRun": "39133260394",
+  "checkedAt": "2026-10-18T14:20:34.681Z",
+  "lastRun": "39135225596",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -2460,44 +2560,18 @@
       "checkedAt": "2026-10-18T13:46:52.101Z"
     },
     "8e5d178f102ef90e59cc5e96a23c02aeecec9d3335bc0a6c4ced661520436d48": {
-      "reason": "Resposta visual sem JSON válido; seleção não aprovada.",
-      "checkedAt": "2026-10-18T13:51:00.590Z"
+      "reason": "Faltam seis cenas distintas e inéditas para esta pauta.",
+      "checkedAt": "2026-10-18T14:20:31.931Z"
     }
   },
   "lastEvaluation": {
     "version": "kids-scene-review-v4-visual",
-    "matchingVersion": "independent-pair-verse-bound-v9",
+    "matchingVersion": "independent-pair-exclusion-v10",
     "packId": "kids-biblia-29",
-    "decision": "approve",
+    "decision": "reject",
     "cards": [
       {
         "scene": 1,
-        "observationId": "98834c32e024c944",
-        "observedEvent": "Um homem sentado à esquerda, vestindo túnica amarela e manto vermelho, segura um recipiente, enquanto outro homem em pé à direita, vestindo túnica azul e faixa listrada, gesticula em sua direção em um ambiente interno com uma mesa contendo objetos arredondados.",
-        "depictedEvent": "Zacchaeus stood and said to the Lord, “Behold, Lord, half of my goods I give to the poor. If I have wrongfully exacted anything of anyone, I restore four times as much.”",
-        "pixelMatch": true,
-        "passageMatch": true,
-        "childSuitable": true,
-        "distinct": true,
-        "copyMatch": true,
-        "verse": "19:8",
-        "reason": "A cena mostra Zaqueu em pé gesticulando diante de Jesus sentado à mesa, correspondendo visualmente ao momento em que ele se levanta e declara a restituição (Lc 19:8). Compatível com o título da capa sobre receber Jesus em casa."
-      },
-      {
-        "scene": 2,
-        "observationId": "0d7ed7a02e4a2584",
-        "observedEvent": "Ilustração de um homem sentado nos galhos de uma árvore frondosa, olhando para baixo, enquanto um grupo de homens com barbas e vestes coloridas está reunido ao redor do tronco, em um ambiente externo com folhagem verde.",
-        "depictedEvent": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way.",
-        "pixelMatch": true,
-        "passageMatch": true,
-        "childSuitable": true,
-        "distinct": true,
-        "copyMatch": true,
-        "verse": "19:4",
-        "reason": "Ilustra claramente Zaqueu subido na árvore observando Jesus abaixo, ação descrita em Lc 19:4. A composição difere da Cena 5 por mostrar o grupo ao redor do tronco em plano mais aberto."
-      },
-      {
-        "scene": 3,
         "observationId": "0213f4524b345be9",
         "observedEvent": "Ilustração de quatro homens com barbas e turbantes em primeiro plano observando duas figuras ao fundo numa passagem entre paredes de pedra; uma figura vestida de vermelho e branco está diante de uma porta, enquanto outra figura azul segura um pequeno objeto escuro na mão estendida.",
         "depictedEvent": "When they saw it, they all murmured, saying, “He has gone in to lodge with a man who is a sinner.”",
@@ -2507,10 +2581,23 @@
         "distinct": true,
         "copyMatch": true,
         "verse": "19:7",
-        "reason": "Mostra figuras murmurando em primeiro plano enquanto Jesus entra na casa ao fundo, representando diretamente a murmuração dos presentes descrita em Lc 19:7. Adequado para cartão de lição."
+        "reason": "A ilustração mostra pessoas murmurando/observando enquanto Jesus entra na casa de Zaqueu (figura vermelha à porta), correspondendo exatamente ao evento do título 'Zaqueu recebeu Jesus em sua casa' e ao versículo 19:7 sobre o murmúrio. A observação descreve corretamente os pixels da cena."
       },
       {
-        "scene": 4,
+        "scene": 2,
+        "observationId": "0d7ed7a02e4a2584",
+        "observedEvent": "Ilustração de um homem sentado nos galhos de uma árvore frondosa, olhando para baixo, enquanto um grupo de homens com barbas e vestes coloridas está reunido ao redor do tronco, em um ambiente externo com folhagem verde.",
+        "depictedEvent": "",
+        "pixelMatch": true,
+        "passageMatch": false,
+        "childSuitable": true,
+        "distinct": true,
+        "copyMatch": true,
+        "verse": "",
+        "reason": "A observação descreve um homem sentado nos galhos olhando para baixo, mas a imagem mostra claramente Zaqueu em pé/agarrado aos galhos com braços levantados (ação de subir ou manter-se na árvore, 19:4), não sentado contemplativamente. O suggestedVerse 19:4 é correto para a ação visível, mas a observação está imprecisa quanto à postura, tornando pixelMatch incompatível com a descrição fornecida."
+      },
+      {
+        "scene": 3,
         "observationId": "6654943ac38eff87",
         "observedEvent": "Ilustração colorida mostrando um grupo de seis homens com vestimentas e turbantes tradicionais reunidos em círculo; o homem central, de túnica vermelha, gesticula com a mão direita levantada enquanto os demais observam ou conversam entre si, em ambiente externo claro com arco arquitetônico ao fundo.",
         "depictedEvent": "Jesus said to him,\n“Today, salvation has come to this house, because he also is a son of Abraham.",
@@ -2520,23 +2607,23 @@
         "distinct": true,
         "copyMatch": true,
         "verse": "19:9",
-        "reason": "Jesus gesticula em meio a um grupo reunido, compatível com o discurso de salvação e missão em Lc 19:9-10. Composição distinta das demais cenas de diálogo ou murmuração."
+        "reason": "Cena de Jesus falando/gesticulando diante de Zaqueu e outros, compatível com 19:9 (declaração de salvação). Como cartão de lição com escopo whole_passage, a representação editorial do momento da declaração é adequada e semanticamente coerente com o texto educativo sobre mudança de atitude."
       },
       {
-        "scene": 5,
+        "scene": 4,
         "observationId": "d3c9e973465ce4fc",
         "observedEvent": "Uma pessoa vestida com túnica amarela e azul está subindo em uma árvore de copa densa, enquanto um grupo de pessoas com trajes tradicionais observa da parte inferior da cena; ao fundo há edificações de pedra e tendas vermelhas em ambiente externo.",
         "depictedEvent": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way.",
         "pixelMatch": true,
         "passageMatch": true,
         "childSuitable": true,
-        "distinct": true,
+        "distinct": false,
         "copyMatch": true,
         "verse": "19:4",
-        "reason": "Retrata Zaqueu subindo ativamente na árvore com tendas e edificações ao fundo, enquadramento diferente da Cena 2. Sustenta Lc 19:4 e é pertinente para cartão de leitura."
+        "reason": "A imagem mostra Zaqueu subindo/na árvore com multidão abaixo, mesma ação concreta e composição quase idêntica à posição 2 (ambas representam 19:4, Zaqueu na árvore com espectadores). Embora os ângulos difiram ligeiramente, a ação central (subir/estar na árvore para ver Jesus) e os elementos composicionais principais são repetidos, violando distinct. Para family_activity seria aceitável como cena da passagem, mas a duplicação composicional com o card narrative impede aprovação."
       },
       {
-        "scene": 6,
+        "scene": 5,
         "observationId": "9ce49c775a44acf7",
         "observedEvent": "Quatro homens com vestes longas e faixas coloridas caminham em fila por um caminho de terra cercado por vegetação verde; o homem à frente, vestido de amarelo com faixa vermelha, olha para baixo enquanto segura um pequeno objeto na mão direita.",
         "depictedEvent": "He entered and was passing through Jericho.",
@@ -2546,7 +2633,20 @@
         "distinct": true,
         "copyMatch": true,
         "verse": "19:1",
-        "reason": "Grupo caminhando por caminho externo representa Jesus e discípulos passando por Jericó (Lc 19:1). Cena distinta das demais e adequada como encerramento narrativo (Story)."
+        "reason": "Jesus e discípulos caminhando por estrada rural, representando adequadamente 19:1 ('entrando e passando por Jericó'). Para cartão reading com escopo whole_passage, a cena de chegada/trânsito é pertinente e sustentada pela passagem, sem exigir que o texto editorial descreva literalmente a caminhada."
+      },
+      {
+        "scene": 6,
+        "observationId": "7fe1505874703f57",
+        "observedEvent": "Ilustração de um grupo de homens com barbas e vestes coloridas em tons de amarelo, vermelho e azul, reunidos ao ar livre em um ambiente com paredes de pedra; um homem ajoelhado à esquerda estende a mão para tocar as costas de outro homem que está de pé no centro da composição.",
+        "depictedEvent": "",
+        "pixelMatch": true,
+        "passageMatch": false,
+        "childSuitable": true,
+        "distinct": true,
+        "copyMatch": true,
+        "verse": "",
+        "reason": "A observação descreve um homem ajoelhado tocando as costas de outro homem de pé, mas a imagem mostra Zaqueu (homem baixo de túnica azul/amarela) estendendo o braço para tocar/chamar Jesus (figura central de túnica amarela clara) no meio da multidão — ação de tentar ver Jesus através da multidão (19:3), não de ajoelhar-se. A postura descrita na observação não corresponde aos pixels; além disso, o sourceContext menciona 19:3 mas a ação visível é mais compatível com Zaqueu tentando alcançar/ver Jesus, não necessariamente ajoelhado. Versículo vazio pois a observação imprecisa compromete a confianç"
       }
     ]
   },
@@ -2560,29 +2660,99 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "select:kids-biblia-29",
-    "value": null
+    "stage": "verify:kids-biblia-29",
+    "value": {
+      "decision": "reject",
+      "cards": [
+        {
+          "position": 1,
+          "observationId": "0213f4524b345be9",
+          "pixelMatch": true,
+          "passageMatch": true,
+          "childSuitable": true,
+          "distinct": true,
+          "copyMatch": true,
+          "verse": "19:7",
+          "reason": "A ilustração mostra pessoas murmurando/observando enquanto Jesus entra na casa de Zaqueu (figura vermelha à porta), correspondendo exatamente ao evento do título 'Zaqueu recebeu Jesus em sua casa' e ao versículo 19:7 sobre o murmúrio. A observação descreve corretamente os pixels da cena."
+        },
+        {
+          "position": 2,
+          "observationId": "0d7ed7a02e4a2584",
+          "pixelMatch": true,
+          "passageMatch": false,
+          "childSuitable": true,
+          "distinct": true,
+          "copyMatch": true,
+          "verse": "",
+          "reason": "A observação descreve um homem sentado nos galhos olhando para baixo, mas a imagem mostra claramente Zaqueu em pé/agarrado aos galhos com braços levantados (ação de subir ou manter-se na árvore, 19:4), não sentado contemplativamente. O suggestedVerse 19:4 é correto para a ação visível, mas a observação está imprecisa quanto à postura, tornando pixelMatch incompatível com a descrição fornecida."
+        },
+        {
+          "position": 3,
+          "observationId": "6654943ac38eff87",
+          "pixelMatch": true,
+          "passageMatch": true,
+          "childSuitable": true,
+          "distinct": true,
+          "copyMatch": true,
+          "verse": "19:9",
+          "reason": "Cena de Jesus falando/gesticulando diante de Zaqueu e outros, compatível com 19:9 (declaração de salvação). Como cartão de lição com escopo whole_passage, a representação editorial do momento da declaração é adequada e semanticamente coerente com o texto educativo sobre mudança de atitude."
+        },
+        {
+          "position": 4,
+          "observationId": "d3c9e973465ce4fc",
+          "pixelMatch": true,
+          "passageMatch": true,
+          "childSuitable": true,
+          "distinct": false,
+          "copyMatch": true,
+          "verse": "19:4",
+          "reason": "A imagem mostra Zaqueu subindo/na árvore com multidão abaixo, mesma ação concreta e composição quase idêntica à posição 2 (ambas representam 19:4, Zaqueu na árvore com espectadores). Embora os ângulos difiram ligeiramente, a ação central (subir/estar na árvore para ver Jesus) e os elementos composicionais principais são repetidos, violando distinct. Para family_activity seria aceitável como cena da passagem, mas a duplicação composicional com o card narrative impede aprovação."
+        },
+        {
+          "position": 5,
+          "observationId": "9ce49c775a44acf7",
+          "pixelMatch": true,
+          "passageMatch": true,
+          "childSuitable": true,
+          "distinct": true,
+          "copyMatch": true,
+          "verse": "19:1",
+          "reason": "Jesus e discípulos caminhando por estrada rural, representando adequadamente 19:1 ('entrando e passando por Jericó'). Para cartão reading com escopo whole_passage, a cena de chegada/trânsito é pertinente e sustentada pela passagem, sem exigir que o texto editorial descreva literalmente a caminhada."
+        },
+        {
+          "position": 6,
+          "observationId": "7fe1505874703f57",
+          "pixelMatch": true,
+          "passageMatch": false,
+          "childSuitable": true,
+          "distinct": true,
+          "copyMatch": true,
+          "verse": "",
+          "reason": "A observação descreve um homem ajoelhado tocando as costas de outro homem de pé, mas a imagem mostra Zaqueu (homem baixo de túnica azul/amarela) estendendo o braço para tocar/chamar Jesus (figura central de túnica amarela clara) no meio da multidão — ação de tentar ver Jesus através da multidão (19:3), não de ajoelhar-se. A postura descrita na observação não corresponde aos pixels; além disso, o sourceContext menciona 19:3 mas a ação visível é mais compatível com Zaqueu tentando alcançar/ver Jesus, não necessariamente ajoelhado. Versículo vazio pois a observação imprecisa compromete a confiança na atribuição."
+        }
+      ]
+    }
   },
   "lastFactualEvaluation": {
     "packId": "kids-biblia-29",
-    "fingerprint": "65660c08dd09f887d36b5c7b6a3ea2a0e5e6e809d105dca304fed40b7895dbde",
+    "fingerprint": "95490442baad9a8371bb7d4be8f0560ca1cf288601713f0299152ab1e6a9698a",
     "result": {
       "claims": [
         {
           "id": "98834c32e024c944",
-          "supported": true,
-          "reason": "O texto corresponde exatamente ao versículo 19:8. A visualObservation descreve um homem sentado à esquerda segurando recipiente (Zacchaeus) e outro homem em pé gesticulando (Jesus ou interlocutor), em ambiente interno com mesa. O versículo diz 'Zacchaeus stood and said to the Lord', indicando que Zacchaeus estava em pé falando. A ilustração mostra um homem sentado, o que contradiz a ação de 'stood' (ficar em pé). Portanto, há incompatibilidade entre a ação descrita no texto (estar em pé) e a visualização (sentado).",
+          "supported": false,
+          "reason": "A ilustração mostra um ambiente interno com homem sentado à mesa, mas o texto descreve Jesus falando com Zaqueu que estava na árvore (19:5). A ação visual de alguém sentado à mesa é incompatível com a fase em que Zaqueu ainda está na árvore sendo chamado para descer.",
           "evidence": [
             {
-              "sourceId": "19:8",
-              "quote": "Zacchaeus stood and said to the Lord, \"Behold, Lord, half of my goods I give to the poor. If I have wrongfully exacted anything of anyone, I restore four times as much.\""
+              "sourceId": "19:5",
+              "quote": "When Jesus came to the place, he looked up and saw him, and said to him,\n\"Zacchaeus, hurry and come down, for today I must stay at your house.\""
             }
           ]
         },
         {
           "id": "0d7ed7a02e4a2584",
           "supported": true,
-          "reason": "O texto corresponde ao versículo 19:4. A visualObservation mostra um homem sentado nos galhos de uma árvore, olhando para baixo, com grupo de homens reunidos ao redor do tronco. Isso é compatível com 'climbed up into a sycamore tree to see him'. Embora o texto mencione 'ran on ahead', a ilustração pode representar apenas a fase de estar na árvore, não precisando mostrar todas as ações simultaneamente.",
+          "reason": "A ilustração mostra um homem sentado nos galhos de uma árvore olhando para baixo, com grupo reunido ao redor do tronco, compatível com Zaqueu subindo na sicômoro para ver Jesus.",
           "evidence": [
             {
               "sourceId": "19:4",
@@ -2591,20 +2761,9 @@
           ]
         },
         {
-          "id": "0213f4524b345be9",
-          "supported": true,
-          "reason": "O texto corresponde ao versículo 19:7. A visualObservation mostra homens observando duas figuras ao fundo numa passagem entre paredes, com uma figura diante de uma porta. Isso é compatível com 'He has gone in to lodge with a man who is a sinner', representando a entrada na casa.",
-          "evidence": [
-            {
-              "sourceId": "19:7",
-              "quote": "When they saw it, they all murmured, saying, \"He has gone in to lodge with a man who is a sinner.\""
-            }
-          ]
-        },
-        {
           "id": "6654943ac38eff87",
-          "supported": false,
-          "reason": "O texto cita parcialmente o versículo 19:9, mas está incompleto (falta o final do versículo). Além disso, a visualObservation mostra um grupo de seis homens em círculo com o homem central gesticulando, mas não há evidência visual clara de que isso representa especificamente Jesus dizendo estas palavras a Zacchaeus dentro de sua casa. A cena parece genérica e não específica o suficiente para sustentar esta afirmação particular.",
+          "supported": true,
+          "reason": "A ilustração mostra grupo de homens reunidos com homem central gesticulando, compatível com Jesus falando sobre salvação. Não há contradição de ação visível.",
           "evidence": [
             {
               "sourceId": "19:9",
@@ -2613,24 +2772,35 @@
           ]
         },
         {
-          "id": "d3c9e973465ce4fc",
-          "supported": true,
-          "reason": "O texto corresponde ao versículo 19:4. A visualObservation mostra uma pessoa subindo em uma árvore enquanto grupo observa da parte inferior. Isso é compatível com 'climbed up into a sycamore tree'. A ação de subir é mostrada, diferente da claim anterior que mostrava já sentado.",
+          "id": "e64874ce7ad7e208",
+          "supported": false,
+          "reason": "O texto afirma que Zaqueu era cobrador de impostos chefe e rico, mas a ilustração não apresenta elementos visuais que sustentem essa informação específica (riqueza, função). É apenas um grupo de homens sem contexto identificável.",
           "evidence": [
             {
-              "sourceId": "19:4",
-              "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
+              "sourceId": "19:2",
+              "quote": "There was a man named Zacchaeus. He was a chief tax collector, and he was rich."
             }
           ]
         },
         {
-          "id": "9ce49c775a44acf7",
+          "id": "0213f4524b345be9",
           "supported": true,
-          "reason": "O texto corresponde ao versículo 19:1. A visualObservation mostra quatro homens caminhando em fila por um caminho, o que é compatível com 'entered and was passing through Jericho'. A ação de caminhar/passar é representada adequadamente.",
+          "reason": "A ilustração mostra homens observando figuras ao fundo numa passagem entre paredes, com figura diante de porta, compatível com as pessoas murmurando ao ver Jesus entrando na casa de Zaqueu.",
           "evidence": [
             {
-              "sourceId": "19:1",
-              "quote": "He entered and was passing through Jericho."
+              "sourceId": "19:7",
+              "quote": "When they saw it, they all murmured, saying, \"He has gone in to lodge with a man who is a sinner.\""
+            }
+          ]
+        },
+        {
+          "id": "d3c9e973465ce4fc",
+          "supported": true,
+          "reason": "A ilustração mostra pessoa subindo em árvore enquanto grupo observa, compatível com Zaqueu correndo adiante e subindo na sicômoro para ver Jesus.",
+          "evidence": [
+            {
+              "sourceId": "19:4",
+              "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
             }
           ]
         }
@@ -2963,13 +3133,13 @@
   },
   "reasoningModel": "claude-sonnet-4.6",
   "pilotRun": {
-    "id": "f804d452-01fb-4baf-b05f-f6b456099876",
+    "id": "127039e8-0571-496c-9d76-5b499c74f3f9",
     "packId": "kids-biblia-29",
     "status": "rejected",
-    "startedAt": "2026-10-18T13:50:42.635Z",
-    "expiresAt": "2026-10-18T14:15:42.635Z",
+    "startedAt": "2026-10-18T14:17:07.847Z",
+    "expiresAt": "2026-10-18T14:42:07.847Z",
     "maxCalls": 10,
     "maxInputTokens": 1200000,
-    "completedAt": "2026-10-18T13:51:03.169Z"
+    "completedAt": "2026-10-18T14:20:34.681Z"
   }
 }
