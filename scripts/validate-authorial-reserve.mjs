@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {RESERVE_VERSION,RESERVE_RENDER_VERSION,TOPICS,digest,buildAuthorialPack,packClaims,reserveApproved,readyAuthorialPacks,conceptSvg} from '../lib/authorial-reserve.js';
+import {RESERVE_VERSION,RESERVE_RENDER_VERSION,TOPICS,digest,buildAuthorialPack,packClaims,reserveApproved,readyAuthorialPacks,conceptSvg,bindSourceEvidence,sourceBoundSchema} from '../lib/authorial-reserve.js';
 import {pickEditorialVisualReserve,pickFreshPack,preparePackForPublication} from '../automation/instagram-template/scripts/publish-carousel.mjs';
 import {solutionForWatchdogError} from './watchdog-error-classification.mjs';
 const topic=TOPICS[0],slide={eyebrow:'Exercício educativo',title:'Organize os campos de um pedido fictício.',body:'Separe produto e prazo. Confira cada campo na mensagem original e marque a informação que estiver ausente.'};
@@ -23,4 +23,8 @@ assert.equal(reserveApproved(entry,()=>Buffer.from('changed')),false);
 assert.throws(()=>buildAuthorialPack({...draft,caption:'A IA economiza 90% do tempo.'.repeat(15)},topic));
 assert.notEqual(conceptSvg(topic),conceptSvg(topic,true));
 assert.match(solutionForWatchdogError('Radar visual sem foto inédita e reserva autoral esgotada.','content-selection'),/Claude/);
+assert.equal(sourceBoundSchema(task).properties.claims.items.properties.evidence.items.properties.quote,undefined);
+assert.equal(bindSourceEvidence(task,{claims:[{id:'test',evidence:[{sourceId:'brief'}]}]}).claims[0].evidence[0].quote,topic.brief);
+assert.throws(()=>bindSourceEvidence(task,{claims:[{evidence:[{sourceId:'invented'}]}]}));
+assert.throws(()=>bindSourceEvidence(task,{claims:[{evidence:[{sourceId:'brief',quote:'Paráfrase inventada.'}]}]}));
 console.log('Reserva Claude: prova, recibos, isolamento de conta, citações, render, alterações de conteúdo/arte e repetição validados.');
