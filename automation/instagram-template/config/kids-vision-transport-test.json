@@ -323,9 +323,14 @@
     {
       "id": "3ab127bc-5619-4571-ae39-0ca76d9fc7ac",
       "day": "2026-10-18",
-      "status": "reserved",
+      "status": "completed",
       "stage": "event-grounding-v2",
-      "startedAt": "2026-10-18T13:43:10.062Z"
+      "startedAt": "2026-10-18T13:43:10.062Z",
+      "completedAt": "2026-10-18T13:43:26.646Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 1,
+      "usageStatus": "unconfirmed_counted_at_maximum"
     }
   ],
   "entries": [
@@ -664,7 +669,7 @@
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:43:10.063Z",
+  "checkedAt": "2026-10-18T13:43:26.647Z",
   "workflowRun": "39132707291",
   "summary": [
     {
@@ -701,10 +706,10 @@
   "activationEligible": false,
   "semanticConclusion": "Resultados iniciais não se sustentaram no piloto completo. Sonnet inventou cama; Haiku recusou imagem anexada. Nenhuma ativação.",
   "eventGrounding": {
-    "version": "depicted-event-v3",
+    "version": "depicted-event-v4",
     "model": "claude-sonnet-4.6",
     "passed": true,
-    "checkedAt": "2026-10-18T13:24:19.181Z",
+    "checkedAt": "2026-10-18T13:43:26.647Z",
     "taskFingerprint": "24a3d96350ad5e68eec4ef675e4a33577dc5379d0b6c66576eea86e58d75a818",
     "task": {
       "scopeReference": "Trechos WEB fornecidos, sem ampliar o relato.",
@@ -867,7 +872,7 @@
       {
         "id": "absent-appearance",
         "supported": false,
-        "reason": "As fontes não relatam que Jesus apareceu pessoalmente às mulheres diante do túmulo. Os versículos mencionam dois homens em roupas resplandecentes (p0:24:4), mas não Jesus pessoalmente.",
+        "reason": "As fontes não relatam aparição pessoal de Jesus às mulheres no túmulo; apenas dois homens em vestes resplandecentes apareceram.",
         "evidence": [
           {
             "sourceId": "p0:24:4",
@@ -884,15 +889,11 @@
       {
         "id": "zacchaeus-house",
         "supported": true,
-        "reason": "O texto confirma que Zaqueu recebeu Jesus em sua casa com alegria após descer da árvore.",
+        "reason": "Zaqueu recebeu Jesus em sua casa conforme Lucas 19:6, e a observação visual mostra um homem de pé ao lado de outro sentado à mesa em ambiente interno, compatível com o relato.",
         "evidence": [
           {
             "sourceId": "p1:19:6",
             "quote": "He hurried, came down, and received him joyfully."
-          },
-          {
-            "sourceId": "p1:19:7",
-            "quote": "When they saw it, they all murmured, saying, “He has gone in to lodge with a man who is a sinner.”"
           }
         ],
         "expected": true,
@@ -901,7 +902,7 @@
       {
         "id": "tree-action",
         "supported": true,
-        "reason": "O texto confirma explicitamente que Zaqueu subiu em uma árvore sicômoro para ver Jesus, e a observação visual é compatível.",
+        "reason": "Zaqueu subiu numa árvore para ver Jesus conforme Lucas 19:4, e a observação visual mostra um homem nos galhos acima de pessoas no chão, compatível com a ação descrita.",
         "evidence": [
           {
             "sourceId": "p1:19:4",
@@ -914,7 +915,7 @@
       {
         "id": "wrong-table",
         "supported": false,
-        "reason": "A observação visual mostra um homem nos galhos de uma árvore, o que contradiz diretamente a afirmação de que Zaqueu estava sentado à mesa com Jesus. A ação visível é incompatível.",
+        "reason": "A claim diz que Zaqueu estava sentado à mesa com Jesus, mas a observação visual mostra um homem nos galhos de uma árvore, o que contradiz diretamente a ação de estar sentado à mesa.",
         "evidence": [
           {
             "sourceId": "p1:19:4",
@@ -927,7 +928,7 @@
       {
         "id": "sleep-illustration",
         "supported": true,
-        "reason": "O texto confirma que Jesus estava dormindo na popa (stern) do barco, e a observação visual é compatível.",
+        "reason": "Jesus dormia na popa do barco conforme Marcos 4:38, e a observação visual mostra um homem deitado na popa de um barco, compatível com o relato.",
         "evidence": [
           {
             "sourceId": "p2:4:38",
@@ -940,7 +941,7 @@
       {
         "id": "wrong-tree-action",
         "supported": false,
-        "reason": "A observação visual mostra quatro homens caminhando em uma estrada sem ninguém em árvore, o que contradiz a afirmação de que Zaqueu subiu em uma árvore. A ação visível é incompatível.",
+        "reason": "A claim diz que Zaqueu subiu numa árvore, mas a observação visual mostra quatro homens caminhando em uma estrada sem ninguém em árvore, contradizendo a ação descrita.",
         "evidence": [
           {
             "sourceId": "p1:19:4",
