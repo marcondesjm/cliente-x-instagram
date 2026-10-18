@@ -4265,11 +4265,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-18T22:01:30.774Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 10998,
       "imageFingerprint": null,
-      "promptFingerprint": "63a9bf262556cebf36cd93a093b392f1c3c419e830cd86ef9fcd2bea6f446b7d"
+      "promptFingerprint": "63a9bf262556cebf36cd93a093b392f1c3c419e830cd86ef9fcd2bea6f446b7d",
+      "completedAt": "2026-10-18T22:02:37.727Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 32,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -4412,7 +4418,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T22:01:30.775Z",
+  "checkedAt": "2026-10-18T22:02:37.727Z",
   "lastRun": "39170079691",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -4687,12 +4693,370 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-21:11a6ef202c206858",
+    "stage": "select:kids-biblia-21",
     "value": {
-      "visible": true,
-      "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Ilustração mostrando uma mulher deitada sobre palha dentro de um espaço arqueado, com um homem sentado ao lado e um bebê envolto em panos à frente; dois animais quadrúpedes estão ao fundo, sob céu azul visível pela abertura."
+      "cards": [
+        {
+          "card": 1,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Anjo isolado não retrata o evento do título sobre pastores ouvindo."
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Maria com bebê não é o evento dos pastores ouvirem a notícia."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Pastores no campo sem anjo não mostra o momento de ouvir."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Pastores louvando ocorre após ouvir, não durante o anúncio."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Hostes celestiais sozinhos não mostram pastores recebendo notícia."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "2:8-9",
+              "reason": "Pastores vigiando vêem anjo aparecer, retratando ouvir a boa nova."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Glória brilhando com figuras ambíguas não foca no ato de ouvir."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Encontro em Belém ocorre depois de ouvir, não durante o anúncio."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Nascimento no estábulo precede o anúncio aos pastores."
+            }
+          ],
+          "reason": "Capa exige evento do título: pastores ouvindo. Apenas cena 6 mostra isso."
+        },
+        {
+          "card": 2,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "2:10-11",
+              "reason": "Anjo trazendo boa notícia corresponde ao resumo narrativo."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "2:17-18",
+              "reason": "Pastores contando e Maria refletindo apoia narrativa geral."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "2:15",
+              "reason": "Pastores decidindo ir a Belém faz parte do resumo da história."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "2:20",
+              "reason": "Pastores retornando louvando integra o resumo completo."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "2:13-14",
+              "reason": "Hostes celestiais louvando é parte do relato bíblico."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "2:8-9",
+              "reason": "Aparição do anjo aos pastores é evento central do resumo."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "2:9",
+              "reason": "Glória do Senhor brilhando é parte do evento narrado."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "2:16",
+              "reason": "Encontrar bebê na manjedoura confirma o que foi anunciado."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Nascimento precede Lucas 2:8-20, fora da passagem especificada."
+            }
+          ],
+          "reason": "Cartão narrativo aceita qualquer evento do resumo dentro da passagem."
+        },
+        {
+          "card": 3,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "2:10",
+              "reason": "Anjo anunciando alegria sustenta lição sobre compartilhar boas novas."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "2:19",
+              "reason": "Maria ponderando ensina reflexão sobre eventos espirituais."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "2:15",
+              "reason": "Pastores indo verificar ensina ação diante da palavra ouvida."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "2:20",
+              "reason": "Pastores louvando ensina gratidão após experimentar Deus."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "2:14",
+              "reason": "Glória a Deus ensina adoração como resposta à revelação divina."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "2:8-9",
+              "reason": "Anjo aparecendo ensina que Deus toma iniciativa de revelar-se."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "2:9",
+              "reason": "Glória brilhando ilustra poder divino presente na história."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "2:16",
+              "reason": "Encontrar Jesus ensina busca pessoal pela verdade revelada."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Nascimento fora da passagem Lucas 2:8-20 especificada."
+            }
+          ],
+          "reason": "Lições podem usar qualquer cena pertinente com conexão educativa clara."
+        },
+        {
+          "card": 4,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "2:10-11",
+              "reason": "Boa notícia do anjo fornece conteúdo para recontar em família."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "2:17-18",
+              "reason": "Pastores compartilhando modelo de reconto familiar da experiência."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "2:15",
+              "reason": "Decisão de ir ver fornece narrativa para atividade de reconto."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "2:20",
+              "reason": "Pastores glorificando oferece exemplo de resposta para discutir."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "2:13-14",
+              "reason": "Louvor celestial inspira conversa familiar sobre adoração."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "2:8-9",
+              "reason": "Aparição angélica fornece evento central para recontar juntos."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "2:9",
+              "reason": "Glória divina oferece elemento visual para narrativa familiar."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "2:16",
+              "reason": "Encontro com Jesus é clímax da história para recontar em família."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Nascimento fora da passagem especificada para esta atividade."
+            }
+          ],
+          "reason": "Atividade familiar aceita cenas pertinentes para base do reconto."
+        },
+        {
+          "card": 5,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "2:10-11",
+              "reason": "Mensagem angelical sustenta leitura e discussão familiar contínua."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "2:17-19",
+              "reason": "Reações dos ouvintes e Maria apoiam reflexão pós-leitura."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "2:15",
+              "reason": "Resposta dos pastores à palavra incentiva leitura continuada."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "2:20",
+              "reason": "Glorificação final dos pastores encerra bem a leitura familiar."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "2:13-14",
+              "reason": "Cântico celestial enriquece compreensão da passagem lida."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "2:8-9",
+              "reason": "Início do relato fornece contexto para leitura completa."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "2:9",
+              "reason": "Manifestação da glória divina destaca aspecto teológico da leitura."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "2:16",
+              "reason": "Confirmação do sinal leva à profundidade na leitura familiar."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Nascimento precede a passagem Lucas 2:8-20 especificada."
+            }
+          ],
+          "reason": "Leitura familiar aceita cenas pertinentes para apoiar estudo contínuo."
+        },
+        {
+          "card": 6,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "2:10-12",
+              "reason": "Anjo anunciando é cena pertinente diferente das anteriores possíveis."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "2:17-19",
+              "reason": "Reações pós-visita oferecem perspectiva única para Story final."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "2:15",
+              "reason": "Decisão de ir mostra transição importante na narrativa."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "2:20",
+              "reason": "Retorno louvando fecha ciclo da experiência dos pastores."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "2:13-14",
+              "reason": "Hostes celestiais destacam dimensão cósmica do evento."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "2:8-9",
+              "reason": "Primeiro contato com o divino inicia toda a sequência."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "2:9",
+              "reason": "Glória manifestada revela natureza sobrenatural do encontro."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "2:16",
+              "reason": "Encontro pessoal com Jesus é culminação da jornada."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Nascimento fora da passagem Lucas 2:8-20 para Story também."
+            }
+          ],
+          "reason": "Story aceita cena pertinente diferente, sustentada pela passagem."
+        }
+      ]
     }
   },
   "lastFactualEvaluation": {
@@ -6608,6 +6972,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 9,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-18T22:01:30.775Z"
+    "checkedAt": "2026-10-18T22:02:37.727Z"
   }
 }
