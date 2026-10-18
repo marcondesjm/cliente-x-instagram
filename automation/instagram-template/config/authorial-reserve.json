@@ -4,7 +4,7 @@
   "enabled": true,
   "targetReady": 13,
   "maxPacksPerRun": 1,
-  "health": "daily_limit",
+  "health": "review_rejected",
   "entries": [
     {
       "id": "authorial-7822d0ca002cba49",
@@ -502,9 +502,9 @@
       "reason": "Reserva educativa não aceita fontes inventadas, números ou promessa de resultado."
     }
   ],
-  "checkedAt": "2026-10-18T16:40:01.248Z",
+  "checkedAt": "2026-10-18T16:40:02.970Z",
   "workflowRun": "39145939005",
-  "message": "Limite diário de tokens atingido.",
+  "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
     "stage": "generate:versao-instrucao",
     "callId": "19d206ae-dd22-4f9e-91ca-8c0db4db4c76",
@@ -603,6 +603,6 @@
     "nextAttemptAt": "2026-10-18T16:39:14.622Z",
     "checkedAt": "2026-10-18T16:39:14.703Z",
     "workflowRun": "39145939005",
-    "retryAfter": null
+    "retryAfter": "2026-10-18T18:40:02.970Z"
   }
 }
