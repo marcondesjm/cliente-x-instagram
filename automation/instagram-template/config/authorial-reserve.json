@@ -6931,135 +6931,40 @@
       "reason": "Revisão rejeitou o lote: A claim art-5 não possui suporte nas fontes nem corresponde a uma ilustração verificável nos renders fornecidos, violando o critério de visualMatch e supported. Embora o conteúdo seja novel em relação ao histórico e prático como exercício, a inconsistência entre a descrição da arte-5 e o material di"
     }
   ],
-  "checkedAt": "2026-10-18T19:59:28.103Z",
+  "checkedAt": "2026-10-18T20:00:08.133Z",
   "workflowRun": "39161134821",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "review:pedido-duplicado-v4",
-    "callId": "2aa35186-e346-4617-bc28-64d6659dd890",
+    "stage": "generate:base-respostas-v4",
+    "callId": "3d1be3b9-78cc-418b-b833-5d6ee79d397f",
     "value": {
-      "claims": [
+      "slides": [
         {
-          "id": "slide-1",
-          "supported": true,
-          "reason": "A fonte brief descreve exatamente o cenário fictício de uma escola recebendo a mesma dúvida sobre horário por múltiplos canais (e-mail e WhatsApp), sustentando a alegação do slide 1.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Dúvida na inscrição",
+          "title": "O aluno pergunta horário fora da lista oficial",
+          "body": "A escola fictícia recebe mensagem sobre horário que não consta na política comercial publicada recentemente."
         },
         {
-          "id": "slide-2",
-          "supported": true,
-          "reason": "O briefing orienta explicitamente atribuir um identificador ao pedido e registrá-lo antes de criar tarefas para evitar duplicações, alinhando-se perfeitamente com o conteúdo do slide 2.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Procedimento claro",
+          "title": "Peça rascunho baseado apenas na política vigente",
+          "body": "Solicite à IA um rascunho de resposta usando somente a lista oficial com fonte e data de revisão marcada."
         },
         {
-          "id": "slide-3",
-          "supported": true,
-          "reason": "A fonte brief instrui consultar se o identificador já foi registrado e, se existir, encaminhar para conferência em vez de criar nova tarefa, correspondendo à prescrição do slide 3.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Conferência necessária",
+          "title": "Verifique o trecho citado diretamente na fonte",
+          "body": "Confira se a citação gerada corresponde exatamente ao texto da política, pois geração automática não prova validade."
         },
         {
-          "id": "slide-4",
-          "supported": true,
-          "reason": "O exercício proposto no briefing é testar reenviando o mesmo pedido fictício e verificando se o sistema reconhece o identificador previamente registrado, conforme descrito no slide 4.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "caption",
-          "supported": true,
-          "reason": "A legenda resume corretamente o propósito educativo do conteúdo, reforça que é um exemplo fictício e convida ao engajamento sem prometer resultados, em conformidade com as fontes brief e label.",
-          "evidence": [
-            {
-              "sourceId": "label"
-            },
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "story",
-          "supported": true,
-          "reason": "O texto da story apresenta o tema de pedidos iguais chegando por canais diferentes e propõe o exercício de identificar e conferir registros, consistente com o escopo fictício definido no briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-1",
-          "supported": true,
-          "reason": "Os rótulos 'e-mail aberto', 'WhatsApp ativo' e 'identificador' refletem fielmente os elementos visuais e textuais presentes na ilustração do slide 1.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-2",
-          "supported": true,
-          "reason": "Os rótulos 'aluno pergunta', 'horário curso' e 'resposta enviada' correspondem aos textos legíveis na ilustração do slide 2, representando o fluxo de atendimento fictício.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-3",
-          "supported": true,
-          "reason": "Os rótulos 'recebe pedido', 'cria identificador' e 'registra sistema' espelham exatamente as etapas do fluxograma visualizado na ilustração do slide 3.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-4",
-          "supported": true,
-          "reason": "Os rótulos 'consulta registro', 'existe duplicado' e 'encaminha conferência' são idênticos aos itens listados na checklist da ilustração do slide 4.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-5",
-          "supported": false,
-          "reason": "Não há evidência visual ou textual nas fontes fornecidas que corrobore os rótulos 'reenvia pedido', 'verifica registro' e 'confere existente' como parte de uma quinta ilustração distinta; o slide 4 já cobre o teste de reenvio, tornando esta claim redundante ou inexistente no material auditado.",
-          "evidence": []
+          "eyebrow": "Exercício prático",
+          "title": "Marque a dúvida para revisão quando faltar base",
+          "body": "Se a resposta não estiver na política, registre a pendência para revisão humana antes de enviar qualquer comunicação ao interessado."
         }
       ],
-      "decision": "reject",
-      "supported": false,
-      "novel": true,
-      "practical": true,
-      "visualMatch": false,
-      "reason": "A claim art-5 não possui suporte nas fontes nem corresponde a uma ilustração verificável nos renders fornecidos, violando o critério de visualMatch e supported. Embora o conteúdo seja novel em relação ao histórico e prático como exercício, a inconsistência entre a descrição da arte-5 e o material disponível impede a aprovação editorial.",
-      "growth": {
-        "hookSpecific": true,
-        "payoffDelivered": true,
-        "followReason": true,
-        "shareReason": true
+      "caption": "Como sua equipe lida com dúvidas que fogem da política comercial? Este exercício propõe um método simples: manter uma lista atualizada, pedir rascunhos baseados nela e conferir cada citação na fonte original.\n\nQuando a informação não estiver disponível, marque para revisão humana. Acompanhe o perfil para aprender aplicações práticas de IA em empresas e organizar melhor sua operação diária.",
+      "storySlide": {
+        "eyebrow": "Rotina operacional",
+        "title": "Sua equipe confere citações antes de enviar?",
+        "body": "Veja no feed como criar um exercício prático para validar respostas geradas por IA usando políticas comerciais atualizadas da sua empresa."
       }
     },
     "structured": true,
