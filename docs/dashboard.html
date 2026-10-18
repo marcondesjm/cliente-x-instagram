@@ -3260,18 +3260,20 @@
       const accounts = appState.accounts || [];
       const connectedAccounts = accounts.filter((account) => account.onboarding?.status === 'connected').length;
       const readiness = appState.visualReadiness || {};
+      const biblical=readiness.required===true;
+      const bibleTopics=appState.biblicalResearch?.entries?.length||0;
       const openWatchdogError = (appState.watchdogErrors || []).some((error) => error.status === 'open');
       const capabilities = [
         {
-          good: radar.status === 'working',
-          title: 'Radar editorial',
-          body: `${radarSources.length} fontes cadastradas. Pesquisa pautas recentes, registra o link original e evita fonte, notícia e capa repetidas.`,
-          state: radar.status === 'working' ? 'Pesquisando fontes' : 'Requer atenção'
+          good: biblical ? bibleTopics>0 : radar.status === 'working',
+          title: biblical ? 'Pesquisa bíblica' : 'Radar editorial',
+          body: biblical ? `${bibleTopics} temas encontrados para pesquisa. Texto bíblico, cenas, licença e revisão precisam ser conferidos antes da publicação. Esta conta usa pesquisa bíblica em vez do radar de notícias.` : `${radarSources.length} fontes cadastradas. Pesquisa pautas recentes, registra o link original e evita fonte, notícia e capa repetidas.`,
+          state: biblical ? (bibleTopics?'Pesquisa cadastrada; revisão por pauta':'Pesquisa bíblica pendente') : radar.status === 'working' ? 'Pesquisando fontes' : 'Requer atenção'
         },
         {
-          good: DATA.packCount > 0 && (!readiness.required || readiness.ready > 0),
+          good: DATA.packCount > 0 && (!readiness.required || (readiness.unpublished??readiness.ready)>0),
           title: 'Conteúdo e criativos',
-          body: `${DATA.packCount} pautas cadastradas para ${DATA.schedulesUtc.length} horários.${readiness.required ? ` ${readiness.ready || 0} atendem ao padrão de ilustrações e ${readiness.pending || 0} aguardam preparação.` : ' A quantidade cadastrada não comprova revisão editorial ou postagem.'}`,
+          body: `${DATA.packCount} pautas cadastradas para ${DATA.schedulesUtc.length} horários.${readiness.required ? ` ${readiness.ready || 0} atendem ao padrão visual; ${Number.isInteger(readiness.unpublished)?readiness.unpublished:'saldo a conferir'} sem publicação no histórico e ${readiness.pending || 0} aguardam preparação. A seleção final também confere novidade e integridade.` : ' A quantidade cadastrada não comprova revisão editorial ou postagem.'}`,
           state: readiness.required ? 'Prontidão visual do acervo' : 'Acervo cadastrado'
         },
         {
@@ -3282,9 +3284,10 @@
         },
         {
           good: activeAutomations > 0,
+          optional: activeAutomations===0,
           title: 'Automação do Direct',
           body: `${activeAutomations} automação(ões) ativa(s), palavras-chave, entrega de materiais e ${deliveries} envio(s) registrado(s) no histórico.`,
-          state: activeAutomations ? 'Direct configurado' : 'Configuração pendente'
+          state: activeAutomations ? 'Direct configurado' : 'Opcional; não impede publicar Feed e Story'
         },
         {
           good: bioLinks > 0,
@@ -3299,8 +3302,9 @@
           state: `${connectedAccounts} conexão(ões) registrada(s); teste Meta separado`
         }
       ];
-      const attentionCount = capabilities.filter((item) => !item.good).length;
-      status.textContent = attentionCount ? `${attentionCount} atenção` : 'Tudo operacional';
+      const attentionCount = capabilities.filter((item) => !item.good&&!item.optional).length;
+      const optionalCount=capabilities.filter(item=>item.optional).length;
+      status.textContent = (attentionCount ? `${attentionCount} atenção` : 'Sem bloqueios neste resumo')+(optionalCount?` · ${optionalCount} opcional`:'');
       status.className = `status-pill ${attentionCount ? 'warn' : 'good'}`;
       grid.innerHTML = capabilities.map((item) => `
         <article class="capability-card ${item.good ? 'good' : 'warn'}">

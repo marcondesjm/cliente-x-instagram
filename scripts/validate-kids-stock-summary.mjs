@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+import {illustratedStockSummary} from '../lib/illustrated-stock-summary.js';
+import {packContentFingerprint} from '../lib/scheduled-content-guard.js';
+const pack={slides:[{title:'Jesus acolheu as crianças',body:'Texto de teste'}]};
+assert.equal(illustratedStockSummary([pack],[pack],[]).unpublished,1);
+assert.equal(illustratedStockSummary([pack],[pack],[{feedFingerprint:packContentFingerprint(pack)}]).unpublished,0);
+assert.equal(illustratedStockSummary([pack],[pack],[{coverTitle:'Jesus acolheu as criancas!'}]).unpublished,0);
+const html=fs.readFileSync('docs/dashboard.html','utf8');
+const fn=html.slice(html.indexOf('    function renderSystemCapabilities()'),html.indexOf('    function renderAccountSwitcher()'));
+const nodes=new Map();const get=id=>{if(!nodes.has(id))nodes.set(id,{});return nodes.get(id);};
+const data={visualReadiness:{required:true,ready:13,unpublished:0,pending:24},biblicalResearch:{entries:[{}]},watchdogErrors:[{status:'open'}],bioPage:{links:[{title:'Site',url:'https://example.test'}]},accounts:[{onboarding:{status:'connected'}}]};
+const sandbox={renderEditorialApiReview:()=>{},document:{getElementById:get},appState:data,DATA:{packCount:37,schedulesUtc:Array(12)},escapeHtml:String};vm.createContext(sandbox);vm.runInContext(fn,sandbox);sandbox.renderSystemCapabilities();
+assert.match(get('systemCapabilitiesGrid').innerHTML,/Pesquisa bíblica/);assert.match(get('systemCapabilitiesGrid').innerHTML,/0 sem publicação no histórico/);assert.match(get('systemCapabilitiesStatus').textContent,/2 atenção · 1 opcional/);
+assert(!get('systemCapabilitiesGrid').innerHTML.includes('0 fontes cadastradas'));
+sandbox.appState={...data,visualReadiness:{required:false},editorialRadar:{status:'working',sources:[{name:'Teste',url:'https://example.test'}]},directAutomation:{automations:[{enabled:true}]},watchdogErrors:[]};sandbox.renderSystemCapabilities();assert.match(get('systemCapabilitiesGrid').innerHTML,/Radar editorial/);assert.match(get('systemCapabilitiesStatus').textContent,/Sem bloqueios/);
+console.log('PASS: published illustrated packs excluded, normalized duplicate titles, Kids biblical research, optional Direct and main account capabilities. No API calls.');

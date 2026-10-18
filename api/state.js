@@ -1,4 +1,5 @@
 import {watchdogQuotaWait} from '../lib/watchdog-quota-wait.js';
+import {illustratedStockSummary} from '../lib/illustrated-stock-summary.js';
 import claudeControlHandler from "../lib/claude-api.js";
 import { educationCollectionDiagnostics } from '../lib/education-collection.js';
 import { visualReadyPacks, requiresBibleIllustrations } from '../lib/bible-visual-standard.js';
@@ -2966,7 +2967,7 @@ export default async function handler(req, res) {
     biblicalSceneAutomation,
     biblicalSceneReplenishment,
     editorialApiReview,
-    visualReadiness: { required: requiresBibleIllustrations(account), total: packs.length, ready: readyPacks.length, pending: packs.length - readyPacks.length },
+    visualReadiness: { required: requiresBibleIllustrations(account), ...illustratedStockSummary(packs,readyPacks,publicationHistory[accountKey]||[]) },
     calendarPublications: (publicationHistory[accountKey] || [])
       .filter(entry => entry.mediaId && entry.publishedAt)
       .map(entry => ({ date: brtDateAndTime(entry.publishedAt).date, title: entry.coverTitle || 'Publicado', permalink: entry.permalink || '', mediaId: entry.mediaId, storyMediaId: entry.storyMediaId || '' })),

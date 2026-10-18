@@ -258,7 +258,7 @@ function activate() {
   state.activationEvidence=assertSceneActivation({state,recipes,packs:read(C+'content-packs.json').find(g=>g.account==='sabedoria-kids').packs,assembled:read(C+'kids-scene-automation.json'),diagnostics:read(C+'kids-vision-transport-test.json'),readAsset:p=>fs.existsSync(p)?fs.readFileSync(p):null});
   state.accuracyGate=state.activationEvidence.accuracyGate;
   state.circuit=null;state.enabled=true;state.activatedAt=now();
-  Object.assign(state.policy,{maxCallsPerDay:26,maxInputTokensPerDay:1500000,maxPacksPerRun:3});
+  state.policy.maxCallsPerDay??=26;state.policy.maxInputTokensPerDay??=1500000;state.policy.maxPacksPerRun??=3;
   state.health='active';state.message='Reposição automática ativa: revisão dos pixels, testes de precisão e montagem obrigatória.';save();
 }
 try {
