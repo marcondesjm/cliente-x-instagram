@@ -3176,6 +3176,9 @@ export function anatexSlideHtml(slide, index, total, account, style, renderConte
     main.with-editorial-support:is(.role-value,.role-proof,.authorial-illustration):not(.has-sector-photo).reel-mode .note {top:1060px;min-height:440px;padding:60px;}
     main.authorial-illustration.has-sector-photo .context-photo { background-size:contain !important;background-color:#101b31; }
     body main.authorial-illustration.has-sector-photo .note {height:auto;min-height:0;bottom:auto;padding:24px 28px;}
+    body main.authorial-illustration.has-sector-photo .note .close {min-height:0;padding:0;margin-top:8px;background:transparent;}
+    main.authorial-illustration.with-editorial-support:not(.reel-mode) .editorial-support {top:440px;height:285px;}
+    main.authorial-illustration.with-editorial-support:not(.reel-mode) .editorial-support svg {height:240px;}
     main.authorial-illustration.with-editorial-support .note :is(.lead,.emphasis,.close) {color:#132238 !important;}
     /* Licensed Bible illustrations keep the whole scene visible. */
     body main.bible-illustration.has-sector-photo .headline { position:absolute;left:58px;right:58px;top:180px;width:auto;max-width:964px;margin:0;font-size:66px;line-height:1.06;text-align:left; }
