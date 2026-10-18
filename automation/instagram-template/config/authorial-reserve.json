@@ -3877,7 +3877,7 @@
       "topic": "extracao-campos-v3",
       "account": "cliente-x",
       "version": "claude-authorial-reserve-v1",
-      "status": "draft",
+      "status": "ready",
       "generationCallId": "ae00e3cc-fc8f-46f3-9f8a-2aa1f70a8041",
       "learningContext": {
         "version": "claude-observed-editorial-v1",
@@ -4140,10 +4140,225 @@
           "shareReason": true,
           "payoffDelivered": true
         }
+      },
+      "review": {
+        "claims": [
+          {
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "reason": "O slide descreve um pedido incompleto e questiona se a IA completa dados, com o exemplo de um cliente que não informa quantidade nem prazo, conforme o briefing.",
+            "id": "slide-1",
+            "supported": true
+          },
+          {
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "supported": true,
+            "id": "slide-2",
+            "reason": "O slide orienta a definir campos antes da extração e solicitar uma tabela com colunas de produto, quantidade e prazo, alinhado ao briefing."
+          },
+          {
+            "reason": "O slide instrui a marcar ausentes sem supor valores e comparar campos com a mensagem original, conforme o briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "supported": true,
+            "id": "slide-3"
+          },
+          {
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "reason": "O slide propõe um exercício prático de criar um pedido fictício e revisar a tabela gerada, conforme o briefing.",
+            "id": "slide-4"
+          },
+          {
+            "id": "caption",
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "reason": "A legenda resume o objetivo do exercício de estruturar a extração de dados e conferir itens, conforme o briefing."
+          },
+          {
+            "reason": "O story convida a descobrir como validar tabelas geradas por IA, alinhado ao briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "id": "story",
+            "supported": true
+          },
+          {
+            "reason": "Os rótulos da ilustração fictícia refletem o cenário proposto no briefing.",
+            "supported": true,
+            "id": "art-1",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "supported": true,
+            "reason": "Os rótulos da ilustração fictícia refletem o cenário proposto no briefing.",
+            "id": "art-2",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "id": "art-3",
+            "supported": true,
+            "reason": "Os rótulos da ilustração fictícia refletem o cenário proposto no briefing."
+          },
+          {
+            "reason": "Os rótulos da ilustração fictícia refletem o cenário proposto no briefing.",
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "id": "art-4"
+          },
+          {
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "reason": "Os rótulos da ilustração fictícia refletem o cenário proposto no briefing.",
+            "supported": true,
+            "id": "art-5"
+          }
+        ],
+        "decision": "approve",
+        "supported": true,
+        "novel": true,
+        "practical": true,
+        "visualMatch": true,
+        "reason": "O conteúdo apresenta um exercício educativo fictício coerente com o briefing, estruturado de forma clara e prática para o público-alvo, sem promessas de resultados ou dados reais.",
+        "growth": {
+          "hookSpecific": true,
+          "followReason": true,
+          "shareReason": true,
+          "payoffDelivered": true
+        },
+        "bindingVersion": "exact-source-id-v1",
+        "callId": "71d1a2b4-6d79-43db-b87d-8748823cd065",
+        "packHash": "e4d039b9ae97ebc82bc6959eec01722a7dbd25caa7caf28e7a93edc84e117cce",
+        "checkedAt": "2026-10-18T19:37:03.998Z",
+        "groundingTask": {
+          "scope": "Exercício educativo fictício. Orientações são propostas, não resultados ou notícias.",
+          "sources": [
+            {
+              "id": "brief",
+              "text": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+            },
+            {
+              "id": "label",
+              "text": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            }
+          ],
+          "claims": [
+            {
+              "id": "slide-1",
+              "text": "Pedido incompleto. A IA completa dados que faltam?. Um cliente envia mensagem pedindo três itens sem informar quantidade nem prazo de entrega."
+            },
+            {
+              "id": "slide-2",
+              "text": "Estrutura clara. Defina os campos antes da extração. Solicite à inteligência artificial uma tabela com colunas produto quantidade e prazo definidos previamente."
+            },
+            {
+              "id": "slide-3",
+              "text": "Conferência obrigatória. Marque ausentes sem supor valores. Compare cada campo extraído com a mensagem original e registre não informado quando o dado estiver ausente."
+            },
+            {
+              "id": "slide-4",
+              "text": "Exercício prático. Valide antes de cadastrar o pedido. Crie um pedido fictício e revise linha por linha a tabela gerada contra o texto recebido do cliente."
+            },
+            {
+              "id": "caption",
+              "text": "Como evitar que a IA invente dados em pedidos comerciais? Este exercício mostra como estruturar a extração de informações de mensagens de clientes, definindo campos claros e conferindo cada item antes do cadastro.\n\nVocê já revisou uma tabela gerada por IA contra o texto original do cliente? Siga o perfil para aprender aplicações práticas de inteligência artificial em empresas.\n\nConteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            },
+            {
+              "id": "story",
+              "text": "Rotina comercial. Você confere dados extraídos por IA?. Descubra no feed como validar tabelas geradas por inteligência artificial antes de cadastrar pedidos na sua empresa."
+            },
+            {
+              "id": "art-1",
+              "text": "Rótulos de ilustração fictícia: mensagem cliente. campos vazios. tabela IA"
+            },
+            {
+              "id": "art-2",
+              "text": "Rótulos de ilustração fictícia: definir colunas. estrutura tabela. IA processa"
+            },
+            {
+              "id": "art-3",
+              "text": "Rótulos de ilustração fictícia: ler original. comparar campo. marcar ausente"
+            },
+            {
+              "id": "art-4",
+              "text": "Rótulos de ilustração fictícia: produto ok. quantidade?. prazo?"
+            },
+            {
+              "id": "art-5",
+              "text": "Rótulos de ilustração fictícia: validar tudo. revisar linha. cadastrar seguro"
+            }
+          ]
+        }
+      },
+      "render": {
+        "version": "authorial-layout-v3",
+        "packHash": "e4d039b9ae97ebc82bc6959eec01722a7dbd25caa7caf28e7a93edc84e117cce",
+        "verifiedAt": "2026-10-18T19:37:03.998Z",
+        "feedCount": 4,
+        "story": true,
+        "runDir": "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-18-163612-slot-2-render-only",
+        "imageHashes": [
+          "586ddf18a8c112d8d73f57598756158505695978c7a649266aa220afc44d8930",
+          "a324f588b3d2ea09a957f3a7041732e9319bd0a01d71d797c5c42c3e8ce53e0d",
+          "e480235da14526851ce0460da9b9daf29002658703fc7174ba14f350f9c6fe95",
+          "e8dbf1288521733e1754e3603bba2eaf0f2c14d18fbdd54dac44446420faf7c4",
+          "c76559938b4e1ae952a2a0377b95b9cf6495809531916dcb86d9656857d4b0b1"
+        ]
       }
     }
   ],
-  "checkedAt": "2026-10-18T19:37:02.613Z",
+  "checkedAt": "2026-10-18T19:37:04.000Z",
   "workflowRun": "39159132037",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
