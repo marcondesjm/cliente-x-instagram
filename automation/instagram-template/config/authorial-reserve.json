@@ -3224,138 +3224,53 @@
           "796deb2d23cb9e373a3797f7b3b44c5e9c19f52bb9fd881486dcf8e2ab940229"
         ]
       }
+    },
+    {
+      "id": "draft-base-respostas-v2",
+      "topic": "base-respostas-v2",
+      "account": "cliente-x",
+      "version": "claude-authorial-reserve-v1",
+      "status": "rejected",
+      "generationCallId": "0b66b1b6-bd00-4a6a-9fee-490367196c60",
+      "createdAt": "2026-10-18T18:55:48.985Z",
+      "draftRevisionCallId": "5ac215a3-a079-42f6-a9f6-16eb66df1d31",
+      "reason": "Pauta de crescimento precisa explicar por que acompanhar o perfil."
     }
   ],
-  "checkedAt": "2026-10-18T18:55:31.939Z",
+  "checkedAt": "2026-10-18T18:56:05.442Z",
   "workflowRun": "39155841344",
-  "message": "2 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
+  "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "review:pedido-duplicado-v2",
-    "callId": "8153941e-9e38-44bb-8e69-3c3b7fd31ef4",
+    "stage": "revise-draft:base-respostas-v2",
+    "callId": "5ac215a3-a079-42f6-a9f6-16eb66df1d31",
     "value": {
-      "claims": [
+      "slides": [
         {
-          "reason": "O slide descreve o problema de pedidos duplicados, exemplificando com um cliente que envia o mesmo pedido por e-mail e formulário, o que é sustentado pelo briefing.",
-          "supported": true,
-          "id": "slide-1",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Política comercial",
+          "title": "O rascunho cita a fonte correta?",
+          "body": "Um orçamento fictício pede prazo fora da política comercial vigente e registrada com data de revisão."
         },
         {
-          "reason": "O slide propõe a atribuição de um código único antes da criação da tarefa, conforme orientado no briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "id": "slide-2",
-          "supported": true
+          "eyebrow": "Procedimento",
+          "title": "Exija indicação do trecho usado no rascunho",
+          "body": "Peça um rascunho baseado apenas na política e exija que ele indique o trecho específico utilizado como base."
         },
         {
-          "id": "slide-3",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "supported": true,
-          "reason": "O slide instrui a verificar a existência do identificador antes de prosseguir, o que está alinhado com o briefing."
+          "eyebrow": "Conferência",
+          "title": "Confira o trecho citado na fonte original",
+          "body": "Uma citação gerada não comprova validade, então confira o trecho indicado diretamente na fonte oficial registrada."
         },
         {
-          "supported": true,
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "O slide propõe um teste prático de reenvio para verificar o comportamento do sistema, conforme sugerido no briefing.",
-          "id": "slide-4"
-        },
-        {
-          "supported": true,
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "A legenda resume o exercício educativo proposto no briefing, mantendo a cautela sobre a implementação técnica.",
-          "id": "caption"
-        },
-        {
-          "supported": true,
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "O story convida à reflexão sobre pedidos duplicados e direciona para o exercício no feed, conforme o briefing.",
-          "id": "story"
-        },
-        {
-          "supported": true,
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "Os rótulos da ilustração são consistentes com o cenário fictício descrito no briefing.",
-          "id": "art-1"
-        },
-        {
-          "supported": true,
-          "id": "art-2",
-          "reason": "Os rótulos da ilustração são consistentes com o cenário fictício descrito no briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "reason": "Os rótulos da ilustração são consistentes com o cenário fictício descrito no briefing.",
-          "supported": true,
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "id": "art-3"
-        },
-        {
-          "id": "art-4",
-          "reason": "Os rótulos da ilustração são consistentes com o cenário fictício descrito no briefing.",
-          "supported": true,
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "id": "art-5",
-          "supported": true,
-          "reason": "Os rótulos da ilustração são consistentes com o cenário fictício descrito no briefing."
+          "eyebrow": "Exercício",
+          "title": "Marque a dúvida para revisão posterior",
+          "body": "Quando a resposta não estiver na política, marque a dúvida para revisão e evite assumir informações não documentadas."
         }
       ],
-      "decision": "approve",
-      "supported": true,
-      "novel": true,
-      "practical": true,
-      "visualMatch": true,
-      "reason": "O conteúdo apresenta um exercício educativo coerente e prático sobre a gestão de pedidos duplicados, seguindo as diretrizes do briefing sem prometer resultados irreais. A estrutura é clara e os elementos visuais apoiam o fluxo de aprendizado proposto.",
-      "growth": {
-        "payoffDelivered": true,
-        "shareReason": true,
-        "hookSpecific": true,
-        "followReason": true
+      "caption": "Imagine que um cliente solicita prazo fora da política registrada. Sua equipe consulta o documento oficial ou responde de memória? Mantenha uma lista atualizada com fonte e data de revisão. Peça rascunhos baseados apenas nesse material e exija a indicação do trecho usado.\n\nConfira sempre o trecho na fonte original, pois citações geradas não provam validade por si só. Quando a informação não estiver documentada, marque a dúvida para revisão em vez de assumir dados. Quer aprender aplicações práticas de IA em empresas? Acompanhe o perfil para receber conteúdos úteis assim.",
+      "storySlide": {
+        "eyebrow": "Rotina",
+        "title": "Seu time confere a fonte antes de enviar?",
+        "body": "Quando um cliente pede algo fora da política, sua equipe verifica o documento registrado ou responde de memória?"
       }
     },
     "structured": true,
@@ -3412,13 +3327,13 @@
   "automaticRecovery": {
     "pending": false,
     "pendingSlot": null,
-    "available": 2,
+    "available": 3,
     "recoveryReady": false,
     "run": true,
     "phase": "maintain_stock",
     "budgetRenewsAt": "2026-10-19T03:00:00.000Z",
-    "nextAttemptAt": "2026-10-18T18:52:52.134Z",
-    "checkedAt": "2026-10-18T18:52:52.355Z",
+    "nextAttemptAt": "2026-10-18T18:56:06.884Z",
+    "checkedAt": "2026-10-18T18:56:07.112Z",
     "workflowRun": "39155841344",
     "retryAfter": null
   }
