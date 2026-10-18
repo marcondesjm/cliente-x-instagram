@@ -7894,140 +7894,40 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T20:02:56.968Z",
+  "checkedAt": "2026-10-18T20:03:18.894Z",
   "workflowRun": "39161134821",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "review:fila-prioridade-v4",
-    "callId": "2e4cf6a0-c902-4e86-8839-e5db6ebe8d94",
+    "stage": "generate:teste-variacoes-v4",
+    "callId": "69d836df-feb9-4aa3-af39-95d1eecf16af",
     "value": {
-      "claims": [
+      "slides": [
         {
-          "id": "slide-1",
-          "supported": true,
-          "reason": "A claim descreve o cenário fictício da escola e a pergunta central sobre prioridade, alinhando-se ao briefing que propõe um exercício educativo com solicitações fictícias de horários e inscrições.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Inscrição incompleta",
+          "title": "O pedido do aluno tem todos os dados?",
+          "body": "Escreva um pedido fictício com nome, curso e horário desejado para inscrição na escola."
         },
         {
-          "id": "slide-2",
-          "supported": true,
-          "reason": "A claim instrui a definição de critérios explícitos como prazo e tipo de solicitação, correspondendo exatamente à orientação do briefing para estabelecer regras antes de classificar.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Varie o texto",
+          "title": "Crie versões com erro e falta de informação",
+          "body": "Repita o mesmo pedido com abreviação excessiva, erro de digitação e campo essencial ausente propositalmente."
         },
         {
-          "id": "slide-3",
-          "supported": true,
-          "reason": "A claim orienta pedir justificativa à IA e comparar com critérios definidos, seguindo a prescrição do briefing de solicitar sugestão de classificação acompanhada de explicação.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Execute e compare",
+          "title": "Rode a instrução e anote as divergências",
+          "body": "Use o mesmo rascunho de instrução em cada versão e compare os campos extraídos pela ferramenta automaticamente."
         },
         {
-          "id": "slide-4",
-          "supported": true,
-          "reason": "A claim determina a revisão manual de casos ambíguos antes de alterar a fila, conforme explicitado no briefing como etapa obrigatória do exercício.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "caption",
-          "supported": true,
-          "reason": "O texto resume o fluxo educativo proposto (critérios, IA com justificativa, comparação, revisão) e inclui o aviso de conteúdo fictício, atendendo às restrições de não prometer resultados nem inferir urgência pessoal.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            },
-            {
-              "sourceId": "label"
-            }
-          ]
-        },
-        {
-          "id": "story",
-          "supported": true,
-          "reason": "A capa abre com uma pergunta específica sobre a rotina operacional de priorização, aplicando o experimento editorial de alterar o eixo hook para uma situação empresarial reconhecível.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-1",
-          "supported": true,
-          "reason": "Os rótulos 'prazo definido', 'tipo de solicitação' e 'fila de espera' são elementos visuais do exemplo fictício descrito no briefing para ilustrar a triagem na escola.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-2",
-          "supported": true,
-          "reason": "Os rótulos 'critérios escritos', 'triagem clara' e 'regras visíveis' representam visualmente a etapa de definição de regras antes da classificação, conforme o briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-3",
-          "supported": true,
-          "reason": "Os rótulos 'sugestão da IA', 'justificativa dada' e 'comparação feita' ilustram o fluxo de conferência solicitado no briefing, onde a IA deve justificar sua classificação.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-4",
-          "supported": true,
-          "reason": "Os rótulos 'casos ambíguos', 'revisão manual' e 'ordem ajustada' correspondem à etapa final de revisão humana prescrita no briefing para situações duvidosas.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-5",
-          "supported": true,
-          "reason": "Os rótulos 'mensagens recebidas', 'prioridade definida' e 'atendimento iniciado' compõem a ilustração da capa (Story), representando visualmente a rotina operacional questionada no hook experimental.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Ajuste e repita",
+          "title": "Corrija a instrução antes da rotina real",
+          "body": "Refine a instrução com base nas divergências encontradas e repita o teste completo antes de aplicar na operação diária."
         }
       ],
-      "decision": "approve",
-      "supported": true,
-      "novel": true,
-      "practical": true,
-      "visualMatch": true,
-      "reason": "O lote apresenta um exercício educativo completo e coerente com o briefing, utilizando um cenário fictício de escola para ensinar priorização de filas com IA. O experimento editorial foi aplicado corretamente na capa (Story), que abre com uma pergunta situacional específica sobre rotina operacional. Todas as claims possuem suporte nas fontes fornecidas, incluindo os rótulos das ilustrações que refletem fielmente as etapas do fluxo proposto. O conteúdo é prático, executável e evita promessas de resultados ou viés pessoal, atendendo aos critérios de crescimento e às restrições editoriais.",
-      "experimentApplied": true,
-      "growth": {
-        "hookSpecific": true,
-        "payoffDelivered": true,
-        "followReason": true,
-        "shareReason": true
+      "caption": "Como garantir que a IA entenda pedidos variados de alunos? Escreva um pedido fictício de inscrição com dados completos. Crie versões com abreviação, erro de digitação e informação faltante. Execute a mesma instrução em cada caso e compare os resultados extraídos.\n\nAnote onde a ferramenta falhou ou completou dados sozinha. Ajuste a instrução para ser mais clara e específica. Repita o ciclo até obter consistência. Só então use na rotina real. Qual campo costuma faltar nos pedidos da sua equipe? Siga o perfil para aprender aplicações práticas de IA em empresas.",
+      "storySlide": {
+        "eyebrow": "Rotina de inscrições",
+        "title": "Seus pedidos chegam completos?",
+        "body": "Teste como a IA lida com textos variados antes de usar na operação real. Veja o exercício no feed."
       }
     },
     "structured": true,
