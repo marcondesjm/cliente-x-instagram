@@ -3,8 +3,8 @@
   "enabled": true,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "reviewing",
-  "message": "Revisando cenas da pauta kids-biblia-34; aprovação bíblica, visual e render ainda obrigatórios.",
+  "health": "daily_limit",
+  "message": "Saldo interno insuficiente para revisão completa; aguarda a renovação diária sem iniciar novas leituras.",
   "policy": {
     "maxCallsPerDay": 100,
     "maxInputTokensPerCall": 120000,
@@ -3511,7 +3511,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T19:41:40.344Z",
+  "checkedAt": "2026-10-18T19:41:42.193Z",
   "lastRun": "39159879406",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -5466,6 +5466,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 0,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-18T19:41:40.344Z"
+    "checkedAt": "2026-10-18T19:41:42.193Z"
   }
 }
