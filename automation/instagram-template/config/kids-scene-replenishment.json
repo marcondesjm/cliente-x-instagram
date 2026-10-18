@@ -4550,11 +4550,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-18T22:10:57.258Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 13352,
       "imageFingerprint": null,
-      "promptFingerprint": "fb0cd657c22d5e9374379cafa555fd5d57a7335fd1a4cac198edd34cc4ce8254"
+      "promptFingerprint": "fb0cd657c22d5e9374379cafa555fd5d57a7335fd1a4cac198edd34cc4ce8254",
+      "completedAt": "2026-10-18T22:12:06.739Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 30,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -4697,7 +4703,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T22:10:57.258Z",
+  "checkedAt": "2026-10-18T22:12:06.740Z",
   "lastRun": "39170079691",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -4972,12 +4978,478 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-18:a9d2a1f72a9649e9",
+    "stage": "select:kids-biblia-18",
     "value": {
-      "visible": true,
-      "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Figuras humanas em pé sobre uma grande embarcação de madeira inclinada, lançando sacos e um baú para a água verde agitada; o céu ao fundo apresenta tons escuros com nuvens. A composição mostra o casco vermelho da embarcação ocupando a parte superior e objetos flutuantes na água na parte inferior."
+      "cards": [
+        {
+          "card": 1,
+          "reason": "Capa exige evento do título: nova oportunidade/comissão divina em Jonas 3:1-2",
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa sem figura humana não retrata comissão divina ou profeta recebendo mensagem"
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena pós-arrependimento de Nínive, fora do escopo da capa sobre nova oportunidade"
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas observando cidade após pregação, não momento da comissão divina"
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas sob abrigo destruído, episódio final fora do escopo da capa"
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas pregando a judeus em Israel, contexto diferente de Jonas 3"
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Pessoas bebendo, cena genérica não relacionada à comissão de Jonas"
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas sendo lançado ao mar, episódio anterior de Jonas 1-2"
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Homem encolhido em sackcloth, pode ser rei de Nínive mas não é comissão"
+            },
+            {
+              "scene": 9,
+              "allowed": true,
+              "verse": "3:4",
+              "reason": "Jonas pregando na cidade ilustra o cumprimento da comissão divina"
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas confessando aos marinheiros, episódio de Jonas 1"
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Marinheiros apontando, cena do barco antes de Jonas ser lançado"
+            },
+            {
+              "scene": 12,
+              "allowed": false,
+              "verse": "",
+              "reason": "Tripulação jogando carga ao mar, tempestade de Jonas 1"
+            }
+          ]
+        },
+        {
+          "card": 2,
+          "reason": "Cartão narrativo: Deus fala com Jonas que vai a Nínive anunciar mensagem",
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "3:3",
+              "reason": "Mapa com trajetória ilustra viagem de Jonas a Nínive conforme comando divino"
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Reação de homens após arrependimento, não narra ida e pregação inicial"
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas observando após pregação, etapa posterior ao resumo do cartão"
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Episódio final com abrigo destruído, fora do escopo narrativo do cartão"
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas pregando a judeus em Israel, contexto errado para Jonas 3"
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Pessoas bebendo, não ilustra narrativa de Jonas indo a Nínive"
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas sendo lançado ao mar, episódio anterior não relacionado a Jonas 3"
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Figura encolhida pode ser rei, mas não ilustra Jonas anunciando mensagem"
+            },
+            {
+              "scene": 9,
+              "allowed": true,
+              "verse": "3:4",
+              "reason": "Jonas pregando na cidade ilustra anúncio da mensagem divina em Nínive"
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas no barco confessando, episódio de Jonas 1 não relacionado"
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Marinheiros no barco, cena anterior não relacionada a Jonas 3"
+            },
+            {
+              "scene": 12,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jogando carga ao mar durante tempestade, episódio de Jonas 1"
+            }
+          ]
+        },
+        {
+          "card": 3,
+          "reason": "Lição: após erro podemos ouvir orientação e mudar atitude - whole_passage",
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa sem figura humana não ilustra mudança de atitude pessoal"
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Homens reagindo após arrependimento coletivo, não foca em lição individual"
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas observando cidade, não ilustra claramente mudança de atitude"
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas reclamando sob abrigo destruído, mostra teimosia não mudança"
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas pregando a judeus, contexto diferente de Jonas 3"
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Pessoas bebendo, não ilustra lição sobre mudança de atitude"
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas sendo lançado ao mar, não ilustra mudança de atitude"
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "3:6",
+              "reason": "Rei tirando vestes reais e sentando em cinzas ilustra humildade e mudança"
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas pregando ameaça, não ilustra mudança de atitude dos ouvintes"
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas confessando culpa, mas contexto é Jonas 1 não Jonas 3"
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Marinheiros no barco, não ilustra lição sobre mudança de atitude"
+            },
+            {
+              "scene": 12,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jogando carga ao mar, ação prática não ilustra mudança espiritual"
+            }
+          ]
+        },
+        {
+          "card": 4,
+          "reason": "Atividade familiar: pensar como consertar algo que saiu errado - whole_passage",
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa não ilustra reflexão sobre consertar erros pessoais"
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Homens reagindo coletivamente, não sugere atividade familiar de reflexão"
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas observando passivamente, não ilustra processo de consertar erro"
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas reclamando amargamente, não modela atitude construtiva"
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas pregando a outros, não ilustra reflexão familiar sobre erros"
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Pessoas bebendo, não conecta com tema de consertar erros"
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas sendo lançado ao mar, consequência não ilustra conserto"
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "3:6-8",
+              "reason": "Rei mudando atitude ilustra reconhecimento de erro e busca de reparação"
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas anunciando juízo, não ilustra processo de consertar erro"
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas admitindo culpa no barco, mas contexto é Jonas 1"
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Marinheiros no barco, não ilustra reflexão sobre consertar erros"
+            },
+            {
+              "scene": 12,
+              "allowed": false,
+              "verse": "",
+              "reason": "Ação emergencial no barco, não ilustra processo reflexivo de conserto"
+            }
+          ]
+        },
+        {
+          "card": 5,
+          "reason": "Leitura em família: ler Jonas 3:1-10 - whole_passage",
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "3:3",
+              "reason": "Mapa com trajetória contextualiza geograficamente a passagem para leitura"
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena pós-arrependimento, não representa integralmente Jonas 3:1-10"
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Episódio final de Jonas 4, fora da passagem Jonas 3:1-10"
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Episódio de Jonas 4, fora do escopo da passagem indicada"
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas pregando em Israel, contexto diferente de Jonas 3"
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Pessoas bebendo, não ilustra conteúdo de Jonas 3:1-10"
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Episódio de Jonas 1-2, fora da passagem Jonas 3:1-10"
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "3:6",
+              "reason": "Rei de Nínive em sackcloth ilustra parte central da passagem lida"
+            },
+            {
+              "scene": 9,
+              "allowed": true,
+              "verse": "3:4",
+              "reason": "Jonas pregando em Nínive ilustra evento central da passagem lida"
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas no barco, episódio de Jonas 1 fora da passagem"
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Marinheiros no barco, episódio anterior fora de Jonas 3:1-10"
+            },
+            {
+              "scene": 12,
+              "allowed": false,
+              "verse": "",
+              "reason": "Tempestade de Jonas 1, fora do escopo da passagem indicada"
+            }
+          ]
+        },
+        {
+          "card": 6,
+          "reason": "Story: cena diferente relacionada à mesma passagem Jonas 3:1-10",
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "3:3",
+              "reason": "Mapa contextualiza jornada a Nínive, pertinente à passagem"
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Reação pós-arrependimento, mais ligado a Jonas 4 do que Jonas 3"
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Episódio de Jonas 4, fora da passagem Jonas 3:1-10"
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Episódio de Jonas 4, fora do escopo da passagem"
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas em Israel, contexto diferente de Jonas 3"
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Pessoas bebendo, não relacionada especificamente a Jonas 3"
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Episódio de Jonas 1-2, fora da passagem Jonas 3:1-10"
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "3:6",
+              "reason": "Rei em sackcloth e cinzas ilustra resposta de Nínive em Jonas 3"
+            },
+            {
+              "scene": 9,
+              "allowed": true,
+              "verse": "3:4",
+              "reason": "Jonas pregando em Nínive ilustra evento central de Jonas 3"
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jonas no barco, episódio de Jonas 1 fora da passagem"
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Marinheiros no barco, episódio anterior fora de Jonas 3:1-10"
+            },
+            {
+              "scene": 12,
+              "allowed": false,
+              "verse": "",
+              "reason": "Tempestade de Jonas 1, fora do escopo da passagem"
+            }
+          ]
+        }
+      ]
     }
   },
   "lastFactualEvaluation": {
@@ -7097,6 +7569,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 21,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-18T22:10:57.258Z"
+    "checkedAt": "2026-10-18T22:12:06.740Z"
   }
 }
