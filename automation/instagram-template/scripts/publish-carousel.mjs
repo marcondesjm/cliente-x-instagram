@@ -19,6 +19,7 @@ import { assertVisualAgentPlan, buildVisualAgentPlan, CLOUD_VISUAL_AGENT_VERSION
 import { editorialImageCandidates } from '../../../lib/editorial-image-fallbacks.js';
 import { photoSignature, similarPhoto, photoIdentity } from '../../../lib/photo-uniqueness.js';
 import { readyAuthorialPacks, approvedGeneratedPack } from '../../../lib/authorial-reserve.js';
+import {growthEnabled,growthDiscoveryStrategy,growthEditorialSignals} from '../../../lib/audience-growth.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const TEMPLATE_DIR = resolve(ROOT, 'automation', 'instagram-template');
@@ -710,6 +711,12 @@ function withFreePromptsCtaAtEnd(caption = '') {
 }
 
 const CONTENT_GOALS = {
+  growth: {
+    label: 'Crescimento de público',
+    eyebrowHooks: ['IA na prática', 'Teste na sua rotina', 'Dúvida da equipe', 'Aplicação prática'],
+    captionAngles: ['Use um exemplo concreto para discutir esta aplicação de IA com a equipe.'],
+    ctas: ['Siga o perfil para aprender aplicações práticas de IA no atendimento, nas vendas e na operação.']
+  },
   authority: {
     label: 'Autoridade',
     eyebrowHooks: ['Ponto de vista', 'Autoridade', 'Critério', 'Experiência real'],
@@ -1305,7 +1312,8 @@ function enhanceSlide(slide, index, dateString, slotIndex, goal = CONTENT_GOALS.
   return next;
 }
 
-function organicDiscoveryStrategy(dateString, slotIndex) {
+function organicDiscoveryStrategy(dateString, slotIndex, account = {}) {
+  if(growthEnabled(account))return growthDiscoveryStrategy(dateString,slotIndex);
   return ORGANIC_DISCOVERY_STRATEGIES[pickDailyIndex(ORGANIC_DISCOVERY_STRATEGIES, dateString, slotIndex)];
 }
 
@@ -1339,7 +1347,7 @@ function enhancePackForEngagement(pack, dateString, slotIndex, account = {}) {
 
   const enhanced = JSON.parse(JSON.stringify(pack));
   const goal = contentGoalFromAccount(account);
-  const discovery = organicDiscoveryStrategy(dateString, slotIndex);
+  const discovery = organicDiscoveryStrategy(dateString, slotIndex, account);
   const totalSlides = (enhanced.slides || []).length;
   const preserveResearchCopy = Boolean(enhanced.research?.sourceUrl);
   if (preserveResearchCopy) {
@@ -4578,6 +4586,7 @@ function organicPotentialScore(pack = {}, dateString = todaySaoPaulo(), publicat
   if (facts.length >= 3) add(7, 'densidade-factual');
   if (facts.some((fact) => String(fact).length >= 150)) add(4, 'contexto-aprofundado');
   if (/chocante|imperdivel|imperdível|voce nao vai acreditar|você não vai acreditar|matriculas abertas|matrículas abertas|pre-mba|pré-mba/iu.test(searchable)) add(-20, 'promocao-ou-clickbait');
+  if(learningContext.growthMode){const growth=growthEditorialSignals(pack);score+=growth.adjustment;signals.push(...growth.reasons);}
 
   const fatigue = contentFatigue(pack, publicationHistory);
   if (fatigue.penalty) add(-fatigue.penalty, ...fatigue.reasons);
@@ -5869,12 +5878,13 @@ async function main() {
 
   const selectionSlotCron = (account.scheduleUtc || [])[generationSlotIndex] || '';
   const selectionSlotTime = scheduledPost?.scheduledFor || (selectionSlotCron ? cronToBrtTime(selectionSlotCron) : '');
-  const selectionDiscovery = organicDiscoveryStrategy(today, generationSlotIndex);
+  const selectionDiscovery = organicDiscoveryStrategy(today, generationSlotIndex, account);
   const selectionLearningContext = {
     format: publicationFormat(publishMode),
     daypart: learningDaypart(selectionSlotTime),
     objective: learningObjective(selectionDiscovery.primarySignal),
-    primarySignal: selectionDiscovery.primarySignal
+    primarySignal: selectionDiscovery.primarySignal,
+    growthMode: growthEnabled(account)
   };
 
   const token = env[account.accessTokenEnv];

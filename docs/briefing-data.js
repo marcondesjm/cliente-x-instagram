@@ -17,7 +17,7 @@ export function normalizeBriefing(input) {
   if (!/^[a-zA-Z0-9._]{1,30}$/.test(username) || ['p','reel','reels','stories','explore','accounts'].includes(username.toLowerCase())) throw new Error('Informe um @ válido do Instagram.');
   data.username = username.toLowerCase();
   for (const key of ['brand','niche','audience','offer']) if (!data[key]) throw new Error('Preencha nome da marca, nicho, público e conteúdo ou oferta principal.');
-  data.goal = ['authority','leads','offer','personalBrand','reactivation'].includes(input.goal) ? input.goal : 'authority';
+  data.goal = ['growth','authority','leads','offer','personalBrand','reactivation'].includes(input.goal) ? input.goal : 'authority';
   data.tone = ['consultivo','autoridade','educativo','provocativo'].includes(input.tone) ? input.tone : 'educativo';
   data.postsPerDay = Number(input.postsPerDay);
   const allowedFormats = ['feed', 'reels', 'stories'];

@@ -2456,7 +2456,7 @@
               Objetivo dos próximos posts
               <select id="activeAccountGoal">
                 <option value="authority">Autoridade</option>
-                <option value="leads">Captação de leads</option>
+                <option value="growth">Crescer público e seguidores</option><option value="leads">Captação de leads</option>
                 <option value="offer">Oferta ou lançamento</option>
                 <option value="personalBrand">Marca pessoal</option>
                 <option value="reactivation">Reativação</option>
@@ -2613,7 +2613,7 @@
                     Objetivo
                     <select id="brandBriefingGoal">
                       <option value="authority">Autoridade</option>
-                      <option value="leads">Captação de leads</option>
+                      <option value="growth">Crescer público e seguidores</option><option value="leads">Captação de leads</option>
                       <option value="offer">Oferta ou lançamento</option>
                       <option value="personalBrand">Marca pessoal</option>
                       <option value="reactivation">Reativação</option>
@@ -2752,7 +2752,7 @@
               Objetivo dos próximos posts
               <select id="newAccountGoal">
                 <option value="authority">Autoridade</option>
-                <option value="leads">Captação de leads</option>
+                <option value="growth">Crescer público e seguidores</option><option value="leads">Captação de leads</option>
                 <option value="offer">Oferta ou lançamento</option>
                 <option value="personalBrand">Marca pessoal</option>
                 <option value="reactivation">Reativação</option>
@@ -2805,7 +2805,7 @@
                     Objetivo
                     <select id="newAccountBriefingGoal">
                       <option value="authority">Autoridade</option>
-                      <option value="leads">Captação de leads</option>
+                      <option value="growth">Crescer público e seguidores</option><option value="leads">Captação de leads</option>
                       <option value="offer">Oferta ou lançamento</option>
                       <option value="personalBrand">Marca pessoal</option>
                       <option value="reactivation">Reativação</option>
@@ -5994,6 +5994,15 @@
     };
 
     const briefingGoals = {
+      growth: {
+        label: 'Crescimento de público',
+        questions: [
+          'Quem deve descobrir e acompanhar este perfil?',
+          'Que problema dessa pessoa o conteúdo pode ajudar a resolver?',
+          'O que ela aprende no próprio post e por que voltaria ao perfil?',
+          'Quais dados de alcance, compartilhamentos e seguidores estão disponíveis?'
+        ]
+      },
       authority: {
         label: 'Autoridade',
         questions: [
