@@ -4721,11 +4721,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-18T22:16:03.203Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 63412,
       "promptChars": 793,
       "imageFingerprint": "789c12543fd4dddfd32ceb70a38441dc60c4772f1328dbad05d3e9ca5f64b5c4",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-18T22:16:24.856Z",
+      "reportedInputTokens": 23038,
+      "inputTokens": 23038,
+      "outputTokens": 70,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -4876,7 +4882,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T22:16:03.203Z",
+  "checkedAt": "2026-10-18T22:16:24.856Z",
   "lastRun": "39170079691",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -5156,12 +5162,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-16:71a5339de6517af2",
+    "stage": "pixels:kids-biblia-16:a785bd66f81a1b2a",
     "value": {
       "visible": true,
       "style": "illustration",
       "childSuitable": true,
-      "observedEvent": "Ilustração mostrando uma mulher ajoelhada apontando o dedo para um homem barbudo de perfil em primeiro plano, enquanto uma criança está deitada sobre uma superfície elevada ao fundo, em ambiente externo com vegetação."
+      "observedEvent": "Um homem de barba com túnica e faixa vermelha está em pé com os braços erguidos ao lado de outra pessoa deitada sobre uma superfície plana; ambos estão em um ambiente interno simples com paredes claras."
     }
   },
   "lastFactualEvaluation": {
@@ -7401,6 +7407,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 29,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-18T22:16:03.203Z"
+    "checkedAt": "2026-10-18T22:16:24.856Z"
   }
 }
