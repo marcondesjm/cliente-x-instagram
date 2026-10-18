@@ -70,7 +70,7 @@
       "topic": "pedido-duplicado",
       "account": "cliente-x",
       "version": "claude-authorial-reserve-v1",
-      "status": "render_revision_required",
+      "status": "ready",
       "generationCallId": "cdd425ad-6df0-4424-924a-28529330efe6",
       "createdAt": "2026-10-18T15:41:21.873Z",
       "pack": {
@@ -127,67 +127,51 @@
           {
             "id": "slide-1",
             "supported": true,
-            "reason": "A imagem 1 exibe exatamente o título 'PROBLEMA CONCRETO', o subtítulo 'Pedidos duplicados sobrecarregam a operação' e o texto descritivo sobre um mesmo pedido chegando por canais diferentes, gerando duas tarefas e retrabalho na conferência final, conforme o briefing.",
+            "reason": "O briefing descreve explicitamente o problema de pedidos duplicados sobrecarregarem a operação e gerarem retrabalho, correspondendo exatamente ao conteúdo do slide 1.",
             "evidence": [
               {
                 "sourceId": "brief",
-                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro."
-              },
-              {
-                "sourceId": "label",
-                "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações."
               }
             ]
           },
           {
             "id": "slide-2",
             "supported": true,
-            "reason": "A imagem 2 mostra o cabeçalho 'PROCEDIMENTO', o título 'Identificador único antes de criar a tarefa' e o conteúdo prescrevendo atribuir um identificador no recebimento e consultá-lo antes de criar nova tarefa, alinhado ao briefing.",
+            "reason": "O briefing orienta atribuir um identificador único no recebimento e consultar seu registro antes de criar tarefas, alinhando-se perfeitamente ao procedimento do slide 2.",
             "evidence": [
               {
                 "sourceId": "brief",
-                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro."
-              },
-              {
-                "sourceId": "label",
-                "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações."
               }
             ]
           },
           {
             "id": "slide-3",
             "supported": true,
-            "reason": "A imagem 3 apresenta o cabeçalho 'CONFERÊNCIA', o título 'Encaminhe para revisão quando houver registro' e o texto orientando a encaminhar para conferência se o identificador já existir, evitando duplicação, conforme o briefing.",
+            "reason": "O briefing determina encaminhar para conferência caso o identificador já exista, evitando duplicação, conforme descrito no slide 3.",
             "evidence": [
               {
                 "sourceId": "brief",
-                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro."
-              },
-              {
-                "sourceId": "label",
-                "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações."
               }
             ]
           },
           {
             "id": "slide-4",
             "supported": true,
-            "reason": "A imagem 4 contém o cabeçalho 'EXERCÍCIO PRÁTICO', o título 'Teste reenviando o mesmo pedido' e o texto instruindo a reenviar o pedido com o mesmo identificador e verificar se o sistema reconhece o registro anterior, conforme o briefing.",
+            "reason": "O briefing inclui a instrução de testar reenviando o mesmo pedido e ajustar a regra conforme o comportamento observado, cobrindo integralmente o exercício prático do slide 4.",
             "evidence": [
               {
                 "sourceId": "brief",
-                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro."
-              },
-              {
-                "sourceId": "label",
-                "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações."
               }
             ]
           },
           {
             "id": "caption",
             "supported": true,
-            "reason": "O texto da legenda sintetiza corretamente as etapas do exercício (identificador único, consulta prévia, encaminhamento para conferência e teste de reenvio), reforça que a eficácia depende da implementação e testes, e inclui o aviso de que é conteúdo educativo fictício, tudo conforme o briefing.",
+            "reason": "A legenda sintetiza corretamente o fluxo proposto (identificador, consulta prévia, conferência, teste) e reforça que a eficácia depende da implementação, em consonância com o briefing e o label.",
             "evidence": [
               {
                 "sourceId": "brief",
@@ -202,15 +186,11 @@
           {
             "id": "story",
             "supported": true,
-            "reason": "A imagem 5 exibe o cabeçalho 'REFLEXÃO', o título 'Como você identifica pedidos únicos hoje?' e o texto convidando a compartilhar nos comentários métodos usados pela equipe ou dúvidas sobre identificadores únicos, conforme o briefing.",
+            "reason": "A reflexão pede compartilhamento sobre métodos atuais de identificação de pedidos únicos, sendo coerente com o tema educativo fictício definido nas fontes.",
             "evidence": [
               {
                 "sourceId": "brief",
-                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro."
-              },
-              {
-                "sourceId": "label",
-                "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações."
               }
             ]
           }
@@ -220,10 +200,11 @@
         "novel": true,
         "practical": true,
         "visualMatch": true,
-        "reason": "Todos os cinco renders estão legíveis, composicionalmente coerentes com o briefing e sem cortes ou sobreposições prejudiciais. O conteúdo é estritamente educativo e fictício, sem estatísticas, casos reais ou promessas de resultado. O exercício prático possui começo (atribuição de identificador), desenvolvimento (consulta e encaminhamento) e conclusão (teste de reenvio). As claims são totalmente sustentadas pelas fontes brief e label. Não há contradições entre texto visível e briefing.",
-        "callId": "0b13341a-9715-4731-934f-043a13b24940",
+        "reason": "Todas as alegações estão integralmente sustentadas pelo briefing e pelo label. O conteúdo é educativo, fictício e não apresenta estatísticas ou garantias indevidas. As imagens são diagramas autorais legíveis e pertinentes, sem cortes ou sobreposições prejudiciais. O exercício possui começo, desenvolvimento e conclusão claros, atendendo aos critérios de praticidade e novidade frente ao histórico fornecido.",
+        "bindingVersion": "exact-source-id-v1",
+        "callId": "6c8fbb16-0360-4425-9c6c-d2c0a287ffe8",
         "packHash": "9c6412fcd576c3a05caa8d9a1faa851a99a917b679ba38476b808c653da5f612",
-        "checkedAt": "2026-10-18T15:41:59.394Z",
+        "checkedAt": "2026-10-18T15:52:41.293Z",
         "groundingTask": {
           "scope": "Exercício educativo fictício. Orientações são propostas, não resultados ou notícias.",
           "sources": [
@@ -265,17 +246,18 @@
         }
       },
       "render": {
+        "version": "authorial-layout-v3",
         "packHash": "9c6412fcd576c3a05caa8d9a1faa851a99a917b679ba38476b808c653da5f612",
-        "verifiedAt": "2026-10-18T15:41:59.394Z",
+        "verifiedAt": "2026-10-18T15:52:41.293Z",
         "feedCount": 4,
         "story": true,
-        "runDir": "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-18-124131-slot-1-render-only",
+        "runDir": "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-18-125218-slot-0-render-only",
         "imageHashes": [
-          "06953d43ea47e64ceadb2acf2940e5ef2173d3e4ec29a2521d0b348a530417e8",
-          "4c1cb3eebd86da4c60adc358746a0e6e7da46f30d88b22e3047a38a5e0cc49dc",
-          "8a26f8d2cf1d82f8fe8635a070230ded1b8237580769c7d9704b19f8eddb57e3",
-          "1025f1c9b53ca3236225018c6faa331ae213b7b688ee44ce15c07a84f26f6ccb",
-          "6805c1ee0e5624acfe2164f7ea6998d6b05c0fe7878f376dbeba1375e54b389f"
+          "0fd2d65a1f66ded118f08a5d7e50ab0d49a1942e74622e4edf0d37fcc36c4886",
+          "e64d4bda4d9871e30ccd9842d7ba311487c6d0fd04d9032b62a487b0f20f8ea0",
+          "1c05026f136ea49a509e1bfc1f716a5599f3fcc37f68d8a3ce99e54a9b6adca8",
+          "3dab15e49fef840c8144799641eba63de765ec95f43cdf47e253868860ab2b8d",
+          "5a8581a5ffd4cf5a91a77d65031ac18dac53a4030a505587dfa645777512820b"
         ]
       },
       "reviewCandidate": {
@@ -490,7 +472,7 @@
       "reason": "Citação factual inventada ou fora das fontes."
     }
   ],
-  "checkedAt": "2026-10-18T15:52:40.026Z",
+  "checkedAt": "2026-10-18T15:52:41.295Z",
   "workflowRun": "39142326219",
   "message": "Nenhuma nova pauta liberada; consulte as rejeições sem repetir conteúdo.",
   "lastResponse": {
