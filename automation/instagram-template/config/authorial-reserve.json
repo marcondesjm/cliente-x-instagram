@@ -1959,56 +1959,137 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T18:49:50.161Z",
+  "checkedAt": "2026-10-18T18:50:25.933Z",
   "workflowRun": "39155831978",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "art-direction:versao-instrucao-v1",
-    "callId": "e3053533-f978-4a02-95c3-efb1f52b06e3",
+    "stage": "review:versao-instrucao-v1",
+    "callId": "909483ac-152c-4784-aeb3-25f40a8a9cc3",
     "value": {
-      "palette": "copper",
-      "frames": [
+      "claims": [
         {
-          "layout": "workspace",
-          "labels": [
-            "Mesa bagunçada",
-            "Chat aberto",
-            "Pedidos confusos"
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "supported": true,
+          "id": "slide-1",
+          "reason": "O slide descreve o cenário fictício de uma loja de materiais que recebe pedidos por mensagem e nota inconsistências, conforme proposto no briefing."
+        },
+        {
+          "reason": "O slide orienta a salvar a instrução com versão e data, mantendo exemplos e critérios, alinhado ao briefing.",
+          "supported": true,
+          "id": "slide-2",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Salvar versão",
-            "Data clara",
-            "Exemplos fixos"
-          ]
+          "id": "slide-3",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "supported": true,
+          "reason": "O slide instrui a executar os mesmos testes ao alterar a instrução e registrar melhorias/pioras, conforme o briefing."
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Alterar prompt",
-            "Rodar testes",
-            "Comparar saída"
-          ]
+          "supported": true,
+          "reason": "O slide propõe um exercício prático de criar um registro de versões com um pedido fictício, conforme o briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "id": "slide-4"
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Critérios claros",
-            "Melhorias anotadas",
-            "Pioras registradas"
-          ]
+          "reason": "A legenda explica a causa da mudança nas respostas da IA e convida ao acompanhamento do perfil para exercícios práticos, conforme o briefing.",
+          "id": "caption",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "supported": true
         },
         {
-          "layout": "decision",
-          "labels": [
-            "Escolher pedido",
-            "Definir critérios",
-            "Anotar diferenças"
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "id": "story",
+          "reason": "O story apresenta a rotina real e convida a ver no feed como criar um registro de versões, alinhado ao briefing.",
+          "supported": true
+        },
+        {
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "supported": true,
+          "reason": "Os rótulos da ilustração descrevem o cenário fictício de rotina de empresa, conforme o briefing.",
+          "id": "art-1"
+        },
+        {
+          "supported": true,
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "reason": "Os rótulos da ilustração descrevem o processo de organização de testes, conforme o briefing.",
+          "id": "art-2"
+        },
+        {
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "supported": true,
+          "reason": "Os rótulos da ilustração descrevem o fluxo de execução de testes, conforme o briefing.",
+          "id": "art-3"
+        },
+        {
+          "supported": true,
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "id": "art-4",
+          "reason": "Os rótulos da ilustração descrevem a conferência de resultados, conforme o briefing."
+        },
+        {
+          "reason": "Os rótulos da ilustração descrevem os passos de escolha de pedido e definição de critérios, conforme o briefing.",
+          "supported": true,
+          "id": "art-5",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         }
-      ]
+      ],
+      "decision": "approve",
+      "supported": true,
+      "novel": true,
+      "practical": true,
+      "visualMatch": true,
+      "reason": "O conteúdo é um exercício educativo fictício bem estruturado, seguindo todas as orientações do briefing sem prometer resultados ou usar dados externos. A progressão dos slides é lógica e prática.",
+      "growth": {
+        "payoffDelivered": true,
+        "hookSpecific": true,
+        "followReason": true,
+        "shareReason": true
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
