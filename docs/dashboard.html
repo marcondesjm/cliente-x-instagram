@@ -5799,6 +5799,7 @@
         title: card.querySelector('[data-field="title"]').value,
         body: card.querySelector('[data-field="body"]').value,
         imagePath: card.querySelector('[data-field="imagePath"]').value,
+        imageIsFinalArtwork: card.querySelector('[data-field="imageIsFinalArtwork"]')?.checked === true,
         imageUrl: card.querySelector('[data-field="imageUrl"]').value
       }));
       return {
@@ -5867,6 +5868,7 @@
             Enviar imagem do computador
             <input type="file" data-image-upload="${index}" accept="image/png,image/jpeg,image/webp">
           </label>
+          ${index === 0 ? `<label><span><input type="checkbox" data-field="imageIsFinalArtwork" ${slide.imageIsFinalArtwork ? 'checked' : ''}> A imagem já é uma capa pronta com texto (preservar arte)</span></label>` : ''}
           <input type="hidden" data-slide="${index}" data-field="imagePath" value="${escapeHtml(slide.imagePath || '')}">
           <div class="two-fields">
             <label>

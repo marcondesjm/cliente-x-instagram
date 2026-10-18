@@ -11,6 +11,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from
 import { isIP } from 'node:net';
 import { basename, dirname, extname, isAbsolute, join, relative, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import {composePhotoHeadline} from '../../../lib/licensed-media-art.js';
 import {MEDIA_CONFIG,MEDIA_PREFIX,mediaCredits,withMediaCredits,sha256} from '../../../lib/licensed-media.js';
 import { ensureBusinessHashtags } from '../../../lib/business-hashtags.js';
 import { spawnSync } from 'node:child_process';
@@ -3704,8 +3705,14 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
       const source = resolve(ROOT, String(slide.imagePath).replace(/^\/+/, ''));
       if (!existsSync(source)) throw new Error(`Imagem do slide ${index + 1} nao encontrada: ${slide.imagePath}`);
       await assertDistinctPhoto(source, index);
-      const customImagePath = join(runDir, `slide-${String(index + 1).padStart(2, '0')}${extname(source).toLowerCase() || '.jpg'}`);
-      copyFileSync(source, customImagePath);
+      const finishedArtwork = slide.imageIsFinalArtwork === true || String(slide.imagePath).replace(/^\//, '').startsWith(MEDIA_PREFIX) || /(?:^|\/)docs\/(?:illustrations|generated)\//.test(String(slide.imagePath)) || Boolean(renderContext.businessArt);
+      const needsHeadline = account.account === 'cliente-x' && index === 0 && !finishedArtwork;
+      const customImagePath = join(runDir, `slide-${String(index + 1).padStart(2, '0')}${needsHeadline ? '.jpg' : extname(source).toLowerCase() || '.jpg'}`);
+      if (needsHeadline) {
+        const title = String(slide.title || '').trim();
+        writeFileSync(customImagePath, await composePhotoHeadline(readFileSync(source), {title, eyebrow:slide.eyebrow || 'IA NA PRÁTICA'}));
+        writeFileSync(join(runDir, 'cover-headline.json'), JSON.stringify({version:'photo-headline-v1',title,sourcePhotoPreserved:true},null,2));
+      } else copyFileSync(source, customImagePath);
       imagePaths.push(customImagePath);
       continue;
     }

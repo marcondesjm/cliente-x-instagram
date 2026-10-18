@@ -1,0 +1,38 @@
+name: Cliente X - headlines da biblioteca com Claude
+on:
+  schedule:
+    - cron: '7,27,47 * * * *'
+  workflow_dispatch:
+    inputs:
+      pack_index:
+        description: Índice do conteúdo manual (vazio seleciona a próxima pauta nova)
+        type: string
+        default: ''
+permissions:
+  contents: write
+concurrency:
+  group: platform-editorial-api-validation
+  cancel-in-progress: false
+jobs:
+  headlines:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Atualizar conteúdo e consumo
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git pull --rebase origin main
+      - run: npm ci --ignore-scripts
+      - name: Validar isolamento e revisão textual
+        run: node scripts/validate-media-copy.mjs
+      - name: Criar headline e revisar sem enviar fotografias
+        env:
+          KIDS_VISION_ANTHROPIC_API_KEY: ${{ secrets.KIDS_VISION_ANTHROPIC_API_KEY }}
+          MEDIA_COPY_PACK_INDEX: ${{ inputs.pack_index }}
+        run: node scripts/generate-media-copy.mjs --persist

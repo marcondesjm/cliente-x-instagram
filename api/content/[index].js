@@ -129,6 +129,7 @@ export default async function handler(req, res) {
         eyebrow: String(slide.eyebrow || '').trim(),
         title: String(slide.title || '').trim(),
         body: String(slide.body || '').trim(),
+        ...(slide.imageIsFinalArtwork === true ? {imageIsFinalArtwork:true} : {}),
         ...(slide.imagePath ? { imagePath: String(slide.imagePath).trim() } : {}),
         ...(slide.imageUrl ? { imageUrl: String(slide.imageUrl).trim() } : {})
       })),

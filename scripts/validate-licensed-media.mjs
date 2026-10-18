@@ -22,6 +22,8 @@ const mock=async(url,opt={})=>{const path=url.split('/cliente-x-instagram/')[1];
  else if(path==='git/blobs')result={sha:'blob'};
  else if(path==='git/trees')result={sha:'newtree'};
  else if(path==='git/commits')result={sha:'next'};
+ else if(path.startsWith('actions/workflows/')&&path.includes('/runs?'))result={workflow_runs:[]};
+ else if(path.endsWith('/dispatches'))result={};
  else if(path==='git/refs/heads/main')result={object:{sha:'next'}};
  else throw Error(path);
  return {ok:true,json:async()=>result};};
@@ -32,4 +34,5 @@ r=await run(createMediaHandler(opts),{},'POST',{origin:'https://bad.test',host:'
 r=await run(createMediaHandler(opts),{action:'import',revision:'stale'});assert.equal(r.code,409);assert.equal(writes.length,0);
 r=await run(createMediaHandler(opts),{...form,action:'import',revision:'head',dataUrl:'data:image/jpeg;base64,'+original.toString('base64')});assert.equal(r.code,200,r.value.error);assert.equal(r.value.entry.aiProcessingAllowed,false);assert.equal(writes.at(-1).val.force,false);const blob=writes.find(w=>w.path==='git/blobs');assert.notEqual(blob.val.content,original.toString('base64'),'original must never be stored');assert.equal(writes.find(w=>w.path==='git/trees').val.tree.length,2,'design and manifest atomically committed');
 manifest={items:[r.value.entry]};writes=[];r=await run(createMediaHandler(opts),{action:'apply',id:manifest.items[0].id,slideIndex:0,revision:'head'});assert.equal(r.code,200,r.value.error);const tree=writes.find(w=>w.path==='git/trees');const saved=JSON.parse(tree.val.tree[0].content);assert(saved[0].packs[0].caption.includes(meta.credit));assert.equal(saved[0].packs[0].slides[0].licensedMediaId,manifest.items[0].id);
+groups=[{account:'cliente-x',packs:[{slides:[{title:'Confira cada pedido antes de cadastrar',body:'Confira produto e prazo na mensagem antes de cadastrar o pedido.'}],caption:'Pauta da empresa.'}]}];writes=[];r=await run(createMediaHandler(opts),{action:'generate',packIndex:0,revision:'head'});assert.equal(r.code,202,r.value.error);assert.deepEqual(writes[0].val,{ref:'main',inputs:{pack_index:'0'}});assert(!JSON.stringify(writes).includes('dataUrl'));
 console.log('PASS: autorização, origem, concorrência, licença, isolamento de projeto, créditos, imagem real, armazenamento só da composição e aplicação ao slide. Sem API externa ou publicação.');
