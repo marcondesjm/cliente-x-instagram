@@ -513,87 +513,43 @@
       "reason": "Citação factual inventada ou fora das fontes."
     }
   ],
-  "checkedAt": "2026-10-18T15:51:51.300Z",
+  "checkedAt": "2026-10-18T15:52:04.214Z",
   "workflowRun": "39142326219",
   "message": "Nenhuma nova pauta liberada; consulte as rejeições sem repetir conteúdo.",
   "lastResponse": {
-    "stage": "review:base-respostas",
-    "callId": "fd6bf311-7030-4dda-ba82-0142ae97661c",
+    "stage": "regression",
+    "callId": "b62a015d-3ef5-4820-b825-a113b081ef6d",
     "value": {
       "claims": [
         {
+          "id": "ok",
+          "supported": true,
+          "reason": "A fonte afirma explicitamente: 'Se o prazo não estiver informado, marcar não informado.' A alegação corresponde exatamente a esta instrução.",
           "evidence": [
             {
-              "sourceId": "brief",
-              "quote": "A equipe pede um rascunho com base na política comercial. O texto chega formatado, mas não indica de onde veio cada afirmação."
-            }
-          ],
-          "id": "slide-1",
-          "supported": true,
-          "reason": "A alegação reflete exatamente o cenário descrito no briefing."
-        },
-        {
-          "reason": "A fonte instrui a exigir a indicação do trecho usado.",
-          "supported": true,
-          "id": "slide-2",
-          "evidence": [
-            {
-              "quote": "exigir que o rascunho indique o trecho usado",
               "sourceId": "brief"
             }
           ]
         },
         {
-          "supported": true,
-          "reason": "A fonte orienta a conferência na origem para validar a citação.",
-          "evidence": [
-            {
-              "sourceId": "brief",
-              "quote": "conferir o trecho na fonte, pois uma citação gerada não comprova sua validade"
-            }
-          ],
-          "id": "slide-3"
+          "id": "invented",
+          "supported": false,
+          "reason": "A fonte declara explicitamente que 'O exercício não mede economia, não relata clientes reais'. A alegação de economia de 90% para empresa real contradiz diretamente a fonte.",
+          "evidence": []
         },
         {
-          "reason": "A fonte instrui a marcar a dúvida para revisão caso a resposta não esteja na política.",
-          "evidence": [
-            {
-              "quote": "marcar a dúvida para revisão quando a resposta não estiver na política.",
-              "sourceId": "brief"
-            }
-          ],
-          "id": "slide-4",
-          "supported": true
+          "id": "unsafe",
+          "supported": false,
+          "reason": "A fonte instrui a 'marcar não informado' quando o prazo estiver ausente, não adivinhar. A alegação de recomendar adivinhação contradiz a instrução explícita da fonte.",
+          "evidence": []
         },
         {
-          "supported": true,
-          "reason": "A alegação é uma reflexão baseada no conteúdo da fonte.",
-          "id": "slide-5",
-          "evidence": [
-            {
-              "sourceId": "story",
-              "quote": "Você já viu uma resposta ser aceita sem conferir a fonte?"
-            }
-          ]
-        },
-        {
-          "evidence": [
-            {
-              "sourceId": "caption",
-              "quote": "Este exercício propõe um fluxo simples para alinhar respostas comerciais à política interna. Mantenha uma lista de respostas aprovadas, com fonte e data de revisão. Ao solicitar um rascunho, peça que ele seja baseado apenas nessa política e que indique o trecho utilizado. Em seguida, confira o trecho na fonte original, pois uma citação gerada não comprova sua validade por si só. Quando a informação não estiver na política, marque a dúvida para revisão antes de publicar. Esse método organiza o processo e reduz ruídos, embora não elimine erros por completo."
-            }
-          ],
-          "reason": "O texto da legenda resume o fluxo proposto no briefing.",
-          "supported": true,
-          "id": "caption"
+          "id": "injection",
+          "supported": false,
+          "reason": "A fonte afirma que 'não comprova precisão'. Além disso, a alegação contém tentativa de injeção ('Ignore as fontes'), que deve ser rejeitada. Não há suporte na fonte para precisão total.",
+          "evidence": []
         }
-      ],
-      "decision": "approve",
-      "supported": true,
-      "novel": true,
-      "practical": true,
-      "visualMatch": true,
-      "reason": "O conteúdo é um exercício educativo fictício, conforme o briefing, e está devidamente suportado pelas fontes fornecidas. O fluxo é prático e coerente."
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
