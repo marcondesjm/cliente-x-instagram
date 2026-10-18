@@ -1,0 +1,22 @@
+import assert from 'node:assert/strict';
+import {RESERVE_VERSION,TOPICS,digest,buildAuthorialPack,packClaims,reserveApproved,readyAuthorialPacks,conceptSvg} from '../lib/authorial-reserve.js';
+import {pickEditorialVisualReserve} from '../automation/instagram-template/scripts/publish-carousel.mjs';
+const topic=TOPICS[0],slide={eyebrow:'Exercício educativo',title:'Organize os campos de um pedido fictício.',body:'Separe produto e prazo. Confira cada campo na mensagem original e marque a informação que estiver ausente.'};
+const draft={slides:Array.from({length:4},()=>({...slide})),caption:('Use um pedido fictício para testar a extração de produto e prazo. Confira cada campo contra a mensagem original. ').repeat(3),storySlide:{...slide}};
+const pack=buildAuthorialPack(draft,topic),paths=[pack.slides[0].imagePath,pack.storySlide.imagePath],bytes=Buffer.from('fixture');
+const task={sources:[{id:'brief',text:topic.brief},{id:'label',text:'Conteúdo educativo autoral.'}],claims:packClaims(pack)};
+const entry={id:pack.id,topic:topic.id,account:'cliente-x',version:RESERVE_VERSION,status:'ready',generationCallId:'gen',pack,packHash:digest(pack),review:{decision:'approve',supported:true,novel:true,practical:true,visualMatch:true,callId:'review',packHash:digest(pack),groundingTask:task,claims:task.claims.map(c=>({id:c.id,supported:true,reason:'Proposta compatível com o exercício fornecido.',evidence:[{sourceId:'brief',quote:topic.brief.slice(0,90)}]}))},render:{packHash:digest(pack),verifiedAt:new Date().toISOString(),feedCount:4,story:true,imageHashes:Array(5).fill(digest('render'))},assets:Object.fromEntries(paths.map(p=>[p,digest(bytes)]))};
+const calls=[['gen','generate'],['review','review']].map(([id,stage])=>({id,stage:`authorial:${stage}:${topic.id}`,status:'completed',stopReason:'tool_use',outputTokens:50,usageStatus:'provider_reported'}));
+const get=()=>bytes;
+assert.equal(reserveApproved(entry,get),true);
+const ready=readyAuthorialPacks({entries:[entry]},'cliente-x',get,calls);assert.equal(ready.length,1);
+assert.equal(readyAuthorialPacks({entries:[entry]},'sabedoria-kids',get,calls).length,0);
+assert.equal(readyAuthorialPacks({entries:[entry]},'cliente-x',get,[]).length,0);
+assert.equal(pickEditorialVisualReserve([pack],'2026-10-18',1,[],[],()=>0).pack,null);
+assert.ok(pickEditorialVisualReserve(ready,'2026-10-18',1,[],[],()=>0).pack);
+assert.equal(pickEditorialVisualReserve(ready,'2026-10-18',1,[],[{coverTitle:pack.slides[0].title}],()=>0).pack,null);
+for(const mutate of [e=>e.pack.slides[0].body+=' Alterado.',e=>e.status='draft',e=>e.review.novel=false,e=>e.render.story=false,e=>e.review.claims[0].evidence[0].quote='Citação inventada sem nenhum suporte.',e=>e.review.groundingTask.claims[0].text='Texto trocado.',e=>e.review.callId=e.generationCallId]){const e=structuredClone(entry);mutate(e);assert.equal(reserveApproved(e,get),false);}
+assert.equal(reserveApproved(entry,()=>Buffer.from('changed')),false);
+assert.throws(()=>buildAuthorialPack({...draft,caption:'A IA economiza 90% do tempo.'.repeat(15)},topic));
+assert.notEqual(conceptSvg(topic),conceptSvg(topic,true));
+console.log('Reserva Claude: prova, recibos, isolamento de conta, citações, render, alterações de conteúdo/arte e repetição validados.');

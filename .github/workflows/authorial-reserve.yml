@@ -1,0 +1,40 @@
+name: Cliente X - repor reserva autoral com Claude
+on:
+  workflow_dispatch:
+  schedule:
+    # 06h35 e 15h35 BRT; compartilha o teto da auditoria editorial, sem ampliá-lo.
+    - cron: '35 9,18 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: platform-editorial-api-validation
+  cancel-in-progress: false
+jobs:
+  replenish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Refresh state
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git pull --rebase origin main
+      - run: npm ci --ignore-scripts
+      - run: npx playwright install --with-deps chromium
+      - name: Generate, render and independently review authorial reserve
+        env:
+          KIDS_VISION_ANTHROPIC_API_KEY: ${{ secrets.KIDS_VISION_ANTHROPIC_API_KEY }}
+        run: node scripts/replenish-authorial-reserve.mjs --persist
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: authorial-reserve-evidence
+          path: |
+            output/authorial-reserve/
+            automation/instagram-template/config/authorial-reserve.json
+            automation/instagram-template/runs/cliente-x/

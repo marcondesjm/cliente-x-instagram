@@ -50,7 +50,7 @@ export function persistState(paths, assets = []) {
       }
       const remember=()=>saved.forEach(item=>persistedBases.set(item.cacheKey,{head:base,data:structuredClone(item.local)}));
       for(const path of assets) {
-        if(!/^docs\/illustrations\/sabedoria-kids\/[a-z0-9-]+\/[a-zA-Z0-9_.-]+\.(jpg|png)$/.test(path)) throw new Error('Invalid reviewed Bible asset path');
+        if(!/^docs\/illustrations\/sabedoria-kids\/[a-z0-9-]+\/[a-zA-Z0-9_.-]+\.(jpg|png)$/.test(path) && !/^docs\/illustrations\/cliente-x\/authorial-[a-f0-9]{16}\/(cover|story)\.png$/.test(path)) throw new Error('Invalid reviewed asset path');
         git(['add','--',path],{env});
       }
       const tree=git(['write-tree'],{env});
