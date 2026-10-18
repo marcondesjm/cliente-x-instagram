@@ -1943,11 +1943,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-18T13:24:11.962Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 9716,
       "imageFingerprint": null,
-      "promptFingerprint": "e8381f03940bdc998709364376b6ab8b5f9dee3540cbd831e0a6eb2c7c0c1844"
+      "promptFingerprint": "e8381f03940bdc998709364376b6ab8b5f9dee3540cbd831e0a6eb2c7c0c1844",
+      "completedAt": "2026-10-18T13:24:59.345Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 1,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -2050,7 +2056,7 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:24:11.962Z",
+  "checkedAt": "2026-10-18T13:24:59.345Z",
   "lastRun": "39131302669",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -2278,78 +2284,332 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "facts:kids-biblia-29",
+    "stage": "select:kids-biblia-29",
     "value": {
-      "claims": [
+      "cards": [
         {
-          "id": "98834c32e024c944",
-          "supported": true,
-          "reason": "A fonte 19:8 afirma exatamente que Zaqueu declarou dar metade dos seus bens aos pobres e restituir quatro vezes o que defraudou.",
-          "evidence": [
+          "card": 1,
+          "assessments": [
             {
-              "sourceId": "19:8",
-              "quote": "Zacchaeus stood and said to the Lord, \"Behold, Lord, half of my goods I give to the poor. If I have wrongfully exacted anything of anyone, I restore four times as much.\""
-            }
-          ]
-        },
-        {
-          "id": "0d7ed7a02e4a2584",
-          "supported": true,
-          "reason": "A fonte 19:4 confirma que Zaqueu subiu em uma árvore para ver Jesus, e a visualObservation descreve corretamente essa cena com ele nos galhos da árvore.",
-          "evidence": [
-            {
-              "sourceId": "19:4",
-              "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
-            }
-          ]
-        },
-        {
-          "id": "6654943ac38eff87",
-          "supported": false,
-          "reason": "A fonte 19:9 diz 'salvation has come to this house' e 'son of Abraham', mas não menciona 'Jew'. A tradução no sourceContext altera 'son of Abraham' para 'This man is a Jew also', o que não está nas fontes originais. Além disso, a visualObservation mostra um grupo de homens em círculo, mas as fontes não descrevem esta configuração específica.",
-          "evidence": [
-            {
-              "sourceId": "19:9",
-              "quote": "Jesus said to him,\n\"Today, salvation has come to this house, because he also is a son of Abraham."
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo conversando não retrata especificamente o recebimento de Jesus por Zaqueu em casa."
             },
             {
-              "sourceId": "19:10",
-              "quote": "For the Son of Man came to seek and to save that which was lost.\""
+              "scene": 2,
+              "allowed": true,
+              "verse": "19:5-6",
+              "reason": "Retrata interação entre Zaqueu e Jesus, compatível com recebimento mencionado no título da capa."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mostra Zaqueu na árvore, etapa anterior ao recebimento em casa descrito no título."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo genérico sem identificar evento específico de receber Jesus em casa."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "19:5-6",
+              "reason": "Figura diante de porta sugere chegada/recebimento, alinhado com título da capa."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena da subida na árvore, não representa o recebimento em casa."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Homens caminhando não retratam o evento de recebimento em casa."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena ambígua de homem ajoelhado não claramente ilustra recebimento em casa."
             }
-          ]
+          ],
+          "reason": "Capa exige evento do título: Zaqueu recebendo Jesus. Apenas cenas 2 e 5 retratam essa interação específica."
         },
         {
-          "id": "d3c9e973465ce4fc",
-          "supported": true,
-          "reason": "A fonte 19:4 confirma que Zaqueu correu adiante e subiu em uma árvore para ver Jesus passar. A visualObservation é consistente com este evento.",
-          "evidence": [
+          "card": 2,
+          "assessments": [
             {
-              "sourceId": "19:4",
-              "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo conversando não retrata especificamente subir na árvore ou receber Jesus conforme resumo."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "19:8",
+              "reason": "Zaqueu declarando restituição é evento mencionado no corpo do cartão narrativo."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "19:4-5",
+              "reason": "Zaqueu na árvore sendo chamado por Jesus é evento central descrito no resumo."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo genérico sem ação específica dos eventos resumidos."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "19:6-7",
+              "reason": "Recebimento de Jesus e murmuração são parte do relato mencionado no resumo."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "19:4",
+              "reason": "Subida na árvore para ver Jesus é evento explicitamente descrito no resumo."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Caminhada pela cidade não é evento específico destacado no resumo."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena ambígua não claramente ligada aos eventos específicos do resumo."
             }
-          ]
+          ],
+          "reason": "Cartão narrativo pede evento do resumo: subir na árvore, receber Jesus ou falar sobre reparar. Cenas 2, 3, 5 e 6 são pertinentes."
         },
         {
-          "id": "0213f4524b345be9",
-          "supported": true,
-          "reason": "A fonte 19:7 confirma que as pessoas murmuraram quando viram Jesus entrar na casa de Zaqueu, chamando-o de pecador. O sourceContext também confirma este murmúrio.",
-          "evidence": [
+          "card": 3,
+          "assessments": [
             {
-              "sourceId": "19:7",
-              "quote": "When they saw it, they all murmured, saying, \"He has gone in to lodge with a man who is a sinner.\""
+              "scene": 1,
+              "allowed": true,
+              "verse": "19:9-10",
+              "reason": "Grupo reunido pode ilustrar reflexão sobre salvação e busca dos perdidos mencionada na lição."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "19:8",
+              "reason": "Zaqueu declarando restituição ilustra mudança de atitude mencionada no texto da lição."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "19:5",
+              "reason": "Encontro na árvore sustenta reflexão sobre acolhimento e transformação educativa."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "19:2-3",
+              "reason": "Multidão buscando Jesus contextualiza a história para reflexão educativa proposta."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "19:6-7",
+              "reason": "Recebimento e reação da multidão ilustram impacto da mudança pertinente à lição."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "19:4",
+              "reason": "Esforço de Zaqueu para ver Jesus sustenta lição sobre busca e atitude ativa."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "19:1",
+              "reason": "Passagem por Jericó contextualiza início da história para reflexão educativa."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "19:3",
+              "reason": "Dificuldade de Zaqueu em ver Jesus ilustra obstáculos superados, pertinente à lição."
             }
-          ]
+          ],
+          "reason": "Cartão de lição permite qualquer cena pertinente à passagem com conexão educativa justificável. Todas as cenas são sustentadas pelo texto bíblico."
         },
         {
-          "id": "9ce49c775a44acf7",
-          "supported": true,
-          "reason": "A fonte 19:1 confirma que Jesus entrou e estava passando por Jericó. O sourceContext adiciona contexto sobre estar a caminho de Jerusalém, mas o evento principal de passar por Jericó está confirmado.",
-          "evidence": [
+          "card": 4,
+          "assessments": [
             {
-              "sourceId": "19:1",
-              "quote": "He entered and was passing through Jericho."
+              "scene": 1,
+              "allowed": true,
+              "verse": "19:8-9",
+              "reason": "Interação grupal pode ilustrar conversa sobre restituição mencionada na atividade familiar."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "19:8",
+              "reason": "Zaqueu falando sobre reparar prejuízo conecta diretamente à atividade proposta de conversar."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "19:5-6",
+              "reason": "Encontro entre Jesus e Zaqueu sustenta reflexão sobre mudanças discutíveis em família."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "19:2-3",
+              "reason": "Contexto da multidão e Zaqueu oferece base para discussão familiar sobre atitudes."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "19:6-7",
+              "reason": "Reação ao recebimento de Jesus ilustra consequências de ações pertinentes ao diálogo."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "19:4",
+              "reason": "Iniciativa de Zaqueu para ver Jesus exemplifica atitude ativa discutível em família."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "19:1",
+              "reason": "Cena de jornada contextualiza a história para conversa sobre ações e reparação."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "19:3",
+              "reason": "Superação de obstáculos por Zaqueu ilustra determinação relevante para diálogo familiar."
             }
-          ]
+          ],
+          "reason": "Atividade familiar permite cena pertinente à passagem com conexão educativa. Todas as cenas sustentam reflexão sobre devolver/reparar."
+        },
+        {
+          "card": 5,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "19:9-10",
+              "reason": "Cena grupal sustenta contexto para leitura reflexiva da passagem completa proposta."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "19:8",
+              "reason": "Declaração de Zaqueu sobre restituição é parte central da passagem a ser lida."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "19:4-5",
+              "reason": "Encontro na árvore é momento chave da narrativa para leitura em família."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "19:2-3",
+              "reason": "Apresentação de Zaqueu e contexto inicial fundamenta a leitura proposta em família."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "19:6-7",
+              "reason": "Recebimento e reação ilustram desenvolvimento da história a ser lida com adulto."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "19:4",
+              "reason": "Ação de subir na árvore é elemento narrativo importante para compreensão da leitura."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "19:1",
+              "reason": "Chegada a Jericó inicia a passagem que será lida em família conforme proposto."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "19:3",
+              "reason": "Dificuldade de Zaqueu contextualiza sua motivação na história a ser lida."
+            }
+          ],
+          "reason": "Cartão de leitura permite qualquer cena pertinente à passagem. Todas as cenas são sustentadas pelo texto bíblico integral."
+        },
+        {
+          "card": 6,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "19:9-10",
+              "reason": "Cena diferente das anteriores, pertinente à conclusão da passagem sobre salvação."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "19:8",
+              "reason": "Cena pertinente à passagem, diferente pode ser escolhida pelo código posteriormente."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "19:4-5",
+              "reason": "Cena pertinente à passagem, diferente pode ser escolhida pelo código posteriormente."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "19:2-3",
+              "reason": "Cena diferente mostrando contexto inicial, pertinente ao relato bíblico."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "19:6-7",
+              "reason": "Cena pertinente à passagem, diferente pode ser escolhida pelo código posteriormente."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "19:4",
+              "reason": "Cena pertinente à passagem, diferente pode ser escolhida pelo código posteriormente."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "19:1",
+              "reason": "Cena diferente mostrando chegada a Jericó, pertinente ao início da passagem."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "19:3",
+              "reason": "Cena diferente mostrando dificuldade de Zaqueu, pertinente à narrativa bíblica."
+            }
+          ],
+          "reason": "Story aceita cena pertinente à passagem, diferente das demais. Múltiplas opções disponíveis mantendo independência para resolução posterior pelo código."
         }
       ]
     }
