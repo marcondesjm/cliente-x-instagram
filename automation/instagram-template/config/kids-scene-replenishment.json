@@ -3,8 +3,8 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "blocked",
-  "message": "A fonte não sustenta todas as cenas: 6654943ac38eff87: O texto cita parcialmente o versículo 19:9, mas está incompleto (falta o final do versículo). Além disso, a visualObservation mostra um grupo de seis homens em círculo com o homem central gesticulando, mas não há evidência visual clara de que isso representa especificamente Jesus d",
+  "health": "pilot_running",
+  "message": "Piloto diagnóstico da pauta kids-biblia-29 em execução; reposição recorrente permanece bloqueada.",
   "policy": {
     "maxCallsPerDay": 26,
     "maxInputTokensPerCall": 120000,
@@ -2296,8 +2296,8 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:46:54.582Z",
-  "lastRun": "39132710148",
+  "checkedAt": "2026-10-18T13:50:42.635Z",
+  "lastRun": "39133260394",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -3008,13 +3008,12 @@
   },
   "reasoningModel": "claude-sonnet-4.6",
   "pilotRun": {
-    "id": "67a791d4-4b43-4fbc-9ffe-381c6c27d5c6",
+    "id": "f804d452-01fb-4baf-b05f-f6b456099876",
     "packId": "kids-biblia-29",
-    "status": "rejected",
-    "startedAt": "2026-10-18T13:43:12.521Z",
-    "expiresAt": "2026-10-18T14:08:12.521Z",
+    "status": "running",
+    "startedAt": "2026-10-18T13:50:42.635Z",
+    "expiresAt": "2026-10-18T14:15:42.635Z",
     "maxCalls": 10,
-    "maxInputTokens": 1200000,
-    "completedAt": "2026-10-18T13:46:54.582Z"
+    "maxInputTokens": 1200000
   }
 }
