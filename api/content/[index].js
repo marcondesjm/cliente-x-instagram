@@ -133,6 +133,7 @@ export default async function handler(req, res) {
         ...(slide.imageUrl ? { imageUrl: String(slide.imageUrl).trim() } : {})
       })),
       caption: String(body.pack.caption || '').trim(),
+      ...(body.pack.licensedMediaProject ? {licensedMediaProject:String(body.pack.licensedMediaProject)} : {}),
       ...(body.pack.visualDirection ? { visualDirection: String(body.pack.visualDirection).trim() } : {})
     };
     if (index === group.packs.length) group.packs.push(normalizedPack);

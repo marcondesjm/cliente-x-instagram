@@ -1,14 +1,22 @@
-# Fotografias naturais para a conta Marcondes
+# Biblioteca de fotos: Pinterest e Vecteezy
 
-Preferir fotos pertinentes ao assunto, sem aparência sintética. No Vecteezy, usar os filtros Free License e Non-AI Images:
-https://www.vecteezy.com/free-photos/business-meeting
+Na conta Marcondes, abra Conteúdo → Biblioteca de fotos, ou /docs/licensed-media.html. Disponível ao administrador principal, pela sessão atual do painel. Não solicita senha de Pinterest ou Vecteezy e não conecta essas contas por OAuth.
 
-O download gratuito não equivale a licença irrestrita. Antes de importar uma foto, registrar o arquivo original, URL da página do arquivo, autor, licença, data do download, projeto de destino e texto de atribuição. Verificar autorização comercial; excluir Editorial Use Only de anúncios. Incluir o crédito exigido na peça/legenda.
+1. Abra a pesquisa do Pinterest ou Vecteezy pelo botão da biblioteca. Faça login no próprio site, se necessário, e baixe o arquivo pela opção normal.
+2. Confira a autorização comercial para o projeto, autor, crédito completo e eventuais autorizações de pessoas/marcas. Pinterest exige localizar a fonte original. No Vecteezy, excluir Editorial Use Only e respeitar o projeto autorizado por download.
+3. Selecione o conteúdo de destino, informe os links da origem e da licença, data do download/autorização, autor e crédito. Envie JPG, PNG ou WEBP de até 2 MB e pelo menos 600 × 600 pixels. Preencha título e texto da peça.
+4. A biblioteca compõe um JPEG de 1080 × 1350 com foto, identidade, texto e crédito. Confira a prévia, escolha o slide e clique Aplicar ao conteúdo.
+5. Recarregue o editor no painel, revise e renderize antes de publicar. Aplicar salva no conteúdo manual; não dispara publicação nem altera posts já publicados.
 
-A integração automática com o Vecteezy NÃO está habilitada. Os termos restringem robôs e processamento por IA; imagens/legendas/metadados gratuitos não devem entrar no Claude ou na revisão visual automática sem autorização específica. O fluxo atual de reserva autoral envia as imagens ao Claude, portanto importar uma foto nesse fluxo exige autorização adicional compatível. A alternativa é composição e revisão humana sem processamento por IA.
+A foto original é processada em memória e descartada. Somente a composição final e o registro de origem/licença são salvos. A aplicação acrescenta o crédito à legenda. O publicador confere o vínculo de projeto, integridade da peça e preserva os créditos; se a legenda exceder o limite, bloqueia para revisão.
+
+Não há scraping, download automático ou envio desses arquivos ao Claude. A biblioteca usa revisão humana declarada: registrar uma licença não prova sua validade. A reserva autoral aprovada e a conta Sabedoria Kids permanecem separadas deste fluxo. Uma nova campanha pode exigir novo download/licença.
 
 Fontes oficiais:
+- https://help.pinterest.com/en/article/download-an-image
+- https://help.pinterest.com/pt-br/article/copyright
+- https://policy.pinterest.com/en/terms-of-service
 - https://www.vecteezy.com/licensing-agreement
 - https://www.vecteezy.com/terms
 
-Nenhuma imagem ou assinatura Vecteezy foi adquirida por esta alteração. O teste de Story usa o arquivo local já existente sector-photos/ecommerce.jpg, não um download Vecteezy.
+Testes: node scripts/validate-licensed-media.mjs; node scripts/preview-licensed-media.mjs. Os testes usam arquivos sintéticos/locais, respostas simuladas e não publicam no Instagram. Nenhuma imagem Vecteezy ou Pinterest foi adquirida nesta implementação.
