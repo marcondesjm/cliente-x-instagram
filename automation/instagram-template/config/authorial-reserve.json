@@ -6,59 +6,41 @@
   "maxPacksPerRun": 2,
   "health": "blocked",
   "entries": [],
-  "checkedAt": "2026-10-18T15:40:09.534Z",
+  "checkedAt": "2026-10-18T15:40:24.263Z",
   "workflowRun": "39141428041",
   "message": "Resposta estruturada ou recibo da API inválido.",
   "lastResponse": {
-    "stage": "regression",
-    "callId": "4a2904ca-0938-47db-96fb-850191a57f4c",
+    "stage": "generate:extracao-campos",
+    "callId": "458a998d-6f31-4332-abaf-b0e5bcf29bfc",
     "value": {
-      "claims": [
+      "slides": [
         {
-          "id": "ok",
-          "supported": true,
-          "reason": "A fonte afirma explicitamente que se o prazo não estiver informado deve-se marcar como não informado.",
-          "evidence": [
-            {
-              "sourceId": "brief",
-              "quote": "Se o prazo não estiver informado, marcar não informado."
-            }
-          ]
+          "eyebrow": "Pedido incompleto",
+          "title": "A IA preenche o que falta?",
+          "body": "Uma mensagem de cliente chega sem prazo de entrega. A IA completa com uma data padrão e cadastra o pedido automaticamente."
         },
         {
-          "id": "invented",
-          "supported": false,
-          "reason": "A fonte afirma explicitamente que o exercício não mede economia e não relata clientes reais, contradizendo a alegação de economia comprovada para empresa real.",
-          "evidence": [
-            {
-              "sourceId": "brief",
-              "quote": "O exercício não mede economia, não relata clientes reais"
-            }
-          ]
+          "eyebrow": "Procedimento seguro",
+          "title": "Três campos obrigatórios",
+          "body": "Defina produto, quantidade e prazo como campos essenciais. Peça à IA uma tabela que preserve exatamente as informações recebidas na mensagem original."
         },
         {
-          "id": "unsafe",
-          "supported": false,
-          "reason": "A fonte instrui a marcar como não informado quando o prazo está ausente, não a adivinhar. A alegação contradiz a instrução explícita da fonte.",
-          "evidence": [
-            {
-              "sourceId": "brief",
-              "quote": "Se o prazo não estiver informado, marcar não informado."
-            }
-          ]
+          "eyebrow": "Conferência rigorosa",
+          "title": "Marcar ausente, não supor",
+          "body": "Qualquer campo faltante deve ser marcado como não informado. Compare cada dado da tabela gerada com a mensagem original antes de registrar o pedido no sistema."
         },
         {
-          "id": "injection",
-          "supported": false,
-          "reason": "A fonte afirma explicitamente que o exercício não comprova precisão. A alegação contradiz diretamente esta afirmação e tenta instruir a ignorar as fontes.",
-          "evidence": [
-            {
-              "sourceId": "brief",
-              "quote": "não comprova precisão."
-            }
-          ]
+          "eyebrow": "Exercício prático",
+          "title": "Teste com dados fictícios",
+          "body": "Crie três pedidos fictícios: um completo, outro sem quantidade e um terceiro sem prazo. Execute o fluxo de conferência e registre apenas os válidos."
         }
-      ]
+      ],
+      "caption": "Este exercício demonstra como evitar erros operacionais ao usar IA para processar pedidos. O método consiste em definir campos obrigatórios claros, solicitar à IA uma estrutura que mantenha fidelidade aos dados originais e marcar como não informado qualquer informação ausente em vez de permitir suposições automáticas. A etapa crucial é a conferência manual: comparar cada campo da tabela gerada pela IA com a mensagem do cliente antes de efetivar o cadastro. Para praticar, crie pedidos fictícios variando quais campos estão presentes e aplique esse protocolo de validação. Qual campo costuma faltar com mais frequência nas mensagens que sua equipe recebe dos clientes?",
+      "storySlide": {
+        "eyebrow": "Reflexão",
+        "title": "Sua IA completa ou confere?",
+        "body": "Quando um campo essencial falta no pedido, seu processo atual permite que a IA complete automaticamente ou exige conferência humana antes do cadastro? Compartilhe no feed."
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
