@@ -8038,56 +8038,138 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T20:03:51.485Z",
+  "checkedAt": "2026-10-18T20:04:55.475Z",
   "workflowRun": "39161134821",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "art-direction:teste-variacoes-v4",
-    "callId": "26cddda8-9823-482b-ba97-a4e60f84400a",
+    "stage": "review:teste-variacoes-v4",
+    "callId": "17aa4abe-ca24-4028-9014-b65a26dbc297",
     "value": {
-      "palette": "copper",
-      "frames": [
+      "claims": [
         {
-          "layout": "workspace",
-          "labels": [
-            "Pedido escrito",
-            "Dados do aluno",
-            "Curso desejado"
+          "reason": "O slide propõe o exercício de escrever um pedido fictício com nome, curso e horário para inscrição na escola, conforme o briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "supported": true,
+          "id": "slide-1"
+        },
+        {
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "id": "slide-2",
+          "reason": "O slide instrui a criar versões com abreviação, erro de digitação e campo ausente, conforme o briefing.",
+          "supported": true
+        },
+        {
+          "id": "slide-3",
+          "reason": "O slide orienta a executar a instrução e comparar os campos extraídos, conforme o briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "supported": true
+        },
+        {
+          "id": "slide-4",
+          "supported": true,
+          "reason": "O slide orienta a corrigir a instrução e repetir o teste, conforme o briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Texto abreviado",
-            "Erro de digitação",
-            "Campo ausente"
+          "supported": true,
+          "id": "caption",
+          "reason": "A legenda descreve o exercício completo de teste de IA para pedidos de inscrição, conforme o briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Executar instrução",
-            "Extrair campos",
-            "Comparar saídas"
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "id": "story",
+          "reason": "O story introduz a rotina de inscrições e o teste com IA, conforme o briefing.",
+          "supported": true
+        },
+        {
+          "reason": "Os rótulos da ilustração correspondem aos elementos do pedido fictício mencionados no briefing.",
+          "supported": true,
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "id": "art-1"
+        },
+        {
+          "id": "art-2",
+          "supported": true,
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "reason": "Os rótulos da ilustração correspondem às variações de erro solicitadas no briefing."
+        },
+        {
+          "reason": "Os rótulos da ilustração correspondem ao processo de execução e comparação solicitado no briefing.",
+          "id": "art-3",
+          "supported": true,
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Anotar divergências",
-            "Refinar instrução",
-            "Repetir teste"
-          ]
+          "id": "art-4",
+          "supported": true,
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "reason": "Os rótulos da ilustração correspondem ao processo de ajuste e repetição solicitado no briefing."
         },
         {
-          "layout": "decision",
-          "labels": [
-            "Validar campos",
-            "Corrigir modelo",
-            "Aplicar na rotina"
+          "id": "art-5",
+          "reason": "Os rótulos da ilustração correspondem ao fluxo de validação e correção do modelo, alinhado ao objetivo do exercício.",
+          "supported": true,
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         }
-      ]
+      ],
+      "decision": "approve",
+      "supported": true,
+      "novel": true,
+      "practical": true,
+      "visualMatch": true,
+      "reason": "O conteúdo apresenta um exercício educativo prático e coerente com o briefing, utilizando uma abordagem de teste de IA em rotinas de inscrição. O experimento de alterar o hook para uma pergunta específica sobre a situação empresarial foi aplicado com sucesso. Todos os elementos visuais e textuais estão alinhados e suportados pelas fontes.",
+      "experimentApplied": true,
+      "growth": {
+        "hookSpecific": true,
+        "shareReason": true,
+        "payoffDelivered": true,
+        "followReason": true
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
