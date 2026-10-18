@@ -22,6 +22,8 @@ assert.throws(()=>applyControlSettings(b,s,{dailyLimit:12,todayLimit:18,enabled:
 assert.throws(()=>assertCanRun({...summary,circuit:'provider_response_unconfirmed'}),/bloqueio/);
 assert.throws(()=>assertCanRun({...summary,enabled:false}),/Ative/);
 const pending=budget();pending.calls[0].status='reserved';assert.throws(()=>applyControlSettings(pending,s,{dailyLimit:12,todayLimit:18,enabled:false},at),/andamento/);
+const overused=budget();overused.policy.maxCallsPerDay=5;overused.calls[0].status='reserved';const paused=stock();
+applyControlSettings(overused,paused,{dailyLimit:5,todayLimit:null,enabled:false},at);assert.equal(paused.enabled,false,'Pause remains available while over quota or in flight');assert.equal(overused.policy.maxCallsPerDay,5);
 const mockRes=()=>({code:200,headers:{},setHeader(k,v){this.headers[k]=v;},status(c){this.code=c;return this;},json(v){this.data=v;return this;}});
 let requests=[],writes=[],conflict=false,active=false,hasBudget=false;
 const fakeFetch=async(url,options={})=>{
