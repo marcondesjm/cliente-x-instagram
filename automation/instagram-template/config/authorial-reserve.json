@@ -10228,56 +10228,138 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T21:15:39.491Z",
+  "checkedAt": "2026-10-18T21:16:29.971Z",
   "workflowRun": "39166855065",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "art-direction:medicao-rascunho-v5",
-    "callId": "37a58110-70ef-4a91-b582-0eb1177f8aab",
+    "stage": "review:medicao-rascunho-v5",
+    "callId": "397ed734-defd-4778-b698-c5355310f252",
     "value": {
-      "palette": "copper",
-      "frames": [
+      "claims": [
         {
-          "layout": "workspace",
-          "labels": [
-            "Dois orçamentos",
-            "Mesa da oficina",
-            "Sistema aberto"
+          "id": "slide-1",
+          "supported": true,
+          "reason": "O texto da imagem e a legenda descrevem exatamente o cenário fictício de orçamento duplicado em uma oficina, conforme definido no briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Critério correção",
-            "Critério clareza",
-            "Dados ausentes"
+          "id": "slide-2",
+          "supported": true,
+          "reason": "A imagem lista os três critérios (correção, clareza, dados ausentes) exigidos pelo briefing para avaliação de respostas de IA.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Ler rascunho",
-            "Verificar padrão",
-            "Anotar ajuste"
+          "id": "slide-3",
+          "supported": true,
+          "reason": "O fluxo visual Receber/Organizar/Conferir corresponde à instrução do briefing de comparar rascunhos com padrões estabelecidos.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Revisão feita",
-            "Correções marcadas",
-            "Pronto para teste"
+          "id": "slide-4",
+          "supported": true,
+          "reason": "A imagem aplica o conceito de teste limitado apenas na etapa de orçamento, alinhado à orientação experimental e ao briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "decision",
-          "labels": [
-            "Etapa limitada",
-            "Apenas orçamento",
-            "Expandir depois"
+          "id": "caption",
+          "supported": true,
+          "reason": "O texto da legenda resume fielmente o exercício educativo fictício e inclui os avisos obrigatórios sobre natureza autoral e fictícia.",
+          "evidence": [
+            {
+              "sourceId": "label"
+            }
+          ]
+        },
+        {
+          "id": "story",
+          "supported": true,
+          "reason": "A capa Story abre com a pergunta específica sobre pedidos repetidos, aplicando corretamente a orientação experimental de alterar o eixo hook.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-1",
+          "supported": true,
+          "reason": "Os rótulos visuais na Cena 1 correspondem aos elementos descritos no briefing para ilustrar o cenário de orçamento duplicado.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-2",
+          "supported": true,
+          "reason": "Os rótulos visuais na Cena 2 refletem os critérios objetivos definidos no briefing para avaliação de IA.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-3",
+          "supported": true,
+          "reason": "Os rótulos visuais na Cena 3 representam as etapas de análise e anotação previstas no fluxo do briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-4",
+          "supported": true,
+          "reason": "Os rótulos visuais na Cena 4 confirmam a aplicação do teste limitado na etapa de conferência, conforme briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-5",
+          "supported": true,
+          "reason": "Os rótulos visuais na Cena 5 (Story) reforçam a limitação do escopo ao orçamento inicial, validando a orientação experimental.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         }
-      ]
+      ],
+      "decision": "approve",
+      "supported": true,
+      "novel": true,
+      "practical": true,
+      "visualMatch": true,
+      "reason": "Conteúdo educativo fictício coerente com o briefing. A orientation experimental foi aplicada corretamente na capa Story com pergunta específica sobre situação empresarial. Todos os slides apresentam texto legível, composição pertinente e ausência de cortes. Não há estatísticas, casos reais ou promessas de resultados. O fluxo é executável e completo.",
+      "experimentApplied": true,
+      "growth": {
+        "hookSpecific": true,
+        "payoffDelivered": true,
+        "followReason": true,
+        "shareReason": true
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
