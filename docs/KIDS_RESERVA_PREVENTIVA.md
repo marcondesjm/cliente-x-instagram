@@ -12,4 +12,10 @@ Os conjuntos são priorizados pela cobertura declarada da passagem antes da quan
 
 O Controle do Claude mostra o saldo apurado e contagens de leituras reaproveitadas, novas leituras confirmadas e candidatos inalterados ignorados. Meta configurada não significa meta atingida. Quando não houver material novo elegível ou orçamento, a rotina aguarda sem liberar conteúdo rejeitado.
 
+## Limite do Gateway
+
+O modo `policy.quotaMode=provider` só é elegível para Claude Gateway com plano fixo confirmado. Nesse modo, a plataforma registra chamadas e estimativas, mas não bloqueia pelo número de chamadas ou teto diário interno de tokens. O Gateway continua aplicando os limites reais do plano. Não há sincronização automática do saldo do provedor.
+
+Falhas, respostas incompletas, consumo por chamada acima do limite técnico, chamada sem recibo e revisão editorial continuam bloqueantes. Os limites por execução, pilotos diagnósticos e meta de estoque permanecem ativos. O administrador pode voltar ao modo interno no Controle do Claude; os limites numéricos ficam preservados como alternativa.
+
 Verificações: `validate-kids-reserve-policy.mjs`, `validate-kids-stock-summary.mjs`, `validate-kids-scene-replenishment.mjs`, `validate-kids-scene-matching.mjs` e `validate-kids-scene-assembly.mjs`.

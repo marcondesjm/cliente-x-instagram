@@ -6,11 +6,13 @@ const html=fs.readFileSync('docs/dashboard.html','utf8'),styles=html.match(/<sty
 const browser=await chromium.launch({headless:true});
 const page=await browser.newPage({viewport:{width:1280,height:1000}});
 const sample={...controlSummary({model:'claude-sonnet-4.6',calls:[{id:'1',day:'2026-10-18',stage:'authorial:review:resumo-transferencia',status:'completed',inputTokens:5678,completedAt:'2026-10-18T17:00:00Z'}],policy:{maxCallsPerDay:12,maxInputTokensPerCall:120000,maxInputTokensPerDay:1500000}}, {enabled:true,health:'stock_ready',entries:[{id:'authorial-exemplo',status:'ready'}]},new Date('2026-10-18T18:00:00Z')),scope:'cliente-x',revision:'demo',workflowUrl:'https://github.com/marcondesjm/cliente-x-instagram/actions/workflows/authorial-reserve.yml',runs:[]};
+if(process.argv.includes('--provider')){sample.quotaMode='provider';sample.providerQuotaEligible=true;sample.usage.limit=null;sample.usage.remaining=null;sample.usage.inputTokenLimit=null;}
 await page.setContent(`<html><head>${styles}</head><body><main style="padding:20px;max-width:1100px;margin:auto"><div class="panel"><span id="maintenanceStatus"></span></div></main></body></html>`);
 await page.evaluate(data=>{window.fetch=async(url,options)=>{window.lastRequest={url,body:options?.body?JSON.parse(options.body):null};const body=window.lastRequest.body;return {ok:true,json:async()=>body?{...data,saved:true,policy:{dailyLimit:body.dailyLimit,todayLimit:body.todayLimit},enabled:body.enabled}:data};};},sample);
 await page.addScriptTag({path:'docs/claude-control.js'});await page.evaluate(()=>document.dispatchEvent(new Event('DOMContentLoaded')));
 await page.evaluate(()=>window.ClaudeControl.load('cliente-x','owner',true));
 await page.getByText('Controle do Claude',{exact:true}).waitFor();
+if(process.argv.includes('--provider')){if(!(await page.locator('#claudeConsumption').textContent()).includes('sem teto interno'))throw Error('Provider quota mode not shown');if(!await page.locator('#claudeProviderMode').isChecked())throw Error('Provider checkbox missing');}
 if(await page.locator('#claudeCalibrate').isVisible())throw Error('Kids-only action visible for Cliente X');
 await page.locator('#claudeDailyLimit').fill('16');await page.locator('#claudeTodayLimit').fill('20');await page.locator('#claudeEnabled').uncheck();await page.getByRole('button',{name:'Salvar controles'}).click();
 await page.waitForFunction(()=>document.getElementById('claudeFeedback').textContent.includes('salva'));

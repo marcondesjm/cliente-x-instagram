@@ -11,6 +11,13 @@ applyControlSettings(pauseBudget,stock(),{dailyLimit:26,todayLimit:null,enabled:
 assert.equal(pauseBudget.policy.maxInputTokensPerDay,1500000,'Pausing without changing call limits must not increase token allowance');
 applyControlSettings(b,s,{dailyLimit:12,todayLimit:18,enabled:true},at);
 const summary=controlSummary(b,s,at);
+const gatewayBudget=budget(),gatewayStock=stock();gatewayBudget.provider='claude-ss';gatewayBudget.billingMode='fixed_plan_user_confirmed';
+applyControlSettings(gatewayBudget,gatewayStock,{dailyLimit:12,todayLimit:null,enabled:true,quotaMode:'provider'},at);
+const gatewaySummary=controlSummary(gatewayBudget,gatewayStock,at);assert.equal(gatewaySummary.quotaMode,'provider');assert.equal(gatewaySummary.usage.remaining,null);assertCanRun(gatewaySummary);assert.equal(callAllowance(gatewayBudget,at,1000),'2026-10-18');
+gatewayBudget.circuit='provider_response_unconfirmed';assert.throws(()=>callAllowance(gatewayBudget,at),/pausada|bloque/i);gatewayBudget.circuit=null;
+gatewayBudget.calls.push({day:'2026-10-18',status:'reserved'});assert.throws(()=>callAllowance(gatewayBudget,at),/recibo/);gatewayBudget.calls.pop();
+applyControlSettings(gatewayBudget,gatewayStock,{dailyLimit:12,todayLimit:null,enabled:true,quotaMode:'internal'},at);assert.throws(()=>callAllowance(gatewayBudget,at),/chamadas/);
+assert.throws(()=>applyControlSettings(budget(),stock(),{dailyLimit:12,todayLimit:null,enabled:true,quotaMode:'provider'},at),/plano fixo/);
 assert.equal(summary.usage.remaining,6);assert.equal(summary.usage.inputTokensAccounted,1440000);
 assert.equal(summary.usage.inputTokenLimit,2160000);assert.equal(summary.usage.estimatedCalls,12);
 assert.equal(JSON.stringify(summary).includes('PRIVATE PROMPT'),false);

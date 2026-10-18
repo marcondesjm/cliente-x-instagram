@@ -5,10 +5,11 @@
  <div class="panel-head"><div><div class="section-label">Inteligência artificial</div><h2>Controle do Claude</h2></div><span class="status-pill warn" id="claudeStatus">Consultar</span></div>
  <p id="claudeConsumption"></p><p id="claudeConnection"></p><p id="claudeBudgetScope"></p><p id="claudeTokens"></p>
  <form id="claudeSettings" style="display:flex;flex-wrap:wrap;gap:16px;align-items:end">
+ <label id="claudeProviderModeLabel" style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="claudeProviderMode" style="width:auto;margin:0"> Usar o limite do Claude Gateway (plano fixo)</label>
  <label>Limite interno diário de chamadas<br><input id="claudeDailyLimit" type="number" min="1" max="250" required style="width:130px"></label>
  <label>Limite total só para hoje<br><input id="claudeTodayLimit" type="number" min="1" max="250" placeholder="Usar normal" style="width:150px"></label>
  <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="claudeEnabled" style="width:auto;margin:0"> Reposição automática ativa</label><button class="btn" type="submit">Salvar controles</button></form>
- <p>Este é o limite interno da plataforma, separado do saldo do Claude Gateway. Aumentá-lo permite mais chamadas e consumo no provedor. O teto de tokens acompanha o número de chamadas. Deixe o limite de hoje vazio para usar o normal. Salve as alterações antes de executar.</p>
+ <p>No modo Gateway, os tetos numéricos internos ficam desativados. O provedor aplica a cota do plano; o saldo real não é sincronizado aqui. Os valores acima ficam guardados para o modo interno. Pausa, revisão e proteção contra falhas continuam ativas.</p>
  <p id="claudeHealth"></p><div style="display:flex;flex-wrap:wrap;gap:10px"><button class="btn" id="claudeRefresh" type="button">Atualizar dados</button><button class="btn" id="claudeRun" type="button">Repor conteúdo</button><button class="btn" id="claudeAudit" type="button">Executar auditoria editorial</button><button class="btn" id="claudeCalibrate" type="button">Executar calibração visual</button></div>
  <p id="claudeRunNote"></p><p>Auditoria e calibração também consomem chamadas. Não publicam conteúdo.</p><button class="btn" id="claudeLearn" type="button">Analisar desempenho com Claude</button><p id="claudeStrategy" style="white-space:pre-line;overflow-wrap:anywhere"></p><p id="claudeFeedback" role="status" aria-live="polite"></p>
  <details><summary>Chamadas recentes</summary><ul id="claudeHistory" style="overflow-wrap:anywhere"></ul></details>
@@ -27,8 +28,10 @@
  function render(data){
   current=data;el('claudeStatus').textContent=data.circuit?'Bloqueio para conferir':data.enabled?'Reposição ativa':'Reposição pausada';
   el('claudeStatus').className='status-pill '+(data.enabled&&!data.circuit?'good':'warn');
-  el('claudeConsumption').textContent=`${data.usage.calls} de ${data.usage.limit} chamadas hoje · ${data.usage.remaining} disponíveis`;
-  el('claudeTokens').textContent=`${data.usage.inputTokensAccounted.toLocaleString('pt-BR')} de ${data.usage.inputTokenLimit.toLocaleString('pt-BR')} tokens de entrada contabilizados. ${data.usage.estimatedCalls} chamada(s) sem contagem completa usam o máximo reservado. Não é uma fatura do provedor.`;
+  const providerQuota=data.quotaMode==='provider';
+  el('claudeConsumption').textContent=providerQuota?`${data.usage.calls} chamadas hoje · limite aplicado pelo Claude Gateway, sem teto interno de chamadas`:`${data.usage.calls} de ${data.usage.limit} chamadas hoje · ${data.usage.remaining} disponíveis`;
+  el('claudeTokens').textContent=providerQuota?`${data.usage.inputTokensAccounted.toLocaleString('pt-BR')} tokens de entrada contabilizados conservadoramente; ${data.usage.estimatedCalls} chamada(s) usam estimativa máxima. Sem bloqueio pelo teto interno de tokens. Consulte o saldo real no Claude Gateway.`:`${data.usage.inputTokensAccounted.toLocaleString('pt-BR')} de ${data.usage.inputTokenLimit.toLocaleString('pt-BR')} tokens de entrada contabilizados. ${data.usage.estimatedCalls} chamada(s) sem contagem completa usam o máximo reservado. Não é uma fatura do provedor.`;
+  el('claudeProviderMode').checked=providerQuota;el('claudeProviderModeLabel').hidden=!data.providerQuotaEligible;
   el('claudeConnection').textContent=`Modelo: ${data.model||'não configurado'}. Última resposta registrada: ${time(data.connection.lastResponseAt)}. Esse registro não testa a conexão atual.`;
   el('claudeBudgetScope').textContent=scope==='cliente-x'?'Esta cota é compartilhada entre reserva autoral e auditorias editoriais.':'Esta cota controla as avaliações de cenas bíblicas do Sabedoria Kids.';
   el('claudeDailyLimit').value=data.policy.dailyLimit;el('claudeTodayLimit').value=data.policy.todayLimit??'';el('claudeEnabled').checked=data.enabled;
@@ -60,7 +63,7 @@
   if(busy||!current)return;setBusy(true);el('claudeFeedback').textContent='Enviando solicitação…';const activeScope=scope;
   try{
    const body={action,scope,revision:current.revision};
-   if(action==='settings')Object.assign(body,{dailyLimit:Number(el('claudeDailyLimit').value),todayLimit:el('claudeTodayLimit').value===''?null:Number(el('claudeTodayLimit').value),enabled:el('claudeEnabled').checked});
+   if(action==='settings')Object.assign(body,{dailyLimit:Number(el('claudeDailyLimit').value),todayLimit:el('claudeTodayLimit').value===''?null:Number(el('claudeTodayLimit').value),enabled:el('claudeEnabled').checked,quotaMode:el('claudeProviderMode').checked?'provider':'internal'});
    const data=await request(body);if(scope!==activeScope)return;
    if(data.saved)render(data);
    el('claudeFeedback').textContent=data.saved?'Configuração salva na nuvem.':data.message;

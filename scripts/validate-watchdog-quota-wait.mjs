@@ -13,6 +13,7 @@ assert.equal(watchdogQuotaWait({...error,account:'sabedoria-kids'},reserve,budge
 assert.equal(watchdogQuotaWait({...error,stage:'render'},reserve,budget,now),null);
 assert.equal(watchdogQuotaWait(error,{...reserve,automaticRecovery:{...reserve.automaticRecovery,available:1}},budget,now),null,'Do not block published recovery when stock became available');
 assert.equal(watchdogQuotaWait(error,reserve,{...budget,calls:[]},now),null,'Newly authorized budget permits another attempt');
+assert.equal(watchdogQuotaWait(error,reserve,{...budget,provider:'claude-ss',billingMode:'fixed_plan_user_confirmed',policy:{...budget.policy,quotaMode:'provider'}},now),null,'Gateway mode never waits for the obsolete internal daily ceiling');
 assert.equal(watchdogQuotaWait(error,reserve,budget,new Date('2026-10-19T03:00:00Z')),null,'BRT midnight restores normal budget');
 const reviewWait={...reserve,automaticRecovery:{...reserve.automaticRecovery,phase:'waiting_review_backoff',retryAfter:'2026-10-18T18:20:00Z'}};
 assert.equal(watchdogQuotaWait(error,reviewWait,budget,now).waitingReason,'editorial_review');
