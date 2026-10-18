@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {claudePerformanceContext,claudeLearningBrief} from '../lib/claude-performance-context.js';
+const now=Date.parse('2026-10-18T19:00:00Z');
+const sample={mediaId:'one',publishedAt:'2026-10-16T18:00:00Z',coverTitle:'Exemplo',learningContext:{format:'FEED'},observations:[{windowHours:24,ageHours:25,performance:{score:30},metrics:{reach:20,saved:2}}]};
+const state={accounts:{'cliente-x':{updatedAt:new Date(now).toISOString(),samples:[sample,sample,{...sample,mediaId:'late',observations:[{...sample.observations[0],ageHours:80}]},{...sample,mediaId:'early',observations:[{...sample.observations[0],windowHours:2,ageHours:2}]}]}}};
+let context=claudePerformanceContext(state,now);
+assert.equal(context.examples.length,1);assert.equal(context.examples[0].metrics.follows,null);assert.equal(context.examples[0].metrics.saved,2);
+assert.equal(claudePerformanceContext(state,now+6*3600000).examples.length,0);
+assert.equal(claudePerformanceContext({},now).examples.length,0);
+assert.match(claudeLearningBrief(context),/correlação/);
+state.accounts['cliente-x'].samples=Array.from({length:30},(_,i)=>({...sample,mediaId:String(i)}));
+assert.equal(claudePerformanceContext(state,now).examples.length,16);
+console.log('PASS: account isolation, freshness, deduplication, mature matching windows, missing metrics and bounded evidence.');

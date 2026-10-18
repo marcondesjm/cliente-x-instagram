@@ -4907,7 +4907,7 @@
         card('Versão do modelo', learning.modelVersion || 'nerion-adaptive-v1.0.0', 'plataforma v6.03 estável'),
         card('Atualização dos dados', liveData ? 'Contínua' : 'Snapshot do deploy', liveData ? 'estado vivo do GitHub main' : 'contingência temporária', liveData ? 'good' : 'warn'),
         card('Confiança atual', confidence, `${formatNumber(learning.effectiveSamples)} amostras · alcance ${formatNumber(learning.effectiveReach)}`, confidence === 'initial' ? 'warn' : 'good'),
-        card('Modo operacional', stale ? 'Fallback editorial' : 'Aprendizado assistido', stale ? 'peso aprendido temporariamente desligado' : 'peso limitado pela confiança', stale ? 'warn' : 'good'),
+        card('Modo operacional', stale ? 'Fallback editorial' : 'Aprendizado contínuo', stale ? 'dados antigos: tendências temporariamente desligadas' : 'Claude recebe resultados recentes ao criar novas pautas; confiança limita as conclusões', stale ? 'warn' : 'good'),
         card('Testes controlados', `${formatNumber(modes.exploit)} / ${formatNumber(modes.explore)} / ${formatNumber(modes.experiment)}`, 'desempenho / exploração / experimento'),
         card('Base acompanhada', `${formatNumber(learning.totalMedia)} mídias · ${formatNumber(learning.observedMedia)} com métricas`, `${formatNumber(learning.observationCount)} observações`),
         card('Fonte em destaque', best(learning.models?.sources, 'Amostra em formação'), 'por desempenho normalizado'),

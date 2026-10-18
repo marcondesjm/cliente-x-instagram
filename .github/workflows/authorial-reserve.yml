@@ -41,6 +41,8 @@ jobs:
       - name: Plan automatic recovery without paid calls
         id: plan
         run: node scripts/plan-authorial-recovery.mjs --persist
+      - name: Validate Claude learning evidence
+        run: node scripts/validate-claude-learning.mjs
       - if: steps.plan.outputs.run == 'true'
         run: npm ci --ignore-scripts
       - if: steps.plan.outputs.run == 'true' && steps.plan.outputs.recovery_ready != 'true'
