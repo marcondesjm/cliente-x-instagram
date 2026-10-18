@@ -1755,3 +1755,8 @@ Correções: planejador e executor compartilham a mesma regressão factual e sua
 Retomada após cota: falta de conteúdo registrada no dia anterior permanece elegível tanto no planejador quanto no seletor do Vigia, com data/slot originais. Exceção restrita à conta cliente-x, estágio content-selection e erro de foto inédita/reserva esgotada; sem fila manual, slot publicado/inicializado, data futura, outra conta ou retomada indiscriminada de dias antigos. A janela é hoje e o dia BRT anterior. Não altera as treze faixas nem o orçamento.
 
 Testes: validate-authorial-reserve, validate-authorial-slot-recovery (seletor real em fixture), validate-recovery-workflow, validate-restored-schedule (isolado do ledger de produção), validate-copy (76 pautas) e git diff --check passaram. A cota real continua insuficiente para gerar e revisar; publicação nova ainda não confirmada.
+
+
+## Teste imediato Claude confirmado — 18/10/2026, 14h03 BRT
+
+Workflow 39147349239 concluiu reposição e recuperação do Vigia com sucesso. Claude gerou e revisou authorial-e899f2dacb4bbaab (resumo-transferencia); capa e Story renderizados também inspecionados. Slot 2 de 18/10 marcado published no ledger. Reel 17961676122225215, Story 18035043506853486, permalink https://www.instagram.com/reel/DepLJi8kpCN/. Histórico persistido, sete alertas desse slot encerrados pelo run. Primeiro comentário sem ID e sem erro registrado; não afirmar envio de comentário. Consumo do dia: 19/20 chamadas; override temporário restrito a 18/10, sem aumento dos limites recorrentes.

@@ -3627,3 +3627,8 @@ Testes: validate-authorial-reserve, validate-authorial-slot-recovery (seletor re
 
 
 18/10/2026 BRT: usuário autorizou expressamente duas chamadas adicionais para teste imediato do Claude. Override do dia passa de 18 para 20 chamadas e de 2160000 para 2400000 tokens máximos contabilizados; limites recorrentes permanecem. Backoff editorial antecipado para este teste. Publicação continua condicionada às revisões e ao Vigia.
+
+
+## Teste imediato Claude confirmado — 18/10/2026, 14h03 BRT
+
+Workflow 39147349239 concluiu reposição e recuperação do Vigia com sucesso. Claude gerou e revisou authorial-e899f2dacb4bbaab (resumo-transferencia); capa e Story renderizados também inspecionados. Slot 2 de 18/10 marcado published no ledger. Reel 17961676122225215, Story 18035043506853486, permalink https://www.instagram.com/reel/DepLJi8kpCN/. Histórico persistido, sete alertas desse slot encerrados pelo run. Primeiro comentário sem ID e sem erro registrado; não afirmar envio de comentário. Consumo do dia: 19/20 chamadas; override temporário restrito a 18/10, sem aumento dos limites recorrentes.
