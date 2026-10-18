@@ -1796,7 +1796,7 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:09:38.928Z",
+  "checkedAt": "2026-10-18T13:09:40.610Z",
   "lastRun": "39130137477",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -2133,6 +2133,22 @@
   },
   "responseFormat": "json",
   "pixelCache": {
+    "6523f9cfd66a4aa911456ff1feb23b169d76d48cfc046f362f42a367bb4cebbf": {
+      "version": "kids-scene-review-v4-visual",
+      "model": "claude-sonnet-4.6",
+      "promptHash": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "checkedAt": "2026-10-18T13:09:40.610Z",
+      "observation": {
+        "id": "98834c32e024c944",
+        "sha256": "6523f9cfd66a4aa911456ff1feb23b169d76d48cfc046f362f42a367bb4cebbf",
+        "imageHash": "34169359e67f7acc29d673c680eab8f7cc3bbe6cf27019b69da83c755945902e",
+        "imageBytes": 57096,
+        "visible": true,
+        "style": "illustration",
+        "childSuitable": true,
+        "observedEvent": "Um homem sentado à esquerda, vestindo túnica amarela e manto vermelho, segura um recipiente, enquanto outro homem em pé à direita, vestindo túnica azul e faixa listrada, gesticula em sua direção em um ambiente interno com uma mesa contendo objetos arredondados."
+      }
+    },
     "8dbedeafddff03fa6d585f7c4acb81503f20e32f855266e2cccce2530fa043dd": {
       "version": "kids-scene-review-v4-visual",
       "model": "claude-sonnet-4.6",
@@ -2415,24 +2431,6 @@
         "style": "illustration",
         "childSuitable": true,
         "observedEvent": "Um homem sentado nos galhos de uma árvore olha para baixo enquanto um grupo de pessoas reunidas ao redor da árvore olha para cima na direção dele."
-      }
-    },
-    "6523f9cfd66a4aa911456ff1feb23b169d76d48cfc046f362f42a367bb4cebbf": {
-      "version": "kids-scene-review-v3-blind",
-      "model": "claude-haiku-4.5",
-      "promptHash": "8757f8af2d72f56ed83bcbd4da7166c7c5186e2a50a019a9ee0803cf91ed29fc",
-      "checkedAt": "2026-10-17T22:54:14.401Z",
-      "recoveredFromRun": "39076836345",
-      "callId": "ce0a07e3-e04e-4152-9ab6-f3d1487e9b5d",
-      "observation": {
-        "id": "98834c32e024c944",
-        "sha256": "6523f9cfd66a4aa911456ff1feb23b169d76d48cfc046f362f42a367bb4cebbf",
-        "imageHash": "34169359e67f7acc29d673c680eab8f7cc3bbe6cf27019b69da83c755945902e",
-        "imageBytes": 57096,
-        "visible": true,
-        "style": "illustration",
-        "childSuitable": true,
-        "observedEvent": "Um homem sentado segura um copo enquanto outro homem de pé gesticula com a mão em direção a ele, ambos conversando em um ambiente interno."
       }
     }
   },
