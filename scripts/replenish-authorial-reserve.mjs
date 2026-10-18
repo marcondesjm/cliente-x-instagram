@@ -23,10 +23,10 @@ async function request(stage,prompt,schema,images=null){
  catch(e){Object.assign(call,{status:'failed',completedAt:new Date().toISOString(),httpStatus:e.httpStatus||null});budget.circuit='provider_response_unconfirmed';save();throw Error('API sem resposta confirmada; novas chamadas bloqueadas.');}
  const {blocked,...usage}=normalizeProviderUsage(response.usage,budget.policy,budget.billingMode);
  Object.assign(call,{status:'completed',completedAt:new Date().toISOString(),...usage,stopReason:response.stopReason||null});
- if(blocked)budget.circuit='invalid_usage_receipt';save();
- if(blocked||!response.value||!response.structured||response.stopReason!=='tool_use')throw Error('Resposta estruturada ou recibo da API inválido.');
- const value=JSON.parse(JSON.stringify(response.value).replaceAll(key,'[redacted]'));
- state.lastResponse={stage,callId:call.id,value};save();
+ if(blocked)budget.circuit='invalid_usage_receipt';
+ const value=response.value?JSON.parse(JSON.stringify(response.value).replaceAll(key,'[redacted]')):null;
+ state.lastResponse={stage,callId:call.id,value,structured:response.structured===true,stopReason:response.stopReason,invalidResponse:response.invalidResponseText||null};save();
+ if(blocked||!value||!response.structured||response.stopReason!=='tool_use')throw Error('Resposta estruturada ou recibo da API inválido.');
  return {value,callId:call.id};
 }
 async function regression(){
