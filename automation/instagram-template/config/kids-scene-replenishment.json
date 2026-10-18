@@ -1983,11 +1983,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-18T13:25:32.257Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 14400,
       "imageFingerprint": null,
-      "promptFingerprint": "4fe56d120e9ca419bdac24805725135f90b726efd1d7989497dc379711df7fd6"
+      "promptFingerprint": "4fe56d120e9ca419bdac24805725135f90b726efd1d7989497dc379711df7fd6",
+      "completedAt": "2026-10-18T13:26:15.813Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 29,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -2090,7 +2096,7 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:25:32.257Z",
+  "checkedAt": "2026-10-18T13:26:15.813Z",
   "lastRun": "39131302669",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -2318,81 +2324,332 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "verify:kids-biblia-29",
+    "stage": "select:kids-biblia-29",
     "value": {
-      "decision": "reject",
       "cards": [
         {
-          "position": 1,
-          "observationId": "98834c32e024c944",
-          "pixelMatch": true,
-          "depictedEvent": "Zaqueu declara a Jesus que dará metade de seus bens aos pobres e restituirá quatro vezes o que tiver defraudado.",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true,
-          "verse": "19:8",
-          "reason": "A observação descreve corretamente os pixels da Cena 1. O evento bíblico representado corresponde a Lucas 19:8 (declaração de Zaqueu sobre restituição). Compatível com título e corpo do cartão."
+          "card": 1,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena mostra grupo reunido em círculo sem identificar claramente o evento do título 'Zaqueu recebeu Jesus em sua casa'. Não retrata a recepção na casa."
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena interna com dois homens não corresponde ao evento principal do título que é Zaqueu recebendo Jesus em sua casa."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena mostra Zaqueu na árvore, que é etapa anterior ao evento do título (receber Jesus em casa). Capa exige o evento do título."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo reunido sem cenário identificável não retrata o evento específico do título sobre Zaqueu receber Jesus."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "19:6",
+              "reason": "Cena retrata figura diante de porta com pessoas observando, compatível com Jesus entrando na casa de Zaqueu conforme Lucas 19:6, que é o evento do título."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena mostra subida na árvore, etapa anterior ao evento do título. Capa exige o evento principal descrito no título."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Homens caminhando por caminho de terra não retrata o evento específico de Zaqueu recebendo Jesus em sua casa."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Homem ajoelhado tocando costas de outro não representa claramente o evento do título sobre recepção na casa."
+            }
+          ],
+          "reason": "Capa exige ilustração do evento do título 'Zaqueu recebeu Jesus em sua casa'. Apenas cena 5 retrata adequadamente este momento específico."
         },
         {
-          "position": 2,
-          "observationId": "0d7ed7a02e4a2584",
-          "pixelMatch": true,
-          "depictedEvent": "Zaqueu está sentado nos galhos de uma árvore enquanto Jesus olha para cima e fala com ele; multidão observa ao redor.",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true,
-          "verse": "19:4-5",
-          "reason": "Observação correta dos pixels. Cena representa Zaqueu na árvore e Jesus chamando-o, conforme Lucas 19:4-5. Compatível com resumo narrativo do cartão."
+          "card": 2,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo reunido em círculo não ilustra claramente nenhum dos eventos do resumo (subir na árvore, receber Jesus, falar sobre reparar erros)."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "19:8",
+              "reason": "Dois homens em ambiente interno, um gesticulando, pode representar Zaqueu declarando a Jesus sobre restituir, conforme Lucas 19:8 mencionado no resumo."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "19:4-5",
+              "reason": "Homem sentado nos galhos da árvore com grupo abaixo retrata Zaqueu subindo na árvore para ver Jesus, conforme Lucas 19:4-5, evento do resumo."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo reunido sem cenário ou ação identificável não ilustra concretamente nenhum evento do resumo narrativo."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "19:6-7",
+              "reason": "Figura diante de porta com pessoas observando pode representar Jesus entrando na casa de Zaqueu, evento implícito no resumo 'recebeu Jesus'."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "19:4",
+              "reason": "Pessoa subindo em árvore com grupo observando retrata Zaqueu subindo na árvore para ver Jesus, conforme Lucas 19:4, primeiro evento do resumo."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Homens caminhando por caminho não ilustra especificamente os eventos do resumo sobre Zaqueu."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena ambígua de homem ajoelhado não ilustra claramente nenhum dos três eventos mencionados no resumo."
+            }
+          ],
+          "reason": "Cartão narrativo resume dois eventos principais. Cenas 2, 3, 5 e 6 retratam momentos concretos da passagem mencionados no resumo."
         },
         {
-          "position": 3,
-          "observationId": "6654943ac38eff87",
-          "pixelMatch": true,
-          "depictedEvent": "Jesus fala a um grupo de pessoas reunidas, declarando que a salvação chegou à casa de Zaqueu.",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true,
-          "verse": "19:9-10",
-          "reason": "Pixels descritos corretamente. Representa Jesus ensinando/declarando à multidão, compatível com Lucas 19:9-10. Adequado como cena de lição sustentada pela passagem."
+          "card": 3,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "19:9-10",
+              "reason": "Jesus gesticulando para grupo reunido pode representar ensino sobre salvação e busca dos perdidos, pertinente à lição sobre mudança de atitude sustentada por Lucas 19:9-10."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "19:8",
+              "reason": "Declaração de Zaqueu sobre restituição demonstra mudança de atitude concreta, diretamente pertinente à reflexão do cartão sobre mudanças no que fazemos."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "19:4-5",
+              "reason": "Encontro entre Zaqueu na árvore e Jesus representa momento inicial da transformação, pertinente à lição sobre mudança de atitude."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo reunido sem cenário ou ação clara não fornece base concreta para ilustrar lição sobre mudança de atitude."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "19:6-7",
+              "reason": "Recepção de Jesus na casa de Zaqueu com murmuração da multidão ilustra contraste entre atitudes, pertinente à reflexão sobre mudança."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "19:4",
+              "reason": "Esforço de Zaqueu para ver Jesus subindo na árvore demonstra disposição para mudança, pertinente à lição educativa."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Homens caminhando por caminho não estabelece conexão educativa clara com lição sobre mudança de atitude."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena ambígua sem ação identificável não sustenta adequadamente reflexão sobre mudança de comportamento."
+            }
+          ],
+          "reason": "Cartão de lição permite qualquer cena pertinente à passagem com conexão educativa justificável sobre mudança de atitude."
         },
         {
-          "position": 4,
-          "observationId": "e64874ce7ad7e208",
-          "pixelMatch": false,
-          "depictedEvent": "",
-          "passageMatch": false,
-          "childSuitable": true,
-          "distinct": false,
-          "copyMatch": false,
-          "verse": "",
-          "reason": "A observação descreve apenas homens reunidos em círculo sem cenário ou ação identificável. Não é possível confirmar que a cena retrata qualquer evento concreto de Lucas 19:1-10. Sem composição distinta verificável, não atende ao requisito de ilustrar uma cena sustentada pela passagem para atividade familiar."
+          "card": 4,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "19:9-10",
+              "reason": "Ensino de Jesus sobre salvação pode fundamentar conversa familiar sobre reparar prejuízos, conectando declaração bíblica à atividade proposta."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "19:8",
+              "reason": "Declaração explícita de Zaqueu sobre restituir quatro vezes conecta diretamente à atividade de conversar sobre devolver algo e reparar prejuízo."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "19:4-5",
+              "reason": "Momento do encontro inicial entre Zaqueu e Jesus pode iniciar conversa familiar sobre transformação e reparação."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo sem cenário ou ação identificável não oferece base concreta para ilustrar atividade familiar sobre reparação."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "19:6-7",
+              "reason": "Entrada de Jesus na casa de Zaqueu precede a declaração sobre restituição, sendo pertinente como ponto de partida para conversa familiar."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "19:4",
+              "reason": "Iniciativa de Zaqueu em subir na árvore demonstra disposição que pode inspirar conversa familiar sobre mudança e reparação."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Caminhada por caminho não estabelece conexão educativa suficientemente clara com atividade específica sobre reparar prejuízo."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena ambígua não fornece base adequada para ilustrar atividade familiar concreta sobre devolução e reparação."
+            }
+          ],
+          "reason": "Atividade familiar pede conversa sobre reparar prejuízo. Cenas que mostram momentos da história sustentam esta reflexão educativa."
         },
         {
-          "position": 5,
-          "observationId": "0213f4524b345be9",
-          "pixelMatch": true,
-          "depictedEvent": "Jesus entra na casa de Zaqueu enquanto pessoas murmuram e observam a cena numa passagem entre paredes de pedra.",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": true,
-          "copyMatch": true,
-          "verse": "19:6-7",
-          "reason": "Observação correta dos pixels. Cena representa Jesus entrando na casa de Zaqueu com murmuração da multidão, conforme Lucas 19:6-7. Compatível com cartão de leitura da passagem."
+          "card": 5,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "19:9-10",
+              "reason": "Declaração de Jesus sobre salvação e busca dos perdidos é pertinente para convite à leitura continuada da passagem completa."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "19:8",
+              "reason": "Restituição prometida por Zaqueu é parte importante da passagem, pertinente para incentivar leitura completa do relato."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "19:4-5",
+              "reason": "Encontro na árvore é momento marcante da história, adequado para convidar à leitura integral da passagem."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo sem cenário ou ação clara não oferece elemento concreto suficientemente distintivo para ilustrar convite à leitura."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "19:6-7",
+              "reason": "Entrada de Jesus na casa é evento central do relato, pertinente para motivar leitura completa da história."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "19:4",
+              "reason": "Subida na árvore é episódio icônico da história de Zaqueu, adequado para cartão que convida à leitura da passagem."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Caminhada genérica por caminho não destaca aspecto específico suficiente para ilustrar convite à leitura desta passagem particular."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena ambígua sem ação identificável não serve adequadamente como ilustração para convite à leitura da história."
+            }
+          ],
+          "reason": "Cartão de leitura aceita qualquer cena pertinente à passagem que motive leitura continuada em família."
         },
         {
-          "position": 6,
-          "observationId": "d3c9e973465ce4fc",
-          "pixelMatch": true,
-          "depictedEvent": "Zaqueu sobe em uma árvore frondosa para ver Jesus passar, enquanto uma multidão observa abaixo.",
-          "passageMatch": true,
-          "childSuitable": true,
-          "distinct": false,
-          "copyMatch": true,
-          "verse": "19:4",
-          "reason": "Pixels descritos corretamente e evento corresponde a Lucas 19:4. Porém, a composição é essencialmente idêntica à Cena 2 (homem subindo/sentado em árvore com multidão observando), violando o requisito de distinct para o Story. Ambas representam o mesmo momento da subida na árvore sem diferenciação composicional clara."
+          "card": 6,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "19:9-10",
+              "reason": "Ensino de Jesus sobre salvação é pertinente ao Story como cena diferente relacionada à passagem, complementando outras posições."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "19:8",
+              "reason": "Declaração de restituição é momento importante da história, adequado para Story se diferente das demais posições selecionadas."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "19:4-5",
+              "reason": "Encontro na árvore é cena relevante da passagem, aceitável para Story desde que distinta das outras posições escolhidas."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo sem cenário ou ação identificável não oferece composição suficientemente clara para servir como Story pertinente."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "19:6-7",
+              "reason": "Recepção na casa é evento central, pertinente para Story se não utilizado em outra posição."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "19:4",
+              "reason": "Subida na árvore é episódio marcante, adequado para Story desde que composicionalmente distinto das demais cenas selecionadas."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Caminhada genérica não destaca aspecto suficientemente específico da história de Zaqueu para servir como Story."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena ambígua sem ação clara não fornece base adequada para ilustrar Story relacionado à passagem."
+            }
+          ],
+          "reason": "Story aceita cena pertinente à passagem diferente das demais. Avaliações independentes permitem múltiplas opções válidas."
         }
       ]
     }
