@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {RESERVE_VERSION,TOPICS,digest,buildAuthorialPack,packClaims,reserveApproved,readyAuthorialPacks,conceptSvg} from '../lib/authorial-reserve.js';
-import {pickEditorialVisualReserve,pickFreshPack} from '../automation/instagram-template/scripts/publish-carousel.mjs';
+import {pickEditorialVisualReserve,pickFreshPack,preparePackForPublication} from '../automation/instagram-template/scripts/publish-carousel.mjs';
 import {solutionForWatchdogError} from './watchdog-error-classification.mjs';
 const topic=TOPICS[0],slide={eyebrow:'Exercício educativo',title:'Organize os campos de um pedido fictício.',body:'Separe produto e prazo. Confira cada campo na mensagem original e marque a informação que estiver ausente.'};
 const draft={slides:Array.from({length:4},()=>({...slide})),caption:('Use um pedido fictício para testar a extração de produto e prazo. Confira cada campo contra a mensagem original. ').repeat(3),storySlide:{...slide}};
@@ -16,6 +16,7 @@ assert.equal(readyAuthorialPacks({entries:[entry]},'cliente-x',get,[]).length,0)
 assert.equal(pickEditorialVisualReserve([pack],'2026-10-18',1,[],[],()=>0).pack,null);
 assert.ok(pickFreshPack([pack],'2026-10-18',1,[],[],()=>0).pack);
 assert.ok(pickEditorialVisualReserve(ready,'2026-10-18',1,[],[],()=>0).pack);
+assert.deepEqual(preparePackForPublication(pack,'2026-10-19',5,{contentProfile:{storyMethod:{ihcHanahEnabled:true}}}).pack,pack);
 assert.equal(pickEditorialVisualReserve(ready,'2026-10-18',1,[],[{coverTitle:pack.slides[0].title}],()=>0).pack,null);
 for(const mutate of [e=>e.pack.slides[0].body+=' Alterado.',e=>e.status='draft',e=>e.review.novel=false,e=>e.render.story=false,e=>e.review.claims[0].evidence[0].quote='Citação inventada sem nenhum suporte.',e=>e.review.groundingTask.claims[0].text='Texto trocado.',e=>e.review.callId=e.generationCallId]){const e=structuredClone(entry);mutate(e);assert.equal(reserveApproved(e,get),false);}
 assert.equal(reserveApproved(entry,()=>Buffer.from('changed')),false);
