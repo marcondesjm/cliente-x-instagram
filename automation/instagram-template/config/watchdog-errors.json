@@ -1,24 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-10-17:8:39060573550",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-10-17",
-    "slotIndex": 8,
-    "scheduledAt": "2026-10-17T17:50:00.000Z",
-    "scheduledPostId": null,
-    "failedAt": "2026-10-17T19:02:30.083Z",
-    "workflowRun": "39060573550",
-    "workflowName": "Instagram Watchdog Backup",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/39060573550",
-    "stage": "content-selection",
-    "error": "Radar visual sem foto inédita e reserva autoral esgotada. Nenhuma publicação repetida foi enviada; consulte visual-selection.json.",
-    "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o conteúdo ou dependência indicada antes da próxima tentativa.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-10-17-160230.json",
-    "resolvedAt": "2026-10-18T00:02:24.288Z",
-    "resolvedRun": "39081148473"
-  },
-  {
     "key": "cliente-x:2026-10-17:8:39062217454",
     "status": "resolved",
     "account": "cliente-x",
@@ -938,5 +919,22 @@
     "error": "Conteúdo bíblico ilustrado inédito esgotado. Adicione novas pautas revisadas com imagens; nenhum conteúdo genérico será publicado.",
     "solution": "Adicionar pautas bíblicas inéditas com ilustrações revisadas em todos os cartões, Story e créditos. O vigia retoma o horário pendente após a revisão; não repetir posts, voltar a cartões vazios ou renovar token por esse erro de conteúdo.",
     "failurePath": "automation/instagram-template/runs/failure-2026-10-18-141927.json"
+  },
+  {
+    "key": "cliente-x:2026-10-18:3:39149553608",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-10-18",
+    "slotIndex": 3,
+    "scheduledAt": "2026-10-18T14:50:00.000Z",
+    "scheduledPostId": null,
+    "failedAt": "2026-10-18T17:27:12.834Z",
+    "workflowRun": "39149553608",
+    "workflowName": "Instagram Watchdog Backup",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/39149553608",
+    "stage": "content-selection",
+    "error": "Radar visual sem foto inédita e reserva autoral esgotada. Nenhuma publicação repetida foi enviada; consulte visual-selection.json.",
+    "solution": "A reposição automática com Claude tenta criar e revisar conteúdo inédito para recuperar este horário. Se a cota diária terminou, aguarda a renovação e retoma pelo agendamento, sem botão ou pedido manual. O vigia só publica após aprovação factual, visual e contra repetição; o alerta permanece aberto até a publicação confirmada.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-10-18-142712.json"
   }
 ]
