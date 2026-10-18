@@ -6935,7 +6935,7 @@
       "topic": "base-respostas-v4",
       "account": "cliente-x",
       "version": "claude-authorial-reserve-v1",
-      "status": "draft",
+      "status": "rejected",
       "generationCallId": "3d1be3b9-78cc-418b-b833-5d6ee79d397f",
       "learningContext": {
         "version": "claude-observed-editorial-v1",
@@ -7197,10 +7197,210 @@
           "followReason": true,
           "shareReason": true
         }
-      }
+      },
+      "review": {
+        "claims": [
+          {
+            "id": "slide-1",
+            "supported": true,
+            "reason": "A claim descreve o cenário fictício de dúvida sobre horário fora da política, alinhado ao briefing que propõe exercício educativo com escola fictícia e mensagem sobre horário não constante na política comercial.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-2",
+            "supported": true,
+            "reason": "O slide orienta pedir rascunho baseado apenas na política vigente com fonte e data de revisão, conforme instrução explícita do briefing sobre solicitar à IA um rascunho usando somente a lista oficial.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-3",
+            "supported": true,
+            "reason": "A conferência direta na fonte é exigida pelo briefing, que determina verificar se a citação gerada corresponde exatamente ao texto da política, pois geração automática não prova validade.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-4",
+            "supported": true,
+            "reason": "Marcar pendência para revisão humana quando a resposta não estiver na política está previsto no briefing como etapa obrigatória antes de enviar comunicação ao interessado.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "caption",
+            "supported": true,
+            "reason": "A legenda resume o método proposto (lista atualizada, rascunho baseado nela, conferência na fonte e revisão humana) e inclui disclaimer de conteúdo educativo autoral com apoio de IA, conforme fontes brief e label.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              },
+              {
+                "sourceId": "label",
+                "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+              }
+            ]
+          },
+          {
+            "id": "story",
+            "supported": true,
+            "reason": "O texto da story convida a ver no feed como criar exercício prático para validar respostas de IA usando políticas comerciais, coerente com o escopo educativo fictício descrito no briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-1",
+            "supported": true,
+            "reason": "Os rótulos 'Política aberta', 'Mensagem do aluno' e 'Tela de inscrição' correspondem aos elementos visuais do slide 1 e são consistentes com o cenário fictício de dúvida na inscrição descrito no briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-2",
+            "supported": true,
+            "reason": "Os rótulos 'Pedido de rascunho', 'Fonte indicada' e 'Data de revisão' refletem os campos do procedimento descrito no briefing para solicitar rascunho baseado na política vigente.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-3",
+            "supported": true,
+            "reason": "Os rótulos 'Citação gerada', 'Texto original' e 'Conferência lado a lado' ilustram a etapa de verificação exigida pelo briefing, que manda conferir o trecho citado diretamente na fonte.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-4",
+            "supported": true,
+            "reason": "Os rótulos 'Trecho ausente', 'Pendência marcada' e 'Revisão humana' representam a ação de marcar dúvida para revisão quando faltar base, conforme instrução do briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-5",
+            "supported": false,
+            "reason": "Não há suporte nas fontes brief ou label para os rótulos 'Equipe reunida', 'Validação em tela' e 'Aprovação antes do envio'; o briefing não menciona reunião de equipe nem aprovação coletiva como etapa do exercício, apenas revisão humana individual.",
+            "evidence": []
+          }
+        ],
+        "decision": "reject",
+        "supported": false,
+        "novel": true,
+        "practical": true,
+        "visualMatch": true,
+        "reason": "A claim art-5 não possui suporte nas fontes fornecidas. O briefing descreve um fluxo individual de conferência e marcação de pendência para revisão humana, sem mencionar reunião de equipe, validação em tela coletiva ou aprovação antes do envio como etapas do exercício. Como supported=false, a decisão deve ser reject independentemente dos demais critérios.",
+        "growth": {
+          "hookSpecific": true,
+          "payoffDelivered": true,
+          "followReason": true,
+          "shareReason": true
+        },
+        "bindingVersion": "exact-source-id-v1",
+        "callId": "4e90e858-b970-4d17-bb66-378bec6340c8",
+        "packHash": "60eecf59aebab4641aa3fac58936f18381860051dd62987aab3bb3d1a5c1e6c8",
+        "checkedAt": "2026-10-18T20:01:20.319Z",
+        "groundingTask": {
+          "scope": "Exercício educativo fictício. Orientações são propostas, não resultados ou notícias.",
+          "sources": [
+            {
+              "id": "brief",
+              "text": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+            },
+            {
+              "id": "label",
+              "text": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            }
+          ],
+          "claims": [
+            {
+              "id": "slide-1",
+              "text": "Dúvida na inscrição. O aluno pergunta horário fora da lista oficial. A escola fictícia recebe mensagem sobre horário que não consta na política comercial publicada recentemente."
+            },
+            {
+              "id": "slide-2",
+              "text": "Procedimento claro. Peça rascunho baseado apenas na política vigente. Solicite à IA um rascunho de resposta usando somente a lista oficial com fonte e data de revisão marcada."
+            },
+            {
+              "id": "slide-3",
+              "text": "Conferência necessária. Verifique o trecho citado diretamente na fonte. Confira se a citação gerada corresponde exatamente ao texto da política, pois geração automática não prova validade."
+            },
+            {
+              "id": "slide-4",
+              "text": "Exercício prático. Marque a dúvida para revisão quando faltar base. Se a resposta não estiver na política, registre a pendência para revisão humana antes de enviar qualquer comunicação ao interessado."
+            },
+            {
+              "id": "caption",
+              "text": "Como sua equipe lida com dúvidas que fogem da política comercial? Este exercício propõe um método simples: manter uma lista atualizada, pedir rascunhos baseados nela e conferir cada citação na fonte original.\n\nQuando a informação não estiver disponível, marque para revisão humana. Acompanhe o perfil para aprender aplicações práticas de IA em empresas e organizar melhor sua operação diária.\n\nConteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            },
+            {
+              "id": "story",
+              "text": "Rotina operacional. Sua equipe confere citações antes de enviar?. Veja no feed como criar um exercício prático para validar respostas geradas por IA usando políticas comerciais atualizadas da sua empresa."
+            },
+            {
+              "id": "art-1",
+              "text": "Rótulos de ilustração fictícia: Política aberta. Mensagem do aluno. Tela de inscrição"
+            },
+            {
+              "id": "art-2",
+              "text": "Rótulos de ilustração fictícia: Pedido de rascunho. Fonte indicada. Data de revisão"
+            },
+            {
+              "id": "art-3",
+              "text": "Rótulos de ilustração fictícia: Citação gerada. Texto original. Conferência lado a lado"
+            },
+            {
+              "id": "art-4",
+              "text": "Rótulos de ilustração fictícia: Trecho ausente. Pendência marcada. Revisão humana"
+            },
+            {
+              "id": "art-5",
+              "text": "Rótulos de ilustração fictícia: Equipe reunida. Validação em tela. Aprovação antes do envio"
+            }
+          ]
+        }
+      },
+      "reason": "Revisão rejeitou o lote: A claim art-5 não possui suporte nas fontes fornecidas. O briefing descreve um fluxo individual de conferência e marcação de pendência para revisão humana, sem mencionar reunião de equipe, validação em tela coletiva ou aprovação antes do envio como etapas do exercício. Como supported=false, a decisã"
     }
   ],
-  "checkedAt": "2026-10-18T20:01:18.325Z",
+  "checkedAt": "2026-10-18T20:01:20.319Z",
   "workflowRun": "39161134821",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
