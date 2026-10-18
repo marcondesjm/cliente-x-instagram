@@ -3599,3 +3599,8 @@ Conclusao de ativacao:
 - Próximo passo operacional: execução automática com orçamento renovado; pautas sem seis cenas confiáveis continuam aguardando material. Grade de 12 horários preservada, sem afirmar 12 novos conteúdos prontos por dia.
 - Emaús está com seleção e render comprovados; ainda não havia publicação correspondente no histórico sincronizado nesta conferência.
 - Resíduo local preservado: output/ com scripts auxiliares, artefatos e prévias. Nenhum segredo foi gravado nessas evidências.
+
+### 2026-10-18 12:58 BRT — recuperação Cliente X com Claude
+- Implementada reposição autoral revisada, com recibos persistentes no orçamento editorial existente, provas de texto/arte/render e seleção exclusiva da conta cliente-x. Workflow 06:35/15:35 BRT, target quatro elegíveis, até duas pautas por execução; catálogo finito permanece sujeito a revisão e ampliação.
+- Regressão factual e revisão completa aprovadas no run 39142326219. Citações por ID de fonte, sem aceitar paráfrases como trechos literais. Renders corrigidos após QA local e reavaliados; bloqueios anteriores preservados como evidência.
+- Run automático 39142554068 recuperou o slot 1 às 12:56 BRT: Feed 18017783831744794, https://www.instagram.com/p/DepDekfDVbu/ , Story 18011158589969681, sem primeiro comentário solicitado. Histórico, ledger e alertas resolved conferidos. A cota de novas avaliações de 18/10 terminou; a pauta aprovada foi consumida e não é estoque para os próximos slots. Nenhuma garantia de 13 materiais disponíveis por dia.

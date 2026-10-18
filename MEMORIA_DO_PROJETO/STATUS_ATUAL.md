@@ -1727,3 +1727,10 @@ Resultado:
 - Próximo passo operacional: execução automática com orçamento renovado; pautas sem seis cenas confiáveis continuam aguardando material. Grade de 12 horários preservada, sem afirmar 12 novos conteúdos prontos por dia.
 - Emaús está com seleção e render comprovados; ainda não havia publicação correspondente no histórico sincronizado nesta conferência.
 - Resíduo local preservado: output/ com scripts auxiliares, artefatos e prévias. Nenhum segredo foi gravado nessas evidências.
+
+### 2026-10-18 12:58 BRT — Cliente X: reserva Claude e slot 1 recuperado
+- Run 39136840769 bloqueava imagens já publicadas em setembro e reserva autoral usada em 17/10. Proteções mantidas; correção em lib/authorial-reserve.js, scripts/replenish-authorial-reserve.mjs e workflow authorial-reserve.yml. Auditoria/editorial compartilham cota existente e concorrência, sem ampliar chamadas.
+- Reposição programada 06:35/15:35 BRT, até duas pautas por execução e objetivo de quatro elegíveis; briefings finitos e específicos de IA em empresas. Geração, revisão independente, regressão positiva/negativa, citações vinculadas a IDs de fonte e hashes exatos de texto/ativos/render. Aplicação isolada em cliente-x, não modifica a composição Kids.
+- Run 39142326219 validou a pauta authorial-7170d58abcfb7faa e o layout autoral v3. Conferência local corrigiu corte do Story, espaço vazio e contraste antes da liberação final. Testes de isolamento, repetição, alteração de hash/ativo, citação inventada e recuperação passaram.
+- Publicação automática real confirmada no run 39142554068 às 12:56 BRT: CAROUSEL 18017783831744794, https://www.instagram.com/p/DepDekfDVbu/ , Story 18011158589969681. Primeiro comentário não configurado, sem erro. Slot 1 persistido e respectivos alertas resolved. Artefatos finais conferidos, sem excluir/republicar mídia.
+- Estado de avaliação daily_limit: 12 chamadas editoriais em 18/10; próximas avaliações após renovação/ciclo. A única reserva liberada já foi consumida. Outros horários continuam dependentes de material elegível, sem promessa de 13 posts/dia. Detalhes em INCIDENTE_CLIENTE_X_RESERVA_20261018.md.
