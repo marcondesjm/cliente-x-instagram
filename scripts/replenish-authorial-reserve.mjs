@@ -88,7 +88,7 @@ try{
    entry.review={...bound,bindingVersion:SOURCE_BINDING_VERSION,callId:reviewed.callId,packHash:entry.packHash,checkedAt:new Date().toISOString(),groundingTask:task};
    if(!grounded.approved||reviewed.value.decision!=='approve'||!['supported','novel','practical','visualMatch'].every(k=>reviewed.value[k]===true))throw Error('Revisão rejeitou o lote: '+String(reviewed.value.reason).slice(0,300));
    entry.render={version:RESERVE_RENDER_VERSION,packHash:entry.packHash,verifiedAt:new Date().toISOString(),feedCount:4,story:true,runDir:receipt.runDir,imageHashes:[...receipt.imagePaths,receipt.storyImagePath].map(p=>digest(asset(p)))};
-   entry.status='ready';
+   entry.status='ready';if(entry.reason)entry.previousRejection=entry.reason;delete entry.reason;
    if(!reserveApproved(entry,asset))throw Error('Prova de aprovação autoral inválida.');
    save(paths);accepted++;
   }catch(e){entry.status='rejected';entry.reason=String(e.message).replaceAll(key||'__absent__','[redacted]').slice(0,650);save();if(budget.circuit)throw e;}
