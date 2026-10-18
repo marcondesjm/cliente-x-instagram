@@ -6466,7 +6466,7 @@
       "topic": "pedido-duplicado-v4",
       "account": "cliente-x",
       "version": "claude-authorial-reserve-v1",
-      "status": "draft",
+      "status": "rejected",
       "generationCallId": "26024363-301c-43d6-810e-db2f4a3ece21",
       "learningContext": {
         "version": "claude-observed-editorial-v1",
@@ -6728,10 +6728,210 @@
           "followReason": true,
           "shareReason": true
         }
-      }
+      },
+      "review": {
+        "claims": [
+          {
+            "id": "slide-1",
+            "supported": true,
+            "reason": "A fonte brief descreve exatamente o cenário fictício de uma escola recebendo a mesma dúvida sobre horário por múltiplos canais (e-mail e WhatsApp), sustentando a alegação do slide 1.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-2",
+            "supported": true,
+            "reason": "O briefing orienta explicitamente atribuir um identificador ao pedido e registrá-lo antes de criar tarefas para evitar duplicações, alinhando-se perfeitamente com o conteúdo do slide 2.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-3",
+            "supported": true,
+            "reason": "A fonte brief instrui consultar se o identificador já foi registrado e, se existir, encaminhar para conferência em vez de criar nova tarefa, correspondendo à prescrição do slide 3.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-4",
+            "supported": true,
+            "reason": "O exercício proposto no briefing é testar reenviando o mesmo pedido fictício e verificando se o sistema reconhece o identificador previamente registrado, conforme descrito no slide 4.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "caption",
+            "supported": true,
+            "reason": "A legenda resume corretamente o propósito educativo do conteúdo, reforça que é um exemplo fictício e convida ao engajamento sem prometer resultados, em conformidade com as fontes brief e label.",
+            "evidence": [
+              {
+                "sourceId": "label",
+                "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+              },
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "story",
+            "supported": true,
+            "reason": "O texto da story apresenta o tema de pedidos iguais chegando por canais diferentes e propõe o exercício de identificar e conferir registros, consistente com o escopo fictício definido no briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-1",
+            "supported": true,
+            "reason": "Os rótulos 'e-mail aberto', 'WhatsApp ativo' e 'identificador' refletem fielmente os elementos visuais e textuais presentes na ilustração do slide 1.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-2",
+            "supported": true,
+            "reason": "Os rótulos 'aluno pergunta', 'horário curso' e 'resposta enviada' correspondem aos textos legíveis na ilustração do slide 2, representando o fluxo de atendimento fictício.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-3",
+            "supported": true,
+            "reason": "Os rótulos 'recebe pedido', 'cria identificador' e 'registra sistema' espelham exatamente as etapas do fluxograma visualizado na ilustração do slide 3.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-4",
+            "supported": true,
+            "reason": "Os rótulos 'consulta registro', 'existe duplicado' e 'encaminha conferência' são idênticos aos itens listados na checklist da ilustração do slide 4.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-5",
+            "supported": false,
+            "reason": "Não há evidência visual ou textual nas fontes fornecidas que corrobore os rótulos 'reenvia pedido', 'verifica registro' e 'confere existente' como parte de uma quinta ilustração distinta; o slide 4 já cobre o teste de reenvio, tornando esta claim redundante ou inexistente no material auditado.",
+            "evidence": []
+          }
+        ],
+        "decision": "reject",
+        "supported": false,
+        "novel": true,
+        "practical": true,
+        "visualMatch": false,
+        "reason": "A claim art-5 não possui suporte nas fontes nem corresponde a uma ilustração verificável nos renders fornecidos, violando o critério de visualMatch e supported. Embora o conteúdo seja novel em relação ao histórico e prático como exercício, a inconsistência entre a descrição da arte-5 e o material disponível impede a aprovação editorial.",
+        "growth": {
+          "hookSpecific": true,
+          "payoffDelivered": true,
+          "followReason": true,
+          "shareReason": true
+        },
+        "bindingVersion": "exact-source-id-v1",
+        "callId": "2aa35186-e346-4617-bc28-64d6659dd890",
+        "packHash": "c750f6a3ebc802641b71d8fc22d84a7ed72a4025f2007b0bdb666075e52f4cd9",
+        "checkedAt": "2026-10-18T19:58:19.910Z",
+        "groundingTask": {
+          "scope": "Exercício educativo fictício. Orientações são propostas, não resultados ou notícias.",
+          "sources": [
+            {
+              "id": "brief",
+              "text": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+            },
+            {
+              "id": "label",
+              "text": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            }
+          ],
+          "claims": [
+            {
+              "id": "slide-1",
+              "text": "Pedido duplicado. O mesmo pedido gera duas tarefas?. Uma escola recebe a mesma dúvida sobre horário por e-mail e WhatsApp simultaneamente."
+            },
+            {
+              "id": "slide-2",
+              "text": "Procedimento. Atribua um identificador único ao pedido recebido. Registre o identificador antes de criar qualquer tarefa nova para evitar duplicações operacionais."
+            },
+            {
+              "id": "slide-3",
+              "text": "Conferência. Consulte se o identificador já existe no sistema. Se o registro existir, encaminhe para conferência em vez de criar uma nova tarefa operacional."
+            },
+            {
+              "id": "slide-4",
+              "text": "Exercício. Reenvie o mesmo pedido e verifique o registro existente. Teste reenviando o pedido fictício e confirme que o sistema reconhece o identificador previamente registrado."
+            },
+            {
+              "id": "caption",
+              "text": "Como sua equipe lida com pedidos que chegam por múltiplos canais?\n\nEste exercício mostra como atribuir identificadores únicos evita tarefas duplicadas na operação. Teste com um cenário fictício da sua rotina e observe o comportamento do sistema. Siga o perfil para aprender aplicações práticas de IA em empresas.\n\nConteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            },
+            {
+              "id": "story",
+              "text": "Rotina. Pedidos iguais chegam por canais diferentes?. Veja no feed como identificar e conferir registros para evitar tarefas duplicadas na operação diária."
+            },
+            {
+              "id": "art-1",
+              "text": "Rótulos de ilustração fictícia: e-mail aberto. WhatsApp ativo. identificador"
+            },
+            {
+              "id": "art-2",
+              "text": "Rótulos de ilustração fictícia: aluno pergunta. horário curso. resposta enviada"
+            },
+            {
+              "id": "art-3",
+              "text": "Rótulos de ilustração fictícia: recebe pedido. cria identificador. registra sistema"
+            },
+            {
+              "id": "art-4",
+              "text": "Rótulos de ilustração fictícia: consulta registro. existe duplicado. encaminha conferência"
+            },
+            {
+              "id": "art-5",
+              "text": "Rótulos de ilustração fictícia: reenvia pedido. verifica registro. confere existente"
+            }
+          ]
+        }
+      },
+      "reason": "Revisão rejeitou o lote: A claim art-5 não possui suporte nas fontes nem corresponde a uma ilustração verificável nos renders fornecidos, violando o critério de visualMatch e supported. Embora o conteúdo seja novel em relação ao histórico e prático como exercício, a inconsistência entre a descrição da arte-5 e o material di"
     }
   ],
-  "checkedAt": "2026-10-18T19:58:18.547Z",
+  "checkedAt": "2026-10-18T19:58:19.910Z",
   "workflowRun": "39160892213",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
