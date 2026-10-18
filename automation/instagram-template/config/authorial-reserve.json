@@ -472,84 +472,41 @@
       "reason": "Citação factual inventada ou fora das fontes."
     }
   ],
-  "checkedAt": "2026-10-18T16:32:51.577Z",
+  "checkedAt": "2026-10-18T16:33:08.620Z",
   "workflowRun": "39145392528",
   "message": "Reposição automática aguarda a renovação diária da cota; será retomada pelo agendamento, sem ação manual.",
   "lastResponse": {
-    "stage": "review:pedido-duplicado",
-    "callId": "6c8fbb16-0360-4425-9c6c-d2c0a287ffe8",
+    "stage": "generate:fila-prioridade",
+    "callId": "52a21568-7b07-425f-a9eb-88851126c9a7",
     "value": {
-      "claims": [
+      "slides": [
         {
-          "id": "slide-1",
-          "supported": true,
-          "reason": "O briefing descreve explicitamente o problema de pedidos duplicados sobrecarregarem a operação e gerarem retrabalho, correspondendo exatamente ao conteúdo do slide 1.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Prioridade",
+          "title": "A mensagem parece urgente. Quem definiu a prioridade?",
+          "body": "Um cliente pede orçamento com prazo de dois dias. Outro, sem data, usa tom firme. A fila se organiza pela sensação, não por critérios."
         },
         {
-          "id": "slide-2",
-          "supported": true,
-          "reason": "O briefing orienta atribuir um identificador único no recebimento e consultar seu registro antes de criar tarefas, alinhando-se perfeitamente ao procedimento do slide 2.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Procedimento",
+          "title": "Defina critérios antes de classificar",
+          "body": "Estabeleça regras claras: tipo de solicitação e prazo informado determinam a ordem. Peça à IA uma sugestão de classificação com justificativa explícita."
         },
         {
-          "id": "slide-3",
-          "supported": true,
-          "reason": "O briefing determina encaminhar para conferência caso o identificador já exista, evitando duplicação, conforme descrito no slide 3.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Conferência",
+          "title": "Compare a justificativa com os critérios",
+          "body": "Verifique se a razão apresentada pela IA respeita as regras definidas. Casos ambíguos exigem revisão humana antes de qualquer mudança na fila."
         },
         {
-          "id": "slide-4",
-          "supported": true,
-          "reason": "O briefing inclui a instrução de testar reenviando o mesmo pedido e ajustar a regra conforme o comportamento observado, cobrindo integralmente o exercício prático do slide 4.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "caption",
-          "supported": true,
-          "reason": "A legenda sintetiza corretamente o fluxo proposto (identificador, consulta prévia, conferência, teste) e reforça que a eficácia depende da implementação, em consonância com o briefing e o label.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            },
-            {
-              "sourceId": "label"
-            }
-          ]
-        },
-        {
-          "id": "story",
-          "supported": true,
-          "reason": "A reflexão pede compartilhamento sobre métodos atuais de identificação de pedidos únicos, sendo coerente com o tema educativo fictício definido nas fontes.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Exercício",
+          "title": "Revise um caso ambíguo hoje",
+          "body": "Pegue três solicitações recentes. Classifique-as segundo seus critérios. Compare com a sugestão da IA e ajuste apenas o que estiver alinhado às regras."
         }
       ],
-      "decision": "approve",
-      "supported": true,
-      "novel": true,
-      "practical": true,
-      "visualMatch": true,
-      "reason": "Todas as alegações estão integralmente sustentadas pelo briefing e pelo label. O conteúdo é educativo, fictício e não apresenta estatísticas ou garantias indevidas. As imagens são diagramas autorais legíveis e pertinentes, sem cortes ou sobreposições prejudiciais. O exercício possui começo, desenvolvimento e conclusão claros, atendendo aos critérios de praticidade e novidade frente ao histórico fornecido."
+      "caption": "Urgência percebida nem sempre reflete prioridade real. Quando a fila se organiza por tom de voz ou pressão do momento, casos importantes ficam para trás e a operação perde clareza.\n\nEste exercício propõe uma rotina simples: definir critérios objetivos de prioridade, como prazo informado e tipo de solicitação. Em seguida, pedir à IA uma sugestão de classificação acompanhada da justificativa. O passo seguinte é comparar essa justificativa com os critérios estabelecidos. Casos ambíguos devem ser revisados manualmente antes de qualquer alteração na fila.\n\nA prática evita inferir urgência por características pessoais ou estilo de comunicação. Também não promete ganho imediato de produtividade, mas oferece estrutura para decisões mais consistentes.\n\nExperimente aplicar esse método a três solicitações reais da sua operação. Observe onde a justificativa da IA diverge dos seus critérios e ajuste conforme necessário.\n\nSe este tipo de aplicação prática de IA em empresas faz sentido para seu negócio, siga o perfil para acompanhar exercícios semelhantes. Aqui você encontra rotinas testáveis para integrar inteligência artificial ao dia a dia operacional, sem promessas vazias ou jargões desnecessários.\n\nQual critério de prioridade sua equipe usa hoje? Está escrito em algum lugar ou depende da interpretação de cada pessoa?",
+      "storySlide": {
+        "eyebrow": "Rotina",
+        "title": "Sua fila tem critérios escritos?",
+        "body": "Ou a prioridade muda conforme quem pede? Veja no feed um exercício para organizar classificações com ajuda da IA."
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
