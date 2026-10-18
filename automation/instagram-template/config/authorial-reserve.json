@@ -5484,41 +5484,56 @@
       "createdAt": "2026-10-18T19:53:39.885Z"
     }
   ],
-  "checkedAt": "2026-10-18T19:53:41.696Z",
+  "checkedAt": "2026-10-18T19:53:53.008Z",
   "workflowRun": "39160638249",
   "message": "2 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "generate:medicao-rascunho-v3",
-    "callId": "dc7c57ab-0249-4503-8024-1db381a6f945",
+    "stage": "art-direction:medicao-rascunho-v3",
+    "callId": "d5837c93-f7fd-4522-8ad9-171bcc54e049",
     "value": {
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "eyebrow": "Cenário fictício",
-          "title": "O rascunho da IA confere com a política?",
-          "body": "Uma distribuidora fictícia recebe pedidos comerciais e solicitações internas frequentes."
+          "layout": "workspace",
+          "labels": [
+            "Pedido comercial",
+            "Política interna",
+            "Rascunho IA"
+          ]
         },
         {
-          "eyebrow": "Critérios claros",
-          "title": "Defina correção, clareza e dados ausentes",
-          "body": "Estabeleça critérios objetivos para avaliar correção, clareza e informações ausentes nos textos."
+          "layout": "conversation",
+          "labels": [
+            "Critérios claros",
+            "Correção",
+            "Dados ausentes"
+          ]
         },
         {
-          "eyebrow": "Comparação prática",
-          "title": "Compare rascunhos com os critérios definidos",
-          "body": "Analise cada resposta gerada comparando com os critérios estabelecidos previamente pela equipe."
+          "layout": "workflow",
+          "labels": [
+            "Comparar texto",
+            "Verificar clareza",
+            "Marcar falhas"
+          ]
         },
         {
-          "eyebrow": "Ação realizável",
-          "title": "Anote correções e teste em etapa limitada",
-          "body": "Registre as correções necessárias e decida se vale testar o fluxo em uma etapa operacional limitada."
+          "layout": "checklist",
+          "labels": [
+            "Anotar correções",
+            "Revisar fluxo",
+            "Etapa limitada"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Vale testar?",
+            "Escopo definido",
+            "Próximo passo"
+          ]
         }
-      ],
-      "caption": "Este exercício propõe criar critérios para revisar respostas de atendimento em uma distribuidora fictícia. Defina o que significa correção, clareza e completude antes de analisar qualquer rascunho gerado.\n\nCompare cada texto com esses critérios, anote ajustes e avalie se o processo merece um teste piloto. Qual critério seria mais difícil de aplicar na sua operação hoje? Siga o perfil para aprender aplicações práticas de IA em empresas.",
-      "storySlide": {
-        "eyebrow": "Sua rotina",
-        "title": "Você revisa rascunhos da IA?",
-        "body": "Como sua equipe define o que é uma resposta clara e completa no atendimento comercial atual?"
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
