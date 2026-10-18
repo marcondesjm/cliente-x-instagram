@@ -14,7 +14,7 @@ const prompt='Observe SOMENTE a imagem fornecida, sem presumir uma história, re
 const source=read(C+'kids-image-discovery.json').entries.find(e=>e.id==='kids-biblia-29').candidates[0];
 const fixtures=[{id:'scene-a',scene:source.scenes[0],expected:{personInTree:false,openBooks:false,style:'illustration'}},{id:'scene-b',scene:source.scenes[3],expected:{personInTree:true,openBooks:false,style:'illustration'}}];
 const holdoutFixtures=[7,6,5,4].map((index,i)=>({id:'holdout-'+(i+1),scene:source.scenes[index],expected:{personInTree:index===4,openBooks:false,style:'illustration'}}));
-const modes=[{id:'base64-json',model:'claude-sonnet-4.6',transport:'base64',tool:false},{id:'url-json',model:'claude-sonnet-4.6',transport:'url',tool:false},{id:'base64-tool',model:'claude-sonnet-4.6',transport:'base64',tool:true},{id:'haiku-base64-json',model:'claude-haiku-4.5',transport:'base64',tool:false},{id:'haiku-holdout',model:'claude-haiku-4.5',transport:'base64',tool:false,holdout:true}];
+const modes=[{id:'sonnet-forced-holdout',model:'claude-sonnet-4.6',transport:'base64',tool:true,holdout:true},{id:'base64-json',model:'claude-sonnet-4.6',transport:'base64',tool:false},{id:'url-json',model:'claude-sonnet-4.6',transport:'url',tool:false},{id:'base64-tool',model:'claude-sonnet-4.6',transport:'base64',tool:true},{id:'haiku-base64-json',model:'claude-haiku-4.5',transport:'base64',tool:false},{id:'haiku-holdout',model:'claude-haiku-4.5',transport:'base64',tool:false,holdout:true}];
 try {
   for(const mode of modes)for(const fixture of (mode.holdout?holdoutFixtures:fixtures)) {
     const id=mode.id+':'+fixture.id;if(state.entries.some(e=>e.id===id))continue;
@@ -28,7 +28,7 @@ try {
     const call={id:randomUUID(),day,status:'reserved',stage:id,startedAt:new Date().toISOString(),imageHash:createHash('sha256').update(image).digest('hex'),imageBytes:image.length};
     state.calls.push(call);save();
     let r;
-    try {r=await sendVision({key,model:mode.model,...(mode.transport==='url'?{imageUrl:fixture.scene.imageUrl}:{image}),prompt,maxOutputTokens:600,schema:mode.tool?schema:null});}
+    try {r=await sendVision({key,model:mode.model,...(mode.transport==='url'?{imageUrl:fixture.scene.imageUrl}:{image}),prompt,maxOutputTokens:600,schema:mode.tool?schema:null,forceTool:Boolean(mode.tool)});}
     catch(e){call.status='failed';call.completedAt=new Date().toISOString();call.httpStatus=e.httpStatus || null;state.circuit='request_failed';save();throw new Error('Teste interrompido por erro de transporte; sem repetição automática.');}
     const {blocked,...usage}=normalizeProviderUsage(r.usage,state.policy,state.billingMode);Object.assign(call,{status:'completed',completedAt:new Date().toISOString(),...usage,stopReason:r.stopReason});
     const value=JSON.parse(JSON.stringify(r.value).replaceAll(key,'[redacted]'));
