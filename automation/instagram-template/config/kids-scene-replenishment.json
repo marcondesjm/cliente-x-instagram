@@ -3561,11 +3561,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-18T19:49:49.725Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 10052,
       "imageFingerprint": null,
-      "promptFingerprint": "25c2b680813b831d27b992c91e488324912bd870df81fe8f7b959f19f4f62759"
+      "promptFingerprint": "25c2b680813b831d27b992c91e488324912bd870df81fe8f7b959f19f4f62759",
+      "completedAt": "2026-10-18T19:50:33.519Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 1,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -3700,7 +3706,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T19:49:49.725Z",
+  "checkedAt": "2026-10-18T19:50:33.519Z",
   "lastRun": "39160300496",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -3967,12 +3973,370 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-34:d345d05d031d3581",
+    "stage": "select:kids-biblia-34",
     "value": {
-      "visible": true,
-      "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Grupo de homens com barbas e vestimentas coloridas, incluindo túnicas amarelas, azuis e vermelhas e coberturas de cabeça variadas, reunidos em um ambiente externo com vegetação ao fundo; alguns erguem os braços ou gesticulam enquanto outros observam a cena central."
+      "cards": [
+        {
+          "card": 1,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Não retrata o evento do título; mostra viúvas exibindo roupas a Pedro."
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena fora da passagem (ressurreição); não é evento do título da capa."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mostra Tabita morta; não corresponde ao título sobre ajudar pessoas."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Pedro orando junto ao corpo; não ilustra o ato de ajudar do título."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa geográfico; não retrata evento de ajudar pessoas conforme título."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "9:36",
+              "reason": "Mulher com tecido representa Tabita fazendo boas obras, alinhado ao título."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Homens conversando; não ilustra o evento central de ajudar pessoas."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Tabita sendo levantada; evento posterior, não corresponde ao título da capa."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena de outro relato (Eneias); não pertence à passagem de Tabita."
+            }
+          ],
+          "reason": "Capa exige evento do título. Apenas cena 6 retrata diretamente as boas obras de Tabita mencionadas no título."
+        },
+        {
+          "card": 2,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "9:39",
+              "reason": "Viúvas mostrando roupas feitas por Dorcas; corresponde ao resumo narrativo."
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Evento fora da passagem solicitada; não está no resumo dos versículos 36-39."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "9:37",
+              "reason": "Tabita deitada após morte; evento descrito no resumo bíblico fornecido."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Pedro orando; momento não mencionado no corpo do cartão narrativo."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa não ilustra evento narrativo descrito no resumo da história."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "9:36",
+              "reason": "Tabita com tecido representa suas boas obras mencionadas no resumo."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Homens buscando Pedro; não é foco do resumo sobre obras e roupas."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Ressurreição fora do escopo dos versículos 36-39 do resumo."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Pertence a outro relato bíblico; não faz parte desta passagem."
+            }
+          ],
+          "reason": "Cartão narrativo permite cenas dos eventos descritos no resumo: boas obras, morte e exibição das roupas."
+        },
+        {
+          "card": 3,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "9:39",
+              "reason": "Viúvas exibindo obras de misericórdia ilustra uso de habilidades para cuidar."
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Evento fora da passagem; não sustenta a lição dentro do texto solicitado."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Morte não conecta claramente à lição sobre usar habilidades para ajudar."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Oração de Pedro não ilustra diretamente o uso de habilidades pessoais."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa geográfico não oferece conexão educativa com a lição proposta."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "9:36",
+              "reason": "Tabita fazendo roupas exemplifica usar habilidades para cuidar de outros."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Busca por Pedro não ilustra lição sobre habilidades e cuidado pessoal."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Ressurreição é milagre divino, não exemplo de habilidade humana aplicada."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Outro relato; não sustenta lição da passagem de Atos 9:36-39."
+            }
+          ],
+          "reason": "Lições permitem cenas pertinentes que ilustrem o princípio educativo de usar habilidades."
+        },
+        {
+          "card": 4,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "9:39",
+              "reason": "Exibição de roupas feitas inspira reflexão sobre desenvolver habilidades próprias."
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Evento fora da passagem não serve como base para atividade familiar proposta."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena de morte não conecta adequadamente à atividade de desenhar habilidades."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Momento de oração não ilustra desenvolvimento de habilidades para ajudar."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa não oferece estímulo visual para atividade de desenho de habilidades."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "9:36",
+              "reason": "Tabita criando roupas motiva crianças a pensar em suas próprias habilidades."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Diálogo entre homens não inspira atividade prática de desenvolvimento pessoal."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Milagre não é modelo para atividade infantil de desenvolver habilidades."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Relato diferente; não apoia atividade baseada nesta passagem específica."
+            }
+          ],
+          "reason": "Atividade familiar aceita cenas que inspirem reflexão sobre habilidades sem exigir literalidade."
+        },
+        {
+          "card": 5,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "9:39",
+              "reason": "Cena da passagem fornece contexto visual para leitura conjunta em família."
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Fora da passagem especificada; não adequada para cartão de leitura deste texto."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "9:37",
+              "reason": "Evento da passagem oferece referência visual para momento de leitura bíblica."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Embora na passagem, foco em oração pode distrair da leitura proposta."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa não representa adequadamente conteúdo narrativo para leitura em família."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "9:36",
+              "reason": "Boas obras de Tabita são tema central da leitura sugerida no cartão."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Busca por Pedro é detalhe secundário; não representa bem o tema principal."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Evento fora dos versículos indicados para leitura neste cartão específico."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Pertence a outro relato; inadequado para leitura de Atos 9:36-39."
+            }
+          ],
+          "reason": "Cartão de leitura aceita cenas pertinentes da passagem que contextualizem o texto bíblico."
+        },
+        {
+          "card": 6,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "9:39",
+              "reason": "Cena pertinente à passagem, diferente das outras posições selecionáveis."
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Evento fora da passagem especificada; não adequado para Story deste conjunto."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "9:37",
+              "reason": "Parte do relato bíblico; pode servir como cena final distinta das demais."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Embora na narrativa completa, está fora do intervalo 9:36-39 definido."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa geográfico não representa adequadamente momento narrativo para Story."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "9:36",
+              "reason": "Introdução de Tabita é pertinente e pode fechar a sequência visualmente."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Detalhe da narrativa menos central; outras cenas representam melhor o relato."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Fora dos versículos especificados; não deve ser usado neste Story."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Relato diferente de Eneias; não pertence à passagem de Tabita."
+            }
+          ],
+          "reason": "Story aceita cena pertinente e diferente; mantém coerência com a passagem bíblica."
+        }
+      ]
     }
   },
   "lastFactualEvaluation": {
@@ -5344,6 +5708,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 9,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-18T19:49:49.725Z"
+    "checkedAt": "2026-10-18T19:50:33.519Z"
   }
 }
