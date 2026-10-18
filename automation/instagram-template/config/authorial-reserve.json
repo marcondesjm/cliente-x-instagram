@@ -7434,41 +7434,56 @@
       "createdAt": "2026-10-18T20:01:49.941Z"
     }
   ],
-  "checkedAt": "2026-10-18T20:01:52.186Z",
+  "checkedAt": "2026-10-18T20:02:01.405Z",
   "workflowRun": "39161134821",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "generate:fila-prioridade-v4",
-    "callId": "b82b5759-229d-413b-9a54-e8c03fb08e8d",
+    "stage": "art-direction:fila-prioridade-v4",
+    "callId": "475fff18-5c20-4944-9289-460bf464b7ec",
     "value": {
-      "slides": [
+      "palette": "ocean",
+      "frames": [
         {
-          "eyebrow": "Prioridade na fila",
-          "title": "Qual solicitação atender primeiro?",
-          "body": "Uma escola recebe mensagens sobre horários e inscrições com prazos diferentes para responder."
+          "layout": "workspace",
+          "labels": [
+            "prazo definido",
+            "tipo de solicitação",
+            "fila de espera"
+          ]
         },
         {
-          "eyebrow": "Critérios claros",
-          "title": "Defina regras antes de classificar",
-          "body": "Estabeleça critérios explícitos como prazo informado e tipo de solicitação para orientar a triagem."
+          "layout": "conversation",
+          "labels": [
+            "critérios escritos",
+            "triagem clara",
+            "regras visíveis"
+          ]
         },
         {
-          "eyebrow": "Conferência da IA",
-          "title": "Peça justificativa à inteligência artificial",
-          "body": "Solicite que a IA sugira classificação com justificativa e compare essa explicação com seus critérios definidos."
+          "layout": "workflow",
+          "labels": [
+            "sugestão da IA",
+            "justificativa dada",
+            "comparação feita"
+          ]
         },
         {
-          "eyebrow": "Revisão humana",
-          "title": "Analise casos ambíguos manualmente",
-          "body": "Revise manualmente situações duvidosas antes de alterar a ordem da fila de atendimento operacional."
+          "layout": "checklist",
+          "labels": [
+            "casos ambíguos",
+            "revisão manual",
+            "ordem ajustada"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "mensagens recebidas",
+            "prioridade definida",
+            "atendimento iniciado"
+          ]
         }
-      ],
-      "caption": "Como sua equipe decide qual mensagem responder primeiro quando várias chegam simultaneamente?\n\nDefina critérios objetivos como prazo e tipo de solicitação. Peça à IA uma sugestão de classificação com justificativa. Compare a explicação gerada com suas regras estabelecidas. Revise casos ambíguos antes de mudar a fila. Esse exercício ajuda a organizar o atendimento sem inferir urgência por características pessoais.\n\nAcompanhe o perfil para aprender aplicações práticas de IA em empresas.",
-      "storySlide": {
-        "eyebrow": "Rotina operacional",
-        "title": "Como você prioriza as mensagens hoje?",
-        "body": "Você usa critérios definidos ou decide na hora qual solicitação atender primeiro no atendimento?"
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
