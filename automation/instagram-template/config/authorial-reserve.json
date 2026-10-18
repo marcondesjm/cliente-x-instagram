@@ -1082,11 +1082,10 @@
       "topic": "base-respostas-v1",
       "account": "cliente-x",
       "version": "claude-authorial-reserve-v1",
-      "status": "render_revision_required",
+      "status": "ready",
       "generationCallId": "f47973ec-b93c-4add-b068-951b8955d1c4",
       "createdAt": "2026-10-18T18:09:16.548Z",
       "draftRevisionCallId": "d1fe31e2-3fde-422d-8c50-3fdba0a56c2e",
-      "reason": "Texto autoral fora dos limites.",
       "pack": {
         "id": "authorial-462e9d0ca897080c",
         "authorialTopic": "base-respostas-v1",
@@ -1221,10 +1220,155 @@
           "followReason": true,
           "shareReason": true
         }
-      }
+      },
+      "review": {
+        "claims": [
+          {
+            "id": "slide-1",
+            "supported": true,
+            "reason": "A fonte 'brief' descreve exatamente o cenário de uma loja fictícia com pedido urgente fora da política comercial e a necessidade de responder sem criar regras inexistentes.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-2",
+            "supported": true,
+            "reason": "O briefing instrui explicitamente a pedir um rascunho baseado apenas na política e exigir a indicação do trecho usado para justificar a resposta.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-3",
+            "supported": true,
+            "reason": "A fonte determina conferir se o trecho citado existe na política, verificar a data de revisão e marcar a dúvida quando a resposta não estiver na política.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-4",
+            "supported": true,
+            "reason": "O exercício proposto no briefing é pegar uma dúvida recente do atendimento, usar a política interna como base, conferir a referência e anotar onde faltou informação.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "caption",
+            "supported": true,
+            "reason": "O texto da legenda resume corretamente o procedimento educativo descrito nas fontes: usar a política como única fonte, pedir rascunho com trecho, conferir no original e marcar dúvidas.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              },
+              {
+                "sourceId": "label",
+                "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+              }
+            ]
+          },
+          {
+            "id": "story",
+            "supported": true,
+            "reason": "A fonte 'brief' propõe desenvolver um exercício simples para treinar a equipe sobre conferência de fontes, alinhado ao título da story.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          }
+        ],
+        "decision": "approve",
+        "supported": true,
+        "novel": true,
+        "practical": true,
+        "visualMatch": true,
+        "reason": "Todas as alegações dos slides e legendas estão integralmente sustentadas pelo briefing (fonte 'brief'), que define o cenário fictício, o procedimento passo a passo e o aviso de conteúdo educativo. O conteúdo é prático, executável e visualmente coerente com os renders apresentados. Não há promessas de resultado nem dados externos não autorizados. A proposta difere dos títulos do histórico por focar em metodologia de atendimento baseada em políticas internas, sem sobreposição temática direta.",
+        "growth": {
+          "hookSpecific": true,
+          "payoffDelivered": true,
+          "followReason": true,
+          "shareReason": true
+        },
+        "bindingVersion": "exact-source-id-v1",
+        "callId": "9e6f6a56-d922-4f52-87cc-929f5e2d86ef",
+        "packHash": "85d08b834128649de38f05206701c93df60535921438bbe6a73435c1e1195da9",
+        "checkedAt": "2026-10-18T18:12:53.361Z",
+        "groundingTask": {
+          "scope": "Exercício educativo fictício. Orientações são propostas, não resultados ou notícias.",
+          "sources": [
+            {
+              "id": "brief",
+              "text": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma loja fictícia de materiais de escritório, com pedidos enviados por mensagem. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+            },
+            {
+              "id": "label",
+              "text": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            }
+          ],
+          "claims": [
+            {
+              "id": "slide-1",
+              "text": "Situação. O cliente pede prazo fora da política. Uma loja fictícia recebe um pedido de entrega urgente, mas sua política exige um prazo maior. A equipe precisa responder ao cliente sem criar regras inexistentes."
+            },
+            {
+              "id": "slide-2",
+              "text": "Procedimento. Rascunho com indicação do trecho. Peça um rascunho baseado apenas na política comercial. Exija que ele indique qual trecho foi usado para justificar a resposta sobre o prazo informado ao cliente."
+            },
+            {
+              "id": "slide-3",
+              "text": "Conferência. Verifique a citação na fonte. Confira se o trecho citado existe na política e se a data de revisão está atualizada. Uma citação gerada não comprova validade. Marque a dúvida para revisão se ausente."
+            },
+            {
+              "id": "slide-4",
+              "text": "Exercício. Pratique com seu próprio caso. Pegue uma dúvida recente do seu atendimento. Peça um rascunho usando apenas sua política interna. Confira a referência antes de enviar. Anote onde faltou informação para ajustar."
+            },
+            {
+              "id": "caption",
+              "text": "Como evitar respostas inventadas no atendimento? Use a política comercial como única fonte. Peça um rascunho que indique o trecho usado. Confira esse trecho no documento original antes de responder. Se a informação não estiver lá, marque a dúvida para revisão da equipe.\n\nTeste esse procedimento com uma conversa fictícia. Sua equipe confere as fontes antes de responder? Acompanhe o perfil para aprender aplicações práticas de IA em empresas.\n\nConteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            },
+            {
+              "id": "story",
+              "text": "Rotina. Sua política está atualizada?. Quando surge uma dúvida no atendimento, você confere a fonte ou responde de cabeça? Veja no feed como criar um exercício simples para treinar sua equipe."
+            }
+          ]
+        }
+      },
+      "render": {
+        "version": "authorial-layout-v3",
+        "packHash": "85d08b834128649de38f05206701c93df60535921438bbe6a73435c1e1195da9",
+        "verifiedAt": "2026-10-18T18:12:53.362Z",
+        "feedCount": 4,
+        "story": true,
+        "runDir": "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-18-151152-slot-0-render-only",
+        "imageHashes": [
+          "b1318a67181c72e900f2e4bcf7e5aef0c615a5714b44899b10ab0ee093df3dd4",
+          "21cec9789ddb53ba9d6c8a20166dbcc2cd5a4819903b592da5ab314d300dedc8",
+          "faa42824b13f22d35ea3eb7ffbe2fc7b1135fb426bf8ecaae77b467cfd5ccfff",
+          "3e9f92944c463bef5aa4837632cbd51089c9774fee00addf8f03b8bc85ceaec1",
+          "3a2a626c8453c5d88d7cb925ab1999955de1e1691507f3d25a7ba56409539282"
+        ]
+      },
+      "previousRejection": "Texto autoral fora dos limites."
     }
   ],
-  "checkedAt": "2026-10-18T18:12:51.626Z",
+  "checkedAt": "2026-10-18T18:12:53.363Z",
   "workflowRun": "39152946079",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
