@@ -435,41 +435,87 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T15:49:09.064Z",
+  "checkedAt": "2026-10-18T15:50:06.266Z",
   "workflowRun": "39141961559",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "generate:base-respostas",
-    "callId": "196fb0e1-db12-47b6-a2f9-23c6a9c1ba28",
+    "stage": "review:base-respostas",
+    "callId": "fd6bf311-7030-4dda-ba82-0142ae97661c",
     "value": {
-      "slides": [
+      "claims": [
         {
-          "eyebrow": "Problema",
-          "title": "Resposta pronta sem conferir a fonte",
-          "body": "A equipe pede um rascunho com base na política comercial. O texto chega formatado, mas não indica de onde veio cada afirmação."
+          "evidence": [
+            {
+              "sourceId": "brief",
+              "quote": "A equipe pede um rascunho com base na política comercial. O texto chega formatado, mas não indica de onde veio cada afirmação."
+            }
+          ],
+          "id": "slide-1",
+          "supported": true,
+          "reason": "A alegação reflete exatamente o cenário descrito no briefing."
         },
         {
-          "eyebrow": "Procedimento",
-          "title": "Exigir indicação do trecho usado",
-          "body": "Oriente quem redige a apontar o trecho exato da política que sustenta cada ponto. Sem essa referência, o rascunho não avança."
+          "reason": "A fonte instrui a exigir a indicação do trecho usado.",
+          "supported": true,
+          "id": "slide-2",
+          "evidence": [
+            {
+              "quote": "exigir que o rascunho indique o trecho usado",
+              "sourceId": "brief"
+            }
+          ]
         },
         {
-          "eyebrow": "Conferência",
-          "title": "Validar a citação na origem",
-          "body": "Abra a política e verifique se o trecho indicado existe e diz o que foi afirmado. Citação gerada sem conferência não garante validade."
+          "supported": true,
+          "reason": "A fonte orienta a conferência na origem para validar a citação.",
+          "evidence": [
+            {
+              "sourceId": "brief",
+              "quote": "conferir o trecho na fonte, pois uma citação gerada não comprova sua validade"
+            }
+          ],
+          "id": "slide-3"
         },
         {
-          "eyebrow": "Ação",
-          "title": "Marcar dúvida para revisão",
-          "body": "Se a resposta não estiver na política, registre a pendência e encaminhe para revisão. Atualize a lista oficial após a decisão."
+          "reason": "A fonte instrui a marcar a dúvida para revisão caso a resposta não esteja na política.",
+          "evidence": [
+            {
+              "quote": "marcar a dúvida para revisão quando a resposta não estiver na política.",
+              "sourceId": "brief"
+            }
+          ],
+          "id": "slide-4",
+          "supported": true
+        },
+        {
+          "supported": true,
+          "reason": "A alegação é uma reflexão baseada no conteúdo da fonte.",
+          "id": "slide-5",
+          "evidence": [
+            {
+              "sourceId": "story",
+              "quote": "Você já viu uma resposta ser aceita sem conferir a fonte?"
+            }
+          ]
+        },
+        {
+          "evidence": [
+            {
+              "sourceId": "caption",
+              "quote": "Este exercício propõe um fluxo simples para alinhar respostas comerciais à política interna. Mantenha uma lista de respostas aprovadas, com fonte e data de revisão. Ao solicitar um rascunho, peça que ele seja baseado apenas nessa política e que indique o trecho utilizado. Em seguida, confira o trecho na fonte original, pois uma citação gerada não comprova sua validade por si só. Quando a informação não estiver na política, marque a dúvida para revisão antes de publicar. Esse método organiza o processo e reduz ruídos, embora não elimine erros por completo."
+            }
+          ],
+          "reason": "O texto da legenda resume o fluxo proposto no briefing.",
+          "supported": true,
+          "id": "caption"
         }
       ],
-      "caption": "Este exercício propõe um fluxo simples para alinhar respostas comerciais à política interna. Mantenha uma lista de respostas aprovadas, com fonte e data de revisão. Ao solicitar um rascunho, peça que ele seja baseado apenas nessa política e que indique o trecho utilizado. Em seguida, confira o trecho na fonte original, pois uma citação gerada não comprova sua validade por si só. Quando a informação não estiver na política, marque a dúvida para revisão antes de publicar. Esse método organiza o processo e reduz ruídos, embora não elimine erros por completo. Qual etapa costuma falhar mais no seu time hoje: a indicação do trecho ou a conferência na fonte?",
-      "storySlide": {
-        "eyebrow": "Reflexão",
-        "title": "Onde está a fragilidade?",
-        "body": "Você já viu uma resposta ser aceita sem conferir a fonte? Conte como sua equipe lida com isso no feed."
-      }
+      "decision": "approve",
+      "supported": true,
+      "novel": true,
+      "practical": true,
+      "visualMatch": true,
+      "reason": "O conteúdo é um exercício educativo fictício, conforme o briefing, e está devidamente suportado pelas fontes fornecidas. O fluxo é prático e coerente."
     },
     "structured": true,
     "stopReason": "tool_use",
