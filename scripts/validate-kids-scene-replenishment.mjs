@@ -10,6 +10,11 @@ import {beginDiagnosticPilot,endDiagnosticPilot,reviewCircuitBlocked,cachedBlind
 import {sceneGroundingTask,groundingFingerprint,groundingPrompt,inspectGrounding} from '../lib/editorial-grounding.js';
 import {assertSceneActivation} from '../lib/kids-scene-activation.js';
 const state={calls:[],circuit:null,policy:{maxCallsPerDay:2,maxInputTokensPerDay:100,maxInputTokensPerCall:100}};
+const temporaryBudget={calls:Array.from({length:17},()=>({day:'2026-10-18',status:'completed',inputTokens:1})),circuit:null,policy:{maxCallsPerDay:12,dailyCallOverrides:{'2026-10-18':18},maxInputTokensPerDay:1000,maxInputTokensPerCall:1}};
+assert.equal(callAllowance(temporaryBudget,new Date('2026-10-19T02:59:59Z')),'2026-10-18');
+assert.throws(()=>callAllowance(temporaryBudget,new Date('2026-10-19T02:59:59Z'),2),/chamadas/,'Temporary authorization must stop at eighteen calls');
+temporaryBudget.calls=Array.from({length:12},()=>({day:'2026-10-19',status:'completed',inputTokens:1}));
+assert.throws(()=>callAllowance(temporaryBudget,new Date('2026-10-19T03:00:00Z')),/chamadas/,'Normal cap resumes at midnight BRT');
 assert.equal(reviewPoolLimit({maxCallsPerDay:26,maxInputTokensPerDay:1500000,maxInputTokensPerCall:120000}),9);
 assert.equal(reviewPoolLimit({maxCallsPerDay:40,maxInputTokensPerDay:3000000,maxInputTokensPerCall:120000}),12);
 assert.equal(reviewPoolLimit({maxCallsPerDay:8,maxInputTokensPerDay:3000000,maxInputTokensPerCall:120000}),5);

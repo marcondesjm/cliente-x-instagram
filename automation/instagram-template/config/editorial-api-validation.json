@@ -6,7 +6,10 @@
   "policy": {
     "maxCallsPerDay": 12,
     "maxInputTokensPerCall": 120000,
-    "maxInputTokensPerDay": 1500000
+    "maxInputTokensPerDay": 1500000,
+    "dailyCallOverrides": {
+      "2026-10-18": 18
+    }
   },
   "circuit": null,
   "calls": [
@@ -127,7 +130,7 @@
       "day": "2026-10-17",
       "stage": "account:sabedoria-kids",
       "status": "completed",
-      "startedAt": "2026-10-17T22:12:56.320Z",
+      "startedAt": "2026-10-17T22:12:56.32Z",
       "promptFingerprint": "535aff7d0eaf5dd40313d60e960369ff2b1e118d53998d73b8001f85f244ebdb",
       "completedAt": "2026-10-17T22:13:12.606Z",
       "reportedInputTokens": 0,
@@ -225,7 +228,7 @@
       "day": "2026-10-18",
       "stage": "authorial:generate:pedido-duplicado",
       "status": "completed",
-      "startedAt": "2026-10-18T15:41:06.150Z",
+      "startedAt": "2026-10-18T15:41:06.15Z",
       "promptFingerprint": "5c9567f2b257af32c24a3fcfa584e26c3b43d1a006719973c439c9056a27928c",
       "completedAt": "2026-10-18T15:41:20.325Z",
       "reportedInputTokens": 0,
@@ -269,7 +272,7 @@
       "status": "completed",
       "startedAt": "2026-10-18T15:48:43.008Z",
       "promptFingerprint": "21db5c4c6af349187eb203453865f6e295b11fe3a07b54aeab338889f46d59ac",
-      "completedAt": "2026-10-18T15:48:57.270Z",
+      "completedAt": "2026-10-18T15:48:57.27Z",
       "reportedInputTokens": 0,
       "inputTokens": null,
       "outputTokens": 1,
@@ -295,7 +298,7 @@
       "day": "2026-10-18",
       "stage": "authorial:regression",
       "status": "completed",
-      "startedAt": "2026-10-18T15:51:51.300Z",
+      "startedAt": "2026-10-18T15:51:51.3Z",
       "promptFingerprint": "f7e3ec9c56f0f7b61f7366f5ece229e0cb55bbc9d6b9ec8cc11db72eb7a1493b",
       "completedAt": "2026-10-18T15:52:04.214Z",
       "reportedInputTokens": 0,
@@ -322,7 +325,7 @@
   "entries": [
     {
       "account": "cliente-x",
-      "checkedAt": "2026-10-17T22:12:33.310Z",
+      "checkedAt": "2026-10-17T22:12:33.31Z",
       "status": "advisory",
       "snapshotFingerprint": "b28f28fcc64e06c1731e8e18cb4a58fd84fd0cee3af75824bff8b41d61cb7aaa",
       "snapshot": {
