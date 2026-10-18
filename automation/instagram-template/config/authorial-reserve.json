@@ -4397,7 +4397,7 @@
       "topic": "base-respostas-v3",
       "account": "cliente-x",
       "version": "claude-authorial-reserve-v1",
-      "status": "draft",
+      "status": "ready",
       "generationCallId": "aad1f9a2-6540-462c-b431-991a8620bee3",
       "learningContext": {
         "version": "claude-observed-editorial-v1",
@@ -4534,143 +4534,551 @@
         "docs/illustrations/cliente-x/authorial-90770bae45cf56ff/slide-3.png": "640a6837f689eb3e8bd26f0a2e84bd4e5ce0060a57e5801aa4f3a4544a51bead",
         "docs/illustrations/cliente-x/authorial-90770bae45cf56ff/slide-4.png": "ee6374e9d0afc905074a7ea62a53719029d470c0fd4d73ee2970f5ae2877a126",
         "docs/illustrations/cliente-x/authorial-90770bae45cf56ff/story.png": "efd0cd811f2e445add3443df9fff9e0bc0a7f2f626f2478ac462379cd943cfba"
-      }
-    }
-  ],
-  "checkedAt": "2026-10-18T19:45:03.872Z",
-  "workflowRun": "39159975467",
-  "message": "2 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
-  "lastResponse": {
-    "stage": "review:base-respostas-v3",
-    "callId": "e20ae879-960e-40db-b571-eeac6c659e7d",
-    "value": {
-      "claims": [
-        {
-          "id": "slide-1",
-          "supported": true,
-          "reason": "A claim descreve o problema inicial do exercício fictício (rascunho sem fonte e pedido fora da política), alinhado ao briefing que propõe um cenário de distribuidora com consultas comerciais.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+      },
+      "reviewCandidate": {
+        "claims": [
+          {
+            "id": "slide-1",
+            "supported": true,
+            "reason": "A claim descreve o problema inicial do exercício fictício (rascunho sem fonte e pedido fora da política), alinhado ao briefing que propõe um cenário de distribuidora com consultas comerciais.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "slide-2",
+            "supported": true,
+            "reason": "Reflete a instrução do briefing para manter lista de respostas aprovadas com fonte oficial e data de revisão, baseando o rascunho apenas na política.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "slide-3",
+            "supported": true,
+            "reason": "Corresponde à exigência do briefing de conferir o trecho citado na fonte original e validar se a citação gerada consta na política vigente.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "slide-4",
+            "supported": true,
+            "reason": "Espelha a orientação do briefing de sinalizar quando a resposta não estiver na política e registrar a dúvida para revisão futura.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "caption",
+            "supported": true,
+            "reason": "Resume fielmente o exercício educativo fictício descrito no briefing, incluindo o disclaimer obrigatório de conteúdo autoral com apoio de IA.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              },
+              {
+                "sourceId": "label"
+              }
+            ]
+          },
+          {
+            "id": "story",
+            "supported": true,
+            "reason": "Apresenta a pergunta de engajamento sobre rotina diária de consulta à política, coerente com o cenário de distribuidora fictícia proposto.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "art-1",
+            "supported": true,
+            "reason": "Os rótulos visuais ('política aberta', 'pedido fora', 'sem autorização') ilustram corretamente o cenário de vendedor pedindo prazo não autorizado.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "art-2",
+            "supported": true,
+            "reason": "Os rótulos ('rascunho pedido', 'base na política', 'trecho indicado') representam visualmente a etapa de solicitação baseada na política.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "art-3",
+            "supported": true,
+            "reason": "Os rótulos ('citação gerada', 'conferir fonte', 'validar trecho') correspondem ao fluxo de conferência obrigatória descrito no briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "art-4",
+            "supported": true,
+            "reason": "Os rótulos ('resposta ausente', 'dúvida marcada', 'revisão futura') ilustram adequadamente a etapa de sinalização de dúvidas.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "art-5",
+            "supported": true,
+            "reason": "Os rótulos ('consulta oficial', 'evitar memória', 'fonte vigente') sintetizam visualmente a rotina diária de consulta à política antes de responder.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          }
+        ],
+        "decision": "approve",
+        "supported": true,
+        "novel": true,
+        "practical": true,
+        "visualMatch": true,
+        "reason": "Todos os slides e legendas estão integralmente sustentados pelo briefing do exercício educativo fictício. O conteúdo apresenta um fluxo prático e executável (problema → lista revisada → conferência → marcação de dúvida) com situação empresarial reconhecível (vendedor solicitando prazo fora da política). Não há alegações de resultados comprovados, estatísticas ou casos reais. Os critérios de crescimento são atendidos: hook específico, payoff entregue, convite natural e utilidade concreta para compartilhamento.",
+        "growth": {
+          "hookSpecific": true,
+          "payoffDelivered": true,
+          "followReason": true,
+          "shareReason": true
+        }
+      },
+      "review": {
+        "claims": [
+          {
+            "id": "slide-1",
+            "supported": true,
+            "reason": "A claim descreve o problema inicial do exercício fictício (rascunho sem fonte e pedido fora da política), alinhado ao briefing que propõe um cenário de distribuidora com consultas comerciais.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-2",
+            "supported": true,
+            "reason": "Reflete a instrução do briefing para manter lista de respostas aprovadas com fonte oficial e data de revisão, baseando o rascunho apenas na política.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-3",
+            "supported": true,
+            "reason": "Corresponde à exigência do briefing de conferir o trecho citado na fonte original e validar se a citação gerada consta na política vigente.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-4",
+            "supported": true,
+            "reason": "Espelha a orientação do briefing de sinalizar quando a resposta não estiver na política e registrar a dúvida para revisão futura.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "caption",
+            "supported": true,
+            "reason": "Resume fielmente o exercício educativo fictício descrito no briefing, incluindo o disclaimer obrigatório de conteúdo autoral com apoio de IA.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              },
+              {
+                "sourceId": "label",
+                "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+              }
+            ]
+          },
+          {
+            "id": "story",
+            "supported": true,
+            "reason": "Apresenta a pergunta de engajamento sobre rotina diária de consulta à política, coerente com o cenário de distribuidora fictícia proposto.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-1",
+            "supported": true,
+            "reason": "Os rótulos visuais ('política aberta', 'pedido fora', 'sem autorização') ilustram corretamente o cenário de vendedor pedindo prazo não autorizado.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-2",
+            "supported": true,
+            "reason": "Os rótulos ('rascunho pedido', 'base na política', 'trecho indicado') representam visualmente a etapa de solicitação baseada na política.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-3",
+            "supported": true,
+            "reason": "Os rótulos ('citação gerada', 'conferir fonte', 'validar trecho') correspondem ao fluxo de conferência obrigatória descrito no briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-4",
+            "supported": true,
+            "reason": "Os rótulos ('resposta ausente', 'dúvida marcada', 'revisão futura') ilustram adequadamente a etapa de sinalização de dúvidas.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-5",
+            "supported": true,
+            "reason": "Os rótulos ('consulta oficial', 'evitar memória', 'fonte vigente') sintetizam visualmente a rotina diária de consulta à política antes de responder.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          }
+        ],
+        "decision": "approve",
+        "supported": true,
+        "novel": true,
+        "practical": true,
+        "visualMatch": true,
+        "reason": "Todos os slides e legendas estão integralmente sustentados pelo briefing do exercício educativo fictício. O conteúdo apresenta um fluxo prático e executável (problema → lista revisada → conferência → marcação de dúvida) com situação empresarial reconhecível (vendedor solicitando prazo fora da política). Não há alegações de resultados comprovados, estatísticas ou casos reais. Os critérios de crescimento são atendidos: hook específico, payoff entregue, convite natural e utilidade concreta para compartilhamento.",
+        "growth": {
+          "hookSpecific": true,
+          "payoffDelivered": true,
+          "followReason": true,
+          "shareReason": true
         },
-        {
-          "id": "slide-2",
-          "supported": true,
-          "reason": "Reflete a instrução do briefing para manter lista de respostas aprovadas com fonte oficial e data de revisão, baseando o rascunho apenas na política.",
-          "evidence": [
+        "bindingVersion": "exact-source-id-v1",
+        "callId": "e20ae879-960e-40db-b571-eeac6c659e7d",
+        "packHash": "7a3fe0b44717027a5090cf9e296665a5ccbbe74fd96dc3e914af5d08b298afff",
+        "checkedAt": "2026-10-18T19:45:06.955Z",
+        "groundingTask": {
+          "scope": "Exercício educativo fictício. Orientações são propostas, não resultados ou notícias.",
+          "sources": [
             {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "slide-3",
-          "supported": true,
-          "reason": "Corresponde à exigência do briefing de conferir o trecho citado na fonte original e validar se a citação gerada consta na política vigente.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "slide-4",
-          "supported": true,
-          "reason": "Espelha a orientação do briefing de sinalizar quando a resposta não estiver na política e registrar a dúvida para revisão futura.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "caption",
-          "supported": true,
-          "reason": "Resume fielmente o exercício educativo fictício descrito no briefing, incluindo o disclaimer obrigatório de conteúdo autoral com apoio de IA.",
-          "evidence": [
-            {
-              "sourceId": "brief"
+              "id": "brief",
+              "text": "Proposta de exercício educativo com uma política comercial fictícia: manter uma lista de respostas com fonte e data de revisão; pedir um rascunho baseado apenas nessa política; exigir que o rascunho indique o trecho usado; conferir o trecho na fonte, pois uma citação gerada não comprova sua validade; marcar a dúvida para revisão quando a resposta não estiver na política. Não alegar que esse método elimina erros. Cenário proposto: uma distribuidora fictícia, com consultas comerciais e solicitações internas. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
             },
             {
-              "sourceId": "label"
+              "id": "label",
+              "text": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
             }
-          ]
-        },
-        {
-          "id": "story",
-          "supported": true,
-          "reason": "Apresenta a pergunta de engajamento sobre rotina diária de consulta à política, coerente com o cenário de distribuidora fictícia proposto.",
-          "evidence": [
+          ],
+          "claims": [
             {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-1",
-          "supported": true,
-          "reason": "Os rótulos visuais ('política aberta', 'pedido fora', 'sem autorização') ilustram corretamente o cenário de vendedor pedindo prazo não autorizado.",
-          "evidence": [
+              "id": "slide-1",
+              "text": "Rascunho sem fonte. A citação gerada confere com a política?. Um vendedor pede prazo especial que a política comercial fictícia não autoriza em nenhuma situação prevista."
+            },
             {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-2",
-          "supported": true,
-          "reason": "Os rótulos ('rascunho pedido', 'base na política', 'trecho indicado') representam visualmente a etapa de solicitação baseada na política.",
-          "evidence": [
+              "id": "slide-2",
+              "text": "Lista revisada. Peça o rascunho baseado apenas na política. Mantenha uma lista de respostas aprovadas com fonte oficial e data clara da última revisão feita pela equipe."
+            },
             {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-3",
-          "supported": true,
-          "reason": "Os rótulos ('citação gerada', 'conferir fonte', 'validar trecho') correspondem ao fluxo de conferência obrigatória descrito no briefing.",
-          "evidence": [
+              "id": "slide-3",
+              "text": "Conferência obrigatória. Verifique o trecho citado na fonte original. Exija que cada rascunho indique o trecho usado e confira se a citação gerada realmente consta na política vigente."
+            },
             {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-4",
-          "supported": true,
-          "reason": "Os rótulos ('resposta ausente', 'dúvida marcada', 'revisão futura') ilustram adequadamente a etapa de sinalização de dúvidas.",
-          "evidence": [
+              "id": "slide-4",
+              "text": "Marque a dúvida. Sinalize quando a resposta não estiver na política. Registre a questão pendente para revisão futura e evite responder com informação que não esteja documentada oficialmente."
+            },
             {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-5",
-          "supported": true,
-          "reason": "Os rótulos ('consulta oficial', 'evitar memória', 'fonte vigente') sintetizam visualmente a rotina diária de consulta à política antes de responder.",
-          "evidence": [
+              "id": "caption",
+              "text": "Uma distribuidora fictícia mantém políticas comerciais atualizadas para orientar sua equipe de vendas. Quando um cliente solicita condição fora do previsto, o vendedor precisa consultar a lista oficial antes de responder.\n\nPeça um rascunho baseado apenas nessa política, exija a indicação do trecho usado e confira na fonte. Se a resposta não estiver lá, marque a dúvida para revisão. Como sua equipe lida com consultas fora da política hoje? Siga para aprender aplicações práticas de IA em empresas.\n\nConteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            },
             {
-              "sourceId": "brief"
+              "id": "story",
+              "text": "Rotina diária. Seu time consulta a política antes de responder?. Quando surge uma solicitação fora do padrão, vocês conferem a fonte oficial ou respondem de memória?"
+            },
+            {
+              "id": "art-1",
+              "text": "Rótulos de ilustração fictícia: política aberta. pedido fora. sem autorização"
+            },
+            {
+              "id": "art-2",
+              "text": "Rótulos de ilustração fictícia: rascunho pedido. base na política. trecho indicado"
+            },
+            {
+              "id": "art-3",
+              "text": "Rótulos de ilustração fictícia: citação gerada. conferir fonte. validar trecho"
+            },
+            {
+              "id": "art-4",
+              "text": "Rótulos de ilustração fictícia: resposta ausente. dúvida marcada. revisão futura"
+            },
+            {
+              "id": "art-5",
+              "text": "Rótulos de ilustração fictícia: consulta oficial. evitar memória. fonte vigente"
             }
           ]
         }
-      ],
-      "decision": "approve",
-      "supported": true,
-      "novel": true,
-      "practical": true,
-      "visualMatch": true,
-      "reason": "Todos os slides e legendas estão integralmente sustentados pelo briefing do exercício educativo fictício. O conteúdo apresenta um fluxo prático e executável (problema → lista revisada → conferência → marcação de dúvida) com situação empresarial reconhecível (vendedor solicitando prazo fora da política). Não há alegações de resultados comprovados, estatísticas ou casos reais. Os critérios de crescimento são atendidos: hook específico, payoff entregue, convite natural e utilidade concreta para compartilhamento.",
-      "growth": {
-        "hookSpecific": true,
-        "payoffDelivered": true,
-        "followReason": true,
-        "shareReason": true
+      },
+      "render": {
+        "version": "authorial-layout-v3",
+        "packHash": "7a3fe0b44717027a5090cf9e296665a5ccbbe74fd96dc3e914af5d08b298afff",
+        "verifiedAt": "2026-10-18T19:45:06.955Z",
+        "feedCount": 4,
+        "story": true,
+        "runDir": "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-18-164422-slot-1-render-only",
+        "imageHashes": [
+          "7709b362505b0a253edaf98ba39c14e37a81ed432f87697124b3083c4bff1714",
+          "57b0db95710fe1e97ad3f45cdb839cc377844b01f73a0cbefec711fc59e12b14",
+          "a166d8cca67f27ed33460b4e53779623ff70dff1351588a6ce3ba0c5ecabde93",
+          "e3e942221ea8a3f04501ce4c97c0e3aaf1653d568dad13701bd612708c974d89",
+          "347e819aa29ab2105188a7601a69046338c01757d4b1dc48abd540b456253847"
+        ]
       }
+    },
+    {
+      "id": "authorial-eac9732f0d439b55",
+      "topic": "fila-prioridade-v3",
+      "account": "cliente-x",
+      "version": "claude-authorial-reserve-v1",
+      "status": "draft",
+      "generationCallId": "47104d1a-2c51-41da-a30e-2131d2f37058",
+      "learningContext": {
+        "version": "claude-observed-editorial-v1",
+        "updatedAt": "2026-10-18T19:31:45.196Z",
+        "freshness": "current",
+        "confidence": "high",
+        "mediaIds": [
+          "18027287510700068",
+          "18635759569032252",
+          "17975613105154212",
+          "18005483804793255",
+          "18035061395893467",
+          "18098498537539858",
+          "17948704314303604",
+          "17979514499921010",
+          "17950664886057055",
+          "18438511210179318",
+          "17964523959233461",
+          "18072826643597029",
+          "18009850214996015",
+          "18221206201339690",
+          "18124691968931630",
+          "17971818954156938"
+        ],
+        "fingerprint": "d3894b66ace34a02bf96b846f4bf87775d97ad1cdf8d081db714654ded6879fa"
+      },
+      "createdAt": "2026-10-18T19:45:46.330Z",
+      "artDirectionCallId": "a7693b2d-0a43-468c-890e-ffbb2658e2e4",
+      "pack": {
+        "id": "authorial-eac9732f0d439b55",
+        "authorialTopic": "fila-prioridade-v3",
+        "editorialReserve": true,
+        "autoGenerated": true,
+        "audienceGrowth": {
+          "version": "business-audience-growth-v1"
+        },
+        "visualDirection": "impact-carousel",
+        "slides": [
+          {
+            "eyebrow": "Rotina",
+            "title": "Como priorizar pedidos sem viés?",
+            "body": "Uma distribuidora fictícia recebe consultas comerciais e solicitações internas simultaneamente todos os dias úteis.",
+            "preserveEngagementCopy": true,
+            "imagePath": "docs/illustrations/cliente-x/authorial-eac9732f0d439b55/cover.png"
+          },
+          {
+            "eyebrow": "Critérios",
+            "title": "Defina regras claras de prioridade",
+            "body": "Estabeleça critérios explícitos como prazo informado pelo cliente e tipo específico da solicitação recebida pela equipe.",
+            "preserveEngagementCopy": true,
+            "imagePath": "docs/illustrations/cliente-x/authorial-eac9732f0d439b55/slide-2.png"
+          },
+          {
+            "eyebrow": "Conferência",
+            "title": "Peça justificativa à inteligência artificial",
+            "body": "Solicite que a IA sugira uma classificação acompanhada da justificativa para comparar com seus critérios definidos previamente.",
+            "preserveEngagementCopy": true,
+            "imagePath": "docs/illustrations/cliente-x/authorial-eac9732f0d439b55/slide-3.png"
+          },
+          {
+            "eyebrow": "Ação",
+            "title": "Revise casos ambíguos antes de mudar",
+            "body": "Analise manualmente as situações pouco claras antes de alterar a fila de atendimento estabelecida pela sua operação atual.",
+            "preserveEngagementCopy": true,
+            "imagePath": "docs/illustrations/cliente-x/authorial-eac9732f0d439b55/slide-4.png"
+          }
+        ],
+        "caption": "Como sua equipe decide qual pedido atender primeiro quando tudo parece urgente ao mesmo tempo?\n\nDefina critérios objetivos como prazo e tipo de solicitação. Peça à IA uma sugestão com justificativa. Compare essa justificativa com suas regras. Revise os casos ambíguos antes de mudar a fila. Não inferir urgência por características pessoais.\n\nQuer aprender aplicações práticas de IA em empresas? Acompanhe o perfil para receber exercícios como este.\n\nConteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado.",
+        "storySlide": {
+          "eyebrow": "Rotina",
+          "title": "Qual pedido você atende primeiro?",
+          "body": "Quando tudo parece urgente, como sua equipe define prioridades no atendimento diário da empresa?",
+          "imagePath": "docs/illustrations/cliente-x/authorial-eac9732f0d439b55/story.png"
+        },
+        "claudeExperiment": {
+          "strategyId": "6659090c-ea3c-4965-bff1-d1a1cd30c99b",
+          "axis": "hook",
+          "variant": "specific-question",
+          "metric": "comments",
+          "intendedFormat": "FEED",
+          "group": "variant"
+        },
+        "businessArt": {
+          "version": "business-editorial-v1",
+          "palette": "copper",
+          "frames": [
+            {
+              "layout": "workspace",
+              "labels": [
+                "prazo informado",
+                "tipo solicitação",
+                "fila atendimento"
+              ]
+            },
+            {
+              "layout": "conversation",
+              "labels": [
+                "critérios claros",
+                "consulta comercial",
+                "solicitação interna"
+              ]
+            },
+            {
+              "layout": "workflow",
+              "labels": [
+                "sugestão IA",
+                "justificativa",
+                "comparação"
+              ]
+            },
+            {
+              "layout": "checklist",
+              "labels": [
+                "casos ambíguos",
+                "revisão manual",
+                "alteração fila"
+              ]
+            },
+            {
+              "layout": "decision",
+              "labels": [
+                "tudo urgente",
+                "prioridade equipe",
+                "atendimento diário"
+              ]
+            }
+          ]
+        }
+      },
+      "packHash": "713fc889a91ea4383fcd0f164ed0ca543d698e0cce116742d9602003d893a670",
+      "assets": {
+        "docs/illustrations/cliente-x/authorial-eac9732f0d439b55/cover.png": "6ce70113246068d577edebf80945b090b998f83e19a3c9900bd4d29e773bfa74",
+        "docs/illustrations/cliente-x/authorial-eac9732f0d439b55/slide-2.png": "c28045f773b5ae23b78e6bf4c1b3b66323cbfc78bfd6e82f46727c4a2ecbad62",
+        "docs/illustrations/cliente-x/authorial-eac9732f0d439b55/slide-3.png": "cbe6dc20c74a0b13b0e8610fe863550ec42a1250a91b44442b2893347d5c092a",
+        "docs/illustrations/cliente-x/authorial-eac9732f0d439b55/slide-4.png": "229a5bcb5d32656ecbabb8a920b53d8eecd662860c9d58406f4238ec9a8598c3",
+        "docs/illustrations/cliente-x/authorial-eac9732f0d439b55/story.png": "9e15c12058e126fbe6222e207f5e37fa638f539405244e845847e3711d609ab4"
+      }
+    }
+  ],
+  "checkedAt": "2026-10-18T19:46:06.290Z",
+  "workflowRun": "39159975467",
+  "message": "2 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
+  "lastResponse": {
+    "stage": "art-direction:fila-prioridade-v3",
+    "callId": "a7693b2d-0a43-468c-890e-ffbb2658e2e4",
+    "value": {
+      "palette": "copper",
+      "frames": [
+        {
+          "layout": "workspace",
+          "labels": [
+            "prazo informado",
+            "tipo solicitação",
+            "fila atendimento"
+          ]
+        },
+        {
+          "layout": "conversation",
+          "labels": [
+            "critérios claros",
+            "consulta comercial",
+            "solicitação interna"
+          ]
+        },
+        {
+          "layout": "workflow",
+          "labels": [
+            "sugestão IA",
+            "justificativa",
+            "comparação"
+          ]
+        },
+        {
+          "layout": "checklist",
+          "labels": [
+            "casos ambíguos",
+            "revisão manual",
+            "alteração fila"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "tudo urgente",
+            "prioridade equipe",
+            "atendimento diário"
+          ]
+        }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
