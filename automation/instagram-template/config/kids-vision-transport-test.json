@@ -275,7 +275,7 @@
     {
       "id": "3454913a-5275-467b-b557-ef1fc27a3eca",
       "day": "2026-10-18",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-distinct",
       "startedAt": "2026-10-18T13:34:28.816Z",
       "images": [
@@ -289,7 +289,12 @@
           "sha256": "5deb818f6dba6ea2d625eb2e92a157a12599151861f70fa2d6ce80102df818b9",
           "bytes": 45919
         }
-      ]
+      ],
+      "completedAt": "2026-10-18T13:35:17.426Z",
+      "reportedInputTokens": 3764,
+      "inputTokens": 3764,
+      "outputTokens": 118,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -628,7 +633,7 @@
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:34:28.816Z",
+  "checkedAt": "2026-10-18T13:35:17.426Z",
   "workflowRun": "39132069734",
   "summary": [
     {
@@ -912,6 +917,19 @@
           }
         ],
         "expected": false,
+        "passed": true
+      }
+    ]
+  },
+  "visualDiversity": {
+    "version": "visual-diversity-v1",
+    "model": "claude-sonnet-4.6",
+    "checkedAt": "2026-10-18T13:35:17.426Z",
+    "cases": [
+      {
+        "expected": true,
+        "distinct": true,
+        "reason": "As imagens mostram o mesmo personagem em uma árvore, mas em momentos e ângulos diferentes. Na primeira imagem, o personagem está de costas, subindo na árvore, e o foco está na multidão abaixo. Na segunda imagem, o personagem está de frente, sentado na árvore, sorrindo, e o foco está na interação com uma figura masculina (Jesus) que aparece em primeiro plano à esquerda. As posições do corpo e o enquadramento da cena são distintos.",
         "passed": true
       }
     ]
