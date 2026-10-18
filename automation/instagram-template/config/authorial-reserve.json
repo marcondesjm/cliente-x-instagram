@@ -4,7 +4,7 @@
   "enabled": true,
   "targetReady": 13,
   "maxPacksPerRun": 1,
-  "health": "daily_limit",
+  "health": "review_rejected",
   "entries": [
     {
       "id": "authorial-7822d0ca002cba49",
@@ -482,9 +482,9 @@
       "reason": "Legenda autoral fora dos limites."
     }
   ],
-  "checkedAt": "2026-10-18T16:33:12.111Z",
+  "checkedAt": "2026-10-18T16:33:13.775Z",
   "workflowRun": "39145392528",
-  "message": "Reposição automática aguarda a renovação diária da cota; será retomada pelo agendamento, sem ação manual.",
+  "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
     "stage": "generate:fila-prioridade",
     "callId": "52a21568-7b07-425f-a9eb-88851126c9a7",
@@ -582,6 +582,7 @@
     "budgetRenewsAt": "2026-10-19T03:00:00Z",
     "nextAttemptAt": "2026-10-18T16:32:17.355Z",
     "checkedAt": "2026-10-18T16:32:17.685Z",
-    "workflowRun": "39145392528"
+    "workflowRun": "39145392528",
+    "retryAfter": "2026-10-18T18:33:13.775Z"
   }
 }
