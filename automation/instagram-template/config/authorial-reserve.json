@@ -4,7 +4,7 @@
   "enabled": true,
   "targetReady": 13,
   "maxPacksPerRun": 3,
-  "health": "stock_ready",
+  "health": "review_rejected",
   "entries": [
     {
       "id": "authorial-7822d0ca002cba49",
@@ -3271,42 +3271,114 @@
       "createdAt": "2026-10-18T18:59:01.297Z",
       "draftRevisionCallId": "ea082565-d58f-466a-a83b-db566901c0b1",
       "reason": "Pauta de crescimento precisa explicar por que acompanhar o perfil."
+    },
+    {
+      "id": "draft-teste-variacoes-v2",
+      "topic": "teste-variacoes-v2",
+      "account": "cliente-x",
+      "version": "claude-authorial-reserve-v1",
+      "status": "rejected",
+      "generationCallId": "74f1145f-e754-406e-b4aa-0346d879bc27",
+      "learningContext": {
+        "version": "claude-observed-editorial-v1",
+        "updatedAt": "2026-10-18T18:39:03.631Z",
+        "freshness": "current",
+        "confidence": "high",
+        "mediaIds": [
+          "18635759569032252",
+          "17975613105154212",
+          "18005483804793255",
+          "18035061395893467",
+          "18098498537539858",
+          "17948704314303604",
+          "17979514499921010",
+          "17950664886057055",
+          "18438511210179318",
+          "17964523959233461",
+          "18072826643597029",
+          "18009850214996015",
+          "18221206201339690",
+          "18124691968931630",
+          "17971818954156938",
+          "18090564053234917"
+        ],
+        "fingerprint": "1f489e627c109aea50a7acfe1c4199b0b9b8ef14b270889564a17e6977a328fe"
+      },
+      "createdAt": "2026-10-18T18:59:42.907Z",
+      "draftRevisionCallId": "9a1d72a7-bfea-415f-941e-2e4cd0230096",
+      "reason": "Pauta de crescimento precisa explicar por que acompanhar o perfil."
+    },
+    {
+      "id": "draft-versao-instrucao-v2",
+      "topic": "versao-instrucao-v2",
+      "account": "cliente-x",
+      "version": "claude-authorial-reserve-v1",
+      "status": "rejected",
+      "generationCallId": "a51f57ee-cc0f-46a6-8a01-fd219382fb99",
+      "learningContext": {
+        "version": "claude-observed-editorial-v1",
+        "updatedAt": "2026-10-18T18:39:03.631Z",
+        "freshness": "current",
+        "confidence": "high",
+        "mediaIds": [
+          "18635759569032252",
+          "17975613105154212",
+          "18005483804793255",
+          "18035061395893467",
+          "18098498537539858",
+          "17948704314303604",
+          "17979514499921010",
+          "17950664886057055",
+          "18438511210179318",
+          "17964523959233461",
+          "18072826643597029",
+          "18009850214996015",
+          "18221206201339690",
+          "18124691968931630",
+          "17971818954156938",
+          "18090564053234917"
+        ],
+        "fingerprint": "1f489e627c109aea50a7acfe1c4199b0b9b8ef14b270889564a17e6977a328fe"
+      },
+      "createdAt": "2026-10-18T19:00:21.892Z",
+      "draftRevisionCallId": "2bf58a02-1db6-4ac3-9418-d5ed9ed3db1e",
+      "reason": "Pauta de crescimento precisa explicar por que acompanhar o perfil."
     }
   ],
-  "checkedAt": "2026-10-18T18:59:18.946Z",
+  "checkedAt": "2026-10-18T19:00:42.252Z",
   "workflowRun": "39156527380",
-  "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
+  "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "revise-draft:fila-prioridade-v2",
-    "callId": "ea082565-d58f-466a-a83b-db566901c0b1",
+    "stage": "revise-draft:versao-instrucao-v2",
+    "callId": "2bf58a02-1db6-4ac3-9418-d5ed9ed3db1e",
     "value": {
       "slides": [
         {
-          "eyebrow": "Prioridade",
-          "title": "Qual solicitação atender primeiro na fila?",
-          "body": "Defina critérios objetivos como prazo e tipo de solicitação antes de classificar pedidos."
+          "eyebrow": "Versão da IA",
+          "title": "A instrução mudou sem aviso?",
+          "body": "Guarde a versão atual com data para comparar mudanças futuras."
         },
         {
-          "eyebrow": "Classificação",
-          "title": "Peça à IA sugestão com justificativa clara",
-          "body": "Solicite que a inteligência artificial sugira classificação acompanhada da justificativa para casos ambíguos."
+          "eyebrow": "Procedimento",
+          "title": "Registre exemplos e critérios antes de alterar",
+          "body": "Mantenha exemplos fictícios de entrada e os critérios esperados registrados."
         },
         {
           "eyebrow": "Conferência",
-          "title": "Compare justificativa com seus critérios definidos",
-          "body": "Analise se a justificativa apresentada pela IA está alinhada aos critérios explícitos estabelecidos anteriormente."
+          "title": "Execute os mesmos testes após cada alteração",
+          "body": "Compare as respostas novas com as anteriores para identificar diferenças claras."
         },
         {
-          "eyebrow": "Ação",
-          "title": "Revise casos ambíguos antes de mudar a fila",
-          "body": "Examine manualmente os casos duvidosos antes de alterar a ordem de atendimento para evitar erros."
+          "eyebrow": "Exercício",
+          "title": "Anote melhorias e perdas antes de decidir",
+          "body": "Escolha a versão que mantém qualidade nos pontos mais importantes do processo."
         }
       ],
-      "caption": "Imagine uma prestadora fictícia recebendo diversos pedidos de orçamento simultaneamente. Sem critérios claros, a equipe decide por impressão pessoal, gerando confusão na fila de atendimento.\\n\\nEstabeleça regras objetivas baseadas em prazo e tipo de solicitação. Peça à IA uma sugestão classificatória com justificativa. Compare essa análise com seus critérios pré-definidos. Revise manualmente os casos ambíguos antes de qualquer mudança na ordem. Esse exercício educativo promove decisões mais estruturadas e menos enviesadas.\\n\\nQuer aprender aplicações práticas de IA em empresas? Siga o perfil para conteúdos que ajudam a organizar processos reais.",
+      "caption": "Se uma prestadora fictícia alterasse sua instrução de IA, como saber se o retorno ao cliente melhorou? Guarde a versão com data, mantenha exemplos fictícios e critérios. Execute os mesmos casos e compare as respostas. Anote ganhos e perdas antes de escolher.\n\nEste exercício apoia decisões baseadas em comparação concreta, não em impressão. Quer aprender aplicações práticas de IA em empresas? Acompanhe o perfil para receber conteúdos assim.",
       "storySlide": {
         "eyebrow": "Rotina",
-        "title": "Como você define prioridades hoje?",
-        "body": "Seu time usa critérios objetivos ou decide na hora qual pedido de orçamento atender primeiro?"
+        "title": "Como você compara versões de instrução?",
+        "body": "Veja no feed um exercício prático para testar mudanças na sua IA aplicada."
       }
     },
     "structured": true,
@@ -3371,6 +3443,6 @@
     "nextAttemptAt": "2026-10-18T18:57:51.878Z",
     "checkedAt": "2026-10-18T18:57:52.235Z",
     "workflowRun": "39156527380",
-    "retryAfter": null
+    "retryAfter": "2026-10-18T19:20:42.252Z"
   }
 }
