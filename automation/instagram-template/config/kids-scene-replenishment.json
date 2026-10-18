@@ -2376,7 +2376,7 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T14:19:12.266Z",
+  "checkedAt": "2026-10-18T14:19:13.595Z",
   "lastRun": "39135225596",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -2694,24 +2694,24 @@
   },
   "lastFactualEvaluation": {
     "packId": "kids-biblia-29",
-    "fingerprint": "65660c08dd09f887d36b5c7b6a3ea2a0e5e6e809d105dca304fed40b7895dbde",
+    "fingerprint": "95490442baad9a8371bb7d4be8f0560ca1cf288601713f0299152ab1e6a9698a",
     "result": {
       "claims": [
         {
           "id": "98834c32e024c944",
-          "supported": true,
-          "reason": "O texto corresponde exatamente ao versículo 19:8. A visualObservation descreve um homem sentado à esquerda segurando recipiente (Zacchaeus) e outro homem em pé gesticulando (Jesus ou interlocutor), em ambiente interno com mesa. O versículo diz 'Zacchaeus stood and said to the Lord', indicando que Zacchaeus estava em pé falando. A ilustração mostra um homem sentado, o que contradiz a ação de 'stood' (ficar em pé). Portanto, há incompatibilidade entre a ação descrita no texto (estar em pé) e a visualização (sentado).",
+          "supported": false,
+          "reason": "A ilustração mostra um ambiente interno com homem sentado à mesa, mas o texto descreve Jesus falando com Zaqueu que estava na árvore (19:5). A ação visual de alguém sentado à mesa é incompatível com a fase em que Zaqueu ainda está na árvore sendo chamado para descer.",
           "evidence": [
             {
-              "sourceId": "19:8",
-              "quote": "Zacchaeus stood and said to the Lord, \"Behold, Lord, half of my goods I give to the poor. If I have wrongfully exacted anything of anyone, I restore four times as much.\""
+              "sourceId": "19:5",
+              "quote": "When Jesus came to the place, he looked up and saw him, and said to him,\n\"Zacchaeus, hurry and come down, for today I must stay at your house.\""
             }
           ]
         },
         {
           "id": "0d7ed7a02e4a2584",
           "supported": true,
-          "reason": "O texto corresponde ao versículo 19:4. A visualObservation mostra um homem sentado nos galhos de uma árvore, olhando para baixo, com grupo de homens reunidos ao redor do tronco. Isso é compatível com 'climbed up into a sycamore tree to see him'. Embora o texto mencione 'ran on ahead', a ilustração pode representar apenas a fase de estar na árvore, não precisando mostrar todas as ações simultaneamente.",
+          "reason": "A ilustração mostra um homem sentado nos galhos de uma árvore olhando para baixo, com grupo reunido ao redor do tronco, compatível com Zaqueu subindo na sicômoro para ver Jesus.",
           "evidence": [
             {
               "sourceId": "19:4",
@@ -2720,20 +2720,9 @@
           ]
         },
         {
-          "id": "0213f4524b345be9",
-          "supported": true,
-          "reason": "O texto corresponde ao versículo 19:7. A visualObservation mostra homens observando duas figuras ao fundo numa passagem entre paredes, com uma figura diante de uma porta. Isso é compatível com 'He has gone in to lodge with a man who is a sinner', representando a entrada na casa.",
-          "evidence": [
-            {
-              "sourceId": "19:7",
-              "quote": "When they saw it, they all murmured, saying, \"He has gone in to lodge with a man who is a sinner.\""
-            }
-          ]
-        },
-        {
           "id": "6654943ac38eff87",
-          "supported": false,
-          "reason": "O texto cita parcialmente o versículo 19:9, mas está incompleto (falta o final do versículo). Além disso, a visualObservation mostra um grupo de seis homens em círculo com o homem central gesticulando, mas não há evidência visual clara de que isso representa especificamente Jesus dizendo estas palavras a Zacchaeus dentro de sua casa. A cena parece genérica e não específica o suficiente para sustentar esta afirmação particular.",
+          "supported": true,
+          "reason": "A ilustração mostra grupo de homens reunidos com homem central gesticulando, compatível com Jesus falando sobre salvação. Não há contradição de ação visível.",
           "evidence": [
             {
               "sourceId": "19:9",
@@ -2742,24 +2731,35 @@
           ]
         },
         {
-          "id": "d3c9e973465ce4fc",
-          "supported": true,
-          "reason": "O texto corresponde ao versículo 19:4. A visualObservation mostra uma pessoa subindo em uma árvore enquanto grupo observa da parte inferior. Isso é compatível com 'climbed up into a sycamore tree'. A ação de subir é mostrada, diferente da claim anterior que mostrava já sentado.",
+          "id": "e64874ce7ad7e208",
+          "supported": false,
+          "reason": "O texto afirma que Zaqueu era cobrador de impostos chefe e rico, mas a ilustração não apresenta elementos visuais que sustentem essa informação específica (riqueza, função). É apenas um grupo de homens sem contexto identificável.",
           "evidence": [
             {
-              "sourceId": "19:4",
-              "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
+              "sourceId": "19:2",
+              "quote": "There was a man named Zacchaeus. He was a chief tax collector, and he was rich."
             }
           ]
         },
         {
-          "id": "9ce49c775a44acf7",
+          "id": "0213f4524b345be9",
           "supported": true,
-          "reason": "O texto corresponde ao versículo 19:1. A visualObservation mostra quatro homens caminhando em fila por um caminho, o que é compatível com 'entered and was passing through Jericho'. A ação de caminhar/passar é representada adequadamente.",
+          "reason": "A ilustração mostra homens observando figuras ao fundo numa passagem entre paredes, com figura diante de porta, compatível com as pessoas murmurando ao ver Jesus entrando na casa de Zaqueu.",
           "evidence": [
             {
-              "sourceId": "19:1",
-              "quote": "He entered and was passing through Jericho."
+              "sourceId": "19:7",
+              "quote": "When they saw it, they all murmured, saying, \"He has gone in to lodge with a man who is a sinner.\""
+            }
+          ]
+        },
+        {
+          "id": "d3c9e973465ce4fc",
+          "supported": true,
+          "reason": "A ilustração mostra pessoa subindo em árvore enquanto grupo observa, compatível com Zaqueu correndo adiante e subindo na sicômoro para ver Jesus.",
+          "evidence": [
+            {
+              "sourceId": "19:4",
+              "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
             }
           ]
         }
