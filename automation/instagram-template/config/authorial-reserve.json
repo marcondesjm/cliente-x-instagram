@@ -6965,41 +6965,56 @@
       "createdAt": "2026-10-18T20:00:10.053Z"
     }
   ],
-  "checkedAt": "2026-10-18T20:00:12.028Z",
+  "checkedAt": "2026-10-18T20:00:22.200Z",
   "workflowRun": "39161134821",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "generate:base-respostas-v4",
-    "callId": "3d1be3b9-78cc-418b-b833-5d6ee79d397f",
+    "stage": "art-direction:base-respostas-v4",
+    "callId": "7ed44741-168a-4322-8cd6-cdc163d541fa",
     "value": {
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "eyebrow": "Dúvida na inscrição",
-          "title": "O aluno pergunta horário fora da lista oficial",
-          "body": "A escola fictícia recebe mensagem sobre horário que não consta na política comercial publicada recentemente."
+          "layout": "workspace",
+          "labels": [
+            "Política aberta",
+            "Mensagem do aluno",
+            "Tela de inscrição"
+          ]
         },
         {
-          "eyebrow": "Procedimento claro",
-          "title": "Peça rascunho baseado apenas na política vigente",
-          "body": "Solicite à IA um rascunho de resposta usando somente a lista oficial com fonte e data de revisão marcada."
+          "layout": "conversation",
+          "labels": [
+            "Pedido de rascunho",
+            "Fonte indicada",
+            "Data de revisão"
+          ]
         },
         {
-          "eyebrow": "Conferência necessária",
-          "title": "Verifique o trecho citado diretamente na fonte",
-          "body": "Confira se a citação gerada corresponde exatamente ao texto da política, pois geração automática não prova validade."
+          "layout": "workflow",
+          "labels": [
+            "Citação gerada",
+            "Texto original",
+            "Conferência lado a lado"
+          ]
         },
         {
-          "eyebrow": "Exercício prático",
-          "title": "Marque a dúvida para revisão quando faltar base",
-          "body": "Se a resposta não estiver na política, registre a pendência para revisão humana antes de enviar qualquer comunicação ao interessado."
+          "layout": "checklist",
+          "labels": [
+            "Trecho ausente",
+            "Pendência marcada",
+            "Revisão humana"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Equipe reunida",
+            "Validação em tela",
+            "Aprovação antes do envio"
+          ]
         }
-      ],
-      "caption": "Como sua equipe lida com dúvidas que fogem da política comercial? Este exercício propõe um método simples: manter uma lista atualizada, pedir rascunhos baseados nela e conferir cada citação na fonte original.\n\nQuando a informação não estiver disponível, marque para revisão humana. Acompanhe o perfil para aprender aplicações práticas de IA em empresas e organizar melhor sua operação diária.",
-      "storySlide": {
-        "eyebrow": "Rotina operacional",
-        "title": "Sua equipe confere citações antes de enviar?",
-        "body": "Veja no feed como criar um exercício prático para validar respostas geradas por IA usando políticas comerciais atualizadas da sua empresa."
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
