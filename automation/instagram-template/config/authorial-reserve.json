@@ -1078,86 +1078,40 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T18:08:48.662Z",
+  "checkedAt": "2026-10-18T18:09:15.120Z",
   "workflowRun": "39152748429",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "review:pedido-duplicado-v1",
-    "callId": "3a4b94d6-f7eb-4ff3-8b26-d5807174ab17",
+    "stage": "generate:base-respostas-v1",
+    "callId": "f47973ec-b93c-4add-b068-951b8955d1c4",
     "value": {
-      "claims": [
+      "slides": [
         {
-          "reason": "O slide descreve o problema de pedidos duplicados em uma loja fictícia, conforme detalhado no briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "supported": true,
-          "id": "slide-1"
+          "eyebrow": "Situação",
+          "title": "O cliente pede prazo fora da política",
+          "body": "Uma loja de materiais recebe pedidos por mensagem. Um cliente solicita entrega em dois dias, mas a política diz que o prazo mínimo é cinco. A equipe precisa responder sem inventar regras."
         },
         {
-          "supported": true,
-          "reason": "O slide apresenta o procedimento de atribuir identificador e consultar antes de criar tarefa, conforme proposto no briefing.",
-          "id": "slide-2",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Procedimento",
+          "title": "Rascunho com indicação do trecho",
+          "body": "Peça um rascunho baseado apenas na política comercial. Exija que ele indique qual trecho foi usado para justificar a resposta sobre o prazo de entrega informado ao cliente."
         },
         {
-          "supported": true,
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "id": "slide-3",
-          "reason": "O slide detalha o teste de reenvio e a verificação do sistema, alinhado com as orientações do briefing."
+          "eyebrow": "Conferência",
+          "title": "Verifique a citação na fonte",
+          "body": "Confira se o trecho citado existe na política e se a data de revisão está atualizada. Uma citação gerada não comprova sua validade. Marque a dúvida para revisão se a resposta não estiver no documento."
         },
         {
-          "id": "slide-4",
-          "supported": true,
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "O slide propõe o exercício de mapear pontos de entrada e definir identificadores, conforme solicitado no briefing."
-        },
-        {
-          "reason": "A legenda resume o exercício educativo proposto no briefing, sem prometer resultados.",
-          "id": "caption",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "supported": true
-        },
-        {
-          "reason": "O slide de rotina introduz o exercício educativo conforme o cenário fictício do briefing.",
-          "supported": true,
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "id": "story"
+          "eyebrow": "Exercício",
+          "title": "Pratique com seu próprio caso",
+          "body": "Pegue uma dúvida recente do seu atendimento. Peça um rascunho usando apenas sua política interna. Confira a referência antes de enviar. Anote onde faltou informação para ajustar o documento base."
         }
       ],
-      "decision": "approve",
-      "supported": true,
-      "novel": true,
-      "practical": true,
-      "visualMatch": true,
-      "reason": "O conteúdo apresenta um exercício educativo fictício coerente com o briefing, estruturado de forma lógica e prática para o público-alvo, sem promessas de resultados ou notícias falsas.",
-      "growth": {
-        "shareReason": true,
-        "followReason": true,
-        "payoffDelivered": true,
-        "hookSpecific": true
+      "caption": "Como evitar respostas inventadas no atendimento? Use sua política comercial como única fonte. Peça um rascunho que cite o trecho exato usado. Confira essa citação no documento original antes de enviar ao cliente. Se a informação não estiver lá, marque para revisão da equipe.\n\nEsse exercício ajuda a organizar o conhecimento da empresa e reduz improvisos. Quer aprender aplicações práticas de IA em empresas? Acompanhe o perfil para receber conteúdos úteis para sua rotina.",
+      "storySlide": {
+        "eyebrow": "Rotina",
+        "title": "Sua política está atualizada?",
+        "body": "Quando surge uma dúvida no atendimento, você confere a fonte ou responde de cabeça? Veja no feed como criar um exercício simples para treinar sua equipe."
       }
     },
     "structured": true,
