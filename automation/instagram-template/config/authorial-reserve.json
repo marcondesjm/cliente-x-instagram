@@ -10049,143 +10049,40 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T20:44:52.817Z",
+  "checkedAt": "2026-10-18T20:45:06.798Z",
   "workflowRun": "39164475597",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "review:teste-variacoes-v5",
-    "callId": "2a23585e-793e-4066-8308-f55d723276a7",
+    "stage": "generate:versao-instrucao-v5",
+    "callId": "02d16f19-c11f-463a-a368-7232707a31c4",
     "value": {
-      "claims": [
+      "slides": [
         {
-          "id": "slide-1",
-          "supported": true,
-          "reason": "A fonte brief descreve exatamente o cenário fictício de uma oficina com solicitações contendo abreviação e palavra digitada incorretamente pela pressa do dia.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Versão da instrução",
+          "title": "A IA mudou sem aviso prévio?",
+          "body": "Uma oficina recebe solicitações de orçamento e acompanhamento pelo mesmo canal digital todos os dias."
         },
         {
-          "id": "slide-2",
-          "supported": true,
-          "reason": "O briefing orienta explicitamente a execução do mesmo rascunho de instrução em cada versão (original, abreviado, erro, dado faltante) para comparar resultados.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Nomeie a versão",
+          "title": "Guarde a instrução com nome e data",
+          "body": "Salve o texto usado pela inteligência artificial com um identificador único e a data atual de criação."
         },
         {
-          "id": "slide-3",
-          "supported": true,
-          "reason": "A fonte brief determina que se comparem os campos extraídos e se anotem as divergências onde a extração falhou em cada variação.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Teste antes de trocar",
+          "title": "Execute exemplos fictícios para comparar",
+          "body": "Rode as mesmas entradas simuladas nas duas versões e registre melhorias e perdas observadas antes."
         },
         {
-          "id": "slide-4",
-          "supported": true,
-          "reason": "O briefing prescreve corrigir o rascunho com base nas divergências e repetir o teste antes de usar na rotina, conforme indicado no slide 4.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "caption",
-          "supported": true,
-          "reason": "O texto da legenda resume fielmente o exercício proposto no briefing: criar variações de pedido fictício, testar extração, anotar divergências e ajustar antes da automação.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            },
-            {
-              "sourceId": "label"
-            }
-          ]
-        },
-        {
-          "id": "story",
-          "supported": true,
-          "reason": "A narrativa da capa reflete o contexto descrito no briefing sobre clientes que escrevem com pressa, abreviam termos e cometem erros, servindo como gancho para o exercício.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-1",
-          "supported": true,
-          "reason": "Os rótulos visuais correspondem aos elementos descritos no briefing para a etapa de pedido fictício (orçamento oficina, mensagem digitada, campo vazio).",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-2",
-          "supported": true,
-          "reason": "Os rótulos visuais alinham-se à instrução do briefing de executar o mesmo rascunho em versões original, abreviada e com erro de digitação.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-3",
-          "supported": true,
-          "reason": "Os rótulos visuais representam corretamente a fase de conferência descrita no briefing: rascunho instrução, executar extração e comparar campos.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-4",
-          "supported": true,
-          "reason": "Os rótulos visuais refletem a etapa de ação prescrita no briefing: anotar divergências, corrigir rascunho e repetir teste.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-5",
-          "supported": true,
-          "reason": "Os rótulos visuais sintetizam o objetivo educativo do briefing: testar mensagens variadas antes de automatizar, sem prometer resultados reais.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            },
-            {
-              "sourceId": "label"
-            }
-          ]
+          "eyebrow": "Escolha com registro",
+          "title": "Decida após conferir ganhos e perdas",
+          "body": "Compare os resultados lado a lado e adote a versão que apresentar comportamento mais adequado à rotina."
         }
       ],
-      "decision": "approve",
-      "supported": true,
-      "novel": true,
-      "practical": true,
-      "visualMatch": true,
-      "reason": "Todas as claims possuem suporte direto no briefing e na label. O conteúdo é um exercício educativo fictício executável, com começo (cenário), desenvolvimento (teste comparativo) e conclusão (ajuste pré-automação). A abordagem de testar variações textuais antes de automatizar é concreta e diferenciada dos títulos anteriores do histórico. Os renders são diagramas autorais legíveis e pertinentes ao tema, sem cortes ou sobreposições prejudiciais.",
-      "experimentApplied": true,
-      "growth": {
-        "hookSpecific": true,
-        "payoffDelivered": true,
-        "followReason": true,
-        "shareReason": true
+      "caption": "Quando a resposta da IA muda, como saber se a nova instrução é realmente melhor? Guarde o texto com nome e data, mantenha exemplos fictícios de entrada e critérios esperados. Ao alterar, execute os mesmos casos e registre o que melhorou ou piorou antes de decidir.\n\nQual mudança você faria primeiro na sua operação? Siga o perfil para aprender aplicações práticas de IA em empresas no dia a dia.",
+      "storySlide": {
+        "eyebrow": "Rotina operacional",
+        "title": "Como você testa mudanças na IA?",
+        "body": "Você compara versões antes de adotar uma nova instrução na sua empresa ou troca direto?"
       }
     },
     "structured": true,
