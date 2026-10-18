@@ -5974,7 +5974,7 @@
       "topic": "extracao-campos-v4",
       "account": "cliente-x",
       "version": "claude-authorial-reserve-v1",
-      "status": "draft",
+      "status": "ready",
       "generationCallId": "fc988c0b-a8e1-4750-a515-43e1a2399642",
       "learningContext": {
         "version": "claude-observed-editorial-v1",
@@ -6240,10 +6240,229 @@
           "followReason": true,
           "shareReason": true
         }
+      },
+      "review": {
+        "claims": [
+          {
+            "id": "slide-1",
+            "supported": true,
+            "reason": "A fonte brief descreve exatamente a situação hipotética de uma escola fictícia recebendo mensagens sem produto, quantidade ou prazo definidos, correspondendo ao conteúdo do slide 1.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-2",
+            "supported": true,
+            "reason": "O briefing instrui explicitamente a pedir à IA uma tabela que preserve as informações recebidas (produto, quantidade e prazo), o que é reproduzido fielmente no slide 2 como procedimento prático.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-3",
+            "supported": true,
+            "reason": "A orientação de marcar campos ausentes como 'não informado' e conferir cada dado com a mensagem original está presente no texto da fonte brief e corresponde ao passo de conferência essencial do slide 3.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "slide-4",
+            "supported": true,
+            "reason": "A validação final antes do cadastro, comparando campos extraídos com o texto original, é a conclusão lógica prescrita pelo briefing para evitar suposições, alinhada ao conteúdo do slide 4.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "caption",
+            "supported": true,
+            "reason": "A legenda resume corretamente o exercício educativo fictício proposto no briefing, incluindo a pergunta de engajamento e o disclaimer de conteúdo autoral, sem adicionar resultados comprovados.",
+            "evidence": [
+              {
+                "sourceId": "label",
+                "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+              },
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "story",
+            "supported": true,
+            "reason": "O texto da story introduz a rotina operacional de pedidos incompletos (produto, quantidade ou prazo) conforme descrito na proposta educativa do briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-1",
+            "supported": true,
+            "reason": "Os rótulos visuais da cena 1 (mesa com formulários, tela de inscrição, relógio) são elementos cênicos consistentes com a situação hipotética de atendimento escolar descrita no briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-2",
+            "supported": true,
+            "reason": "Os rótulos da cena 2 (mensagem do aluno, campos vazios, dúvida no texto) ilustram visualmente o problema de dados incompletos mencionado no briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-3",
+            "supported": true,
+            "reason": "Os rótulos da cena 3 (IA gera tabela, dados preservados, estrutura clara) representam graficamente o procedimento prático solicitado no briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-4",
+            "supported": true,
+            "reason": "Os rótulos da cena 4 (marcar ausente, comparar original, validar campo) sintetizam visualmente os passos de conferência essenciais definidos na fonte brief.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-5",
+            "supported": true,
+            "reason": "Os rótulos da cena 5 (cadastrar?, dados completos, aguardar resposta) fecham o ciclo operativo do exercício fictício, coerente com a proposta de validação antes do registro.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          }
+        ],
+        "decision": "approve",
+        "supported": true,
+        "novel": true,
+        "practical": true,
+        "visualMatch": true,
+        "reason": "Todas as alegações são sustentadas pelas fontes brief e label. O conteúdo é um exercício educativo fictício completo, com início (problema), desenvolvimento (procedimento com IA) e conclusão (validação). A abordagem de extrair dados de mensagens informais usando IA é distinta dos títulos do histórico (que focam em duplicidade, filas ou políticas). Os critérios de crescimento são atendidos: hook específico (pedidos incompletos), payoff entregue (passo a passo executável), follow reason claro (aplicações práticas de IA) e share reason útil (checklist de validação).",
+        "growth": {
+          "hookSpecific": true,
+          "payoffDelivered": true,
+          "followReason": true,
+          "shareReason": true
+        },
+        "bindingVersion": "exact-source-id-v1",
+        "callId": "93baffe5-dc4e-4e9c-91bf-f309ab23aa17",
+        "packHash": "a9e7b8b220dcd1c94358f7ae68b0f62e7ae7fbafec3499120fc2108aad1fb215",
+        "checkedAt": "2026-10-18T19:57:13.475Z",
+        "groundingTask": {
+          "scope": "Exercício educativo fictício. Orientações são propostas, não resultados ou notícias.",
+          "sources": [
+            {
+              "id": "brief",
+              "text": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada campo com a mensagem original antes de cadastrar o pedido. Não usar dados reais de clientes no exercício. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+            },
+            {
+              "id": "label",
+              "text": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            }
+          ],
+          "claims": [
+            {
+              "id": "slide-1",
+              "text": "Situação hipotética. Pedido incompleto na inscrição de curso. A escola recebe mensagem sem produto, quantidade ou prazo definido para matrícula."
+            },
+            {
+              "id": "slide-2",
+              "text": "Procedimento prático. Peça tabela com campos definidos pela IA. Solicite à inteligência artificial uma tabela preservando produto, quantidade e prazo informados."
+            },
+            {
+              "id": "slide-3",
+              "text": "Conferência essencial. Marque ausentes e compare com original. Indique não informado para campos faltantes e confira cada dado com a mensagem recebida."
+            },
+            {
+              "id": "slide-4",
+              "text": "Exercício aplicável. Valide antes de cadastrar o pedido. Compare todos os campos extraídos com o texto original antes de registrar qualquer inscrição."
+            },
+            {
+              "id": "caption",
+              "text": "Uma escola fictícia recebe pedidos de inscrição por mensagem. Alguns chegam sem produto, quantidade ou prazo claros. Como evitar suposições ao processar esses dados?\n\nDefina os campos essenciais, peça à IA uma tabela organizada, marque como não informado o que estiver ausente e compare cada informação com o texto original antes de cadastrar. Esse exercício ajuda a manter a integridade dos registros sem completar dados por conta própria.\n\nQual campo costuma faltar mais nos pedidos da sua operação? Siga o perfil para aprender aplicações práticas de IA em empresas.\n\nConteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            },
+            {
+              "id": "story",
+              "text": "Rotina operacional. Quais dados faltam nos pedidos?. Produto, quantidade ou prazo aparecem incompletos nas mensagens que sua equipe recebe diariamente?"
+            },
+            {
+              "id": "art-1",
+              "text": "Rótulos de ilustração fictícia: Mesa com formulários. Tela de inscrição. Relógio na parede"
+            },
+            {
+              "id": "art-2",
+              "text": "Rótulos de ilustração fictícia: Mensagem do aluno. Campos vazios. Dúvida no texto"
+            },
+            {
+              "id": "art-3",
+              "text": "Rótulos de ilustração fictícia: IA gera tabela. Dados preservados. Estrutura clara"
+            },
+            {
+              "id": "art-4",
+              "text": "Rótulos de ilustração fictícia: Marcar ausente. Comparar original. Validar campo"
+            },
+            {
+              "id": "art-5",
+              "text": "Rótulos de ilustração fictícia: Cadastrar?. Dados completos. Aguardar resposta"
+            }
+          ]
+        }
+      },
+      "render": {
+        "version": "authorial-layout-v3",
+        "packHash": "a9e7b8b220dcd1c94358f7ae68b0f62e7ae7fbafec3499120fc2108aad1fb215",
+        "verifiedAt": "2026-10-18T19:57:13.475Z",
+        "feedCount": 4,
+        "story": true,
+        "runDir": "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-18-165639-slot-1-render-only",
+        "imageHashes": [
+          "1057851049ef80b2bfde164225319a164448ff052d21937ab382176ef995dd4a",
+          "50439a05b32cedea2833f072b929db636686ccc6bcfc54304134041dbdeed05e",
+          "04d332855db8d765c1c5b88ad1cdcf7642215eb4315c6215059a2f1ff6e96d3d",
+          "077694654bbe111bcb2bfbac270eeb3af4d41341f691e8148286190bbffda52b",
+          "4482cc891780184d048bcb9b27f7847ac0e6cd70bb6f0567aa00e05b0feb0594"
+        ]
       }
     }
   ],
-  "checkedAt": "2026-10-18T19:57:12.125Z",
+  "checkedAt": "2026-10-18T19:57:13.476Z",
   "workflowRun": "39160892213",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
