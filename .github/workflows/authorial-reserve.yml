@@ -7,9 +7,9 @@ on:
         type: boolean
         default: false
   schedule:
-    # Verificação horária, inclusive após a renovação da cota às 00h BRT.
+    # Estoque preventivo a cada vinte minutos, também após publicações.
     # Preflight sem API evita instalações e chamadas quando não há orçamento.
-    - cron: '35 * * * *'
+    - cron: '15,35,55 * * * *'
   workflow_run:
     workflows:
       - Instagram Feed Cliente X

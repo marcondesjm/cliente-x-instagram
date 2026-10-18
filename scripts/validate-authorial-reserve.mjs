@@ -55,9 +55,11 @@ const now=new Date('2026-10-18T16:00:00Z'),error={account:'cliente-x',status:'op
 const budget={model:'claude-sonnet-4.6',circuit:null,policy:{maxCallsPerDay:12,maxInputTokensPerCall:120000,maxInputTokensPerDay:1500000},calls:[]};
 const state={enabled:true,targetReady:13,entries:[],regression:{fingerprint:groundingFingerprint(AUTHORIAL_REGRESSION_TASK),bindingVersion:SOURCE_BINDING_VERSION,model:budget.model,passed:true,checkedAt:now.toISOString(),cases:Array.from({length:4},()=>({passed:true}))}};
 const plan=(changes={})=>recoveryPlan({state,budget,history:[],errors:[error],readAsset:get,event:'workflow_run',now,...changes});
-assert.equal(plan().phase,'replenish_for_incident');assert.equal(plan({errors:[{...error,account:'sabedoria-kids'}]}).run,false);
+assert.equal(plan().phase,'replenish_for_incident');assert.equal(plan({errors:[{...error,account:'sabedoria-kids'}]}).phase,'maintain_stock','Maintain Cliente X stock without depending on another account incident');
+assert.equal(plan({errors:[]}).phase,'maintain_stock','Refill after successful publication before a new shortage');
 assert.equal(plan({history:[{slotDate:error.date,slotIndex:2}]}).pending,false);
-assert.equal(plan({errors:[{...error,stage:'Graph POST'}]}).run,false);
+assert.equal(plan({errors:[{...error,stage:'Graph POST'}]}).pending,false);
+assert.equal(plan({errors:[{...error,stage:'Graph POST'}]}).phase,'maintain_stock');
 const spent={...budget,calls:Array.from({length:12},(_,i)=>({id:String(i),day:'2026-10-18',status:'completed',inputTokens:120000}))};
 assert.equal(plan({budget:spent}).run,false);assert.equal(plan({budget:spent}).nextAttemptAt,'2026-10-19T03:35:00.000Z');
 assert.equal(nextBrtDay(new Date('2026-10-19T02:59:00Z')),'2026-10-19T03:00:00.000Z');
@@ -70,7 +72,7 @@ assert.equal(plan({state:stocked,budget:receipted,history:[{coverTitle:pack.slid
 const similarTitle=pack.slides[0].title.replace(/\.$/,'')+' hoje.';
 assert.equal(pickEditorialVisualReserve(ready,'2026-10-18',1,[],[{coverTitle:similarTitle}],()=>0).pack,null);
 assert.equal(plan({state:stocked,budget:receipted,history:[{coverTitle:similarTitle}]}).recoveryReady,false);
-const workflow=readFileSync('.github/workflows/authorial-reserve.yml','utf8');assert.match(workflow,/workflow_run:/);assert.match(workflow,/cron: '35 \* \* \* \*'/);assert.match(workflow,/uses: \.\/\.github\/workflows\/instagram-watchdog-backup.yml/);assert.match(workflow,/needs.replenish.outputs.recovery_ready == 'true'/);
+const workflow=readFileSync('.github/workflows/authorial-reserve.yml','utf8');assert.match(workflow,/workflow_run:/);assert.match(workflow,/cron: '15,35,55 \* \* \* \*'/);assert.match(workflow,/uses: \.\/\.github\/workflows\/instagram-watchdog-backup.yml/);assert.match(workflow,/needs.replenish.outputs.recovery_ready == 'true'/);
 assert.match(readFileSync('.github/workflows/instagram-watchdog-backup.yml','utf8'),/workflow_call:/);
 console.log('Recuperação automática: incidente certo, estoque consumido, cota BRT, retomada, backoff, circuito e chamada do Vigia validados. Sem API ou publicação nos testes.');
 console.log('Reserva Claude: prova, recibos, isolamento de conta, citações, render, alterações de conteúdo/arte e repetição validados.');
