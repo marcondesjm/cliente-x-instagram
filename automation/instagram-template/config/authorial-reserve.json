@@ -6004,41 +6004,56 @@
       "createdAt": "2026-10-18T19:56:17.973Z"
     }
   ],
-  "checkedAt": "2026-10-18T19:56:19.451Z",
+  "checkedAt": "2026-10-18T19:56:28.070Z",
   "workflowRun": "39160892213",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "generate:extracao-campos-v4",
-    "callId": "fc988c0b-a8e1-4750-a515-43e1a2399642",
+    "stage": "art-direction:extracao-campos-v4",
+    "callId": "218cf450-8650-44df-8fa5-12868cfe2557",
     "value": {
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "eyebrow": "Situação hipotética",
-          "title": "Pedido incompleto na inscrição de curso",
-          "body": "A escola recebe mensagem sem produto, quantidade ou prazo definido para matrícula."
+          "layout": "workspace",
+          "labels": [
+            "Mesa com formulários",
+            "Tela de inscrição",
+            "Relógio na parede"
+          ]
         },
         {
-          "eyebrow": "Procedimento prático",
-          "title": "Peça tabela com campos definidos pela IA",
-          "body": "Solicite à inteligência artificial uma tabela preservando produto, quantidade e prazo informados."
+          "layout": "conversation",
+          "labels": [
+            "Mensagem do aluno",
+            "Campos vazios",
+            "Dúvida no texto"
+          ]
         },
         {
-          "eyebrow": "Conferência essencial",
-          "title": "Marque ausentes e compare com original",
-          "body": "Indique não informado para campos faltantes e confira cada dado com a mensagem recebida."
+          "layout": "workflow",
+          "labels": [
+            "IA gera tabela",
+            "Dados preservados",
+            "Estrutura clara"
+          ]
         },
         {
-          "eyebrow": "Exercício aplicável",
-          "title": "Valide antes de cadastrar o pedido",
-          "body": "Compare todos os campos extraídos com o texto original antes de registrar qualquer inscrição."
+          "layout": "checklist",
+          "labels": [
+            "Marcar ausente",
+            "Comparar original",
+            "Validar campo"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Cadastrar?",
+            "Dados completos",
+            "Aguardar resposta"
+          ]
         }
-      ],
-      "caption": "Uma escola fictícia recebe pedidos de inscrição por mensagem. Alguns chegam sem produto, quantidade ou prazo claros. Como evitar suposições ao processar esses dados?\n\nDefina os campos essenciais, peça à IA uma tabela organizada, marque como não informado o que estiver ausente e compare cada informação com o texto original antes de cadastrar. Esse exercício ajuda a manter a integridade dos registros sem completar dados por conta própria.\n\nQual campo costuma faltar mais nos pedidos da sua operação? Siga o perfil para aprender aplicações práticas de IA em empresas.",
-      "storySlide": {
-        "eyebrow": "Rotina operacional",
-        "title": "Quais dados faltam nos pedidos?",
-        "body": "Produto, quantidade ou prazo aparecem incompletos nas mensagens que sua equipe recebe diariamente?"
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
