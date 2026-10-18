@@ -2156,7 +2156,7 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:36:23.713Z",
+  "checkedAt": "2026-10-18T13:36:25.063Z",
   "lastRun": "39132072064",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -2470,13 +2470,13 @@
   },
   "lastFactualEvaluation": {
     "packId": "kids-biblia-29",
-    "fingerprint": "fc4ee9e9fc604abcd1e72cad3b0fc7385d65ff9ce9d071b384b556c7d13d233a",
+    "fingerprint": "c9551f661c3570c72b4d5bdf77670bc9a63800f645210414a4ab9284b211a466",
     "result": {
       "claims": [
         {
           "id": "98834c32e024c944",
           "supported": true,
-          "reason": "A fonte 19:8 afirma exatamente que Zaqueu declarou dar metade dos seus bens aos pobres e restituir quatro vezes o que defraudou.",
+          "reason": "A declaração de Zaqueu sobre dar metade dos bens aos pobres e restituir quatro vezes mais está literalmente citada em Lucas 19:8. A visualObservation mostra dois homens em ambiente interno com mesa, compatível com o contexto de Zaqueu falando a Jesus após descer da árvore.",
           "evidence": [
             {
               "sourceId": "19:8",
@@ -2486,9 +2486,13 @@
         },
         {
           "id": "0d7ed7a02e4a2584",
-          "supported": true,
-          "reason": "A fonte 19:4 confirma que Zaqueu subiu em uma árvore para ver Jesus, e a visualObservation descreve corretamente essa cena com ele nos galhos da árvore.",
+          "supported": false,
+          "reason": "O text afirma que Zaqueu 'sobe' na árvore (ação de subir), mas a visualObservation descreve um homem 'sentado nos galhos' (já posicionado). Embora ambos envolvam a árvore, a ação descrita no texto é de subida ativa, enquanto a imagem mostra estado estático sentado. Além disso, não há evidência textual direta que confirme que a multidão observa especificamente 'ao redor do tronco' - Lucas 19:3-4 menciona apenas que havia multidão impedindo a visão, sem detalhar posição relativa à árvore.",
           "evidence": [
+            {
+              "sourceId": "19:3",
+              "quote": "He was trying to see who Jesus was, and couldn't because of the crowd, because he was short."
+            },
             {
               "sourceId": "19:4",
               "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
@@ -2498,33 +2502,33 @@
         {
           "id": "6654943ac38eff87",
           "supported": false,
-          "reason": "A fonte 19:9 diz 'salvation has come to this house' e 'son of Abraham', mas não menciona 'Jew'. A tradução no sourceContext altera 'son of Abraham' para 'This man is a Jew also', o que não está nas fontes originais. Além disso, a visualObservation mostra um grupo de homens em círculo, mas as fontes não descrevem esta configuração específica.",
+          "reason": "O text afirma que Jesus fala 'à multidão reunida ao seu redor', mas Lucas 19:9 mostra que Jesus disse isso 'a ele' (a Zaqueu), não à multidão. A visualObservation também mostra um grupo de homens em círculo sem indicar claramente quem é Jesus ou Zaqueu, tornando incompatível a atribuição de que Jesus está falando à multidão quando o texto bíblico indica conversa direta com Zaqueu.",
           "evidence": [
             {
               "sourceId": "19:9",
               "quote": "Jesus said to him,\n\"Today, salvation has come to this house, because he also is a son of Abraham."
-            },
-            {
-              "sourceId": "19:10",
-              "quote": "For the Son of Man came to seek and to save that which was lost.\""
             }
           ]
         },
         {
-          "id": "d3c9e973465ce4fc",
+          "id": "e64874ce7ad7e208",
           "supported": true,
-          "reason": "A fonte 19:4 confirma que Zaqueu correu adiante e subiu em uma árvore para ver Jesus passar. A visualObservation é consistente com este evento.",
+          "reason": "O text descreve Jesus no meio de uma multidão em Jericó, cercado por pessoas querendo vê-lo. Isso é sustentado por Lucas 19:1 (Jesus passando por Jericó) e Lucas 19:3 (multidão impedindo Zaqueu de ver Jesus, indicando presença de multidão). A visualObservation mostra grupo de homens reunidos em círculo com figura central, compatível com essa descrição geral.",
           "evidence": [
             {
-              "sourceId": "19:4",
-              "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
+              "sourceId": "19:1",
+              "quote": "He entered and was passing through Jericho."
+            },
+            {
+              "sourceId": "19:3",
+              "quote": "He was trying to see who Jesus was, and couldn't because of the crowd, because he was short."
             }
           ]
         },
         {
           "id": "0213f4524b345be9",
           "supported": true,
-          "reason": "A fonte 19:7 confirma que as pessoas murmuraram quando viram Jesus entrar na casa de Zaqueu, chamando-o de pecador. O sourceContext também confirma este murmúrio.",
+          "reason": "Lucas 19:7 registra que 'todos murmuraram' ao verem Jesus entrando para hospedar-se na casa de Zaqueu, considerado pecador. A visualObservation mostra homens observando figuras ao fundo numa passagem entre paredes, com uma figura diante de uma porta, compatível com a cena de murmuração ao ver Jesus entrando na casa.",
           "evidence": [
             {
               "sourceId": "19:7",
@@ -2533,13 +2537,13 @@
           ]
         },
         {
-          "id": "9ce49c775a44acf7",
+          "id": "d3c9e973465ce4fc",
           "supported": true,
-          "reason": "A fonte 19:1 confirma que Jesus entrou e estava passando por Jericó. O sourceContext adiciona contexto sobre estar a caminho de Jerusalém, mas o evento principal de passar por Jericó está confirmado.",
+          "reason": "Lucas 19:4 declara explicitamente que Zaqueu 'correu adiante e subiu numa árvore de sicômoro para vê-lo'. A visualObservation mostra pessoa subindo em árvore com grupo observando, compatível com a ação descrita no texto bíblico.",
           "evidence": [
             {
-              "sourceId": "19:1",
-              "quote": "He entered and was passing through Jericho."
+              "sourceId": "19:4",
+              "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
             }
           ]
         }
