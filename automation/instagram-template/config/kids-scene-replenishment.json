@@ -1783,11 +1783,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "json",
       "startedAt": "2026-10-18T13:10:34.939Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 7980,
       "imageFingerprint": null,
-      "promptFingerprint": "60117a5bae82ffb4a71f3944c05b4ac6a126aba5b8074ea8e99c9d1dc0c3d851"
+      "promptFingerprint": "60117a5bae82ffb4a71f3944c05b4ac6a126aba5b8074ea8e99c9d1dc0c3d851",
+      "completedAt": "2026-10-18T13:10:59.878Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 971,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "end_turn"
     }
   ],
   "entries": [
@@ -1890,7 +1896,7 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:10:34.939Z",
+  "checkedAt": "2026-10-18T13:10:59.878Z",
   "lastRun": "39130137477",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -2098,12 +2104,86 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-29:d3c9e973465ce4fc",
+    "stage": "select:kids-biblia-29",
     "value": {
-      "visible": true,
-      "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Uma pessoa vestida com túnica amarela e azul está subindo em uma árvore de copa densa, enquanto um grupo de pessoas com trajes tradicionais observa da parte inferior da cena; ao fundo há edificações de pedra e tendas vermelhas em ambiente externo."
+      "cards": [
+        {
+          "card": 1,
+          "options": [
+            {
+              "scene": 3,
+              "verse": "19:5",
+              "reason": "A capa exige o evento do título 'Zaqueu recebeu Jesus'. A cena mostra Jesus identificando Zaqueu na árvore e convidando-o para descer ('hurry down... guest in your home'), que é o momento decisivo que leva ao recebimento em casa descrito no título."
+            },
+            {
+              "scene": 5,
+              "verse": "19:6-7",
+              "reason": "A cena retrata Zaqueu recebendo Jesus em sua casa ('welcomed Jesus into his home'), correspondendo diretamente ao título da capa. As figuras ao fundo murmurando refletem a reação descrita no texto."
+            }
+          ],
+          "reason": "As opções selecionadas retratam diretamente o evento central do título: o encontro e acolhimento de Jesus por Zaqueu. A cena 3 captura o convite inicial e a cena 5 a entrada na casa."
+        },
+        {
+          "card": 2,
+          "options": [
+            {
+              "scene": 6,
+              "verse": "19:4",
+              "reason": "O resumo menciona 'Zaqueu subiu em uma árvore'. Esta cena ilustra exatamente essa ação: Zaqueu subindo na sicômoro para ver Jesus, conforme descrito no versículo 4."
+            },
+            {
+              "scene": 3,
+              "verse": "19:5",
+              "reason": "O resumo menciona o encontro com Jesus. Esta cena mostra Jesus olhando para Zaqueu na árvore e falando com ele, parte integrante da narrativa resumida."
+            }
+          ],
+          "reason": "As cenas ilustram os dois eventos principais mencionados no resumo do cartão narrativo: subir na árvore e o encontro com Jesus."
+        },
+        {
+          "card": 3,
+          "options": [
+            {
+              "scene": 2,
+              "verse": "19:8",
+              "reason": "A lição fala sobre 'mudança de atitude' e 'reparar erros'. A cena mostra Zaqueu declarando suas intenções de restituição ('give half my belongings... pay back four times'), que é a evidência concreta da mudança de coração."
+            }
+          ],
+          "reason": "A cena 2 é a única que ilustra concretamente a mudança de atitude através das ações de restituição prometidas por Zaqueu, alinhada com o tema da lição."
+        },
+        {
+          "card": 4,
+          "options": [
+            {
+              "scene": 2,
+              "verse": "19:8",
+              "reason": "A atividade familiar trata de 'devolver algo e reparar prejuízo'. A cena mostra Zaqueu comprometendo-se a devolver quatro vezes mais se tiver defraudado alguém, sendo a ilustração bíblica direta do princípio ensinado na atividade."
+            }
+          ],
+          "reason": "A cena ilustra o princípio bíblico de restituição que fundamenta a conversa sugerida na atividade familiar sobre reparar prejuízos."
+        },
+        {
+          "card": 5,
+          "options": [
+            {
+              "scene": 1,
+              "verse": "19:9-10",
+              "reason": "O cartão de leitura convida a continuar a conversa. A cena mostra Jesus declarando que a salvação chegou àquela casa e explicando sua missão de buscar os perdidos, oferecendo o fechamento teológico da passagem para reflexão familiar."
+            }
+          ],
+          "reason": "A cena captura a declaração final de Jesus sobre salvação e sua missão, fornecendo base teológica rica para a leitura e conversa familiar sugeridas."
+        },
+        {
+          "card": 6,
+          "options": [
+            {
+              "scene": 4,
+              "verse": "19:2-3",
+              "reason": "O Story pede uma cena diferente relacionada à passagem. Esta cena mostra Jesus no meio da multidão em Jerico, com Zaqueu (o cobrador de impostos rico) mencionado no contexto. É uma cena introdutória distinta das demais já utilizadas, mostrando o contexto social da história."
+            }
+          ],
+          "reason": "A cena 4 é a única restante não utilizada e retrata o contexto inicial da passagem: Jesus na multidão e a presença de Zaqueu, oferecendo uma perspectiva diferente da narrativa principal."
+        }
+      ]
     }
   },
   "lastFactualEvaluation": {
