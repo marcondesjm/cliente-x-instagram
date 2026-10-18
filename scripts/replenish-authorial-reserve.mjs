@@ -115,6 +115,7 @@ try{
  }
  state.automaticRecovery={...state.automaticRecovery,retryAfter:accepted?null:new Date(Date.now()+2*3600000).toISOString()};
  if(state.health!=='topics_exhausted'){state.health=accepted?'stock_ready':'review_rejected';state.message=accepted?`${accepted} pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.`:'Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.';}
+ if(accepted&&process.env.AUTHORIAL_PREVIEW_ONLY==='true'){state.health='preview_ready';state.message='Prévia renderizada e revisada; não liberada para a agenda nem publicada.';}
  save();if(state.health==='review_rejected')process.exitCode=1;
 }catch(e){state.health=e.code==='DAILY_LIMIT'?'daily_limit':'blocked';state.message=String(e.message).replaceAll(key||'__absent__','[redacted]').slice(0,500);save();if(e.code!=='DAILY_LIMIT')process.exitCode=1;}
 console.log(JSON.stringify({health:state.health,message:state.message,ready:state.entries.filter(e=>reserveApproved(e,asset)).length,publicationTriggered:false}));
