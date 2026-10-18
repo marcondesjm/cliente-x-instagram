@@ -11196,56 +11196,41 @@
       "reason": "Recibo do render ausente."
     }
   ],
-  "checkedAt": "2026-10-18T21:55:37.921Z",
+  "checkedAt": "2026-10-18T21:55:58.129Z",
   "workflowRun": "39169879037",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "art-direction:extracao-campos-v6",
-    "callId": "d281f75b-ac02-4583-9b3d-68acb181706d",
+    "stage": "generate:pedido-duplicado-v6",
+    "callId": "6982f024-6cc7-467d-840f-c653d7e3c007",
     "value": {
-      "palette": "copper",
-      "frames": [
+      "slides": [
         {
-          "layout": "workspace",
-          "labels": [
-            "Mensagem vaga",
-            "Campos vazios",
-            "Dados ausentes"
-          ]
+          "eyebrow": "Pedido duplicado",
+          "title": "O mesmo pedido gera duas tarefas?",
+          "body": "A equipe administrativa recebe mensagens internas com solicitações de atendimento ao cliente."
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Produto",
-            "Quantidade",
-            "Prazo"
-          ]
+          "eyebrow": "Identificador único",
+          "title": "Como evitar tarefas repetidas no atendimento?",
+          "body": "Atribua um identificador ao pedido antes de consultar se ele já foi registrado anteriormente."
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Extrair dados",
-            "Comparar original",
-            "Registrar pedido"
-          ]
+          "eyebrow": "Conferência interna",
+          "title": "Vai transferir? Leve as pendências",
+          "body": "Se o identificador já existir, encaminhe para conferência em vez de criar outra tarefa nova."
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Campo presente?",
-            "Valor correto?",
-            "Marcar ausente"
-          ]
-        },
-        {
-          "layout": "decision",
-          "labels": [
-            "Dado faltante",
-            "Não completar",
-            "Solicitar info"
-          ]
+          "eyebrow": "Teste prático",
+          "title": "O que três reclamações ensinam sobre seu atendimento?",
+          "body": "Reenvie o mesmo pedido fictício e verifique se o sistema registrou apenas uma ocorrência."
         }
-      ]
+      ],
+      "caption": "Uma equipe administrativa fictícia recebe pedidos por mensagens internas. Como evitar que o mesmo pedido gere tarefas duplicadas? Atribua um identificador único, consulte o registro antes de criar a tarefa e encaminhe para conferência caso já exista. Teste reenviando o mesmo pedido e verifique o resultado.\n\nEssa prática depende da implementação e dos testes realizados. Quer aprender aplicações práticas de IA em empresas? Acompanhe o perfil para receber exercícios como este que você pode salvar ou enviar a um colega.",
+      "storySlide": {
+        "eyebrow": "Rotina operacional",
+        "title": "Pedidos duplicados sobrecarregam a operação",
+        "body": "Sua equipe cria tarefas repetidas para o mesmo pedido sem perceber a duplicação?"
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
