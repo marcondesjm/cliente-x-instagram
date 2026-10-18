@@ -75,7 +75,7 @@ try{
   try{
    let draft=generated?.value,pack=repair?entry.pack:null;
    if(!repair) {
-    try{pack=buildAuthorialPack(draft,topic,{growth});}
+    try{pack=buildAuthorialPack(draft,topic,{growth});validatePack(pack);}
     catch(validationError){
      callAllowance(budget,new Date(),2);
      const revised=await request("revise-draft:"+topic.id,"Corrija o rascunho mantendo o tema, o procedimento e a conclusão. Erro local: "+validationError.message+". A legenda anterior tem "+String(draft?.caption?.length||0)+" caracteres. Reescreva em dois parágrafos curtos, com cerca de quatrocentos caracteres no total e no máximo seiscentos. Reduza a extensão de verdade; não devolva o texto anterior. O desenvolvimento completo permanece nos cartões. Cada eyebrow entre três e trinta e dois caracteres; título entre doze e setenta e dois; corpo entre trinta e cinco e cento e oitenta. Na capa, apresente uma situação explicitamente hipotética, sem relatar um caso real ou resultado ocorrido. Não use algarismos, porcentagens, links, nem as palavras garantido, garantidos, comprovado ou comprovados, mesmo em ressalvas negativas. Remova essas ressalvas sem transformar o conteúdo em promessa. Preserve a pergunta e o convite natural para acompanhar o perfil. Não acrescente fatos externos. Dados: "+JSON.stringify({brief:topic.brief,draft}),draftSchema());
