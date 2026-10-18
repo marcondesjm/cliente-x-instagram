@@ -2783,41 +2783,56 @@
       "createdAt": "2026-10-18T18:54:12.702Z"
     }
   ],
-  "checkedAt": "2026-10-18T18:54:14.048Z",
+  "checkedAt": "2026-10-18T18:54:23.404Z",
   "workflowRun": "39155841344",
   "message": "2 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "generate:pedido-duplicado-v2",
-    "callId": "ead094af-a344-4ec5-8038-a8ca09752fc2",
+    "stage": "art-direction:pedido-duplicado-v2",
+    "callId": "8d9d731f-7750-451b-b97d-19d7550b2862",
     "value": {
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "eyebrow": "Pedido duplicado",
-          "title": "O mesmo orçamento chega duas vezes na equipe",
-          "body": "Um cliente envia o mesmo pedido de orçamento por e-mail e depois pelo formulário do site da empresa."
+          "layout": "workspace",
+          "labels": [
+            "E-mail recebido",
+            "Formulário web",
+            "Mesa de trabalho"
+          ]
         },
         {
-          "eyebrow": "Identificador único",
-          "title": "Atribua um código ao pedido antes de criar a tarefa",
-          "body": "Gere um identificador próprio para cada solicitação recebida e registre esse código no sistema interno da operação."
+          "layout": "conversation",
+          "labels": [
+            "Código gerado",
+            "Registro interno",
+            "Identificador único"
+          ]
         },
         {
-          "eyebrow": "Consulta prévia",
-          "title": "Verifique se o identificador já existe antes de prosseguir",
-          "body": "Consulte o registro existente com esse código e encaminhe para conferência caso ele já tenha sido criado anteriormente."
+          "layout": "workflow",
+          "labels": [
+            "Consulta prévia",
+            "Já existe?",
+            "Encaminhar"
+          ]
         },
         {
-          "eyebrow": "Teste prático",
-          "title": "Reenvie o mesmo pedido fictício e observe o comportamento",
-          "body": "Simule o reenvio da mesma solicitação e confirme se o sistema direcionou para conferência em vez de criar nova tarefa."
+          "layout": "checklist",
+          "labels": [
+            "Reenviar pedido",
+            "Verificar rota",
+            "Conferência ativa"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Canais múltiplos",
+            "Pedidos repetidos",
+            "Sua rotina"
+          ]
         }
-      ],
-      "caption": "Imagine que sua prestadora de serviços recebe pedidos de orçamento por múltiplos canais. Como evitar que a mesma solicitação vire tarefas repetidas para a equipe?\n\nEste exercício propõe atribuir um identificador único a cada pedido, consultar se ele já foi registrado antes de criar uma nova tarefa e encaminhar para conferência quando houver duplicidade. A regra depende da implementação técnica e dos testes realizados, sem prometer que a IA sozinha resolva o problema.\n\nQue tipo de duplicidade mais sobrecarrega sua operação hoje? Siga o perfil para aprender aplicações práticas de IA em empresas.",
-      "storySlide": {
-        "eyebrow": "Sua rotina",
-        "title": "Quantos pedidos duplicados sua equipe atende por semana?",
-        "body": "Pense nos canais que sua empresa usa e como as solicitações chegam repetidas. Veja no feed um exercício para organizar essa situação com identificador único e consulta prévia."
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
