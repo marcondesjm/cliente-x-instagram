@@ -191,11 +191,17 @@
     {
       "id": "f345f1e9-b6a5-4822-a5e7-37577c1f15dc",
       "day": "2026-10-18",
-      "status": "reserved",
+      "status": "completed",
       "stage": "sonnet-forced-holdout:holdout-1",
       "startedAt": "2026-10-18T13:08:03.892Z",
       "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817",
-      "imageBytes": 66332
+      "imageBytes": 66332,
+      "completedAt": "2026-10-18T13:08:18.549Z",
+      "reportedInputTokens": 23930,
+      "inputTokens": 23930,
+      "outputTokens": 171,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -445,12 +451,33 @@
       "checkedAt": "2026-10-17T22:45:33.903Z",
       "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/05_FB_Zacchaeus_1024.jpg?1724237549",
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
+    },
+    {
+      "id": "sonnet-forced-holdout:holdout-1",
+      "mode": "sonnet-forced-holdout",
+      "fixture": "holdout-1",
+      "model": "claude-sonnet-4.6",
+      "passed": true,
+      "value": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration",
+        "description": "Ilustração colorida mostrando um grupo de seis homens com vestimentas e turbantes típicos do Oriente Médio antigo. No centro, um homem de túnica vermelha sorri e levanta a mão direita em gesto de saudação ou fala. À esquerda, dois homens sorridentes usam túnicas vermelhas e azuis com faixas listradas. À direita, três homens observam; um deles usa um turbante colorido (vermelho, amarelo e azul) e aponta o dedo indicador para cima enquanto fala. O fundo é neutro, com tons de bege e amarelo claro, sugerindo um ambiente externo ou interior simples. Não há árvores nem livros abertos visíveis na cena."
+      },
+      "expected": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration"
+      },
+      "checkedAt": "2026-10-18T13:08:18.549Z",
+      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/08_FB_Zacchaeus_1024.jpg?1724237549",
+      "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817"
     }
   ],
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:08:03.892Z",
+  "checkedAt": "2026-10-18T13:08:18.549Z",
   "workflowRun": "39130135749",
   "summary": [
     {
