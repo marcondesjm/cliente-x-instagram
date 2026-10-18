@@ -6496,41 +6496,56 @@
       "createdAt": "2026-10-18T19:57:29.573Z"
     }
   ],
-  "checkedAt": "2026-10-18T19:57:31.039Z",
+  "checkedAt": "2026-10-18T19:57:42.342Z",
   "workflowRun": "39160892213",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "generate:pedido-duplicado-v4",
-    "callId": "26024363-301c-43d6-810e-db2f4a3ece21",
+    "stage": "art-direction:pedido-duplicado-v4",
+    "callId": "4a5c6346-b399-4ad0-a3e1-3dacd712eb1e",
     "value": {
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "eyebrow": "Pedido duplicado",
-          "title": "O mesmo pedido gera duas tarefas?",
-          "body": "Uma escola recebe a mesma dúvida sobre horário por e-mail e WhatsApp simultaneamente."
+          "layout": "workspace",
+          "labels": [
+            "e-mail aberto",
+            "WhatsApp ativo",
+            "identificador"
+          ]
         },
         {
-          "eyebrow": "Procedimento",
-          "title": "Atribua um identificador único ao pedido recebido",
-          "body": "Registre o identificador antes de criar qualquer tarefa nova para evitar duplicações operacionais."
+          "layout": "conversation",
+          "labels": [
+            "aluno pergunta",
+            "horário curso",
+            "resposta enviada"
+          ]
         },
         {
-          "eyebrow": "Conferência",
-          "title": "Consulte se o identificador já existe no sistema",
-          "body": "Se o registro existir, encaminhe para conferência em vez de criar uma nova tarefa operacional."
+          "layout": "workflow",
+          "labels": [
+            "recebe pedido",
+            "cria identificador",
+            "registra sistema"
+          ]
         },
         {
-          "eyebrow": "Exercício",
-          "title": "Reenvie o mesmo pedido e verifique o registro existente",
-          "body": "Teste reenviando o pedido fictício e confirme que o sistema reconhece o identificador previamente registrado."
+          "layout": "checklist",
+          "labels": [
+            "consulta registro",
+            "existe duplicado",
+            "encaminha conferência"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "reenvia pedido",
+            "verifica registro",
+            "confere existente"
+          ]
         }
-      ],
-      "caption": "Como sua equipe lida com pedidos que chegam por múltiplos canais?\n\nEste exercício mostra como atribuir identificadores únicos evita tarefas duplicadas na operação. Teste com um cenário fictício da sua rotina e observe o comportamento do sistema. Siga o perfil para aprender aplicações práticas de IA em empresas.",
-      "storySlide": {
-        "eyebrow": "Rotina",
-        "title": "Pedidos iguais chegam por canais diferentes?",
-        "body": "Veja no feed como identificar e conferir registros para evitar tarefas duplicadas na operação diária."
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
