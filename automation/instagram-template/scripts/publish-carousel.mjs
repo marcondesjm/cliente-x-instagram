@@ -10,7 +10,8 @@ import { lookup } from 'node:dns/promises';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { isIP } from 'node:net';
 import { basename, dirname, extname, isAbsolute, join, relative, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { ensureBusinessHashtags } from '../../../lib/business-hashtags.js';
 import { spawnSync } from 'node:child_process';
 import { buildBrandContext } from '../../../lib/brand-analysis.js';
 import { buildResearchPack, decodeEditorialEntities, filterValidEditorialPacks, EDITORIAL_SOURCES, extractArticleFacts, extractEditorialImageUrl, factualSummary, isPredominantlyEnglish, isUsableEditorialFact, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
@@ -1943,7 +1944,7 @@ function accountAvatarCssImage(account = {}, index = 1, visualCue = '', context 
     console.warn(`Avatar configurado nao encontrado: ${account.avatarPath}`);
     return '';
   }
-  return cssUrl(`file:///${source.replace(/\\/g, '/')}`);
+  return cssUrl(pathToFileURL(source).href);
 }
 
 function accountUsernameDisplay(account = {}) {
@@ -1954,7 +1955,7 @@ function accountUsernameDisplay(account = {}) {
 function localAssetCssImage(path = '') {
   const source = resolve(ROOT, String(path || '').replace(/^\/+/, ''));
   if (!existsSync(source)) return '';
-  return cssUrl(`file:///${source.replace(/\\/g, '/')}`);
+  return cssUrl(pathToFileURL(source).href);
 }
 
 function fileCssImage(path = '') {
@@ -1962,7 +1963,7 @@ function fileCssImage(path = '') {
   if (!value) return '';
   const source = isAbsolute(value) ? value : resolve(ROOT, value.replace(/^\/+/, ''));
   if (!existsSync(source)) return '';
-  return cssUrl(`file:///${source.replace(/\\/g, '/')}`);
+  return cssUrl(pathToFileURL(source).href);
 }
 
 function normalizedEditorialImageUrl(value = '') {
@@ -4034,22 +4035,22 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     .impact-carousel h1 { color: ${slideStyle.text}; }
     .impact-carousel p { color: ${slideStyle.muted}; }
     .impact-carousel .feed-cta { background: ${accent}; color: #fff; }
-    .impact-carousel.has-story-photo .visual-card { display: block; left: 72px; right: 72px; top: 980px; height: 720px; border-radius: 30px; background-position: center; box-shadow: 0 28px 72px rgba(0,0,0,.28); }
+    .has-story-photo .visual-card { display: block; left: 72px; right: 72px; top: 980px; height: 720px; border-radius: 30px; background-position: center; box-shadow: 0 28px 72px rgba(0,0,0,.28); }
     .impact-carousel.has-research-photo .visual-card {
       background-color: #080d12;
       background-size: 100% 100%, contain;
       background-repeat: no-repeat;
     }
-    .impact-carousel.has-story-photo .avatar, .impact-carousel.has-story-photo .panel, .impact-carousel.has-story-photo .note { display: none; }
+    .has-story-photo .avatar, .has-story-photo .panel, .has-story-photo .note { display: none; }
     /* The handle already identifies the account at the top. Repeating the
        personal name over the lower photograph looks like an accidental
        watermark and competes with the editorial image. */
-    .impact-carousel footer { display: none; }
-    .impact-carousel.has-story-photo.mode-statement .badge { margin-top: 62px; text-align: left; }
-    .impact-carousel.has-story-photo.mode-statement h1 { margin: 52px 0 0; max-width: 900px; font-size: 68px; text-align: left; }
-    .impact-carousel.has-story-photo.mode-statement h1::before { width: 84px; height: 9px; margin: 0 0 34px; }
-    .impact-carousel.has-story-photo.mode-statement p { margin: 28px 0 0; max-width: 850px; font-size: 31px; text-align: left; }
-    .impact-carousel.has-story-photo.mode-statement .feed-cta { margin-top: 22px; max-width: 560px; padding: 16px 22px; font-size: 27px; }
+    .impact-carousel footer, .has-story-photo footer { display: none; }
+    .has-story-photo.mode-statement .badge { margin-top: 62px; text-align: left; }
+    .has-story-photo.mode-statement h1 { margin: 52px 0 0; max-width: 900px; font-size: 68px; text-align: left; }
+    .has-story-photo.mode-statement h1::before { width: 84px; height: 9px; margin: 0 0 34px; }
+    .has-story-photo.mode-statement p { margin: 28px 0 0; max-width: 850px; font-size: 31px; text-align: left; }
+    .has-story-photo.mode-statement .feed-cta { margin-top: 22px; max-width: 560px; padding: 16px 22px; font-size: 27px; }
     main.bible-illustration .brand {position:absolute;left:72px;top:260px;margin:0;font-size:30px;}
     main.bible-illustration .badge {position:absolute;left:72px;top:320px;margin:0;text-align:left;}
     main.authorial-illustration .visual-card {background-size:contain !important;background-color:#101b31;}
@@ -6072,7 +6073,7 @@ async function main() {
   assertBibleVisualStandard(pack, account, path => existsSync(resolve(ROOT, path)));
   const enhancement = preparePackForPublication(pack, today, generationSlotIndex, account, publishMode, { allowIhc: methodAllowed });
   pack = enhancement.pack;
-  pack.caption = fitInstagramCaption(pack.caption, pack);
+  pack.caption = fitInstagramCaption(account.account === 'cliente-x' ? ensureBusinessHashtags(pack.caption, pack.authorialTopic || pack.id) : pack.caption, pack);
   assertCarouselPublishingLimit(pack, publishMode, args);
   const historyPack = JSON.parse(JSON.stringify(pack));
   // A mesma janela de publicação pode gerar várias pautas. A fonte e o tema
@@ -6391,7 +6392,7 @@ export function assertCarouselPublishingLimit(pack, publishMode, args = {}) {
   }
 }
 
-export { validatePack, preparePackForPublication, renderSlides, loadConfig, splitCreativeDescription, recordPublicationHistory };
+export { validatePack, preparePackForPublication, renderSlides, loadConfig, splitCreativeDescription, recordPublicationHistory, storyHtml, renderStory };
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main().catch((error) => {
   const args = parseArgs(process.argv);
