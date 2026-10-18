@@ -1716,7 +1716,7 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T12:59:04.336Z",
+  "checkedAt": "2026-10-18T12:59:05.837Z",
   "lastRun": "39129415731",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -1838,53 +1838,53 @@
   },
   "lastEvaluation": {
     "version": "kids-scene-review-v3-blind",
-    "matchingVersion": "card-options-identity-v3",
+    "matchingVersion": "card-options-family-context-v4",
     "packId": "kids-biblia-27",
     "decision": "reject",
     "cards": [
       {
         "scene": 1,
-        "observationId": "b0f0500ff2339ced",
-        "observedEvent": "Pessoas em um barco inclinado em águas agitadas sob céu nublado",
-        "passageMatch": true,
-        "childSuitable": true,
-        "distinct": true,
-        "copyMatch": true,
-        "verse": "4:37",
-        "reason": "Capa retrata barco inclinado em águas agitadas sob céu nublado, compatível com Marcos 4:37 (tempestade violenta). Título e corpo indicam o evento corretamente."
-      },
-      {
-        "scene": 2,
-        "observationId": "8e150ed2cdf55de4",
-        "observedEvent": "Pessoas em uma embarcação inclinada por ondas agitadas, com uma pessoa se agarrando à lateral do barco e outras permanecendo a bordo",
-        "passageMatch": true,
-        "childSuitable": true,
-        "distinct": true,
-        "copyMatch": true,
-        "verse": "4:37",
-        "reason": "Barco inclinado por ondas, pessoas se agarrando — corresponde ao barco sendo inundado pelas ondas em Marcos 4:37. Compatível com o resumo narrativo."
-      },
-      {
-        "scene": 3,
         "observationId": "36ce414d3821afc1",
         "observedEvent": "Uma figura central de braços erguidos em uma embarcação balançada por ondas agitadas, acompanhada por outras pessoas a bordo",
         "passageMatch": true,
         "childSuitable": true,
         "distinct": true,
-        "copyMatch": true,
+        "copyMatch": false,
         "verse": "4:39",
-        "reason": "Figura central de braços erguidos em barco balançado representa Jesus repreendendo o vento e o mar (Marcos 4:39). Cena pertinente à lição sobre o poder de Jesus."
+        "reason": "A capa exige retratar o evento do título 'Jesus e os discípulos na tempestade'. A observação mostra Jesus de braços erguidos em barco balançado, compatível com Marcos 4:39 (repreensão ao vento). Porém copyMatch=false porque o sourceContext descreve Jesus dando ordens ('Quiet! Be still!'), mas a observação não permite confirmar se há gesto de repreensão ou apenas braços erguidos; ambiguidade entre ação de acalmar versus simples postura. Além disso, o título sugere presença dos discípulos como foco, mas a observação menciona 'outras pessoas' sem especificar discípulos claramente."
       },
       {
-        "scene": 4,
-        "observationId": "db49c0a40d7f9418",
-        "observedEvent": "Um grupo de pessoas navega em um barco a vela sobre águas agitadas, com aves voando ao redor.",
+        "scene": 2,
+        "observationId": "f123e875a5e0eaa7",
+        "observedEvent": "Um homem de túnica vermelha estende o braço e toca o ombro de outro homem sentado em um barco com velas amarelas, cercado por outros homens.",
         "passageMatch": false,
         "childSuitable": true,
         "distinct": true,
         "copyMatch": false,
         "verse": "",
-        "reason": "Observação descreve barco a vela sobre águas agitadas, mas sourceContext refere-se ao momento calmo quando partiram e Jesus dormia (Marcos 4:35-38). Há contradição entre observação (águas agitadas) e contexto editorial (tempo calmo na partida). Além disso, não há barcos a vela mencionados na passagem; os discípulos eram pescadores com barcos típicos da Galileia."
+        "reason": "O cartão é narrative e deve retratar um evento do resumo da tempestade. A observação mostra homem de túnica vermelha tocando ombro de outro em barco com velas amarelas. O sourceContext refere-se ao momento após a calma ('Why were you so afraid?'), mas a observação não mostra cena de acalmar vento/mar nem diálogo pós-tempestade claramente. Tocar ombro não corresponde a nenhum evento específico de Marcos 4:35-41 (sono, despertar, repreensão, questionamento sobre fé). Evento ambíguo e incompatível com a passagem."
+      },
+      {
+        "scene": 3,
+        "observationId": "710fa5ba86eb086b",
+        "observedEvent": "Grupo de homens barbados com turbantes conversando juntos ao ar livre próximo a um corpo d'água",
+        "passageMatch": false,
+        "childSuitable": true,
+        "distinct": true,
+        "copyMatch": false,
+        "verse": "",
+        "reason": "Cartão de lição exige cena sustentada pela passagem. A observação mostra grupo de homens barbados conversando ao ar livre próximo a água. O sourceContext refere-se aos discípulos perguntando 'Quem é este?', mas a observação não mostra cena no barco durante/após tempestade, nem composição que identifique claramente os discípulos reagindo ao milagre. Homens conversando à beira d'água é genérico e não sustenta concretamente o evento de Marcos 4:41. Fora da passagem específica."
+      },
+      {
+        "scene": 4,
+        "observationId": "db49c0a40d7f9418",
+        "observedEvent": "Um grupo de pessoas navega em um barco a vela sobre águas agitadas, com aves voando ao redor.",
+        "passageMatch": true,
+        "childSuitable": true,
+        "distinct": false,
+        "copyMatch": true,
+        "verse": "4:37",
+        "reason": "Family_activity pode usar cena pertinente sem encenar atividade familiar. Observação mostra grupo navegando em barco sobre águas agitadas, compatível com Marcos 4:37 (tempestade). CopyMatch=true pois semanticamente relacionado. Porém distinct=false: esta composição (barco em águas agitadas com pessoas) é similar à posição 1 (embarcação balançada por ondas) e posição 6 (embarcação inclinada por ondas). Todas compartilham barco+ondas agitadas+grupo de pessoas sem diferenciar claramente a ação concreta. Posição 1 tem figura central de braços erguidos, posição 4 tem aves voando, posição 6 tem pess"
       },
       {
         "scene": 5,
@@ -1895,18 +1895,18 @@
         "distinct": true,
         "copyMatch": true,
         "verse": "4:35",
-        "reason": "Homem gesticulando à beira d'água com barcos ao fundo corresponde a Jesus dizendo 'Vamos para o outro lado' (Marcos 4:35). Cena pertinente ao cartão de leitura que pede ler a passagem."
+        "reason": "Reading card pode usar cena pertinente. Observação mostra homem gesticulando à beira d'água com barcos ao fundo. SourceContext refere-se a Jesus dizendo 'Vamos para o outro lado' (Marcos 4:35). Cena compatível: Jesus falando antes de embarcar. Distinct=true pois composição diferente (terra firme, não dentro do barco). PassageMatch=true, copyMatch=true."
       },
       {
         "scene": 6,
-        "observationId": "b267a6846f705117",
-        "observedEvent": "Dois homens ajudam um terceiro homem deitado em uma cama ou leito",
-        "passageMatch": false,
+        "observationId": "8e150ed2cdf55de4",
+        "observedEvent": "Pessoas em uma embarcação inclinada por ondas agitadas, com uma pessoa se agarrando à lateral do barco e outras permanecendo a bordo",
+        "passageMatch": true,
         "childSuitable": true,
-        "distinct": true,
-        "copyMatch": false,
-        "verse": "",
-        "reason": "Observação descreve dois homens ajudando um terceiro deitado em cama ou leito, o que é incompatível com Marcos 4:35-41. Na passagem, Jesus está no barco, dormindo numa almofada na popa, e os discípulos o acordam — não há cena de homem deitado em cama sendo ajudado. Esta observação parece referir-se a outra passagem (possivelmente cura de paralítico ou enfermo), não à tempestade acalmada."
+        "distinct": false,
+        "copyMatch": true,
+        "verse": "4:37",
+        "reason": "Story é última posição, exige cena da mesma passagem diferente dos demais. Observação mostra pessoas em embarcação inclinada por ondas, com pessoa agarrando lateral. Compatível com Marcos 4:37 (barco sendo enchido). CopyMatch=true. Porém distinct=false pela mesma razão da posição 4: composição visual muito similar às posições 1 e 4 (todas mostram barco em águas agitadas com múltiplas pessoas). Embora a ação específica difira (agarrar lateral vs braços erguidos vs aves), o cenário dominante é idêntico, violando requisito de composições diferentes."
       }
     ]
   },
