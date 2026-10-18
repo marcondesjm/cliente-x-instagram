@@ -4014,10 +4014,136 @@
         "docs/illustrations/cliente-x/authorial-ece324b791776244/slide-3.png": "edb863e7bee8882d1b95c6bcd2f125b7b4f61e511e990d52ab647cf2117fcbc8",
         "docs/illustrations/cliente-x/authorial-ece324b791776244/slide-4.png": "d28dec6eb9f785fc472cf9f2a154afd5ea2680e4851e1abcc12311b3dae99c7c",
         "docs/illustrations/cliente-x/authorial-ece324b791776244/story.png": "2d6c589d5efa6ee8b94308a61848ece18a93d258d88ba02e8c5e69c21fcaeb83"
+      },
+      "reviewCandidate": {
+        "claims": [
+          {
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ],
+            "reason": "O slide descreve um pedido incompleto e questiona se a IA completa dados, com o exemplo de um cliente que não informa quantidade nem prazo, conforme o briefing.",
+            "id": "slide-1",
+            "supported": true
+          },
+          {
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ],
+            "supported": true,
+            "id": "slide-2",
+            "reason": "O slide orienta a definir campos antes da extração e solicitar uma tabela com colunas de produto, quantidade e prazo, alinhado ao briefing."
+          },
+          {
+            "reason": "O slide instrui a marcar ausentes sem supor valores e comparar campos com a mensagem original, conforme o briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ],
+            "supported": true,
+            "id": "slide-3"
+          },
+          {
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ],
+            "reason": "O slide propõe um exercício prático de criar um pedido fictício e revisar a tabela gerada, conforme o briefing.",
+            "id": "slide-4"
+          },
+          {
+            "id": "caption",
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ],
+            "reason": "A legenda resume o objetivo do exercício de estruturar a extração de dados e conferir itens, conforme o briefing."
+          },
+          {
+            "reason": "O story convida a descobrir como validar tabelas geradas por IA, alinhado ao briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ],
+            "id": "story",
+            "supported": true
+          },
+          {
+            "reason": "Os rótulos da ilustração fictícia refletem o cenário proposto no briefing.",
+            "supported": true,
+            "id": "art-1",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "supported": true,
+            "reason": "Os rótulos da ilustração fictícia refletem o cenário proposto no briefing.",
+            "id": "art-2",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ],
+            "id": "art-3",
+            "supported": true,
+            "reason": "Os rótulos da ilustração fictícia refletem o cenário proposto no briefing."
+          },
+          {
+            "reason": "Os rótulos da ilustração fictícia refletem o cenário proposto no briefing.",
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ],
+            "id": "art-4"
+          },
+          {
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ],
+            "reason": "Os rótulos da ilustração fictícia refletem o cenário proposto no briefing.",
+            "supported": true,
+            "id": "art-5"
+          }
+        ],
+        "decision": "approve",
+        "supported": true,
+        "novel": true,
+        "practical": true,
+        "visualMatch": true,
+        "reason": "O conteúdo apresenta um exercício educativo fictício coerente com o briefing, estruturado de forma clara e prática para o público-alvo, sem promessas de resultados ou dados reais.",
+        "growth": {
+          "hookSpecific": true,
+          "followReason": true,
+          "shareReason": true,
+          "payoffDelivered": true
+        }
       }
     }
   ],
-  "checkedAt": "2026-10-18T19:37:01.055Z",
+  "checkedAt": "2026-10-18T19:37:02.613Z",
   "workflowRun": "39159132037",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
