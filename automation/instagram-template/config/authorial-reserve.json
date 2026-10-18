@@ -1485,56 +1485,140 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T18:33:01.303Z",
+  "checkedAt": "2026-10-18T18:34:56.877Z",
   "workflowRun": "39154544317",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "art-direction:fila-prioridade-v1",
-    "callId": "cdab820f-b302-4d8e-8389-84125574b111",
+    "stage": "review:fila-prioridade-v1",
+    "callId": "7ca53bbe-a2c8-4d05-829a-b1fa32e144ac",
     "value": {
-      "palette": "copper",
-      "frames": [
+      "claims": [
         {
-          "layout": "workspace",
-          "labels": [
-            "Prazo definido",
-            "Tipo de pedido",
-            "Fila organizada"
+          "id": "slide-1",
+          "supported": true,
+          "reason": "A claim descreve o cenário fictício de loja e a necessidade de critérios para priorizar mensagens, alinhando-se ao briefing que propõe definir critérios explícitos.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Critérios claros",
-            "Sugestão da IA",
-            "Justificativa visível"
+          "id": "slide-2",
+          "supported": true,
+          "reason": "A claim instrui a definição de critérios antes da sugestão da IA, conforme explicitado no briefing sobre pedir classificação justificada e comparar com regras.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Mensagem ambígua",
-            "Revisão manual",
-            "Fila ajustada"
+          "id": "slide-3",
+          "supported": true,
+          "reason": "A claim orienta a revisão manual de casos ambíguos, atendendo à instrução do briefing de revisar casos antes de mudar a fila.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Três mensagens",
-            "Classificação feita",
-            "Decisão conferida"
+          "id": "slide-4",
+          "supported": true,
+          "reason": "A claim propõe um exercício prático com três mensagens fictícias, seguindo a orientação do briefing de desenvolver uma situação específica não coberta no histórico.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "decision",
-          "labels": [
-            "Critério aplicado",
-            "Urgência real",
-            "Ordem definida"
+          "id": "caption",
+          "supported": true,
+          "reason": "O caption resume o exercício educativo autoral e fictício, em total conformidade com as fontes 'brief' e 'label'.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            },
+            {
+              "sourceId": "label"
+            }
+          ]
+        },
+        {
+          "id": "story",
+          "supported": true,
+          "reason": "A story introduz o exercício como método estruturado para organizar a fila, refletindo o conteúdo educativo proposto nas fontes.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-1",
+          "supported": true,
+          "reason": "Os rótulos da ilustração (Prazo definido, Tipo de pedido, Fila organizada) são consistentes com os critérios de prioridade mencionados no briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-2",
+          "supported": true,
+          "reason": "Os rótulos (Critérios claros, Sugestão da IA, Justificativa visível) refletem o procedimento de comparação sugerido no briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-3",
+          "supported": true,
+          "reason": "Os rótulos (Mensagem ambígua, Revisão manual, Fila ajustada) correspondem à etapa de conferência de casos ambíguos descrita no briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-4",
+          "supported": true,
+          "reason": "Os rótulos (Três mensagens, Classificação feita, Decisão conferida) alinham-se à proposta de exercício com três mensagens fictícias do briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-5",
+          "supported": true,
+          "reason": "Os rótulos (Critério aplicado, Urgência real, Ordem definida) sintetizam o resultado esperado do exercício de priorização descrito nas fontes.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         }
-      ]
+      ],
+      "decision": "approve",
+      "supported": true,
+      "novel": true,
+      "practical": true,
+      "visualMatch": true,
+      "reason": "O conteúdo é um exercício educativo fictício bem estruturado, com critérios claros, procedimento passo a passo e aplicação prática. As alegações são totalmente sustentadas pelo briefing e pela label de conteúdo autoral. O material é novel em relação ao histórico fornecido, pois foca em metodologia de priorização de atendimento, diferindo dos títulos anteriores. Os critérios de crescimento foram atendidos: a situação é reconhecível (loja/pedidos), o payoff é entregue (método completo), há motivo para seguir (aplicações práticas) e utilidade para compartilhar (exercício adaptável).",
+      "growth": {
+        "followReason": true,
+        "hookSpecific": true,
+        "payoffDelivered": true,
+        "shareReason": true
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
