@@ -65,41 +65,95 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T15:40:37.392Z",
+  "checkedAt": "2026-10-18T15:41:02.977Z",
   "workflowRun": "39141428041",
   "message": "Resposta estruturada ou recibo da API inválido.",
   "lastResponse": {
-    "stage": "generate:extracao-campos",
-    "callId": "458a998d-6f31-4332-abaf-b0e5bcf29bfc",
+    "stage": "review:extracao-campos",
+    "callId": "901b874b-68cb-4273-829f-bf9749ba342b",
     "value": {
-      "slides": [
+      "claims": [
         {
-          "eyebrow": "Pedido incompleto",
-          "title": "A IA preenche o que falta?",
-          "body": "Uma mensagem de cliente chega sem prazo de entrega. A IA completa com uma data padrão e cadastra o pedido automaticamente."
+          "id": "slide-1",
+          "supported": true,
+          "reason": "O slide 1 apresenta o cenário de 'Pedido incompleto' onde a IA preenche automaticamente um prazo padrão quando falta informação, servindo como contraponto negativo ao método ensinado. O texto visível na imagem confirma exatamente essa dinâmica: 'A IA completa com uma data padrão e cadastra o pedido automaticamente'.",
+          "evidence": [
+            {
+              "sourceId": "brief",
+              "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição"
+            }
+          ]
         },
         {
-          "eyebrow": "Procedimento seguro",
-          "title": "Três campos obrigatórios",
-          "body": "Defina produto, quantidade e prazo como campos essenciais. Peça à IA uma tabela que preserve exatamente as informações recebidas na mensagem original."
+          "id": "slide-2",
+          "supported": true,
+          "reason": "O slide 2 define os três campos obrigatórios (produto, quantidade e prazo) e instrui a solicitar à IA uma tabela fiel à mensagem original, conforme descrito no briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief",
+              "quote": "definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve exatamente as informações recebidas na mensagem original"
+            }
+          ]
         },
         {
-          "eyebrow": "Conferência rigorosa",
-          "title": "Marcar ausente, não supor",
-          "body": "Qualquer campo faltante deve ser marcado como não informado. Compare cada dado da tabela gerada com a mensagem original antes de registrar o pedido no sistema."
+          "id": "slide-3",
+          "supported": true,
+          "reason": "O slide 3 estabelece a regra de conferência rigorosa: marcar como 'não informado' qualquer campo faltante e comparar dados da tabela com a mensagem original antes do cadastro, alinhado ao briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief",
+              "quote": "marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada dado da tabela gerada com a mensagem original antes de registrar o pedido no sistema"
+            }
+          ]
         },
         {
-          "eyebrow": "Exercício prático",
-          "title": "Teste com dados fictícios",
-          "body": "Crie três pedidos fictícios: um completo, outro sem quantidade e um terceiro sem prazo. Execute o fluxo de conferência e registre apenas os válidos."
+          "id": "slide-4",
+          "supported": true,
+          "reason": "O slide 4 propõe o exercício prático com três pedidos fictícios variando campos ausentes (completo, sem quantidade, sem prazo), executando o fluxo de conferência e registrando apenas válidos, conforme o escopo do briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief",
+              "quote": "Proposta de exercício educativo com pedidos fictícios... Não usar dados reais de clientes no exercício."
+            },
+            {
+              "sourceId": "label",
+              "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            }
+          ]
+        },
+        {
+          "id": "caption",
+          "supported": true,
+          "reason": "A legenda sintetiza corretamente o método educativo apresentado nos slides: definição de campos, fidelidade aos dados originais, marcação de ausências e conferência manual, além de reforçar a natureza fictícia do conteúdo.",
+          "evidence": [
+            {
+              "sourceId": "brief",
+              "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente"
+            },
+            {
+              "sourceId": "label",
+              "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            }
+          ]
+        },
+        {
+          "id": "story",
+          "supported": true,
+          "reason": "O story de reflexão questiona se o processo atual permite que a IA complete automaticamente ou exige conferência humana, conectando-se diretamente ao problema ilustrado no slide 1 e à solução proposta nos demais slides.",
+          "evidence": [
+            {
+              "sourceId": "brief",
+              "quote": "marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada dado da tabela gerada com a mensagem original antes de registrar o pedido no sistema"
+            }
+          ]
         }
       ],
-      "caption": "Este exercício demonstra como evitar erros operacionais ao usar IA para processar pedidos. O método consiste em definir campos obrigatórios claros, solicitar à IA uma estrutura que mantenha fidelidade aos dados originais e marcar como não informado qualquer informação ausente em vez de permitir suposições automáticas. A etapa crucial é a conferência manual: comparar cada campo da tabela gerada pela IA com a mensagem do cliente antes de efetivar o cadastro. Para praticar, crie pedidos fictícios variando quais campos estão presentes e aplique esse protocolo de validação. Qual campo costuma faltar com mais frequência nas mensagens que sua equipe recebe dos clientes?",
-      "storySlide": {
-        "eyebrow": "Reflexão",
-        "title": "Sua IA completa ou confere?",
-        "body": "Quando um campo essencial falta no pedido, seu processo atual permite que a IA complete automaticamente ou exige conferência humana antes do cadastro? Compartilhe no feed."
-      }
+      "decision": "approve",
+      "supported": true,
+      "novel": true,
+      "practical": true,
+      "visualMatch": true,
+      "reason": "Todos os cinco renders estão alinhados ao briefing de exercício educativo fictício sobre processamento de pedidos com IA. Os slides apresentam progressão lógica: problema (IA completando sozinha), definição de campos obrigatórios, protocolo de conferência rigorosa, exercício prático com dados fictícios e reflexão final. O conteúdo é autoral, não faz afirmações factuais sobre resultados reais, mantém coerência visual entre diagramas e textos, e oferece um exercício executável com começo, desenvolvimento e conclusão claros."
     },
     "structured": true,
     "stopReason": "tool_use",
