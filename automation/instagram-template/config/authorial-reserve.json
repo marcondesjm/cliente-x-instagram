@@ -5379,140 +5379,40 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T19:52:03.214Z",
+  "checkedAt": "2026-10-18T19:52:26.529Z",
   "workflowRun": "39160638249",
   "message": "2 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "review:fila-prioridade-v3",
-    "callId": "4653678a-a392-4785-ba34-4e814760a288",
+    "stage": "generate:teste-variacoes-v3",
+    "callId": "02512add-dc88-49c8-94eb-ce5382b252ed",
     "value": {
-      "claims": [
+      "slides": [
         {
-          "id": "slide-1",
-          "supported": true,
-          "reason": "A fonte brief descreve explicitamente o exercício educativo fictício com uma distribuidora que recebe consultas comerciais e solicitações internas simultaneamente todos os dias úteis, correspondendo ao texto do slide 1.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Rotina",
+          "title": "O que acontece quando o pedido chega incompleto?",
+          "body": "Um cliente envia mensagem abreviada pedindo cotação urgente sem informar quantidade ou prazo de entrega."
         },
         {
-          "id": "slide-2",
-          "supported": true,
-          "reason": "O briefing instrui a definição de critérios explícitos de prioridade, como prazo informado e tipo de solicitação, alinhando-se exatamente ao conteúdo do slide 2 sobre regras claras de prioridade.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Teste",
+          "title": "Como preparar a instrução para entradas variadas?",
+          "body": "Escreva uma instrução base e aplique em versões com erro, abreviação e dado ausente para comparar resultados."
         },
         {
-          "id": "slide-3",
-          "supported": true,
-          "reason": "A fonte brief orienta pedir à IA uma sugestão de classificação acompanhada da justificativa para comparar com critérios definidos, correspondendo integralmente ao passo de conferência apresentado no slide 3.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Conferência",
+          "title": "Onde estão as divergências entre as extrações?",
+          "body": "Compare os campos extraídos em cada versão e anote quais informações faltaram ou foram interpretadas diferente."
         },
         {
-          "id": "slide-4",
-          "supported": true,
-          "reason": "O briefing determina revisar casos ambíguos antes de mudar a fila de atendimento estabelecida pela operação atual, validando completamente o conteúdo do slide 4 sobre revisão manual.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "caption",
-          "supported": true,
-          "reason": "O caption resume fielmente as prescrições do briefing (critérios objetivos, justificativa da IA, comparação, revisão de ambiguidades) e inclui a disclaimer obrigatória de conteúdo educativo fictício conforme a fonte label.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            },
-            {
-              "sourceId": "label"
-            }
-          ]
-        },
-        {
-          "id": "story",
-          "supported": true,
-          "reason": "A pergunta da story reproduz o hook experimental exigido pelo briefing: abrir com uma questão específica sobre situação empresarial reconhecível (priorização quando tudo parece urgente), sem jargão vago.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-1",
-          "supported": true,
-          "reason": "Os rótulos da ilustração do slide 1 (prazo informado, tipo solicitação, fila atendimento) refletem visualmente os elementos descritos no briefing para o exemplo fictício da distribuidora.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-2",
-          "supported": true,
-          "reason": "Os rótulos da ilustração do slide 2 (critérios claros, consulta comercial, solicitação interna) correspondem aos tipos de solicitação e critérios mencionados na fonte brief.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-3",
-          "supported": true,
-          "reason": "Os rótulos da ilustração do slide 3 (sugestão IA, justificativa, comparação) representam corretamente o fluxo de conferência descrito no briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-4",
-          "supported": true,
-          "reason": "Os rótulos da ilustração do slide 4 (casos ambíguos, revisão manual, alteração fila) espelham com precisão a etapa final prescrita na fonte brief.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-5",
-          "supported": true,
-          "reason": "Os rótulos da ilustração da story (tudo urgente, prioridade equipe, atendimento diário) traduzem visualmente a situação empresarial apresentada no hook experimental do briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Ação",
+          "title": "Refine a instrução antes de usar na rotina real",
+          "body": "Corrija pontos fracos identificados no teste e repita o exercício até obter consistência nos campos desejados."
         }
       ],
-      "decision": "approve",
-      "supported": true,
-      "novel": true,
-      "practical": true,
-      "visualMatch": true,
-      "reason": "Todas as alegações estão sustentadas pelas fontes brief e label. O experimento editorial foi aplicado corretamente com hook específico sobre priorização em cenário empresarial reconhecível. Os quatro slides mais a story formam um exercício completo e executável com começo, desenvolvimento e conclusão. Nenhum dado externo, estatística ou caso real foi inserido. A disclaimer educativa está presente. Todos os critérios de crescimento são atendidos: hook específico, payoff entregue, convite natural para seguir e utilidade concreta para salvar/compartilhar.",
-      "experimentApplied": true,
-      "growth": {
-        "followReason": true,
-        "hookSpecific": true,
-        "payoffDelivered": true,
-        "shareReason": true
+      "caption": "Você já recebeu um pedido tão resumido que ficou na dúvida sobre o que o cliente realmente queria?\n\nEste exercício propõe testar sua instrução com variações comuns: abreviação, erro de digitação e informação ausente. Escreva uma instrução base, aplique nas três versões e compare os campos extraídos. Anote as divergências, ajuste a instrução e repita até obter consistência. É um treino prático para identificar pontos cegos antes de colocar em produção.\n\nQuer aprender mais aplicações práticas de IA em empresas? Siga o perfil para receber conteúdos como este.",
+      "storySlide": {
+        "eyebrow": "Rotina",
+        "title": "Seu time recebe pedidos confusos?",
+        "body": "Veja no feed um exercício para testar instruções com entradas variadas antes de usar na operação real."
       }
     },
     "structured": true,
