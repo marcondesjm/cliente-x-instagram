@@ -4358,136 +4358,40 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T19:43:10.786Z",
+  "checkedAt": "2026-10-18T19:43:26.679Z",
   "workflowRun": "39159975467",
   "message": "2 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "review:extracao-campos-v3",
-    "callId": "71d1a2b4-6d79-43db-b87d-8748823cd065",
+    "stage": "generate:pedido-duplicado-v3",
+    "callId": "39243e16-f2ef-499d-a2e9-8a5dc699857c",
     "value": {
-      "claims": [
+      "slides": [
         {
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "O slide descreve um pedido incompleto e questiona se a IA completa dados, com o exemplo de um cliente que não informa quantidade nem prazo, conforme o briefing.",
-          "id": "slide-1",
-          "supported": true
+          "eyebrow": "Dúvida",
+          "title": "O mesmo pedido chega duas vezes na equipe?",
+          "body": "Uma distribuidora recebe o mesmo e-mail comercial em caixas diferentes da empresa."
         },
         {
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "supported": true,
-          "id": "slide-2",
-          "reason": "O slide orienta a definir campos antes da extração e solicitar uma tabela com colunas de produto, quantidade e prazo, alinhado ao briefing."
+          "eyebrow": "Procedimento",
+          "title": "Atribua um identificador único antes de criar a tarefa interna",
+          "body": "Crie um código simples para cada solicitação recebida pelos canais de atendimento."
         },
         {
-          "reason": "O slide instrui a marcar ausentes sem supor valores e comparar campos com a mensagem original, conforme o briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "supported": true,
-          "id": "slide-3"
+          "eyebrow": "Conferência",
+          "title": "Consulte se esse identificador já foi registrado no sistema operacional",
+          "body": "Verifique a existência do código antes de gerar nova tarefa para a equipe técnica."
         },
         {
-          "supported": true,
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "O slide propõe um exercício prático de criar um pedido fictício e revisar a tabela gerada, conforme o briefing.",
-          "id": "slide-4"
-        },
-        {
-          "id": "caption",
-          "supported": true,
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "A legenda resume o objetivo do exercício de estruturar a extração de dados e conferir itens, conforme o briefing."
-        },
-        {
-          "reason": "O story convida a descobrir como validar tabelas geradas por IA, alinhado ao briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "id": "story",
-          "supported": true
-        },
-        {
-          "reason": "Os rótulos da ilustração fictícia refletem o cenário proposto no briefing.",
-          "supported": true,
-          "id": "art-1",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "supported": true,
-          "reason": "Os rótulos da ilustração fictícia refletem o cenário proposto no briefing.",
-          "id": "art-2",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "id": "art-3",
-          "supported": true,
-          "reason": "Os rótulos da ilustração fictícia refletem o cenário proposto no briefing."
-        },
-        {
-          "reason": "Os rótulos da ilustração fictícia refletem o cenário proposto no briefing.",
-          "supported": true,
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "id": "art-4"
-        },
-        {
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "Os rótulos da ilustração fictícia refletem o cenário proposto no briefing.",
-          "supported": true,
-          "id": "art-5"
+          "eyebrow": "Exercício",
+          "title": "Reenvie o mesmo pedido fictício e confira o registro existente",
+          "body": "Teste o fluxo simulando duplicação para observar como o sistema trata repetições."
         }
       ],
-      "decision": "approve",
-      "supported": true,
-      "novel": true,
-      "practical": true,
-      "visualMatch": true,
-      "reason": "O conteúdo apresenta um exercício educativo fictício coerente com o briefing, estruturado de forma clara e prática para o público-alvo, sem promessas de resultados ou dados reais.",
-      "growth": {
-        "hookSpecific": true,
-        "followReason": true,
-        "shareReason": true,
-        "payoffDelivered": true
+      "caption": "Como sua equipe lida com solicitações que chegam por múltiplos canais simultaneamente?\n\nEste exercício propõe um método simples para evitar trabalho duplicado em operações comerciais. Atribuir identificadores únicos permite consultar registros existentes antes de criar novas tarefas, organizando o fluxo sem promessas automáticas. Testar com cenários fictícios revela como seu sistema atual responde a repetições naturais do dia a dia empresarial.\n\nSiga o perfil para aprender aplicações práticas de IA em empresas reais.",
+      "storySlide": {
+        "eyebrow": "Rotina",
+        "title": "Seu time cria tarefas duplicadas sem perceber?",
+        "body": "Confira no feed como identificar e organizar pedidos repetidos com método simples."
       }
     },
     "structured": true,
