@@ -2778,7 +2778,7 @@
       "topic": "pedido-duplicado-v2",
       "account": "cliente-x",
       "version": "claude-authorial-reserve-v1",
-      "status": "draft",
+      "status": "ready",
       "generationCallId": "ead094af-a344-4ec5-8038-a8ca09752fc2",
       "createdAt": "2026-10-18T18:54:12.702Z",
       "artDirectionCallId": "8d9d731f-7750-451b-b97d-19d7550b2862",
@@ -3008,10 +3008,225 @@
           "hookSpecific": true,
           "followReason": true
         }
+      },
+      "review": {
+        "claims": [
+          {
+            "reason": "O slide descreve o problema de pedidos duplicados, exemplificando com um cliente que envia o mesmo pedido por e-mail e formulário, o que é sustentado pelo briefing.",
+            "supported": true,
+            "id": "slide-1",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma prestadora fictícia de serviços, com pedidos de orçamento e retorno ao cliente. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "reason": "O slide propõe a atribuição de um código único antes da criação da tarefa, conforme orientado no briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma prestadora fictícia de serviços, com pedidos de orçamento e retorno ao cliente. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "id": "slide-2",
+            "supported": true
+          },
+          {
+            "id": "slide-3",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma prestadora fictícia de serviços, com pedidos de orçamento e retorno ao cliente. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "supported": true,
+            "reason": "O slide instrui a verificar a existência do identificador antes de prosseguir, o que está alinhado com o briefing."
+          },
+          {
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma prestadora fictícia de serviços, com pedidos de orçamento e retorno ao cliente. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "reason": "O slide propõe um teste prático de reenvio para verificar o comportamento do sistema, conforme sugerido no briefing.",
+            "id": "slide-4"
+          },
+          {
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma prestadora fictícia de serviços, com pedidos de orçamento e retorno ao cliente. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "reason": "A legenda resume o exercício educativo proposto no briefing, mantendo a cautela sobre a implementação técnica.",
+            "id": "caption"
+          },
+          {
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma prestadora fictícia de serviços, com pedidos de orçamento e retorno ao cliente. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "reason": "O story convida à reflexão sobre pedidos duplicados e direciona para o exercício no feed, conforme o briefing.",
+            "id": "story"
+          },
+          {
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma prestadora fictícia de serviços, com pedidos de orçamento e retorno ao cliente. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "reason": "Os rótulos da ilustração são consistentes com o cenário fictício descrito no briefing.",
+            "id": "art-1"
+          },
+          {
+            "supported": true,
+            "id": "art-2",
+            "reason": "Os rótulos da ilustração são consistentes com o cenário fictício descrito no briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma prestadora fictícia de serviços, com pedidos de orçamento e retorno ao cliente. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "reason": "Os rótulos da ilustração são consistentes com o cenário fictício descrito no briefing.",
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma prestadora fictícia de serviços, com pedidos de orçamento e retorno ao cliente. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "id": "art-3"
+          },
+          {
+            "id": "art-4",
+            "reason": "Os rótulos da ilustração são consistentes com o cenário fictício descrito no briefing.",
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma prestadora fictícia de serviços, com pedidos de orçamento e retorno ao cliente. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma prestadora fictícia de serviços, com pedidos de orçamento e retorno ao cliente. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "id": "art-5",
+            "supported": true,
+            "reason": "Os rótulos da ilustração são consistentes com o cenário fictício descrito no briefing."
+          }
+        ],
+        "decision": "approve",
+        "supported": true,
+        "novel": true,
+        "practical": true,
+        "visualMatch": true,
+        "reason": "O conteúdo apresenta um exercício educativo coerente e prático sobre a gestão de pedidos duplicados, seguindo as diretrizes do briefing sem prometer resultados irreais. A estrutura é clara e os elementos visuais apoiam o fluxo de aprendizado proposto.",
+        "growth": {
+          "payoffDelivered": true,
+          "shareReason": true,
+          "hookSpecific": true,
+          "followReason": true
+        },
+        "bindingVersion": "exact-source-id-v1",
+        "callId": "8153941e-9e38-44bb-8e69-3c3b7fd31ef4",
+        "packHash": "5a99a2574519735bfe8bb1f7b4e8afde4872c9e19c0e3763b015228d2c77022c",
+        "checkedAt": "2026-10-18T18:55:31.937Z",
+        "groundingTask": {
+          "scope": "Exercício educativo fictício. Orientações são propostas, não resultados ou notícias.",
+          "sources": [
+            {
+              "id": "brief",
+              "text": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações. Cenário proposto: uma prestadora fictícia de serviços, com pedidos de orçamento e retorno ao cliente. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+            },
+            {
+              "id": "label",
+              "text": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            }
+          ],
+          "claims": [
+            {
+              "id": "slide-1",
+              "text": "Pedido duplicado. O mesmo orçamento chega duas vezes na equipe. Um cliente envia o mesmo pedido de orçamento por e-mail e depois pelo formulário do site da empresa."
+            },
+            {
+              "id": "slide-2",
+              "text": "Identificador único. Atribua um código ao pedido antes de criar a tarefa. Gere um identificador próprio para cada solicitação recebida e registre esse código no sistema interno da operação."
+            },
+            {
+              "id": "slide-3",
+              "text": "Consulta prévia. Verifique se o identificador já existe antes de prosseguir. Consulte o registro existente com esse código e encaminhe para conferência caso ele já tenha sido criado anteriormente."
+            },
+            {
+              "id": "slide-4",
+              "text": "Teste prático. Reenvie o mesmo pedido fictício e observe o comportamento. Simule o reenvio da mesma solicitação e confirme se o sistema direcionou para conferência em vez de criar nova tarefa."
+            },
+            {
+              "id": "caption",
+              "text": "Imagine que sua prestadora de serviços recebe pedidos de orçamento por múltiplos canais. Como evitar que a mesma solicitação vire tarefas repetidas para a equipe?\n\nEste exercício propõe atribuir um identificador único a cada pedido, consultar se ele já foi registrado antes de criar uma nova tarefa e encaminhar para conferência quando houver duplicidade. A regra depende da implementação técnica e dos testes realizados, sem prometer que a IA sozinha resolva o problema.\n\nQue tipo de duplicidade mais sobrecarrega sua operação hoje? Siga o perfil para aprender aplicações práticas de IA em empresas.\n\nConteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            },
+            {
+              "id": "story",
+              "text": "Sua rotina. Quantos pedidos duplicados sua equipe atende por semana?. Pense nos canais que sua empresa usa e como as solicitações chegam repetidas. Veja no feed um exercício para organizar essa situação com identificador único e consulta prévia."
+            },
+            {
+              "id": "art-1",
+              "text": "Rótulos de ilustração fictícia: E-mail recebido. Formulário web. Mesa de trabalho"
+            },
+            {
+              "id": "art-2",
+              "text": "Rótulos de ilustração fictícia: Código gerado. Registro interno. Identificador único"
+            },
+            {
+              "id": "art-3",
+              "text": "Rótulos de ilustração fictícia: Consulta prévia. Já existe?. Encaminhar"
+            },
+            {
+              "id": "art-4",
+              "text": "Rótulos de ilustração fictícia: Reenviar pedido. Verificar rota. Conferência ativa"
+            },
+            {
+              "id": "art-5",
+              "text": "Rótulos de ilustração fictícia: Canais múltiplos. Pedidos repetidos. Sua rotina"
+            }
+          ]
+        }
+      },
+      "render": {
+        "version": "authorial-layout-v3",
+        "packHash": "5a99a2574519735bfe8bb1f7b4e8afde4872c9e19c0e3763b015228d2c77022c",
+        "verifiedAt": "2026-10-18T18:55:31.937Z",
+        "feedCount": 4,
+        "story": true,
+        "runDir": "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-18-155435-slot-1-render-only",
+        "imageHashes": [
+          "648f5c3af0b252ffc429987408e52e00f37a67dd48ff31d90ce4499fc1490053",
+          "3fe9b6f4728440193116692d9950c8823025105bf946898229335552b42630b4",
+          "7caf252d640eff845a0fbb6066190076aeeefa7f2cddf6e127581a0811a489ee",
+          "02462d712e29faaec0a287e602d458fce7d99dc7823fca0b5d4e50c8c1b1b342",
+          "796deb2d23cb9e373a3797f7b3b44c5e9c19f52bb9fd881486dcf8e2ab940229"
+        ]
       }
     }
   ],
-  "checkedAt": "2026-10-18T18:55:30.510Z",
+  "checkedAt": "2026-10-18T18:55:31.939Z",
   "workflowRun": "39155841344",
   "message": "2 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
