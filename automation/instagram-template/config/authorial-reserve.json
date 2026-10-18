@@ -6462,139 +6462,40 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T19:57:15.059Z",
+  "checkedAt": "2026-10-18T19:57:28.051Z",
   "workflowRun": "39160892213",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "review:extracao-campos-v4",
-    "callId": "93baffe5-dc4e-4e9c-91bf-f309ab23aa17",
+    "stage": "generate:pedido-duplicado-v4",
+    "callId": "26024363-301c-43d6-810e-db2f4a3ece21",
     "value": {
-      "claims": [
+      "slides": [
         {
-          "id": "slide-1",
-          "supported": true,
-          "reason": "A fonte brief descreve exatamente a situação hipotética de uma escola fictícia recebendo mensagens sem produto, quantidade ou prazo definidos, correspondendo ao conteúdo do slide 1.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Pedido duplicado",
+          "title": "O mesmo pedido gera duas tarefas?",
+          "body": "Uma escola recebe a mesma dúvida sobre horário por e-mail e WhatsApp simultaneamente."
         },
         {
-          "id": "slide-2",
-          "supported": true,
-          "reason": "O briefing instrui explicitamente a pedir à IA uma tabela que preserve as informações recebidas (produto, quantidade e prazo), o que é reproduzido fielmente no slide 2 como procedimento prático.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Procedimento",
+          "title": "Atribua um identificador único ao pedido recebido",
+          "body": "Registre o identificador antes de criar qualquer tarefa nova para evitar duplicações operacionais."
         },
         {
-          "id": "slide-3",
-          "supported": true,
-          "reason": "A orientação de marcar campos ausentes como 'não informado' e conferir cada dado com a mensagem original está presente no texto da fonte brief e corresponde ao passo de conferência essencial do slide 3.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Conferência",
+          "title": "Consulte se o identificador já existe no sistema",
+          "body": "Se o registro existir, encaminhe para conferência em vez de criar uma nova tarefa operacional."
         },
         {
-          "id": "slide-4",
-          "supported": true,
-          "reason": "A validação final antes do cadastro, comparando campos extraídos com o texto original, é a conclusão lógica prescrita pelo briefing para evitar suposições, alinhada ao conteúdo do slide 4.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "caption",
-          "supported": true,
-          "reason": "A legenda resume corretamente o exercício educativo fictício proposto no briefing, incluindo a pergunta de engajamento e o disclaimer de conteúdo autoral, sem adicionar resultados comprovados.",
-          "evidence": [
-            {
-              "sourceId": "label"
-            },
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "story",
-          "supported": true,
-          "reason": "O texto da story introduz a rotina operacional de pedidos incompletos (produto, quantidade ou prazo) conforme descrito na proposta educativa do briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-1",
-          "supported": true,
-          "reason": "Os rótulos visuais da cena 1 (mesa com formulários, tela de inscrição, relógio) são elementos cênicos consistentes com a situação hipotética de atendimento escolar descrita no briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-2",
-          "supported": true,
-          "reason": "Os rótulos da cena 2 (mensagem do aluno, campos vazios, dúvida no texto) ilustram visualmente o problema de dados incompletos mencionado no briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-3",
-          "supported": true,
-          "reason": "Os rótulos da cena 3 (IA gera tabela, dados preservados, estrutura clara) representam graficamente o procedimento prático solicitado no briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-4",
-          "supported": true,
-          "reason": "Os rótulos da cena 4 (marcar ausente, comparar original, validar campo) sintetizam visualmente os passos de conferência essenciais definidos na fonte brief.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-5",
-          "supported": true,
-          "reason": "Os rótulos da cena 5 (cadastrar?, dados completos, aguardar resposta) fecham o ciclo operativo do exercício fictício, coerente com a proposta de validação antes do registro.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Exercício",
+          "title": "Reenvie o mesmo pedido e verifique o registro existente",
+          "body": "Teste reenviando o pedido fictício e confirme que o sistema reconhece o identificador previamente registrado."
         }
       ],
-      "decision": "approve",
-      "supported": true,
-      "novel": true,
-      "practical": true,
-      "visualMatch": true,
-      "reason": "Todas as alegações são sustentadas pelas fontes brief e label. O conteúdo é um exercício educativo fictício completo, com início (problema), desenvolvimento (procedimento com IA) e conclusão (validação). A abordagem de extrair dados de mensagens informais usando IA é distinta dos títulos do histórico (que focam em duplicidade, filas ou políticas). Os critérios de crescimento são atendidos: hook específico (pedidos incompletos), payoff entregue (passo a passo executável), follow reason claro (aplicações práticas de IA) e share reason útil (checklist de validação).",
-      "growth": {
-        "hookSpecific": true,
-        "payoffDelivered": true,
-        "followReason": true,
-        "shareReason": true
+      "caption": "Como sua equipe lida com pedidos que chegam por múltiplos canais?\n\nEste exercício mostra como atribuir identificadores únicos evita tarefas duplicadas na operação. Teste com um cenário fictício da sua rotina e observe o comportamento do sistema. Siga o perfil para aprender aplicações práticas de IA em empresas.",
+      "storySlide": {
+        "eyebrow": "Rotina",
+        "title": "Pedidos iguais chegam por canais diferentes?",
+        "body": "Veja no feed como identificar e conferir registros para evitar tarefas duplicadas na operação diária."
       }
     },
     "structured": true,
