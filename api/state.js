@@ -1,3 +1,4 @@
+import pinterestHandler from '../lib/pinterest-api.js';
 import licensedMediaHandler from '../lib/licensed-media-api.js';
 import {watchdogQuotaWait} from '../lib/watchdog-quota-wait.js';
 import {illustratedStockSummary} from '../lib/illustrated-stock-summary.js';
@@ -2441,6 +2442,7 @@ async function publishThreadsTest(account, text) {
 }
 
 export default async function handler(req, res) {
+  if (req.query?.pinterest === '1') return pinterestHandler(req, res);
   if (req.query?.licensedMedia === '1') return licensedMediaHandler(req, res);
   if (req.query?.claudeControl === "1") return claudeControlHandler(req, res);
   if (req.method === 'POST') {
