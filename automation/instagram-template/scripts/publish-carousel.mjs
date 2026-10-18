@@ -3200,6 +3200,12 @@ export function anatexSlideHtml(slide, index, total, account, style, renderConte
     body main.authorial-business-art .note {max-height:none!important;overflow:visible!important;}
     body main.authorial-business-art .progress {bottom:38px!important;}
     body main.authorial-business-art :is(.save-cue,.swipe-cue) {bottom:82px!important;}
+    body main.authorial-business-art.reel-mode .headline {top:220px;font-size:82px;}
+    body main.authorial-business-art.reel-mode .context-photo {top:600px!important;height:760px!important;max-height:none!important;min-height:0!important;left:60px!important;right:60px!important;width:auto!important;transform:none!important;}
+    body main.authorial-business-art.reel-mode .note {top:1410px!important;}
+    body main.authorial-business-art.reel-mode .business-copy {font-size:36px!important;line-height:1.2!important;}
+    body main.authorial-business-art.reel-mode .progress {bottom:155px!important;}
+    body main.authorial-business-art.reel-mode :is(.save-cue,.swipe-cue) {bottom:220px!important;}
     /* Licensed Bible illustrations keep the whole scene visible. */
     body main.bible-illustration.has-sector-photo .headline { position:absolute;left:58px;right:58px;top:180px;width:auto;max-width:964px;margin:0;font-size:66px;line-height:1.06;text-align:left; }
     body main.bible-illustration.has-sector-photo .note { left:58px;right:58px;top:365px;bottom:auto;width:auto;height:auto;min-height:0;max-width:964px;padding:22px 28px;transform:none; }
