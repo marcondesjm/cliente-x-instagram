@@ -7898,7 +7898,7 @@
       "topic": "teste-variacoes-v4",
       "account": "cliente-x",
       "version": "claude-authorial-reserve-v1",
-      "status": "draft",
+      "status": "ready",
       "generationCallId": "69d836df-feb9-4aa3-af39-95d1eecf16af",
       "learningContext": {
         "version": "claude-observed-editorial-v1",
@@ -8162,10 +8162,226 @@
           "payoffDelivered": true,
           "followReason": true
         }
+      },
+      "review": {
+        "claims": [
+          {
+            "reason": "O slide propõe o exercício de escrever um pedido fictício com nome, curso e horário para inscrição na escola, conforme o briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "supported": true,
+            "id": "slide-1"
+          },
+          {
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "id": "slide-2",
+            "reason": "O slide instrui a criar versões com abreviação, erro de digitação e campo ausente, conforme o briefing.",
+            "supported": true
+          },
+          {
+            "id": "slide-3",
+            "reason": "O slide orienta a executar a instrução e comparar os campos extraídos, conforme o briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "supported": true
+          },
+          {
+            "id": "slide-4",
+            "supported": true,
+            "reason": "O slide orienta a corrigir a instrução e repetir o teste, conforme o briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "supported": true,
+            "id": "caption",
+            "reason": "A legenda descreve o exercício completo de teste de IA para pedidos de inscrição, conforme o briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "id": "story",
+            "reason": "O story introduz a rotina de inscrições e o teste com IA, conforme o briefing.",
+            "supported": true
+          },
+          {
+            "reason": "Os rótulos da ilustração correspondem aos elementos do pedido fictício mencionados no briefing.",
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "id": "art-1"
+          },
+          {
+            "id": "art-2",
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "reason": "Os rótulos da ilustração correspondem às variações de erro solicitadas no briefing."
+          },
+          {
+            "reason": "Os rótulos da ilustração correspondem ao processo de execução e comparação solicitado no briefing.",
+            "id": "art-3",
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          },
+          {
+            "id": "art-4",
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ],
+            "reason": "Os rótulos da ilustração correspondem ao processo de ajuste e repetição solicitado no briefing."
+          },
+          {
+            "id": "art-5",
+            "reason": "Os rótulos da ilustração correspondem ao fluxo de validação e correção do modelo, alinhado ao objetivo do exercício.",
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+              }
+            ]
+          }
+        ],
+        "decision": "approve",
+        "supported": true,
+        "novel": true,
+        "practical": true,
+        "visualMatch": true,
+        "reason": "O conteúdo apresenta um exercício educativo prático e coerente com o briefing, utilizando uma abordagem de teste de IA em rotinas de inscrição. O experimento de alterar o hook para uma pergunta específica sobre a situação empresarial foi aplicado com sucesso. Todos os elementos visuais e textuais estão alinhados e suportados pelas fontes.",
+        "experimentApplied": true,
+        "growth": {
+          "hookSpecific": true,
+          "shareReason": true,
+          "payoffDelivered": true,
+          "followReason": true
+        },
+        "bindingVersion": "exact-source-id-v1",
+        "callId": "17aa4abe-ca24-4028-9014-b65a26dbc297",
+        "packHash": "01bac62f7bb77870d9846939d162e71fbe3225928595d688e7b3182e001a4a39",
+        "checkedAt": "2026-10-18T20:04:59.071Z",
+        "groundingTask": {
+          "scope": "Exercício educativo fictício. Orientações são propostas, não resultados ou notícias.",
+          "sources": [
+            {
+              "id": "brief",
+              "text": "Proposta de exercício educativo: escrever um pedido fictício e depois versões com abreviação, erro de digitação e informação ausente; executar o mesmo rascunho de instrução em cada versão; comparar os campos extraídos e anotar divergências; corrigir a instrução e repetir o conjunto antes de usar na rotina. É uma proposta de teste, sem prometer precisão ou resultados. Cenário proposto: uma escola fictícia de cursos livres, com dúvidas sobre horários e inscrições. Desenvolva uma situação específica e um exercício ainda não cobertos no histórico. Trocar título, data ou nome de empresa não comprova novidade. Não relate um cliente real nem acrescente resultados comprovados."
+            },
+            {
+              "id": "label",
+              "text": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            }
+          ],
+          "claims": [
+            {
+              "id": "slide-1",
+              "text": "Inscrição incompleta. O pedido do aluno tem todos os dados?. Escreva um pedido fictício com nome, curso e horário desejado para inscrição na escola."
+            },
+            {
+              "id": "slide-2",
+              "text": "Varie o texto. Crie versões com erro e falta de informação. Repita o mesmo pedido com abreviação excessiva, erro de digitação e campo essencial ausente propositalmente."
+            },
+            {
+              "id": "slide-3",
+              "text": "Execute e compare. Rode a instrução e anote as divergências. Use o mesmo rascunho de instrução em cada versão e compare os campos extraídos pela ferramenta automaticamente."
+            },
+            {
+              "id": "slide-4",
+              "text": "Ajuste e repita. Corrija a instrução antes da rotina real. Refine a instrução com base nas divergências encontradas e repita o teste completo antes de aplicar na operação diária."
+            },
+            {
+              "id": "caption",
+              "text": "Como garantir que a IA entenda pedidos variados de alunos? Escreva um pedido fictício de inscrição com dados completos. Crie versões com abreviação, erro de digitação e informação faltante. Execute a mesma instrução em cada caso e compare os resultados extraídos.\n\nAnote onde a ferramenta falhou ou completou dados sozinha. Ajuste a instrução para ser mais clara e específica. Repita o ciclo até obter consistência. Só então use na rotina real. Qual campo costuma faltar nos pedidos da sua equipe? Siga o perfil para aprender aplicações práticas de IA em empresas.\n\nConteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            },
+            {
+              "id": "story",
+              "text": "Rotina de inscrições. Seus pedidos chegam completos?. Teste como a IA lida com textos variados antes de usar na operação real. Veja o exercício no feed."
+            },
+            {
+              "id": "art-1",
+              "text": "Rótulos de ilustração fictícia: Pedido escrito. Dados do aluno. Curso desejado"
+            },
+            {
+              "id": "art-2",
+              "text": "Rótulos de ilustração fictícia: Texto abreviado. Erro de digitação. Campo ausente"
+            },
+            {
+              "id": "art-3",
+              "text": "Rótulos de ilustração fictícia: Executar instrução. Extrair campos. Comparar saídas"
+            },
+            {
+              "id": "art-4",
+              "text": "Rótulos de ilustração fictícia: Anotar divergências. Refinar instrução. Repetir teste"
+            },
+            {
+              "id": "art-5",
+              "text": "Rótulos de ilustração fictícia: Validar campos. Corrigir modelo. Aplicar na rotina"
+            }
+          ]
+        }
+      },
+      "render": {
+        "version": "authorial-layout-v3",
+        "packHash": "01bac62f7bb77870d9846939d162e71fbe3225928595d688e7b3182e001a4a39",
+        "verifiedAt": "2026-10-18T20:04:59.071Z",
+        "feedCount": 4,
+        "story": true,
+        "runDir": "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-18-170350-slot-2-render-only",
+        "imageHashes": [
+          "188e57ab607a7e06f6036cfbd7e30d2f69360b1f9d447df325a8f1d3ce44e85f",
+          "7a8b3c5d3f62a1ab1280a9acd33ec47341d87a7398548442f75078443af48e34",
+          "75834ff7e89e089612ff13b21cae9f6daa6e37043d2c05a9bd4314be490ec803",
+          "39eb3325428708656e9b97f515baf41aedd9ba7453671593c4f79d3186ec77b4",
+          "919110ca4998f6c44554b8ab3ad3aff5dbb3908ea312a5309a0cb5f1593d971a"
+        ]
       }
     }
   ],
-  "checkedAt": "2026-10-18T20:04:57.353Z",
+  "checkedAt": "2026-10-18T20:04:59.072Z",
   "workflowRun": "39161134821",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
