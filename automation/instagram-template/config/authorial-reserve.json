@@ -7928,41 +7928,56 @@
       "createdAt": "2026-10-18T20:03:29.554Z"
     }
   ],
-  "checkedAt": "2026-10-18T20:03:31.304Z",
+  "checkedAt": "2026-10-18T20:03:41.146Z",
   "workflowRun": "39161134821",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "generate:teste-variacoes-v4",
-    "callId": "69d836df-feb9-4aa3-af39-95d1eecf16af",
+    "stage": "art-direction:teste-variacoes-v4",
+    "callId": "26cddda8-9823-482b-ba97-a4e60f84400a",
     "value": {
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "eyebrow": "Inscrição incompleta",
-          "title": "O pedido do aluno tem todos os dados?",
-          "body": "Escreva um pedido fictício com nome, curso e horário desejado para inscrição na escola."
+          "layout": "workspace",
+          "labels": [
+            "Pedido escrito",
+            "Dados do aluno",
+            "Curso desejado"
+          ]
         },
         {
-          "eyebrow": "Varie o texto",
-          "title": "Crie versões com erro e falta de informação",
-          "body": "Repita o mesmo pedido com abreviação excessiva, erro de digitação e campo essencial ausente propositalmente."
+          "layout": "conversation",
+          "labels": [
+            "Texto abreviado",
+            "Erro de digitação",
+            "Campo ausente"
+          ]
         },
         {
-          "eyebrow": "Execute e compare",
-          "title": "Rode a instrução e anote as divergências",
-          "body": "Use o mesmo rascunho de instrução em cada versão e compare os campos extraídos pela ferramenta automaticamente."
+          "layout": "workflow",
+          "labels": [
+            "Executar instrução",
+            "Extrair campos",
+            "Comparar saídas"
+          ]
         },
         {
-          "eyebrow": "Ajuste e repita",
-          "title": "Corrija a instrução antes da rotina real",
-          "body": "Refine a instrução com base nas divergências encontradas e repita o teste completo antes de aplicar na operação diária."
+          "layout": "checklist",
+          "labels": [
+            "Anotar divergências",
+            "Refinar instrução",
+            "Repetir teste"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Validar campos",
+            "Corrigir modelo",
+            "Aplicar na rotina"
+          ]
         }
-      ],
-      "caption": "Como garantir que a IA entenda pedidos variados de alunos? Escreva um pedido fictício de inscrição com dados completos. Crie versões com abreviação, erro de digitação e informação faltante. Execute a mesma instrução em cada caso e compare os resultados extraídos.\n\nAnote onde a ferramenta falhou ou completou dados sozinha. Ajuste a instrução para ser mais clara e específica. Repita o ciclo até obter consistência. Só então use na rotina real. Qual campo costuma faltar nos pedidos da sua equipe? Siga o perfil para aprender aplicações práticas de IA em empresas.",
-      "storySlide": {
-        "eyebrow": "Rotina de inscrições",
-        "title": "Seus pedidos chegam completos?",
-        "body": "Teste como a IA lida com textos variados antes de usar na operação real. Veja o exercício no feed."
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
