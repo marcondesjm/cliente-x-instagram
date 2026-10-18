@@ -3525,56 +3525,140 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T19:33:41.009Z",
+  "checkedAt": "2026-10-18T19:35:34.122Z",
   "workflowRun": "39159132037",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "art-direction:resumo-transferencia-v2",
-    "callId": "e2558349-8bf8-4ea2-9011-118c64167f3f",
+    "stage": "review:resumo-transferencia-v2",
+    "callId": "88d69d2b-2261-4448-8020-e5869e5e4e49",
     "value": {
-      "palette": "copper",
-      "frames": [
+      "claims": [
         {
-          "layout": "workspace",
-          "labels": [
-            "Mesa de atendimento",
-            "Tela com resumo",
-            "Post-it de pendências"
+          "id": "slide-1",
+          "supported": true,
+          "reason": "O briefing instrui explicitamente a pedir um resumo separado com informações confirmadas e pendências antes de transferir o atendimento.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Cliente ao telefone",
-            "Anotações à mão",
-            "Balão de confirmação"
+          "id": "slide-2",
+          "supported": true,
+          "reason": "O briefing determina marcar como pendente tudo que não foi informado durante a conversa fictícia.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Fluxo de triagem",
-            "Seta de conferência",
-            "Caixa de pendentes"
+          "id": "slide-3",
+          "supported": true,
+          "reason": "O briefing exige conferir o resumo contra a conversa original para garantir que apenas o dito seja refletido, sem invenções.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Item confirmado",
-            "Item pendente",
-            "Check verde"
+          "id": "slide-4",
+          "supported": true,
+          "reason": "O briefing instrui encaminhar apenas o contexto necessário (confirmados e pendências) à pessoa que continuará o atendimento.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "decision",
-          "labels": [
-            "O que enviar?",
-            "Contexto filtrado",
-            "Sem dados sensíveis"
+          "id": "caption",
+          "supported": true,
+          "reason": "A legenda repete fielmente as instruções do briefing sobre o exercício educativo fictício e inclui o aviso de conteúdo autoral.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            },
+            {
+              "sourceId": "label"
+            }
+          ]
+        },
+        {
+          "id": "story",
+          "supported": true,
+          "reason": "O texto da story alinha-se com o tema do briefing sobre separar informações confirmadas de pendências em atendimentos.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-1",
+          "supported": true,
+          "reason": "Os rótulos descrevem elementos visuais coerentes com o cenário de atendimento e triagem proposto no briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-2",
+          "supported": true,
+          "reason": "Os rótulos descrevem elementos visuais coerentes com o cenário de atendimento e triagem proposto no briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-3",
+          "supported": true,
+          "reason": "Os rótulos descrevem elementos visuais coerentes com o cenário de atendimento e triagem proposto no briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-4",
+          "supported": true,
+          "reason": "Os rótulos descrevem elementos visuais coerentes com o cenário de atendimento e triagem proposto no briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-5",
+          "supported": true,
+          "reason": "Os rótulos descrevem elementos visuais coerentes com o cenário de atendimento e triagem proposto no briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         }
-      ]
+      ],
+      "decision": "approve",
+      "supported": true,
+      "novel": true,
+      "practical": true,
+      "visualMatch": true,
+      "reason": "Todas as alegações estão estritamente sustentadas pelo briefing e pela label. O conteúdo é um exercício educativo fictício claro, com início, desenvolvimento e conclusão práticos. A abordagem de triagem de atendimento é distinta dos títulos do histórico fornecido. As ilustrações são diagramas autorais pertinentes ao tema. Os critérios de crescimento são atendidos: situação reconhecível, resposta entregue, convite natural e utilidade para colegas.",
+      "growth": {
+        "hookSpecific": true,
+        "payoffDelivered": true,
+        "followReason": true,
+        "shareReason": true
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
