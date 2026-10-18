@@ -42,6 +42,10 @@ assert.equal(diagnostic.pilotRun.status,'rejected','A previously reviewed entry 
 const cachedScene={id:'0123456789abcdef',sha256:'a'.repeat(64)};
 const cachedState={model:'claude-haiku-4.5',pixelCache:{[cachedScene.sha256]:{version:VISION_VERSION,model:'claude-haiku-4.5',promptHash:'prompt-hash',checkedAt:now.toISOString(),observation:{...cachedScene,imageHash:'b'.repeat(64),imageBytes:50000,visible:true,style:'illustration',childSuitable:true,observedEvent:'Pessoas atravessam a água em um barco.'}}}};
 assert.equal(cachedBlindObservation(cachedState,cachedScene,'prompt-hash',now).id,cachedScene.id);
+const receiptedCache=structuredClone(cachedState);receiptedCache.pixelCache[cachedScene.sha256].callId='pixel-receipt';
+receiptedCache.calls=[{id:'pixel-receipt',stage:'pixels:example:scene',status:'completed',model:cachedState.model,imageFingerprint:'b'.repeat(64),stopReason:'tool_use'}];
+assert(cachedBlindObservation(receiptedCache,cachedScene,'prompt-hash',now));
+receiptedCache.calls[0].imageFingerprint='c'.repeat(64);assert.equal(cachedBlindObservation(receiptedCache,cachedScene,'prompt-hash',now),null);
 assert.equal(cachedBlindObservation(cachedState,cachedScene,'changed-prompt',now),null);
 assert.equal(cachedBlindObservation(cachedState,cachedScene,'prompt-hash',new Date(now.getTime()+25*60*60*1000)),null);
 const missingPayload=structuredClone(cachedState);delete missingPayload.pixelCache[cachedScene.sha256].observation.imageHash;

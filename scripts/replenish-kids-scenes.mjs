@@ -1,4 +1,7 @@
 import {rejectedSceneIds} from '../lib/kids-scene-matching.js';
+import {remainingSceneBudget,sourcePassageCoverage,retryAllowed} from '../lib/kids-reserve-policy.js';
+import {illustratedStockSummary} from '../lib/illustrated-stock-summary.js';
+import {nextBrtDay} from '../lib/authorial-recovery.js';
 import {bindVerifiedPassage} from '../lib/kids-scene-vision.js';
 import fs from 'node:fs';
 import {labelledReviewImages,reviewImageManifest} from '../lib/kids-scene-vision.js';
@@ -30,7 +33,9 @@ if(targetPackId&&!/^kids-biblia-[0-9]{2}$/.test(targetPackId))throw new Error('I
 if(pilotPackId && !/^kids-biblia-[0-9]{2}$/.test(pilotPackId))throw new Error('ID de pauta inválido para o piloto.');
 const key=process.env.KIDS_VISION_ANTHROPIC_API_KEY;
 const now=()=>new Date().toISOString();
+const economy={reusedPixelReads:0,newPixelReads:0,skippedCandidates:0};
 function save(paths=[STATE],assets=[]) {
+  state.economy={...economy,checkedAt:now()};
   state.checkedAt=now();state.lastRun=process.env.GITHUB_RUN_ID || null;
   fs.writeFileSync(STATE,JSON.stringify(state,null,2)+'\n');
   if(paths.includes(RECIPES))fs.writeFileSync(RECIPES,JSON.stringify(recipes,null,2)+'\n');
@@ -115,10 +120,10 @@ async function reviewPack(pack,candidate,known,{attempt=0,feedback=null,excluded
   const words=new Set(passage.verses.map(v=>v.text).join(' ').toLowerCase().match(/[a-z]{4,}/g));
   const score=s=>(s.description.toLowerCase().match(/[a-z]{4,}/g) || []).filter(w=>words.has(w)).length;
   const ranked=[...source.scenes].sort((a,b)=>score(b)-score(a));
-  const poolPolicy=state.pilotRun?.status==='running'?{...state.policy,maxCallsPerDay:Math.min(state.policy.maxCallsPerDay,state.pilotRun.maxCalls),maxInputTokensPerDay:Math.min(state.policy.maxInputTokensPerDay,state.pilotRun.maxInputTokens)}:state.policy;
+  const poolPolicy=state.pilotRun?.status==='running'?{...state.policy,maxCallsPerDay:Math.min(state.policy.maxCallsPerDay,state.pilotRun.maxCalls),maxInputTokensPerDay:Math.min(state.policy.maxInputTokensPerDay,state.pilotRun.maxInputTokens)}:remainingSceneBudget(state);
   const usedPilotCalls=state.pilotRun?.status==='running'?state.calls.filter(c=>c.pilotId===state.pilotRun.id).length:0;
   const newReadLimit=reviewPoolLimit({...poolPolicy,maxCallsPerDay:poolPolicy.maxCallsPerDay-usedPilotCalls});
-  let downloaded=0,newReads=0;
+  let downloaded=0,newReads=0,budgetLimitedPool=false;
   for(const scene of ranked.slice(0,30)) {
     if(excluded.has(scene.id))continue;
     if(pool.length>=12)break;
@@ -126,10 +131,13 @@ async function reviewPack(pack,candidate,known,{attempt=0,feedback=null,excluded
     if(downloaded>30_000_000)throw new Error('Conjunto excede limite de download.');
     if([...known,...pool].some(other=>similarScenes(item,other)))continue;
     const cached=blindCache.get(item.sha256) || cachedBlindObservation(state,item,hash(BLIND_SCENE_PROMPT));
-    if(!cached && newReads>=newReadLimit)continue;
+    if(!cached && newReads>=newReadLimit){budgetLimitedPool=true;continue;}
     pool.push(item);if(!cached)newReads++;
   }
-  if(pool.length<pack.slides.length+1)throw new Error('Faltam seis cenas distintas e inéditas para esta pauta.');
+  if(pool.length<pack.slides.length+1){
+    if(budgetLimitedPool)throw Object.assign(new Error('Saldo interno insuficiente para novas leituras e revisão completa; nenhuma nova leitura paga foi iniciada.'),{code:'DAILY_LIMIT'});
+    throw new Error('Faltam seis cenas distintas e inéditas para esta pauta.');
+  }
   const sheet=await contactSheet(pool),ctx=context(pack,passage);
   fs.mkdirSync('output/kids-replenishment',{recursive:true});
   fs.writeFileSync(`output/kids-replenishment/${pack.id}-candidates.jpg`,sheet);
@@ -141,14 +149,16 @@ async function reviewPack(pack,candidate,known,{attempt=0,feedback=null,excluded
     let observation=blindCache.get(scene.sha256);
     const cached=cachedBlindObservation(state,scene,hash(BLIND_SCENE_PROMPT));
     if(!observation && cached){observation=cached;blindCache.set(scene.sha256,observation);}
+    if(observation)economy.reusedPixelReads++;
     if(!observation) {
       const image=await individualSceneImage(scene.bytes);
       callAllowance(state,new Date(),4);
       const value=await paidCall('pixels:'+pack.id+':'+scene.id,image,BLIND_SCENE_PROMPT,700,blindSceneSchema(),true);
+      economy.newPixelReads++;
       try {assertBlindScene(value);}catch{blindCache.set(scene.sha256,null);continue;}
       observation={id:scene.id,sha256:scene.sha256,imageHash:hash(image),imageBytes:image.length,...value};
       blindCache.set(scene.sha256,observation);
-      state.pixelCache ||= {};state.pixelCache[scene.sha256]={version:VISION_VERSION,model:state.model,promptHash:hash(BLIND_SCENE_PROMPT),checkedAt:now(),observation};
+      state.pixelCache ||= {};state.pixelCache[scene.sha256]={version:VISION_VERSION,model:state.model,promptHash:hash(BLIND_SCENE_PROMPT),checkedAt:now(),callId:state.calls.at(-1).id,observation};
       state.pixelCache=Object.fromEntries(Object.entries(state.pixelCache).sort((a,b)=>Date.parse(b[1].checkedAt)-Date.parse(a[1].checkedAt)).slice(0,256));save();
     }
     usable.push(scene);
@@ -208,6 +218,13 @@ async function reviewPack(pack,candidate,known,{attempt=0,feedback=null,excluded
   recipes.push(recipe);return {recipe,assets};
 }
 async function replenish() {
+  if(!manual){
+    const groups=read(C+'content-packs.json'),packs=groups.find(g=>g.account==='sabedoria-kids').packs;
+    const account=read(C+'accounts.json').find(a=>a.account==='sabedoria-kids');
+    const stock=illustratedStockSummary(packs,visualReadyPacks(packs,account,p=>fs.existsSync(p)),read(C+'publication-history.json')['sabedoria-kids']||[]);
+    state.reserve={target:state.policy.readyStockTarget,available:stock.unpublished,shortfall:Math.max(0,state.policy.readyStockTarget-stock.unpublished),checkedAt:now()};
+    if(stock.unpublished>=state.policy.readyStockTarget){state.health='stock_sufficient';state.message='Reserva preventiva de conteúdo inédito revisado completa; nenhuma chamada à API.';save();return;}
+  }
   if(state.enabled && !manual)state.accuracyGate=assertVisionReadiness(state,read(C+'kids-vision-transport-test.json'));
   if(!state.enabled && !manual){state.health='awaiting_activation';state.message='Rotina preparada, aguardando piloto e ativação.';save();return;}
   if(recoverTransientCalls(state)){state.message='Nova janela após falha transitória; chamada anterior permanece contada pelo limite máximo.';save();}
@@ -220,13 +237,15 @@ async function replenish() {
   const published=pack=>history.some(h=>h.coverTitle===pack.slides[0].title);
   const account=read(C+'accounts.json').find(a=>a.account==='sabedoria-kids');
   const ready=visualReadyPacks(packs,account,p=>fs.existsSync(p)).filter(p=>!published(p)).length;
-  if(ready>=state.policy.readyStockTarget){state.health='stock_sufficient';state.message='Estoque de cenas suficiente para a meta configurada.';save();return;}
+  const pendingAssembly=recipes.filter(r=>['automatically-reviewed','editorially-reviewed'].includes(r.status)&&Date.parse(r.reviewedAt)+86400000>Date.now()&&!published(packs.find(p=>p.id===r.id)||{slides:[{}]})&&!visualReadyPacks(packs,account,p=>fs.existsSync(p)).some(p=>p.id===r.id)).length;
+  const maxNew=Math.min(state.policy.maxPacksPerRun,Math.max(0,state.policy.readyStockTarget-ready-pendingAssembly));
+  if(ready+pendingAssembly>=state.policy.readyStockTarget){state.health='stock_sufficient';state.message=pendingAssembly?'Seleções revisadas suficientes; aguardando montagem, sem novas chamadas.':'Estoque de cenas suficiente para a meta configurada.';save();return;}
   const known=[];
   for(const p of packs)for(const s of [...p.slides,p.storySlide].filter(Boolean)) {
     if(!s.imagePath || !fs.existsSync(s.imagePath))continue;
     const bytes=fs.readFileSync(s.imagePath);known.push({sha256:hash(bytes),visualHash:await visualSignature(bytes),mirrorHash:await visualSignature(bytes,true)});
   }
-  let processed=0;
+  let processed=0,budgetWait=false;
   const referenceLength=e=>passageRanges(e.reference).reduce((n,r)=>n+r.end-r.start+1,0);
   const attempts=e=>state.calls.filter(c=>c.stage==='select:'+e.id).length;
   const interrupted=e=>!state.entries.some(r=>r.id===e.id) && state.calls.some(c=>c.stage==='verify:'+e.id && c.status==='completed');
@@ -234,9 +253,9 @@ async function replenish() {
   for(const entry of candidates) {
     const pack=packs.find(p=>p.id===entry.id);
     if(!pack || published(pack) || recipes.some(r=>r.id===pack.id) || pack.slides.every(s=>s.imagePath))continue;
-    if(processed>=state.policy.maxPacksPerRun)break;
-    const choice=entry.candidates.filter(c=>c.scenes.length>=pack.slides.length+1).sort((a,b)=>b.scenes.length-a.scenes.length).map(candidate=>({candidate,fingerprint:hash({copy:copyFingerprint(pack),terms:candidate.termsHash,scenes:candidate.scenes.map(s=>s.id),version:VISION_VERSION,model:state.model,reasoningModel:state.reasoningModel,responseFormat:state.responseFormat,parameters:MATCHING_VERSION})})).find(c=>Boolean(pilotPackId) || targetPackId===pack.id && isIncompleteMatchingReply(state.rejections[c.fingerprint]?.reason) || !state.rejections[c.fingerprint] || Date.parse(state.rejections[c.fingerprint].retryAfter)<=Date.now());
-    if(!choice)continue;
+    if(processed>=maxNew)break;
+    const choice=entry.candidates.filter(c=>c.scenes.length>=pack.slides.length+1).sort((a,b)=>sourcePassageCoverage(pack.biblicalReference,b.reference)-sourcePassageCoverage(pack.biblicalReference,a.reference)||b.scenes.length-a.scenes.length).map(candidate=>({candidate,fingerprint:hash({copy:copyFingerprint(pack),terms:candidate.termsHash,scenes:candidate.scenes.map(s=>s.id),version:VISION_VERSION,model:state.model,reasoningModel:state.reasoningModel,responseFormat:state.responseFormat,parameters:MATCHING_VERSION})})).find(c=>Boolean(pilotPackId) || targetPackId===pack.id && isIncompleteMatchingReply(state.rejections[c.fingerprint]?.reason) || retryAllowed(state.rejections[c.fingerprint]));
+    if(!choice){economy.skippedCandidates+=(entry.candidates||[]).length;continue;}
     const {candidate,fingerprint}=choice;
     try {callAllowance(state,new Date(),3);}catch(error){
       if(error.code!=='DAILY_LIMIT')throw error;
@@ -252,14 +271,15 @@ async function replenish() {
       state.entries=state.entries.filter(e=>e.id!==pack.id);state.entries.push(result);save([STATE,RECIPES],assets);
     } catch(error) {
       result={...result,status:'rejected',message:String(error.message).slice(0,350)};
-      state.rejections[fingerprint]={reason:result.message,checkedAt:now(),...(state.circuit==='provider_temporarily_unavailable'?{retryAfter:state.retryAfter}:error.code==='DAILY_LIMIT'?{retryAfter:new Date(Date.now()+6*60*60*1000).toISOString()}:{})};
+      state.rejections[fingerprint]={reason:result.message,kind:error.code==='DAILY_LIMIT'||state.circuit==='provider_temporarily_unavailable'?'temporary':'editorial',checkedAt:now(),...(state.circuit==='provider_temporarily_unavailable'?{retryAfter:state.retryAfter}:error.code==='DAILY_LIMIT'?{retryAfter:nextBrtDay(new Date())}:{})};
       state.entries=state.entries.filter(e=>e.id!==pack.id);state.entries.push(result);save();
       if(state.circuit)throw error;
+      if(error.code==='DAILY_LIMIT'){budgetWait=true;break;}
     }
   }
   if(pilotPackId && processed===0)throw new Error('Piloto sem avaliação: a pauta não possui candidato novo elegível. Nenhuma chamada de revisão foi realizada.');
-  state.health=state.circuit?'blocked':processed?'review_completed':'awaiting_candidates';
-  state.message=state.circuit?'Circuito de consumo ou visão bloqueado.':`${processed} pauta(s) examinada(s); somente seleções aprovadas seguem para montagem.`;save();
+  state.health=state.circuit?'blocked':budgetWait?'daily_limit':processed?'review_completed':'awaiting_candidates';
+  state.message=state.circuit?'Circuito de consumo ou visão bloqueado.':budgetWait?'Saldo interno insuficiente para revisão completa; aguarda a renovação diária sem iniciar novas leituras.':`${processed} pauta(s) examinada(s); somente seleções aprovadas seguem para montagem.`;save();
 }
 function activate() {
   state.activationEvidence=assertSceneActivation({state,recipes,packs:read(C+'content-packs.json').find(g=>g.account==='sabedoria-kids').packs,assembled:read(C+'kids-scene-automation.json'),diagnostics:read(C+'kids-vision-transport-test.json'),readAsset:p=>fs.existsSync(p)?fs.readFileSync(p):null});

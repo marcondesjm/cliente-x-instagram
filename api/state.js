@@ -2967,7 +2967,7 @@ export default async function handler(req, res) {
     biblicalSceneAutomation,
     biblicalSceneReplenishment,
     editorialApiReview,
-    visualReadiness: { required: requiresBibleIllustrations(account), ...illustratedStockSummary(packs,readyPacks,publicationHistory[accountKey]||[]) },
+    visualReadiness: { required: requiresBibleIllustrations(account), ...illustratedStockSummary(packs,readyPacks,publicationHistory[accountKey]||[]),target:biblicalSceneReplenishment?.policy?.readyStockTarget||null },
     calendarPublications: (publicationHistory[accountKey] || [])
       .filter(entry => entry.mediaId && entry.publishedAt)
       .map(entry => ({ date: brtDateAndTime(entry.publishedAt).date, title: entry.coverTitle || 'Publicado', permalink: entry.permalink || '', mediaId: entry.mediaId, storyMediaId: entry.storyMediaId || '' })),

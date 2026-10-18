@@ -22,8 +22,8 @@ on:
         required: false
         default: ''
   schedule:
-    # Entre descoberta e montagem: 05h40, 11h40, 17h40 e 23h40 BRT.
-    - cron: '40 2,8,14,20 * * *'
+    # Reserva preventiva; as travas evitam chamadas sem saldo ou material novo.
+    - cron: '10,30,50 * * * *'
 permissions:
   contents: write
 concurrency:
@@ -33,6 +33,8 @@ jobs:
   replenish:
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    outputs:
+      assembly_needed: ${{ steps.after.outputs.assemble }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -44,10 +46,19 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git pull --rebase origin main
-      - run: npm ci --ignore-scripts
+      - name: Plan reserve without paid calls
+        id: plan
+        env:
+          REVIEW_MODE: ${{ inputs.mode || 'replenish' }}
+        run: node scripts/plan-kids-reserve.mjs
+      - if: steps.plan.outputs.review == 'true'
+        run: npm ci --ignore-scripts
       - name: Validate stock summary and account isolation
-        run: node scripts/validate-kids-stock-summary.mjs
+        run: |
+          node scripts/validate-kids-stock-summary.mjs
+          node scripts/validate-kids-reserve-policy.mjs
       - name: Calibrate or review new scenes with persisted usage receipts
+        if: steps.plan.outputs.review == 'true'
         env:
           KIDS_VISION_ANTHROPIC_API_KEY: ${{ secrets.KIDS_VISION_ANTHROPIC_API_KEY }}
           REVIEW_MODE: ${{ inputs.mode || 'replenish' }}
@@ -63,6 +74,10 @@ jobs:
           else
             node scripts/replenish-kids-scenes.mjs --persist
           fi
+      - name: Check whether approved scenes need assembly
+        id: after
+        if: success()
+        run: node scripts/plan-kids-reserve.mjs
       - name: Save review evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -74,7 +89,7 @@ jobs:
           if-no-files-found: ignore
   assemble:
     needs: replenish
-    if: inputs.mode != 'calibrate' && inputs.mode != 'activate' && needs.replenish.result == 'success'
+    if: inputs.mode != 'calibrate' && inputs.mode != 'activate' && needs.replenish.result == 'success' && needs.replenish.outputs.assembly_needed == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     concurrency:

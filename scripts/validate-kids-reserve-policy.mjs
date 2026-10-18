@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {sourcePassageCoverage,retryAllowed,remainingSceneBudget} from '../lib/kids-reserve-policy.js';
+assert.equal(sourcePassageCoverage('1 Reis 17:8–16','1 Kings 17:7-18:1'),1);
+assert.equal(sourcePassageCoverage('1 Reis 17:8–16','1 Kings 17:1-9'),2/9);
+assert.equal(sourcePassageCoverage('Lucas 2:1–7','Matthew 1:18-24, Luke 1:26-56, Luke 2:1-7'),1);
+assert.equal(sourcePassageCoverage('Lucas 2:1–7','Luke 1:26-56'),0);
+assert.equal(sourcePassageCoverage('Gênesis 2:1–3','Genesis 1 - 2'),1);
+assert.equal(sourcePassageCoverage('referência inválida','Luke 1'),0);
+assert(retryAllowed(null));assert(!retryAllowed({reason:'Sem combinação de cenas.'}));
+assert(!retryAllowed({kind:'editorial',retryAfter:'2020-01-01'}));
+assert(!retryAllowed({kind:'temporary',retryAfter:'2030-01-01'},Date.parse('2026-10-18')));
+assert(retryAllowed({kind:'temporary',retryAfter:'2026-10-19T03:00:00Z'},Date.parse('2026-10-19T03:00:00Z')));
+const state={policy:{maxCallsPerDay:100,maxInputTokensPerCall:120000,maxInputTokensPerDay:12000000},calls:Array.from({length:95},()=>({day:'2026-10-18',status:'completed',inputTokens:null}))};
+assert.equal(remainingSceneBudget(state,new Date('2026-10-18T20:00:00Z')).maxCallsPerDay,5);
+assert.equal(remainingSceneBudget(state,new Date('2026-10-18T20:00:00Z')).maxInputTokensPerDay,600000);
+assert.equal(remainingSceneBudget(state,new Date('2026-10-19T03:00:00Z')).maxCallsPerDay,100);
+console.log('PASS: source coverage priority, no unchanged editorial retries, temporary retry deadline, conservative remaining budget and BRT rollover. No API calls.');
