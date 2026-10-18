@@ -3415,41 +3415,56 @@
       "createdAt": "2026-10-18T19:33:16.275Z"
     }
   ],
-  "checkedAt": "2026-10-18T19:33:17.630Z",
+  "checkedAt": "2026-10-18T19:33:27.220Z",
   "workflowRun": "39159132037",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "generate:resumo-transferencia-v2",
-    "callId": "c35e2a97-fd7c-4769-8c15-1758eaf53099",
+    "stage": "art-direction:resumo-transferencia-v2",
+    "callId": "e2558349-8bf8-4ea2-9011-118c64167f3f",
     "value": {
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "eyebrow": "Atendimento",
-          "title": "O resumo da conversa foi conferido?",
-          "body": "Peça um resumo separado com informações confirmadas e pendências antes de transferir o atendimento ao colega."
+          "layout": "workspace",
+          "labels": [
+            "Mesa de atendimento",
+            "Tela com resumo",
+            "Post-it de pendências"
+          ]
         },
         {
-          "eyebrow": "Procedimento",
-          "title": "Separe o que foi dito do que falta",
-          "body": "Marque como pendente cada informação não informada durante a conversa fictícia com o cliente da prestadora."
+          "layout": "conversation",
+          "labels": [
+            "Cliente ao telefone",
+            "Anotações à mão",
+            "Balão de confirmação"
+          ]
         },
         {
-          "eyebrow": "Conferência",
-          "title": "Compare o resumo com a conversa original",
-          "body": "Verifique se o resumo reflete apenas o que realmente foi dito, sem adicionar decisões ou dados sensíveis inventados."
+          "layout": "workflow",
+          "labels": [
+            "Fluxo de triagem",
+            "Seta de conferência",
+            "Caixa de pendentes"
+          ]
         },
         {
-          "eyebrow": "Exercício",
-          "title": "Encaminhe apenas o contexto necessário",
-          "body": "Envie à pessoa que continuará o atendimento somente as informações confirmadas e as pendências claramente listadas."
+          "layout": "checklist",
+          "labels": [
+            "Item confirmado",
+            "Item pendente",
+            "Check verde"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "O que enviar?",
+            "Contexto filtrado",
+            "Sem dados sensíveis"
+          ]
         }
-      ],
-      "caption": "Uma prestadora de serviços recebe pedidos de orçamento por mensagem. Antes de passar o caso adiante, peça um resumo separado com o que foi confirmado e o que ainda falta.\n\nMarque como pendente tudo que não foi informado. Confira esse resumo contra a conversa original. Encaminhe apenas o contexto essencial. Como sua equipe organiza essas transferências hoje? Siga para aprender aplicações práticas de IA em empresas.",
-      "storySlide": {
-        "eyebrow": "Rotina",
-        "title": "Seu time confere o resumo antes de transferir?",
-        "body": "Veja no feed como separar informações confirmadas das pendências em atendimentos de prestadoras de serviços."
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
