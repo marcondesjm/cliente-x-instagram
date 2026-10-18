@@ -1,12 +1,12 @@
 import assert from 'node:assert/strict';
-import {RESERVE_VERSION,TOPICS,digest,buildAuthorialPack,packClaims,reserveApproved,readyAuthorialPacks,conceptSvg} from '../lib/authorial-reserve.js';
+import {RESERVE_VERSION,RESERVE_RENDER_VERSION,TOPICS,digest,buildAuthorialPack,packClaims,reserveApproved,readyAuthorialPacks,conceptSvg} from '../lib/authorial-reserve.js';
 import {pickEditorialVisualReserve,pickFreshPack,preparePackForPublication} from '../automation/instagram-template/scripts/publish-carousel.mjs';
 import {solutionForWatchdogError} from './watchdog-error-classification.mjs';
 const topic=TOPICS[0],slide={eyebrow:'Exercício educativo',title:'Organize os campos de um pedido fictício.',body:'Separe produto e prazo. Confira cada campo na mensagem original e marque a informação que estiver ausente.'};
 const draft={slides:Array.from({length:4},()=>({...slide})),caption:('Use um pedido fictício para testar a extração de produto e prazo. Confira cada campo contra a mensagem original. ').repeat(3),storySlide:{...slide}};
 const pack=buildAuthorialPack(draft,topic),paths=[pack.slides[0].imagePath,pack.storySlide.imagePath],bytes=Buffer.from('fixture');
 const task={sources:[{id:'brief',text:topic.brief},{id:'label',text:'Conteúdo educativo autoral.'}],claims:packClaims(pack)};
-const entry={id:pack.id,topic:topic.id,account:'cliente-x',version:RESERVE_VERSION,status:'ready',generationCallId:'gen',pack,packHash:digest(pack),review:{decision:'approve',supported:true,novel:true,practical:true,visualMatch:true,callId:'review',packHash:digest(pack),groundingTask:task,claims:task.claims.map(c=>({id:c.id,supported:true,reason:'Proposta compatível com o exercício fornecido.',evidence:[{sourceId:'brief',quote:topic.brief.slice(0,90)}]}))},render:{packHash:digest(pack),verifiedAt:new Date().toISOString(),feedCount:4,story:true,imageHashes:Array(5).fill(digest('render'))},assets:Object.fromEntries(paths.map(p=>[p,digest(bytes)]))};
+const entry={id:pack.id,topic:topic.id,account:'cliente-x',version:RESERVE_VERSION,status:'ready',generationCallId:'gen',pack,packHash:digest(pack),review:{decision:'approve',supported:true,novel:true,practical:true,visualMatch:true,callId:'review',packHash:digest(pack),groundingTask:task,claims:task.claims.map(c=>({id:c.id,supported:true,reason:'Proposta compatível com o exercício fornecido.',evidence:[{sourceId:'brief',quote:topic.brief.slice(0,90)}]}))},render:{version:RESERVE_RENDER_VERSION,packHash:digest(pack),verifiedAt:new Date().toISOString(),feedCount:4,story:true,imageHashes:Array(5).fill(digest('render'))},assets:Object.fromEntries(paths.map(p=>[p,digest(bytes)]))};
 const calls=[['gen','generate'],['review','review']].map(([id,stage])=>({id,stage:`authorial:${stage}:${topic.id}`,status:'completed',stopReason:'tool_use',outputTokens:50,usageStatus:'provider_reported'}));
 const get=()=>bytes;
 assert.equal(reserveApproved(entry,get),true);
