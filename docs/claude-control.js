@@ -36,7 +36,8 @@
   el('claudeRun').textContent=scope==='cliente-x'?'Repor conteúdo e recuperar horário':'Repor cenas e montar prévias';
   el('claudeRunNote').textContent=scope==='cliente-x'?'Consome chamadas. Conteúdo aprovado pode publicar Feed/Reel e Story para recuperar um horário pendente.':'Consome chamadas. Revê cenas e monta conteúdo aprovado; a publicação depende da agenda existente.';
   el('claudeHistory').innerHTML=data.history.length?data.history.map(c=>`<li><strong>${esc(states[c.status]||c.status)}</strong> · ${esc(c.stage)}<br><small>${esc(time(c.completedAt||c.startedAt))} · ${c.inputTokens===null?'tokens estimados':esc(c.inputTokens)+' tokens de entrada'}</small></li>`).join(''):'<li>Nenhuma chamada registrada.</li>';
-  el('claudeEntries').textContent=data.entries.length?data.entries.map(e=>`${e.id}: ${states[e.status]||e.status}`).join(' · '):'Nenhuma pauta registrada.';
+  const balance=Number.isInteger(data.stock?.available)?`Estoque inédito elegível: ${data.stock.available}. Meta: ${data.stock.target||'não definida'}. Lote: até ${data.stock.batch||1}. Última checagem: ${time(data.stock.checkedAt)}. Pautas já publicadas não entram nesse saldo. `:'';
+  el('claudeEntries').textContent=balance+(data.entries.length?data.entries.map(e=>`${e.id}: ${states[e.status]||e.status}`).join(' · '):'Nenhuma pauta registrada.');
   el('claudeWorkflow').href=data.workflowUrl;el('claudeAudit').hidden=scope!=='cliente-x';el('claudeCalibrate').hidden=scope!=='sabedoria-kids';
   el('claudeRuns').innerHTML=(data.runs||[]).map(r=>`<li><a href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">Execução ${esc(r.id)}</a> · ${esc(r.status)}${r.conclusion?' · '+esc(r.conclusion):''}</li>`).join('')||'<li>Nenhuma execução registrada.</li>';
  }

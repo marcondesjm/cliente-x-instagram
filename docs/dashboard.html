@@ -7414,11 +7414,9 @@
             : 'O Radar está em reserva ou ainda não confirmou uma pauta recente. Atualize as notícias e confira as fontes.')
         },
         {
-          level: DATA.packCount >= DATA.schedulesUtc.length ? 'good' : 'bad',
-          title: `${DATA.packCount} conteúdos para ${DATA.schedulesUtc.length} horários`,
-          body: DATA.packCount >= DATA.schedulesUtc.length
-            ? 'Há conteúdo suficiente para cobrir a agenda diária.'
-            : 'Faltam conteúdos para cobrir todos os horários.'
+          level: DATA.packCount > 0 ? 'good' : 'bad',
+          title: `${DATA.packCount} pautas cadastradas`,
+          body: 'A quantidade cadastrada inclui pautas já usadas e não comprova estoque inédito para os horários. Consulte o saldo elegível e as avaliações no Controle do Claude.'
         },
         {
           level: DATA.uniqueCaptions === DATA.packCount ? 'good' : 'bad',
