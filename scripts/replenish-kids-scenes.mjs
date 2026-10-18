@@ -14,6 +14,7 @@ import {sceneGroundingTask,groundingPrompt,groundingSchema,assertGrounding,groun
 import {normalizeProviderUsage} from '../lib/platform-editorial-validation.js';
 import {VISION_VERSION,callAllowance,sendVision,calibrationImage,CALIBRATION_PROMPT,visualSignature,similarScenes,contactSheet,recoverTransientCalls,promptSceneDescription,selectionSchema,verificationSchema,reviewPoolLimit,BLIND_SCENE_PROMPT,blindSceneSchema,assertBlindScene,individualSceneImage} from '../lib/kids-scene-vision.js';
 
+const MATCHING_VERSION='card-options-family-context-v4';
 const ROOT=resolve(dirname(fileURLToPath(import.meta.url)),'..');process.chdir(ROOT);
 const C='automation/instagram-template/config/',STATE=C+'kids-scene-replenishment.json',RECIPES=C+'kids-reviewed-scenes.json';
 const read=p=>JSON.parse(fs.readFileSync(p,'utf8').replace(/^\uFEFF/,''));
@@ -164,7 +165,7 @@ async function reviewPack(pack,candidate,known,{attempt=0,feedback=null}={}) {
   const verification=bindVerificationObservations(verificationResult,observations);
   const audit={decision:String(verification.decision).slice(0,30),cards:Array.isArray(verification.cards)?verification.cards.slice(0,6).map(c=>({scene:c.scene,observationId:c.observationId,observedEvent:String(c.observedEvent || '').slice(0,500),passageMatch:c.passageMatch===true,childSuitable:c.childSuitable===true,distinct:c.distinct===true,copyMatch:c.copyMatch===true,verse:String(c.verse || '').slice(0,32),reason:String(c.reason || '').slice(0,600)})):[]};
   fs.writeFileSync(`output/kids-replenishment/${pack.id}-verification-${attempt+1}.json`,JSON.stringify(audit,null,2));
-  state.lastEvaluation={version:VISION_VERSION,matchingVersion:'card-options-family-context-v4',packId:pack.id,...audit};save();
+  state.lastEvaluation={version:VISION_VERSION,matchingVersion:MATCHING_VERSION,packId:pack.id,...audit};save();
   if(verification.decision!=='approve' || !Array.isArray(verification.cards) || verification.cards.length!==selected.length || verification.cards.some((c,i)=>c.scene!==i+1 || !['passageMatch','childSuitable','distinct','copyMatch'].every(k=>c[k]===true) || !verseIsWithin(c.verse,passage.verses.map(v=>v.id)) || typeof c.reason!=='string' || c.reason.length<12 || typeof c.observedEvent!=='string' || c.observedEvent.length<12)) {
     if(attempt===0 && audit.cards.length===selected.length) {
       callAllowance(state,new Date(),3);
@@ -217,7 +218,7 @@ async function replenish() {
     const pack=packs.find(p=>p.id===entry.id);
     if(!pack || published(pack) || recipes.some(r=>r.id===pack.id) || pack.slides.every(s=>s.imagePath))continue;
     if(processed>=state.policy.maxPacksPerRun)break;
-    const choice=entry.candidates.filter(c=>c.scenes.length>=pack.slides.length+1).map(candidate=>({candidate,fingerprint:hash({copy:copyFingerprint(pack),terms:candidate.termsHash,scenes:candidate.scenes.map(s=>s.id),version:VISION_VERSION,model:state.model,reasoningModel:state.reasoningModel,responseFormat:state.responseFormat,parameters:'blind-hybrid-card-options-family-context-v7'})})).find(c=>!state.rejections[c.fingerprint] || Date.parse(state.rejections[c.fingerprint].retryAfter)<=Date.now());
+    const choice=entry.candidates.filter(c=>c.scenes.length>=pack.slides.length+1).map(candidate=>({candidate,fingerprint:hash({copy:copyFingerprint(pack),terms:candidate.termsHash,scenes:candidate.scenes.map(s=>s.id),version:VISION_VERSION,model:state.model,reasoningModel:state.reasoningModel,responseFormat:state.responseFormat,parameters:MATCHING_VERSION})})).find(c=>!state.rejections[c.fingerprint] || Date.parse(state.rejections[c.fingerprint].retryAfter)<=Date.now());
     if(!choice)continue;
     const {candidate,fingerprint}=choice;
     try {callAllowance(state,new Date(),3);}catch(error){
@@ -227,7 +228,7 @@ async function replenish() {
     processed++;
     let result={id:pack.id,title:pack.slides[0].title,fingerprint,checkedAt:now()};
     try {
-      const {assets,recipe}=await reviewPack(pack,candidate,known,{feedback:state.lastEvaluation?.version===VISION_VERSION && state.lastEvaluation?.matchingVersion==='card-options-family-context-v4' && state.lastEvaluation?.packId===pack.id?state.lastEvaluation:null});
+      const {assets,recipe}=await reviewPack(pack,candidate,known,{feedback:state.lastEvaluation?.version===VISION_VERSION && state.lastEvaluation?.matchingVersion===MATCHING_VERSION && state.lastEvaluation?.packId===pack.id?state.lastEvaluation:null});
       known.push(...recipe.selected);
       result={...result,status:'reviewed',message:'Seleção e segunda avaliação aprovadas; montagem e render oficial ainda obrigatórios.'};
       state.entries=state.entries.filter(e=>e.id!==pack.id);state.entries.push(result);save([STATE,RECIPES],assets);
