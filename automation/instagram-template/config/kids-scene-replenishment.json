@@ -4113,11 +4113,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-18T21:58:10.783Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 70282,
       "promptChars": 793,
       "imageFingerprint": "003420ba2b918bb7a07e8d2808692a51d9b7ee1af59053013e81ae6bd3e38ced",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-18T21:58:32.326Z",
+      "reportedInputTokens": 25328,
+      "inputTokens": 25328,
+      "outputTokens": 105,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -4260,7 +4266,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T21:58:10.783Z",
+  "checkedAt": "2026-10-18T21:58:32.326Z",
   "lastRun": "39170079691",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -4535,12 +4541,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-21:0b9184aaefa8cf6e",
+    "stage": "pixels:kids-biblia-21:d07e9973d4218453",
     "value": {
       "visible": true,
       "style": "illustration",
       "childSuitable": true,
-      "observedEvent": "Ilustração de uma figura humana sorridente com cabelos longos e vestimenta branca, posicionada centralmente em enquadramento de busto, com um fundo amarelo brilhante irradiando linhas ao redor da cabeça."
+      "observedEvent": "Uma mulher com véu amarelo e túnica azul segura um bebê envolto em panos brancos no primeiro plano, enquanto ao fundo quatro homens com vestimentas e turbantes coloridos conversam entre si. A cena é uma ilustração pintada com traços definidos, mostrando os personagens em um ambiente externo com céu azul visível no canto superior direito."
     }
   },
   "lastFactualEvaluation": {
@@ -6320,6 +6326,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 1,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-18T21:58:10.783Z"
+    "checkedAt": "2026-10-18T21:58:32.326Z"
   }
 }
