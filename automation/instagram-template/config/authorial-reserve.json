@@ -5594,56 +5594,137 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T19:54:10.851Z",
+  "checkedAt": "2026-10-18T19:54:31.860Z",
   "workflowRun": "39160638249",
   "message": "2 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "art-direction:medicao-rascunho-v3",
-    "callId": "d5837c93-f7fd-4522-8ad9-171bcc54e049",
+    "stage": "review:medicao-rascunho-v3",
+    "callId": "aa4429be-a449-4dc8-9a4e-368e8c60ceb9",
     "value": {
-      "palette": "copper",
-      "frames": [
+      "claims": [
         {
-          "layout": "workspace",
-          "labels": [
-            "Pedido comercial",
-            "Política interna",
-            "Rascunho IA"
+          "id": "slide-1",
+          "supported": true,
+          "reason": "O slide 1 apresenta explicitamente o cenário fictício de uma distribuidora e a pergunta sobre o rascunho da IA, conforme descrito no briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Critérios claros",
-            "Correção",
-            "Dados ausentes"
+          "id": "slide-2",
+          "supported": true,
+          "reason": "O slide 2 detalha os critérios claros (correção, clareza, dados ausentes) para avaliação, alinhando-se com a proposta educativa do briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Comparar texto",
-            "Verificar clareza",
-            "Marcar falhas"
+          "id": "slide-3",
+          "supported": true,
+          "reason": "O slide 3 ilustra o fluxo prático de comparação dos rascunhos com os critérios definidos, etapa central do exercício proposto.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Anotar correções",
-            "Revisar fluxo",
-            "Etapa limitada"
+          "id": "slide-4",
+          "supported": true,
+          "reason": "O slide 4 aborda a ação realizável de anotar correções e testar em etapa limitada, fechando o ciclo do exercício educativo.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "decision",
-          "labels": [
-            "Vale testar?",
-            "Escopo definido",
-            "Próximo passo"
+          "id": "caption",
+          "supported": true,
+          "reason": "A legenda resume fielmente o conteúdo dos slides e reforça o caráter fictício e educativo, sem prometer resultados ou citar casos reais.",
+          "evidence": [
+            {
+              "sourceId": "label"
+            }
+          ]
+        },
+        {
+          "id": "story",
+          "supported": true,
+          "reason": "O story engaja o público com uma pergunta reflexiva sobre a rotina de revisão, mantendo o tom educativo e autoral.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-1",
+          "supported": true,
+          "reason": "Os rótulos da ilustração do slide 1 correspondem aos elementos visuais e textuais apresentados na imagem.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-2",
+          "supported": true,
+          "reason": "Os rótulos da ilustração do slide 2 refletem corretamente os critérios de avaliação mostrados visualmente.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-3",
+          "supported": true,
+          "reason": "Os rótulos da ilustração do slide 3 descrevem com precisão as etapas do fluxo de comparação apresentado.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-4",
+          "supported": true,
+          "reason": "Os rótulos da ilustração do slide 4 correspondem às ações de conferência e teste limitadas descritas no conteúdo.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-5",
+          "supported": true,
+          "reason": "Os rótulos da ilustração do story representam adequadamente os elementos de decisão e próximos passos do exercício.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         }
-      ]
+      ],
+      "decision": "approve",
+      "supported": true,
+      "novel": true,
+      "practical": true,
+      "visualMatch": true,
+      "reason": "Conteúdo educativo autoral que propõe um exercício estruturado de revisão de IA em cenário fictício, atendendo a todos os critérios editoriais e de crescimento sem violar restrições de factualidade.",
+      "growth": {
+        "hookSpecific": true,
+        "payoffDelivered": true,
+        "followReason": true,
+        "shareReason": true
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
