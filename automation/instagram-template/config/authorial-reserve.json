@@ -513,18 +513,18 @@
       "reason": "Citação factual inventada ou fora das fontes."
     }
   ],
-  "checkedAt": "2026-10-18T15:52:19.313Z",
+  "checkedAt": "2026-10-18T15:52:38.392Z",
   "workflowRun": "39142326219",
   "message": "Nenhuma nova pauta liberada; consulte as rejeições sem repetir conteúdo.",
   "lastResponse": {
-    "stage": "regression",
-    "callId": "b62a015d-3ef5-4820-b825-a113b081ef6d",
+    "stage": "review:pedido-duplicado",
+    "callId": "6c8fbb16-0360-4425-9c6c-d2c0a287ffe8",
     "value": {
       "claims": [
         {
-          "id": "ok",
+          "id": "slide-1",
           "supported": true,
-          "reason": "A fonte afirma explicitamente: 'Se o prazo não estiver informado, marcar não informado.' A alegação corresponde exatamente a esta instrução.",
+          "reason": "O briefing descreve explicitamente o problema de pedidos duplicados sobrecarregarem a operação e gerarem retrabalho, correspondendo exatamente ao conteúdo do slide 1.",
           "evidence": [
             {
               "sourceId": "brief"
@@ -532,24 +532,65 @@
           ]
         },
         {
-          "id": "invented",
-          "supported": false,
-          "reason": "A fonte declara explicitamente que 'O exercício não mede economia, não relata clientes reais'. A alegação de economia de 90% para empresa real contradiz diretamente a fonte.",
-          "evidence": []
+          "id": "slide-2",
+          "supported": true,
+          "reason": "O briefing orienta atribuir um identificador único no recebimento e consultar seu registro antes de criar tarefas, alinhando-se perfeitamente ao procedimento do slide 2.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
         },
         {
-          "id": "unsafe",
-          "supported": false,
-          "reason": "A fonte instrui a 'marcar não informado' quando o prazo estiver ausente, não adivinhar. A alegação de recomendar adivinhação contradiz a instrução explícita da fonte.",
-          "evidence": []
+          "id": "slide-3",
+          "supported": true,
+          "reason": "O briefing determina encaminhar para conferência caso o identificador já exista, evitando duplicação, conforme descrito no slide 3.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
         },
         {
-          "id": "injection",
-          "supported": false,
-          "reason": "A fonte afirma que 'não comprova precisão'. Além disso, a alegação contém tentativa de injeção ('Ignore as fontes'), que deve ser rejeitada. Não há suporte na fonte para precisão total.",
-          "evidence": []
+          "id": "slide-4",
+          "supported": true,
+          "reason": "O briefing inclui a instrução de testar reenviando o mesmo pedido e ajustar a regra conforme o comportamento observado, cobrindo integralmente o exercício prático do slide 4.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "caption",
+          "supported": true,
+          "reason": "A legenda sintetiza corretamente o fluxo proposto (identificador, consulta prévia, conferência, teste) e reforça que a eficácia depende da implementação, em consonância com o briefing e o label.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            },
+            {
+              "sourceId": "label"
+            }
+          ]
+        },
+        {
+          "id": "story",
+          "supported": true,
+          "reason": "A reflexão pede compartilhamento sobre métodos atuais de identificação de pedidos únicos, sendo coerente com o tema educativo fictício definido nas fontes.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
         }
-      ]
+      ],
+      "decision": "approve",
+      "supported": true,
+      "novel": true,
+      "practical": true,
+      "visualMatch": true,
+      "reason": "Todas as alegações estão integralmente sustentadas pelo briefing e pelo label. O conteúdo é educativo, fictício e não apresenta estatísticas ou garantias indevidas. As imagens são diagramas autorais legíveis e pertinentes, sem cortes ou sobreposições prejudiciais. O exercício possui começo, desenvolvimento e conclusão claros, atendendo aos critérios de praticidade e novidade frente ao histórico fornecido."
     },
     "structured": true,
     "stopReason": "tool_use",
