@@ -1,10 +1,10 @@
 {
   "account": "sabedoria-kids",
-  "enabled": false,
+  "enabled": true,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "pilot_reviewed",
-  "message": "Piloto com seleção automaticamente revisada; montagem, render oficial e ativação continuam sendo etapas separadas.",
+  "health": "active",
+  "message": "Reposição automática ativa: revisão dos pixels, testes de precisão e montagem obrigatória.",
   "policy": {
     "maxCallsPerDay": 26,
     "maxInputTokensPerCall": 120000,
@@ -2734,10 +2734,10 @@
     "passed": true,
     "challengeHash": "695b8e040e170590676379d497155343c47a297353bad9921ba60f57ff3e5602"
   },
-  "circuit": "vision_validation_failed",
+  "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T14:40:01.035Z",
-  "lastRun": "39136687927",
+  "checkedAt": "2026-10-18T15:01:37.221Z",
+  "lastRun": "39138510305",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -3656,5 +3656,29 @@
     "maxCalls": 10,
     "maxInputTokens": 1200000,
     "completedAt": "2026-10-18T14:40:01.035Z"
-  }
+  },
+  "activationEvidence": {
+    "checkedAt": "2026-10-18T15:01:37.215Z",
+    "pilotId": "57cb24d1-9b34-4b6f-8d84-d89948feede7",
+    "recipeId": "kids-biblia-33",
+    "previousCircuit": "vision_validation_failed",
+    "renderVerifiedAt": "2026-10-18T14:41:28.750Z",
+    "accuracyGate": {
+      "checkedAt": "2026-10-18T15:01:37.215Z",
+      "visualCases": 4,
+      "factualCases": 6,
+      "diversityCases": 2,
+      "model": "claude-sonnet-4.6",
+      "reasoningModel": "claude-sonnet-4.6"
+    }
+  },
+  "accuracyGate": {
+    "checkedAt": "2026-10-18T15:01:37.215Z",
+    "visualCases": 4,
+    "factualCases": 6,
+    "diversityCases": 2,
+    "model": "claude-sonnet-4.6",
+    "reasoningModel": "claude-sonnet-4.6"
+  },
+  "activatedAt": "2026-10-18T15:01:37.221Z"
 }
