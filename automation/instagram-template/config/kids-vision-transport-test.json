@@ -271,6 +271,54 @@
       "inputTokens": null,
       "outputTokens": 30,
       "usageStatus": "unconfirmed_counted_at_maximum"
+    },
+    {
+      "id": "3454913a-5275-467b-b557-ef1fc27a3eca",
+      "day": "2026-10-18",
+      "status": "completed",
+      "stage": "diversity-distinct",
+      "startedAt": "2026-10-18T13:34:28.816Z",
+      "images": [
+        {
+          "id": "da05f3177a8948b4",
+          "sha256": "13a6ab062b46a0a539885de32726c82f5af5785bf757080436a6f1c454d06c7f",
+          "bytes": 46225
+        },
+        {
+          "id": "9dcc8106df4b42cc",
+          "sha256": "5deb818f6dba6ea2d625eb2e92a157a12599151861f70fa2d6ce80102df818b9",
+          "bytes": 45919
+        }
+      ],
+      "completedAt": "2026-10-18T13:35:17.426Z",
+      "reportedInputTokens": 3764,
+      "inputTokens": 3764,
+      "outputTokens": 118,
+      "usageStatus": "provider_reported"
+    },
+    {
+      "id": "8e96820a-7813-4dbc-977d-04791bfbca80",
+      "day": "2026-10-18",
+      "status": "completed",
+      "stage": "diversity-mirror",
+      "startedAt": "2026-10-18T13:35:19.054Z",
+      "images": [
+        {
+          "id": "c27e7d797aeb4dad",
+          "sha256": "13a6ab062b46a0a539885de32726c82f5af5785bf757080436a6f1c454d06c7f",
+          "bytes": 46225
+        },
+        {
+          "id": "b03f928277734e5e",
+          "sha256": "0881776f99cc2d4ceaeca8929b84afdccf60642f9b649c4f273540d3b62102f0",
+          "bytes": 46048
+        }
+      ],
+      "completedAt": "2026-10-18T13:36:44.553Z",
+      "reportedInputTokens": 32616,
+      "inputTokens": 32616,
+      "outputTokens": 93,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -609,8 +657,8 @@
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:24:20.901Z",
-  "workflowRun": "39131295395",
+  "checkedAt": "2026-10-18T13:36:46.144Z",
+  "workflowRun": "39132069734",
   "summary": [
     {
       "mode": "sonnet-forced-holdout",
@@ -893,6 +941,25 @@
           }
         ],
         "expected": false,
+        "passed": true
+      }
+    ]
+  },
+  "visualDiversity": {
+    "version": "visual-diversity-v1",
+    "model": "claude-sonnet-4.6",
+    "checkedAt": "2026-10-18T13:36:44.553Z",
+    "cases": [
+      {
+        "expected": true,
+        "distinct": true,
+        "reason": "As imagens mostram o mesmo personagem em uma árvore, mas em momentos e ângulos diferentes. Na primeira imagem, o personagem está de costas, subindo na árvore, e o foco está na multidão abaixo. Na segunda imagem, o personagem está de frente, sentado na árvore, sorrindo, e o foco está na interação com uma figura masculina (Jesus) que aparece em primeiro plano à esquerda. As posições do corpo e o enquadramento da cena são distintos.",
+        "passed": true
+      },
+      {
+        "expected": false,
+        "distinct": false,
+        "reason": "As duas imagens representam o mesmo desenho com enquadramento espelhado horizontalmente: na Cena 1 a figura está no tronco à direita e o edifício à esquerda; na Cena 2 a figura está no tronco à esquerda e o edifício à direita. A composição, cores, personagens e elementos são idênticos, indicando apenas um espelhamento da mesma ilustração.",
         "passed": true
       }
     ]
