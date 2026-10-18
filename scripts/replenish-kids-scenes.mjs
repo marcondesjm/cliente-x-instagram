@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import {assertSceneActivation} from '../lib/kids-scene-activation.js';
 import {randomUUID} from 'node:crypto';
 import {matchingSchema,matchingPrompt,matchSceneOptions} from '../lib/kids-scene-matching.js';
 import {beginDiagnosticPilot,endDiagnosticPilot,reviewCircuitBlocked,bindVerificationObservations,cachedBlindObservation,assertVisionReadiness} from '../lib/kids-scene-vision.js';
@@ -14,7 +15,7 @@ import {sceneGroundingTask,groundingPrompt,groundingSchema,assertGrounding,groun
 import {normalizeProviderUsage} from '../lib/platform-editorial-validation.js';
 import {VISION_VERSION,callAllowance,sendVision,calibrationImage,CALIBRATION_PROMPT,visualSignature,similarScenes,contactSheet,recoverTransientCalls,promptSceneDescription,selectionSchema,verificationSchema,reviewPoolLimit,BLIND_SCENE_PROMPT,blindSceneSchema,assertBlindScene,individualSceneImage} from '../lib/kids-scene-vision.js';
 
-const MATCHING_VERSION='independent-pair-matrix-v6';
+const MATCHING_VERSION='independent-pair-matrix-grounded-v7';
 const ROOT=resolve(dirname(fileURLToPath(import.meta.url)),'..');process.chdir(ROOT);
 const C='automation/instagram-template/config/',STATE=C+'kids-scene-replenishment.json',RECIPES=C+'kids-reviewed-scenes.json';
 const read=p=>JSON.parse(fs.readFileSync(p,'utf8').replace(/^\uFEFF/,''));
@@ -246,20 +247,11 @@ async function replenish() {
   state.message=state.circuit?'Circuito de consumo ou visão bloqueado.':`${processed} pauta(s) examinada(s); somente seleções aprovadas seguem para montagem.`;save();
 }
 function activate() {
-  state.accuracyGate=assertVisionReadiness(state,read(C+'kids-vision-transport-test.json'));
-  if(state.circuit || !state.calibration?.passed || state.calibration.version!==VISION_VERSION || state.billingMode!=='fixed_plan_user_confirmed')throw new Error('Calibração, consumo ou plano ainda não confirmados para ativação.');
-  const packs=read(C+'content-packs.json').find(g=>g.account==='sabedoria-kids').packs;
-  const assembled=read(C+'kids-scene-automation.json');
-  const passed=recipes.some(recipe=>{
-    if(recipe.status!=='automatically-reviewed')return false;
-    const pack=packs.find(p=>p.id===recipe.id),receipt=assembled.entries.find(e=>e.id===recipe.id);
-    try{validateRecipe(recipe,pack);}catch{return false;}
-    return receipt?.status==='ready' && receipt.renderVerified===true && receipt.packFingerprint===hash(pack) && recipe.selected.every(s=>fs.existsSync(s.path) && hash(fs.readFileSync(s.path))===s.sha256);
-  });
-  if(!passed)throw new Error('Nenhuma pauta com revisão automática e render oficial pronto; ativação bloqueada.');
-  state.enabled=true;state.activatedAt=now();
+  state.activationEvidence=assertSceneActivation({state,recipes,packs:read(C+'content-packs.json').find(g=>g.account==='sabedoria-kids').packs,assembled:read(C+'kids-scene-automation.json'),diagnostics:read(C+'kids-vision-transport-test.json'),readAsset:p=>fs.existsSync(p)?fs.readFileSync(p):null});
+  state.accuracyGate=state.activationEvidence.accuracyGate;
+  state.circuit=null;state.enabled=true;state.activatedAt=now();
   Object.assign(state.policy,{maxCallsPerDay:26,maxInputTokensPerDay:1500000,maxPacksPerRun:3});
-  state.health='active';state.message='Reposição automática ativa: até três pautas por execução, com dupla avaliação e montagem obrigatória.';save();
+  state.health='active';state.message='Reposição automática ativa: revisão dos pixels, testes de precisão e montagem obrigatória.';save();
 }
 try {
   if(process.argv.includes('--pilot')){beginDiagnosticPilot(state,randomUUID(),pilotPackId);save();}

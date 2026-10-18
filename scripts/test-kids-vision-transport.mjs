@@ -38,7 +38,7 @@ try {
     state.entries=state.entries.filter(e=>e.id!==id);state.entries.push({id,mode:mode.id,fixture:fixture.id,model:mode.model,passed,value,...(r.value===null?{responseExcerpt:r.invalidResponseText}:{}),expected:fixture.expected,checkedAt:new Date().toISOString(),sourceUrl:fixture.scene.imageUrl,imageHash:call.imageHash});
     if(blocked)state.circuit='invalid_usage_receipt';save();if(blocked)throw new Error('Recibo inválido no diagnóstico.');
   }
-  const regressionVersion='depicted-event-v2';
+  const regressionVersion='depicted-event-v3';
   if(state.eventGrounding?.version!==regressionVersion || Date.now()-Date.parse(state.eventGrounding?.checkedAt || 0)>=24*60*60*1000) {
     const passages=await Promise.all(['Lucas 24:1–12','Lucas 19:1–10','Marcos 4:35–41'].map(reference=>loadPassage(reference)));
     const task={scopeReference:'Trechos WEB fornecidos, sem ampliar o relato.',sources:passages.flatMap((p,i)=>p.verses.map(v=>({id:`p${i}:${v.id}`,text:v.text}))),claims:[

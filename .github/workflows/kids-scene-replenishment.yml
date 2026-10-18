@@ -10,6 +10,7 @@ on:
           - calibrate
           - pilot
           - replenish
+          - activate
       pilot_pack:
         description: ID obrigatório no modo piloto (ex. kids-biblia-27; não publica)
         type: string
@@ -49,6 +50,8 @@ jobs:
             node scripts/replenish-kids-scenes.mjs --calibrate --persist
           elif [ "$REVIEW_MODE" = pilot ]; then
             node scripts/replenish-kids-scenes.mjs --pilot --persist
+          elif [ "$REVIEW_MODE" = activate ]; then
+            node scripts/replenish-kids-scenes.mjs --activate --persist
           else
             node scripts/replenish-kids-scenes.mjs --persist
           fi
@@ -63,7 +66,7 @@ jobs:
           if-no-files-found: ignore
   assemble:
     needs: replenish
-    if: inputs.mode != 'calibrate' && needs.replenish.result == 'success'
+    if: inputs.mode != 'calibrate' && inputs.mode != 'activate' && needs.replenish.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     concurrency:

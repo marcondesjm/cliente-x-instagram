@@ -6,7 +6,8 @@ import {reviewBinding,assertAutomaticReview,verseIsWithin} from '../lib/kids-sce
 import {passageRanges,loadPassage} from '../lib/kids-bible-passage.js';
 import {validateRecipe,hash} from '../lib/kids-scene-assembly.js';
 import {beginDiagnosticPilot,endDiagnosticPilot,reviewCircuitBlocked,cachedBlindObservation,VISION_VERSION,assertVisionReadiness} from '../lib/kids-scene-vision.js';
-import {sceneGroundingTask,groundingFingerprint} from '../lib/editorial-grounding.js';
+import {sceneGroundingTask,groundingFingerprint,groundingPrompt,inspectGrounding} from '../lib/editorial-grounding.js';
+import {assertSceneActivation} from '../lib/kids-scene-activation.js';
 const state={calls:[],circuit:null,policy:{maxCallsPerDay:2,maxInputTokensPerDay:100,maxInputTokensPerCall:100}};
 assert.equal(reviewPoolLimit({maxCallsPerDay:26,maxInputTokensPerDay:1500000,maxInputTokensPerCall:120000}),9);
 assert.equal(reviewPoolLimit({maxCallsPerDay:40,maxInputTokensPerDay:3000000,maxInputTokensPerCall:120000}),12);
@@ -126,10 +127,28 @@ const inventedEvent=structuredClone(auto);inventedEvent.automaticReview.verifica
 const wrongReviewOrder=structuredClone(auto);wrongReviewOrder.automaticReview.visualReview.positions.reverse();assert.throws(()=>assertAutomaticReview(wrongReviewOrder),/pixels/);
 
 const gateState={model:'claude-sonnet-4.6',reasoningModel:'claude-sonnet-4.6'};
-const diagnostics={entries:Array.from({length:4},(_,i)=>({fixture:'holdout-'+i,mode:'sonnet-forced-holdout',model:gateState.model,passed:true,checkedAt:now.toISOString()})),eventGrounding:{version:'depicted-event-v2',model:gateState.reasoningModel,passed:true,checkedAt:now.toISOString(),cases:Array.from({length:6},(_,i)=>({passed:true,expected:i%2===0,supported:i%2===0}))}};
+const diagnostics={entries:Array.from({length:4},(_,i)=>({fixture:'holdout-'+i,mode:'sonnet-forced-holdout',model:gateState.model,passed:true,checkedAt:now.toISOString()})),eventGrounding:{version:'depicted-event-v3',model:gateState.reasoningModel,passed:true,checkedAt:now.toISOString(),cases:Array.from({length:6},(_,i)=>({passed:true,expected:i%2===0,supported:i%2===0}))}};
 assert.equal(assertVisionReadiness(gateState,diagnostics,now).factualCases,6);
 const failedGate=structuredClone(diagnostics);failedGate.entries[0].passed=false;assert.throws(()=>assertVisionReadiness(gateState,failedGate,now),/visual/);
 assert.throws(()=>assertVisionReadiness(gateState,diagnostics,new Date(now.getTime()+25*60*60*1000)),/visual/);
 const missingNegative=structuredClone(diagnostics);missingNegative.eventGrounding.cases.pop();assert.throws(()=>assertVisionReadiness(gateState,missingNegative,now),/factual/);
 const falseNegative=structuredClone(diagnostics);falseNegative.eventGrounding.cases[1].supported=true;assert.throws(()=>assertVisionReadiness(gateState,falseNegative,now),/factual/);
 console.log('PASS: independent pixel proof, immutable depicted-event binding and fresh positive/negative accuracy gate.');
+const activationNow=new Date(),activationRecipe=structuredClone(auto);
+activationRecipe.reviewedAt=new Date(activationNow.getTime()-60000).toISOString();
+const activationState={...gateState,billingMode:'fixed_plan_user_confirmed',circuit:'vision_validation_failed',calibration:{passed:true,version:VISION_VERSION,model:gateState.model},pilotRun:{id:'passed-pilot',packId:auto.id,status:'reviewed',startedAt:new Date(activationNow.getTime()-120000).toISOString()},calls:[{pilotId:'passed-pilot',status:'completed',stage:'verify:'+auto.id,imageFingerprint:auto.automaticReview.visualReview.imageHash},{pilotId:'passed-pilot',status:'completed',stage:'facts:'+auto.id,promptFingerprint:hash(groundingPrompt(auto.automaticReview.factualReview.task))}]};
+const activationDiagnostics=structuredClone(diagnostics);activationDiagnostics.entries.forEach(e=>e.checkedAt=activationNow.toISOString());activationDiagnostics.eventGrounding.checkedAt=activationNow.toISOString();
+const activationInput={state:activationState,recipes:[activationRecipe],packs:[pack],diagnostics:activationDiagnostics,assembled:{entries:[{id:auto.id,status:'ready',renderVerified:true,recipeFingerprint:hash(activationRecipe),packFingerprint:hash(pack),verifiedAt:new Date(activationNow.getTime()-30000).toISOString()}]},readAsset:p=>fs.readFileSync(p),now:activationNow};
+assert.equal(assertSceneActivation(activationInput).recipeId,auto.id);
+assert.equal(activationState.circuit,'vision_validation_failed','Evidence inspection never mutates the guard');
+for(const circuit of ['invalid_usage_receipt','provider_temporarily_unavailable','pixel_reading_not_confirmed'])assert.throws(()=>assertSceneActivation({...activationInput,state:{...activationState,circuit}}),/consumo ou transporte/);
+assert.throws(()=>assertSceneActivation({...activationInput,state:{...activationState,calls:[]}}),/Recibos/);
+assert.throws(()=>assertSceneActivation({...activationInput,readAsset:()=>Buffer.from('changed')}),/Arquivos/);
+const wrongRender=structuredClone(activationInput.assembled);wrongRender.entries[0].renderVerified=false;assert.throws(()=>assertSceneActivation({...activationInput,assembled:wrongRender}),/render/);
+assert.throws(()=>assertSceneActivation({...activationInput,state:{...activationState,pilotRun:{...activationState.pilotRun,status:'rejected'}}}),/Piloto/);
+console.log('PASS: activation requires matching pilot, visual/factual receipts, exact files and rendered pack; transport and usage blocks remain latched.');
+
+const typographicTask={sources:[{id:'quote',text:'He said, “Go now.”'}],claims:[{id:'q',text:'He instructed someone to go.'}]};
+const quoteResult={claims:[{id:'q',supported:true,reason:'A citação conserva todas as palavras da fonte.',evidence:[{sourceId:'quote',quote:'He said, "Go now."'}]}]};
+assert.equal(inspectGrounding(typographicTask,quoteResult).approved,true);
+quoteResult.claims[0].evidence[0].quote='He said, "Go soon."';assert.throws(()=>inspectGrounding(typographicTask,quoteResult),/Citação/);
