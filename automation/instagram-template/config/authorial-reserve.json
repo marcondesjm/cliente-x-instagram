@@ -11370,41 +11370,56 @@
       "createdAt": "2026-10-18T23:13:42.260Z"
     }
   ],
-  "checkedAt": "2026-10-18T23:13:43.977Z",
+  "checkedAt": "2026-10-18T23:13:53.742Z",
   "workflowRun": "39175475573",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "generate:versao-instrucao-v6",
-    "callId": "923fe5eb-89eb-4560-90c0-3b8986b2daa7",
+    "stage": "art-direction:versao-instrucao-v6",
+    "callId": "a1c2ae0c-7c5d-4716-ad73-b084bb11a33e",
     "value": {
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "eyebrow": "Versão da IA",
-          "title": "A instrução mudou sem aviso?",
-          "body": "Uma equipe administrativa fictícia nota respostas diferentes ao processar pedidos internos após ajuste na ferramenta."
+          "layout": "workspace",
+          "labels": [
+            "Mesa com tela dividida",
+            "Post-it na borda",
+            "Caneca ao lado"
+          ]
         },
         {
-          "eyebrow": "Controle de versão",
-          "title": "Nomeie a instrução e guarde exemplos",
-          "body": "Salve a instrução com nome de versão e data, mantendo exemplos fictícios de entrada e critérios esperados para conferência futura."
+          "layout": "conversation",
+          "labels": [
+            "Chat da equipe",
+            "Tela de histórico",
+            "Nota de versão"
+          ]
         },
         {
-          "eyebrow": "Comparação prática",
-          "title": "Execute os mesmos exemplos e compare",
-          "body": "Ao alterar a instrução, execute novamente os exemplos fictícios e registre o que melhorou ou piorou antes de escolher a nova versão."
+          "layout": "workflow",
+          "labels": [
+            "Exemplos salvos",
+            "Execução nova",
+            "Comparação lado a lado"
+          ]
         },
         {
-          "eyebrow": "Exercício prático",
-          "title": "Teste uma mudança pequena esta semana",
-          "body": "Escolha uma instrução atual, crie três exemplos fictícios e teste uma alteração simples, anotando as diferenças observadas nas respostas geradas pela IA."
+          "layout": "checklist",
+          "labels": [
+            "Nomear versão",
+            "Guardar exemplos",
+            "Registrar mudanças"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "O que melhorou?",
+            "O que piorou?",
+            "Escolha final"
+          ]
         }
-      ],
-      "caption": "Quando a IA muda o comportamento, como saber se a nova versão ajuda ou atrapalha?\n\nGuarde a instrução com nome e data, mantenha exemplos fictícios de entrada e critérios esperados. Ao alterar, execute os mesmos exemplos e compare as respostas, registrando o que melhorou e o que piorou antes de decidir. Assim você evita trocar algo útil por acidente.\n\nQuer aprender aplicações práticas de IA em empresas? Siga o perfil para receber exercícios como este no seu feed.",
-      "storySlide": {
-        "eyebrow": "Rotina",
-        "title": "Você testa mudanças na IA?",
-        "body": "Quando ajusta instruções, como confere se a resposta ficou melhor ou pior? Veja um exercício prático no carrossel do feed para aplicar na sua equipe administrativa."
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
