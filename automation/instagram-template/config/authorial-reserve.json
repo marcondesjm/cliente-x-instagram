@@ -574,40 +574,86 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T16:59:12.982Z",
+  "checkedAt": "2026-10-18T17:00:21.685Z",
   "workflowRun": "39147349239",
   "message": "Reposição automática aguarda a renovação diária da cota; será retomada pelo agendamento, sem ação manual.",
   "lastResponse": {
-    "stage": "generate:resumo-transferencia",
-    "callId": "c571de42-d383-434e-859e-7edac111953d",
+    "stage": "review:resumo-transferencia",
+    "callId": "8301533c-e64e-47b1-b4fe-8793df0aec08",
     "value": {
-      "slides": [
+      "claims": [
         {
-          "eyebrow": "Atendimento",
-          "title": "Vai transferir? Leve as pendências",
-          "body": "Num cenário fictício, o atendente recebe um pedido com dados incompletos. Antes de repassar, separa o que foi confirmado do que falta definir."
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "reason": "O slide descreve o cenário fictício de um atendente recebendo um pedido com dados incompletos e a necessidade de separar o que foi confirmado do que falta definir, conforme proposto no briefing.",
+          "id": "slide-1",
+          "supported": true
         },
         {
-          "eyebrow": "Procedimento",
-          "title": "Separe confirmações e pendências",
-          "body": "Peça um resumo em três partes: pedido do cliente, informações confirmadas e itens pendentes. Marque como pendente tudo que não foi informado na conversa."
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "reason": "O slide detalha o procedimento de pedir um resumo em três partes e marcar pendências, alinhado com as orientações do briefing.",
+          "id": "slide-2",
+          "supported": true
         },
         {
-          "eyebrow": "Conferência",
-          "title": "Confira o resumo contra a fala",
-          "body": "Leia a conversa original e verifique se cada ponto do resumo tem base no que foi dito. Ajuste o que estiver fora ou sem respaldo no diálogo."
+          "reason": "O slide instrui a conferir o resumo contra a fala original e ajustar o que for necessário, conforme proposto no briefing.",
+          "id": "slide-3",
+          "supported": true,
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
         },
         {
-          "eyebrow": "Encerramento",
-          "title": "Encaminhe só o necessário",
-          "body": "Envie ao próximo atendente apenas o contexto essencial: resumo validado e lista de pendências. Evite incluir dados sensíveis ou decisões inventadas."
+          "supported": true,
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "id": "slide-4",
+          "reason": "O slide orienta sobre o encerramento, encaminhando apenas o contexto essencial e evitando dados sensíveis, conforme o briefing."
+        },
+        {
+          "supported": true,
+          "id": "caption",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "reason": "A legenda resume o processo de atendimento fictício, a conferência contra a conversa e o encaminhamento do essencial, alinhado ao briefing."
+        },
+        {
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "id": "story",
+          "reason": "O story introduz o tema das pendências na transferência e convida para o exercício prático, conforme o briefing.",
+          "supported": true
         }
       ],
-      "caption": "Em um atendimento fictício, dados faltam antes da transferência. Peça um resumo com pedido, confirmações e pendências. Confira cada ponto contra a conversa original para evitar invenções. Encaminhe apenas o essencial ao próximo atendente, sem dados sensíveis.\n\nComo sua equipe lida com pendências nas transferências? Siga para aprender aplicações práticas de IA em empresas e organizar melhor o fluxo de atendimento.",
-      "storySlide": {
-        "eyebrow": "Rotina",
-        "title": "Pendências somem na transferência?",
-        "body": "Quando você repassa um atendimento, o que fica para trás? Veja no feed um exercício prático para organizar confirmações e pendências antes de encaminhar."
+      "decision": "approve",
+      "supported": true,
+      "novel": true,
+      "practical": true,
+      "visualMatch": true,
+      "reason": "O conteúdo apresenta um exercício educativo fictício coerente e bem estruturado, seguindo todas as orientações do briefing sem inventar dados ou resultados. A progressão entre os slides é lógica e prática.",
+      "growth": {
+        "hookSpecific": true,
+        "shareReason": true,
+        "payoffDelivered": true,
+        "followReason": true
       }
     },
     "structured": true,
