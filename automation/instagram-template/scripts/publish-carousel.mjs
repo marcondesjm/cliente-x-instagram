@@ -3196,7 +3196,7 @@ export function anatexSlideHtml(slide, index, total, account, style, renderConte
     body main.authorial-business-art.has-sector-photo .note {position:absolute;left:60px;right:60px;top:1040px!important;display:block!important;bottom:auto;width:auto;max-width:960px;min-height:0;height:auto;padding:22px 26px;transform:none;text-align:left;}
     body main.authorial-business-art.has-sector-photo .note :is(.lead,.emphasis,.close) {display:inline!important;font-size:30px!important;line-height:1.2!important;text-align:left;margin:0!important;padding:0!important;background:transparent!important;}
     body main.authorial-business-art.has-sector-photo .panel,body main.authorial-business-art.has-sector-photo .bubble,body main.authorial-business-art.has-sector-photo .spark {display:none;}
-    body main.authorial-business-art .business-copy {font-size:30px!important;line-height:1.2!important;text-align:left;margin:0!important;color:#111;}
+    body main.authorial-business-art .business-copy {font-size:30px!important;line-height:1.2!important;text-align:left;margin:0!important;padding:0 0 4px!important;color:#111;}
     body main.authorial-business-art .note {max-height:none!important;overflow:visible!important;}
     body main.authorial-business-art .progress {bottom:38px!important;}
     body main.authorial-business-art :is(.save-cue,.swipe-cue) {bottom:82px!important;}
