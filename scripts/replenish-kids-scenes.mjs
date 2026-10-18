@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import {labelledReviewImages,reviewImageManifest} from '../lib/kids-scene-vision.js';
 import {assertSceneActivation} from '../lib/kids-scene-activation.js';
 import {randomUUID} from 'node:crypto';
-import {matchingSchema,matchingPrompt,matchSceneOptions,completeSceneMatching} from '../lib/kids-scene-matching.js';
+import {matchingSchema,matchingPrompt,matchSceneOptions,completeSceneMatching,isIncompleteMatchingReply} from '../lib/kids-scene-matching.js';
 import {beginDiagnosticPilot,endDiagnosticPilot,reviewCircuitBlocked,bindVerificationObservations,cachedBlindObservation,assertVisionReadiness} from '../lib/kids-scene-vision.js';
 import {resolve,dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -25,6 +25,8 @@ const read=p=>JSON.parse(fs.readFileSync(p,'utf8').replace(/^\uFEFF/,''));
 const state=read(STATE),recipes=read(RECIPES),persist=process.argv.includes('--persist');
 const manual=process.argv.includes('--pilot') || process.argv.includes('--calibrate');
 const pilotPackId=process.argv.includes('--pilot')?String(process.env.KIDS_SCENE_PILOT_PACK_ID || ''):'';
+const targetPackId=String(process.env.KIDS_SCENE_TARGET_PACK_ID||'');
+if(targetPackId&&!/^kids-biblia-[0-9]{2}$/.test(targetPackId))throw new Error('ID de revisão direcionada inválido.');
 if(pilotPackId && !/^kids-biblia-[0-9]{2}$/.test(pilotPackId))throw new Error('ID de pauta inválido para o piloto.');
 const key=process.env.KIDS_VISION_ANTHROPIC_API_KEY;
 const now=()=>new Date().toISOString();
@@ -228,12 +230,12 @@ async function replenish() {
   const referenceLength=e=>passageRanges(e.reference).reduce((n,r)=>n+r.end-r.start+1,0);
   const attempts=e=>state.calls.filter(c=>c.stage==='select:'+e.id).length;
   const interrupted=e=>!state.entries.some(r=>r.id===e.id) && state.calls.some(c=>c.stage==='verify:'+e.id && c.status==='completed');
-  const candidates=discovery.entries.filter(e=>e.status==='found' && (!pilotPackId || e.id===pilotPackId)).sort((a,b)=>Number(interrupted(b))-Number(interrupted(a)) || attempts(a)-attempts(b) || referenceLength(b)-referenceLength(a));
+  const candidates=discovery.entries.filter(e=>e.status==='found' && (!(pilotPackId||targetPackId) || e.id===(pilotPackId||targetPackId))).sort((a,b)=>Number(interrupted(b))-Number(interrupted(a)) || attempts(a)-attempts(b) || referenceLength(b)-referenceLength(a));
   for(const entry of candidates) {
     const pack=packs.find(p=>p.id===entry.id);
     if(!pack || published(pack) || recipes.some(r=>r.id===pack.id) || pack.slides.every(s=>s.imagePath))continue;
     if(processed>=state.policy.maxPacksPerRun)break;
-    const choice=entry.candidates.filter(c=>c.scenes.length>=pack.slides.length+1).sort((a,b)=>b.scenes.length-a.scenes.length).map(candidate=>({candidate,fingerprint:hash({copy:copyFingerprint(pack),terms:candidate.termsHash,scenes:candidate.scenes.map(s=>s.id),version:VISION_VERSION,model:state.model,reasoningModel:state.reasoningModel,responseFormat:state.responseFormat,parameters:MATCHING_VERSION})})).find(c=>Boolean(pilotPackId) || !state.rejections[c.fingerprint] || Date.parse(state.rejections[c.fingerprint].retryAfter)<=Date.now());
+    const choice=entry.candidates.filter(c=>c.scenes.length>=pack.slides.length+1).sort((a,b)=>b.scenes.length-a.scenes.length).map(candidate=>({candidate,fingerprint:hash({copy:copyFingerprint(pack),terms:candidate.termsHash,scenes:candidate.scenes.map(s=>s.id),version:VISION_VERSION,model:state.model,reasoningModel:state.reasoningModel,responseFormat:state.responseFormat,parameters:MATCHING_VERSION})})).find(c=>Boolean(pilotPackId) || targetPackId===pack.id && isIncompleteMatchingReply(state.rejections[c.fingerprint]?.reason) || !state.rejections[c.fingerprint] || Date.parse(state.rejections[c.fingerprint].retryAfter)<=Date.now());
     if(!choice)continue;
     const {candidate,fingerprint}=choice;
     try {callAllowance(state,new Date(),3);}catch(error){
