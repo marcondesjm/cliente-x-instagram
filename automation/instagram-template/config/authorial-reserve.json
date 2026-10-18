@@ -2752,136 +2752,40 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T18:51:40.253Z",
+  "checkedAt": "2026-10-18T18:51:52.473Z",
   "workflowRun": "39155831978",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "review:medicao-rascunho-v1",
-    "callId": "4acdb278-2a8a-499d-8df0-ec49e5d795bd",
+    "stage": "generate:resumo-transferencia-v1",
+    "callId": "bceaf559-264c-496e-a2ae-fc04e1e7f6bf",
     "value": {
-      "claims": [
+      "slides": [
         {
-          "reason": "O slide apresenta o tema de atendimento e o cenário fictício de uma loja de materiais com cliente enviando mensagem incompleta.",
-          "id": "slide-1",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "supported": true
+          "eyebrow": "Pedido incompleto",
+          "title": "O cliente esqueceu detalhes do pedido",
+          "body": "Um cliente envia mensagem pedindo material de escritório sem informar quantidade ou endereço de entrega."
         },
         {
-          "id": "slide-2",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "supported": true,
-          "reason": "O slide define a necessidade de estabelecer critérios de clareza, correção e verificação de dados ausentes."
+          "eyebrow": "Separe as informações",
+          "title": "Peça resumo com confirmados e pendências",
+          "body": "Solicite um resumo separado listando dados confirmados pelo cliente e itens que ainda faltam ser informados."
         },
         {
-          "reason": "O slide propõe a comparação de rascunhos com os critérios definidos para identificar lacunas.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "supported": true,
-          "id": "slide-3"
+          "eyebrow": "Conferência final",
+          "title": "Compare o resumo com a conversa original",
+          "body": "Verifique se todas as informações marcadas como confirmadas realmente aparecem na troca de mensagens com o cliente."
         },
         {
-          "id": "slide-4",
-          "supported": true,
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "O slide orienta o registro de correções e a decisão sobre testar o fluxo em etapa limitada."
-        },
-        {
-          "id": "caption",
-          "reason": "A legenda resume o exercício proposto de forma educativa e sem promessas de resultados.",
-          "supported": true,
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "O story questiona a rotina da equipe sobre a conferência de dados antes de responder.",
-          "id": "story",
-          "supported": true
-        },
-        {
-          "reason": "Os rótulos descrevem os problemas de uma mensagem incompleta conforme o cenário.",
-          "id": "art-1",
-          "supported": true,
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-2",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "supported": true,
-          "reason": "Os rótulos listam os critérios de avaliação da resposta."
-        },
-        {
-          "id": "art-3",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "supported": true,
-          "reason": "Os rótulos detalham o processo de conferência."
-        },
-        {
-          "id": "art-4",
-          "reason": "Os rótulos indicam as ações de revisão e teste.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "supported": true
-        },
-        {
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "Os rótulos resumem o fluxo operacional de verificação.",
-          "id": "art-5",
-          "supported": true
+          "eyebrow": "Encaminhe o essencial",
+          "title": "Envie apenas contexto necessário ao colega",
+          "body": "Transfira para quem dará continuidade somente o resumo validado, omitindo conversas paralelas ou dados irrelevantes."
         }
       ],
-      "decision": "approve",
-      "supported": true,
-      "novel": true,
-      "practical": true,
-      "visualMatch": true,
-      "reason": "O conteúdo apresenta um exercício educativo coerente e bem estruturado sobre a revisão de respostas de atendimento com IA, seguindo todas as diretrizes do briefing sem promessas de resultados ou dados externos.",
-      "growth": {
-        "hookSpecific": true,
-        "followReason": true,
-        "shareReason": true,
-        "payoffDelivered": true
+      "caption": "Imagine receber um pedido por mensagem sem quantidade nem endereço. Como evitar retrabalho?\n\nPeça um resumo separando o que foi confirmado do que falta. Confira cada item contra a conversa original antes de repassar. Assim, quem assume o atendimento já tem o essencial.\n\nEsse exercício ajuda a organizar fluxos de atendimento com mais clareza. Quer aprender outras aplicações práticas de IA em empresas? Acompanhe o perfil para conteúdos assim.",
+      "storySlide": {
+        "eyebrow": "Rotina prática",
+        "title": "Como você lida com pedidos incompletos?",
+        "body": "Se um cliente não informa todos os dados, qual sua primeira ação para evitar retrabalho na equipe?"
       }
     },
     "structured": true,
