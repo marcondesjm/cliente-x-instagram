@@ -2123,11 +2123,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-18T13:44:34.871Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 4977,
       "imageFingerprint": null,
-      "promptFingerprint": "44066be0bb021dbc5ee28968494392b92fde8bf5ed7328907cd85edd162cdd8e"
+      "promptFingerprint": "44066be0bb021dbc5ee28968494392b92fde8bf5ed7328907cd85edd162cdd8e",
+      "completedAt": "2026-10-18T13:44:52.810Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 32,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -2230,7 +2236,7 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:44:34.871Z",
+  "checkedAt": "2026-10-18T13:44:52.810Z",
   "lastRun": "39132710148",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -2466,75 +2472,74 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "verify:kids-biblia-29",
+    "stage": "facts:kids-biblia-29",
     "value": {
-      "decision": "approve",
-      "cards": [
+      "claims": [
         {
-          "verse": "19:6",
-          "passageMatch": true,
-          "pixelMatch": true,
-          "position": 1,
-          "copyMatch": true,
-          "distinct": true,
-          "observationId": "98834c32e024c944",
-          "reason": "A cena retrata Zaqueu recebendo Jesus em sua casa, condizente com o título e a passagem.",
-          "childSuitable": true
+          "id": "98834c32e024c944",
+          "supported": true,
+          "reason": "A ilustração mostra um homem sentado recebendo outro homem em pé que gesticula, compatível com Zacchaeus tendo descido da árvore e recebido Jesus alegremente em ambiente interno.",
+          "evidence": [
+            {
+              "sourceId": "19:6",
+              "quote": "He hurried, came down, and received him joyfully."
+            }
+          ]
         },
         {
-          "copyMatch": true,
-          "reason": "A cena mostra Zaqueu na árvore, um evento central do resumo da história.",
-          "distinct": true,
-          "passageMatch": true,
-          "position": 2,
-          "childSuitable": true,
-          "observationId": "0d7ed7a02e4a2584",
-          "verse": "19:4",
-          "pixelMatch": true
+          "id": "0d7ed7a02e4a2584",
+          "supported": true,
+          "reason": "A ilustração mostra um homem sentado nos galhos de uma árvore olhando para baixo, enquanto um grupo está reunido ao redor do tronco, compatível com Zacchaeus subindo na árvore para ver Jesus.",
+          "evidence": [
+            {
+              "sourceId": "19:4",
+              "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
+            }
+          ]
         },
         {
-          "verse": "19:7",
-          "reason": "A cena ilustra a interação de Jesus com Zaqueu e a reação das pessoas, pertinente à lição.",
-          "passageMatch": true,
-          "distinct": true,
-          "childSuitable": true,
-          "position": 3,
-          "observationId": "0213f4524b345be9",
-          "copyMatch": true,
-          "pixelMatch": true
+          "id": "0213f4524b345be9",
+          "supported": true,
+          "reason": "A ilustração mostra homens observando figuras ao fundo numa passagem entre paredes, com uma figura diante de uma porta, compatível com a murmuração das pessoas ao verem Jesus entrando na casa de Zacchaeus.",
+          "evidence": [
+            {
+              "sourceId": "19:7",
+              "quote": "When they saw it, they all murmured, saying, “He has gone in to lodge with a man who is a sinner.”"
+            }
+          ]
         },
         {
-          "position": 4,
-          "distinct": true,
-          "pixelMatch": true,
-          "verse": "19:9",
-          "observationId": "6654943ac38eff87",
-          "passageMatch": true,
-          "reason": "A cena mostra Jesus falando com o grupo, contexto adequado para a atividade familiar sobre a salvação e reparação.",
-          "childSuitable": true,
-          "copyMatch": true
+          "id": "6654943ac38eff87",
+          "supported": true,
+          "reason": "A ilustração mostra um grupo de homens reunidos com um homem central gesticulando, compatível com Jesus falando sobre salvação ter chegado àquela casa.",
+          "evidence": [
+            {
+              "sourceId": "19:9",
+              "quote": "Jesus said to him,\n“Today, salvation has come to this house, because he also is a son of Abraham."
+            }
+          ]
         },
         {
-          "copyMatch": true,
-          "observationId": "e64874ce7ad7e208",
-          "verse": "19:1",
-          "position": 5,
-          "distinct": true,
-          "childSuitable": true,
-          "reason": "A cena mostra Jesus no meio da multidão, contexto geral da passagem para leitura.",
-          "pixelMatch": true,
-          "passageMatch": true
+          "id": "e64874ce7ad7e208",
+          "supported": false,
+          "reason": "A visualObservation descreve apenas um grupo de homens reunidos em círculo sem cenário identificável ou ação de entrada/passagem por Jericó. Não há evidência visual de movimento através da cidade ou entrada em algum lugar.",
+          "evidence": [
+            {
+              "sourceId": "19:1",
+              "quote": "He entered and was passing through Jericho."
+            }
+          ]
         },
         {
-          "observationId": "d3c9e973465ce4fc",
-          "pixelMatch": true,
-          "verse": "19:4",
-          "childSuitable": true,
-          "passageMatch": true,
-          "copyMatch": true,
-          "reason": "A cena mostra Zaqueu subindo na árvore, um momento distinto da história.",
-          "position": 6,
-          "distinct": true
+          "id": "d3c9e973465ce4fc",
+          "supported": true,
+          "reason": "A ilustração mostra uma pessoa subindo em uma árvore enquanto outras observam, compatível com Zacchaeus correndo adiante e subindo na árvore para ver Jesus.",
+          "evidence": [
+            {
+              "sourceId": "19:4",
+              "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
+            }
+          ]
         }
       ]
     }
