@@ -9582,41 +9582,56 @@
       "createdAt": "2026-10-18T20:43:56.332Z"
     }
   ],
-  "checkedAt": "2026-10-18T20:43:57.882Z",
+  "checkedAt": "2026-10-18T20:44:06.161Z",
   "workflowRun": "39164475597",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "generate:teste-variacoes-v5",
-    "callId": "4e2dbbfb-9a1c-470b-bea3-9f3659dd0ab9",
+    "stage": "art-direction:teste-variacoes-v5",
+    "callId": "4c6d184c-6463-4b38-a20a-19ac7908a617",
     "value": {
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "eyebrow": "Pedido",
-          "title": "O que acontece quando o cliente escreve errado?",
-          "body": "Um cliente envia solicitação de orçamento com abreviação e palavra digitada incorretamente pela pressa do dia."
+          "layout": "workspace",
+          "labels": [
+            "orçamento oficina",
+            "mensagem digitada",
+            "campo vazio"
+          ]
         },
         {
-          "eyebrow": "Teste",
-          "title": "Execute o mesmo rascunho em cada versão do texto",
-          "body": "Use a mesma instrução de extração nos textos original, abreviado, com erro e com dado faltante para comparar resultados."
+          "layout": "conversation",
+          "labels": [
+            "texto original",
+            "versão abreviada",
+            "erro de digitação"
+          ]
         },
         {
-          "eyebrow": "Conferência",
-          "title": "Compare os campos extraídos e anote as diferenças",
-          "body": "Verifique quais informações foram capturadas corretamente e registre onde a extração falhou em cada variação apresentada."
+          "layout": "workflow",
+          "labels": [
+            "rascunho instrução",
+            "executar extração",
+            "comparar campos"
+          ]
         },
         {
-          "eyebrow": "Ação",
-          "title": "Corrija a instrução e repita antes de usar na rotina",
-          "body": "Ajuste o rascunho com base nas divergências encontradas e teste novamente até obter extração consistente em todos os casos."
+          "layout": "checklist",
+          "labels": [
+            "anotar divergências",
+            "corrigir rascunho",
+            "repetir teste"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "mensagens variadas",
+            "testar antes",
+            "automatizar depois"
+          ]
         }
-      ],
-      "caption": "Uma oficina recebe pedidos por mensagem com abreviações, erros e dados faltantes. Como testar se a instrução para IA extrai corretamente cada variação?\n\nEscreva um pedido fictício completo e crie versões com erro de digitação e informação ausente. Execute o mesmo rascunho em cada caso e compare os campos extraídos. Anote divergências e ajuste antes de usar na rotina.\n\nVocê já conferiu como variações no texto afetam a extração automática? Siga o perfil para aprender aplicações práticas de IA em empresas.",
-      "storySlide": {
-        "eyebrow": "Rotina",
-        "title": "Seu atendimento recebe mensagens variadas?",
-        "body": "Clientes escrevem com pressa, abreviam termos e cometem erros. Você testa como a IA lida com essas variações antes de automatizar?"
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
