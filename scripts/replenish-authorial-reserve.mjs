@@ -6,7 +6,7 @@ import sharp from 'sharp';
 import {persistState} from './persist-instagram-state.mjs';
 import {sendVision,callAllowance,labelledReviewImages} from '../lib/kids-scene-vision.js';
 import {normalizeProviderUsage} from '../lib/platform-editorial-validation.js';
-import {groundingPrompt,groundingSchema,inspectGrounding,groundingFingerprint} from '../lib/editorial-grounding.js';
+import {groundingPrompt,inspectGrounding,groundingFingerprint} from '../lib/editorial-grounding.js';
 import {RESERVE_VERSION,RESERVE_RENDER_VERSION,SOURCE_BINDING_VERSION,sourceBoundSchema,bindSourceEvidence,TOPICS,digest,draftSchema,buildAuthorialPack,packClaims,reserveApproved,conceptSvg} from '../lib/authorial-reserve.js';
 import {validatePack,pickFreshPack} from '../automation/instagram-template/scripts/publish-carousel.mjs';
 const C='automation/instagram-template/config/',P=C+'authorial-reserve.json',B=C+'editorial-api-validation.json';
@@ -61,7 +61,8 @@ try{
  const needsRepair=e=>e.status==='render_revision_required'||e.status==='ready'&&e.render?.version!==RESERVE_RENDER_VERSION;
  callAllowance(budget,new Date(),state.entries.some(needsRepair)?1:3);await regression();
  let accepted=0;
- for(let index=0;index<Math.min(state.entries.some(needsRepair)?1:state.maxPacksPerRun,state.targetReady-available.length);index++){
+ const batchLimit=Math.min(state.entries.some(needsRepair)?1:state.maxPacksPerRun,state.targetReady-available.length);
+ for(let index=0;index<batchLimit;index++){
   const repair=state.entries.find(needsRepair);
   callAllowance(budget,new Date(),repair?1:2);
   const topic=repair?TOPICS.find(t=>t.id===repair.topic):TOPICS.find(t=>!state.entries.some(e=>e.topic===t.id));
