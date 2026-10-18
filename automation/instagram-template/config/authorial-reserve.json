@@ -5377,142 +5377,113 @@
           "424341cda0331d3dd805f86fae655e75a5131bdfd4fb8c5a977c81ff70baa2b9"
         ]
       }
+    },
+    {
+      "id": "draft-teste-variacoes-v3",
+      "topic": "teste-variacoes-v3",
+      "account": "cliente-x",
+      "version": "claude-authorial-reserve-v1",
+      "status": "rejected",
+      "generationCallId": "02512add-dc88-49c8-94eb-ce5382b252ed",
+      "learningContext": {
+        "version": "claude-observed-editorial-v1",
+        "updatedAt": "2026-10-18T19:31:45.196Z",
+        "freshness": "current",
+        "confidence": "high",
+        "mediaIds": [
+          "18027287510700068",
+          "18635759569032252",
+          "17975613105154212",
+          "18005483804793255",
+          "18035061395893467",
+          "18098498537539858",
+          "17948704314303604",
+          "17979514499921010",
+          "17950664886057055",
+          "18438511210179318",
+          "17964523959233461",
+          "18072826643597029",
+          "18009850214996015",
+          "18221206201339690",
+          "18124691968931630",
+          "17971818954156938"
+        ],
+        "fingerprint": "d3894b66ace34a02bf96b846f4bf87775d97ad1cdf8d081db714654ded6879fa"
+      },
+      "createdAt": "2026-10-18T19:52:28.490Z",
+      "draftRevisionCallId": "b4ecb916-d038-4159-a594-6705f9af8050",
+      "reason": "Pauta de crescimento precisa explicar por que acompanhar o perfil."
+    },
+    {
+      "id": "draft-versao-instrucao-v3",
+      "topic": "versao-instrucao-v3",
+      "account": "cliente-x",
+      "version": "claude-authorial-reserve-v1",
+      "status": "rejected",
+      "generationCallId": "597379d9-7c68-48cf-ad05-0a43f06b1bfa",
+      "learningContext": {
+        "version": "claude-observed-editorial-v1",
+        "updatedAt": "2026-10-18T19:31:45.196Z",
+        "freshness": "current",
+        "confidence": "high",
+        "mediaIds": [
+          "18027287510700068",
+          "18635759569032252",
+          "17975613105154212",
+          "18005483804793255",
+          "18035061395893467",
+          "18098498537539858",
+          "17948704314303604",
+          "17979514499921010",
+          "17950664886057055",
+          "18438511210179318",
+          "17964523959233461",
+          "18072826643597029",
+          "18009850214996015",
+          "18221206201339690",
+          "18124691968931630",
+          "17971818954156938"
+        ],
+        "fingerprint": "d3894b66ace34a02bf96b846f4bf87775d97ad1cdf8d081db714654ded6879fa"
+      },
+      "createdAt": "2026-10-18T19:53:12.112Z",
+      "reason": "Pauta bloqueada por repetição."
     }
   ],
-  "checkedAt": "2026-10-18T19:46:46.189Z",
-  "workflowRun": "39159975467",
+  "checkedAt": "2026-10-18T19:53:15.455Z",
+  "workflowRun": "39160638249",
   "message": "2 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "review:fila-prioridade-v3",
-    "callId": "4653678a-a392-4785-ba34-4e814760a288",
+    "stage": "generate:versao-instrucao-v3",
+    "callId": "597379d9-7c68-48cf-ad05-0a43f06b1bfa",
     "value": {
-      "claims": [
+      "slides": [
         {
-          "id": "slide-1",
-          "supported": true,
-          "reason": "A fonte brief descreve explicitamente o exercício educativo fictício com uma distribuidora que recebe consultas comerciais e solicitações internas simultaneamente todos os dias úteis, correspondendo ao texto do slide 1.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Instrução",
+          "title": "A IA mudou sem aviso prévio?",
+          "body": "Uma distribuidora fictícia percebe respostas diferentes para as mesmas consultas comerciais após alteração silenciosa da instrução interna."
         },
         {
-          "id": "slide-2",
-          "supported": true,
-          "reason": "O briefing instrui a definição de critérios explícitos de prioridade, como prazo informado e tipo de solicitação, alinhando-se exatamente ao conteúdo do slide 2 sobre regras claras de prioridade.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Procedimento",
+          "title": "Guarde a versão com nome e data",
+          "body": "Registre o texto da instrução com um nome de versão e a data atual para permitir comparação futura entre mudanças aplicadas."
         },
         {
-          "id": "slide-3",
-          "supported": true,
-          "reason": "A fonte brief orienta pedir à IA uma sugestão de classificação acompanhada da justificativa para comparar com critérios definidos, correspondendo integralmente ao passo de conferência apresentado no slide 3.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Conferência",
+          "title": "Execute os mesmos exemplos fictícios",
+          "body": "Rode os exemplos de entrada mantidos e compare as respostas geradas para identificar alterações no comportamento do sistema."
         },
         {
-          "id": "slide-4",
-          "supported": true,
-          "reason": "O briefing determina revisar casos ambíguos antes de mudar a fila de atendimento estabelecida pela operação atual, validando completamente o conteúdo do slide 4 sobre revisão manual.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "caption",
-          "supported": true,
-          "reason": "O caption resume fielmente as prescrições do briefing (critérios objetivos, justificativa da IA, comparação, revisão de ambiguidades) e inclui a disclaimer obrigatória de conteúdo educativo fictício conforme a fonte label.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            },
-            {
-              "sourceId": "label"
-            }
-          ]
-        },
-        {
-          "id": "story",
-          "supported": true,
-          "reason": "A pergunta da story reproduz o hook experimental exigido pelo briefing: abrir com uma questão específica sobre situação empresarial reconhecível (priorização quando tudo parece urgente), sem jargão vago.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-1",
-          "supported": true,
-          "reason": "Os rótulos da ilustração do slide 1 (prazo informado, tipo solicitação, fila atendimento) refletem visualmente os elementos descritos no briefing para o exemplo fictício da distribuidora.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-2",
-          "supported": true,
-          "reason": "Os rótulos da ilustração do slide 2 (critérios claros, consulta comercial, solicitação interna) correspondem aos tipos de solicitação e critérios mencionados na fonte brief.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-3",
-          "supported": true,
-          "reason": "Os rótulos da ilustração do slide 3 (sugestão IA, justificativa, comparação) representam corretamente o fluxo de conferência descrito no briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-4",
-          "supported": true,
-          "reason": "Os rótulos da ilustração do slide 4 (casos ambíguos, revisão manual, alteração fila) espelham com precisão a etapa final prescrita na fonte brief.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-5",
-          "supported": true,
-          "reason": "Os rótulos da ilustração da story (tudo urgente, prioridade equipe, atendimento diário) traduzem visualmente a situação empresarial apresentada no hook experimental do briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Exercício",
+          "title": "Anote melhorias e pioras antes de decidir",
+          "body": "Escolha uma consulta comercial fictícia, salve a instrução atual e execute o teste comparativo registrado em planilha simples hoje."
         }
       ],
-      "decision": "approve",
-      "supported": true,
-      "novel": true,
-      "practical": true,
-      "visualMatch": true,
-      "reason": "Todas as alegações estão sustentadas pelas fontes brief e label. O experimento editorial foi aplicado corretamente com hook específico sobre priorização em cenário empresarial reconhecível. Os quatro slides mais a story formam um exercício completo e executável com começo, desenvolvimento e conclusão. Nenhum dado externo, estatística ou caso real foi inserido. A disclaimer educativa está presente. Todos os critérios de crescimento são atendidos: hook específico, payoff entregue, convite natural para seguir e utilidade concreta para salvar/compartilhar.",
-      "experimentApplied": true,
-      "growth": {
-        "followReason": true,
-        "hookSpecific": true,
-        "payoffDelivered": true,
-        "shareReason": true
+      "caption": "Quando a instrução muda, as respostas mudam. Em uma distribuidora fictícia, consultas comerciais passaram a divergir sem alerta prévio da equipe operacional.\n\nGuarde a instrução com nome de versão e data, mantenha exemplos fictícios de entrada e critérios esperados. Ao alterar, execute os mesmos exemplos e compare as respostas, anotando o que melhorou e o que piorou antes de escolher a versão. Qual consulta você testaria primeiro na sua rotina? Siga o perfil para aprender aplicações práticas de IA em empresas.",
+      "storySlide": {
+        "eyebrow": "Rotina",
+        "title": "Sua instrução tem versão e data?",
+        "body": "Pense em uma consulta comercial recorrente e imagine comparar respostas após mudança silenciosa da instrução interna usada pela equipe."
       }
     },
     "structured": true,
@@ -5574,9 +5545,9 @@
     "run": true,
     "phase": "maintain_stock",
     "budgetRenewsAt": "2026-10-19T03:00:00.000Z",
-    "nextAttemptAt": "2026-10-18T19:46:47.664Z",
-    "checkedAt": "2026-10-18T19:46:48.092Z",
-    "workflowRun": "39159975467",
+    "nextAttemptAt": "2026-10-18T19:51:38.699Z",
+    "checkedAt": "2026-10-18T19:51:39.130Z",
+    "workflowRun": "39160638249",
     "retryAfter": null
   },
   "learningStrategy": {
