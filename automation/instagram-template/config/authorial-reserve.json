@@ -4537,56 +4537,140 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T19:44:23.423Z",
+  "checkedAt": "2026-10-18T19:45:03.872Z",
   "workflowRun": "39159975467",
   "message": "2 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "art-direction:base-respostas-v3",
-    "callId": "248749e7-7f63-46ce-967a-3a4e83bc7c54",
+    "stage": "review:base-respostas-v3",
+    "callId": "e20ae879-960e-40db-b571-eeac6c659e7d",
     "value": {
-      "palette": "copper",
-      "frames": [
+      "claims": [
         {
-          "layout": "workspace",
-          "labels": [
-            "política aberta",
-            "pedido fora",
-            "sem autorização"
+          "id": "slide-1",
+          "supported": true,
+          "reason": "A claim descreve o problema inicial do exercício fictício (rascunho sem fonte e pedido fora da política), alinhado ao briefing que propõe um cenário de distribuidora com consultas comerciais.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "rascunho pedido",
-            "base na política",
-            "trecho indicado"
+          "id": "slide-2",
+          "supported": true,
+          "reason": "Reflete a instrução do briefing para manter lista de respostas aprovadas com fonte oficial e data de revisão, baseando o rascunho apenas na política.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "citação gerada",
-            "conferir fonte",
-            "validar trecho"
+          "id": "slide-3",
+          "supported": true,
+          "reason": "Corresponde à exigência do briefing de conferir o trecho citado na fonte original e validar se a citação gerada consta na política vigente.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "resposta ausente",
-            "dúvida marcada",
-            "revisão futura"
+          "id": "slide-4",
+          "supported": true,
+          "reason": "Espelha a orientação do briefing de sinalizar quando a resposta não estiver na política e registrar a dúvida para revisão futura.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "decision",
-          "labels": [
-            "consulta oficial",
-            "evitar memória",
-            "fonte vigente"
+          "id": "caption",
+          "supported": true,
+          "reason": "Resume fielmente o exercício educativo fictício descrito no briefing, incluindo o disclaimer obrigatório de conteúdo autoral com apoio de IA.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            },
+            {
+              "sourceId": "label"
+            }
+          ]
+        },
+        {
+          "id": "story",
+          "supported": true,
+          "reason": "Apresenta a pergunta de engajamento sobre rotina diária de consulta à política, coerente com o cenário de distribuidora fictícia proposto.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-1",
+          "supported": true,
+          "reason": "Os rótulos visuais ('política aberta', 'pedido fora', 'sem autorização') ilustram corretamente o cenário de vendedor pedindo prazo não autorizado.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-2",
+          "supported": true,
+          "reason": "Os rótulos ('rascunho pedido', 'base na política', 'trecho indicado') representam visualmente a etapa de solicitação baseada na política.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-3",
+          "supported": true,
+          "reason": "Os rótulos ('citação gerada', 'conferir fonte', 'validar trecho') correspondem ao fluxo de conferência obrigatória descrito no briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-4",
+          "supported": true,
+          "reason": "Os rótulos ('resposta ausente', 'dúvida marcada', 'revisão futura') ilustram adequadamente a etapa de sinalização de dúvidas.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-5",
+          "supported": true,
+          "reason": "Os rótulos ('consulta oficial', 'evitar memória', 'fonte vigente') sintetizam visualmente a rotina diária de consulta à política antes de responder.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         }
-      ]
+      ],
+      "decision": "approve",
+      "supported": true,
+      "novel": true,
+      "practical": true,
+      "visualMatch": true,
+      "reason": "Todos os slides e legendas estão integralmente sustentados pelo briefing do exercício educativo fictício. O conteúdo apresenta um fluxo prático e executável (problema → lista revisada → conferência → marcação de dúvida) com situação empresarial reconhecível (vendedor solicitando prazo fora da política). Não há alegações de resultados comprovados, estatísticas ou casos reais. Os critérios de crescimento são atendidos: hook específico, payoff entregue, convite natural e utilidade concreta para compartilhamento.",
+      "growth": {
+        "hookSpecific": true,
+        "payoffDelivered": true,
+        "followReason": true,
+        "shareReason": true
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
