@@ -3570,3 +3570,10 @@ Conclusao de ativacao:
 - A revisão ainda produz descrições/decisões ambíguas; não há evidência suficiente para ativar a reposição recorrente. Próximo passo: validar a precisão visual e semântica em imagens individuais antes de repetir pilotos ou liberar a rotina. Não tratar falta de aprovação como prova de inexistência de imagens adequadas na fonte.
 - Passaram: sintaxe do script/API, parser dos scripts do painel, validate-kids-scene-matching, validate-kids-scene-replenishment, validate-kids-scene-assembly, validate-kids-vision-transport e git diff --check. Testes locais são simulados, distintos dos pilotos reais.
 - Guia PDF v1.7 de 18/10 gerado e conferido visualmente em uma página; links do guia e do painel atualizados. Painel passa a v6.09. Deploy e conferência do download em produção serão registrados após execução.
+
+
+### 2026-10-18 10:02 BRT — deploy e download confirmados
+- Commit documental/guia: cfe9c891, sincronizado com origin/main. Deploy de produção READY: dpl_HTd6z4YSkzM2e4Gvu6am2a8gMc4X; domínio https://cliente-x-instagram.vercel.app.
+- Verificação pública: raiz HTTP 200 com v6.09 e botão PDF v1.7; /docs/conferencia-cenas.html HTTP 200 com versão 1.7 de 18/10; PDF HTTP 200 application/pdf, 1.106.667 bytes, SHA256 idêntico ao arquivo local conferido visualmente.
+- Piloto final: https://github.com/marcondesjm/cliente-x-instagram/actions/runs/39129415731 — reprovado, sem nova seleção aprovada. Reposição recorrente continua desativada. Nenhuma publicação nova foi disparada nesta retomada.
+- Único resíduo local fora do Git: output/ com prévias e evidências preservadas.
