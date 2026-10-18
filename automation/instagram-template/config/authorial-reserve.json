@@ -1857,41 +1857,56 @@
       "createdAt": "2026-10-18T18:49:23.073Z"
     }
   ],
-  "checkedAt": "2026-10-18T18:49:24.501Z",
+  "checkedAt": "2026-10-18T18:49:35.070Z",
   "workflowRun": "39155831978",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "generate:versao-instrucao-v1",
-    "callId": "be5c41f5-4170-477a-a6f9-22be91b9333f",
+    "stage": "art-direction:versao-instrucao-v1",
+    "callId": "e3053533-f978-4a02-95c3-efb1f52b06e3",
     "value": {
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "eyebrow": "Versão da instrução",
-          "title": "A IA mudou sem aviso prévio?",
-          "body": "Uma loja fictícia de materiais recebe pedidos por mensagem e nota respostas inconsistentes ao longo das semanas."
+          "layout": "workspace",
+          "labels": [
+            "Mesa bagunçada",
+            "Chat aberto",
+            "Pedidos confusos"
+          ]
         },
         {
-          "eyebrow": "Organize os testes",
-          "title": "Guarde versão, data e exemplos",
-          "body": "Salve a instrução com nome de versão e data, mantendo exemplos fictícios de entrada e critérios esperados claros."
+          "layout": "conversation",
+          "labels": [
+            "Salvar versão",
+            "Data clara",
+            "Exemplos fixos"
+          ]
         },
         {
-          "eyebrow": "Compare resultados",
-          "title": "Execute os mesmos casos de teste",
-          "body": "Ao alterar a instrução, rode os exemplos anteriores e registre o que melhorou e o que piorou antes de decidir."
+          "layout": "workflow",
+          "labels": [
+            "Alterar prompt",
+            "Rodar testes",
+            "Comparar saída"
+          ]
         },
         {
-          "eyebrow": "Faça agora mesmo",
-          "title": "Crie seu registro de versões hoje",
-          "body": "Escolha um pedido fictício, defina critérios simples e anote as diferenças entre duas versões da sua instrução atual."
+          "layout": "checklist",
+          "labels": [
+            "Critérios claros",
+            "Melhorias anotadas",
+            "Pioras registradas"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Escolher pedido",
+            "Definir critérios",
+            "Anotar diferenças"
+          ]
         }
-      ],
-      "caption": "Quando a resposta da IA muda sem que você altere nada, a causa pode estar na própria instrução. Guardar versões com data e testar com os mesmos exemplos fictícios revela o que realmente mudou.\n\nComo você organiza suas instruções hoje? Siga o perfil para aprender aplicações práticas de IA em empresas com exercícios que você pode aplicar imediatamente no seu negócio.",
-      "storySlide": {
-        "eyebrow": "Rotina real",
-        "title": "Sua IA responde diferente?",
-        "body": "Você já percebeu mudanças nas respostas sem alterar a instrução? Veja no feed como criar um registro simples para acompanhar versões."
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
