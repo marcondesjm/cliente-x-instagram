@@ -68,6 +68,7 @@ async function paidCall(stage,image,prompt,maxOutputTokens=2200,schema=null,allo
   if(reviewCircuitBlocked(state))throw new Error('Consumo ou recibo fora do limite; reposição pausada automaticamente.');
   if(result.stopReason!=='end_turn' && !(result.stopReason==='tool_use' && result.structured===true))throw new Error('Avaliação incompleta; não aprovada.');
   if(result.value===null) {
+    state.lastInvalidResponse={stage,callId:call.id,checkedAt:now(),stopReason:result.stopReason || null,excerpt:String(result.invalidResponseText || '').slice(0,5000)};save();
     if(allowUnverifiedImage && image && stage.startsWith('pixels:'))return null;
     console.log(JSON.stringify({stage,problem:'invalid_json',sanitizedResponse:result.invalidResponseText}));
     throw new Error('Resposta visual sem JSON válido; seleção não aprovada.');
@@ -228,7 +229,7 @@ async function replenish() {
     const pack=packs.find(p=>p.id===entry.id);
     if(!pack || published(pack) || recipes.some(r=>r.id===pack.id) || pack.slides.every(s=>s.imagePath))continue;
     if(processed>=state.policy.maxPacksPerRun)break;
-    const choice=entry.candidates.filter(c=>c.scenes.length>=pack.slides.length+1).map(candidate=>({candidate,fingerprint:hash({copy:copyFingerprint(pack),terms:candidate.termsHash,scenes:candidate.scenes.map(s=>s.id),version:VISION_VERSION,model:state.model,reasoningModel:state.reasoningModel,responseFormat:state.responseFormat,parameters:MATCHING_VERSION})})).find(c=>!state.rejections[c.fingerprint] || Date.parse(state.rejections[c.fingerprint].retryAfter)<=Date.now());
+    const choice=entry.candidates.filter(c=>c.scenes.length>=pack.slides.length+1).map(candidate=>({candidate,fingerprint:hash({copy:copyFingerprint(pack),terms:candidate.termsHash,scenes:candidate.scenes.map(s=>s.id),version:VISION_VERSION,model:state.model,reasoningModel:state.reasoningModel,responseFormat:state.responseFormat,parameters:MATCHING_VERSION})})).find(c=>Boolean(pilotPackId) || !state.rejections[c.fingerprint] || Date.parse(state.rejections[c.fingerprint].retryAfter)<=Date.now());
     if(!choice)continue;
     const {candidate,fingerprint}=choice;
     try {callAllowance(state,new Date(),3);}catch(error){
