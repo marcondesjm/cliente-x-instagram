@@ -474,7 +474,7 @@
   ],
   "checkedAt": "2026-10-18T15:52:42.493Z",
   "workflowRun": "39142326219",
-  "message": "Limite diário de chamadas atingido.",
+  "message": "Reposição automática aguarda a renovação diária da cota; será retomada pelo agendamento, sem ação manual.",
   "lastResponse": {
     "stage": "review:pedido-duplicado",
     "callId": "6c8fbb16-0360-4425-9c6c-d2c0a287ffe8",
@@ -601,5 +601,20 @@
         "passed": true
       }
     ]
+  },
+  "automaticRecovery": {
+    "pending": true,
+    "pendingSlot": {
+      "date": "2026-10-18",
+      "slotIndex": 2
+    },
+    "available": 0,
+    "recoveryReady": false,
+    "run": false,
+    "phase": "waiting_daily_budget",
+    "budgetRenewsAt": "2026-10-19T03:00:00.000Z",
+    "nextAttemptAt": "2026-10-19T03:35:00.000Z",
+    "checkedAt": "2026-10-18T16:24:02.528Z",
+    "workflowRun": "39144787573"
   }
 }
