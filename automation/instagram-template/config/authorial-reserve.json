@@ -283,86 +283,63 @@
           {
             "id": "slide-1",
             "supported": true,
-            "reason": "A alegação descreve o problema de pedidos duplicados e sobrecarga operacional, conteúdo que corresponde exatamente ao texto visível na Cena 1 ('Pedidos duplicados sobrecarregam a operação', 'Um mesmo pedido chega por canais diferentes e vira duas tarefas'). O briefing confirma que se trata de um exercício educativo fictício sobre esse tema.",
+            "reason": "O briefing descreve explicitamente o problema de pedidos duplicados sobrecarregarem a operação e gerarem retrabalho, correspondendo exatamente ao conteúdo do slide 1.",
             "evidence": [
               {
-                "sourceId": "brief",
-                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa"
-              },
-              {
-                "sourceId": "stock",
-                "quote": "Pedidos duplicados sobrecarregam a operação"
+                "sourceId": "brief"
               }
             ]
           },
           {
             "id": "slide-2",
             "supported": true,
-            "reason": "O slide apresenta o procedimento de atribuir identificador único e consultar registro antes de criar tarefa, alinhado perfeitamente com as instruções do briefing. A imagem mostra diagrama com etapas Pedido, Identificação e Registro, corroborando o texto descrito.",
+            "reason": "O briefing orienta atribuir um identificador único no recebimento e consultar seu registro antes de criar tarefas, alinhando-se perfeitamente ao procedimento do slide 2.",
             "evidence": [
               {
-                "sourceId": "brief",
-                "quote": "atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa"
-              },
-              {
-                "sourceId": "label",
-                "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+                "sourceId": "brief"
               }
             ]
           },
           {
             "id": "slide-3",
             "supported": true,
-            "reason": "A instrução de encaminhar para conferência quando houver registro existente está explicitamente prevista no briefing e reproduzida literalmente no texto da Cena 2. Não há promessa de eliminação automática de duplicações, apenas orientação procedural.",
+            "reason": "O briefing determina encaminhar para conferência caso o identificador já exista, evitando duplicação, conforme descrito no slide 3.",
             "evidence": [
               {
-                "sourceId": "brief",
-                "quote": "se já existir, encaminhar para conferência em vez de criar outra tarefa"
-              },
-              {
-                "sourceId": "brief",
-                "quote": "não prometer que a IA sozinha elimina duplicações."
+                "sourceId": "brief"
               }
             ]
           },
           {
             "id": "slide-4",
             "supported": true,
-            "reason": "O exercício prático de reenviar o mesmo pedido para testar reconhecimento do registro anterior está descrito integralmente no briefing e corresponde ao conteúdo da Cena 3. A menção a ajustar a regra conforme testes também está presente nas fontes.",
+            "reason": "O briefing inclui a instrução de testar reenviando o mesmo pedido e ajustar a regra conforme o comportamento observado, cobrindo integralmente o exercício prático do slide 4.",
             "evidence": [
               {
-                "sourceId": "brief",
-                "quote": "testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes"
+                "sourceId": "brief"
               }
             ]
           },
           {
             "id": "caption",
             "supported": true,
-            "reason": "A legenda sintetiza corretamente o fluxo do exercício (identificador, consulta prévia, encaminhamento para conferência) e inclui o disclaimer obrigatório de que é conteúdo educativo fictício com apoio de IA, conforme exigido pelo briefing e pela label.",
+            "reason": "A legenda sintetiza corretamente o fluxo proposto (identificador, consulta prévia, conferência, teste) e reforça que a eficácia depende da implementação, em consonância com o briefing e o label.",
             "evidence": [
               {
-                "sourceId": "brief",
-                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência"
+                "sourceId": "brief"
               },
               {
-                "sourceId": "label",
-                "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+                "sourceId": "label"
               }
             ]
           },
           {
             "id": "story",
             "supported": true,
-            "reason": "A reflexão proposta ('Como você identifica pedidos únicos hoje?') é coerente com o caráter educativo e interativo do material. O briefing estabelece que são orientações e propostas, não resultados, e a pergunta convida à participação sem afirmar benefícios garantidos.",
+            "reason": "A reflexão pede compartilhamento sobre métodos atuais de identificação de pedidos únicos, sendo coerente com o tema educativo fictício definido nas fontes.",
             "evidence": [
               {
-                "sourceId": "brief",
-                "quote": "Orientações são propostas, não resultados ou notícias."
-              },
-              {
-                "sourceId": "label",
-                "quote": "Exemplo fictício; não é notícia nem resultado comprovado."
+                "sourceId": "brief"
               }
             ]
           }
@@ -372,7 +349,7 @@
         "novel": true,
         "practical": true,
         "visualMatch": true,
-        "reason": "Todas as seis alegações estão integralmente sustentadas pelas fontes brief, label e stock. O conteúdo é estritamente educativo e fictício, sem promessas de resultados, estatísticas ou casos reais. Os renders apresentam texto legível, composição coerente com o briefing e ausência de cortes ou sobreposições. O exercício possui começo (problema), desenvolvimento (procedimento e conferência) e conclusão (teste prático e reflexão) completos, atendendo aos critérios de practicality e novelty em relação ao histórico de títulos fornecido."
+        "reason": "Todas as alegações estão integralmente sustentadas pelo briefing e pelo label. O conteúdo é educativo, fictício e não apresenta estatísticas ou garantias indevidas. As imagens são diagramas autorais legíveis e pertinentes, sem cortes ou sobreposições prejudiciais. O exercício possui começo, desenvolvimento e conclusão claros, atendendo aos critérios de praticidade e novidade frente ao histórico fornecido."
       },
       "reason": "Citação factual inventada ou fora das fontes.",
       "repairReason": "Novo render v3 e revisão independente com seleção de IDs de fonte; nenhuma aprovação manual."
@@ -513,7 +490,7 @@
       "reason": "Citação factual inventada ou fora das fontes."
     }
   ],
-  "checkedAt": "2026-10-18T15:52:38.392Z",
+  "checkedAt": "2026-10-18T15:52:40.026Z",
   "workflowRun": "39142326219",
   "message": "Nenhuma nova pauta liberada; consulte as rejeições sem repetir conteúdo.",
   "lastResponse": {
