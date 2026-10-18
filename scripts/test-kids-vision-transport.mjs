@@ -54,7 +54,7 @@ try {
       if(blocked)throw new Error('Recibo do teste de composição inválido.');
     }
   }
-  const regressionVersion='depicted-event-v3';
+  const regressionVersion='depicted-event-v4';
   if(state.eventGrounding?.version!==regressionVersion || Date.now()-Date.parse(state.eventGrounding?.checkedAt || 0)>=24*60*60*1000) {
     const passages=await Promise.all(['Lucas 24:1–12','Lucas 19:1–10','Marcos 4:35–41'].map(reference=>loadPassage(reference)));
     const task={scopeReference:'Trechos WEB fornecidos, sem ampliar o relato.',sources:passages.flatMap((p,i)=>p.verses.map(v=>({id:`p${i}:${v.id}`,text:v.text}))),claims:[

@@ -1,3 +1,4 @@
+import {bindVerifiedPassage} from '../lib/kids-scene-vision.js';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import sharp from 'sharp';
@@ -95,9 +96,9 @@ await assert.rejects(sendVision({key:'x',model:'other-host',image,prompt:'x'}),/
 const auto=structuredClone(recipe);auto.status='automatically-reviewed';
 auto.selected=auto.selected.map((s,i)=>({...s,visualHash:String(i).padStart(16,'0'),mirrorHash:String(i+10).padStart(16,'0')}));
 const fixturePassage={reference:auto.reference,translation:'World English Bible',license:'Public Domain',urls:['https://bible-api.com/data/web/GEN/45'],verses:[{id:'45:1',text:'Then Joseph could not control himself before all those who stood before him.'}]};
-const task=sceneGroundingTask(auto.selected,fixturePassage,auto.selected.map(()=>({observedEvent:'Família reunida com José na casa.',depictedEvent:'Família reunida com José na casa.'})));
+const task=sceneGroundingTask(auto.selected,fixturePassage,auto.selected.map(()=>({observedEvent:'Família reunida com José na casa.',depictedEvent:fixturePassage.verses[0].text})));
 const fixtureManifest=reviewImageManifest(auto.selected.map(s=>({id:s.id,bytes:image})));
-auto.automaticReview={version:VISION_VERSION,calibrationPassed:true,scriptureHash:hash(fixturePassage),scriptureSources:fixturePassage.urls,reviewedAt:new Date().toISOString(),verseIds:['45:1'],factualReview:{task,fingerprint:groundingFingerprint(task),result:{claims:task.claims.map(c=>({id:c.id,supported:true,reason:'Justificativa simulada para verificar o vínculo da prova.',evidence:[{sourceId:'45:1',quote:'Then Joseph could not control himself'}]}))}},selection:{decision:'approve',feed:auto.selected.slice(0,-1).map(s=>s.id),story:auto.selected.at(-1).id,childSuitable:true,distinct:true,referenceAccurate:true},visualReview:{mode:'labelled-images-v1',inputs:fixtureManifest,imageHash:hash(fixtureManifest),imageBytes:fixtureManifest.reduce((n,s)=>n+s.bytes,0),positions:auto.selected.map(s=>s.id)},verification:{decision:'approve',cards:auto.selected.map(s=>({id:s.id,observedEvent:'Família reunida com José na casa.',depictedEvent:'Família reunida com José na casa.',pixelMatch:true,passageMatch:true,childSuitable:true,distinct:true,copyMatch:true,verse:'45:1',reason:'A cena mostra uma família reunida.'}))},binding:reviewBinding(auto)};
+auto.automaticReview={version:VISION_VERSION,calibrationPassed:true,scriptureHash:hash(fixturePassage),scriptureSources:fixturePassage.urls,reviewedAt:new Date().toISOString(),verseIds:['45:1'],factualReview:{task,fingerprint:groundingFingerprint(task),result:{claims:task.claims.map(c=>({id:c.id,supported:true,reason:'Justificativa simulada para verificar o vínculo da prova.',evidence:[{sourceId:'45:1',quote:'Then Joseph could not control himself'}]}))}},selection:{decision:'approve',feed:auto.selected.slice(0,-1).map(s=>s.id),story:auto.selected.at(-1).id,childSuitable:true,distinct:true,referenceAccurate:true},visualReview:{mode:'labelled-images-v1',inputs:fixtureManifest,imageHash:hash(fixtureManifest),imageBytes:fixtureManifest.reduce((n,s)=>n+s.bytes,0),positions:auto.selected.map(s=>s.id)},verification:{decision:'approve',cards:auto.selected.map(s=>({id:s.id,observedEvent:'Família reunida com José na casa.',depictedEvent:fixturePassage.verses[0].text,pixelMatch:true,passageMatch:true,childSuitable:true,distinct:true,copyMatch:true,verse:'45:1',reason:'A cena mostra uma família reunida.'}))},binding:reviewBinding(auto)};
 auto.automaticReview.selection.evidence=auto.selected.map((s,i)=>({id:s.id,card:i+1,verse:'45:1',reason:'A cena mostra o reencontro da família.'}));
 assert.equal(verseIsWithin('45:1–2',['45:1','45:2']),true);assert.equal(verseIsWithin('45:1–3',['45:1','45:2']),false);
 auto.automaticReview.blindObservations=auto.selected.map(s=>({id:s.id,sha256:s.sha256,imageHash:hash(photo),imageBytes:50000,visible:true,style:'illustration',childSuitable:true,observedEvent:'Família reunida com José na casa.'}));
@@ -124,11 +125,11 @@ console.log('PASS: call limits/interruption, BRT day, full scripture completenes
 
 const noVisualReview=structuredClone(auto);delete noVisualReview.automaticReview.visualReview;assert.throws(()=>assertAutomaticReview(noVisualReview),/pixels/);
 const wrongPixelMatch=structuredClone(auto);wrongPixelMatch.automaticReview.verification.cards[0].pixelMatch=false;assert.throws(()=>assertAutomaticReview(wrongPixelMatch),/avaliação/);
-const inventedEvent=structuredClone(auto);inventedEvent.automaticReview.verification.cards[0].depictedEvent='Jesus apareceu pessoalmente às mulheres.';assert.throws(()=>assertAutomaticReview(inventedEvent),/fonte factual/);
+const inventedEvent=structuredClone(auto);inventedEvent.automaticReview.verification.cards[0].depictedEvent='Jesus apareceu pessoalmente às mulheres.';assert.throws(()=>assertAutomaticReview(inventedEvent),/literal|fonte factual/);
 const wrongReviewOrder=structuredClone(auto);wrongReviewOrder.automaticReview.visualReview.positions.reverse();assert.throws(()=>assertAutomaticReview(wrongReviewOrder),/pixels/);
 
 const gateState={model:'claude-sonnet-4.6',reasoningModel:'claude-sonnet-4.6'};
-const diagnostics={visualDiversity:{version:'visual-diversity-v1',model:gateState.reasoningModel,checkedAt:now.toISOString(),cases:[{distinct:true,expected:true,passed:true},{distinct:false,expected:false,passed:true}]},entries:Array.from({length:4},(_,i)=>({fixture:'holdout-'+i,mode:'sonnet-forced-holdout',model:gateState.model,passed:true,checkedAt:now.toISOString()})),eventGrounding:{version:'depicted-event-v3',model:gateState.reasoningModel,passed:true,checkedAt:now.toISOString(),cases:Array.from({length:6},(_,i)=>({passed:true,expected:[false,true,true,false,true,false][i],supported:[false,true,true,false,true,false][i]}))}};
+const diagnostics={visualDiversity:{version:'visual-diversity-v1',model:gateState.reasoningModel,checkedAt:now.toISOString(),cases:[{distinct:true,expected:true,passed:true},{distinct:false,expected:false,passed:true}]},entries:Array.from({length:4},(_,i)=>({fixture:'holdout-'+i,mode:'sonnet-forced-holdout',model:gateState.model,passed:true,checkedAt:now.toISOString()})),eventGrounding:{version:'depicted-event-v4',model:gateState.reasoningModel,passed:true,checkedAt:now.toISOString(),cases:Array.from({length:6},(_,i)=>({passed:true,expected:[false,true,true,false,true,false][i],supported:[false,true,true,false,true,false][i]}))}};
 assert.equal(assertVisionReadiness(gateState,diagnostics,now).factualCases,6);
 const failedGate=structuredClone(diagnostics);failedGate.entries[0].passed=false;assert.throws(()=>assertVisionReadiness(gateState,failedGate,now),/visual/);
 assert.throws(()=>assertVisionReadiness(gateState,diagnostics,new Date(now.getTime()+25*60*60*1000)),/visual/);
@@ -167,3 +168,12 @@ await assert.rejects(sendVision({key:'test',model:'claude-sonnet-4.6',images:[{i
 const tamperedManifest=structuredClone(auto);tamperedManifest.automaticReview.visualReview.inputs[0].sha256='0'.repeat(64);assert.throws(()=>assertAutomaticReview(tamperedManifest),/Manifesto/);
 const missingMirror=structuredClone(diagnostics);missingMirror.visualDiversity.cases.pop();assert.throws(()=>assertVisionReadiness(gateState,missingMirror,now),/composições/);
 console.log('PASS: separately labelled image blocks, combined payload cap, immutable pixel manifest and distinct/mirrored regression gate.');
+
+const linkedObservation=[{id:'0123456789abcdef',observedEvent:'Um homem está sentado nos galhos de uma árvore.'}];
+const linkedPassage={verses:[{id:'19:5',text:'When Jesus came to the place, he looked up and saw him.'}]};
+const linkedReview={decision:'approve',cards:[{position:1,observationId:linkedObservation[0].id,verse:'19:5',passageMatch:true}]};
+const linked=bindVerifiedPassage(linkedReview,linkedObservation,linkedPassage);
+assert.equal(linked.cards[0].depictedEvent,linkedPassage.verses[0].text);assert.equal(linked.cards[0].observedEvent,linkedObservation[0].observedEvent);
+assert.throws(()=>bindVerifiedPassage({...linkedReview,cards:[{...linkedReview.cards[0],verse:'19:4'}]},linkedObservation,linkedPassage),/versículo exato/);
+assert.throws(()=>bindVerifiedPassage({...linkedReview,cards:[{...linkedReview.cards[0],depictedEvent:'An invented action.'}]},linkedObservation,linkedPassage),/reescrever/);
+console.log('PASS: biblical event text is copied from the exact verse, never authored by the image reviewer.');
