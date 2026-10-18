@@ -12,7 +12,7 @@ c=canvas.Canvas(p,pagesize=(595.28,841.89));c.setTitle('Cliente X | Direção de
 def base(n):
  c.setFillColor(HexColor('#073f48'));c.rect(0,730,596,112,fill=1,stroke=0)
  c.setFillColor(white);c.setFont('ArialBold',24);c.drawString(42,790,'Direção de arte com Claude')
- c.setFont('Arial',11);c.drawString(42,764,'Marcondes Machado · IA aplicada a empresas · v1 · 18/10/2026')
+ c.setFont('Arial',11);c.drawString(42,764,'Marcondes Machado · IA aplicada a empresas · v1.1 · 18/10/2026')
  c.setFillColor(HexColor('#52636a'));c.setFont('Arial',9);c.drawString(42,28,'business-editorial-v1 · Ilustrações editoriais identificadas · '+str(n))
 def paragraph(text,y,size=11,width=510):
  c.setFillColor(HexColor('#18313b'));c.setFont('Arial',size)
@@ -29,6 +29,7 @@ for title,body in [
  ('Uma narrativa visual completa','Cada carrossel recebe quatro artes distintas, ligadas ao texto. O Story recebe uma quinta composição. Capa, desenvolvimento, conferência e ação final mantêm o conteúdo completo.'),
  ('Como a API participa','O fluxo gera o roteiro, pode revisar um rascunho inválido, solicita a direção de arte estruturada e executa uma revisão independente dos cinco renders. Rótulos das ilustrações também entram na conferência factual.'),
  ('O que impede a publicação','Texto cortado, composição repetida, rótulo fora do briefing, alegação sem suporte ou reprovação visual bloqueiam a liberação. A prévia de teste não entra no estoque publicável.'),
+ ('Estoque preventivo','A meta é manter treze pautas aprovadas. A reposição trabalha em lotes de até três, verifica o estoque a cada vinte minutos e também após publicações. Uma reprovação mantém a proteção e programa nova avaliação após vinte minutos.'),
  ('Como avaliar o resultado','Compare salvamentos, compartilhamentos, visitas ao perfil e novos seguidores em períodos equivalentes. Aparência mais atraente é uma hipótese editorial, sem garantia de alcance ou crescimento.')]:
  c.setFillColor(HexColor('#073f48'));c.setFont('ArialBold',14);c.drawString(42,y,title);y-=24;y=paragraph(body,y)
 c.showPage();base(2)

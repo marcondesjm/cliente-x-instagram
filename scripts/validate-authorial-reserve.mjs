@@ -92,3 +92,7 @@ const nearlySpent={...spent,calls:spent.calls.slice(0,9)};
 assert.equal(plan({budget:nearlySpent}).run,true,'A fresh regression reserves generation, art direction and review');
 assert.equal(plan({budget:{...spent,calls:spent.calls.slice(0,10)}}).phase,'waiting_daily_budget');
 console.log('PASS: previous-day shortage only, ledger exclusion, future/old-date guards and exact regression budget.');
+
+assert.doesNotMatch(workflow,/\nconcurrency:\r?\n  group: platform-editorial-api-validation/,'Do not hold the Claude lock while publication waits');
+assert.match(workflow,/replenish:\s+concurrency:\s+group: platform-editorial-api-validation/,'Serialize paid replenishment jobs');
+assert.equal(plan({state:{...stocked,targetReady:1},budget:receipted,errors:[]}).phase,'stock_sufficient','Stop calls when approved fresh target stock is sufficient');
