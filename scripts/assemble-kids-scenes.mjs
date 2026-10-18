@@ -30,6 +30,7 @@ for(const recipe of recipes) {
   try {
     validateRecipe(recipe,pack);
     if(history.some(e=>e.feedFingerprint===packContentFingerprint(pack) || e.coverTitle===pack.slides[0].title)) {
+      if(previous?.recipeFingerprint===hash(recipe) && previous.packFingerprint===hash(pack))entry={...previous,...entry};
       entry.status='already_published';entry.message='Conteúdo já publicado; não foi remontado nem republicado.';
     } else {
       const intact=recipe.selected.every(s=>fs.existsSync(s.path) && hash(fs.readFileSync(s.path))===s.sha256);

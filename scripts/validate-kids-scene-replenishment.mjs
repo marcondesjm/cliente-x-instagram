@@ -140,6 +140,7 @@ const activationState={...gateState,billingMode:'fixed_plan_user_confirmed',circ
 const activationDiagnostics=structuredClone(diagnostics);activationDiagnostics.entries.forEach(e=>e.checkedAt=activationNow.toISOString());activationDiagnostics.eventGrounding.checkedAt=activationNow.toISOString();
 const activationInput={state:activationState,recipes:[activationRecipe],packs:[pack],diagnostics:activationDiagnostics,assembled:{entries:[{id:auto.id,status:'ready',renderVerified:true,recipeFingerprint:hash(activationRecipe),packFingerprint:hash(pack),verifiedAt:new Date(activationNow.getTime()-30000).toISOString()}]},readAsset:p=>fs.readFileSync(p),now:activationNow};
 assert.equal(assertSceneActivation(activationInput).recipeId,auto.id);
+const publishedReceipt=structuredClone(activationInput.assembled);publishedReceipt.entries[0].status='already_published';assert.equal(assertSceneActivation({...activationInput,assembled:publishedReceipt}).recipeId,auto.id);
 assert.equal(activationState.circuit,'vision_validation_failed','Evidence inspection never mutates the guard');
 for(const circuit of ['invalid_usage_receipt','provider_temporarily_unavailable','pixel_reading_not_confirmed'])assert.throws(()=>assertSceneActivation({...activationInput,state:{...activationState,circuit}}),/consumo ou transporte/);
 assert.throws(()=>assertSceneActivation({...activationInput,state:{...activationState,calls:[]}}),/Recibos/);
