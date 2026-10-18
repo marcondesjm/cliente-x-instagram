@@ -10605,41 +10605,56 @@
       "createdAt": "2026-10-18T21:17:07.397Z"
     }
   ],
-  "checkedAt": "2026-10-18T21:17:09.211Z",
+  "checkedAt": "2026-10-18T21:17:18.336Z",
   "workflowRun": "39166855065",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "generate:resumo-transferencia-v5",
-    "callId": "80ad01b5-c0d0-4dd1-bf7f-284121265a8b",
+    "stage": "art-direction:resumo-transferencia-v5",
+    "callId": "d44da195-dedd-4ab8-92c7-3054e3ccdc75",
     "value": {
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "eyebrow": "Oficina fictícia",
-          "title": "Como organizar o resumo antes de transferir?",
-          "body": "O cliente pede orçamento e relata barulho no motor do carro antigo."
+          "layout": "workspace",
+          "labels": [
+            "Bancada da oficina",
+            "Ficha do veículo",
+            "Resumo aberto"
+          ]
         },
         {
-          "eyebrow": "Separe as partes",
-          "title": "Confirme dados e liste pendências claras",
-          "body": "Peça modelo, ano e quilometragem para montar a proposta técnica completa."
+          "layout": "conversation",
+          "labels": [
+            "Cliente relata",
+            "Atendente anota",
+            "Dados pendentes"
+          ]
         },
         {
-          "eyebrow": "Conferência rápida",
-          "title": "Compare o resumo com a conversa original",
-          "body": "Marque como pendente qualquer informação que ainda não foi informada pelo cliente."
+          "layout": "workflow",
+          "labels": [
+            "Recebe pedido",
+            "Confere resumo",
+            "Marca pendências"
+          ]
         },
         {
-          "eyebrow": "Encaminhe só o necessário",
-          "title": "Envie contexto limpo para quem continua",
-          "body": "Repasse apenas o resumo conferido e as pendências marcadas para o próximo atendente."
+          "layout": "checklist",
+          "labels": [
+            "Modelo verificado",
+            "Ano confirmado",
+            "Km pendente"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Contexto limpo",
+            "Pendências claras",
+            "Próximo atendente"
+          ]
         }
-      ],
-      "caption": "Em uma oficina fictícia, o cliente solicita orçamento e menciona barulho no motor. Antes de transferir, peça um resumo separado com informações confirmadas e pendências. Marque como pendente o que não foi informado e confira o resumo contra a conversa original. Encaminhe apenas o contexto necessário à pessoa que continuará o atendimento.\n\nComo sua equipe separa confirmações de pendências hoje? Siga o perfil para aprender aplicações práticas de IA em empresas.",
-      "storySlide": {
-        "eyebrow": "Rotina da oficina",
-        "title": "Você confere o resumo antes de repassar?",
-        "body": "Veja no feed um exercício prático para organizar transferências de atendimento com clareza."
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
