@@ -3,8 +3,8 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-haiku-4.5",
-  "health": "blocked",
-  "message": "Segunda avaliação reprovada ou incompleta. Cena 3: A observação descreve um homem tocando o ombro de outro sentado, mas o contexto editorial refere-se ao momento após a calma quando Jesus questiona a fé dos discípulos (Marcos 4:40). A ação observada não corresponde semanticamente ao texto da fonte nem aos versículos da passagem que tratam de Jesus ",
+  "health": "pilot_running",
+  "message": "Piloto diagnóstico da pauta kids-biblia-27 em execução; reposição recorrente permanece bloqueada.",
   "policy": {
     "maxCallsPerDay": 26,
     "maxInputTokensPerCall": 120000,
@@ -1536,8 +1536,8 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-17T23:59:16.837Z",
-  "lastRun": "39080825099",
+  "checkedAt": "2026-10-18T00:03:26.340Z",
+  "lastRun": "39081281100",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -2219,13 +2219,12 @@
   },
   "reasoningModel": "claude-sonnet-4.6",
   "pilotRun": {
-    "id": "48c3eb7f-8b84-4a98-9aca-05021a6a869f",
+    "id": "a8fbd6a2-5c4b-4a1f-a318-2b70cea25407",
     "packId": "kids-biblia-27",
-    "status": "rejected",
-    "startedAt": "2026-10-17T23:56:01.135Z",
-    "expiresAt": "2026-10-18T00:21:01.135Z",
+    "status": "running",
+    "startedAt": "2026-10-18T00:03:26.340Z",
+    "expiresAt": "2026-10-18T00:28:26.340Z",
     "maxCalls": 10,
-    "maxInputTokens": 1200000,
-    "completedAt": "2026-10-17T23:59:16.837Z"
+    "maxInputTokens": 1200000
   }
 }
