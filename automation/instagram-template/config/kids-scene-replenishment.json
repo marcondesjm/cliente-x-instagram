@@ -2143,11 +2143,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-18T13:44:58.140Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 11995,
       "imageFingerprint": null,
-      "promptFingerprint": "73289d4b66a40491f757bc14edb2ac52422e35148f3e17dd1051cd26ce246109"
+      "promptFingerprint": "73289d4b66a40491f757bc14edb2ac52422e35148f3e17dd1051cd26ce246109",
+      "completedAt": "2026-10-18T13:45:44.682Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 27,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -2250,7 +2256,7 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:44:58.140Z",
+  "checkedAt": "2026-10-18T13:45:44.682Z",
   "lastRun": "39132710148",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -2486,74 +2492,332 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "facts:kids-biblia-29",
+    "stage": "select:kids-biblia-29",
     "value": {
-      "claims": [
+      "cards": [
         {
-          "id": "98834c32e024c944",
-          "supported": true,
-          "reason": "A ilustração mostra um homem sentado recebendo outro homem em pé que gesticula, compatível com Zacchaeus tendo descido da árvore e recebido Jesus alegremente em ambiente interno.",
-          "evidence": [
+          "card": 1,
+          "assessments": [
             {
-              "sourceId": "19:6",
-              "quote": "He hurried, came down, and received him joyfully."
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "A capa exige o evento do título 'Zaqueu recebeu Jesus em sua casa'. Esta cena mostra um grupo reunido com homem gesticulando, mas não retrata especificamente Zaqueu recebendo Jesus em sua casa."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "19:6",
+              "reason": "Retrata Zaqueu sentado recebendo Jesus em ambiente interno, compatível com 'recebeu Jesus em sua casa' do título da capa."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mostra Zaqueu na árvore, que é etapa anterior ao recebimento em casa exigido pelo título da capa."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo reunido sem cenário identificável ou ação específica de Zaqueu recebendo Jesus em sua casa."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mostra murmuração das pessoas ao ver Jesus entrando, não o ato de Zaqueu recebê-lo alegremente em casa."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mostra Zaqueu subindo na árvore, etapa anterior ao recebimento em casa exigido pelo título."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mostra Jesus e discípulos caminhando, não o evento específico de Zaqueu recebendo Jesus em sua casa."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mostra Zaqueu tentando ver Jesus através da multidão, etapa anterior ao recebimento em casa."
             }
-          ]
+          ],
+          "reason": "Capa exige ilustrar especificamente o evento do título: Zaqueu recebendo Jesus em sua casa."
         },
         {
-          "id": "0d7ed7a02e4a2584",
-          "supported": true,
-          "reason": "A ilustração mostra um homem sentado nos galhos de uma árvore olhando para baixo, enquanto um grupo está reunido ao redor do tronco, compatível com Zacchaeus subindo na árvore para ver Jesus.",
-          "evidence": [
+          "card": 2,
+          "assessments": [
             {
-              "sourceId": "19:4",
-              "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "O resumo menciona subir na árvore, receber Jesus e falar sobre reparar erros. Esta cena mostra grupo reunido sem conexão clara com esses eventos específicos do resumo."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "19:8",
+              "reason": "Retrata Zaqueu falando sobre restituição (dar aos pobres e reparar prejuízos), evento mencionado no resumo do cartão."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "19:4-5",
+              "reason": "Mostra Zaqueu na árvore sendo chamado por Jesus, evento central mencionado no resumo 'subiu em uma árvore para ver Jesus'."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo reunido sem ação específica relacionada aos eventos descritos no resumo do cartão narrativo."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Foca na murmuração das pessoas, não nos eventos principais do resumo (subir na árvore, receber Jesus, falar sobre reparação)."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "19:4",
+              "reason": "Ilustra Zaqueu subindo na árvore para ver Jesus, evento explicitamente mencionado no resumo do cartão."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mostra Jesus passando por Jericó, não os eventos específicos de Zaqueu descritos no resumo."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mostra Zaqueu tentando ver Jesus pela multidão, etapa preparatória não mencionada como evento principal no resumo."
             }
-          ]
+          ],
+          "reason": "Cartão narrativo deve retratar um dos eventos do resumo: subir na árvore, receber Jesus ou falar sobre reparação."
         },
         {
-          "id": "0213f4524b345be9",
-          "supported": true,
-          "reason": "A ilustração mostra homens observando figuras ao fundo numa passagem entre paredes, com uma figura diante de uma porta, compatível com a murmuração das pessoas ao verem Jesus entrando na casa de Zacchaeus.",
-          "evidence": [
+          "card": 3,
+          "assessments": [
             {
-              "sourceId": "19:7",
-              "quote": "When they saw it, they all murmured, saying, “He has gone in to lodge with a man who is a sinner.”"
+              "scene": 1,
+              "allowed": true,
+              "verse": "19:9",
+              "reason": "Cena pertinente à passagem mostrando Jesus falando sobre salvação, conectada educativamente à lição sobre mudança de atitude."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "19:8",
+              "reason": "Ilustra Zaqueu comprometendo-se com restituição, demonstrando concretamente a 'mudança de atitude' mencionada no texto da lição."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "19:5",
+              "reason": "Cena pertinente mostrando encontro entre Jesus e Zaqueu na árvore, base para a transformação de atitude abordada na lição."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo reunido sem ação específica ou conexão educativa clara com a reflexão sobre mudança de atitude."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "19:7",
+              "reason": "Cena pertinente mostrando contexto social da história, útil para discutir mudança de atitude diante de preconceitos."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "19:4",
+              "reason": "Ilustra iniciativa de Zaqueu em buscar Jesus, demonstrando mudança de atitude pertinente à reflexão do cartão."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mostra apenas Jesus caminhando, sem conexão educativa direta com a lição sobre mudança de atitude pessoal."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "19:3",
+              "reason": "Cena pertinente mostrando determinação de Zaqueu em superar obstáculos para ver Jesus, relacionada à mudança de atitude."
             }
-          ]
+          ],
+          "reason": "Cartão de lição aceita qualquer cena pertinente à passagem com conexão educativa justificável à reflexão sobre mudança de atitude."
         },
         {
-          "id": "6654943ac38eff87",
-          "supported": true,
-          "reason": "A ilustração mostra um grupo de homens reunidos com um homem central gesticulando, compatível com Jesus falando sobre salvação ter chegado àquela casa.",
-          "evidence": [
+          "card": 4,
+          "assessments": [
             {
-              "sourceId": "19:9",
-              "quote": "Jesus said to him,\n“Today, salvation has come to this house, because he also is a son of Abraham."
+              "scene": 1,
+              "allowed": true,
+              "verse": "19:9-10",
+              "reason": "Cena pertinente à passagem sobre salvação e busca dos perdidos, conectada educativamente à atividade sobre reparação e devolução."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "19:8",
+              "reason": "Ilustra diretamente o compromisso de Zaqueu com restituição, tema central da atividade familiar sobre devolver e reparar prejuízo."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Embora pertinente à passagem, não tem conexão educativa clara com a atividade específica sobre reparação e devolução."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo sem ação específica não oferece conexão educativa direta com a atividade sobre reparação mencionada no cartão."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Foca na murmuração, sem conexão educativa clara com a atividade prática sobre reparação e devolução."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Ação de subir na árvore não se conecta educativamente à atividade sobre reparação e devolução de prejuízos."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jesus caminhando não oferece conexão educativa direta com a atividade familiar sobre reparação mencionada."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Tentativa de ver Jesus não tem relação educativa clara com a atividade sobre reparação e devolução."
             }
-          ]
+          ],
+          "reason": "Atividade familiar foca em reparação; cenas devem ter conexão educativa justificável com esse tema específico."
         },
         {
-          "id": "e64874ce7ad7e208",
-          "supported": false,
-          "reason": "A visualObservation descreve apenas um grupo de homens reunidos em círculo sem cenário identificável ou ação de entrada/passagem por Jericó. Não há evidência visual de movimento através da cidade ou entrada em algum lugar.",
-          "evidence": [
+          "card": 5,
+          "assessments": [
             {
-              "sourceId": "19:1",
-              "quote": "He entered and was passing through Jericho."
+              "scene": 1,
+              "allowed": true,
+              "verse": "19:9-10",
+              "reason": "Cena pertinente à passagem sobre salvação, adequada para acompanhamento da leitura completa de Lucas 19:1-10."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "19:8",
+              "reason": "Ilustra momento chave da passagem sobre restituição, pertinente para incentivo à leitura completa do relato."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "19:4-5",
+              "reason": "Cena central do encontro na árvore, pertinente para motivar a leitura completa da passagem indicada."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo sem ação específica não oferece conexão clara com incentivo à leitura da passagem completa."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "19:7",
+              "reason": "Cena pertinente mostrando reação das pessoas, parte importante do relato a ser lido completamente."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "19:4",
+              "reason": "Ilustra evento marcante da passagem, adequado para acompanhar convite à leitura completa de Lucas 19:1-10."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "19:1",
+              "reason": "Mostra Jesus entrando em Jericó, início da passagem a ser lida, pertinente ao convite para leitura completa."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "19:3",
+              "reason": "Cena pertinente mostrando dificuldade de Zaqueu, parte do relato que incentiva a leitura completa da passagem."
             }
-          ]
+          ],
+          "reason": "Cartão de leitura aceita cenas pertinentes à passagem que acompanhem o convite para ler Lucas 19:1-10 completo."
         },
         {
-          "id": "d3c9e973465ce4fc",
-          "supported": true,
-          "reason": "A ilustração mostra uma pessoa subindo em uma árvore enquanto outras observam, compatível com Zacchaeus correndo adiante e subindo na árvore para ver Jesus.",
-          "evidence": [
+          "card": 6,
+          "assessments": [
             {
-              "sourceId": "19:4",
-              "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
+              "scene": 1,
+              "allowed": true,
+              "verse": "19:9",
+              "reason": "Cena diferente relacionada à passagem sobre salvação, adequada para Story como leitura complementar com adulto."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "19:8",
+              "reason": "Ilustra compromisso de Zaqueu com restituição, cena pertinente e diferente para Story sobre a mesma passagem."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "19:5",
+              "reason": "Cena do encontro na árvore, pertinente à passagem e adequada como Story diferente das demais posições."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Grupo sem ação específica não oferece conteúdo suficiente para Story como leitura complementar significativa."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "19:7",
+              "reason": "Cena da murmuração, pertinente à passagem e adequada para Story como aspecto diferente do relato."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "19:4",
+              "reason": "Ilustra subida na árvore, cena pertinente e diferente adequada para Story sobre a mesma passagem."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "19:1",
+              "reason": "Mostra Jesus entrando em Jericó, início da passagem, pertinente para Story como contexto do relato."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "19:3",
+              "reason": "Cena de Zaqueu tentando ver Jesus, pertinente à passagem e adequada para Story como momento inicial do relato."
             }
-          ]
+          ],
+          "reason": "Story aceita cena diferente relacionada à mesma passagem para leitura complementar com adulto."
         }
       ]
     }
