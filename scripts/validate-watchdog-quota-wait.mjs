@@ -14,6 +14,12 @@ assert.equal(watchdogQuotaWait({...error,stage:'render'},reserve,budget,now),nul
 assert.equal(watchdogQuotaWait(error,{...reserve,automaticRecovery:{...reserve.automaticRecovery,available:1}},budget,now),null,'Do not block published recovery when stock became available');
 assert.equal(watchdogQuotaWait(error,reserve,{...budget,calls:[]},now),null,'Newly authorized budget permits another attempt');
 assert.equal(watchdogQuotaWait(error,reserve,budget,new Date('2026-10-19T03:00:00Z')),null,'BRT midnight restores normal budget');
+const reviewWait={...reserve,automaticRecovery:{...reserve.automaticRecovery,phase:'waiting_review_backoff',retryAfter:'2026-10-18T18:20:00Z'}};
+assert.equal(watchdogQuotaWait(error,reviewWait,budget,now).waitingReason,'editorial_review');
+assert.equal(watchdogQuotaWait(error,reviewWait,budget,new Date('2026-10-18T18:21:00Z')),null,'Review interval expiry permits a new attempt');
+const workflow=fs.readFileSync('.github/workflows/instagram-watchdog-backup.yml','utf8');
+assert.match(workflow,/id: stock_gate/);
+assert.match(workflow,/name: Mark automatic slot published[\s\S]*?if:[^\n]*stock_gate.outputs.waiting != 'true'/,'Waiting must never mark a slot as published');
 const html=fs.readFileSync('docs/dashboard.html','utf8');
 for(const [,source]of html.matchAll(/<script>([\s\S]*?)<\/script>/g))new Function(source);
 console.log('PASS: exhausted quota waits without dispatch, stock availability, renewed budget, BRT rollover, unrelated/resolved incidents and dashboard syntax. No paid calls or publication.');

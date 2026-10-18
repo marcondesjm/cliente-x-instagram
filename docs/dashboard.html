@@ -4738,7 +4738,7 @@
         if(payload.waiting){
           button.textContent='Aguardando cota';
           appState.watchdogRecovery={waiting:true,nextAttemptAt:payload.nextAttemptAt};
-          updateHeaderHealth('checking','Aguardando limite interno da automação',true);
+          updateHeaderHealth('checking',payload.waitingLabel || 'Aguardando limite interno da automação',true);
           setMessage(payload.message,'warn');
           if(actionMessage){actionMessage.className='message';actionMessage.textContent=payload.message;}
           return payload;
@@ -7603,17 +7603,17 @@
         }
 
         const hasError = checkCards.some((card) => card.querySelector('.dot.bad'));
-        healthStatus.textContent = recoveryWait ? 'Aguardando cota' : hasError ? (recoveryStarted ? 'Solicitado' : 'Erro') : 'OK';
+        healthStatus.textContent = recoveryWait ? (recoveryWait.waitingLabel || 'Aguardando limite interno') : hasError ? (recoveryStarted ? 'Solicitado' : 'Erro') : 'OK';
         healthStatus.className = `status-pill ${recoveryWait ? 'warn' : hasError ? (recoveryStarted ? 'warn' : 'bad') : 'good'}`;
         appendHealthTerminal(
           hasError
-            ? (recoveryWait ? 'AGUARDANDO LIMITE INTERNO DA AUTOMAÇÃO — HORÁRIO PENDENTE' : recoveryStarted ? 'CORREÇÃO SOLICITADA — AGUARDANDO RESULTADO' : 'CHECKAGEM CONCLUÍDA: ERRO ENCONTRADO')
+            ? (recoveryWait ? 'AGUARDANDO REPOSIÇÃO OU LIMITE INTERNO — HORÁRIO PENDENTE' : recoveryStarted ? 'CORREÇÃO SOLICITADA — AGUARDANDO RESULTADO' : 'CHECKAGEM CONCLUÍDA: ERRO ENCONTRADO')
             : 'CHECKAGEM CONCLUÍDA: TUDO OK',
           `${hasError ? (recoveryWait || recoveryStarted ? 'running' : 'bad') : 'good'} final`
         );
         updateHeaderHealth(
           hasError ? (recoveryWait || recoveryStarted ? 'checking' : 'bad') : 'good',
-          hasError ? (recoveryWait ? 'Aguardando limite interno da automação' : recoveryStarted ? 'Correção solicitada' : 'Atenção necessária') : 'Checkagem: tudo OK',
+          hasError ? (recoveryWait ? (recoveryWait.waitingLabel || 'Aguardando limite interno') : recoveryStarted ? 'Correção solicitada' : 'Atenção necessária') : 'Checkagem: tudo OK',
           true
         );
       } catch (error) {

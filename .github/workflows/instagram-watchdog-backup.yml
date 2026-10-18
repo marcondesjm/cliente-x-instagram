@@ -67,27 +67,35 @@ jobs:
         if: steps.scheduled_queue.outputs.has_due != 'true'
         run: node scripts/select-due-auto-slot.mjs
 
+      - name: Check known stock wait before another publication attempt
+        id: stock_gate
+        if: steps.scheduled_queue.outputs.has_due != 'true' && steps.auto_slot.outputs.has_due == 'true'
+        env:
+          AUTO_SLOT_DATE: ${{ steps.auto_slot.outputs.slot_date }}
+          AUTO_SLOT_INDEX: ${{ steps.auto_slot.outputs.slot_index }}
+        run: node scripts/watchdog-stock-preflight.mjs
+
       - name: Install dependencies
-        if: steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
+        if: steps.scheduled_queue.outputs.has_due == 'true' || (steps.auto_slot.outputs.has_due == 'true' && steps.stock_gate.outputs.waiting != 'true')
         run: npm ci
 
       - name: Validate copy
-        if: steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
+        if: steps.scheduled_queue.outputs.has_due == 'true' || (steps.auto_slot.outputs.has_due == 'true' && steps.stock_gate.outputs.waiting != 'true')
         run: npm run instagram -- --account "$ACCOUNT" --validate-copy
 
       - name: Install Playwright Chromium
-        if: steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
+        if: steps.scheduled_queue.outputs.has_due == 'true' || (steps.auto_slot.outputs.has_due == 'true' && steps.stock_gate.outputs.waiting != 'true')
         run: npx playwright install --with-deps chromium
 
       - name: Install FFmpeg for automatic Reels
-        if: steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
+        if: steps.scheduled_queue.outputs.has_due == 'true' || (steps.auto_slot.outputs.has_due == 'true' && steps.stock_gate.outputs.waiting != 'true')
         run: |
           sudo apt-get update
           sudo apt-get install -y ffmpeg
           ffmpeg -version
 
       - name: Select content slot
-        if: steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
+        if: steps.scheduled_queue.outputs.has_due == 'true' || (steps.auto_slot.outputs.has_due == 'true' && steps.stock_gate.outputs.waiting != 'true')
         shell: bash
         run: |
           if [ "${{ steps.scheduled_queue.outputs.has_due }}" = "true" ]; then
@@ -98,7 +106,7 @@ jobs:
           echo "INSTAGRAM_TEMPLATE_SLOT_INDEX=$SLOT_INDEX" >> "$GITHUB_ENV"
 
       - name: Publish feed and story
-        if: steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
+        if: steps.scheduled_queue.outputs.has_due == 'true' || (steps.auto_slot.outputs.has_due == 'true' && steps.stock_gate.outputs.waiting != 'true')
         shell: bash
         run: |
           ARGS=""
@@ -108,19 +116,19 @@ jobs:
           npm run instagram -- --account "$ACCOUNT" $ARGS
 
       - name: Mark automatic slot published
-        if: success() && steps.scheduled_queue.outputs.has_due != 'true' && steps.auto_slot.outputs.has_due == 'true'
+        if: success() && steps.scheduled_queue.outputs.has_due != 'true' && steps.auto_slot.outputs.has_due == 'true' && steps.stock_gate.outputs.waiting != 'true'
         run: node scripts/mark-auto-slot-published.mjs
 
       - name: Resolve watchdog error
-        if: success() && (steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true')
+        if: success() && (steps.scheduled_queue.outputs.has_due == 'true' || (steps.auto_slot.outputs.has_due == 'true' && steps.stock_gate.outputs.waiting != 'true'))
         run: node scripts/record-watchdog-status.mjs --status=resolved
 
       - name: Record watchdog error
-        if: failure() && (steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true')
+        if: failure() && (steps.scheduled_queue.outputs.has_due == 'true' || (steps.auto_slot.outputs.has_due == 'true' && steps.stock_gate.outputs.waiting != 'true'))
         run: node scripts/record-watchdog-status.mjs --status=failed
 
       - name: Persist schedule state
-        if: always() && (steps.scheduled_queue.outputs.state_changed == 'true' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true')
+        if: always() && (steps.scheduled_queue.outputs.state_changed == 'true' || steps.scheduled_queue.outputs.has_due == 'true' || (steps.auto_slot.outputs.has_due == 'true' && steps.stock_gate.outputs.waiting != 'true'))
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
