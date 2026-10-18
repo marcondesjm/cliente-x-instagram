@@ -517,7 +517,7 @@
       "topic": "resumo-transferencia",
       "account": "cliente-x",
       "version": "claude-authorial-reserve-v1",
-      "status": "draft",
+      "status": "ready",
       "generationCallId": "c571de42-d383-434e-859e-7edac111953d",
       "createdAt": "2026-10-18T16:58:59.674Z",
       "pack": {
@@ -647,10 +647,150 @@
           "payoffDelivered": true,
           "followReason": true
         }
+      },
+      "review": {
+        "claims": [
+          {
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com conversa fictícia: pedir um resumo separado em pedido do cliente, informações confirmadas e pendências; marcar como pendente o que não foi informado; conferir o resumo contra a conversa; encaminhar apenas o contexto necessário à pessoa que continuará o atendimento. Não incluir dados reais ou sensíveis no exercício nem inventar decisões tomadas."
+              }
+            ],
+            "reason": "O slide descreve o cenário fictício de um atendente recebendo um pedido com dados incompletos e a necessidade de separar o que foi confirmado do que falta definir, conforme proposto no briefing.",
+            "id": "slide-1",
+            "supported": true
+          },
+          {
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com conversa fictícia: pedir um resumo separado em pedido do cliente, informações confirmadas e pendências; marcar como pendente o que não foi informado; conferir o resumo contra a conversa; encaminhar apenas o contexto necessário à pessoa que continuará o atendimento. Não incluir dados reais ou sensíveis no exercício nem inventar decisões tomadas."
+              }
+            ],
+            "reason": "O slide detalha o procedimento de pedir um resumo em três partes e marcar pendências, alinhado com as orientações do briefing.",
+            "id": "slide-2",
+            "supported": true
+          },
+          {
+            "reason": "O slide instrui a conferir o resumo contra a fala original e ajustar o que for necessário, conforme proposto no briefing.",
+            "id": "slide-3",
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com conversa fictícia: pedir um resumo separado em pedido do cliente, informações confirmadas e pendências; marcar como pendente o que não foi informado; conferir o resumo contra a conversa; encaminhar apenas o contexto necessário à pessoa que continuará o atendimento. Não incluir dados reais ou sensíveis no exercício nem inventar decisões tomadas."
+              }
+            ]
+          },
+          {
+            "supported": true,
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com conversa fictícia: pedir um resumo separado em pedido do cliente, informações confirmadas e pendências; marcar como pendente o que não foi informado; conferir o resumo contra a conversa; encaminhar apenas o contexto necessário à pessoa que continuará o atendimento. Não incluir dados reais ou sensíveis no exercício nem inventar decisões tomadas."
+              }
+            ],
+            "id": "slide-4",
+            "reason": "O slide orienta sobre o encerramento, encaminhando apenas o contexto essencial e evitando dados sensíveis, conforme o briefing."
+          },
+          {
+            "supported": true,
+            "id": "caption",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com conversa fictícia: pedir um resumo separado em pedido do cliente, informações confirmadas e pendências; marcar como pendente o que não foi informado; conferir o resumo contra a conversa; encaminhar apenas o contexto necessário à pessoa que continuará o atendimento. Não incluir dados reais ou sensíveis no exercício nem inventar decisões tomadas."
+              }
+            ],
+            "reason": "A legenda resume o processo de atendimento fictício, a conferência contra a conversa e o encaminhamento do essencial, alinhado ao briefing."
+          },
+          {
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com conversa fictícia: pedir um resumo separado em pedido do cliente, informações confirmadas e pendências; marcar como pendente o que não foi informado; conferir o resumo contra a conversa; encaminhar apenas o contexto necessário à pessoa que continuará o atendimento. Não incluir dados reais ou sensíveis no exercício nem inventar decisões tomadas."
+              }
+            ],
+            "id": "story",
+            "reason": "O story introduz o tema das pendências na transferência e convida para o exercício prático, conforme o briefing.",
+            "supported": true
+          }
+        ],
+        "decision": "approve",
+        "supported": true,
+        "novel": true,
+        "practical": true,
+        "visualMatch": true,
+        "reason": "O conteúdo apresenta um exercício educativo fictício coerente e bem estruturado, seguindo todas as orientações do briefing sem inventar dados ou resultados. A progressão entre os slides é lógica e prática.",
+        "growth": {
+          "hookSpecific": true,
+          "shareReason": true,
+          "payoffDelivered": true,
+          "followReason": true
+        },
+        "bindingVersion": "exact-source-id-v1",
+        "callId": "8301533c-e64e-47b1-b4fe-8793df0aec08",
+        "packHash": "53ccf37ac0e26337b8d6dd33062b1fc5b6cda59d0fe7a7a80b729fcdd71b25e3",
+        "checkedAt": "2026-10-18T17:00:24.262Z",
+        "groundingTask": {
+          "scope": "Exercício educativo fictício. Orientações são propostas, não resultados ou notícias.",
+          "sources": [
+            {
+              "id": "brief",
+              "text": "Proposta de exercício educativo com conversa fictícia: pedir um resumo separado em pedido do cliente, informações confirmadas e pendências; marcar como pendente o que não foi informado; conferir o resumo contra a conversa; encaminhar apenas o contexto necessário à pessoa que continuará o atendimento. Não incluir dados reais ou sensíveis no exercício nem inventar decisões tomadas."
+            },
+            {
+              "id": "label",
+              "text": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            }
+          ],
+          "claims": [
+            {
+              "id": "slide-1",
+              "text": "Atendimento. Vai transferir? Leve as pendências. Num cenário fictício, o atendente recebe um pedido com dados incompletos. Antes de repassar, separa o que foi confirmado do que falta definir."
+            },
+            {
+              "id": "slide-2",
+              "text": "Procedimento. Separe confirmações e pendências. Peça um resumo em três partes: pedido do cliente, informações confirmadas e itens pendentes. Marque como pendente tudo que não foi informado na conversa."
+            },
+            {
+              "id": "slide-3",
+              "text": "Conferência. Confira o resumo contra a fala. Leia a conversa original e verifique se cada ponto do resumo tem base no que foi dito. Ajuste o que estiver fora ou sem respaldo no diálogo."
+            },
+            {
+              "id": "slide-4",
+              "text": "Encerramento. Encaminhe só o necessário. Envie ao próximo atendente apenas o contexto essencial: resumo validado e lista de pendências. Evite incluir dados sensíveis ou decisões inventadas."
+            },
+            {
+              "id": "caption",
+              "text": "Em um atendimento fictício, dados faltam antes da transferência. Peça um resumo com pedido, confirmações e pendências. Confira cada ponto contra a conversa original para evitar invenções. Encaminhe apenas o essencial ao próximo atendente, sem dados sensíveis.\n\nComo sua equipe lida com pendências nas transferências? Siga para aprender aplicações práticas de IA em empresas e organizar melhor o fluxo de atendimento.\n\nConteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+            },
+            {
+              "id": "story",
+              "text": "Rotina. Pendências somem na transferência?. Quando você repassa um atendimento, o que fica para trás? Veja no feed um exercício prático para organizar confirmações e pendências antes de encaminhar."
+            }
+          ]
+        }
+      },
+      "render": {
+        "version": "authorial-layout-v3",
+        "packHash": "53ccf37ac0e26337b8d6dd33062b1fc5b6cda59d0fe7a7a80b729fcdd71b25e3",
+        "verifiedAt": "2026-10-18T17:00:24.262Z",
+        "feedCount": 4,
+        "story": true,
+        "runDir": "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-18-135911-slot-0-render-only",
+        "imageHashes": [
+          "9c30c5cb45eb96915d906e3763319505caf447b7417ae2b400a89d8aa1f9a021",
+          "2324438344568d63e14b11a73f3541cec639f3e27a35df0c2e20496aee276d29",
+          "fcbd942bc217478d5a2daf2d9b9a3572286ed5606faf3a84c41d6123df8ffdbf",
+          "2314a26ab37c41caf23727abf617869ae3ccb17c33167d91e219df8add27ed8d",
+          "d5d5a7e3a1236df5c9ade60f73adb66b3799eb62a5f1b9c95c54b5f31a6f2074"
+        ]
       }
     }
   ],
-  "checkedAt": "2026-10-18T17:00:22.971Z",
+  "checkedAt": "2026-10-18T17:00:24.263Z",
   "workflowRun": "39147349239",
   "message": "Reposição automática aguarda a renovação diária da cota; será retomada pelo agendamento, sem ação manual.",
   "lastResponse": {
