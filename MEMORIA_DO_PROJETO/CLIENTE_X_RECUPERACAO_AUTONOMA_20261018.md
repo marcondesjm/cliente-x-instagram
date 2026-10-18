@@ -20,3 +20,12 @@ Automação tenta corrigir e retoma após a cota; não garante que o modelo apro
 Testes simulam incidente correto, conta/etapa errada, slot já publicado, material consumido e título semanticamente repetido, cota e virada de dia BRT, retomada, backoff editorial e bloqueio do provedor. Contrato YAML de workflow_run, outputs, secrets herdados e workflow_call conferido; validate-copy e recuperação de agenda passaram. Preflight local com o estado real de 18/10 detectou slot 2, zero estoque elegível e 12/12 chamadas usadas, aguardando 19/10 às 00:35 BRT para a primeira verificação horária após renovação, sujeita à fila do GitHub.
 
 Prova do primeiro ciclo na nuvem será registrada após a instalação. A espera por cota não deve ser relatada como publicação ou aprovação editorial.
+
+
+## Revisão completa da recuperação Claude — 18/10/2026 BRT
+
+Correções: planejador e executor compartilham a mesma regressão factual e sua validade por fingerprint/modelo/tempo, reservando duas chamadas quando a regressão ainda vale e três quando precisa ser refeita. Contagem de estoque exige os recibos de geração e revisão. O prompt exige situação hipotética na abertura e evita termos bloqueados também em negativas.
+
+Retomada após cota: falta de conteúdo registrada no dia anterior permanece elegível tanto no planejador quanto no seletor do Vigia, com data/slot originais. Exceção restrita à conta cliente-x, estágio content-selection e erro de foto inédita/reserva esgotada; sem fila manual, slot publicado/inicializado, data futura, outra conta ou retomada indiscriminada de dias antigos. A janela é hoje e o dia BRT anterior. Não altera as treze faixas nem o orçamento.
+
+Testes: validate-authorial-reserve, validate-authorial-slot-recovery (seletor real em fixture), validate-recovery-workflow, validate-restored-schedule (isolado do ledger de produção), validate-copy (76 pautas) e git diff --check passaram. A cota real continua insuficiente para gerar e revisar; publicação nova ainda não confirmada.

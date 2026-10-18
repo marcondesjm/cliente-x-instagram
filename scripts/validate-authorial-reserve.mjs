@@ -3,9 +3,11 @@ import {RESERVE_VERSION,RESERVE_RENDER_VERSION,TOPICS,digest,buildAuthorialPack,
 import {pickEditorialVisualReserve,pickFreshPack,preparePackForPublication} from '../automation/instagram-template/scripts/publish-carousel.mjs';
 import {solutionForWatchdogError} from './watchdog-error-classification.mjs';
 import {AUDIENCE_GROWTH_VERSION,assertGrowthCopy,growthEnabled,growthDiscoveryStrategy,growthEditorialSignals} from '../lib/audience-growth.js';
-import {authorialTopic,nextAuthorialTopic,SOURCE_BINDING_VERSION} from '../lib/authorial-reserve.js';
+import {authorialTopic,nextAuthorialTopic,SOURCE_BINDING_VERSION,AUTHORIAL_REGRESSION_TASK,authorialRegressionFresh} from '../lib/authorial-reserve.js';
 import {recoveryPlan,nextBrtDay} from '../lib/authorial-recovery.js';
 import {readFileSync} from 'node:fs';
+import {groundingFingerprint} from '../lib/editorial-grounding.js';
+import {pendingAuthorialShortages} from '../lib/authorial-shortage.js';
 const topic=TOPICS[0],slide={eyebrow:'Exercício educativo',title:'Organize os campos de um pedido fictício.',body:'Separe produto e prazo. Confira cada campo na mensagem original e marque a informação que estiver ausente.'};
 const draft={slides:Array.from({length:4},()=>({...slide})),caption:('Use um pedido fictício para testar a extração de produto e prazo. Confira cada campo contra a mensagem original. ').repeat(3),storySlide:{...slide}};
 assert.equal(draftSchema().properties.caption.maxLength,600);
@@ -51,7 +53,7 @@ const variant=nextAuthorialTopic(TOPICS.map(t=>({topic:t.id})));assert.equal(var
 assert.notEqual(nextAuthorialTopic([...TOPICS.map(t=>({topic:t.id})),{topic:variant.id}]).id,variant.id);
 const now=new Date('2026-10-18T16:00:00Z'),error={account:'cliente-x',status:'open',stage:'content-selection',error:'Radar visual sem foto inédita e reserva autoral esgotada.',date:'2026-10-18',slotIndex:2,failedAt:now.toISOString()};
 const budget={model:'claude-sonnet-4.6',circuit:null,policy:{maxCallsPerDay:12,maxInputTokensPerCall:120000,maxInputTokensPerDay:1500000},calls:[]};
-const state={enabled:true,targetReady:13,entries:[],regression:{bindingVersion:SOURCE_BINDING_VERSION,model:budget.model,passed:true,checkedAt:now.toISOString(),cases:Array.from({length:4},()=>({passed:true}))}};
+const state={enabled:true,targetReady:13,entries:[],regression:{fingerprint:groundingFingerprint(AUTHORIAL_REGRESSION_TASK),bindingVersion:SOURCE_BINDING_VERSION,model:budget.model,passed:true,checkedAt:now.toISOString(),cases:Array.from({length:4},()=>({passed:true}))}};
 const plan=(changes={})=>recoveryPlan({state,budget,history:[],errors:[error],readAsset:get,event:'workflow_run',now,...changes});
 assert.equal(plan().phase,'replenish_for_incident');assert.equal(plan({errors:[{...error,account:'sabedoria-kids'}]}).run,false);
 assert.equal(plan({history:[{slotDate:error.date,slotIndex:2}]}).pending,false);
@@ -72,3 +74,19 @@ const workflow=readFileSync('.github/workflows/authorial-reserve.yml','utf8');as
 assert.match(readFileSync('.github/workflows/instagram-watchdog-backup.yml','utf8'),/workflow_call:/);
 console.log('Recuperação automática: incidente certo, estoque consumido, cota BRT, retomada, backoff, circuito e chamada do Vigia validados. Sem API ou publicação nos testes.');
 console.log('Reserva Claude: prova, recibos, isolamento de conta, citações, render, alterações de conteúdo/arte e repetição validados.');
+
+const tomorrow=new Date('2026-10-19T03:35:00Z');
+assert.equal(plan({budget:spent,event:'workflow_run',now:tomorrow}).pending,true,'Keep yesterday content shortage after renewal');
+assert.equal(plan({state:stocked,budget:receipted,event:'workflow_run',now:tomorrow}).recoveryReady,true);
+assert.equal(plan({ledger:[{account:'cliente-x',date:error.date,slotIndex:2,status:'published'}]}).pending,false);
+assert.equal(plan({errors:[{...error,date:'2026-10-19'}]}).pending,false,'Reject future incident');
+assert.equal(plan({errors:[{...error,date:'2026-10-16'}]}).pending,false,'Do not build historical backlog');
+assert.equal(pendingAuthorialShortages({errors:[{...error,slotIndex:null}],now}).length,0);
+assert.equal(pendingAuthorialShortages({errors:[{...error,scheduledPostId:'manual'}],now}).length,0);
+assert.equal(authorialRegressionFresh(state,budget.model,now),true);
+assert.equal(authorialRegressionFresh({...state,regression:{...state.regression,fingerprint:'changed'}},budget.model,now),false);
+assert.equal(authorialRegressionFresh(state,budget.model,tomorrow),true);
+const nearlySpent={...spent,calls:spent.calls.slice(0,10)};
+assert.equal(plan({budget:nearlySpent}).run,true,'A fresh regression needs two calls, not three');
+assert.equal(plan({budget:{...spent,calls:spent.calls.slice(0,11)}}).phase,'waiting_daily_budget');
+console.log('PASS: previous-day shortage only, ledger exclusion, future/old-date guards and exact regression budget.');

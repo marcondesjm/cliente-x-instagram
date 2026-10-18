@@ -2,6 +2,7 @@
 import { existsSync, readFileSync, appendFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import {pendingAuthorialShortages} from '../lib/authorial-shortage.js';
 import { educationDayBlocked, educationIntegrated } from '../lib/education-strategy.js';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
@@ -77,15 +78,16 @@ if (account.educationStrategy?.enabled && !educationIntegrated(account)) {
   }
 }
 const candidates = [];
+const shortageSlots=new Set(pendingAuthorialShortages({errors:readJson(join(ROOT,'automation/instagram-template/config/watchdog-errors.json'),[]),history:readJson(join(ROOT,'automation/instagram-template/config/publication-history.json'),{})[ACCOUNT]||[],ledger,now}).map(e=>`${e.date}:${e.slotIndex}`));
 
-for (const offset of [-1, 0]) {
+for (const offset of [-2, -1, 0]) {
   const day = utcDay(now, offset);
   for (const [slotIndex, cron] of (account.scheduleUtc || []).entries()) {
     const scheduledAt = scheduledAtUtc(cron, day);
     if (!scheduledAt || scheduledAt > dueUntil) continue;
     if (account.automaticScheduleStartsAt && scheduledAt < new Date(account.automaticScheduleStartsAt)) continue;
     const slotDate = saoPauloDate(scheduledAt);
-    if (slotDate !== currentLocalDate) continue;
+    if (slotDate !== currentLocalDate && (ACCOUNT!=='cliente-x'||!shortageSlots.has(`${slotDate}:${slotIndex}`))) continue;
     const candidate = {
       account: account.account,
       date: slotDate,

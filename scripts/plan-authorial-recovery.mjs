@@ -4,7 +4,7 @@ import {recoveryPlan} from '../lib/authorial-recovery.js';
 import {isAuthorialShortage} from '../lib/authorial-recovery.js';
 import {solutionForWatchdogError} from './watchdog-error-classification.mjs';
 const C='automation/instagram-template/config/',P=C+'authorial-reserve.json',read=p=>JSON.parse(fs.readFileSync(p,'utf8').replace(/^\uFEFF/,''));
-const state=read(P),previous=JSON.stringify(state),errors=read(C+'watchdog-errors.json'),oldErrors=JSON.stringify(errors),plan=recoveryPlan({state,budget:read(C+'editorial-api-validation.json'),history:read(C+'publication-history.json')['cliente-x']||[],errors,readAsset:p=>fs.readFileSync(p),event:process.env.GITHUB_EVENT_NAME||'schedule'});
+const state=read(P),previous=JSON.stringify(state),errors=read(C+'watchdog-errors.json'),oldErrors=JSON.stringify(errors),plan=recoveryPlan({state,budget:read(C+'editorial-api-validation.json'),ledger:read(C+'published-slots.json'),history:read(C+'publication-history.json')['cliente-x']||[],errors,readAsset:p=>fs.readFileSync(p),event:process.env.GITHUB_EVENT_NAME||'schedule'});
 const prior=state.automaticRecovery;
 state.automaticRecovery={...state.automaticRecovery,...plan,checkedAt:new Date().toISOString(),workflowRun:process.env.GITHUB_RUN_ID||null};
 if(prior&&['pending','pendingSlot','available','recoveryReady','run','phase','nextAttemptAt'].every(k=>JSON.stringify(prior[k])===JSON.stringify(plan[k])))state.automaticRecovery=prior;

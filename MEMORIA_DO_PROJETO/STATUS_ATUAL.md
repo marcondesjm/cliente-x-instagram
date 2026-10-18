@@ -1746,3 +1746,12 @@ Resultado:
 Slot 2: run 39145840470 falhou na seleção por falta de foto inédita e reserva. A reserva pronta authorial-7170d58abcfb7faa já foi consumida no slot 1 (Feed 18017783831744794); não reutilizar. Última revisão de legenda retornou 1063 caracteres, acima de 1050. Geração e revisão agora pedem legenda curta com esquema 300–600 caracteres; diagnóstico local informa a extensão real. Limite final, revisão factual/visual e antirrepetição preservados.
 
 Validação: validate-authorial-reserve e validate-recovery-workflow passaram. Preflight real: 17 chamadas usadas de 18 autorizadas hoje; geração + revisão não cabem. waiting_daily_budget, primeira verificação prevista 19/10/2026 00:35 BRT. Não houve publicação nova nem liberação editorial nesta correção.
+
+
+## Revisão completa da recuperação Claude — 18/10/2026 BRT
+
+Correções: planejador e executor compartilham a mesma regressão factual e sua validade por fingerprint/modelo/tempo, reservando duas chamadas quando a regressão ainda vale e três quando precisa ser refeita. Contagem de estoque exige os recibos de geração e revisão. O prompt exige situação hipotética na abertura e evita termos bloqueados também em negativas.
+
+Retomada após cota: falta de conteúdo registrada no dia anterior permanece elegível tanto no planejador quanto no seletor do Vigia, com data/slot originais. Exceção restrita à conta cliente-x, estágio content-selection e erro de foto inédita/reserva esgotada; sem fila manual, slot publicado/inicializado, data futura, outra conta ou retomada indiscriminada de dias antigos. A janela é hoje e o dia BRT anterior. Não altera as treze faixas nem o orçamento.
+
+Testes: validate-authorial-reserve, validate-authorial-slot-recovery (seletor real em fixture), validate-recovery-workflow, validate-restored-schedule (isolado do ledger de produção), validate-copy (76 pautas) e git diff --check passaram. A cota real continua insuficiente para gerar e revisar; publicação nova ainda não confirmada.
