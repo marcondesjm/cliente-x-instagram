@@ -2885,56 +2885,137 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T18:54:37.068Z",
+  "checkedAt": "2026-10-18T18:55:29.259Z",
   "workflowRun": "39155841344",
   "message": "2 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "art-direction:pedido-duplicado-v2",
-    "callId": "8d9d731f-7750-451b-b97d-19d7550b2862",
+    "stage": "review:pedido-duplicado-v2",
+    "callId": "8153941e-9e38-44bb-8e69-3c3b7fd31ef4",
     "value": {
-      "palette": "copper",
-      "frames": [
+      "claims": [
         {
-          "layout": "workspace",
-          "labels": [
-            "E-mail recebido",
-            "Formulário web",
-            "Mesa de trabalho"
+          "reason": "O slide descreve o problema de pedidos duplicados, exemplificando com um cliente que envia o mesmo pedido por e-mail e formulário, o que é sustentado pelo briefing.",
+          "supported": true,
+          "id": "slide-1",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Código gerado",
-            "Registro interno",
-            "Identificador único"
+          "reason": "O slide propõe a atribuição de um código único antes da criação da tarefa, conforme orientado no briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "id": "slide-2",
+          "supported": true
+        },
+        {
+          "id": "slide-3",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "supported": true,
+          "reason": "O slide instrui a verificar a existência do identificador antes de prosseguir, o que está alinhado com o briefing."
+        },
+        {
+          "supported": true,
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "reason": "O slide propõe um teste prático de reenvio para verificar o comportamento do sistema, conforme sugerido no briefing.",
+          "id": "slide-4"
+        },
+        {
+          "supported": true,
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "reason": "A legenda resume o exercício educativo proposto no briefing, mantendo a cautela sobre a implementação técnica.",
+          "id": "caption"
+        },
+        {
+          "supported": true,
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "reason": "O story convida à reflexão sobre pedidos duplicados e direciona para o exercício no feed, conforme o briefing.",
+          "id": "story"
+        },
+        {
+          "supported": true,
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "reason": "Os rótulos da ilustração são consistentes com o cenário fictício descrito no briefing.",
+          "id": "art-1"
+        },
+        {
+          "supported": true,
+          "id": "art-2",
+          "reason": "Os rótulos da ilustração são consistentes com o cenário fictício descrito no briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Consulta prévia",
-            "Já existe?",
-            "Encaminhar"
+          "reason": "Os rótulos da ilustração são consistentes com o cenário fictício descrito no briefing.",
+          "supported": true,
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "id": "art-3"
+        },
+        {
+          "id": "art-4",
+          "reason": "Os rótulos da ilustração são consistentes com o cenário fictício descrito no briefing.",
+          "supported": true,
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Reenviar pedido",
-            "Verificar rota",
-            "Conferência ativa"
-          ]
-        },
-        {
-          "layout": "decision",
-          "labels": [
-            "Canais múltiplos",
-            "Pedidos repetidos",
-            "Sua rotina"
-          ]
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "id": "art-5",
+          "supported": true,
+          "reason": "Os rótulos da ilustração são consistentes com o cenário fictício descrito no briefing."
         }
-      ]
+      ],
+      "decision": "approve",
+      "supported": true,
+      "novel": true,
+      "practical": true,
+      "visualMatch": true,
+      "reason": "O conteúdo apresenta um exercício educativo coerente e prático sobre a gestão de pedidos duplicados, seguindo as diretrizes do briefing sem prometer resultados irreais. A estrutura é clara e os elementos visuais apoiam o fluxo de aprendizado proposto.",
+      "growth": {
+        "payoffDelivered": true,
+        "shareReason": true,
+        "hookSpecific": true,
+        "followReason": true
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
