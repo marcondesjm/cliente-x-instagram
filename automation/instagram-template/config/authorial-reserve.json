@@ -66,95 +66,41 @@
       "reason": "Citação factual inventada ou fora das fontes."
     }
   ],
-  "checkedAt": "2026-10-18T15:41:06.150Z",
+  "checkedAt": "2026-10-18T15:41:20.325Z",
   "workflowRun": "39141428041",
   "message": "Resposta estruturada ou recibo da API inválido.",
   "lastResponse": {
-    "stage": "review:extracao-campos",
-    "callId": "901b874b-68cb-4273-829f-bf9749ba342b",
+    "stage": "generate:pedido-duplicado",
+    "callId": "cdd425ad-6df0-4424-924a-28529330efe6",
     "value": {
-      "claims": [
+      "slides": [
         {
-          "id": "slide-1",
-          "supported": true,
-          "reason": "O slide 1 apresenta o cenário de 'Pedido incompleto' onde a IA preenche automaticamente um prazo padrão quando falta informação, servindo como contraponto negativo ao método ensinado. O texto visível na imagem confirma exatamente essa dinâmica: 'A IA completa com uma data padrão e cadastra o pedido automaticamente'.",
-          "evidence": [
-            {
-              "sourceId": "brief",
-              "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente, sem completar por suposição"
-            }
-          ]
+          "eyebrow": "Problema concreto",
+          "title": "Pedidos duplicados sobrecarregam a operação",
+          "body": "Um mesmo pedido chega por canais diferentes e vira duas tarefas. A equipe executa o trabalho duas vezes, consome recursos e gera retrabalho na conferência final."
         },
         {
-          "id": "slide-2",
-          "supported": true,
-          "reason": "O slide 2 define os três campos obrigatórios (produto, quantidade e prazo) e instrui a solicitar à IA uma tabela fiel à mensagem original, conforme descrito no briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief",
-              "quote": "definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve exatamente as informações recebidas na mensagem original"
-            }
-          ]
+          "eyebrow": "Procedimento",
+          "title": "Identificador único antes de criar a tarefa",
+          "body": "Atribua um identificador ao pedido no momento do recebimento. Consulte se esse identificador já foi registrado antes de criar qualquer tarefa nova no sistema."
         },
         {
-          "id": "slide-3",
-          "supported": true,
-          "reason": "O slide 3 estabelece a regra de conferência rigorosa: marcar como 'não informado' qualquer campo faltante e comparar dados da tabela com a mensagem original antes do cadastro, alinhado ao briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief",
-              "quote": "marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada dado da tabela gerada com a mensagem original antes de registrar o pedido no sistema"
-            }
-          ]
+          "eyebrow": "Conferência",
+          "title": "Encaminhe para revisão quando houver registro",
+          "body": "Se o identificador já existir, encaminhe o caso para conferência em vez de abrir outra tarefa. Isso evita duplicação e mantém o fluxo organizado."
         },
         {
-          "id": "slide-4",
-          "supported": true,
-          "reason": "O slide 4 propõe o exercício prático com três pedidos fictícios variando campos ausentes (completo, sem quantidade, sem prazo), executando o fluxo de conferência e registrando apenas válidos, conforme o escopo do briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief",
-              "quote": "Proposta de exercício educativo com pedidos fictícios... Não usar dados reais de clientes no exercício."
-            },
-            {
-              "sourceId": "label",
-              "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
-            }
-          ]
-        },
-        {
-          "id": "caption",
-          "supported": true,
-          "reason": "A legenda sintetiza corretamente o método educativo apresentado nos slides: definição de campos, fidelidade aos dados originais, marcação de ausências e conferência manual, além de reforçar a natureza fictícia do conteúdo.",
-          "evidence": [
-            {
-              "sourceId": "brief",
-              "quote": "Proposta de exercício educativo com pedidos fictícios: definir campos produto, quantidade e prazo; pedir à IA uma tabela que preserve as informações recebidas; marcar como não informado qualquer campo ausente"
-            },
-            {
-              "sourceId": "label",
-              "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
-            }
-          ]
-        },
-        {
-          "id": "story",
-          "supported": true,
-          "reason": "O story de reflexão questiona se o processo atual permite que a IA complete automaticamente ou exige conferência humana, conectando-se diretamente ao problema ilustrado no slide 1 e à solução proposta nos demais slides.",
-          "evidence": [
-            {
-              "sourceId": "brief",
-              "quote": "marcar como não informado qualquer campo ausente, sem completar por suposição; comparar cada dado da tabela gerada com a mensagem original antes de registrar o pedido no sistema"
-            }
-          ]
+          "eyebrow": "Exercício prático",
+          "title": "Teste reenviando o mesmo pedido",
+          "body": "Reenvie o pedido com o mesmo identificador e verifique se o sistema reconhece o registro anterior. Ajuste a regra conforme o comportamento observado nos testes."
         }
       ],
-      "decision": "approve",
-      "supported": true,
-      "novel": true,
-      "practical": true,
-      "visualMatch": true,
-      "reason": "Todos os cinco renders estão alinhados ao briefing de exercício educativo fictício sobre processamento de pedidos com IA. Os slides apresentam progressão lógica: problema (IA completando sozinha), definição de campos obrigatórios, protocolo de conferência rigorosa, exercício prático com dados fictícios e reflexão final. O conteúdo é autoral, não faz afirmações factuais sobre resultados reais, mantém coerência visual entre diagramas e textos, e oferece um exercício executável com começo, desenvolvimento e conclusão claros."
+      "caption": "Duplicações de pedidos ocorrem quando não há controle de identidade do item recebido. O exercício propõe atribuir um identificador único, consultar sua existência antes de criar tarefas e encaminhar casos repetidos para conferência. Reenvie o mesmo pedido e observe se o registro é reconhecido. A eficácia depende da implementação e dos testes realizados. Qual etapa do seu processo atual carece desse tipo de verificação prévia?",
+      "storySlide": {
+        "eyebrow": "Reflexão",
+        "title": "Como você identifica pedidos únicos hoje?",
+        "body": "Compartilhe nos comentários qual método sua equipe usa para evitar duplicações ou quais dúvidas surgem ao implementar identificadores únicos."
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
