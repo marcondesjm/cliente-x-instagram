@@ -236,11 +236,17 @@
     {
       "id": "172eef16-e4a4-4b9e-962c-7413388abdb2",
       "day": "2026-10-18",
-      "status": "reserved",
+      "status": "completed",
       "stage": "sonnet-forced-holdout:holdout-4",
       "startedAt": "2026-10-18T13:08:45.907Z",
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572",
-      "imageBytes": 84542
+      "imageBytes": 84542,
+      "completedAt": "2026-10-18T13:08:58.784Z",
+      "reportedInputTokens": 30000,
+      "inputTokens": 30000,
+      "outputTokens": 117,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -553,12 +559,33 @@
       "checkedAt": "2026-10-18T13:08:43.554Z",
       "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/06_FB_Zacchaeus_1024.jpg?1724237549",
       "imageHash": "0e68d89f3b06e81914792cf90b2e067b890038d0529d6b9579fc219f5e7cf478"
+    },
+    {
+      "id": "sonnet-forced-holdout:holdout-4",
+      "mode": "sonnet-forced-holdout",
+      "fixture": "holdout-4",
+      "model": "claude-sonnet-4.6",
+      "passed": true,
+      "value": {
+        "personInTree": true,
+        "openBooks": false,
+        "style": "illustration",
+        "description": "Ilustração colorida mostrando um homem sentado em uma árvore frondosa, com os braços abertos. Abaixo da árvore, um grupo de homens observa para cima, incluindo uma figura central com túnica vermelha e cabelos longos castanhos olhando diretamente para o homem na árvore. Os demais homens usam túnicas variadas e turbantes ou chapéus. O fundo é composto por folhagem verde densa e céu claro."
+      },
+      "expected": {
+        "personInTree": true,
+        "openBooks": false,
+        "style": "illustration"
+      },
+      "checkedAt": "2026-10-18T13:08:58.784Z",
+      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/05_FB_Zacchaeus_1024.jpg?1724237549",
+      "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
     }
   ],
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:08:45.907Z",
+  "checkedAt": "2026-10-18T13:08:58.784Z",
   "workflowRun": "39130135749",
   "summary": [
     {
