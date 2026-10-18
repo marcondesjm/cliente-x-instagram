@@ -70,7 +70,7 @@
       "topic": "pedido-duplicado",
       "account": "cliente-x",
       "version": "claude-authorial-reserve-v1",
-      "status": "render_revision_required",
+      "status": "rejected",
       "generationCallId": "cdd425ad-6df0-4424-924a-28529330efe6",
       "createdAt": "2026-10-18T15:41:21.873Z",
       "pack": {
@@ -277,106 +277,237 @@
           "1025f1c9b53ca3236225018c6faa331ae213b7b688ee44ce15c07a84f26f6ccb",
           "6805c1ee0e5624acfe2164f7ea6998d6b05c0fe7878f376dbeba1375e54b389f"
         ]
+      },
+      "reviewCandidate": {
+        "claims": [
+          {
+            "id": "slide-1",
+            "supported": true,
+            "reason": "A alegação descreve o problema de pedidos duplicados e sobrecarga operacional, conteúdo que corresponde exatamente ao texto visível na Cena 1 ('Pedidos duplicados sobrecarregam a operação', 'Um mesmo pedido chega por canais diferentes e vira duas tarefas'). O briefing confirma que se trata de um exercício educativo fictício sobre esse tema.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa"
+              },
+              {
+                "sourceId": "stock",
+                "quote": "Pedidos duplicados sobrecarregam a operação"
+              }
+            ]
+          },
+          {
+            "id": "slide-2",
+            "supported": true,
+            "reason": "O slide apresenta o procedimento de atribuir identificador único e consultar registro antes de criar tarefa, alinhado perfeitamente com as instruções do briefing. A imagem mostra diagrama com etapas Pedido, Identificação e Registro, corroborando o texto descrito.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa"
+              },
+              {
+                "sourceId": "label",
+                "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+              }
+            ]
+          },
+          {
+            "id": "slide-3",
+            "supported": true,
+            "reason": "A instrução de encaminhar para conferência quando houver registro existente está explicitamente prevista no briefing e reproduzida literalmente no texto da Cena 2. Não há promessa de eliminação automática de duplicações, apenas orientação procedural.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "se já existir, encaminhar para conferência em vez de criar outra tarefa"
+              },
+              {
+                "sourceId": "brief",
+                "quote": "não prometer que a IA sozinha elimina duplicações."
+              }
+            ]
+          },
+          {
+            "id": "slide-4",
+            "supported": true,
+            "reason": "O exercício prático de reenviar o mesmo pedido para testar reconhecimento do registro anterior está descrito integralmente no briefing e corresponde ao conteúdo da Cena 3. A menção a ajustar a regra conforme testes também está presente nas fontes.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes"
+              }
+            ]
+          },
+          {
+            "id": "caption",
+            "supported": true,
+            "reason": "A legenda sintetiza corretamente o fluxo do exercício (identificador, consulta prévia, encaminhamento para conferência) e inclui o disclaimer obrigatório de que é conteúdo educativo fictício com apoio de IA, conforme exigido pelo briefing e pela label.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência"
+              },
+              {
+                "sourceId": "label",
+                "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+              }
+            ]
+          },
+          {
+            "id": "story",
+            "supported": true,
+            "reason": "A reflexão proposta ('Como você identifica pedidos únicos hoje?') é coerente com o caráter educativo e interativo do material. O briefing estabelece que são orientações e propostas, não resultados, e a pergunta convida à participação sem afirmar benefícios garantidos.",
+            "evidence": [
+              {
+                "sourceId": "brief",
+                "quote": "Orientações são propostas, não resultados ou notícias."
+              },
+              {
+                "sourceId": "label",
+                "quote": "Exemplo fictício; não é notícia nem resultado comprovado."
+              }
+            ]
+          }
+        ],
+        "decision": "approve",
+        "supported": true,
+        "novel": true,
+        "practical": true,
+        "visualMatch": true,
+        "reason": "Todas as seis alegações estão integralmente sustentadas pelas fontes brief, label e stock. O conteúdo é estritamente educativo e fictício, sem promessas de resultados, estatísticas ou casos reais. Os renders apresentam texto legível, composição coerente com o briefing e ausência de cortes ou sobreposições. O exercício possui começo (problema), desenvolvimento (procedimento e conferência) e conclusão (teste prático e reflexão) completos, atendendo aos critérios de practicality e novelty em relação ao histórico de títulos fornecido."
+      },
+      "reason": "Citação factual inventada ou fora das fontes."
+    },
+    {
+      "id": "authorial-29c568acf5636c1d",
+      "topic": "base-respostas",
+      "account": "cliente-x",
+      "version": "claude-authorial-reserve-v1",
+      "status": "draft",
+      "generationCallId": "196fb0e1-db12-47b6-a2f9-23c6a9c1ba28",
+      "createdAt": "2026-10-18T15:48:59.151Z",
+      "pack": {
+        "id": "authorial-29c568acf5636c1d",
+        "authorialTopic": "base-respostas",
+        "editorialReserve": true,
+        "autoGenerated": true,
+        "visualDirection": "impact-carousel",
+        "slides": [
+          {
+            "eyebrow": "Problema",
+            "title": "Resposta pronta sem conferir a fonte",
+            "body": "A equipe pede um rascunho com base na política comercial. O texto chega formatado, mas não indica de onde veio cada afirmação.",
+            "preserveEngagementCopy": true,
+            "imagePath": "docs/illustrations/cliente-x/authorial-29c568acf5636c1d/cover.png"
+          },
+          {
+            "eyebrow": "Procedimento",
+            "title": "Exigir indicação do trecho usado",
+            "body": "Oriente quem redige a apontar o trecho exato da política que sustenta cada ponto. Sem essa referência, o rascunho não avança.",
+            "preserveEngagementCopy": true,
+            "typographicOnly": true
+          },
+          {
+            "eyebrow": "Conferência",
+            "title": "Validar a citação na origem",
+            "body": "Abra a política e verifique se o trecho indicado existe e diz o que foi afirmado. Citação gerada sem conferência não garante validade.",
+            "preserveEngagementCopy": true,
+            "typographicOnly": true
+          },
+          {
+            "eyebrow": "Ação",
+            "title": "Marcar dúvida para revisão",
+            "body": "Se a resposta não estiver na política, registre a pendência e encaminhe para revisão. Atualize a lista oficial após a decisão.",
+            "preserveEngagementCopy": true,
+            "typographicOnly": true
+          }
+        ],
+        "caption": "Este exercício propõe um fluxo simples para alinhar respostas comerciais à política interna. Mantenha uma lista de respostas aprovadas, com fonte e data de revisão. Ao solicitar um rascunho, peça que ele seja baseado apenas nessa política e que indique o trecho utilizado. Em seguida, confira o trecho na fonte original, pois uma citação gerada não comprova sua validade por si só. Quando a informação não estiver na política, marque a dúvida para revisão antes de publicar. Esse método organiza o processo e reduz ruídos, embora não elimine erros por completo. Qual etapa costuma falhar mais no seu time hoje: a indicação do trecho ou a conferência na fonte?\n\nConteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado.",
+        "storySlide": {
+          "eyebrow": "Reflexão",
+          "title": "Onde está a fragilidade?",
+          "body": "Você já viu uma resposta ser aceita sem conferir a fonte? Conte como sua equipe lida com isso no feed.",
+          "imagePath": "docs/illustrations/cliente-x/authorial-29c568acf5636c1d/story.png"
+        }
+      },
+      "packHash": "46a26488c69033b8daf9fcdbf7ac4c9c84509494265d28ed71099286d6c06b2a",
+      "assets": {
+        "docs/illustrations/cliente-x/authorial-29c568acf5636c1d/cover.png": "ef6196fffe80e34c97a2b9b338a64cb9727b72a8d482db164697e423381140ff",
+        "docs/illustrations/cliente-x/authorial-29c568acf5636c1d/story.png": "d492a988e08e8daa598a4ec85dbc0d44386ad456de591134b9e9c148f07dabe8"
       }
     }
   ],
-  "checkedAt": "2026-10-18T15:42:01.039Z",
-  "workflowRun": "39141428041",
+  "checkedAt": "2026-10-18T15:50:06.266Z",
+  "workflowRun": "39141961559",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "review:pedido-duplicado",
-    "callId": "0b13341a-9715-4731-934f-043a13b24940",
+    "stage": "review:base-respostas",
+    "callId": "fd6bf311-7030-4dda-ba82-0142ae97661c",
     "value": {
       "claims": [
         {
+          "evidence": [
+            {
+              "sourceId": "brief",
+              "quote": "A equipe pede um rascunho com base na política comercial. O texto chega formatado, mas não indica de onde veio cada afirmação."
+            }
+          ],
           "id": "slide-1",
           "supported": true,
-          "reason": "A imagem 1 exibe exatamente o título 'PROBLEMA CONCRETO', o subtítulo 'Pedidos duplicados sobrecarregam a operação' e o texto descritivo sobre um mesmo pedido chegando por canais diferentes, gerando duas tarefas e retrabalho na conferência final, conforme o briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief",
-              "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro."
-            },
-            {
-              "sourceId": "label",
-              "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
-            }
-          ]
+          "reason": "A alegação reflete exatamente o cenário descrito no briefing."
         },
         {
+          "reason": "A fonte instrui a exigir a indicação do trecho usado.",
+          "supported": true,
           "id": "slide-2",
-          "supported": true,
-          "reason": "A imagem 2 mostra o cabeçalho 'PROCEDIMENTO', o título 'Identificador único antes de criar a tarefa' e o conteúdo prescrevendo atribuir um identificador no recebimento e consultá-lo antes de criar nova tarefa, alinhado ao briefing.",
           "evidence": [
             {
-              "sourceId": "brief",
-              "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro."
-            },
-            {
-              "sourceId": "label",
-              "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+              "quote": "exigir que o rascunho indique o trecho usado",
+              "sourceId": "brief"
             }
           ]
         },
         {
-          "id": "slide-3",
           "supported": true,
-          "reason": "A imagem 3 apresenta o cabeçalho 'CONFERÊNCIA', o título 'Encaminhe para revisão quando houver registro' e o texto orientando a encaminhar para conferência se o identificador já existir, evitando duplicação, conforme o briefing.",
+          "reason": "A fonte orienta a conferência na origem para validar a citação.",
           "evidence": [
             {
               "sourceId": "brief",
-              "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro."
-            },
-            {
-              "sourceId": "label",
-              "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+              "quote": "conferir o trecho na fonte, pois uma citação gerada não comprova sua validade"
             }
-          ]
+          ],
+          "id": "slide-3"
         },
         {
+          "reason": "A fonte instrui a marcar a dúvida para revisão caso a resposta não esteja na política.",
+          "evidence": [
+            {
+              "quote": "marcar a dúvida para revisão quando a resposta não estiver na política.",
+              "sourceId": "brief"
+            }
+          ],
           "id": "slide-4",
+          "supported": true
+        },
+        {
           "supported": true,
-          "reason": "A imagem 4 contém o cabeçalho 'EXERCÍCIO PRÁTICO', o título 'Teste reenviando o mesmo pedido' e o texto instruindo a reenviar o pedido com o mesmo identificador e verificar se o sistema reconhece o registro anterior, conforme o briefing.",
+          "reason": "A alegação é uma reflexão baseada no conteúdo da fonte.",
+          "id": "slide-5",
           "evidence": [
             {
-              "sourceId": "brief",
-              "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro."
-            },
-            {
-              "sourceId": "label",
-              "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+              "sourceId": "story",
+              "quote": "Você já viu uma resposta ser aceita sem conferir a fonte?"
             }
           ]
         },
         {
-          "id": "caption",
-          "supported": true,
-          "reason": "O texto da legenda sintetiza corretamente as etapas do exercício (identificador único, consulta prévia, encaminhamento para conferência e teste de reenvio), reforça que a eficácia depende da implementação e testes, e inclui o aviso de que é conteúdo educativo fictício, tudo conforme o briefing.",
           "evidence": [
             {
-              "sourceId": "brief",
-              "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro. A regra depende da implementação e dos testes; não prometer que a IA sozinha elimina duplicações."
-            },
-            {
-              "sourceId": "label",
-              "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
+              "sourceId": "caption",
+              "quote": "Este exercício propõe um fluxo simples para alinhar respostas comerciais à política interna. Mantenha uma lista de respostas aprovadas, com fonte e data de revisão. Ao solicitar um rascunho, peça que ele seja baseado apenas nessa política e que indique o trecho utilizado. Em seguida, confira o trecho na fonte original, pois uma citação gerada não comprova sua validade por si só. Quando a informação não estiver na política, marque a dúvida para revisão antes de publicar. Esse método organiza o processo e reduz ruídos, embora não elimine erros por completo."
             }
-          ]
-        },
-        {
-          "id": "story",
+          ],
+          "reason": "O texto da legenda resume o fluxo proposto no briefing.",
           "supported": true,
-          "reason": "A imagem 5 exibe o cabeçalho 'REFLEXÃO', o título 'Como você identifica pedidos únicos hoje?' e o texto convidando a compartilhar nos comentários métodos usados pela equipe ou dúvidas sobre identificadores únicos, conforme o briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief",
-              "quote": "Proposta de exercício educativo com pedidos fictícios: atribuir um identificador ao pedido; consultar se esse identificador já foi registrado antes de criar uma tarefa; se já existir, encaminhar para conferência em vez de criar outra tarefa; testar reenviando o mesmo pedido e verificar o registro."
-            },
-            {
-              "sourceId": "label",
-              "quote": "Conteúdo educativo autoral com apoio de IA. Exemplo fictício; não é notícia nem resultado comprovado."
-            }
-          ]
+          "id": "caption"
         }
       ],
       "decision": "approve",
@@ -384,7 +515,7 @@
       "novel": true,
       "practical": true,
       "visualMatch": true,
-      "reason": "Todos os cinco renders estão legíveis, composicionalmente coerentes com o briefing e sem cortes ou sobreposições prejudiciais. O conteúdo é estritamente educativo e fictício, sem estatísticas, casos reais ou promessas de resultado. O exercício prático possui começo (atribuição de identificador), desenvolvimento (consulta e encaminhamento) e conclusão (teste de reenvio). As claims são totalmente sustentadas pelas fontes brief e label. Não há contradições entre texto visível e briefing."
+      "reason": "O conteúdo é um exercício educativo fictício, conforme o briefing, e está devidamente suportado pelas fontes fornecidas. O fluxo é prático e coerente."
     },
     "structured": true,
     "stopReason": "tool_use",
