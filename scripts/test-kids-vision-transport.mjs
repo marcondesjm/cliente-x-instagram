@@ -3,6 +3,8 @@ import sharp from 'sharp';
 import {randomUUID,createHash} from 'node:crypto';
 import {sendVision,callAllowance} from '../lib/kids-scene-vision.js';
 import {normalizeProviderUsage} from '../lib/platform-editorial-validation.js';
+import {loadPassage} from '../lib/kids-bible-passage.js';
+import {groundingPrompt,groundingSchema,inspectGrounding,groundingFingerprint} from '../lib/editorial-grounding.js';
 import {persistState} from './persist-instagram-state.mjs';
 const C='automation/instagram-template/config/',PATH=C+'kids-vision-transport-test.json';
 const read=p=>JSON.parse(fs.readFileSync(p,'utf8'));
@@ -35,6 +37,28 @@ try {
     const passed=!blocked && value?.personInTree===fixture.expected.personInTree && value?.openBooks===fixture.expected.openBooks && value?.style===fixture.expected.style && typeof value?.description==='string' && value.description.length>=15 && (r.stopReason==='end_turn' || r.structured && r.stopReason==='tool_use');
     state.entries.push({id,mode:mode.id,fixture:fixture.id,model:mode.model,passed,value,...(r.value===null?{responseExcerpt:r.invalidResponseText}:{}),expected:fixture.expected,checkedAt:new Date().toISOString(),sourceUrl:fixture.scene.imageUrl,imageHash:call.imageHash});
     if(blocked)state.circuit='invalid_usage_receipt';save();if(blocked)throw new Error('Recibo inválido no diagnóstico.');
+  }
+  const regressionVersion='depicted-event-v2';
+  if(state.eventGrounding?.version!==regressionVersion || state.eventGrounding?.passed!==true) {
+    const passages=await Promise.all(['Lucas 24:1–12','Lucas 19:1–10','Marcos 4:35–41'].map(loadPassage));
+    const task={scopeReference:'Trechos WEB fornecidos, sem ampliar o relato.',sources:passages.flatMap((p,i)=>p.verses.map(v=>({id:`p${i}:${v.id}`,text:v.text}))),claims:[
+      {id:'absent-appearance',text:'Jesus apareceu pessoalmente às mulheres diante do túmulo.'},
+      {id:'zacchaeus-house',text:'Zaqueu recebeu Jesus em sua casa.',visualObservation:'Um homem está de pé ao lado de outro sentado junto de uma mesa em um ambiente interno.',sourceContext:'Zacchaeus welcomed Jesus into his house.'},
+      {id:'tree-action',text:'Zaqueu subiu em uma árvore para ver Jesus.',visualObservation:'Um homem está nos galhos de uma árvore, acima de pessoas no chão.',sourceContext:'Zacchaeus climbed a sycamore tree to see Jesus.'},
+      {id:'wrong-table',text:'Zaqueu estava sentado à mesa com Jesus.',visualObservation:'Um homem está nos galhos de uma árvore, acima de pessoas no chão.',sourceContext:'Zacchaeus climbed a sycamore tree to see Jesus.'},
+      {id:'sleep-illustration',text:'Jesus dormia na parte de trás do barco.',visualObservation:'Um homem com túnica vermelha está deitado na popa de um barco, enquanto outros homens estão próximos.',sourceContext:'Jesus was asleep in the stern.'},
+      {id:'wrong-tree-action',text:'Zaqueu subiu em uma árvore para ver Jesus.',visualObservation:'Quatro homens caminham em uma estrada; ninguém está em árvore.',sourceContext:'People walking towards Jericho.'}
+    ]};
+    const day=callAllowance(state),call={id:randomUUID(),day,status:'reserved',stage:'event-grounding-v2',startedAt:new Date().toISOString()};state.calls.push(call);save();
+    let result;
+    try {result=await sendVision({key,model:'claude-sonnet-4.6',prompt:groundingPrompt(task),schema:groundingSchema(task.claims.length),forceTool:true,maxOutputTokens:3000});}
+    catch(error){call.status='failed';call.completedAt=new Date().toISOString();state.circuit='request_failed';save();throw new Error('Regressão factual interrompida; sem repetição automática.');}
+    const {blocked,...usage}=normalizeProviderUsage(result.usage,state.policy,state.billingMode);Object.assign(call,{status:'completed',completedAt:new Date().toISOString(),...usage});
+    let valid=true;try{inspectGrounding(task,result.value);}catch{valid=false;}
+    const expected=[false,true,true,false,true,false];
+    const passed=!blocked && valid && result.value.claims.every((c,i)=>c.supported===expected[i]);
+    state.eventGrounding={version:regressionVersion,model:'claude-sonnet-4.6',passed,checkedAt:new Date().toISOString(),taskFingerprint:groundingFingerprint(task),task,cases:result.value?.claims?.map((c,i)=>({...c,expected:expected[i],passed:c.supported===expected[i]})) || []};save();
+    if(!passed)throw new Error('Regressão de vínculo visual/bíblico reprovada.');
   }
   state.health='completed';state.summary=modes.map(m=>({mode:m.id,passed:state.entries.filter(e=>e.mode===m.id && e.passed).length,total:m.holdout?holdoutFixtures.length:fixtures.length}));save();
 }catch(e){state.health='blocked';state.message=String(e.message).slice(0,350);save();process.exitCode=1;}
