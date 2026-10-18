@@ -14,7 +14,7 @@ import {sceneGroundingTask,groundingPrompt,groundingSchema,assertGrounding,groun
 import {normalizeProviderUsage} from '../lib/platform-editorial-validation.js';
 import {VISION_VERSION,callAllowance,sendVision,calibrationImage,CALIBRATION_PROMPT,visualSignature,similarScenes,contactSheet,recoverTransientCalls,promptSceneDescription,selectionSchema,verificationSchema,reviewPoolLimit,BLIND_SCENE_PROMPT,blindSceneSchema,assertBlindScene,individualSceneImage} from '../lib/kids-scene-vision.js';
 
-const MATCHING_VERSION='card-options-visual-grounding-v5';
+const MATCHING_VERSION='independent-pair-matrix-v6';
 const ROOT=resolve(dirname(fileURLToPath(import.meta.url)),'..');process.chdir(ROOT);
 const C='automation/instagram-template/config/',STATE=C+'kids-scene-replenishment.json',RECIPES=C+'kids-reviewed-scenes.json';
 const read=p=>JSON.parse(fs.readFileSync(p,'utf8').replace(/^\uFEFF/,''));
@@ -40,7 +40,7 @@ async function paidCall(stage,image,prompt,maxOutputTokens=2200,schema=null,allo
   const day=callAllowance(state);
   if(!key)throw new Error('Segredo de visão ausente.');
   const model=stage==='calibration' || stage.startsWith('pixels:')?state.model:(state.reasoningModel || state.model);
-  const forceTool=Boolean(schema && (/^(pixels|verify|facts):/.test(stage) || stage==='calibration'));
+  const forceTool=Boolean(schema && (/^(pixels|select|verify|facts):/.test(stage) || stage==='calibration'));
   const plain=state.responseFormat==='json' && !forceTool;
   const call={id:randomUUID(),...(state.pilotRun?.status==='running'?{pilotId:state.pilotRun.id}:{}),day,stage,model,responseFormat:forceTool?'forced_tool':plain?'json':'tool',startedAt:now(),status:'reserved',payloadBytes:image?.length || 0,promptChars:prompt.length,imageFingerprint:image?hash(image):null,promptFingerprint:hash(prompt)};
   state.calls.push(call);save();
@@ -95,7 +95,7 @@ async function getScene(scene) {
 }
 function context(pack,passage) {
   const roles=['cover','narrative','lesson','family_activity','reading'];
-  return JSON.stringify({reference:pack.biblicalReference,passage:passage.verses,caption:(pack.caption || '').split('\n\nIlustrações:')[0],cards:pack.slides.map((s,i)=>({index:i+1,role:roles[i] || 'narrative',illustrationRequirement:i===0?'Retratar o evento do título da capa.':i>=2?'Cena concretamente sustentada pela passagem e pertinente à história. A imagem não deve encenar desenhar, conversar com um adulto ou ler; essas são instruções ao leitor. copyMatch avalia a ligação da cena com a história bíblica, sem exigir a atividade familiar nos pixels.':'Retratar um dos eventos do resumo.',title:s.title,body:s.body})),story:'Uma cena diferente relacionada à mesma passagem; leitura com um adulto.'});
+  return JSON.stringify({reference:pack.biblicalReference,passage:passage.verses,caption:(pack.caption || '').split('\n\nIlustrações:')[0],cards:pack.slides.map((s,i)=>({index:i+1,role:roles[i] || 'narrative',illustrationScope:i>=2?'whole_passage':i===0?'title_event':'summary_event',illustrationRequirement:i===0?'Retratar o evento do título da capa.':i>=2?'Qualquer cena concretamente sustentada pela passagem e pertinente à história, com conexão educativa justificável. Texto é reflexão/atividade/leitura, não um evento que precise aparecer literalmente nos pixels. Não limite opções ao ato de restituir, desenhar ou ler. Nenhum episódio fora da passagem é aceito.':'Retratar um dos eventos do resumo.',title:s.title,body:s.body})),story:'Uma cena diferente relacionada à mesma passagem; leitura com um adulto.'});
 }
 const blindCache=new Map();
 async function reviewPack(pack,candidate,known,{attempt=0,feedback=null}={}) {
@@ -146,13 +146,13 @@ async function reviewPack(pack,candidate,known,{attempt=0,feedback=null}={}) {
   pool.splice(0,pool.length,...usable);
   if(pool.length<pack.slides.length+1)throw new Error('Faltam seis cenas com leitura individual confirmada.');
   fs.writeFileSync(`output/kids-replenishment/${pack.id}-candidates.jpg`,await contactSheet(pool));
-  const matching=await paidCall('select:'+pack.id,null,matchingPrompt(ctx,pool.map((s,i)=>({scene:i+1,observationId:s.id,observedEvent:blindCache.get(s.sha256).observedEvent,sourceContext:promptSceneDescription(s.description)})),feedback),5000,matchingSchema(pool.length,pack.slides.length+1));
+  const matching=await paidCall('select:'+pack.id,null,matchingPrompt(ctx,pool.map((s,i)=>({scene:i+1,observationId:s.id,observedEvent:blindCache.get(s.sha256).observedEvent,sourceContext:promptSceneDescription(s.description)})),feedback),8000,matchingSchema(pool.length,pack.slides.length+1));
   fs.writeFileSync(`output/kids-replenishment/${pack.id}-matching-${attempt+1}.json`,JSON.stringify(matching,null,2));
   const selection=matchSceneOptions(matching,pool.length,pack.slides.length+1,passage.verses.map(v=>v.id),{scenes:pool,feedback});
   console.log(JSON.stringify({packId:pack.id,decision:selection.decision==='approve'?'approve':'reject',feed:Array.isArray(selection.feed)?selection.feed.map(Number):[],story:Number(selection.story),evidenceCount:selection.evidence?.length || 0,cardLabels:selection.evidence?.map(e=>Number(e.card)) || []}));
   // Preserve rejections too: an API success does not establish editorial approval.
   fs.writeFileSync(`output/kids-replenishment/${pack.id}-selection-${attempt+1}.json`,JSON.stringify({reference:pack.biblicalReference,selection,candidates:pool.map(({bytes,...scene},i)=>({...scene,scene:i+1,observation:blindCache.get(scene.sha256)}))},null,2));
-  if(selection.decision!=='approve' || !['childSuitable','distinct','referenceAccurate'].every(k=>selection[k]===true) || !Array.isArray(selection.feed) || selection.feed.length!==pack.slides.length)throw new Error('Seleção visual não aprovada. '+(selection.reason || '')+' '+matching.cards.filter(c=>!c.options.length).map(c=>'Cartão '+c.card+': '+c.reason).join('; '));
+  if(selection.decision!=='approve' || !['childSuitable','distinct','referenceAccurate'].every(k=>selection[k]===true) || !Array.isArray(selection.feed) || selection.feed.length!==pack.slides.length)throw new Error('Seleção visual não aprovada. '+(selection.reason || '')+' '+matching.cards.filter(c=>!(c.options?.length || c.assessments?.some(a=>a.allowed))).map(c=>'Cartão '+c.card+': '+c.reason).join('; '));
   const labels=[...selection.feed,selection.story];
   if(new Set(labels).size!==labels.length || labels.some(n=>!Number.isInteger(n) || n<1 || n>pool.length))throw new Error('Resposta de seleção contém cenas inválidas ou repetidas.');
   if(!Array.isArray(selection.evidence) || selection.evidence.length!==labels.length || selection.evidence.some((e,i)=>e.card!==i+1 || e.scene!==labels[i]))throw new Error('Seleção sem justificativa coerente por cartão.');

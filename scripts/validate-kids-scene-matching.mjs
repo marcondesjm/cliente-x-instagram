@@ -12,7 +12,7 @@ assert.throws(()=>matchSceneOptions(matrix([[1,1],[2],[3]]),3,3,['19:6']),/repet
 assert.throws(()=>matchSceneOptions(matrix([[1],[2],[4]]),3,3,['19:6']),/inválida/);
 assert.throws(()=>matchSceneOptions(matrix([[1],[2],[3]]),3,3,['19:5']),/passagem/);
 const reordered=matrix([[1],[2],[3]]);reordered.cards.reverse();assert.throws(()=>matchSceneOptions(reordered,3,3,['19:6']),/Posição/);
-assert.equal(matchingSchema(8,6).properties.cards.items.properties.options.minItems,undefined,'Abstention must remain valid');
+assert.equal(matchingSchema(8,6).properties.cards.items.properties.assessments.minItems,8,'Abstention must remain valid');
 assert.match(matchingPrompt('{}',[]),/não uma etapa anterior/);
 const observations=[{id:'0123456789abcdef',observedEvent:'Pessoas atravessam a água em um barco.'},{id:'fedcba9876543210',observedEvent:'Um homem conversa com seus companheiros.'}];
 const review={decision:'reject',cards:[{position:2,observationId:observations[1].id,passageMatch:false},{position:1,observationId:observations[0].id,passageMatch:true}]};
@@ -30,3 +30,9 @@ const switched=structuredClone(review);switched.cards[0].observationId=observati
 const rewritten=structuredClone(review);rewritten.cards[0].observedEvent='An invented event';assert.throws(()=>bindVerificationObservations(rewritten,observations),/reescrever/);
 const repeated=structuredClone(review);repeated.cards[0].position=1;assert.throws(()=>bindVerificationObservations(repeated,observations),/identidade/);
 console.log('PASS: complete distinct assignment, unavailable cover, Hall conflict, invalid/duplicate options, verse bounds and explicit abstention. No API calls.');
+
+const fullMatrix={cards:[[1,2],[1],[2,3]].map((allowed,i)=>({card:i+1,reason:'Conferência independente dos pares.',assessments:[1,2,3].map(scene=>({scene,allowed:allowed.includes(scene),verse:allowed.includes(scene)?'19:6':'',reason:allowed.includes(scene)?'Cena compatível com o relato.':'Cena não atende este cartão.'}))}))};
+assert.deepEqual(matchSceneOptions(fullMatrix,3,3,['19:6']).feed,[2,1]);
+const incomplete=structuredClone(fullMatrix);incomplete.cards[0].assessments.pop();assert.throws(()=>matchSceneOptions(incomplete,3,3,['19:6']),/completa/);
+const duplicatedPair=structuredClone(fullMatrix);duplicatedPair.cards[0].assessments[1].scene=1;assert.throws(()=>matchSceneOptions(duplicatedPair,3,3,['19:6']),/completa/);
+const invalidNegative=structuredClone(fullMatrix);invalidNegative.cards[1].assessments[1].verse='19:6';assert.throws(()=>matchSceneOptions(invalidNegative,3,3,['19:6']),/completa/);
