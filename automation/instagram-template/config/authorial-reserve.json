@@ -492,40 +492,40 @@
       "reason": "Legenda autoral fora dos limites."
     }
   ],
-  "checkedAt": "2026-10-18T16:39:40.784Z",
+  "checkedAt": "2026-10-18T16:39:57.771Z",
   "workflowRun": "39145939005",
   "message": "Limite diário de tokens atingido.",
   "lastResponse": {
-    "stage": "generate:teste-variacoes",
-    "callId": "f4829622-9175-489e-b031-899a1ab32424",
+    "stage": "generate:versao-instrucao",
+    "callId": "19d206ae-dd22-4f9e-91ca-8c0db4db4c76",
     "value": {
       "slides": [
         {
-          "eyebrow": "Teste de instrução",
-          "title": "O pedido veio abreviado. Sua IA entendeu o mesmo?",
-          "body": "Um cliente envia mensagem curta, com erro de digitação e dado faltando. A mesma instrução de extração é aplicada a três versões do texto. Os campos retornados divergem entre si."
+          "eyebrow": "Gestão de IA",
+          "title": "Você mudou a instrução. A resposta melhorou mesmo?",
+          "body": "Ao ajustar o comando da IA, é comum assumir que o resultado ficou melhor. Sem um método de comparação, essa percepção pode enganar e gerar retrabalho na operação."
         },
         {
-          "eyebrow": "Procedimento prático",
-          "title": "Crie variações e execute o mesmo rascunho",
-          "body": "Escreva um pedido fictício completo. Produza versões com abreviação, erro e informação ausente. Aplique a mesma instrução em cada uma e registre os resultados obtidos."
+          "eyebrow": "Procedimento",
+          "title": "Guarde versões com nome e data",
+          "body": "Salve cada instrução com um identificador claro. Mantenha exemplos fictícios de entrada e os critérios de qualidade esperados para ter uma base fixa de teste."
         },
         {
           "eyebrow": "Conferência",
-          "title": "Compare os campos e anote divergências",
-          "body": "Coloque os resultados lado a lado. Identifique quais campos mudaram ou ficaram vazios. Anote onde a instrução falhou em manter consistência entre as versões testadas."
+          "title": "Execute os mesmos casos de teste",
+          "body": "Ao alterar a instrução, rode os exemplos salvos novamente. Compare as novas respostas com as anteriores para identificar mudanças reais no comportamento do modelo."
         },
         {
-          "eyebrow": "Exercício final",
-          "title": "Corrija a instrução e repita o teste",
-          "body": "Ajuste a redação da instrução para cobrir as lacunas identificadas. Execute novamente o conjunto de testes. Use a versão estável na rotina apenas após confirmar consistência."
+          "eyebrow": "Exercício",
+          "title": "Registre ganhos e perdas",
+          "body": "Anote o que melhorou e o que piorou em cada versão. Só adote a nova instrução após essa análise objetiva, sem prometer resultados garantidos."
         }
       ],
-      "caption": "Este exercício propõe um teste controlado para avaliar como sua instrução de extração se comporta diante de mensagens reais, que costumam chegar abreviadas, com erros ou dados incompletos. Comece escrevendo um pedido fictício claro e completo. Em seguida, crie três variações desse mesmo texto: uma versão abreviada, outra com erro de digitação e uma terceira com informação essencial ausente. Aplique exatamente o mesmo rascunho de instrução em cada uma dessas versões e compare os campos extraídos. Anote todas as divergências encontradas entre os resultados. Após identificar onde a instrução falhou, corrija a redação para tornar as regras mais robustas e repita todo o conjunto de testes. Só implemente a instrução na operação diária quando ela demonstrar consistência nas diferentes situações simuladas. Este método ajuda a organizar a confiança no processo sem prometer precisão absoluta ou resultados imediatos. Você já testou suas instruções com variações de texto antes de colocar em produção? Siga o perfil para aprender aplicações práticas de IA em empresas e receber conteúdos úteis para salvar ou enviar a colegas.",
+      "caption": "Mudar a instrução da IA nem sempre gera a melhoria esperada. Para evitar achismos, adote um processo de versionamento simples: salve cada prompt com nome e data, mantenha exemplos fictícios de entrada e defina critérios claros de qualidade. Ao fazer ajustes, execute os mesmos casos de teste e compare as respostas lado a lado. Registre o que efetivamente melhorou e o que pode ter piorado antes de decidir qual versão usar. Essa prática traz clareza para a tomada de decisão e evita retrocessos na qualidade das entregas. Você já compara versões de instruções antes de adotá-las? Siga o perfil para aprender aplicações práticas de IA em empresas e organizar melhor sua rotina operacional.",
       "storySlide": {
-        "eyebrow": "Rotina real",
-        "title": "Sua IA mantém consistência com textos imperfeitos?",
-        "body": "Teste suas instruções com variações de texto antes de usar na operação. Veja o exercício completo no feed e aplique no seu contexto."
+        "eyebrow": "Rotina",
+        "title": "Como você valida mudanças na IA?",
+        "body": "Se ajusta instruções com frequência, confira o exercício completo no feed para aplicar um método de comparação objetivo nas suas tarefas."
       }
     },
     "structured": true,
