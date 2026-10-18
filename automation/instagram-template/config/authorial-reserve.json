@@ -2763,40 +2763,40 @@
       "reason": "Pauta de crescimento precisa explicar por que acompanhar o perfil."
     }
   ],
-  "checkedAt": "2026-10-18T18:53:24.664Z",
+  "checkedAt": "2026-10-18T18:53:36.575Z",
   "workflowRun": "39155841344",
   "message": "2 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
-    "stage": "revise-draft:resumo-transferencia-v1",
-    "callId": "fa565be4-72b5-4ea1-af05-25e205eb2745",
+    "stage": "generate:extracao-campos-v2",
+    "callId": "adfbccc2-20d3-4608-9890-f5de50a4e388",
     "value": {
       "slides": [
         {
-          "eyebrow": "Pedido incompleto",
-          "title": "O cliente esqueceu detalhes do pedido",
-          "body": "Um cliente envia mensagem pedindo material de escritório sem informar quantidade ou endereço de entrega."
+          "eyebrow": "Atendimento",
+          "title": "A IA completa dados que faltam?",
+          "body": "Um cliente envia mensagem pedindo orçamento de serviço sem informar quantidade nem prazo de entrega desejado."
         },
         {
-          "eyebrow": "Separe as informações",
-          "title": "Peça resumo com confirmados e pendências",
-          "body": "Solicite um resumo separado listando dados confirmados pelo cliente e itens que ainda faltam ser informados."
+          "eyebrow": "Procedimento",
+          "title": "Defina campos antes de pedir à IA",
+          "body": "Solicite tabela com produto, quantidade e prazo, marcando como não informado qualquer campo ausente na mensagem original recebida."
         },
         {
-          "eyebrow": "Conferência final",
-          "title": "Compare o resumo com a conversa original",
-          "body": "Verifique se todas as informações marcadas como confirmadas realmente aparecem na troca de mensagens com o cliente."
+          "eyebrow": "Conferência",
+          "title": "Compare cada campo com a mensagem",
+          "body": "Verifique se a tabela reflete exatamente o que o cliente escreveu, sem completar informações por suposição ou inferência automática."
         },
         {
-          "eyebrow": "Encaminhe o essencial",
-          "title": "Envie apenas contexto necessário ao colega",
-          "body": "Transfira para quem dará continuidade somente o resumo validado, omitindo conversas paralelas ou dados irrelevantes."
+          "eyebrow": "Exercício",
+          "title": "Teste com pedido fictício incompleto",
+          "body": "Crie mensagem simulada omitindo um campo e peça tabela estruturada, conferindo resultado antes de cadastrar pedido no sistema operacional."
         }
       ],
-      "caption": "Imagine receber um pedido por mensagem sem quantidade nem endereço. Como evitar retrabalho?\n\nPeça um resumo separando o que foi confirmado do que falta. Confira cada item contra a conversa original antes de repassar. Assim, quem assume o atendimento já tem o essencial. Esse exercício ajuda a organizar fluxos de atendimento com mais clareza. Quer aprender outras aplicações práticas de IA em empresas? Acompanhe o perfil para conteúdos assim.",
+      "caption": "Quando um cliente pede orçamento sem informar todos os detalhes, a IA pode preencher lacunas por conta própria? Isso gera risco operacional.\n\nO exercício propõe definir campos essenciais, solicitar tabela preservando apenas o recebido e conferir cada dado antes do cadastro. Assim você organiza o fluxo sem suposições. Quer aprender aplicações práticas de IA em empresas? Acompanhe o perfil para mais conteúdos úteis.",
       "storySlide": {
-        "eyebrow": "Rotina prática",
-        "title": "Como você lida com pedidos incompletos?",
-        "body": "Se um cliente não informa todos os dados, qual sua primeira ação para evitar retrabalho na equipe?"
+        "eyebrow": "Rotina",
+        "title": "Seu time confere dados antes de cadastrar?",
+        "body": "Veja no feed um exercício prático para organizar pedidos com IA sem completar informações por suposição durante o atendimento diário."
       }
     },
     "structured": true,
