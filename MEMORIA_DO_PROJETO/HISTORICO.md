@@ -3559,3 +3559,14 @@ Conclusao de ativacao:
 - Run `35447132492` concluído com sucesso. Feed carrossel `17986961867870252`, Story `18017622122938743`, permalink https://www.instagram.com/p/DdeKzlaHP1Q/.
 - O post foi aberto no Instagram e confirmou o título “O pós-venda depende de alguém lembrar?”, os dez cartões e a legenda completa com prompt e método de teste.
 - Estado persistido em `origin/main`: `lessonId: serie-12`, episódio 12, formato `CAROUSEL`, Feed e Story com IDs válidos. Primeiro comentário sem ID e sem erro; a interface do Instagram mostrou que ainda não havia comentários.
+
+
+## 2026-10-18 10:00 BRT — reposição Kids: critérios, piloto e guia v1.7
+
+- Worktree `cliente-x-instagram-kids-profile-20261017`, branch `fix/kids-illustrated-stock-slot8`; estado remoto atualizado antes das alterações. Pré-existentes: edições do guia HTML, botão do painel, PDF e gerador Python, preservadas e concluídas nesta etapa.
+- Critério por cartão agora explica que atividade familiar/leitura usa cena bíblica pertinente, sem encenar desenhar ou ler. A revisão distingue ambiente compartilhado de repetição e mantém bloqueios para ambiguidades e contradições.
+- Commits funcionais: `d730fed4`, `c43960e0`, `2e8a1541`, `1a3255b3`. Versão única `card-options-family-context-v4` identifica tanto o cache de rejeição como os pareceres reutilizáveis. Piloto sem candidato elegível encerra com erro explícito.
+- Primeiro disparo `39128872463` não avaliou pauta; montagem redundante cancelada. Piloto `39128997063` reprovado; prancha baixada e inspecionada. Piloto final `39129415731`, com critério v4, também reprovado após seleção, revisão e nova seleção (três chamadas). Estado persistido: `pilotRun.status=rejected`, `enabled=false`, `circuit=vision_validation_failed`. Nenhuma seleção nova, montagem ou publicação foi confirmada por estes pilotos.
+- A revisão ainda produz descrições/decisões ambíguas; não há evidência suficiente para ativar a reposição recorrente. Próximo passo: validar a precisão visual e semântica em imagens individuais antes de repetir pilotos ou liberar a rotina. Não tratar falta de aprovação como prova de inexistência de imagens adequadas na fonte.
+- Passaram: sintaxe do script/API, parser dos scripts do painel, validate-kids-scene-matching, validate-kids-scene-replenishment, validate-kids-scene-assembly, validate-kids-vision-transport e git diff --check. Testes locais são simulados, distintos dos pilotos reais.
+- Guia PDF v1.7 de 18/10 gerado e conferido visualmente em uma página; links do guia e do painel atualizados. Painel passa a v6.09. Deploy e conferência do download em produção serão registrados após execução.
