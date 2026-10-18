@@ -3,8 +3,8 @@
   "enabled": true,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "review_completed",
-  "message": "3 pauta(s) examinada(s); somente seleções aprovadas seguem para montagem.",
+  "health": "reviewing",
+  "message": "Revisando cenas da pauta kids-biblia-34; aprovação bíblica, visual e render ainda obrigatórios.",
   "policy": {
     "maxCallsPerDay": 100,
     "maxInputTokensPerCall": 120000,
@@ -3491,6 +3491,14 @@
       "checkedAt": "2026-10-18T19:22:58.779Z",
       "status": "rejected",
       "message": "Seleção visual não aprovada. Não há combinação completa de cenas compatíveis e distintas para todos os cartões e Story. "
+    },
+    {
+      "id": "kids-biblia-34",
+      "title": "Tabita ajudava as pessoas",
+      "fingerprint": "72c76f9e5dec22cd75c42bb792f74521d6958666633c9f9180b10260df8d5abe",
+      "checkedAt": "2026-10-18T19:41:36.023Z",
+      "status": "rejected",
+      "message": "Saldo interno insuficiente para novas leituras e revisão completa; nenhuma nova leitura paga foi iniciada."
     }
   ],
   "calibration": {
@@ -3503,8 +3511,8 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T19:27:34.678Z",
-  "lastRun": "39157783956",
+  "checkedAt": "2026-10-18T19:41:40.344Z",
+  "lastRun": "39159879406",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -3665,6 +3673,12 @@
     "5edae7931ef977fc62817d1322e37d000996c618455176803c92f485f93044ca": {
       "reason": "Seleção visual não aprovada. Não há combinação completa de cenas compatíveis e distintas para todos os cartões e Story. ",
       "checkedAt": "2026-10-18T19:27:33.267Z"
+    },
+    "72c76f9e5dec22cd75c42bb792f74521d6958666633c9f9180b10260df8d5abe": {
+      "reason": "Saldo interno insuficiente para novas leituras e revisão completa; nenhuma nova leitura paga foi iniciada.",
+      "kind": "temporary",
+      "checkedAt": "2026-10-18T19:41:40.344Z",
+      "retryAfter": "2026-10-19T03:00:00.000Z"
     }
   },
   "lastEvaluation": {
@@ -5430,7 +5444,7 @@
     }
   },
   "accuracyGate": {
-    "checkedAt": "2026-10-18T19:14:06.506Z",
+    "checkedAt": "2026-10-18T19:41:35.169Z",
     "visualCases": 4,
     "factualCases": 6,
     "diversityCases": 2,
@@ -5441,5 +5455,17 @@
   "budgetAdjustment": {
     "at": "2026-10-18T19:12:50.745Z",
     "reason": "Reposição Kids bloqueada pelo teto interno; limite alinhado ao controle administrativo, sem alterar revisão ou proteção bíblica."
+  },
+  "reserve": {
+    "target": 12,
+    "available": 0,
+    "shortfall": 12,
+    "checkedAt": "2026-10-18T19:41:35.169Z"
+  },
+  "economy": {
+    "reusedPixelReads": 0,
+    "newPixelReads": 0,
+    "skippedCandidates": 0,
+    "checkedAt": "2026-10-18T19:41:40.344Z"
   }
 }
