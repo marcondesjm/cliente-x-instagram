@@ -1,6 +1,8 @@
 name: Sabedoria Kids - diagnosticar transporte visual
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '20 8 * * *' # 05h20 BRT: regressões antes da reposição.
 permissions:
   contents: write
 concurrency:

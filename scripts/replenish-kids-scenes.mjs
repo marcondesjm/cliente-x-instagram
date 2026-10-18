@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import {randomUUID} from 'node:crypto';
 import {matchingSchema,matchingPrompt,matchSceneOptions} from '../lib/kids-scene-matching.js';
-import {beginDiagnosticPilot,endDiagnosticPilot,reviewCircuitBlocked,bindVerificationObservations,cachedBlindObservation} from '../lib/kids-scene-vision.js';
+import {beginDiagnosticPilot,endDiagnosticPilot,reviewCircuitBlocked,bindVerificationObservations,cachedBlindObservation,assertVisionReadiness} from '../lib/kids-scene-vision.js';
 import {resolve,dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {persistState} from './persist-instagram-state.mjs';
@@ -193,6 +193,7 @@ async function reviewPack(pack,candidate,known,{attempt=0,feedback=null}={}) {
   recipes.push(recipe);return {recipe,assets};
 }
 async function replenish() {
+  if(state.enabled && !manual)state.accuracyGate=assertVisionReadiness(state,read(C+'kids-vision-transport-test.json'));
   if(!state.enabled && !manual){state.health='awaiting_activation';state.message='Rotina preparada, aguardando piloto e ativação.';save();return;}
   if(recoverTransientCalls(state)){state.message='Nova janela após falha transitória; chamada anterior permanece contada pelo limite máximo.';save();}
   if(!state.calibration?.passed || state.calibration.version!==VISION_VERSION || state.calibration.model!==state.model)await calibrate();
@@ -245,6 +246,7 @@ async function replenish() {
   state.message=state.circuit?'Circuito de consumo ou visão bloqueado.':`${processed} pauta(s) examinada(s); somente seleções aprovadas seguem para montagem.`;save();
 }
 function activate() {
+  state.accuracyGate=assertVisionReadiness(state,read(C+'kids-vision-transport-test.json'));
   if(state.circuit || !state.calibration?.passed || state.calibration.version!==VISION_VERSION || state.billingMode!=='fixed_plan_user_confirmed')throw new Error('Calibração, consumo ou plano ainda não confirmados para ativação.');
   const packs=read(C+'content-packs.json').find(g=>g.account==='sabedoria-kids').packs;
   const assembled=read(C+'kids-scene-automation.json');
