@@ -790,86 +790,40 @@
       }
     }
   ],
-  "checkedAt": "2026-10-18T17:58:42.666Z",
+  "checkedAt": "2026-10-18T17:59:35.811Z",
   "workflowRun": "39151944987",
   "message": "Limite interno ajustado para 100 chamadas e 12 milhões de tokens de entrada por dia; reposição aguardando execução.",
   "lastResponse": {
-    "stage": "review:resumo-transferencia",
-    "callId": "8301533c-e64e-47b1-b4fe-8793df0aec08",
+    "stage": "generate:extracao-campos-v1",
+    "callId": "0cf630ab-28bd-4e8f-b07a-6b18a02f6996",
     "value": {
-      "claims": [
+      "slides": [
         {
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "O slide descreve o cenário fictício de um atendente recebendo um pedido com dados incompletos e a necessidade de separar o que foi confirmado do que falta definir, conforme proposto no briefing.",
-          "id": "slide-1",
-          "supported": true
+          "eyebrow": "Mensagem ambígua",
+          "title": "O pedido veio sem quantidade definida",
+          "body": "Um cliente envia mensagem pedindo grampos e envelopes, mas não informa quantas unidades de cada item deseja. A IA pode preencher com suposições e gerar erro no estoque."
         },
         {
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "O slide detalha o procedimento de pedir um resumo em três partes e marcar pendências, alinhado com as orientações do briefing.",
-          "id": "slide-2",
-          "supported": true
+          "eyebrow": "Procedimento claro",
+          "title": "Defina campos obrigatórios antes de pedir à IA",
+          "body": "Estabeleça produto, quantidade e prazo como campos essenciais. Instrua a IA a montar uma tabela mantendo apenas o que foi informado na mensagem original do cliente."
         },
         {
-          "reason": "O slide instrui a conferir o resumo contra a fala original e ajustar o que for necessário, conforme proposto no briefing.",
-          "id": "slide-3",
-          "supported": true,
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Conferência necessária",
+          "title": "Marque ausentes e compare com a fonte",
+          "body": "Qualquer campo não mencionado deve receber a marcação não informado. Antes de cadastrar, confira cada linha da tabela contra a mensagem recebida para evitar inclusões indevidas."
         },
         {
-          "supported": true,
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "id": "slide-4",
-          "reason": "O slide orienta sobre o encerramento, encaminhando apenas o contexto essencial e evitando dados sensíveis, conforme o briefing."
-        },
-        {
-          "supported": true,
-          "id": "caption",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "reason": "A legenda resume o processo de atendimento fictício, a conferência contra a conversa e o encaminhamento do essencial, alinhado ao briefing."
-        },
-        {
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "id": "story",
-          "reason": "O story introduz o tema das pendências na transferência e convida para o exercício prático, conforme o briefing.",
-          "supported": true
+          "eyebrow": "Ação prática",
+          "title": "Teste com um pedido fictício hoje mesmo",
+          "body": "Crie uma mensagem simulada com dados incompletos. Peça à IA a tabela estruturada e verifique se os campos faltantes foram sinalizados. Ajuste as instruções até obter consistência."
         }
       ],
-      "decision": "approve",
-      "supported": true,
-      "novel": true,
-      "practical": true,
-      "visualMatch": true,
-      "reason": "O conteúdo apresenta um exercício educativo fictício coerente e bem estruturado, seguindo todas as orientações do briefing sem inventar dados ou resultados. A progressão entre os slides é lógica e prática.",
-      "growth": {
-        "hookSpecific": true,
-        "shareReason": true,
-        "payoffDelivered": true,
-        "followReason": true
+      "caption": "Pedidos por mensagem costumam chegar com informações incompletas. Quando a IA completa sozinha o que falta, o risco de erro no cadastro aumenta.\n\nDefina quais campos são essenciais, peça uma tabela que preserve apenas o recebido e marque como não informado tudo que estiver ausente. Compare cada campo com a mensagem original antes de registrar. Quer aprender aplicações práticas de IA em empresas? Siga o perfil para receber exercícios como este.",
+      "storySlide": {
+        "eyebrow": "Rotina operacional",
+        "title": "Sua equipe confere pedidos antes de cadastrar?",
+        "body": "Veja no feed um exercício para organizar a extração de dados de mensagens com IA, evitando suposições que geram retrabalho."
       }
     },
     "structured": true,
