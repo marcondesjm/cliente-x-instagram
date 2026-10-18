@@ -263,9 +263,14 @@
     {
       "id": "08d34f30-97cf-49a5-884c-63d89e81317f",
       "day": "2026-10-18",
-      "status": "reserved",
+      "status": "completed",
       "stage": "event-grounding-v2",
-      "startedAt": "2026-10-18T13:23:57.959Z"
+      "startedAt": "2026-10-18T13:23:57.959Z",
+      "completedAt": "2026-10-18T13:24:19.180Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 30,
+      "usageStatus": "unconfirmed_counted_at_maximum"
     }
   ],
   "entries": [
@@ -604,7 +609,7 @@
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:23:57.959Z",
+  "checkedAt": "2026-10-18T13:24:19.181Z",
   "workflowRun": "39131295395",
   "summary": [
     {
@@ -641,10 +646,10 @@
   "activationEligible": false,
   "semanticConclusion": "Resultados iniciais não se sustentaram no piloto completo. Sonnet inventou cama; Haiku recusou imagem anexada. Nenhuma ativação.",
   "eventGrounding": {
-    "version": "depicted-event-v2",
+    "version": "depicted-event-v3",
     "model": "claude-sonnet-4.6",
     "passed": true,
-    "checkedAt": "2026-10-18T13:11:57.401Z",
+    "checkedAt": "2026-10-18T13:24:19.181Z",
     "taskFingerprint": "24a3d96350ad5e68eec4ef675e4a33577dc5379d0b6c66576eea86e58d75a818",
     "task": {
       "scopeReference": "Trechos WEB fornecidos, sem ampliar o relato.",
@@ -807,23 +812,32 @@
       {
         "id": "absent-appearance",
         "supported": false,
-        "reason": "As fontes não afirmam que Jesus apareceu pessoalmente às mulheres. Os versículos relatam que elas encontraram o túmulo vazio e dois homens em roupas resplandecentes que anunciaram a ressurreição, mas nenhuma aparição pessoal de Jesus é descrita neste trecho.",
-        "evidence": [],
+        "reason": "As fontes não relatam que Jesus apareceu pessoalmente às mulheres diante do túmulo. Os versículos mencionam dois homens em roupas resplandecentes (p0:24:4), mas não Jesus pessoalmente.",
+        "evidence": [
+          {
+            "sourceId": "p0:24:4",
+            "quote": "While they were greatly perplexed about this, behold, two men stood by them in dazzling clothing."
+          },
+          {
+            "sourceId": "p0:24:5",
+            "quote": "Becoming terrified, they bowed their faces down to the earth.\nThey said to them, “Why do you seek the living among the dead?"
+          }
+        ],
         "expected": false,
         "passed": true
       },
       {
         "id": "zacchaeus-house",
         "supported": true,
-        "reason": "A fonte p1:19:5-6 afirma explicitamente que Jesus disse que ficaria na casa de Zaqueu e que ele desceu e o recebeu com alegria, confirmando o recebimento em sua casa.",
+        "reason": "O texto confirma que Zaqueu recebeu Jesus em sua casa com alegria após descer da árvore.",
         "evidence": [
-          {
-            "sourceId": "p1:19:5",
-            "quote": "When Jesus came to the place, he looked up and saw him, and said to him,\n“Zacchaeus, hurry and come down, for today I must stay at your house.”"
-          },
           {
             "sourceId": "p1:19:6",
             "quote": "He hurried, came down, and received him joyfully."
+          },
+          {
+            "sourceId": "p1:19:7",
+            "quote": "When they saw it, they all murmured, saying, “He has gone in to lodge with a man who is a sinner.”"
           }
         ],
         "expected": true,
@@ -832,7 +846,7 @@
       {
         "id": "tree-action",
         "supported": true,
-        "reason": "A fonte p1:19:4 afirma que Zaqueu correu adiante e subiu em uma árvore sicômoro para ver Jesus, correspondendo exatamente à alegação e à observação visual.",
+        "reason": "O texto confirma explicitamente que Zaqueu subiu em uma árvore sicômoro para ver Jesus, e a observação visual é compatível.",
         "evidence": [
           {
             "sourceId": "p1:19:4",
@@ -845,15 +859,20 @@
       {
         "id": "wrong-table",
         "supported": false,
-        "reason": "A alegação contradiz a observação visual fornecida. A visualObservation descreve um homem nos galhos de uma árvore, não sentado à mesa. Além disso, embora Zaqueu tenha recebido Jesus em sua casa, a descrição visual específica não corresponde a uma cena de mesa.",
-        "evidence": [],
+        "reason": "A observação visual mostra um homem nos galhos de uma árvore, o que contradiz diretamente a afirmação de que Zaqueu estava sentado à mesa com Jesus. A ação visível é incompatível.",
+        "evidence": [
+          {
+            "sourceId": "p1:19:4",
+            "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
+          }
+        ],
         "expected": false,
         "passed": true
       },
       {
         "id": "sleep-illustration",
         "supported": true,
-        "reason": "A fonte p2:4:38 afirma explicitamente que Jesus estava na popa do barco, dormindo sobre uma almofada, correspondendo à alegação e à observação visual da ilustração.",
+        "reason": "O texto confirma que Jesus estava dormindo na popa (stern) do barco, e a observação visual é compatível.",
         "evidence": [
           {
             "sourceId": "p2:4:38",
@@ -866,8 +885,13 @@
       {
         "id": "wrong-tree-action",
         "supported": false,
-        "reason": "A alegação contradiz diretamente a observação visual fornecida. A visualObservation descreve quatro homens caminhando em uma estrada sem ninguém em árvore, enquanto a alegação afirma que Zaqueu subiu em uma árvore. Há incompatibilidade entre text e visualObservation.",
-        "evidence": [],
+        "reason": "A observação visual mostra quatro homens caminhando em uma estrada sem ninguém em árvore, o que contradiz a afirmação de que Zaqueu subiu em uma árvore. A ação visível é incompatível.",
+        "evidence": [
+          {
+            "sourceId": "p1:19:4",
+            "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
+          }
+        ],
         "expected": false,
         "passed": true
       }
