@@ -1212,16 +1212,19 @@
     ]
   },
   "automaticRecovery": {
-    "pending": false,
-    "pendingSlot": null,
+    "pending": true,
+    "pendingSlot": {
+      "date": "2026-10-18",
+      "slotIndex": 4
+    },
     "available": 0,
     "recoveryReady": false,
-    "run": false,
-    "phase": "no_stock_incident",
+    "run": true,
+    "phase": "replenish_for_incident",
     "budgetRenewsAt": "2026-10-19T03:00:00.000Z",
-    "nextAttemptAt": null,
-    "checkedAt": "2026-10-18T18:07:07.814Z",
-    "workflowRun": "39152546304",
+    "nextAttemptAt": "2026-10-18T18:08:26.194Z",
+    "checkedAt": "2026-10-18T18:08:26.283Z",
+    "workflowRun": "39152748429",
     "retryAfter": null
   }
 }
