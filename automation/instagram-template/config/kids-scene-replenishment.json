@@ -2036,7 +2036,7 @@
   },
   "circuit": "vision_validation_failed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T13:20:07.707Z",
+  "checkedAt": "2026-10-18T13:20:09.000Z",
   "lastRun": "39130751330",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -2338,65 +2338,13 @@
   },
   "lastFactualEvaluation": {
     "packId": "kids-biblia-29",
-    "fingerprint": "8860a84ecada1d697aa3ca9f127825b40964af62538ce0c78117cbdabe429227",
+    "fingerprint": "fc4ee9e9fc604abcd1e72cad3b0fc7385d65ff9ce9d071b384b556c7d13d233a",
     "result": {
       "claims": [
         {
-          "id": "e64874ce7ad7e208",
-          "supported": false,
-          "reason": "A alegação contém elementos não presentes nas fontes: 'large crowd of people, many of whom wanted to see Him' não é afirmado literalmente (19:3 menciona apenas 'the crowd' impedindo Zacchaeus de ver); 'tax collectors had a bad reputation for gaining money by corruption' é conhecimento externo não presente em nenhuma fonte fornecida.",
-          "evidence": [
-            {
-              "sourceId": "19:2",
-              "quote": "There was a man named Zacchaeus. He was a chief tax collector, and he was rich."
-            },
-            {
-              "sourceId": "19:3",
-              "quote": "He was trying to see who Jesus was, and couldn't because of the crowd, because he was short."
-            }
-          ]
-        },
-        {
-          "id": "d3c9e973465ce4fc",
-          "supported": true,
-          "reason": "A fonte 19:4 afirma exatamente que ele correu à frente e subiu numa árvore sicômoro para ver Jesus.",
-          "evidence": [
-            {
-              "sourceId": "19:4",
-              "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
-            }
-          ]
-        },
-        {
-          "id": "0d7ed7a02e4a2584",
-          "supported": true,
-          "reason": "A fonte 19:5 confirma que Jesus olhou para cima e disse a Zacchaeus para descer rapidamente porque deveria ficar em sua casa naquele dia.",
-          "evidence": [
-            {
-              "sourceId": "19:5",
-              "quote": "When Jesus came to the place, he looked up and saw him, and said to him,\n\"Zacchaeus, hurry and come down, for today I must stay at your house.\""
-            }
-          ]
-        },
-        {
-          "id": "0213f4524b345be9",
-          "supported": false,
-          "reason": "Elementos não suportados: 'Zacchaeus was delighted' não está no texto (19:6 diz 'received him joyfully', referindo-se à recepção, não ao estado emocional prévio); 'Teachers like Jesus usually avoided tax collectors' é conhecimento externo ausente das fontes; 'This man has gone as a guest to the home of a sinner!' difere da citação exata em 19:7 que diz 'He has gone in to lodge with a man who is a sinner.'",
-          "evidence": [
-            {
-              "sourceId": "19:6",
-              "quote": "He hurried, came down, and received him joyfully."
-            },
-            {
-              "sourceId": "19:7",
-              "quote": "When they saw it, they all murmured, saying, \"He has gone in to lodge with a man who is a sinner.\""
-            }
-          ]
-        },
-        {
           "id": "98834c32e024c944",
           "supported": true,
-          "reason": "A fonte 19:8 confirma que Zacchaeus disse que daria metade dos seus bens aos pobres e restituiria quatro vezes mais se tivesse defraudado alguém.",
+          "reason": "A fonte 19:8 afirma exatamente que Zaqueu declarou dar metade dos seus bens aos pobres e restituir quatro vezes o que defraudou.",
           "evidence": [
             {
               "sourceId": "19:8",
@@ -2405,9 +2353,20 @@
           ]
         },
         {
+          "id": "0d7ed7a02e4a2584",
+          "supported": true,
+          "reason": "A fonte 19:4 confirma que Zaqueu subiu em uma árvore para ver Jesus, e a visualObservation descreve corretamente essa cena com ele nos galhos da árvore.",
+          "evidence": [
+            {
+              "sourceId": "19:4",
+              "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
+            }
+          ]
+        },
+        {
           "id": "6654943ac38eff87",
           "supported": false,
-          "reason": "A frase 'This man is a Jew also' não aparece em nenhuma fonte fornecida. A fonte 19:9 diz 'because he also is a son of Abraham', que é diferente de afirmar explicitamente que ele é judeu. Além disso, 'a person has been saved' difere ligeiramente de 'salvation has come to this house'.",
+          "reason": "A fonte 19:9 diz 'salvation has come to this house' e 'son of Abraham', mas não menciona 'Jew'. A tradução no sourceContext altera 'son of Abraham' para 'This man is a Jew also', o que não está nas fontes originais. Além disso, a visualObservation mostra um grupo de homens em círculo, mas as fontes não descrevem esta configuração específica.",
           "evidence": [
             {
               "sourceId": "19:9",
@@ -2416,6 +2375,39 @@
             {
               "sourceId": "19:10",
               "quote": "For the Son of Man came to seek and to save that which was lost.\""
+            }
+          ]
+        },
+        {
+          "id": "d3c9e973465ce4fc",
+          "supported": true,
+          "reason": "A fonte 19:4 confirma que Zaqueu correu adiante e subiu em uma árvore para ver Jesus passar. A visualObservation é consistente com este evento.",
+          "evidence": [
+            {
+              "sourceId": "19:4",
+              "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
+            }
+          ]
+        },
+        {
+          "id": "0213f4524b345be9",
+          "supported": true,
+          "reason": "A fonte 19:7 confirma que as pessoas murmuraram quando viram Jesus entrar na casa de Zaqueu, chamando-o de pecador. O sourceContext também confirma este murmúrio.",
+          "evidence": [
+            {
+              "sourceId": "19:7",
+              "quote": "When they saw it, they all murmured, saying, \"He has gone in to lodge with a man who is a sinner.\""
+            }
+          ]
+        },
+        {
+          "id": "9ce49c775a44acf7",
+          "supported": true,
+          "reason": "A fonte 19:1 confirma que Jesus entrou e estava passando por Jericó. O sourceContext adiciona contexto sobre estar a caminho de Jerusalém, mas o evento principal de passar por Jericó está confirmado.",
+          "evidence": [
+            {
+              "sourceId": "19:1",
+              "quote": "He entered and was passing through Jericho."
             }
           ]
         }
