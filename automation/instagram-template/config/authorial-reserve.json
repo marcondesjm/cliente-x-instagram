@@ -7072,10 +7072,135 @@
         "docs/illustrations/cliente-x/authorial-1eb42e6ee597994b/slide-3.png": "bbdf13030246663e9b11b0293e7eae6f1bf7ca15be0c5e2bdc2bfac1f4cf9807",
         "docs/illustrations/cliente-x/authorial-1eb42e6ee597994b/slide-4.png": "339d79eb32d207f447edcc49ec757b5a5ab2938c0b600e3c704419a571260935",
         "docs/illustrations/cliente-x/authorial-1eb42e6ee597994b/story.png": "cdc4f1d8df193974892a1575e53fc7e8f0076a5eee08fe116d4ce07c8ee2b4f5"
+      },
+      "reviewCandidate": {
+        "claims": [
+          {
+            "id": "slide-1",
+            "supported": true,
+            "reason": "A claim descreve o cenário fictício de dúvida sobre horário fora da política, alinhado ao briefing que propõe exercício educativo com escola fictícia e mensagem sobre horário não constante na política comercial.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "slide-2",
+            "supported": true,
+            "reason": "O slide orienta pedir rascunho baseado apenas na política vigente com fonte e data de revisão, conforme instrução explícita do briefing sobre solicitar à IA um rascunho usando somente a lista oficial.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "slide-3",
+            "supported": true,
+            "reason": "A conferência direta na fonte é exigida pelo briefing, que determina verificar se a citação gerada corresponde exatamente ao texto da política, pois geração automática não prova validade.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "slide-4",
+            "supported": true,
+            "reason": "Marcar pendência para revisão humana quando a resposta não estiver na política está previsto no briefing como etapa obrigatória antes de enviar comunicação ao interessado.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "caption",
+            "supported": true,
+            "reason": "A legenda resume o método proposto (lista atualizada, rascunho baseado nela, conferência na fonte e revisão humana) e inclui disclaimer de conteúdo educativo autoral com apoio de IA, conforme fontes brief e label.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              },
+              {
+                "sourceId": "label"
+              }
+            ]
+          },
+          {
+            "id": "story",
+            "supported": true,
+            "reason": "O texto da story convida a ver no feed como criar exercício prático para validar respostas de IA usando políticas comerciais, coerente com o escopo educativo fictício descrito no briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "art-1",
+            "supported": true,
+            "reason": "Os rótulos 'Política aberta', 'Mensagem do aluno' e 'Tela de inscrição' correspondem aos elementos visuais do slide 1 e são consistentes com o cenário fictício de dúvida na inscrição descrito no briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "art-2",
+            "supported": true,
+            "reason": "Os rótulos 'Pedido de rascunho', 'Fonte indicada' e 'Data de revisão' refletem os campos do procedimento descrito no briefing para solicitar rascunho baseado na política vigente.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "art-3",
+            "supported": true,
+            "reason": "Os rótulos 'Citação gerada', 'Texto original' e 'Conferência lado a lado' ilustram a etapa de verificação exigida pelo briefing, que manda conferir o trecho citado diretamente na fonte.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "art-4",
+            "supported": true,
+            "reason": "Os rótulos 'Trecho ausente', 'Pendência marcada' e 'Revisão humana' representam a ação de marcar dúvida para revisão quando faltar base, conforme instrução do briefing.",
+            "evidence": [
+              {
+                "sourceId": "brief"
+              }
+            ]
+          },
+          {
+            "id": "art-5",
+            "supported": false,
+            "reason": "Não há suporte nas fontes brief ou label para os rótulos 'Equipe reunida', 'Validação em tela' e 'Aprovação antes do envio'; o briefing não menciona reunião de equipe nem aprovação coletiva como etapa do exercício, apenas revisão humana individual.",
+            "evidence": []
+          }
+        ],
+        "decision": "reject",
+        "supported": false,
+        "novel": true,
+        "practical": true,
+        "visualMatch": true,
+        "reason": "A claim art-5 não possui suporte nas fontes fornecidas. O briefing descreve um fluxo individual de conferência e marcação de pendência para revisão humana, sem mencionar reunião de equipe, validação em tela coletiva ou aprovação antes do envio como etapas do exercício. Como supported=false, a decisão deve ser reject independentemente dos demais critérios.",
+        "growth": {
+          "hookSpecific": true,
+          "payoffDelivered": true,
+          "followReason": true,
+          "shareReason": true
+        }
       }
     }
   ],
-  "checkedAt": "2026-10-18T20:01:16.418Z",
+  "checkedAt": "2026-10-18T20:01:18.325Z",
   "workflowRun": "39161134821",
   "message": "1 pauta(s) autoral(is) com texto, arte, Feed e Story revisados; publicação depende da agenda.",
   "lastResponse": {
