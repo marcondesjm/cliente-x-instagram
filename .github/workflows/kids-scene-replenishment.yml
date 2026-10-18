@@ -40,6 +40,8 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git pull --rebase origin main
       - run: npm ci --ignore-scripts
+      - name: Validate stock summary and account isolation
+        run: node scripts/validate-kids-stock-summary.mjs
       - name: Calibrate or review new scenes with persisted usage receipts
         env:
           KIDS_VISION_ANTHROPIC_API_KEY: ${{ secrets.KIDS_VISION_ANTHROPIC_API_KEY }}

@@ -236,6 +236,7 @@ async function replenish() {
       if(error.code!=='DAILY_LIMIT')throw error;
       state.health='daily_limit';state.message='Limite diário atingido; montagens já aprovadas continuam e novas avaliações aguardam o próximo dia.';save();return;
     }
+    state.health='reviewing';state.message=`Revisando cenas da pauta ${pack.id}; aprovação bíblica, visual e render ainda obrigatórios.`;
     processed++;
     let result={id:pack.id,title:pack.slides[0].title,fingerprint,checkedAt:now()};
     try {
