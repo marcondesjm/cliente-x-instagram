@@ -18,11 +18,11 @@ on:
     types: [completed]
 permissions:
   contents: write
-concurrency:
-  group: platform-editorial-api-validation
-  cancel-in-progress: false
 jobs:
   replenish:
+    concurrency:
+      group: platform-editorial-api-validation
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     timeout-minutes: 25
     outputs:
