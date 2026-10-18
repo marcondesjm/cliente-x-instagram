@@ -3907,41 +3907,56 @@
       "createdAt": "2026-10-18T19:35:52.815Z"
     }
   ],
-  "checkedAt": "2026-10-18T19:35:54.107Z",
+  "checkedAt": "2026-10-18T19:36:02.758Z",
   "workflowRun": "39159132037",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "generate:extracao-campos-v3",
-    "callId": "ae00e3cc-fc8f-46f3-9f8a-2aa1f70a8041",
+    "stage": "art-direction:extracao-campos-v3",
+    "callId": "3494a77c-be86-4f92-8f7d-35b291d293dd",
     "value": {
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "eyebrow": "Pedido incompleto",
-          "title": "A IA completa dados que faltam?",
-          "body": "Um cliente envia mensagem pedindo três itens sem informar quantidade nem prazo de entrega."
+          "layout": "workspace",
+          "labels": [
+            "mensagem cliente",
+            "campos vazios",
+            "tabela IA"
+          ]
         },
         {
-          "eyebrow": "Estrutura clara",
-          "title": "Defina os campos antes da extração",
-          "body": "Solicite à inteligência artificial uma tabela com colunas produto quantidade e prazo definidos previamente."
+          "layout": "conversation",
+          "labels": [
+            "definir colunas",
+            "estrutura tabela",
+            "IA processa"
+          ]
         },
         {
-          "eyebrow": "Conferência obrigatória",
-          "title": "Marque ausentes sem supor valores",
-          "body": "Compare cada campo extraído com a mensagem original e registre não informado quando o dado estiver ausente."
+          "layout": "workflow",
+          "labels": [
+            "ler original",
+            "comparar campo",
+            "marcar ausente"
+          ]
         },
         {
-          "eyebrow": "Exercício prático",
-          "title": "Valide antes de cadastrar o pedido",
-          "body": "Crie um pedido fictício e revise linha por linha a tabela gerada contra o texto recebido do cliente."
+          "layout": "checklist",
+          "labels": [
+            "produto ok",
+            "quantidade?",
+            "prazo?"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "validar tudo",
+            "revisar linha",
+            "cadastrar seguro"
+          ]
         }
-      ],
-      "caption": "Como evitar que a IA invente dados em pedidos comerciais? Este exercício mostra como estruturar a extração de informações de mensagens de clientes, definindo campos claros e conferindo cada item antes do cadastro.\n\nVocê já revisou uma tabela gerada por IA contra o texto original do cliente? Siga o perfil para aprender aplicações práticas de inteligência artificial em empresas.",
-      "storySlide": {
-        "eyebrow": "Rotina comercial",
-        "title": "Você confere dados extraídos por IA?",
-        "body": "Descubra no feed como validar tabelas geradas por inteligência artificial antes de cadastrar pedidos na sua empresa."
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
