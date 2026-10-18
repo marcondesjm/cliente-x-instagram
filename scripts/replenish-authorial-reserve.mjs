@@ -58,10 +58,11 @@ try{
  let history=read(C+'publication-history.json')['cliente-x']||[];
  const available=state.entries.filter(e=>reserveApproved(e,asset)&&pickFreshPack([e.pack],'2000-01-01',0,[],history,()=>0).pack);
  if(available.length>=state.targetReady){state.health='stock_ready';state.message='Estoque autoral revisado suficiente; nenhuma chamada à API.';save();process.exit(0);}
- callAllowance(budget,new Date(),3);await regression();
+ const needsRepair=e=>e.status==='render_revision_required'||e.status==='ready'&&e.render?.version!==RESERVE_RENDER_VERSION;
+ callAllowance(budget,new Date(),state.entries.some(needsRepair)?1:3);await regression();
  let accepted=0;
  for(let index=0;index<Math.min(state.maxPacksPerRun,state.targetReady-available.length);index++){
-  const repair=state.entries.find(e=>e.status==='render_revision_required');
+  const repair=state.entries.find(needsRepair);
   callAllowance(budget,new Date(),repair?1:2);
   const topic=repair?TOPICS.find(t=>t.id===repair.topic):TOPICS.find(t=>!state.entries.some(e=>e.topic===t.id));
   if(!topic){state.health='topics_exhausted';state.message='Pautas autorais previstas já avaliadas; amplie o catálogo revisado sem repetir temas.';break;}

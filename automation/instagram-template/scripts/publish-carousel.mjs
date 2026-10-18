@@ -2361,7 +2361,7 @@ export function anatexSlideHtml(slide, index, total, account, style, renderConte
   const outputHeight = isReelMode ? STORY_HEIGHT : FEED_HEIGHT;
   const swipeCue = index === 1 && !isReelMode ? '<div class="swipe-cue">arraste para ver</div>' : '';
   const commentKeyword = `${title} ${body}`.match(/\bcomente\s+([\p{L}\p{N}_-]+)/iu)?.[1];
-  const finalCue = account.account === 'sabedoria-kids' ? 'salve para ler em família' : commentKeyword ? `comente ${commentKeyword}` : /\bcomente\b/i.test(`${title} ${body}`) ? 'comente IA' : 'link na bio';
+  const finalCue = account.account === 'sabedoria-kids' ? 'salve para ler em família' : renderContext.authorialTopic ? 'salve para testar' : commentKeyword ? `comente ${commentKeyword}` : /\bcomente\b/i.test(`${title} ${body}`) ? 'comente IA' : 'link na bio';
   const saveCue = index === total ? `<div class="save-cue">${finalCue}</div>` : index === 3 ? '<div class="save-cue">salve este passo</div>' : '';
   // A capa usa duas colunas previsiveis. O antigo layout de canto reduzia a
   // foto para um selo e quebrava a proporcao em relacao aos demais cartoes.
@@ -3175,6 +3175,7 @@ export function anatexSlideHtml(slide, index, total, account, style, renderConte
     main.with-editorial-support:is(.role-value,.role-proof,.authorial-illustration):not(.has-sector-photo).reel-mode .editorial-support svg {height:420px;}
     main.with-editorial-support:is(.role-value,.role-proof,.authorial-illustration):not(.has-sector-photo).reel-mode .note {top:1060px;min-height:440px;padding:60px;}
     main.authorial-illustration.has-sector-photo .context-photo { background-size:contain !important;background-color:#101b31; }
+    body main.authorial-illustration.has-sector-photo .note {height:auto;min-height:0;bottom:auto;padding:24px 28px;}
     main.authorial-illustration.with-editorial-support .note :is(.lead,.emphasis,.close) {color:#132238 !important;}
     /* Licensed Bible illustrations keep the whole scene visible. */
     body main.bible-illustration.has-sector-photo .headline { position:absolute;left:58px;right:58px;top:180px;width:auto;max-width:964px;margin:0;font-size:66px;line-height:1.06;text-align:left; }
