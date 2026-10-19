@@ -4,7 +4,7 @@
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
   "health": "reviewing",
-  "message": "Revisando cenas da pauta kids-biblia-12; aprovação bíblica, visual e render ainda obrigatórios.",
+  "message": "Revisando cenas da pauta kids-biblia-13; aprovação bíblica, visual e render ainda obrigatórios.",
   "policy": {
     "maxCallsPerDay": 250,
     "maxInputTokensPerCall": 120000,
@@ -5606,6 +5606,19 @@
       "outputTokens": 34,
       "usageStatus": "unconfirmed_counted_at_maximum",
       "stopReason": "tool_use"
+    },
+    {
+      "id": "93cc6d3a-1731-4155-b0c3-ea99032aec39",
+      "day": "2026-10-19",
+      "stage": "pixels:kids-biblia-13:69a456aab9e02983",
+      "model": "claude-sonnet-4.6",
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-19T05:10:45.802Z",
+      "status": "reserved",
+      "payloadBytes": 62796,
+      "promptChars": 793,
+      "imageFingerprint": "cfa1fb0958e207e7e541d5d0d39836321633d22e42e999b83e0d40726d16e4dc",
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
     }
   ],
   "entries": [
@@ -5756,8 +5769,8 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-19T00:37:14.683Z",
-  "lastRun": "39179694974",
+  "checkedAt": "2026-10-19T05:10:45.802Z",
+  "lastRun": "39203126645",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -9296,7 +9309,7 @@
     }
   },
   "accuracyGate": {
-    "checkedAt": "2026-10-19T00:12:35.201Z",
+    "checkedAt": "2026-10-19T05:10:40.897Z",
     "visualCases": 4,
     "factualCases": 6,
     "diversityCases": 2,
@@ -9313,12 +9326,12 @@
     "target": 12,
     "available": 0,
     "shortfall": 12,
-    "checkedAt": "2026-10-19T00:12:35.201Z"
+    "checkedAt": "2026-10-19T05:10:40.897Z"
   },
   "economy": {
     "reusedPixelReads": 0,
-    "newPixelReads": 36,
-    "skippedCandidates": 4,
-    "checkedAt": "2026-10-19T00:37:14.683Z"
+    "newPixelReads": 0,
+    "skippedCandidates": 5,
+    "checkedAt": "2026-10-19T05:10:45.802Z"
   }
 }
