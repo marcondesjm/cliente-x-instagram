@@ -419,7 +419,7 @@
     {
       "id": "00a7f0c0-acb8-45c4-9a2e-4515ee405d73",
       "day": "2026-10-19",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-mirror",
       "startedAt": "2026-10-19T15:46:10.984Z",
       "images": [
@@ -433,7 +433,12 @@
           "sha256": "0881776f99cc2d4ceaeca8929b84afdccf60642f9b649c4f273540d3b62102f0",
           "bytes": 46048
         }
-      ]
+      ],
+      "completedAt": "2026-10-19T15:46:26.800Z",
+      "reportedInputTokens": 32616,
+      "inputTokens": 32616,
+      "outputTokens": 204,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -772,7 +777,7 @@
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-19T15:46:10.985Z",
+  "checkedAt": "2026-10-19T15:46:26.800Z",
   "workflowRun": "39280153252",
   "summary": [
     {
@@ -1059,12 +1064,18 @@
   "visualDiversity": {
     "version": "visual-diversity-v1",
     "model": "claude-sonnet-4.6",
-    "checkedAt": "2026-10-19T15:46:09.660Z",
+    "checkedAt": "2026-10-19T15:46:26.800Z",
     "cases": [
       {
         "expected": true,
         "distinct": true,
         "reason": "Enquadramentos e poses concretamente diferentes: Cena 1 mostra figura subindo a árvore de costas com rosto oculto e edifício ao fundo; Cena 2 mostra figura sentada voltada para frente com rosto visível, Jesus em primeiro plano e ausência do edifício. Não são espelho, recorte ou compressão da mesma ilustração.",
+        "passed": true
+      },
+      {
+        "expected": false,
+        "distinct": false,
+        "reason": "As duas imagens são idênticas em conteúdo pixelar, diferindo apenas por um espelhamento horizontal completo: na Cena 1 a árvore e o personagem ocupam o lado direito do quadro e o edifício fica à esquerda; na Cena 2 esses elementos estão invertidos (árvore/personagem à esquerda, edifício à direita). Não há diferença concreta de ação, posição relativa interna dos elementos, recorte ou compressão além da reflexão lateral.",
         "passed": true
       }
     ]
