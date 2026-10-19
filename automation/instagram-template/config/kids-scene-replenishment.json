@@ -5329,11 +5329,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-19T00:27:46.582Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 12221,
       "imageFingerprint": null,
-      "promptFingerprint": "440dbd6aee2c700401ca7517b9b48f6e0c48f9bcaec7f60334735dcb2c03ac14"
+      "promptFingerprint": "440dbd6aee2c700401ca7517b9b48f6e0c48f9bcaec7f60334735dcb2c03ac14",
+      "completedAt": "2026-10-19T00:28:59.431Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 30,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -5484,7 +5490,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-19T00:27:46.582Z",
+  "checkedAt": "2026-10-19T00:28:59.431Z",
   "lastRun": "39179694974",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -5769,12 +5775,442 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-09:58c3d89ef5fdeece",
+    "stage": "select:kids-biblia-09",
     "value": {
-      "visible": true,
-      "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Ilustração de um homem com toucado listrado e saia branca apontando o dedo indicador enquanto segura rédeas ao lado de uma carruagem vermelha e amarela; ao fundo, outro homem conduz uma segunda carruagem puxada por cavalos em ambiente externo com palmeiras e edificações."
+      "cards": [
+        {
+          "card": 1,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Dois homens sem camisa não retratam o evento do título sobre o mar se abrir."
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Retrato de Moisés sozinho não mostra o mar se abrindo para o povo passar."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Carroça com bois em terreno arenoso não representa a travessia pelo mar aberto."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "14:21",
+              "reason": "Moisés estende o braço sobre águas que formam paredes laterais, retratando o mar se abrindo."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Carruagens egípcias em ambiente aquático não mostram o povo atravessando em terra seca."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Figuras observando objetos na margem não retratam o evento principal do título."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Procissão em caminho desértico não mostra o mar dividido como no título."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Procissão com coluna de nuvem não retrata especificamente o mar se abrindo."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Faraó em trono não retrata o evento do mar se abrir para o povo passar."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Procissão noturna com pilar de fogo não mostra o mar se dividindo."
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Faraó em carruagem perseguindo não retrata o mar se abrindo para travessia."
+            }
+          ],
+          "reason": "Capa exige evento do título: mar se abrindo. Apenas cena 4 retrata isso diretamente."
+        },
+        {
+          "card": 2,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Dois homens sem camisa não ilustram o resumo sobre Deus abrir caminho pelo mar."
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Retrato de Moisés não mostra israelitas atravessando em terra seca conforme resumo."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Carroça com bois não retrata travessia pelo mar com águas como muralha."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "14:21-22",
+              "reason": "Águas formando paredes laterais com Moisés ilustra abertura do caminho pelo mar."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Egípcios em carruagens não mostram israelitas atravessando em terra seca."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "14:29-30",
+              "reason": "Povo seguro na margem após travessia relaciona-se ao resumo da libertação."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Procissão em deserto não mostra especificamente travessia pelo mar aberto."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Coluna de nuvem guiando não retrata o evento central do resumo editorial."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Faraó em trono não ilustra travessia dos israelitas pelo mar."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Procissão noturna não mostra travessia em terra seca com águas como muralha."
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Faraó perseguindo em carruagem não ilustra resumo sobre travessia segura."
+            }
+          ],
+          "reason": "Narrativa pede evento do resumo. Cena 4 mostra mar aberto; cena 6 mostra resultado da travessia."
+        },
+        {
+          "card": 3,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "14:24",
+              "reason": "Pilar separando povos ilustra cuidado divino protegendo israelitas dos egípcios."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "14:15-16",
+              "reason": "Moisés obedecendo a Deus ilustra liderança divina no cuidado com o povo."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "14:11-12",
+              "reason": "Rota alternativa pelo deserto mostra cuidado divino evitando batalha prematura."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "14:21-22",
+              "reason": "Mar aberto demonstra cuidado divino providenciando escape seguro ao povo."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "14:24-25",
+              "reason": "Confusão entre egípcios mostra intervenção divina protegendo seu povo."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "14:30-31",
+              "reason": "Povo salvo na margem ilustra cuidado divino cumprindo promessa de libertação."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "14:11",
+              "reason": "Povo levando pertences mostra cuidado divino preservando bens durante fuga."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "14:19-20",
+              "reason": "Coluna de nuvem guiando demonstra cuidado divino orientando o povo."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Faraó querendo escravos de volta não ilustra cuidado divino com israelitas."
+            },
+            {
+              "scene": 10,
+              "allowed": true,
+              "verse": "14:24",
+              "reason": "Pilar de fogo iluminando rota noturna mostra cuidado divino guiando o povo."
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Faraó perseguindo não ilustra cuidado divino, mas ameaça ao povo."
+            }
+          ],
+          "reason": "Lição sobre cuidado divino aceita várias cenas pertinentes à passagem inteira."
+        },
+        {
+          "card": 4,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "14:24",
+              "reason": "Pilar separando povos pode inspirar atividade familiar sobre proteção divina."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "14:15-16",
+              "reason": "Moisés obedecendo inspira reflexão familiar sobre seguir orientação divina."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "14:11-12",
+              "reason": "Rota segura pelo deserto ilustra cuidado divino relevante para lição familiar."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "14:21-22",
+              "reason": "Caminho entre águas ilustra visualmente tema da atividade de desenhar caminho."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "14:24-25",
+              "reason": "Intervenção divina contra egípcios mostra poder divino discutível em família."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "14:30-31",
+              "reason": "Salvação na margem ilustra resultado do cuidado divino para discussão familiar."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "14:11",
+              "reason": "Povo em jornada ilustra confiança em Deus relevante para atividade familiar."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "14:19-20",
+              "reason": "Coluna guiando demonstra direção divina tema pertinente à lição familiar."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Faraó exigindo escravos não ilustra tema educativo positivo para família."
+            },
+            {
+              "scene": 10,
+              "allowed": true,
+              "verse": "14:24",
+              "reason": "Pilar de fogo noturno ilustra guia divina tema para conversa familiar."
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Perseguição faraônica não ilustra tema educativo construtivo para família."
+            }
+          ],
+          "reason": "Atividade familiar aceita cenas pertinentes à passagem com conexão educativa."
+        },
+        {
+          "card": 5,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "14:24",
+              "reason": "Pilar separando povos ilustra contexto da passagem para leitura em família."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "14:15-16",
+              "reason": "Moisés recebendo instrução divina contextualiza passagem para leitura familiar."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "14:11-12",
+              "reason": "Rota alternativa mostra início do relato contextualizando leitura completa."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "14:21-22",
+              "reason": "Mar aberto é evento central da passagem Êxodo 14:21-31 para leitura."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "14:24-25",
+              "reason": "Confusão egípcia é parte da narrativa da passagem para leitura em família."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "14:30-31",
+              "reason": "Salvação final ilustra conclusão da passagem para leitura compartilhada."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "14:11",
+              "reason": "Povo em fuga contextualiza situação inicial da passagem para leitura."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "14:19-20",
+              "reason": "Coluna de nuvem faz parte do relato completo para leitura em família."
+            },
+            {
+              "scene": 9,
+              "allowed": true,
+              "verse": "14:5-9",
+              "reason": "Mudança de mente do Faraó contextualiza conflito da passagem completa."
+            },
+            {
+              "scene": 10,
+              "allowed": true,
+              "verse": "14:24",
+              "reason": "Pilar de fogo noturno integra narrativa da passagem para leitura familiar."
+            },
+            {
+              "scene": 11,
+              "allowed": true,
+              "verse": "14:8-9",
+              "reason": "Faraó perseguindo inicia ação dramática da passagem para leitura conjunta."
+            }
+          ],
+          "reason": "Leitura em família aceita qualquer cena pertinente à passagem completa."
+        },
+        {
+          "card": 6,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "14:24",
+              "reason": "Pilar separando povos é cena diferente pertinente à passagem para Story."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "14:15-16",
+              "reason": "Moisés obedecendo a Deus é cena pertinente diferente para fechamento."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "14:11-12",
+              "reason": "Rota pelo deserto é cena pertinente diferente adequada para Story."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena já usada na capa; Story pede cena diferente das demais posições."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "14:24-25",
+              "reason": "Confusão egípcia é cena diferente pertinente à passagem para Story."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "14:30-31",
+              "reason": "Povo salvo na margem é cena diferente pertinente para fechamento."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "14:11",
+              "reason": "Povo em jornada é cena diferente pertinente à passagem para Story."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "14:19-20",
+              "reason": "Coluna de nuvem guiando é cena diferente pertinente para Story."
+            },
+            {
+              "scene": 9,
+              "allowed": true,
+              "verse": "14:5-9",
+              "reason": "Faraó mudando ideia é cena diferente pertinente ao contexto da passagem."
+            },
+            {
+              "scene": 10,
+              "allowed": true,
+              "verse": "14:24",
+              "reason": "Pilar de fogo noturno é cena diferente pertinente à passagem para Story."
+            },
+            {
+              "scene": 11,
+              "allowed": true,
+              "verse": "14:8-9",
+              "reason": "Faraó perseguindo é cena diferente pertinente ao início da narrativa."
+            }
+          ],
+          "reason": "Story aceita cena pertinente diferente das usadas nos cartões anteriores."
+        }
+      ]
     }
   },
   "lastFactualEvaluation": {
@@ -8473,6 +8909,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 24,
     "skippedCandidates": 4,
-    "checkedAt": "2026-10-19T00:27:46.582Z"
+    "checkedAt": "2026-10-19T00:28:59.431Z"
   }
 }
