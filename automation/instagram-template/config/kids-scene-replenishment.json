@@ -5671,11 +5671,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-19T05:12:19.378Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 88006,
       "promptChars": 793,
       "imageFingerprint": "6716bb4ff796a1f6a3eedfc917986d67f8ea742415beae3dd975815945863b77",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-19T05:12:29.952Z",
+      "reportedInputTokens": 31236,
+      "inputTokens": 31236,
+      "outputTokens": 68,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -5826,7 +5832,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-19T05:12:19.378Z",
+  "checkedAt": "2026-10-19T05:12:29.952Z",
   "lastRun": "39203126645",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -6121,12 +6127,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-13:0251a6ad1fdae97e",
+    "stage": "pixels:kids-biblia-13:d95655a1e9407f2e",
     "value": {
       "visible": true,
       "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Ilustração em aquarela de uma pessoa com cabelos cacheados escuros, faixa vermelha na testa e túnica vermelha sobre peça branca, enquadrada em close-up frontal; ao fundo há superfície verde-claro inclinada e um mastro ou vara vertical, sem ação dinâmica visível."
+      "childSuitable": false,
+      "observedEvent": "Ilustração em close-up de um homem gigante caído no chão com uma esfera verde encravada na testa e sangue escorrendo, enquanto ao fundo dois homens menores observam a cena em um campo gramado."
     }
   },
   "lastFactualEvaluation": {
@@ -9046,6 +9052,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 3,
     "skippedCandidates": 5,
-    "checkedAt": "2026-10-19T05:12:19.378Z"
+    "checkedAt": "2026-10-19T05:12:29.952Z"
   }
 }
