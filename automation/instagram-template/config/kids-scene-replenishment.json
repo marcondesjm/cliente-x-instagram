@@ -5557,11 +5557,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-19T00:35:02.548Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 93599,
       "promptChars": 793,
       "imageFingerprint": "7059c24f1d5d703ed1ba5e214695bfec0885e3d1a3de7b79b4383f649a7e2603",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-19T00:35:25.820Z",
+      "reportedInputTokens": 33100,
+      "inputTokens": 33100,
+      "outputTokens": 86,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -5712,7 +5718,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-19T00:35:02.549Z",
+  "checkedAt": "2026-10-19T00:35:25.820Z",
   "lastRun": "39179694974",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -6002,12 +6008,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-12:8b710a9e4778422a",
+    "stage": "pixels:kids-biblia-12:3ce4d472fd95902b",
     "value": {
       "visible": true,
       "style": "illustration",
       "childSuitable": true,
-      "observedEvent": "Um homem adulto com barba, vestindo túnica azul e faixa colorida no peito, segura uma haste fina na mão direita enquanto está diante de um grande candelabro dourado com sete braços e chamas acesas; ao seu lado direito, uma criança observa segurando um objeto dourado menor. O fundo é amarelo-alaranjado com linhas verticais sugerindo paredes de madeira ou tenda."
+      "observedEvent": "Ilustração de três homens com turbantes brancos e barbas em plano médio; o homem à direita veste uma túnica azul com um peitoral retangular amarelo adornado por fileiras de pedras coloridas, enquanto os outros dois usam vestes claras e estão posicionados ao fundo."
     }
   },
   "lastFactualEvaluation": {
@@ -8842,6 +8848,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 34,
     "skippedCandidates": 4,
-    "checkedAt": "2026-10-19T00:35:02.549Z"
+    "checkedAt": "2026-10-19T00:35:25.820Z"
   }
 }
