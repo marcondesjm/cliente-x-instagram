@@ -5937,11 +5937,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-19T05:19:53.707Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 17573,
       "imageFingerprint": null,
-      "promptFingerprint": "edc0547b6c8eedbc91727dbfd6e6c5205f004ea4688d1fc70fc34382bf1b61be"
+      "promptFingerprint": "edc0547b6c8eedbc91727dbfd6e6c5205f004ea4688d1fc70fc34382bf1b61be",
+      "completedAt": "2026-10-19T05:20:49.135Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 64,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -6092,7 +6098,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-19T05:19:53.707Z",
+  "checkedAt": "2026-10-19T05:20:49.135Z",
   "lastRun": "39203126645",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -6387,12 +6393,442 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-13:5193deb828280025",
+    "stage": "select:kids-biblia-13",
     "value": {
-      "visible": true,
-      "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Ilustração de uma pessoa sentada sob uma árvore segurando um instrumento retangular com cordas, cercada por rebanho de ovelhas e fogueira em campo aberto sob céu azul."
+      "cards": [
+        {
+          "card": 1,
+          "reason": "Capa exige evento do título: confronto direto Davi vs Golias. Apenas cena 1 mostra ação de lançamento.",
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "17:49",
+              "reason": "Mostra Davi com funda e pedra, ação central do título."
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mostra aproximação inicial, não o evento decisivo do título."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Diálogo com Saul, etapa anterior ao confronto."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena pastoral sem relação com o confronto."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Golias desafiando, mas não o confronto final."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Descrição de Golias, sem ação de confronto."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Conversa entre soldados, não o evento principal."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Formação militar, não o confronto individual."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa geográfico, não ilustra o evento."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Davi pastoreando, contexto prévio."
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Davi tocando harpa, não relacionado ao confronto."
+            }
+          ]
+        },
+        {
+          "card": 2,
+          "reason": "Cartão narrativo sobre Davi enfrentar Golias. Cenas do confronto são adequadas.",
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "17:49",
+              "reason": "Ilustra o momento crucial do enfrentamento."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "17:41",
+              "reason": "Mostra Golias se aproximando de Davi, parte do relato."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Diálogo prévio, não o enfrentamento em si."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena pastoral irrelevante para o resumo."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "17:41",
+              "reason": "Golias avançando com escudeiro, parte do confronto."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Apenas descrição física, sem ação narrativa."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Conversa lateral, não o evento central."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cenário militar genérico."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa não ilustra a narrativa."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Pastoreio é contexto, não o enfrentamento."
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Harpa não relacionada ao confronto."
+            }
+          ]
+        },
+        {
+          "card": 3,
+          "reason": "Lição sobre confiança. Qualquer cena pertinente à passagem serve, com conexão educativa.",
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "17:45-47",
+              "reason": "Davi declarando confiança em Deus durante confronto."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "17:40-41",
+              "reason": "Davi indo ao encontro com fé, apesar da disparidade."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "17:32-37",
+              "reason": "Davi expressando confiança a Saul antes da luta."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena pastoral fora do foco da lição sobre confiança."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "17:41-44",
+              "reason": "Momento tenso onde Davi demonstra coragem e fé."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Apenas descrição física sem elemento educativo claro."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Conversa sobre recompensas, não sobre confiança."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cenário militar genérico sem foco na confiança."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa não transmite lição espiritual."
+            },
+            {
+              "scene": 10,
+              "allowed": true,
+              "verse": "17:34-36",
+              "reason": "Experiência passada de Davi sustenta sua confiança."
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Harpa não conecta claramente com lição de confiança."
+            }
+          ]
+        },
+        {
+          "card": 4,
+          "reason": "Atividade familiar: desenhar Davi e conversar. Cena pertinente à história serve como referência visual.",
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "17:49",
+              "reason": "Imagem icônica de Davi para inspirar desenho infantil."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "17:40-41",
+              "reason": "Mostra Davi e Golias, bom referente para atividade."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "17:32-37",
+              "reason": "Davi conversando com Saul, cena narrativa válida."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Pastoreio não conecta bem com tema de enfrentar dificuldades."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "17:41",
+              "reason": "Golias e Davi, cenário para discussão sobre coragem."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Foco em armadura, menos relevante para atividade."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Conversa secundária, não ideal para atividade."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cenário genérico sem personagem central claro."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa não serve como modelo para desenho de Davi."
+            },
+            {
+              "scene": 10,
+              "allowed": true,
+              "verse": "17:34-35",
+              "reason": "Davi pastor, alternativa segura para desenho infantil."
+            },
+            {
+              "scene": 11,
+              "allowed": true,
+              "verse": "17:34-35",
+              "reason": "Davi protegendo ovelhas, cena tranquila para atividade."
+            }
+          ]
+        },
+        {
+          "card": 5,
+          "reason": "Leitura em família. Qualquer cena pertinente à passagem serve como ilustração complementar.",
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "17:49",
+              "reason": "Cena climática, boa para acompanhar leitura."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "17:40-41",
+              "reason": "Momento de aproximação, relevante para narrativa."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "17:32-37",
+              "reason": "Diálogo importante, enriquece compreensão textual."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Fora do escopo da passagem 17:32-50."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "17:41",
+              "reason": "Golias avançando, parte integrante da história."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Descrição estática, menos envolvente para leitura."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Detalhe secundário, não essencial para leitura."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cenário amplo sem foco narrativo claro."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa não complementa diretamente a leitura."
+            },
+            {
+              "scene": 10,
+              "allowed": true,
+              "verse": "17:34-36",
+              "reason": "Contexto de Davi, ajuda a entender sua confiança."
+            },
+            {
+              "scene": 11,
+              "allowed": true,
+              "verse": "17:34-35",
+              "reason": "Davi com ovelhas, reforça background da história."
+            }
+          ]
+        },
+        {
+          "card": 6,
+          "reason": "Story: cena diferente relacionada à passagem. Deve ser distinta das usadas nos cartões.",
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "17:49",
+              "reason": "Cena pertinente, pode ser usada se não repetida."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "17:41",
+              "reason": "Aproximação inicial, válida para Story."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "17:32-37",
+              "reason": "Diálogo com Saul, cena narrativa adequada."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Fora da passagem especificada."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "17:41",
+              "reason": "Golias e escudeiro, parte da narrativa."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Descrição estática, menos narrativa."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Conversa lateral, não central."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cenário genérico."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa não é cena narrativa."
+            },
+            {
+              "scene": 10,
+              "allowed": true,
+              "verse": "17:34-36",
+              "reason": "Davi pastor, contexto válido da passagem."
+            },
+            {
+              "scene": 11,
+              "allowed": true,
+              "verse": "17:34-35",
+              "reason": "Davi com harpa e ovelhas, cena pertinente."
+            }
+          ]
+        }
+      ]
     }
   },
   "lastFactualEvaluation": {
@@ -9482,6 +9918,6 @@
     "reusedPixelReads": 9,
     "newPixelReads": 14,
     "skippedCandidates": 5,
-    "checkedAt": "2026-10-19T05:19:53.707Z"
+    "checkedAt": "2026-10-19T05:20:49.135Z"
   }
 }
