@@ -350,11 +350,17 @@
     {
       "id": "29659af1-958c-44ab-a435-4295930ff8ba",
       "day": "2026-10-19",
-      "status": "reserved",
+      "status": "completed",
       "stage": "sonnet-forced-holdout:holdout-2",
       "startedAt": "2026-10-19T15:44:32.881Z",
       "imageHash": "34169359e67f7acc29d673c680eab8f7cc3bbe6cf27019b69da83c755945902e",
-      "imageBytes": 57096
+      "imageBytes": 57096,
+      "completedAt": "2026-10-19T15:44:45.970Z",
+      "reportedInputTokens": 20851,
+      "inputTokens": 20851,
+      "outputTokens": 157,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -606,27 +612,6 @@
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
     },
     {
-      "id": "sonnet-forced-holdout:holdout-2",
-      "mode": "sonnet-forced-holdout",
-      "fixture": "holdout-2",
-      "model": "claude-sonnet-4.6",
-      "passed": true,
-      "value": {
-        "personInTree": false,
-        "openBooks": false,
-        "style": "illustration",
-        "description": "Ilustração mostrando dois homens em um ambiente interior com paredes claras e arco ao fundo. À esquerda, um homem de cabelos castanhos e barba, vestindo túnica amarela com manto vermelho, está sentado segurando uma taça metálica; sobre a mesa há uma tigela com frutos vermelhos. À direita, outro homem de barba escura, usando turbante amarelo e túnica azul com faixa listrada vermelha e amarela, está de pé gesticulando com as mãos enquanto conversa com o homem sentado. Ao fundo esquerdo, há um vaso decorativo escuro. A cena representa uma interação entre duas figuras em trajes antigos."
-      },
-      "expected": {
-        "personInTree": false,
-        "openBooks": false,
-        "style": "illustration"
-      },
-      "checkedAt": "2026-10-18T13:08:32.197Z",
-      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/07_FB_Zacchaeus_1024.jpg?1724237549",
-      "imageHash": "34169359e67f7acc29d673c680eab8f7cc3bbe6cf27019b69da83c755945902e"
-    },
-    {
       "id": "sonnet-forced-holdout:holdout-3",
       "mode": "sonnet-forced-holdout",
       "fixture": "holdout-3",
@@ -688,12 +673,33 @@
       "checkedAt": "2026-10-19T15:44:30.358Z",
       "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/08_FB_Zacchaeus_1024.jpg?1724237549",
       "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817"
+    },
+    {
+      "id": "sonnet-forced-holdout:holdout-2",
+      "mode": "sonnet-forced-holdout",
+      "fixture": "holdout-2",
+      "model": "claude-sonnet-4.6",
+      "passed": true,
+      "value": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration",
+        "description": "Ilustração colorida mostrando dois homens em um ambiente interior com paredes claras e uma abertura arqueada. O homem à esquerda está sentado, de perfil, vestindo túnica amarela com manto vermelho sobre o ombro, segurando uma taça metálica; há uma tigela com frutos vermelhos sobre a mesa diante dele. O homem à direita está de pé, usando túnica azul com faixa vermelha listrada e turbante amarelo, gesticulando com a mão direita em direção ao homem sentado. Ambos têm barbas e cabelos escuros. Não há árvores nem livros abertos visíveis na cena."
+      },
+      "expected": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration"
+      },
+      "checkedAt": "2026-10-19T15:44:45.970Z",
+      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/07_FB_Zacchaeus_1024.jpg?1724237549",
+      "imageHash": "34169359e67f7acc29d673c680eab8f7cc3bbe6cf27019b69da83c755945902e"
     }
   ],
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-19T15:44:32.881Z",
+  "checkedAt": "2026-10-19T15:44:45.970Z",
   "workflowRun": "39280153252",
   "summary": [
     {
