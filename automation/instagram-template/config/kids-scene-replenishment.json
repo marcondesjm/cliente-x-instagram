@@ -5500,11 +5500,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-19T00:33:52.429Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 59098,
       "promptChars": 793,
       "imageFingerprint": "18a59d942cf1d509f7114b3d2b95dc55353542fa525cdb10c82b9cdccc0a3d7c",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-19T00:34:13.236Z",
+      "reportedInputTokens": 21600,
+      "inputTokens": 21600,
+      "outputTokens": 100,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -5655,7 +5661,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-19T00:33:52.429Z",
+  "checkedAt": "2026-10-19T00:34:13.236Z",
   "lastRun": "39179694974",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -5945,12 +5951,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-12:dc62dfd21d3f7e33",
+    "stage": "pixels:kids-biblia-12:fd79097f26c6d438",
     "value": {
       "visible": true,
       "style": "illustration",
-      "childSuitable": false,
-      "observedEvent": "Ilustração de combate com múltiplos homens armados com espadas e lanças em confronto próximo, incluindo um cavalo erguido ao centro; figuras vestem túnicas, capacetes e armaduras metálicas douradas, em cenário aberto com céu claro e forma azulada ao fundo à esquerda."
+      "childSuitable": true,
+      "observedEvent": "Ilustração colorida mostrando um pátio cercado por muros brancos com uma estrutura retangular azul e vermelha ao fundo, fumaça subindo de um altar central e um grupo de pessoas reunidas no primeiro plano; a cena está inserida em um mapa topográfico com rótulos geográficos e dois pontos vermelhos marcando localidades."
     }
   },
   "lastFactualEvaluation": {
@@ -8751,6 +8757,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 31,
     "skippedCandidates": 4,
-    "checkedAt": "2026-10-19T00:33:52.429Z"
+    "checkedAt": "2026-10-19T00:34:13.236Z"
   }
 }
