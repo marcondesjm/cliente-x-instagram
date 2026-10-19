@@ -5291,11 +5291,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-19T00:26:36.908Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 35387,
       "promptChars": 793,
       "imageFingerprint": "22e793394c2ad9030dc6a3bfe6b30ec632133bbbec4b64fe280f9881cfc226cf",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-19T00:27:08.110Z",
+      "reportedInputTokens": 13696,
+      "inputTokens": 13696,
+      "outputTokens": 66,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -5446,7 +5452,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-19T00:26:36.908Z",
+  "checkedAt": "2026-10-19T00:27:08.110Z",
   "lastRun": "39179694974",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -5731,12 +5737,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-09:c25550636d4348c6",
+    "stage": "pixels:kids-biblia-09:165dde10515021db",
     "value": {
       "visible": true,
       "style": "illustration",
-      "childSuitable": false,
-      "observedEvent": "Ilustração de uma carruagem puxada por dois cavalos avançando em águas agitadas, com figuras humanas parcialmente submersas e braços emergindo da água; ao fundo, uma figura em posição elevada sobre terreno seco segura um objeto longo. A cena é composta por ondas azuis turquesa, céu claro com nuvens e roda vermelha e dourada em primeiro plano à direita."
+      "childSuitable": true,
+      "observedEvent": "Ilustração de uma longa procissão de pessoas e animais com cargas coloridas atravessando um campo verde sob céu azul escuro, com um grande objeto amarelo vertical flutuante à esquerda."
     }
   },
   "lastFactualEvaluation": {
@@ -8401,6 +8407,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 22,
     "skippedCandidates": 4,
-    "checkedAt": "2026-10-19T00:26:36.908Z"
+    "checkedAt": "2026-10-19T00:27:08.110Z"
   }
 }
