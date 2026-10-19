@@ -4930,11 +4930,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-19T00:15:19.002Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 71604,
       "promptChars": 793,
       "imageFingerprint": "8dc66e2cfe2e1bd933e7aa723c59f0d607dbd8597ec214b824abc29b4941ff8e",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-19T00:15:57.205Z",
+      "reportedInputTokens": 25768,
+      "inputTokens": 25768,
+      "outputTokens": 83,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -5085,7 +5091,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-19T00:15:19.003Z",
+  "checkedAt": "2026-10-19T00:15:57.205Z",
   "lastRun": "39179694974",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -5365,12 +5371,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-31:7040182ccc6b5a0e",
+    "stage": "pixels:kids-biblia-31:a8951fe26fb3a966",
     "value": {
       "visible": true,
       "style": "illustration",
       "childSuitable": true,
-      "observedEvent": "Três homens com vestimentas e coberturas de cabeça coloridas estão reunidos ao redor de uma mesa; o homem central, de túnica clara com faixa vermelha, segura um recipiente retangular marrom enquanto os outros dois observam. A cena é uma ilustração desenhada à mão, com enquadramento médio e fundo neutro claro sob uma estrutura de madeira no topo."
+      "observedEvent": "Ilustração de três homens em trajes antigos; um homem ao centro com túnica azul e faixa colorida gesticula com a mão sobre o peito enquanto fala com outro homem à direita, visto de costas, vestindo túnica vermelha, em um ambiente externo com fundo claro."
     }
   },
   "lastFactualEvaluation": {
@@ -7746,6 +7752,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 4,
     "skippedCandidates": 4,
-    "checkedAt": "2026-10-19T00:15:19.003Z"
+    "checkedAt": "2026-10-19T00:15:57.205Z"
   }
 }
