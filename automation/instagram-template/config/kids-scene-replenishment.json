@@ -5424,11 +5424,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-19T00:31:48.749Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 75412,
       "promptChars": 793,
       "imageFingerprint": "3cd6d3eb411f1b1638c827ccd333a2f4dfae13a5c394a3b6a1d696232225c0f8",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-19T00:32:13.912Z",
+      "reportedInputTokens": 27038,
+      "inputTokens": 27038,
+      "outputTokens": 82,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -5579,7 +5585,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-19T00:31:48.750Z",
+  "checkedAt": "2026-10-19T00:32:13.912Z",
   "lastRun": "39179694974",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -5869,12 +5875,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-12:2bde761914757944",
+    "stage": "pixels:kids-biblia-12:b82d23fc700a0bc2",
     "value": {
       "visible": true,
       "style": "illustration",
       "childSuitable": true,
-      "observedEvent": "Ilustração de um homem idoso com barba, recostado sobre uma superfície coberta por tecido amarelo, apontando o dedo indicador para cima em direção a uma criança de costas vestindo túnica azul que segura um objeto pequeno; ao fundo, parede texturizada e abertura retangular azul."
+      "observedEvent": "Ilustração mostrando duas pessoas deitadas lado a lado sobre uma superfície plana elevada ao ar livre, com um grupo de observadores em pé ao fundo e outra pessoa ajoelhada junto às figuras deitadas; cenário externo com vegetação verde e solo claro."
     }
   },
   "lastFactualEvaluation": {
@@ -8624,6 +8630,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 27,
     "skippedCandidates": 4,
-    "checkedAt": "2026-10-19T00:31:48.750Z"
+    "checkedAt": "2026-10-19T00:32:13.912Z"
   }
 }
