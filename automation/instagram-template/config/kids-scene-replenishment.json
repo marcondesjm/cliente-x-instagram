@@ -3,8 +3,8 @@
   "enabled": true,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "review_completed",
-  "message": "3 pauta(s) examinada(s); somente seleções aprovadas seguem para montagem.",
+  "health": "reviewing",
+  "message": "Revisando cenas da pauta kids-biblia-31; aprovação bíblica, visual e render ainda obrigatórios.",
   "policy": {
     "maxCallsPerDay": 250,
     "maxInputTokensPerCall": 120000,
@@ -4846,6 +4846,19 @@
       "outputTokens": 24,
       "usageStatus": "unconfirmed_counted_at_maximum",
       "stopReason": "tool_use"
+    },
+    {
+      "id": "1b3c10fd-e759-4bf2-9a9c-54047ed67bf0",
+      "day": "2026-10-18",
+      "stage": "pixels:kids-biblia-31:1cacb3d951022c07",
+      "model": "claude-sonnet-4.6",
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-19T00:12:41.037Z",
+      "status": "reserved",
+      "payloadBytes": 79102,
+      "promptChars": 793,
+      "imageFingerprint": "f9071877c0a5996e066b08a40bc15697fd8b99eb71836e7a6820d19d648c98af",
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
     }
   ],
   "entries": [
@@ -4996,8 +5009,8 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-18T22:20:33.481Z",
-  "lastRun": "39170079691",
+  "checkedAt": "2026-10-19T00:12:41.037Z",
+  "lastRun": "39179694974",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -7630,7 +7643,7 @@
     }
   },
   "accuracyGate": {
-    "checkedAt": "2026-10-18T21:57:42.714Z",
+    "checkedAt": "2026-10-19T00:12:35.201Z",
     "visualCases": 4,
     "factualCases": 6,
     "diversityCases": 2,
@@ -7647,12 +7660,12 @@
     "target": 12,
     "available": 0,
     "shortfall": 12,
-    "checkedAt": "2026-10-18T21:57:42.714Z"
+    "checkedAt": "2026-10-19T00:12:35.201Z"
   },
   "economy": {
     "reusedPixelReads": 0,
-    "newPixelReads": 33,
-    "skippedCandidates": 0,
-    "checkedAt": "2026-10-18T22:20:33.481Z"
+    "newPixelReads": 0,
+    "skippedCandidates": 4,
+    "checkedAt": "2026-10-19T00:12:41.037Z"
   }
 }
