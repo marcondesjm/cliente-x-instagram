@@ -5709,11 +5709,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-19T05:13:02.100Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 85500,
       "promptChars": 793,
       "imageFingerprint": "13d19c05a15bff3caa128c03758229661f6e9c25fe1362446d97768c09d809f1",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-19T05:13:31.554Z",
+      "reportedInputTokens": 30400,
+      "inputTokens": 30400,
+      "outputTokens": 83,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -5864,7 +5870,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-19T05:13:02.100Z",
+  "checkedAt": "2026-10-19T05:13:31.554Z",
   "lastRun": "39203126645",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -6159,12 +6165,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-13:d0bb3df44fc6de25",
+    "stage": "pixels:kids-biblia-13:2e4669a239143f2e",
     "value": {
       "visible": true,
       "style": "illustration",
       "childSuitable": true,
-      "observedEvent": "Ilustração colorida mostrando um homem barbado sentado em uma cadeira de madeira à esquerda, vestindo túnica dourada e faixa vermelha na cabeça, com a mão direita no rosto. Três outros homens de pé ao seu lado, todos com faixas vermelhas na cabeça e túnicas brancas ou vermelhas; dois seguram espadas curtas nas mãos. Ao fundo, estrutura de tenda verde-amarelada com tecido esticado e varas verticais visíveis."
+      "observedEvent": "Ilustração mostrando um grupo de homens em vestimentas antigas reunidos ao ar livre sob tendas; um homem em túnica vermelha segura uma lança verticalmente enquanto outros, com faixas vermelhas na cabeça e túnicas brancas, observam ou conversam ao redor."
     }
   },
   "lastFactualEvaluation": {
@@ -9101,6 +9107,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 5,
     "skippedCandidates": 5,
-    "checkedAt": "2026-10-19T05:13:02.100Z"
+    "checkedAt": "2026-10-19T05:13:31.554Z"
   }
 }
