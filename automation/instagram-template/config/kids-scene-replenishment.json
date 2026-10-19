@@ -5519,11 +5519,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-19T00:34:15.980Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 83345,
       "promptChars": 793,
       "imageFingerprint": "fa2e6f06294492fe74c10d45f15e719f2842ec058ce5ba8eb0a34ebb11d25d19",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-19T00:34:38.659Z",
+      "reportedInputTokens": 29682,
+      "inputTokens": 29682,
+      "outputTokens": 77,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -5674,7 +5680,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-19T00:34:15.980Z",
+  "checkedAt": "2026-10-19T00:34:38.659Z",
   "lastRun": "39179694974",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -5964,12 +5970,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-12:fd79097f26c6d438",
+    "stage": "pixels:kids-biblia-12:fe98c68db38f3f07",
     "value": {
       "visible": true,
       "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Ilustração colorida mostrando um pátio cercado por muros brancos com uma estrutura retangular azul e vermelha ao fundo, fumaça subindo de um altar central e um grupo de pessoas reunidas no primeiro plano; a cena está inserida em um mapa topográfico com rótulos geográficos e dois pontos vermelhos marcando localidades."
+      "childSuitable": false,
+      "observedEvent": "Ilustração de um grupo de homens armados com lanças e facões curvos reunidos em ambiente desértico, confrontando uma figura central vestida de branco que ergue os braços; a cena apresenta armas brandidas e postura de confronto."
     }
   },
   "lastFactualEvaluation": {
@@ -8787,6 +8793,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 32,
     "skippedCandidates": 4,
-    "checkedAt": "2026-10-19T00:34:15.980Z"
+    "checkedAt": "2026-10-19T00:34:38.659Z"
   }
 }
