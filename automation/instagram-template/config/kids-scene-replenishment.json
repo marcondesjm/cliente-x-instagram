@@ -5766,11 +5766,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-19T05:14:34.626Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 76355,
       "promptChars": 793,
       "imageFingerprint": "8ec4ddb61b42a7082e4ecf2234a4dc98d62fa0d2e5a71cc3cda0e758b1f9deab",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-19T05:15:06.327Z",
+      "reportedInputTokens": 27352,
+      "inputTokens": 27352,
+      "outputTokens": 97,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -5921,7 +5927,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-19T05:14:34.626Z",
+  "checkedAt": "2026-10-19T05:15:06.327Z",
   "lastRun": "39203126645",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -6216,12 +6222,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-13:98c7e82e95cddc50",
+    "stage": "pixels:kids-biblia-13:7f6f7457a83c28c0",
     "value": {
       "visible": true,
       "style": "illustration",
       "childSuitable": true,
-      "observedEvent": "Ilustração de um guerreiro barbado com armadura dourada, capacete vermelho e lança na mão direita em primeiro plano, acompanhado por outro soldado segurando escudo amarelo ao lado; ao fundo, fileiras de soldados com lanças e capacetes vermelhos sob céu claro."
+      "observedEvent": "Ilustração de um grupo de homens em trajes militares antigos, com armaduras douradas, saias brancas com faixas vermelhas e capacetes com penachos vermelhos; o personagem central segura uma lança e está rodeado por outros soldados, alguns portando escudos circulares amarelos, em ambiente aberto com céu claro."
     }
   },
   "lastFactualEvaluation": {
@@ -9209,6 +9215,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 8,
     "skippedCandidates": 5,
-    "checkedAt": "2026-10-19T05:14:34.626Z"
+    "checkedAt": "2026-10-19T05:15:06.327Z"
   }
 }
