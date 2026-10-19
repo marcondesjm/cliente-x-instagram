@@ -5842,11 +5842,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-19T05:16:31.690Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 14609,
       "imageFingerprint": null,
-      "promptFingerprint": "c1a08ee0984330d617b12e9f27ed233cb23d4c33d0f84c532ff02661ef8f007c"
+      "promptFingerprint": "c1a08ee0984330d617b12e9f27ed233cb23d4c33d0f84c532ff02661ef8f007c",
+      "completedAt": "2026-10-19T05:17:47.207Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 1,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -5997,7 +6003,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-19T05:16:31.690Z",
+  "checkedAt": "2026-10-19T05:17:47.207Z",
   "lastRun": "39203126645",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -6292,12 +6298,442 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-13:39617435b1767117",
+    "stage": "select:kids-biblia-13",
     "value": {
-      "visible": true,
-      "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Mapa ilustrado em estilo desenho com fundo amarelo e azul mostrando corpos de água e três pontos vermelhos marcados por legendas textuais como Gath, Bethlehem, Valley of Elah e Dead Sea."
+      "cards": [
+        {
+          "card": 1,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "17:49",
+              "reason": "Davi com funda e pedra ilustra o confronto do título."
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mostra aproximação inicial, não o evento central da capa."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Close-up estático não retrata o confronto com Golias."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena anterior com Saul, não o enfrentamento titular."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Recusa da armadura é etapa prévia, não o clímax."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena fora da passagem 17:32-50, envio de provisões."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Golias desafiando, sem Davi em ação direta."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Descrição de Golias, sem Davi confrontando."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Conversa sobre recompensas, não o confronto."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Formações militares, sem o ato titular."
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa geográfico não ilustra o evento da capa."
+            }
+          ],
+          "reason": "Capa exige evento do título: Davi confrontando Golias. Apenas cena 1 mostra Davi com funda em ação."
+        },
+        {
+          "card": 2,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "17:49",
+              "reason": "Ilustra Davi enfrentando Golias com funda, conforme resumo."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "17:40-41",
+              "reason": "Davi se aproximando de Golias sustenta o resumo do confronto."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Close-up sem ação não retrata o enfrentamento descrito."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Diálogo com Saul é preliminar, não o confronto principal."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Recusa da armadura não ilustra o enfrentamento com funda."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena fora da passagem referenciada no cartão."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Golias sozinho desafiando não mostra Davi enfrentando."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Foco em Golias e armadura, sem Davi em ação."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Conversa sobre recompensas não ilustra o confronto."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Exércitos posicionados não mostram Davi contra Golias."
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa não ilustra o evento narrado no resumo."
+            }
+          ],
+          "reason": "Resumo menciona Davi enfrentando Golias com funda. Cenas 1 e 2 são pertinentes ao evento."
+        },
+        {
+          "card": 3,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "17:45-47",
+              "reason": "Davi declarando confiança em Deus durante confronto."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "17:40-41",
+              "reason": "Aproximação com funda ilustra confiança prática em Deus."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "17:36-37",
+              "reason": "Davi confiante após relatar vitórias anteriores com Deus."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "17:32-33",
+              "reason": "Davi oferecendo-se mostra confiança inicial em Deus."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "17:38-39",
+              "reason": "Recusar armadura humana reflete confiança exclusiva em Deus."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena fora da passagem 17:32-50, não pertinente."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Golias desafiando não ilustra lição de confiança de Davi."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Foco em armadura de Golias não conecta à lição educativa."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Conversa sobre recompensas materiais desvia da lição espiritual."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Formações militares não ilustram confiança pessoal em Deus."
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa geográfico não sustenta reflexão educativa sobre confiança."
+            }
+          ],
+          "reason": "Lições sobre confiança podem usar várias cenas da passagem que mostrem atitude de Davi."
+        },
+        {
+          "card": 4,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "17:49",
+              "reason": "Cena de Davi com funda pode inspirar atividade de desenho."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "17:40",
+              "reason": "Davi escolhendo pedras e funda ilustra preparação para desafio."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "17:34-36",
+              "reason": "Davi confiante pode ser tema de conversa sobre dificuldades."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "17:32",
+              "reason": "Davi se oferecendo mostra coragem para conversar em família."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "17:39",
+              "reason": "Recusar armadura ilustra autenticidade, tema para diálogo familiar."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena fora da passagem, não pertinente à atividade proposta."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Golias desafiando não conecta diretamente à atividade familiar."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Foco em Golias não ilustra Davi para atividade de desenho."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Recompensas materiais não sustentam conversa sobre ajuda divina."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Exércitos não oferecem conexão clara com atividade infantil."
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa não ilustra personagem ou ação para desenhar em família."
+            }
+          ],
+          "reason": "Atividade familiar pode usar cenas pertinentes que inspirem desenho e conversa."
+        },
+        {
+          "card": 5,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "17:45-47",
+              "reason": "Declaração de fé de Davi sustenta leitura e reflexão familiar."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "17:40-41",
+              "reason": "Preparação de Davi contextualiza passagem para leitura conjunta."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "17:36-37",
+              "reason": "Testemunho de Davi sobre Deus enriquece leitura em família."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "17:32-33",
+              "reason": "Diálogo inicial estabelece contexto para leitura da passagem."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "17:38-39",
+              "reason": "Escolha de Davi por simplicidade ilustra tema da passagem."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena fora da passagem 17:32-50, não pertinente à leitura."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Desafio de Golias isolado não sustenta leitura educativa completa."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Descrição de armadura não conecta à mensagem central da leitura."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Recompensas materiais desviam do foco espiritual da passagem."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Posicionamento militar não ilustra tema central para leitura."
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa geográfico não sustenta leitura narrativa da passagem."
+            }
+          ],
+          "reason": "Leitura familiar pode usar cenas que contextualizem ou ilustrem temas da passagem."
+        },
+        {
+          "card": 6,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "17:49",
+              "reason": "Clímax do confronto é cena pertinente e diferente para Story."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "17:40-41",
+              "reason": "Aproximação de Davi é cena válida e distinta para Story."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "17:36",
+              "reason": "Davi relatando vitórias anteriores é cena pertinente ao relato."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "17:32",
+              "reason": "Davi se oferecendo a Saul é cena inicial pertinente à passagem."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "17:39",
+              "reason": "Recusa da armadura é cena distintiva e pertinente ao relato."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena fora da passagem 17:32-50, não pertinente ao Story."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "17:41",
+              "reason": "Golias avançando com escudeiro é cena pertinente ao confronto."
+            },
+            {
+              "scene": 8,
+              "allowed": false,
+              "verse": "",
+              "reason": "Foco exclusivo em Golias sem Davi limita pertinência educativa."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Conversa sobre recompensas não é cena central do relato."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Formações militares são cenário, não evento narrativo principal."
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa não ilustra evento narrativo para Story da passagem."
+            }
+          ],
+          "reason": "Story aceita cena pertinente à passagem, diferente das demais posições."
+        }
+      ]
     }
   },
   "lastFactualEvaluation": {
@@ -9353,6 +9789,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 12,
     "skippedCandidates": 5,
-    "checkedAt": "2026-10-19T05:16:31.690Z"
+    "checkedAt": "2026-10-19T05:17:47.207Z"
   }
 }
