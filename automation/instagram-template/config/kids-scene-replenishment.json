@@ -6089,11 +6089,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-19T05:25:52.630Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 58104,
       "promptChars": 793,
       "imageFingerprint": "f58b826bf8f4b9bcdb1b95aca3393568f032a4115da548b23fdaaef02ac39c20",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-19T05:26:11.071Z",
+      "reportedInputTokens": 21268,
+      "inputTokens": 21268,
+      "outputTokens": 90,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -6244,7 +6250,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-19T05:25:52.630Z",
+  "checkedAt": "2026-10-19T05:26:11.071Z",
   "lastRun": "39203126645",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -6544,12 +6550,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-28:149ef1b0f7cdb891",
+    "stage": "pixels:kids-biblia-28:67171fa1c19a920c",
     "value": {
       "visible": true,
       "style": "illustration",
       "childSuitable": true,
-      "observedEvent": "Ilustração de um homem de túnica clara e manto vermelho à esquerda conversando com outro homem barbado vestido de amarelo que segura um pano branco contendo objetos redondos; ao fundo há outras pessoas, incluindo uma criança à direita, sob céu azul com nuvens brancas"
+      "observedEvent": "Três homens barbados com túnicas e coberturas de cabeça em estilo ilustrativo, posicionados lado a lado em plano médio contra fundo azul e branco; o homem central veste túnica amarela sobre vermelha e levanta a mão direita, enquanto os dois laterais usam vestes verdes e amarelas."
     }
   },
   "lastFactualEvaluation": {
@@ -9656,6 +9662,6 @@
     "reusedPixelReads": 19,
     "newPixelReads": 16,
     "skippedCandidates": 7,
-    "checkedAt": "2026-10-19T05:25:52.630Z"
+    "checkedAt": "2026-10-19T05:26:11.071Z"
   }
 }
