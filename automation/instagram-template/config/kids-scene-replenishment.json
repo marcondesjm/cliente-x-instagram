@@ -5272,11 +5272,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-19T00:26:05.008Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 74134,
       "promptChars": 793,
       "imageFingerprint": "ecf3433d27cd99c5499ab84007ec189d454445f2705ea3423e4e25319f0ad852",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-19T00:26:35.488Z",
+      "reportedInputTokens": 26612,
+      "inputTokens": 26612,
+      "outputTokens": 109,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -5427,7 +5433,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-19T00:26:05.008Z",
+  "checkedAt": "2026-10-19T00:26:35.488Z",
   "lastRun": "39179694974",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -5712,12 +5718,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-09:fd161ed663e2b3bb",
+    "stage": "pixels:kids-biblia-09:c25550636d4348c6",
     "value": {
       "visible": true,
       "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Ilustração de um salão com colunas e fundo amarelo: uma figura sentada em trono elevado à esquerda, vestindo touca listrada e adornos dourados, observa várias pessoas em pé no centro e à frente, algumas segurando lanças ou usando túnicas brancas e pulseiras douradas. A composição mostra o grupo disposto em semicírculo diante do trono, com objetos como lanças longas e assentos vermelhos visíveis."
+      "childSuitable": false,
+      "observedEvent": "Ilustração de uma carruagem puxada por dois cavalos avançando em águas agitadas, com figuras humanas parcialmente submersas e braços emergindo da água; ao fundo, uma figura em posição elevada sobre terreno seco segura um objeto longo. A cena é composta por ondas azuis turquesa, céu claro com nuvens e roda vermelha e dourada em primeiro plano à direita."
     }
   },
   "lastFactualEvaluation": {
@@ -8382,6 +8388,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 21,
     "skippedCandidates": 4,
-    "checkedAt": "2026-10-19T00:26:05.008Z"
+    "checkedAt": "2026-10-19T00:26:35.488Z"
   }
 }
