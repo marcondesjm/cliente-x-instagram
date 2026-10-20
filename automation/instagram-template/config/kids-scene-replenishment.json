@@ -6713,11 +6713,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-20T20:52:02.331Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 11078,
       "imageFingerprint": null,
-      "promptFingerprint": "b88bc3a8bf62e8734d7bec99b413ac5416c0924eb3c537088480c264121e0b6d"
+      "promptFingerprint": "b88bc3a8bf62e8734d7bec99b413ac5416c0924eb3c537088480c264121e0b6d",
+      "completedAt": "2026-10-20T20:53:57.577Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 30,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -6868,7 +6874,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-20T20:52:02.331Z",
+  "checkedAt": "2026-10-20T20:53:57.577Z",
   "lastRun": "39494979688",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -7173,12 +7179,406 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-27:fcfaceb1142d58f3",
+    "stage": "select:kids-biblia-27",
     "value": {
-      "visible": true,
-      "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Ilustração de mapa estilizado com grande forma de lago em azul-turquesa ao centro sobre fundo amarelo-alaranjado, com ponto vermelho na margem superior e seta vermelha apontando em diagonal para o interior do lago. Textos em preto distribuídos nas margens superior, central e inferior direita, sem pessoas ou objetos adicionais visíveis."
+      "cards": [
+        {
+          "card": 1,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena mostra mar agitado mas não retrata o evento central do título da capa."
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena interna de Jesus dormindo não representa tempestade mencionada no título."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Discípulos conversando não ilustra tempestade exigida pelo título da capa."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jesus falando antes da viagem é etapa anterior, não o evento do título."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Barco em águas calmas contradiz tempestade descrita no título da capa."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jesus acalmando vento é parte da história mas não o evento principal do título."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Partida da margem é cena preliminar, não a tempestade do título."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "4:37",
+              "reason": "Embarcação inclinada em águas agitadas retrata diretamente a tempestade do título."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jesus repreendendo vento é resolução, não o evento central do título."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa estilizado sem pessoas ou tempestade não atende ao título da capa."
+            }
+          ],
+          "reason": "Capa exige evento do título: tempestade. Apenas cena 8 retrata diretamente."
+        },
+        {
+          "card": 2,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "4:37",
+              "reason": "Mar agitado com pessoas na embarcação ilustra resumo da tempestade."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "4:38",
+              "reason": "Jesus dormindo enquanto discípulos acordam-no corresponde ao resumo."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Discípulos conversando após calma não retrata eventos principais do resumo."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jesus convidando para viagem é antes da tempestade, não do resumo."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Águas calmas contradizem tempestade descrita no corpo do cartão."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "4:39",
+              "reason": "Jesus acalmando vento e mar ilustra evento central do resumo narrativo."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Partida da margem é preliminar, não os eventos de tempestade do resumo."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "4:37",
+              "reason": "Embarcação em águas agitadas retrata tempestade mencionada no resumo."
+            },
+            {
+              "scene": 9,
+              "allowed": true,
+              "verse": "4:39",
+              "reason": "Jesus repreendendo vento ilustra acalmar o mar descrito no resumo."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa sem ação narrativa não ilustra eventos do resumo bíblico."
+            }
+          ],
+          "reason": "Cartão narrativo aceita cenas dos eventos principais: tempestade, Jesus dormindo, acalmar."
+        },
+        {
+          "card": 3,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "4:37",
+              "reason": "Tempestade ilustra poder de Jesus e contexto para lição sobre confiança."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "4:38",
+              "reason": "Discípulos acordando Jesus mostra falta de fé, tema educativo da lição."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "4:41",
+              "reason": "Reação dos discípulos ilustra admiração pelo poder de Jesus na lição."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Convite para viagem não conecta claramente com lição sobre poder e fé."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena calma não sustenta reflexão sobre poder de Jesus em tempestade."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "4:39-40",
+              "reason": "Jesus acalmando vento e questionando fé ilustra poder e lição educativa."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Partida da multidão não relaciona-se diretamente com lição sobre confiança."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "4:37",
+              "reason": "Tempestade violenta contextualiza poder de Jesus para lição educativa."
+            },
+            {
+              "scene": 9,
+              "allowed": true,
+              "verse": "4:39",
+              "reason": "Jesus repreendendo vento demonstra poder, tema central da lição."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa geográfico não oferece conexão educativa com lição sobre fé."
+            }
+          ],
+          "reason": "Lições aceitam cenas pertinentes que sustentam reflexão sobre poder e fé."
+        },
+        {
+          "card": 4,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "4:37",
+              "reason": "Tempestade contextualiza história para atividade familiar de desenhar barco."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "4:38",
+              "reason": "Jesus sendo acordado ilustra momento da história relacionada à atividade."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "4:41",
+              "reason": "Reação dos discípulos pertence à história base da atividade educativa."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Convite inicial não conecta bem com atividade de desenhar barco na tempestade."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "4:36",
+              "reason": "Barco navegando ilustra veículo central da atividade de desenhar."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "4:39",
+              "reason": "Jesus acalmando mar pertence à história base da atividade familiar."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "4:36",
+              "reason": "Entrada no barco ilustra início da jornada relacionada à atividade."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "4:37",
+              "reason": "Barco em tempestade é cenário direto para atividade de desenhar barco."
+            },
+            {
+              "scene": 9,
+              "allowed": true,
+              "verse": "4:39",
+              "reason": "Jesus no barco agitado ilustra história base da atividade educativa."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa sem barco visível não apoia atividade de desenhar embarcação."
+            }
+          ],
+          "reason": "Atividade aceita cenas pertinentes à história do barco e tempestade."
+        },
+        {
+          "card": 5,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "4:37",
+              "reason": "Tempestade ilustra passagem de Marcos 4 para leitura em família."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "4:38",
+              "reason": "Jesus dormindo é parte da passagem sugerida para leitura familiar."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "4:41",
+              "reason": "Pergunta dos discípulos está na passagem indicada para leitura."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "4:35",
+              "reason": "Convite de Jesus inicia a passagem recomendada para leitura."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "4:36",
+              "reason": "Barco partindo é parte da passagem de Marcos 4 para leitura."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "4:39",
+              "reason": "Jesus acalmando vento está na passagem sugerida para leitura."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "4:36",
+              "reason": "Deixando multidão e entrando no barco pertence à passagem de leitura."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "4:37",
+              "reason": "Tempestade violenta é evento central da passagem para leitura familiar."
+            },
+            {
+              "scene": 9,
+              "allowed": true,
+              "verse": "4:39",
+              "reason": "Jesus repreendendo vento faz parte da passagem recomendada."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa estilizado não ilustra diretamente a passagem bíblica para leitura."
+            }
+          ],
+          "reason": "Leitura aceita qualquer cena da passagem Marcos 4:35-41 exceto mapa abstrato."
+        },
+        {
+          "card": 6,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "4:37",
+              "reason": "Tempestade é cena pertinente à passagem diferente das anteriores."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "4:38",
+              "reason": "Jesus dormindo pertence à passagem e pode ser cena final distinta."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "4:41",
+              "reason": "Reação dos discípulos é pertinente à passagem para Story final."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "4:35",
+              "reason": "Início da jornada pertence à passagem como opção para Story."
+            },
+            {
+              "scene": 5,
+              "allowed": true,
+              "verse": "4:36",
+              "reason": "Barco partindo é cena pertinente à passagem para encerramento."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "4:39",
+              "reason": "Jesus acalmando mar é pertinente à passagem para Story final."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "4:36",
+              "reason": "Entrada no barco pertence à passagem como opção de Story."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "4:37",
+              "reason": "Tempestade violenta é pertinente à passagem para cena final."
+            },
+            {
+              "scene": 9,
+              "allowed": true,
+              "verse": "4:39",
+              "reason": "Jesus repreendendo vento pertence à passagem para Story."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Mapa abstrato não é cena ilustrativa pertinente para Story final."
+            }
+          ],
+          "reason": "Story aceita cena pertinente à passagem, diferente das demais posições."
+        }
+      ]
     }
   },
   "lastFactualEvaluation": {
@@ -10482,6 +10882,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 10,
     "skippedCandidates": 11,
-    "checkedAt": "2026-10-20T20:52:02.331Z"
+    "checkedAt": "2026-10-20T20:53:57.577Z"
   }
 }
