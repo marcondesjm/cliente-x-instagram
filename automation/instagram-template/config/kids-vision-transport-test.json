@@ -539,7 +539,7 @@
     {
       "id": "eee89555-b596-4f5e-a7d6-f2a322cc81d7",
       "day": "2026-10-20",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-mirror",
       "startedAt": "2026-10-20T20:44:38.148Z",
       "images": [
@@ -553,7 +553,12 @@
           "sha256": "0881776f99cc2d4ceaeca8929b84afdccf60642f9b649c4f273540d3b62102f0",
           "bytes": 46048
         }
-      ]
+      ],
+      "completedAt": "2026-10-20T20:45:01.118Z",
+      "reportedInputTokens": 1102,
+      "inputTokens": 1102,
+      "outputTokens": 996,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -892,7 +897,7 @@
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-20T20:44:38.148Z",
+  "checkedAt": "2026-10-20T20:45:01.118Z",
   "workflowRun": "39494154456",
   "summary": [
     {
@@ -1179,12 +1184,18 @@
   "visualDiversity": {
     "version": "visual-diversity-v1",
     "model": "claude-sonnet-4.6",
-    "checkedAt": "2026-10-20T20:44:36.680Z",
+    "checkedAt": "2026-10-20T20:45:01.118Z",
     "cases": [
       {
         "expected": true,
         "distinct": true,
         "reason": "Imagens distintas: Cena 1 mostra homem de costas subindo na árvore, rosto oculto, pano amarelo nas costas, multidão vista por trás; Cena 2 mostra mesmo homem de frente sentado no galho com braços erguidos, barba e faixa vermelha visíveis, e homem em primeiro plano de perfil olhando para cima. Enquadramento, ângulo e poses são concretamente diferentes, não é espelho/recorte.",
+        "passed": true
+      },
+      {
+        "expected": false,
+        "distinct": false,
+        "reason": "As duas imagens são o mesmo desenho com inversão espelhada horizontal. Mostram pessoa de túnica azul e manto amarelo claro subindo em árvore de tronco marrom e copa verde, multidão de costas com chapéus/turbantes abaixo, e prédio bege com janela em arco ao fundo. Na Cena 1 a árvore está à direita e o prédio à esquerda; na Cena 2 a árvore está à esquerda e o prédio à direita. Cores, traços, poses e enquadramento são idênticos, apenas espelhados. Não há diferença concreta de ação ou composição.",
         "passed": true
       }
     ]
