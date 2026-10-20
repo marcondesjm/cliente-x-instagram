@@ -485,11 +485,17 @@
     {
       "id": "a5ce5702-dd84-4827-94b7-13df9e3acc56",
       "day": "2026-10-20",
-      "status": "reserved",
+      "status": "completed",
       "stage": "sonnet-forced-holdout:holdout-3",
       "startedAt": "2026-10-20T20:43:14.203Z",
       "imageHash": "0e68d89f3b06e81914792cf90b2e067b890038d0529d6b9579fc219f5e7cf478",
-      "imageBytes": 67278
+      "imageBytes": 67278,
+      "completedAt": "2026-10-20T20:43:37.583Z",
+      "reportedInputTokens": 1011,
+      "inputTokens": 1011,
+      "outputTokens": 674,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -741,27 +747,6 @@
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
     },
     {
-      "id": "sonnet-forced-holdout:holdout-3",
-      "mode": "sonnet-forced-holdout",
-      "fixture": "holdout-3",
-      "model": "claude-sonnet-4.6",
-      "passed": true,
-      "value": {
-        "personInTree": false,
-        "openBooks": false,
-        "style": "illustration",
-        "description": "Ilustração em estilo desenho animado mostrando um grupo de homens com vestimentas antigas do Oriente Médio (túnicas coloridas e turbantes) em uma rua estreita entre edifícios de pedra com arcos. No centro, dois homens conversam na entrada de uma porta; ao redor, outros homens observam com expressões sérias ou desconfiadas. O ambiente sugere uma cena histórica ou bíblica em uma cidade antiga. Não há árvores nem livros abertos visíveis."
-      },
-      "expected": {
-        "personInTree": false,
-        "openBooks": false,
-        "style": "illustration"
-      },
-      "checkedAt": "2026-10-19T15:45:36.770Z",
-      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/06_FB_Zacchaeus_1024.jpg?1724237549",
-      "imageHash": "0e68d89f3b06e81914792cf90b2e067b890038d0529d6b9579fc219f5e7cf478"
-    },
-    {
       "id": "sonnet-forced-holdout:holdout-4",
       "mode": "sonnet-forced-holdout",
       "fixture": "holdout-4",
@@ -823,12 +808,33 @@
       "checkedAt": "2026-10-20T20:43:11.199Z",
       "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/07_FB_Zacchaeus_1024.jpg?1724237549",
       "imageHash": "34169359e67f7acc29d673c680eab8f7cc3bbe6cf27019b69da83c755945902e"
+    },
+    {
+      "id": "sonnet-forced-holdout:holdout-3",
+      "mode": "sonnet-forced-holdout",
+      "fixture": "holdout-3",
+      "model": "claude-sonnet-4.6",
+      "passed": true,
+      "value": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration",
+        "description": "Ilustração em estilo desenho com traços marcados e cores planas. Em primeiro plano, três homens barbados de perfil com turbantes e chapéus em tons de amarelo, verde e vermelho observam para a esquerda. Ao fundo, dois homens conversam em frente a uma porta em arco de um prédio de pedra clara com arcos e janela com grades. Um veste manto vermelho sobre túnica clara, o outro veste túnica azul com faixa amarela na cabeça. Ambiente externo diurno."
+      },
+      "expected": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration"
+      },
+      "checkedAt": "2026-10-20T20:43:37.583Z",
+      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/06_FB_Zacchaeus_1024.jpg?1724237549",
+      "imageHash": "0e68d89f3b06e81914792cf90b2e067b890038d0529d6b9579fc219f5e7cf478"
     }
   ],
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-20T20:43:14.203Z",
+  "checkedAt": "2026-10-20T20:43:37.583Z",
   "workflowRun": "39494154456",
   "summary": [
     {
