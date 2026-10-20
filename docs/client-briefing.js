@@ -7,6 +7,8 @@ const logoFile = document.getElementById('logoFile');
 const logoStatus = document.getElementById('logoStatus');
 const preview = document.getElementById('logoPreview');
 const removeLogo = document.getElementById('removeLogo');
+const form = document.getElementById('briefingForm');
+const status = document.getElementById('status');
 function clearLogo() {
   logoAttachment = null;
   logoError = '';
@@ -49,9 +51,19 @@ logoFile.addEventListener('change', () => {
   })();
 });
 removeLogo.addEventListener('click', () => { logoFile.value = ''; clearLogo(); });
-document.getElementById('briefingForm').addEventListener('submit', async event => {
+form.addEventListener('invalid', event => {
+  const field = event.target;
+  if (field.name === 'logo') {
+    status.textContent = 'O link do logotipo é opcional. Deixe o campo vazio ou informe um endereço HTTPS válido.';
+    return;
+  }
+  const label = field.labels?.[0]?.textContent.replace(/\s+/g, ' ').trim();
+  status.textContent = label
+    ? `Confira o campo “${label}”: ${field.validationMessage}`
+    : `Confira os campos obrigatórios: ${field.validationMessage || 'preencha os dados marcados com *.'}`;
+}, true);
+form.addEventListener('submit', async event => {
   event.preventDefault();
-  const status = document.getElementById('status');
   try {
     await logoRead;
     if (logoError) throw new Error(logoError + ' Remova o anexo ou escolha outra imagem.');
@@ -66,11 +78,14 @@ document.getElementById('briefingForm').addEventListener('submit', async event =
     link.setAttribute('role', 'button');
     link.style.cssText = 'display:inline-block;margin-top:12px;padding:14px 22px;background:#0e7c5a;color:#fff;font-weight:700;border-radius:9px;text-decoration:none';
     link.addEventListener('click', () => {
-      status.textContent = 'Se o arquivo abrir em uma nova tela, use Compartilhar e escolha Salvar em Arquivos ou Baixar. Depois, envie briefing-' + data.username + '.json ao responsável pelo seu cadastro.';
+      status.firstChild.textContent = 'Se o arquivo abrir em uma nova tela, use Compartilhar e escolha Salvar em Arquivos ou Baixar. Depois, envie para marcondesgestaotrafego@gmail.com. ';
       // Keep the object URL alive for browsers that open the JSON instead of downloading it.
       setTimeout(() => URL.revokeObjectURL(url), 5 * 60 * 1000);
     }, { once: true });
     status.replaceChildren(document.createTextNode('O briefing está pronto. Se o download não começar, toque no botão abaixo. O envio não é automático.'), document.createElement('br'), link);
     link.click();
-  } catch (error) { status.textContent = error.message; }
+  } catch (error) {
+    status.textContent = `Não foi possível preparar o briefing: ${error.message || 'erro inesperado.'} Revise os campos e tente novamente.`;
+    status.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
 });
