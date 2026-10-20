@@ -3,8 +3,8 @@
   "enabled": true,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "blocked",
-  "message": "Teste visual independente ausente, reprovado ou vencido.",
+  "health": "reviewing",
+  "message": "Revisando cenas da pauta kids-biblia-27; aprovação bíblica, visual e render ainda obrigatórios.",
   "policy": {
     "maxCallsPerDay": 250,
     "maxInputTokensPerCall": 120000,
@@ -6515,6 +6515,19 @@
       "completedAt": "2026-10-20T20:34:33.779Z",
       "inputTokens": null,
       "error": "Workflow interrompido antes do recibo."
+    },
+    {
+      "id": "45f17b17-105d-4041-beaa-f4315459c765",
+      "day": "2026-10-20",
+      "stage": "pixels:kids-biblia-27:8e150ed2cdf55de4",
+      "model": "claude-sonnet-4.6",
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-20T20:48:22.752Z",
+      "status": "reserved",
+      "payloadBytes": 68958,
+      "promptChars": 793,
+      "imageFingerprint": "9d37a56479ea836abdd1f3a7e7433474d9f0fa150eaf4c4c2a46ce2bd4bd830c",
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
     }
   ],
   "entries": [
@@ -6665,8 +6678,8 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-20T20:40:05.865Z",
-  "lastRun": "39493796492",
+  "checkedAt": "2026-10-20T20:48:22.752Z",
+  "lastRun": "39494979688",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -10255,7 +10268,7 @@
     }
   },
   "accuracyGate": {
-    "checkedAt": "2026-10-19T05:10:40.897Z",
+    "checkedAt": "2026-10-20T20:48:16.996Z",
     "visualCases": 4,
     "factualCases": 6,
     "diversityCases": 2,
@@ -10272,12 +10285,12 @@
     "target": 12,
     "available": 0,
     "shortfall": 12,
-    "checkedAt": "2026-10-20T20:40:05.864Z"
+    "checkedAt": "2026-10-20T20:48:16.995Z"
   },
   "economy": {
     "reusedPixelReads": 0,
     "newPixelReads": 0,
-    "skippedCandidates": 0,
-    "checkedAt": "2026-10-20T20:40:05.865Z"
+    "skippedCandidates": 11,
+    "checkedAt": "2026-10-20T20:48:22.752Z"
   }
 }
