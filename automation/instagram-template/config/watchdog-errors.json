@@ -1,24 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-10-18:3:39149553608",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-10-18",
-    "slotIndex": 3,
-    "scheduledAt": "2026-10-18T14:50:00.000Z",
-    "scheduledPostId": null,
-    "failedAt": "2026-10-18T17:27:12.834Z",
-    "workflowRun": "39149553608",
-    "workflowName": "Instagram Watchdog Backup",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/39149553608",
-    "stage": "content-selection",
-    "error": "Radar visual sem foto inédita e reserva autoral esgotada. Nenhuma publicação repetida foi enviada; consulte visual-selection.json.",
-    "solution": "A reposição automática com Claude tenta criar e revisar conteúdo inédito para recuperar este horário. Se a cota diária terminou, aguarda a renovação e retoma pelo agendamento, sem botão ou pedido manual. O vigia só publica após aprovação factual, visual e contra repetição; o alerta permanece aberto até a publicação confirmada.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-10-18-142712.json",
-    "resolvedAt": "2026-10-18T18:06:28.463Z",
-    "resolvedRun": "39152211919"
-  },
-  {
     "key": "cliente-x:2026-10-18:3:39150093703",
     "status": "resolved",
     "account": "cliente-x",
@@ -902,5 +883,22 @@
     "error": "Conteúdo bíblico ilustrado inédito esgotado. Adicione novas pautas revisadas com imagens; nenhum conteúdo genérico será publicado.",
     "solution": "Adicionar pautas bíblicas inéditas com ilustrações revisadas em todos os cartões, Story e créditos. O vigia retoma o horário pendente após a revisão; não repetir posts, voltar a cartões vazios ou renovar token por esse erro de conteúdo.",
     "failurePath": "automation/instagram-template/runs/failure-2026-10-20-105514.json"
+  },
+  {
+    "key": "cliente-x:2026-10-20:2:39439355045",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-10-20",
+    "slotIndex": 2,
+    "scheduledAt": "2026-10-20T12:00:00.000Z",
+    "scheduledPostId": null,
+    "failedAt": "2026-10-20T14:29:31.528Z",
+    "workflowRun": "39439355045",
+    "workflowName": "Instagram Feed Cliente X",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/39439355045",
+    "stage": "content-selection",
+    "error": "Radar visual sem foto inédita e reserva autoral esgotada. Nenhuma publicação repetida foi enviada; consulte visual-selection.json.",
+    "solution": "A reposição automática com Claude tenta criar e revisar conteúdo inédito para recuperar este horário. Se a cota diária terminou, aguarda a renovação e retoma pelo agendamento, sem botão ou pedido manual. O vigia só publica após aprovação factual, visual e contra repetição; o alerta permanece aberto até a publicação confirmada.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-10-20-112931.json"
   }
 ]
