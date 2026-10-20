@@ -3,8 +3,14 @@ import {createHash} from 'node:crypto';
 import {remainingSceneBudget} from '../lib/kids-reserve-policy.js';
 import {usesProviderQuota} from '../lib/editorial-daily-budget.js';
 import {packContentFingerprint} from '../lib/scheduled-content-guard.js';
+import {recoverTransientCalls} from '../lib/kids-call-recovery.js';
+import {persistState} from './persist-instagram-state.mjs';
 const C='automation/instagram-template/config/',read=n=>JSON.parse(fs.readFileSync(C+n,'utf8'));
-const state=read('kids-scene-replenishment.json'),recipes=read('kids-reviewed-scenes.json'),assembly=read('kids-scene-automation.json');
+let state=read('kids-scene-replenishment.json');
+const recipes=read('kids-reviewed-scenes.json'),assembly=read('kids-scene-automation.json');
+const statePath=C+'kids-scene-replenishment.json';
+const recoveredInterruptedCall=recoverTransientCalls(state);
+if(recoveredInterruptedCall){fs.writeFileSync(statePath,JSON.stringify(state,null,2)+'\n');persistState([statePath]);state=read('kids-scene-replenishment.json');}
 const packs=read('content-packs.json').find(g=>g.account==='sabedoria-kids').packs,history=read('publication-history.json')['sabedoria-kids']||[];
 const hash=x=>createHash('sha256').update(Buffer.isBuffer(x)?x:JSON.stringify(x)).digest('hex');
 const assemble=recipes.some(r=>{
@@ -15,4 +21,4 @@ const assemble=recipes.some(r=>{
 const remaining=remainingSceneBudget(state),manual=['calibrate','pilot','activate'].includes(process.env.REVIEW_MODE);
 const review=manual||state.enabled&&!state.circuit&&!state.calls.some(c=>c.status==='reserved')&&remaining.maxCallsPerDay>=3&&remaining.maxInputTokensPerDay>=3*remaining.maxInputTokensPerCall;
 if(process.env.GITHUB_OUTPUT)fs.appendFileSync(process.env.GITHUB_OUTPUT,`review=${review}\nassemble=${assemble}\n`);
-console.log(JSON.stringify({review,assemble,quotaMode:usesProviderQuota(state)?'provider':'internal',remainingCalls:Number.isFinite(remaining.maxCallsPerDay)?remaining.maxCallsPerDay:null,target:state.policy.readyStockTarget,paidCalls:0}));
+console.log(JSON.stringify({review,assemble,recoveredInterruptedCall,quotaMode:usesProviderQuota(state)?'provider':'internal',remainingCalls:Number.isFinite(remaining.maxCallsPerDay)?remaining.maxCallsPerDay:null,target:state.policy.readyStockTarget,paidCalls:0}));
