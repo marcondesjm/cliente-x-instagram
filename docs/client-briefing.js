@@ -9,6 +9,7 @@ const preview = document.getElementById('logoPreview');
 const removeLogo = document.getElementById('removeLogo');
 const form = document.getElementById('briefingForm');
 const status = document.getElementById('status');
+const submitButton = form.querySelector('button[type="submit"]');
 function clearLogo() {
   logoAttachment = null;
   logoError = '';
@@ -83,6 +84,7 @@ form.addEventListener('submit', async event => {
       setTimeout(() => URL.revokeObjectURL(url), 5 * 60 * 1000);
     }, { once: true });
     status.replaceChildren(document.createTextNode('O briefing está pronto. Se o download não começar, toque no botão abaixo. O envio não é automático.'), document.createElement('br'), link);
+    submitButton.hidden = true;
     link.click();
   } catch (error) {
     status.textContent = `Não foi possível preparar o briefing: ${error.message || 'erro inesperado.'} Revise os campos e tente novamente.`;
