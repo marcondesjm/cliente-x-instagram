@@ -83985,6 +83985,166 @@
         }
       },
       "research": null
+    },
+    {
+      "feedFingerprint": "a1db809bb45a76bcc5ad9306cf1f235a5e1793636d0635e69be566dee04d0686",
+      "storyFingerprint": "a1db809bb45a76bcc5ad9306cf1f235a5e1793636d0635e69be566dee04d0686",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Sua empresa quer IA ou só automatizar a bagunça?",
+      "captionFingerprint": "5c2a47bf6adbb310c22c47c7aae1e610f305d3ca497fb81308562f0ea6cbec2c",
+      "coverTitle": "Sua empresa quer IA ou só automatizar a bagunça?",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-03.png",
+      "avatarRotationStart": 6,
+      "publishedAt": "2026-10-20T22:28:18.842Z",
+      "slotDate": "2026-10-20",
+      "slotIndex": 10,
+      "scheduledAt": "2026-10-20T20:40:00.000Z",
+      "workflowRun": "39508022208",
+      "mediaId": "18635936185003572",
+      "storyMediaId": "17979061877921452",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18635936185003572/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"A1wEz93FHyCJ0CRmzMW_hwD\"}}",
+      "permalink": "https://www.instagram.com/reel/Deu56NnDl2I/",
+      "reelDurationSeconds": 18.05,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "TI Inside",
+          "sourceUrl": "https://tiinside.com.br/20/10/2026/sua-empresa-quer-ia-ou-so-automatizar-a-bagunca/",
+          "sourceTitle": "Sua empresa quer IA ou só automatizar a bagunça?",
+          "imageUrl": "https://tiinside.com.br/wp-content/uploads/2026/10/Foto-Renan-Kumulus-2-.jpg",
+          "imageSourcePageUrl": "https://tiinside.com.br/20/10/2026/sua-empresa-quer-ia-ou-so-automatizar-a-bagunca/",
+          "imageCredit": "TI Inside",
+          "imageEvidence": "Main image metadata of the selected article.",
+          "imageHash": "b6a1872cc2d35a758e98f013d3a1ee120fef54b74e6086d5ea9f9887cde254dd",
+          "perceptualHash": "1111100100011001011110100001101001110100010110011011001000110011111011000001110101011000100110110011000101010111000111011101101101110011010100110000010110110010110001111101101011000011101111001100001110100110110000011010011011001000111111000100110010111000",
+          "reusedRelevantImage": false,
+          "approvedRevisionImageReuse": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://tiinside.com.br/20/10/2026/sua-empresa-quer-ia-ou-so-automatizar-a-bagunca/",
+        "slideCount": 4,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-20-192713-slot-10/visual-candidate-4/radar-slide-01.jpg",
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Main image metadata of the selected article."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-20T22:17:14.479Z",
+        "ageHours": 0.17,
+        "freshness": "current",
+        "effectiveSamples": 146,
+        "effectiveReach": 4478,
+        "controlledSamples": 155,
+        "selectionModes": {
+          "exploit": 107,
+          "explore": 34,
+          "experiment": 14
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "afternoon",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "growthMode": true,
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|afternoon|utility",
+        "decisionReasons": [
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico"
+        ],
+        "fatiguePenalty": 6.65,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "claudeExperiment": null,
+      "education": null,
+      "research": {
+        "id": "6ba14aa2d1d0",
+        "source": "TI Inside",
+        "sourceUrl": "https://tiinside.com.br/20/10/2026/sua-empresa-quer-ia-ou-so-automatizar-a-bagunca/",
+        "sourceTitle": "Sua empresa quer IA ou só automatizar a bagunça?",
+        "sourceImageUrl": "",
+        "publishedAt": "2026-10-20T13:58:27.000Z",
+        "researchedAt": "2026-10-20T22:27:01.005Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Após passar pela curva de adoção, empresas se deparam com uma nova realidade no uso de Inteligência Artificial no âmbito corporativo: como transformá-la em força efetiva de trabalho. Segundo dados da McKinsey, embora 88% das empresas implantem ou experimentem IA, 81% relatam não observar ganhos significativos no resultado. Antes de escolher a tecnologia, é preciso entender o problema, onde ele acontece, quem está envolvido, quais informações são usadas e quais decisões precisam ser tomadas. O PL 2.",
+        "sourceFacts": [
+          "Após passar pela curva de adoção, empresas se deparam com uma nova realidade no uso de Inteligência Artificial no âmbito corporativo: como transformá-la em força efetiva de trabalho. Segundo dados da McKinsey, embora 88% das empresas implantem ou experimentem IA, 81% relatam não observar ganhos significativos no resultado. Antes de escolher a tecnologia, é preciso entender o problema, onde ele acontece, quem está envolvido, quais informações são usadas e quais decisões precisam ser tomadas. O PL 2."
+        ],
+        "coverage": {
+          "sourceFactCount": 1,
+          "coveredFactCount": 1,
+          "complete": false,
+          "scope": "feed-summary",
+          "reviewedAdaptation": false
+        },
+        "editorialVariant": 5
+      }
     }
   ],
   "sabedoria-kids": [
