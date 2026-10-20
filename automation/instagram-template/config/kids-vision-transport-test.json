@@ -455,11 +455,17 @@
     {
       "id": "e9ba6f17-2e50-4cdb-964a-81832fc532ce",
       "day": "2026-10-20",
-      "status": "reserved",
+      "status": "completed",
       "stage": "sonnet-forced-holdout:holdout-1",
       "startedAt": "2026-10-20T20:42:27.265Z",
       "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817",
-      "imageBytes": 66332
+      "imageBytes": 66332,
+      "completedAt": "2026-10-20T20:42:43.407Z",
+      "reportedInputTokens": 1011,
+      "inputTokens": 1011,
+      "outputTokens": 655,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -711,27 +717,6 @@
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
     },
     {
-      "id": "sonnet-forced-holdout:holdout-1",
-      "mode": "sonnet-forced-holdout",
-      "fixture": "holdout-1",
-      "model": "claude-sonnet-4.6",
-      "passed": true,
-      "value": {
-        "personInTree": false,
-        "openBooks": false,
-        "style": "illustration",
-        "description": "Ilustração colorida mostrando um grupo de homens com vestimentas antigas orientais, incluindo túnicas vermelhas, azuis e amarelas, turbantes e faixas. Um homem ao centro veste túnica vermelha sobre camisa clara e gesticula com a mão direita levantada enquanto fala com outros homens que o cercam. Ao fundo há arcos arquitetônicos em tons claros. Não há árvores nem livros abertos visíveis na cena."
-      },
-      "expected": {
-        "personInTree": false,
-        "openBooks": false,
-        "style": "illustration"
-      },
-      "checkedAt": "2026-10-19T15:44:30.358Z",
-      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/08_FB_Zacchaeus_1024.jpg?1724237549",
-      "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817"
-    },
-    {
       "id": "sonnet-forced-holdout:holdout-2",
       "mode": "sonnet-forced-holdout",
       "fixture": "holdout-2",
@@ -793,12 +778,33 @@
       "checkedAt": "2026-10-19T15:45:49.938Z",
       "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/05_FB_Zacchaeus_1024.jpg?1724237549",
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
+    },
+    {
+      "id": "sonnet-forced-holdout:holdout-1",
+      "mode": "sonnet-forced-holdout",
+      "fixture": "holdout-1",
+      "model": "claude-sonnet-4.6",
+      "passed": true,
+      "value": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration",
+        "description": "Ilustração colorida de seis homens com barbas, vestindo túnicas e turbantes em tons de vermelho, azul, amarelo e bege. Um homem ao centro, com manto vermelho sobre túnica clara, gesticula com a mão direita levantada enquanto fala. Os demais homens ao redor olham para ele, alguns sorrindo. Um homem de costas com turbante amarelo está em primeiro plano. Ao fundo há paredes em tons claros de amarelo e um arco azul. Não há árvore nem livros visíveis."
+      },
+      "expected": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration"
+      },
+      "checkedAt": "2026-10-20T20:42:43.407Z",
+      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/08_FB_Zacchaeus_1024.jpg?1724237549",
+      "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817"
     }
   ],
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-20T20:42:27.266Z",
+  "checkedAt": "2026-10-20T20:42:43.407Z",
   "workflowRun": "39494154456",
   "summary": [
     {
