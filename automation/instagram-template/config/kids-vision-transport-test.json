@@ -563,9 +563,14 @@
     {
       "id": "f6af2dd4-cdcf-45b1-a260-4bdac47afbc9",
       "day": "2026-10-20",
-      "status": "reserved",
+      "status": "completed",
       "stage": "event-grounding-v2",
-      "startedAt": "2026-10-20T20:45:03.081Z"
+      "startedAt": "2026-10-20T20:45:03.081Z",
+      "completedAt": "2026-10-20T20:45:58.652Z",
+      "reportedInputTokens": 2387,
+      "inputTokens": 2387,
+      "outputTokens": 3503,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -904,7 +909,7 @@
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-20T20:45:03.081Z",
+  "checkedAt": "2026-10-20T20:45:58.653Z",
   "workflowRun": "39494154456",
   "summary": [
     {
@@ -944,7 +949,7 @@
     "version": "depicted-event-v4",
     "model": "claude-sonnet-4.6",
     "passed": true,
-    "checkedAt": "2026-10-19T15:46:47.097Z",
+    "checkedAt": "2026-10-20T20:45:58.653Z",
     "taskFingerprint": "24a3d96350ad5e68eec4ef675e4a33577dc5379d0b6c66576eea86e58d75a818",
     "task": {
       "scopeReference": "Trechos WEB fornecidos, sem ampliar o relato.",
@@ -1107,15 +1112,15 @@
       {
         "id": "absent-appearance",
         "supported": false,
-        "reason": "As fontes não relatam aparição pessoal de Jesus às mulheres no túmulo; apenas dois homens surgem e falam com elas.",
+        "reason": "As fontes sobre o túmulo não relatam aparição pessoal de Jesus às mulheres. Descrevem que encontraram a pedra removida, não acharam o corpo, e dois homens com vestes resplandecentes disseram 'He isn’t here, but is risen'. As mulheres depois voltaram para contar aos apóstolos e Pedro correu ao túmulo. Não há citação literal de Jesus aparecendo pessoalmente às mulheres diante do túmulo.",
         "evidence": [
           {
             "sourceId": "p0:24:4",
             "quote": "While they were greatly perplexed about this, behold, two men stood by them in dazzling clothing."
           },
           {
-            "sourceId": "p0:24:5",
-            "quote": "Becoming terrified, they bowed their faces down to the earth.\nThey said to them, “Why do you seek the living among the dead?"
+            "sourceId": "p0:24:6",
+            "quote": "He isn’t here, but is risen. Remember what he told you when he was still in Galilee,"
           }
         ],
         "expected": false,
@@ -1124,11 +1129,19 @@
       {
         "id": "zacchaeus-house",
         "supported": true,
-        "reason": "O texto confirma que Zaqueu recebeu Jesus em sua casa, e a observação visual mostra um homem de pé ao lado de outro sentado à mesa, compatível com recepção interna.",
+        "reason": "Fontes sustentam literalmente que Jesus disse que ficaria na casa de Zaqueu e que Zaqueu o recebeu com alegria e se hospedou ali. A ilustração com homem de pé ao lado de outro sentado à mesa em ambiente interno é compatível com a fase de receber/hospedar em casa, sem exigir enumeração de roupas ou arquitetura.",
         "evidence": [
+          {
+            "sourceId": "p1:19:5",
+            "quote": "When Jesus came to the place, he looked up and saw him, and said to him,\n“Zacchaeus, hurry and come down, for today I must stay at your house.”"
+          },
           {
             "sourceId": "p1:19:6",
             "quote": "He hurried, came down, and received him joyfully."
+          },
+          {
+            "sourceId": "p1:19:7",
+            "quote": "When they saw it, they all murmured, saying, “He has gone in to lodge with a man who is a sinner.”"
           }
         ],
         "expected": true,
@@ -1137,7 +1150,7 @@
       {
         "id": "tree-action",
         "supported": true,
-        "reason": "O texto afirma que Zaqueu subiu numa árvore para ver Jesus, e a observação visual mostra um homem nos galhos acima de pessoas no chão, compatível.",
+        "reason": "Fonte afirma literalmente que Zaqueu correu adiante e subiu em um sicômoro para ver Jesus. A ilustração mostra homem nos galhos de árvore acima de pessoas no chão, ação diretamente compatível com 'climbed up into a sycamore tree to see him'.",
         "evidence": [
           {
             "sourceId": "p1:19:4",
@@ -1150,7 +1163,7 @@
       {
         "id": "wrong-table",
         "supported": false,
-        "reason": "A claim diz que Zaqueu estava sentado à mesa com Jesus, mas a observação visual mostra um homem na árvore, ação incompatível com estar sentado à mesa.",
+        "reason": "O claim afirma Zaqueu sentado à mesa com Jesus, mas a visualObservation imutável mostra homem nos galhos de árvore acima de pessoas no chão. Um homem na árvore não pode representar alguém sentado à mesa; a ação visível é incompatível com a fase de estar à mesa. A fonte descreve a subida na árvore como fase distinta, não estar à mesa nessa imagem.",
         "evidence": [
           {
             "sourceId": "p1:19:4",
@@ -1163,7 +1176,7 @@
       {
         "id": "sleep-illustration",
         "supported": true,
-        "reason": "O texto relata que Jesus dormia na popa do barco, e a observação visual mostra um homem deitado na popa, compatível.",
+        "reason": "Fonte afirma literalmente que Jesus estava na popa dormindo sobre almofada. A ilustração mostra homem de túnica vermelha deitado na popa do barco com outros homens próximos, ação compatível com 'in the stern, asleep on the cushion', sem exigir detalhes artísticos adicionais.",
         "evidence": [
           {
             "sourceId": "p2:4:38",
@@ -1176,7 +1189,7 @@
       {
         "id": "wrong-tree-action",
         "supported": false,
-        "reason": "A claim diz que Zaqueu subiu numa árvore, mas a observação visual mostra quatro homens caminhando sem ninguém em árvore, ação incompatível.",
+        "reason": "Embora a fonte afirme que Zaqueu subiu na árvore, a visualObservation mostra quatro homens caminhando em estrada e ninguém em árvore. Homens caminhando não podem representar alguém subindo/estando em árvore; a ação visível é incompatível com a fase de subir na árvore, exigindo rejeição da ilustração para este claim.",
         "evidence": [
           {
             "sourceId": "p1:19:4",
