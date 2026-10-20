@@ -57,12 +57,20 @@ document.getElementById('briefingForm').addEventListener('submit', async event =
     if (logoError) throw new Error(logoError + ' Remova o anexo ou escolha outra imagem.');
     const fields = new FormData(event.target);
     const data = normalizeBriefing({ ...Object.fromEntries(fields), logoAttachment, formats: fields.getAll('formats'), schema: 'instagram-client-briefing', version: 1 });
-    const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
     link.download = `briefing-${data.username}.json`;
+    link.textContent = 'Toque aqui para baixar o briefing';
+    link.setAttribute('role', 'button');
+    link.style.cssText = 'display:inline-block;margin-top:12px;padding:14px 22px;background:#0e7c5a;color:#fff;font-weight:700;border-radius:9px;text-decoration:none';
+    link.addEventListener('click', () => {
+      status.textContent = 'Se o arquivo abrir em uma nova tela, use Compartilhar e escolha Salvar em Arquivos ou Baixar. Depois, envie briefing-' + data.username + '.json ao responsável pelo seu cadastro.';
+      // Keep the object URL alive for browsers that open the JSON instead of downloading it.
+      setTimeout(() => URL.revokeObjectURL(url), 5 * 60 * 1000);
+    }, { once: true });
+    status.replaceChildren(document.createTextNode('O briefing está pronto. Se o download não começar, toque no botão abaixo. O envio não é automático.'), document.createElement('br'), link);
     link.click();
-    setTimeout(() => URL.revokeObjectURL(url), 10000);
-    status.textContent = 'Briefing preparado para download. Envie o arquivo briefing-' + data.username + '.json ao responsável pelo seu cadastro. O envio não é automático.';
   } catch (error) { status.textContent = error.message; }
 });
