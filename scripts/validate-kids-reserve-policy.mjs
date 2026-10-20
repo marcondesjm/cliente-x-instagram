@@ -21,7 +21,7 @@ assert.equal(remainingSceneBudget(state,new Date('2026-10-19T03:00:00Z')).maxCal
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'kids-preflight-test-'));
 try{
  for(const dir of ['lib','scripts','automation/instagram-template/config'])fs.mkdirSync(path.join(temp,dir),{recursive:true});
- for(const file of ['scripts/plan-kids-reserve.mjs','lib/kids-call-recovery.js','lib/kids-reserve-policy.js','lib/bible-reference.js','lib/editorial-daily-budget.js','lib/scheduled-content-guard.js'])fs.copyFileSync(file,path.join(temp,file));
+ for(const file of ['scripts/plan-kids-reserve.mjs','scripts/persist-instagram-state.mjs','lib/kids-call-recovery.js','lib/kids-reserve-policy.js','lib/bible-reference.js','lib/editorial-daily-budget.js','lib/scheduled-content-guard.js'])fs.copyFileSync(file,path.join(temp,file));
  fs.writeFileSync(path.join(temp,'package.json'),'{"type":"module"}');
  const C=path.join(temp,'automation/instagram-template/config');
  for(const [file,data] of Object.entries({'kids-scene-replenishment.json':{enabled:true,circuit:null,policy:{maxCallsPerDay:1,maxInputTokensPerCall:120000,maxInputTokensPerDay:120000,readyStockTarget:12},calls:[]},'kids-reviewed-scenes.json':[],'kids-scene-automation.json':{entries:[]},'content-packs.json':[{account:'sabedoria-kids',packs:[]}],'publication-history.json':{}}))fs.writeFileSync(path.join(C,file),JSON.stringify(data));
