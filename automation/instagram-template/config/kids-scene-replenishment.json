@@ -4,7 +4,7 @@
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
   "health": "awaiting_candidates",
-  "message": "Circuito limpo manualmente; rotina reativada para nova tentativa de piloto.",
+  "message": "0 pauta(s) examinada(s); somente seleções aprovadas seguem para montagem.",
   "policy": {
     "maxCallsPerDay": 250,
     "maxInputTokensPerCall": 120000,
@@ -7389,8 +7389,8 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-21T13:40:40.947Z",
-  "lastRun": "39609943426",
+  "checkedAt": "2026-10-21T13:53:51.906Z",
+  "lastRun": "39611897153",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -11013,7 +11013,7 @@
     }
   },
   "accuracyGate": {
-    "checkedAt": "2026-10-21T11:45:16.116Z",
+    "checkedAt": "2026-10-21T13:53:50.605Z",
     "visualCases": 4,
     "factualCases": 6,
     "diversityCases": 2,
@@ -11030,13 +11030,13 @@
     "target": 12,
     "available": 0,
     "shortfall": 12,
-    "checkedAt": "2026-10-21T11:45:16.115Z"
+    "checkedAt": "2026-10-21T13:53:50.604Z"
   },
   "economy": {
     "reusedPixelReads": 0,
     "newPixelReads": 0,
-    "skippedCandidates": 0,
-    "checkedAt": "2026-10-21T13:40:40.947Z"
+    "skippedCandidates": 12,
+    "checkedAt": "2026-10-21T13:53:51.906Z"
   },
   "retryAfter": "2026-10-21T14:12:19.360Z"
 }
