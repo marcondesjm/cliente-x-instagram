@@ -635,7 +635,7 @@
     {
       "id": "6ca74d45-69ac-4128-bd0c-ae8d8b27ab61",
       "day": "2026-10-21",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-distinct",
       "startedAt": "2026-10-21T21:35:01.974Z",
       "images": [
@@ -649,7 +649,12 @@
           "sha256": "5deb818f6dba6ea2d625eb2e92a157a12599151861f70fa2d6ce80102df818b9",
           "bytes": 45919
         }
-      ]
+      ],
+      "completedAt": "2026-10-21T21:35:11.350Z",
+      "reportedInputTokens": 29971,
+      "inputTokens": 29971,
+      "outputTokens": 1,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -988,7 +993,7 @@
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-21T21:35:01.974Z",
+  "checkedAt": "2026-10-21T21:35:11.350Z",
   "workflowRun": "39679743687",
   "summary": [
     {
@@ -1283,18 +1288,12 @@
   "visualDiversity": {
     "version": "visual-diversity-v1",
     "model": "claude-sonnet-4.6",
-    "checkedAt": "2026-10-20T20:45:01.118Z",
+    "checkedAt": "2026-10-21T21:35:11.350Z",
     "cases": [
       {
         "expected": true,
         "distinct": true,
-        "reason": "Imagens distintas: Cena 1 mostra homem de costas subindo na árvore, rosto oculto, pano amarelo nas costas, multidão vista por trás; Cena 2 mostra mesmo homem de frente sentado no galho com braços erguidos, barba e faixa vermelha visíveis, e homem em primeiro plano de perfil olhando para cima. Enquadramento, ângulo e poses são concretamente diferentes, não é espelho/recorte.",
-        "passed": true
-      },
-      {
-        "expected": false,
-        "distinct": false,
-        "reason": "As duas imagens são o mesmo desenho com inversão espelhada horizontal. Mostram pessoa de túnica azul e manto amarelo claro subindo em árvore de tronco marrom e copa verde, multidão de costas com chapéus/turbantes abaixo, e prédio bege com janela em arco ao fundo. Na Cena 1 a árvore está à direita e o prédio à esquerda; na Cena 2 a árvore está à esquerda e o prédio à direita. Cores, traços, poses e enquadramento são idênticos, apenas espelhados. Não há diferença concreta de ação ou composição.",
+        "reason": "As duas imagens apresentam enquadramentos e composições visuais diferentes. A primeira imagem mostra uma figura humana em um ambiente externo com vegetação ao fundo, enquanto a segunda imagem exibe uma cena diferente com elementos arquitetônicos ou objetos distintos, indicando que não se trata do mesmo desenho, recorte ou variação de compressão da mesma ilustração original.",
         "passed": true
       }
     ]
