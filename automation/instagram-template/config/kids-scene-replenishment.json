@@ -3,8 +3,8 @@
   "enabled": true,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "blocked",
-  "message": "Piloto exige rotina desativada, uma pauta explícita e nenhum bloqueio de consumo ou transporte.",
+  "health": "awaiting_candidates",
+  "message": "0 pauta(s) examinada(s); somente seleções aprovadas seguem para montagem.",
   "policy": {
     "maxCallsPerDay": 250,
     "maxInputTokensPerCall": 120000,
@@ -6912,8 +6912,8 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-21T01:57:04.386Z",
-  "lastRun": "39530138215",
+  "checkedAt": "2026-10-21T06:01:25.380Z",
+  "lastRun": "39552810337",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -10567,7 +10567,7 @@
     }
   },
   "accuracyGate": {
-    "checkedAt": "2026-10-21T01:19:58.549Z",
+    "checkedAt": "2026-10-21T06:01:24.012Z",
     "visualCases": 4,
     "factualCases": 6,
     "diversityCases": 2,
@@ -10584,12 +10584,12 @@
     "target": 12,
     "available": 0,
     "shortfall": 12,
-    "checkedAt": "2026-10-21T01:19:58.548Z"
+    "checkedAt": "2026-10-21T06:01:24.011Z"
   },
   "economy": {
     "reusedPixelReads": 0,
     "newPixelReads": 0,
-    "skippedCandidates": 0,
-    "checkedAt": "2026-10-21T01:57:04.386Z"
+    "skippedCandidates": 12,
+    "checkedAt": "2026-10-21T06:01:25.380Z"
   }
 }
