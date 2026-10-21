@@ -11772,7 +11772,7 @@
       "reason": "Render autoral falhou: Slide 6 rejeitado: fotografia repetida ou visualmente semelhante a outro cartão/cena.\n"
     }
   ],
-  "checkedAt": "2026-10-21T17:40:13.605Z",
+  "checkedAt": "2026-10-21T17:40:15.391Z",
   "workflowRun": "39645728981",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
@@ -11862,27 +11862,29 @@
   },
   "learningStrategy": {
     "version": "claude-editorial-strategy-v1",
-    "id": "6659090c-ea3c-4965-bff1-d1a1cd30c99b",
+    "id": "d84588f0-75ab-47f8-a53c-4398518f7cd8",
     "status": "active",
-    "createdAt": "2026-10-18T19:06:41.345Z",
-    "expiresAt": "2026-10-19T19:06:41.345Z",
-    "dataUpdatedAt": "2026-10-18T19:05:47.691Z",
-    "contextFingerprint": "d7c18045daf42202fcc9103ca6dd25503850fee0984d8b9debee992fb7631163",
-    "diagnosis": "Alcance orgânico baixo (7-39) e engajamento quase nulo em 24h. Hooks de \"afirmação\" dominam, mas não convertem em salvamentos ou compartilhamentos. O único like registrado veio de um hook tipo \"dado\" (Ramp/FEED), sugerindo que utilidade factual performa melhor que opinião genérica.",
-    "hypothesis": "Substituir afirmações amplas por perguntas específicas de dor operacional (\"Como sua equipe valida decisões de IA antes do deploy?\") pode elevar comentários por alcance, pois convida à troca de experiência prática em vez de consumo passivo de notícia.",
-    "limitations": "Janela de 24h é curta para avaliar retenção. Volume de posts é pequeno (16). Ausência total de salvamentos/compartilhamentos impede análise de viralidade. Não há dados demográficos ou de horário ideal.",
+    "createdAt": "2026-10-21T17:40:15.391Z",
+    "expiresAt": "2026-10-22T17:40:15.391Z",
+    "dataUpdatedAt": "2026-10-21T17:07:14.724Z",
+    "contextFingerprint": "a3c826917a2693131712c3529e719a72a250d05e9c9c2a43767e3f528eaaf051",
+    "diagnosis": "Perfil com alcance baixo (3-38) e zero engajamento em métricas-alvo (salvamentos, compartilhamentos, comentários). Reels de afirmação atingiram maior alcance (25-38), mas sem conversão em ações. Perguntas em Feed tiveram scores intermediários (8.59-12.24) com alcance reduzido (4-8). Alertas performaram abaixo da média (4.88-5.4). Não há evidência de que formato ou hook influenciem engajamento dado volume amostral insuficiente e ausência total de ações registradas.",
+    "hypothesis": "Testar perguntas específicas sobre dilemas operacionais de IA em empresas no formato Reels pode gerar mais comentários por alcance do que afirmações genéricas, já que perguntas diretas criam convite implícito à resposta, mesmo que o alcance absoluto seja menor.",
+    "limitations": "Amostra pequena (16 posts), janela temporal restrita (24h), zero ações registradas em todas as métricas-alvo impossibilita validação causal. Alcance não se correlaciona com engajamento neste conjunto. Dados desatualizados para teste contínuo.",
     "axis": "hook",
     "variant": "specific-question",
-    "format": "FEED",
+    "format": "REELS",
     "metric": "comments",
     "evidenceIds": [
-      "18009850214996015",
-      "18035061395893467"
+      "17897207760412702",
+      "18130297828822859",
+      "17959944321226712",
+      "18027287510700068"
     ]
   },
   "learningAnalysis": {
     "status": "accepted",
-    "callId": "6659090c-ea3c-4965-bff1-d1a1cd30c99b",
-    "checkedAt": "2026-10-18T19:06:41.345Z"
+    "callId": "d84588f0-75ab-47f8-a53c-4398518f7cd8",
+    "checkedAt": "2026-10-21T17:40:15.391Z"
   }
 }
