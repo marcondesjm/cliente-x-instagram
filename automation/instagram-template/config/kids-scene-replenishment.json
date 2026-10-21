@@ -7342,11 +7342,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-21T16:11:07.622Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 12669,
       "imageFingerprint": null,
-      "promptFingerprint": "502584b6a9e2dc74dbdbb107fe8245fd7051a399e665045efe1f880d3134cb7c"
+      "promptFingerprint": "502584b6a9e2dc74dbdbb107fe8245fd7051a399e665045efe1f880d3134cb7c",
+      "completedAt": "2026-10-21T16:11:51.660Z",
+      "reportedInputTokens": 3976,
+      "inputTokens": 3976,
+      "outputTokens": 6153,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -7497,7 +7503,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-21T16:11:07.622Z",
+  "checkedAt": "2026-10-21T16:11:51.660Z",
   "lastRun": "39632097735",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -7805,12 +7811,478 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-20:02360d0a2daac453",
+    "stage": "select:kids-biblia-20",
     "value": {
-      "visible": true,
-      "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Ilustração mostrando duas pessoas em um ambiente interior com paredes claras: à esquerda, uma pessoa de cabelos longos castanhos vista de perfil; à direita, uma pessoa de cabelos loiros vestindo túnica branca com faixa azul na cintura, com o braço estendido e dedo indicador apontando. Enquadramento em close-up, estilo desenho colorido."
+      "cards": [
+        {
+          "card": 1,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Anjo em sonho a José é Mateus 1, fora de Lucas 2:1-7 e não mostra nascimento em Belém."
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Visita de Maria a Isabel é Lucas 1, anterior ao recenseamento, não retrata nascimento."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Decreto de recenseamento é etapa anterior, não retrata o evento do título nascimento."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Viagem a Belém com Maria no jumento antecede o parto, não mostra nascimento."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "José planejando romper noivado é Mateus 1:19, fora da passagem e sem bebê."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "José tomando Maria como esposa é Mateus 1:24, não retrata nascimento em Belém."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Porta da estalagem sem vaga antecede o parto, não exibe bebê na manjedoura."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "2:7",
+              "reason": "Maria com bebê envolto em panos na manjedoura retrata literalmente o nascimento em Belém."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Maria em Nazaré prometida a José é Lucas 1, não mostra nascimento em Belém."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Anunciação do anjo Gabriel é Lucas 1, anterior à viagem e ao nascimento."
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Encontro de Maria e Isabel é Lucas 1, não retrata nascimento em Belém."
+            },
+            {
+              "scene": 12,
+              "allowed": false,
+              "verse": "",
+              "reason": "Diálogo sobre concepção virginal é Lucas 1:34-37, não mostra nascimento."
+            }
+          ],
+          "reason": "Capa exige nascimento em Belém Lucas 2:7; apenas cena 8 retrata manjedoura, demais são etapas anteriores ou fora da passagem."
+        },
+        {
+          "card": 2,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Anjo em sonho a José é Mateus 1, fora de Lucas 2:1-7, não mostra parto na manjedoura."
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Visita a Isabel é Lucas 1, não corresponde ao resumo de parto em Belém."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Decreto de César é recenseamento Lucas 2:1, não mostra Maria dando à luz."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Viagem a Belém Lucas 2:4-5 antecede o parto, não mostra bebê na manjedoura."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Plano de romper noivado é Mateus 1, fora da passagem, sem nascimento."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "José tomando Maria é Mateus 1:24, não retrata parto e manjedoura."
+            },
+            {
+              "scene": 7,
+              "allowed": false,
+              "verse": "",
+              "reason": "Estalagem sem vaga Lucas 2:7 antecede o parto, não exibe bebê envolto em panos."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "2:7",
+              "reason": "Maria segura bebê envolto em panos na manjedoura, corresponde ao resumo Lucas 2:7."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Maria em Nazaré é Lucas 1, não mostra nascimento em Belém."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Anunciação a Maria é Lucas 1, não retrata parto na manjedoura."
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Saudação de Isabel é Lucas 1, não mostra nascimento em Belém."
+            },
+            {
+              "scene": 12,
+              "allowed": false,
+              "verse": "",
+              "reason": "Pergunta sobre concepção virginal é Lucas 1, não retrata parto."
+            }
+          ],
+          "reason": "Resumo exige Maria dando à luz e colocando na manjedoura em Belém; apenas cena 8 cumpre Lucas 2:7."
+        },
+        {
+          "card": 3,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Anjo em sonho a José é Mateus 1, fora de Lucas 2:1-7, sem sustentação."
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Visita a Isabel é Lucas 1, fora do intervalo 2:1-7."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "2:1",
+              "reason": "Decreto de recenseamento de César ilustra Lucas 2:1-3, parte da história."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "2:4",
+              "reason": "Viagem de José e Maria grávida a Belém retrata Lucas 2:4-5."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Plano de romper noivado é Mateus 1:19, fora de Lucas 2:1-7."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "José tomando Maria é Mateus 1:24, fora da passagem."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "2:7",
+              "reason": "Estalagem sem lugar ilustra 'não havia lugar na hospedaria' Lucas 2:7."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "2:7",
+              "reason": "Nascimento com bebê envolto em panos na manjedoura é Lucas 2:7."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Maria em Nazaré é Lucas 1, fora de Lucas 2:1-7."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Anunciação de Gabriel é Lucas 1, fora do recorte."
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Saudação de Isabel é Lucas 1:42-46, fora da passagem."
+            },
+            {
+              "scene": 12,
+              "allowed": false,
+              "verse": "",
+              "reason": "Diálogo sobre Espírito Santo é Lucas 1:34-37, fora de Lucas 2:1-7."
+            }
+          ],
+          "reason": "Lição whole_passage aceita qualquer cena de Lucas 2:1-7; cenas 3,4,7,8 são sustentadas, demais são Lucas 1/Mateus."
+        },
+        {
+          "card": 4,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Sonho de José é Mateus 1, fora de Lucas 2:1-7."
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Visita a Isabel é Lucas 1, fora da passagem."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "2:1",
+              "reason": "Recenseamento de César ilustra Lucas 2:1-3, pertinente à história."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "2:4",
+              "reason": "Jornada a Belém com Maria grávida retrata Lucas 2:4-5."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Plano secreto de José é Mateus 1:19, fora da passagem."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "José acolhendo Maria é Mateus 1:24, fora de Lucas 2:1-7."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "2:7",
+              "reason": "Falta de lugar na estalagem ilustra Lucas 2:7."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "2:7",
+              "reason": "Bebê na manjedoura retrata nascimento Lucas 2:7, pertinente à atividade."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Maria em Nazaré é Lucas 1, fora do intervalo."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Gabriel anunciando é Lucas 1, fora de Lucas 2:1-7."
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Isabel saudando Maria é Lucas 1, fora da passagem."
+            },
+            {
+              "scene": 12,
+              "allowed": false,
+              "verse": "",
+              "reason": "Concepção virginal é Lucas 1:34-37, fora do recorte."
+            }
+          ],
+          "reason": "Atividade whole_passage permite cena pertinente de Lucas 2:1-7; 3,4,7,8 são válidas, demais fora da passagem."
+        },
+        {
+          "card": 5,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Anjo em sonho é Mateus 1, não pertence a Lucas 2:1-7."
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Encontro com Isabel é Lucas 1, fora da passagem."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "2:1",
+              "reason": "Decreto de César para recenseamento é Lucas 2:1-3."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "2:5",
+              "reason": "Subida a Belém por ser da casa de Davi é Lucas 2:4-5."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Intenção de romper noivado é Mateus 1, fora de Lucas 2:1-7."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Tomar Maria como esposa é Mateus 1:24, fora da passagem."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "2:7",
+              "reason": "Sem lugar na hospedaria ilustra Lucas 2:7."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "2:7",
+              "reason": "Maria com bebê na manjedoura é Lucas 2:6-7."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Jovem em Nazaré é Lucas 1, fora de Lucas 2:1-7."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Anunciação é Lucas 1, fora do intervalo."
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Louvor de Maria e Isabel é Lucas 1, fora da passagem."
+            },
+            {
+              "scene": 12,
+              "allowed": false,
+              "verse": "",
+              "reason": "Pergunta sobre virgindade é Lucas 1:34, fora de Lucas 2:1-7."
+            }
+          ],
+          "reason": "Leitura whole_passage aceita cena de Lucas 2:1-7; 3,4,7,8 sustentadas, demais são Lucas 1/Mateus."
+        },
+        {
+          "card": 6,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": false,
+              "verse": "",
+              "reason": "Sonho de José é Mateus 1, fora de Lucas 2:1-7."
+            },
+            {
+              "scene": 2,
+              "allowed": false,
+              "verse": "",
+              "reason": "Visita a Isabel é Lucas 1, fora da passagem."
+            },
+            {
+              "scene": 3,
+              "allowed": true,
+              "verse": "2:1",
+              "reason": "Recenseamento de Augusto é Lucas 2:1-3, pertinente ao Story."
+            },
+            {
+              "scene": 4,
+              "allowed": true,
+              "verse": "2:4",
+              "reason": "Caminho a Belém com Maria grávida é Lucas 2:4-5."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Plano de José é Mateus 1:19, fora de Lucas 2:1-7."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "José acolhendo Maria é Mateus 1:24, fora da passagem."
+            },
+            {
+              "scene": 7,
+              "allowed": true,
+              "verse": "2:7",
+              "reason": "Estalagem sem vaga é Lucas 2:7, cena pertinente."
+            },
+            {
+              "scene": 8,
+              "allowed": true,
+              "verse": "2:7",
+              "reason": "Nascimento na manjedoura é Lucas 2:7, pertinente ao Story."
+            },
+            {
+              "scene": 9,
+              "allowed": false,
+              "verse": "",
+              "reason": "Maria em Nazaré é Lucas 1, fora do recorte."
+            },
+            {
+              "scene": 10,
+              "allowed": false,
+              "verse": "",
+              "reason": "Gabriel a Maria é Lucas 1, fora de Lucas 2:1-7."
+            },
+            {
+              "scene": 11,
+              "allowed": false,
+              "verse": "",
+              "reason": "Isabel exclamando é Lucas 1, fora da passagem."
+            },
+            {
+              "scene": 12,
+              "allowed": false,
+              "verse": "",
+              "reason": "Espírito Santo sobre Maria é Lucas 1:35, fora de Lucas 2:1-7."
+            }
+          ],
+          "reason": "Story exige cena pertinente a Lucas 2:1-7 distinta; 3,4,7,8 são válidas, demais são de Lucas 1/Mateus."
+        }
+      ]
     }
   },
   "lastFactualEvaluation": {
@@ -11149,7 +11621,7 @@
     "reusedPixelReads": 7,
     "newPixelReads": 5,
     "skippedCandidates": 3,
-    "checkedAt": "2026-10-21T16:11:07.622Z"
+    "checkedAt": "2026-10-21T16:11:51.660Z"
   },
   "retryAfter": "2026-10-21T14:12:19.360Z"
 }
