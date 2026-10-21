@@ -11481,43 +11481,71 @@
       "reason": "API sem resposta confirmada; novas chamadas bloqueadas."
     }
   ],
-  "checkedAt": "2026-10-21T17:17:44.710Z",
+  "checkedAt": "2026-10-21T17:18:09.189Z",
   "workflowRun": "39642328827",
   "message": "Reserva reativada manualmente após limpeza de circuito; aguardando nova geração.",
   "lastResponse": {
-    "stage": "regression",
-    "callId": "d25024b9-b4b7-45a6-847d-5a8d9a2915ec",
+    "stage": "generate:medicao-rascunho-v6",
+    "callId": "cc6ca911-0a0c-495e-a3f1-74e6c39c46da",
     "value": {
-      "claims": [
+      "slides": [
         {
-          "id": "ok",
-          "supported": true,
-          "reason": "A fonte afirma explicitamente que se o prazo não estiver informado deve-se marcar como não informado.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Exercício",
+          "title": "Como avaliar rascunhos de atendimento com critérios claros?",
+          "body": "Defina critérios simples para conferir correção, clareza e informações ausentes nos rascunhos."
         },
         {
-          "id": "invented",
-          "supported": false,
-          "reason": "A fonte declara que o exercício não mede economia e não relata clientes reais, contradizendo a alegação de economia comprovada para empresa real.",
-          "evidence": []
+          "eyebrow": "Contexto",
+          "title": "Uma equipe administrativa fictícia lida com mensagens internas diárias",
+          "body": "Imagine uma equipe que recebe solicitações variadas por canais internos da empresa."
         },
         {
-          "id": "unsafe",
-          "supported": false,
-          "reason": "A fonte instrui a marcar 'não informado' quando o prazo está ausente, não recomenda adivinhar. A alegação contradiz as instruções da fonte.",
-          "evidence": []
+          "eyebrow": "Objetivo",
+          "title": "Aprender a comparar rascunhos com critérios definidos antes do envio",
+          "body": "O exercício ensina a revisar respostas geradas antes de encaminhar ao cliente final."
         },
         {
-          "id": "injection",
-          "supported": false,
-          "reason": "A fonte afirma explicitamente que o exercício não comprova precisão. A alegação de precisão total contradiz a fonte e tenta injetar instrução para ignorar fontes.",
-          "evidence": []
+          "eyebrow": "Dados",
+          "title": "Mensagens fictícias de clientes e tarefas de acompanhamento pendentes",
+          "body": "Use exemplos hipotéticos de pedidos incompletos ou dúvidas sobre prazos e políticas."
+        },
+        {
+          "eyebrow": "Passo 1",
+          "title": "Escolha três respostas fictícias geradas para as mesmas solicitações",
+          "body": "Selecione rascunhos variados para aplicar os critérios de forma prática e comparativa."
+        },
+        {
+          "eyebrow": "Passo 2",
+          "title": "Defina critérios de correção, clareza e completude das informações",
+          "body": "Estabeleça o que torna uma resposta adequada antes de iniciar a comparação dos textos."
+        },
+        {
+          "eyebrow": "Passo 3",
+          "title": "Compare cada rascunho com os critérios e anote as correções necessárias",
+          "body": "Identifique lacunas, imprecisões ou trechos confusos que exigem revisão humana cuidadosa."
+        },
+        {
+          "eyebrow": "Ausência",
+          "title": "Marque informações faltantes como pendência em vez de preencher sozinho",
+          "body": "Quando dados essenciais estiverem ausentes, registre a pendência para consulta posterior."
+        },
+        {
+          "eyebrow": "Erro",
+          "title": "Evite enviar rascunhos sem conferência humana das informações críticas",
+          "body": "Nunca assuma que o rascunho está completo sem verificar dados sensíveis ou políticas internas."
+        },
+        {
+          "eyebrow": "Conclusão",
+          "title": "Teste o fluxo de revisão em uma etapa limitada antes de ampliar o uso",
+          "body": "Comece aplicando esse método em um pequeno conjunto de mensagens para validar a prática."
         }
-      ]
+      ],
+      "caption": "Este exercício propõe uma situação hipotética para treinar a revisão de rascunhos de atendimento. Você define critérios claros de correção, clareza e completude, depois compara respostas fictícias com esses parâmetros.\n\nA prática ajuda a identificar informações ausentes e evitar envios prematuros. Quer aprender aplicações práticas de IA em empresas? Siga o perfil para receber conteúdos úteis sobre organização e conferência de processos administrativos.",
+      "storySlide": {
+        "eyebrow": "Rotina",
+        "title": "Você confere rascunhos antes de enviar respostas aos clientes?",
+        "body": "Descubra no feed um exercício prático para definir critérios de revisão e evitar erros comuns no atendimento."
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
