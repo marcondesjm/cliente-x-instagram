@@ -4480,18 +4480,18 @@ function findSemanticCoverTitle(history = [], pack = {}) {
   }) || null;
 }
 
-function findDuplicateSelection(pack, recentMedia = [], publicationHistory = []) {
+function findDuplicateSelection(pack, recentMedia = [], publicationHistory = [], options = {}) {
   if (pack?.research?.sourceUrl) {
     // A pauta e a chamada de capa precisam ser novas. Fontes diferentes nao
     // justificam repetir a mesma promessa visual em posts proximos.
     return findDuplicateResearchSource(publicationHistory, pack)
       || findConsecutiveResearchSource(publicationHistory, pack)
-      || findDuplicateCoverTitle(recentMedia, publicationHistory, pack)
-      || findSemanticCoverTitle(publicationHistory, pack)
+      || (!options.skipCoverTitleDedup && findDuplicateCoverTitle(recentMedia, publicationHistory, pack))
+      || (!options.skipCoverTitleDedup && findSemanticCoverTitle(publicationHistory, pack))
       || findDuplicatePack(publicationHistory, pack);
   }
-  return findDuplicateCoverTitle(recentMedia, publicationHistory, pack)
-    || findSemanticCoverTitle(publicationHistory, pack)
+  return (!options.skipCoverTitleDedup && findDuplicateCoverTitle(recentMedia, publicationHistory, pack))
+    || (!options.skipCoverTitleDedup && findSemanticCoverTitle(publicationHistory, pack))
     || findDuplicateCaption(recentMedia, pack.caption)
     || findDuplicatePack(publicationHistory, pack);
 }
@@ -4732,9 +4732,9 @@ function selectWithControlledExploration(candidates = [], dateString = '', slotI
   return selected ? { ...selected, selectionMode: mode, experimentAxis } : null;
 }
 
-export function pickFreshPack(packs, dateString, slotIndex, recentMedia = [], publicationHistory = [], chooseIndex = randomInt, learningContext = {}) {
+export function pickFreshPack(packs, dateString, slotIndex, recentMedia = [], publicationHistory = [], chooseIndex = randomInt, learningContext = {}, options = {}) {
   const candidates = balanceResearchPacksByHistory(packs, publicationHistory, dateString, slotIndex);
-  const freshCandidates = candidates.filter(({ pack }) => !findDuplicateSelection(pack, recentMedia, publicationHistory));
+  const freshCandidates = candidates.filter(({ pack }) => !findDuplicateSelection(pack, recentMedia, publicationHistory, options));
   const researchCandidates = freshCandidates.filter(({ pack }) => pack?.research?.source);
   if (researchCandidates.length) {
     const recentSourceCounts = new Map();
@@ -5943,7 +5943,8 @@ async function main() {
     if (!scheduledPost && !dashboardPack && !seriesSelection && !args.storyOnly) {
       const recentMedia = await fetchRecentMedia(userId, token);
       recentSelectionMedia = recentMedia;
-      let fresh = pickFreshPack(automaticSelectionPacks, today, generationSlotIndex, recentMedia, publicationHistory, randomInt, selectionLearningContext);
+      const dedupOptions = account.contentProfile?.visualStandard === 'illustrated-bible' ? { skipCoverTitleDedup: true } : {};
+      let fresh = pickFreshPack(automaticSelectionPacks, today, generationSlotIndex, recentMedia, publicationHistory, randomInt, selectionLearningContext, dedupOptions);
       if (!fresh.pack && radar.enabled) {
         const currentWindow = Number(editorialResearch.maxAgeDays) || 7;
         for (const maxAgeDays of [15, 30].filter((days) => days > currentWindow)) {
