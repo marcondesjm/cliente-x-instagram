@@ -31,6 +31,7 @@ jobs:
       matrix:
         task: ["hooks", "retention", "utility"]
       fail-fast: false
+      # dispatch manual executa só o escolhido; schedule roda os 3
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -44,23 +45,29 @@ jobs:
         env:
           KIDS_VISION_ANTHROPIC_API_KEY: ${{ secrets.KIDS_VISION_ANTHROPIC_API_KEY }}
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            node scripts/generate-reels-brief.mjs ${{ inputs.task }} --persist
-          else
-            node scripts/generate-reels-brief.mjs ${{ matrix.task }} --persist
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ matrix.task }}" != "${{ inputs.task }}" ]; then
+            echo "Skip ${{ matrix.task }} (dispatch is ${{ inputs.task }})"
+            exit 0
           fi
+          TASK="${{ matrix.task }}"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then TASK="${{ inputs.task }}"; fi
+          node scripts/generate-reels-brief.mjs $TASK --persist
       - name: Persist Reels brief
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main 2>/dev/null || true
           git add automation/instagram-template/config/reels-*-brief.json 2>/dev/null || true
+          git add automation/instagram-template/config/claude-editorial-constitution.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No Reels brief changes."
           else
             MSG="Update Reels brief"
             if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then MSG="$MSG: ${{ inputs.task }}"; else MSG="$MSG: ${{ matrix.task }}"; fi
+            git stash push -m "reels-temp" --keep-index 2>/dev/null || true
             git commit -m "$MSG"
+            git stash pop 2>/dev/null || true
             git pull --rebase origin main
             git push origin HEAD:main
           fi
