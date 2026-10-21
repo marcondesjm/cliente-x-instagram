@@ -11772,26 +11772,71 @@
       "reason": "Render autoral falhou: Slide 6 rejeitado: fotografia repetida ou visualmente semelhante a outro cartão/cena.\n"
     }
   ],
-  "checkedAt": "2026-10-21T19:05:55.603Z",
+  "checkedAt": "2026-10-21T19:06:14.130Z",
   "workflowRun": "39658486169",
   "message": "API sem resposta confirmada; novas chamadas bloqueadas.",
   "lastResponse": {
-    "stage": "learning-analysis",
-    "callId": "d84588f0-75ab-47f8-a53c-4398518f7cd8",
+    "stage": "generate:pedido-duplicado-v7",
+    "callId": "2d13faed-b7fa-489a-8ce6-fecc90a6ab91",
     "value": {
-      "diagnosis": "Perfil com alcance baixo (3-38) e zero engajamento em métricas-alvo (salvamentos, compartilhamentos, comentários). Reels de afirmação atingiram maior alcance (25-38), mas sem conversão em ações. Perguntas em Feed tiveram scores intermediários (8.59-12.24) com alcance reduzido (4-8). Alertas performaram abaixo da média (4.88-5.4). Não há evidência de que formato ou hook influenciem engajamento dado volume amostral insuficiente e ausência total de ações registradas.",
-      "hypothesis": "Testar perguntas específicas sobre dilemas operacionais de IA em empresas no formato Reels pode gerar mais comentários por alcance do que afirmações genéricas, já que perguntas diretas criam convite implícito à resposta, mesmo que o alcance absoluto seja menor.",
-      "limitations": "Amostra pequena (16 posts), janela temporal restrita (24h), zero ações registradas em todas as métricas-alvo impossibilita validação causal. Alcance não se correlaciona com engajamento neste conjunto. Dados desatualizados para teste contínuo.",
-      "axis": "hook",
-      "variant": "specific-question",
-      "format": "REELS",
-      "metric": "comments",
-      "evidenceIds": [
-        "17897207760412702",
-        "18130297828822859",
-        "17959944321226712",
-        "18027287510700068"
-      ]
+      "slides": [
+        {
+          "eyebrow": "Dúvida do dia",
+          "title": "O mesmo pedido gera duas tarefas?",
+          "body": "Um cliente envia a mesma solicitação por mensagem em momentos diferentes."
+        },
+        {
+          "eyebrow": "Situação hipotética",
+          "title": "Loja fictícia recebe mensagens repetidas",
+          "body": "Imagine uma loja de materiais que atende pedidos via aplicativo de conversa."
+        },
+        {
+          "eyebrow": "Objetivo do exercício",
+          "title": "Evitar criação de tarefas duplicadas",
+          "body": "A meta é identificar quando um pedido já existe antes de gerar nova tarefa."
+        },
+        {
+          "eyebrow": "Dados necessários",
+          "title": "Identificador único para cada pedido",
+          "body": "Cada solicitação precisa de um código próprio para ser rastreada corretamente."
+        },
+        {
+          "eyebrow": "Primeiro passo",
+          "title": "Consultar registro antes de criar tarefa",
+          "body": "Verifique se o identificador já consta no sistema antes de prosseguir com ação."
+        },
+        {
+          "eyebrow": "Se já existir",
+          "title": "Encaminhe para conferência humana",
+          "body": "Quando o pedido já estiver registrado, direcione para revisão manual da equipe."
+        },
+        {
+          "eyebrow": "Tratamento de ausentes",
+          "title": "Lide com dados incompletos ou faltantes",
+          "body": "Solicite informações complementares ao cliente quando campos essenciais estiverem vazios."
+        },
+        {
+          "eyebrow": "Erro comum",
+          "title": "Criar tarefa sem verificar duplicidade",
+          "body": "Gerar nova tarefa sem consultar o sistema sobrecarrega a operação desnecessariamente."
+        },
+        {
+          "eyebrow": "Exemplo prático",
+          "title": "Pedido de canetas enviado duas vezes",
+          "body": "Cliente pede cem canetas azuis pela manhã e repete o pedido à tarde sem necessidade."
+        },
+        {
+          "eyebrow": "Conclusão útil",
+          "title": "Teste reenviando o mesmo pedido",
+          "body": "Reenvie a mesma solicitação e confirme se o sistema identifica a duplicação corretamente."
+        }
+      ],
+      "caption": "Como sua empresa lida com pedidos repetidos que chegam em horários diferentes? Este exercício mostra como atribuir identificadores únicos e consultar registros antes de criar novas tarefas, evitando sobrecarga operacional em lojas que atendem por mensagem. A prática depende da implementação técnica e dos testes realizados, sem prometer que a IA sozinha resolva duplicações automaticamente.\n\nAcompanhe o perfil para aprender aplicações práticas de IA em atendimento, vendas e operação de negócios. Você receberá conteúdos úteis para salvar e aplicar na rotina da sua empresa, sempre com exercícios fictícios e linguagem acessível para donos de negócio.",
+      "storySlide": {
+        "eyebrow": "Pergunta rápida",
+        "title": "Você confere pedidos antes de criar tarefas?",
+        "body": "Descubra no feed como evitar duplicações com um exercício prático aplicável hoje mesmo."
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
