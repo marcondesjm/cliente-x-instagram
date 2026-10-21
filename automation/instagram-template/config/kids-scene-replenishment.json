@@ -7267,14 +7267,6 @@
       "message": "Seleção e segunda avaliação aprovadas; montagem e render oficial ainda obrigatórios."
     },
     {
-      "id": "kids-biblia-20",
-      "title": "Jesus nasceu em Belém",
-      "fingerprint": "5edae7931ef977fc62817d1322e37d000996c618455176803c92f485f93044ca",
-      "checkedAt": "2026-10-18T19:22:58.779Z",
-      "status": "rejected",
-      "message": "Seleção visual não aprovada. Não há combinação completa de cenas compatíveis e distintas para todos os cartões e Story. "
-    },
-    {
       "id": "kids-biblia-34",
       "title": "Tabita ajudava as pessoas",
       "fingerprint": "72c76f9e5dec22cd75c42bb792f74521d6958666633c9f9180b10260df8d5abe",
@@ -7377,6 +7369,14 @@
       "checkedAt": "2026-10-21T12:58:35.147Z",
       "status": "rejected",
       "message": "Seleção visual não aprovada. Não há combinação completa de cenas compatíveis e distintas para todos os cartões e Story. "
+    },
+    {
+      "id": "kids-biblia-20",
+      "title": "Jesus nasceu em Belém",
+      "fingerprint": "5edae7931ef977fc62817d1322e37d000996c618455176803c92f485f93044ca",
+      "checkedAt": "2026-10-21T13:10:10.857Z",
+      "status": "rejected",
+      "message": "Falha ou resposta não verificável do provedor. Sem nova tentativa paga automática."
     }
   ],
   "calibration": {
@@ -7389,7 +7389,7 @@
   },
   "circuit": "provider_temporarily_unavailable",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-21T13:12:19.360Z",
+  "checkedAt": "2026-10-21T13:12:21.189Z",
   "lastRun": "39605498765",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -7550,8 +7550,10 @@
       "checkedAt": "2026-10-21T13:02:30.624Z"
     },
     "5edae7931ef977fc62817d1322e37d000996c618455176803c92f485f93044ca": {
-      "reason": "Seleção visual não aprovada. Não há combinação completa de cenas compatíveis e distintas para todos os cartões e Story. ",
-      "checkedAt": "2026-10-18T19:27:33.267Z"
+      "reason": "Falha ou resposta não verificável do provedor. Sem nova tentativa paga automática.",
+      "kind": "temporary",
+      "checkedAt": "2026-10-21T13:12:21.189Z",
+      "retryAfter": "2026-10-21T14:12:19.360Z"
     },
     "72c76f9e5dec22cd75c42bb792f74521d6958666633c9f9180b10260df8d5abe": {
       "reason": "Seleção visual não aprovada. Não há combinação completa de cenas compatíveis e distintas para todos os cartões e Story. ",
@@ -11033,7 +11035,7 @@
     "reusedPixelReads": 0,
     "newPixelReads": 7,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-21T13:12:19.360Z"
+    "checkedAt": "2026-10-21T13:12:21.189Z"
   },
   "retryAfter": "2026-10-21T14:12:19.360Z"
 }
