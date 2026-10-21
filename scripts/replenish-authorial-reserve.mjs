@@ -65,7 +65,22 @@ if(process.argv.includes('--analyze-only')){
  try{
   validateStrategy(r.value,learning);
   state.learningStrategy={version:STRATEGY_VERSION,id:r.callId,status:'active',createdAt:new Date().toISOString(),expiresAt:new Date(Date.now()+24*3600000).toISOString(),dataUpdatedAt:learning.updatedAt,contextFingerprint:digest(learning),...r.value};
-  state.learningAnalysis={status:'accepted',callId:r.callId,checkedAt:new Date().toISOString()};save();
+  state.learningAnalysis={status:'accepted',callId:r.callId,checkedAt:new Date().toISOString()};
+  // Writeback: atualiza seções parseáveis do CLAUDE.md com a nova hipótese
+  try {
+    const { updateConstitutionLearnings } = await import('../lib/editorial-constitution.js');
+    const CLAUDE_MD = 'CLAUDE.md';
+    let md = fs.readFileSync(CLAUDE_MD, 'utf8');
+    const hypothesisText = `${r.value.axis}/${r.value.variant} — ${r.value.hypothesis} [formato ${r.value.format}, metrica ${r.value.metric}]`;
+    md = updateConstitutionLearnings(md, {
+      activeHypotheses: [{ date: new Date().toISOString().slice(0, 10), text: hypothesisText }]
+    });
+    fs.writeFileSync(CLAUDE_MD, md, 'utf8');
+    console.log('CLAUDE.md atualizado com nova hipótese exploratória.');
+  } catch (e) {
+    console.warn('Writeback CLAUDE.md ignorado:', String(e.message).slice(0, 200));
+  }
+  save();
   console.log('Diagnóstico Claude aceito; hipótese exploratória ativa, sem publicação nesta execução.');
  }catch(e){state.learningAnalysis={status:'rejected',callId:r.callId,checkedAt:new Date().toISOString(),reason:String(e.message).slice(0,200)};save();throw e;}
  process.exit(0);
