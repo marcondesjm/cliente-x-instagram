@@ -4444,7 +4444,12 @@ function normalizedCoverTitle(pack = {}) {
 function findDuplicateCoverTitle(recentMedia = [], history = [], pack = {}) {
   const expected = normalizedCoverTitle(pack);
   if (!expected) return null;
-  const historyMatch = history.find((entry) => normalizeContentFingerprint(entry?.coverTitle || '') === expected);
+  const ninetyDaysAgo = Date.now() - 90 * 24 * 60 * 60 * 1000;
+  const historyMatch = history.find((entry) => {
+    const publishedAt = Date.parse(entry?.publishedAt || '');
+    if (Number.isFinite(publishedAt) && publishedAt < ninetyDaysAgo) return false;
+    return normalizeContentFingerprint(entry?.coverTitle || '') === expected;
+  });
   if (historyMatch) return historyMatch;
   return recentMedia.find((item) => {
     const firstParagraph = String(item?.caption || '').split(/\n\s*\n|\r?\n/)[0];
