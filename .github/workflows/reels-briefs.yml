@@ -1,0 +1,73 @@
+name: Reels - gerar briefs Claude
+permissions:
+  contents: write
+concurrency:
+  group: reels-claude-briefs
+  cancel-in-progress: false
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: "Qual brief gerar"
+        type: choice
+        default: "hooks"
+        options:
+          - hooks
+          - retention
+          - utility
+          - opportunities
+          - diagnosis
+          - trends
+          - testPlan
+  schedule:
+    - cron: "0 11 * * 1"
+    - cron: "0 11 * * 2"
+    - cron: "0 11 * * 4"
+jobs:
+  reels-brief:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        task: ["hooks", "retention", "utility"]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Resolve task for manual dispatch
+        if: github.event_name == 'workflow_dispatch'
+        run: echo "TASK=${{ inputs.task }}" >> "$GITHUB_ENV"
+      - run: npm ci --ignore-scripts
+      - name: Generate Reels brief
+        env:
+          KIDS_VISION_ANTHROPIC_API_KEY: ${{ secrets.KIDS_VISION_ANTHROPIC_API_KEY }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            node scripts/generate-reels-brief.mjs ${{ inputs.task }} --persist
+          else
+            node scripts/generate-reels-brief.mjs ${{ matrix.task }} --persist
+          fi
+      - name: Persist Reels brief
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add automation/instagram-template/config/reels-*-brief.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No Reels brief changes."
+          else
+            MSG="Update Reels brief"
+            if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then MSG="$MSG: ${{ inputs.task }}"; else MSG="$MSG: ${{ matrix.task }}"; fi
+            git commit -m "$MSG"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reels-brief-${{ matrix.task }}-${{ github.run_id }}
+          path: |
+            automation/instagram-template/config/reels-*-brief.json
+            automation/instagram-template/config/claude-editorial-constitution.json
