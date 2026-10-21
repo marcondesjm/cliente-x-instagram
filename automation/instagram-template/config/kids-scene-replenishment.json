@@ -7011,11 +7011,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-21T13:00:11.009Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 68939,
       "promptChars": 793,
       "imageFingerprint": "bcd80f5cc405a095fab7042037cb146d7688a18aef248370a621479a3e228b66",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-21T13:00:30.304Z",
+      "reportedInputTokens": 24880,
+      "inputTokens": 24880,
+      "outputTokens": 88,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -7166,7 +7172,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-21T13:00:11.010Z",
+  "checkedAt": "2026-10-21T13:00:30.304Z",
   "lastRun": "39603822529",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -7471,12 +7477,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-15:c357006c9213c478",
+    "stage": "pixels:kids-biblia-15:35651e1f6b84a504",
     "value": {
       "visible": true,
       "style": "illustration",
       "childSuitable": true,
-      "observedEvent": "Duas figuras em pé em enquadramento aproximado: uma à frente com véu amarelo e roupa vermelha cobre o rosto com as duas mãos, outra atrás com vestido verde com detalhes amarelos e véu azul claro está em pé com um braço estendido para cima e a outra mão apoiada na cintura. Ao fundo há parede em tom amarelo claro e estrutura de madeira vertical à direita, com céu claro acima."
+      "observedEvent": "Ilustração de dois homens barbudos em trajes antigos, um à esquerda com braços abertos e boca aberta diante de uma grande chama amarela sobre uma estrutura de pedras empilhadas, enquanto outro homem observa de perfil à direita; fundo azul sólido sem detalhes de ambiente."
     }
   },
   "lastFactualEvaluation": {
@@ -10800,6 +10806,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 4,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-21T13:00:11.010Z"
+    "checkedAt": "2026-10-21T13:00:30.304Z"
   }
 }
