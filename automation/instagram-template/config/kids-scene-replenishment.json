@@ -6871,11 +6871,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-21T12:37:40.802Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 74033,
       "promptChars": 793,
       "imageFingerprint": "820b4388b3a4f9e967aa59320493699973981a34c55cd9165b8f6191b6215c80",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-21T12:37:55.098Z",
+      "reportedInputTokens": 26578,
+      "inputTokens": 26578,
+      "outputTokens": 109,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -7026,7 +7032,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-21T12:37:40.802Z",
+  "checkedAt": "2026-10-21T12:37:55.098Z",
   "lastRun": "39600810434",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -7331,12 +7337,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-02:650459f562056db8",
+    "stage": "pixels:kids-biblia-02:b64c9c2a04983216",
     "value": {
       "visible": true,
       "style": "illustration",
-      "childSuitable": false,
-      "observedEvent": "Ilustração de um homem sem camisa com a mão na testa, cercado por grandes folhas verdes em um ambiente de vegetação densa."
+      "childSuitable": true,
+      "observedEvent": "Ilustração em aquarela de um corpo de água azul-turquesa em primeiro plano, delimitado por penhascos rochosos íngremes de cor ocre e areia, com montanhas ao fundo sob céu azul claro; sem pessoas ou ação narrativa visível."
     }
   },
   "lastFactualEvaluation": {
@@ -10656,6 +10662,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 5,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-21T12:37:40.802Z"
+    "checkedAt": "2026-10-21T12:37:55.098Z"
   }
 }
