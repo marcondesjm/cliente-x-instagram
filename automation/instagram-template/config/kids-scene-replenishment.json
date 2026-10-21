@@ -7071,11 +7071,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-21T13:01:27.834Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 10028,
       "imageFingerprint": null,
-      "promptFingerprint": "d2eb4e152efb46ae1a2cff10ff8a8f520552683199f36753f72b0f7311295fae"
+      "promptFingerprint": "d2eb4e152efb46ae1a2cff10ff8a8f520552683199f36753f72b0f7311295fae",
+      "completedAt": "2026-10-21T13:02:28.398Z",
+      "reportedInputTokens": 3315,
+      "inputTokens": 3315,
+      "outputTokens": 7282,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -7226,7 +7232,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-21T13:01:27.834Z",
+  "checkedAt": "2026-10-21T13:02:28.399Z",
   "lastRun": "39603822529",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -7531,12 +7537,262 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-15:ee3b2c34d5fee50d",
+    "stage": "select:kids-biblia-15",
     "value": {
-      "visible": true,
-      "style": "illustration",
-      "childSuitable": false,
-      "observedEvent": "Um homem em pé com manto vermelho e faixa azul gesticula com a mão estendida diante de uma mulher ajoelhada de véu amarelo com as mãos erguidas, enquanto uma mulher de vestido verde e véu azul observa ao fundo com as mãos na cintura e um homem de capacete metálico em primeiro plano segura uma lâmina alongada e um bebê. Ambiente interno com paredes amareladas e coluna de madeira, enquadramento com o homem de capacete em destaque no canto inferior direito em primeiro plano e os demais ao centro e à esquerda."
+      "cards": [
+        {
+          "card": 1,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "3:5",
+              "reason": "Sonho em Gibeão com aparição luminosa onde Deus convida Salomão a pedir."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "3:9",
+              "reason": "Salomão ajoelhado sob luz pedindo coração entendido para julgar bem e mal."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Trono com leões e ofertas de ouro não ocorre em 1 Reis 3:5-12."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Duas mulheres em disputa é julgamento posterior fora da passagem 3:5-12."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Oferta queimada sobre altar de pedras é de 1 Reis 3:4, anterior à passagem."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena mostra Deus concedendo sabedoria, não o ato de pedir exigido na capa."
+            }
+          ],
+          "reason": "Capa exige o evento do título pedir sabedoria; só sonho/oração em Gibeão atendem, demais fora da passagem."
+        },
+        {
+          "card": 2,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "3:5",
+              "reason": "Aparição em sonho em Gibeão quando Salomão pede entendimento para governar."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "3:9",
+              "reason": "Salomão ora pedindo coração compreensivo para discernir bem e mal."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena de trono e tributos não está no resumo nem na passagem 3:5-12."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Episódio das duas mães e espada fora do resumo e da passagem."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Chama sobre altar de holocaustos não faz parte do resumo pedido de sabedoria."
+            },
+            {
+              "scene": 6,
+              "allowed": false,
+              "verse": "",
+              "reason": "Concessão de coração sábio é resposta divina, não o pedido descrito no resumo."
+            }
+          ],
+          "reason": "Resumo é o pedido de entendimento; só cenas do sonho/pedido em Gibeão retratam o evento, concessão é posterior."
+        },
+        {
+          "card": 3,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "3:5",
+              "reason": "Sonho em Gibeão pertinente à história e sustenta reflexão sobre buscar orientação."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "3:9",
+              "reason": "Pedido de coração entendido ilustra buscar orientação antes de decidir."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Trono com guardas e ofertas fora de 1 Reis 3:5-12, sem base na passagem."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Disputa das duas mulheres fora da passagem, não sustenta lição deste trecho."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Holocausto com chama é anterior à passagem e não sustenta reflexão proposta."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "3:12",
+              "reason": "Deus concede coração sábio, cena pertinente que apoia lição sobre consequências."
+            }
+          ],
+          "reason": "Lição é reflexão whole_passage; cenas de sonho, pedido e concessão em 3:5-12 são pertinentes, demais fora."
+        },
+        {
+          "card": 4,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "3:5",
+              "reason": "Aparição em sonho sustenta conversa sobre escolhas e buscar orientação."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "3:9",
+              "reason": "Salomão pedindo discernimento conecta-se à atividade de conversar sobre escolhas."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena de palácio com tributos não pertence a 1 Reis 3:5-12."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Duas mulheres com véus é episódio posterior fora da passagem."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Oferta sobre pedras com chama não está em 3:5-12."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "3:12",
+              "reason": "Coração sábio concedido ilustra valor de pensar antes de decidir, pertinente."
+            }
+          ],
+          "reason": "Atividade é whole_passage; sonho, pedido e concessão são cenas da passagem com vínculo educativo, outras fora."
+        },
+        {
+          "card": 5,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "3:5",
+              "reason": "Sonho em Gibeão é início da passagem e convida à leitura completa com adulto."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "3:9",
+              "reason": "Oração por entendimento é centro da passagem e motiva leitura em família."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Trono e guardas com ofertas não ocorre na passagem 3:5-12."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Cena das duas mulheres pertence a julgamento posterior fora do trecho."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Chama sobre altar não descrita em 3:5-12, fora do escopo."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "3:12",
+              "reason": "Deus dá coração sábio, cena final da passagem pertinente à leitura."
+            }
+          ],
+          "reason": "Leitura whole_passage aceita qualquer cena de 3:5-12 pertinente; sonho, pedido e concessão atendem, demais fora."
+        },
+        {
+          "card": 6,
+          "assessments": [
+            {
+              "scene": 1,
+              "allowed": true,
+              "verse": "3:5",
+              "reason": "Sonho com aparição divina pertinente à passagem para Story de leitura."
+            },
+            {
+              "scene": 2,
+              "allowed": true,
+              "verse": "3:9",
+              "reason": "Pedido de sabedoria sob luz, cena pertinente e distinta para Story."
+            },
+            {
+              "scene": 3,
+              "allowed": false,
+              "verse": "",
+              "reason": "Palácio com leões e tributos fora de 1 Reis 3:5-12."
+            },
+            {
+              "scene": 4,
+              "allowed": false,
+              "verse": "",
+              "reason": "Duas mulheres em pé fora da passagem, não pertinente ao Story."
+            },
+            {
+              "scene": 5,
+              "allowed": false,
+              "verse": "",
+              "reason": "Holocausto com chama anterior à passagem, não adequado ao Story."
+            },
+            {
+              "scene": 6,
+              "allowed": true,
+              "verse": "3:12",
+              "reason": "Concessão de coração sábio, cena pertinente e diferente para Story."
+            }
+          ],
+          "reason": "Story exige cena diferente mas pertinente a 3:5-12; sonho, pedido e concessão são válidas, outras fora da passagem."
+        }
+      ]
     }
   },
   "lastFactualEvaluation": {
@@ -10862,6 +11118,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 7,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-21T13:01:27.834Z"
+    "checkedAt": "2026-10-21T13:02:28.399Z"
   }
 }
