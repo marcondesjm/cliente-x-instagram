@@ -84656,6 +84656,168 @@
         },
         "editorialVariant": 0
       }
+    },
+    {
+      "feedFingerprint": "bbd39d1c472b85b4541c8c538c6eedd5262ee5626485f7b541dda405b5690575",
+      "storyFingerprint": "bbd39d1c472b85b4541c8c538c6eedd5262ee5626485f7b541dda405b5690575",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Livelo lança modo AI e testa compras realizadas por agentes autônomos",
+      "captionFingerprint": "137b351108def9740b25f36fba1b9cb67e0bba4c24bc34c8c7d6ce6211724499",
+      "coverTitle": "Livelo lança modo AI e testa compras realizadas por agentes autônomos",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-05.png",
+      "avatarRotationStart": 8,
+      "publishedAt": "2026-10-21T18:19:54.610Z",
+      "slotDate": "2026-10-21",
+      "slotIndex": 1,
+      "scheduledAt": "2026-10-21T11:10:00.000Z",
+      "workflowRun": "39651349409",
+      "mediaId": "18367716514246019",
+      "storyMediaId": "18168801766475865",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18367716514246019/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"A2fHBcPbSfG97hC7H9shG3X\"}}",
+      "permalink": "https://www.instagram.com/p/DexCURFncmc/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "TI Inside",
+          "sourceUrl": "https://tiinside.com.br/20/10/2026/livelo-lanca-modo-ai-e-testa-compras-realizadas-por-agentes-autonomos/",
+          "sourceTitle": "Livelo lança modo AI e testa compras realizadas por agentes autônomos",
+          "imageUrl": "https://tiinside.com.br/wp-content/uploads/2026/08/Felipe-Avila-CPTO-da-Livelo.jpeg",
+          "imageSourcePageUrl": "https://tiinside.com.br/20/10/2026/livelo-lanca-modo-ai-e-testa-compras-realizadas-por-agentes-autonomos/",
+          "imageCredit": "TI Inside",
+          "imageEvidence": "Main image metadata of the selected article.",
+          "imageHash": "866ca109f0de7e7dbeddd9351c6011f6b9d76a245bfffba5f90a58755f435c07",
+          "perceptualHash": "0011010000000011001110010100001100100011010001110111001101000011101110110000001100101111010000110010111101000001001011110110001100101111011000110110111001010111001011010011001100001110001100110000111011110011000001111111001100000101111110110000010111011011",
+          "reusedRelevantImage": false,
+          "approvedRevisionImageReuse": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://tiinside.com.br/20/10/2026/livelo-lanca-modo-ai-e-testa-compras-realizadas-por-agentes-autonomos/",
+        "slideCount": 4,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-21-151854-slot-1/visual-candidate-2/radar-slide-01.jpg",
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Main image metadata of the selected article."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-21T18:05:52.431Z",
+        "ageHours": 0.22,
+        "freshness": "current",
+        "effectiveSamples": 154,
+        "effectiveReach": 4496,
+        "controlledSamples": 160,
+        "selectionModes": {
+          "exploit": 111,
+          "explore": 34,
+          "experiment": 15
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "morning",
+        "objective": "conversion",
+        "primarySignal": "alcance de nao seguidores",
+        "growthMode": true,
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|morning|conversion",
+        "decisionReasons": [
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "claudeExperiment": null,
+      "education": null,
+      "research": {
+        "id": "18de6ed34d07",
+        "source": "TI Inside",
+        "sourceUrl": "https://tiinside.com.br/20/10/2026/livelo-lanca-modo-ai-e-testa-compras-realizadas-por-agentes-autonomos/",
+        "sourceTitle": "Livelo lança modo AI e testa compras realizadas por agentes autônomos",
+        "sourceImageUrl": "",
+        "publishedAt": "2026-10-20T21:34:24.000Z",
+        "researchedAt": "2026-10-21T18:18:41.308Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "A Livelo está avançando na utilização de inteligência artificial para transformar a experiência de seus participantes e permitir que agentes digitais realizem transações com diferentes níveis de autonomia. Durante o TI Inside Innovation Forum 2026, Felipe Ávila, diretor de Produtos Digitais da companhia, apresentou o modo AI, uma nova experiência que permite aos usuários criar um gêmeo digital e interagir com os serviços da plataforma por meio de inteligência artificial. https://www. youtube. com/watch?",
+        "sourceFacts": [
+          "A Livelo está avançando na utilização de inteligência artificial para transformar a experiência de seus participantes e permitir que agentes digitais realizem transações com diferentes níveis de autonomia. Durante o TI Inside Innovation Forum 2026, Felipe Ávila, diretor de Produtos Digitais da companhia, apresentou o modo AI, uma nova experiência que permite aos usuários criar um gêmeo digital e interagir com os serviços da plataforma por meio de inteligência artificial. https://www. youtube. com/watch?"
+        ],
+        "coverage": {
+          "sourceFactCount": 1,
+          "coveredFactCount": 1,
+          "complete": false,
+          "scope": "feed-summary",
+          "reviewedAdaptation": false
+        },
+        "editorialVariant": 5
+      }
     }
   ],
   "sabedoria-kids": [
