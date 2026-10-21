@@ -683,9 +683,14 @@
     {
       "id": "54ad9510-d895-4599-993d-d928d52d2aa8",
       "day": "2026-10-21",
-      "status": "reserved",
+      "status": "completed",
       "stage": "event-grounding-v2",
-      "startedAt": "2026-10-21T21:35:28.783Z"
+      "startedAt": "2026-10-21T21:35:28.783Z",
+      "completedAt": "2026-10-21T21:35:47.043Z",
+      "reportedInputTokens": 843,
+      "inputTokens": 843,
+      "outputTokens": 23,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -1024,7 +1029,7 @@
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-21T21:35:28.783Z",
+  "checkedAt": "2026-10-21T21:35:47.044Z",
   "workflowRun": "39679743687",
   "summary": [
     {
@@ -1064,7 +1069,7 @@
     "version": "depicted-event-v4",
     "model": "claude-sonnet-4.6",
     "passed": true,
-    "checkedAt": "2026-10-20T20:45:58.653Z",
+    "checkedAt": "2026-10-21T21:35:47.044Z",
     "taskFingerprint": "24a3d96350ad5e68eec4ef675e4a33577dc5379d0b6c66576eea86e58d75a818",
     "task": {
       "scopeReference": "Trechos WEB fornecidos, sem ampliar o relato.",
@@ -1227,11 +1232,15 @@
       {
         "id": "absent-appearance",
         "supported": false,
-        "reason": "As fontes sobre o túmulo não relatam aparição pessoal de Jesus às mulheres. Descrevem que encontraram a pedra removida, não acharam o corpo, e dois homens com vestes resplandecentes disseram 'He isn’t here, but is risen'. As mulheres depois voltaram para contar aos apóstolos e Pedro correu ao túmulo. Não há citação literal de Jesus aparecendo pessoalmente às mulheres diante do túmulo.",
+        "reason": "As fontes não relatam Jesus aparecendo pessoalmente às mulheres; os anjos falam que ele ressuscitou, mas não há aparição pessoal de Jesus no texto fornecido.",
         "evidence": [
           {
             "sourceId": "p0:24:4",
             "quote": "While they were greatly perplexed about this, behold, two men stood by them in dazzling clothing."
+          },
+          {
+            "sourceId": "p0:24:5",
+            "quote": "Becoming terrified, they bowed their faces down to the earth.\nThey said to them, “Why do you seek the living among the dead?"
           },
           {
             "sourceId": "p0:24:6",
@@ -1244,7 +1253,7 @@
       {
         "id": "zacchaeus-house",
         "supported": true,
-        "reason": "Fontes sustentam literalmente que Jesus disse que ficaria na casa de Zaqueu e que Zaqueu o recebeu com alegria e se hospedou ali. A ilustração com homem de pé ao lado de outro sentado à mesa em ambiente interno é compatível com a fase de receber/hospedar em casa, sem exigir enumeração de roupas ou arquitetura.",
+        "reason": "Jesus disse que ficaria na casa de Zaqueu e ele o recebeu com alegria, compatível com a visualização de um homem em pé ao lado de outro sentado à mesa.",
         "evidence": [
           {
             "sourceId": "p1:19:5",
@@ -1253,10 +1262,6 @@
           {
             "sourceId": "p1:19:6",
             "quote": "He hurried, came down, and received him joyfully."
-          },
-          {
-            "sourceId": "p1:19:7",
-            "quote": "When they saw it, they all murmured, saying, “He has gone in to lodge with a man who is a sinner.”"
           }
         ],
         "expected": true,
@@ -1265,8 +1270,12 @@
       {
         "id": "tree-action",
         "supported": true,
-        "reason": "Fonte afirma literalmente que Zaqueu correu adiante e subiu em um sicômoro para ver Jesus. A ilustração mostra homem nos galhos de árvore acima de pessoas no chão, ação diretamente compatível com 'climbed up into a sycamore tree to see him'.",
+        "reason": "Zaqueu subiu em uma árvore sicômoro para ver Jesus, compatível com a visualização de um homem nos galhos acima de pessoas no chão.",
         "evidence": [
+          {
+            "sourceId": "p1:19:3",
+            "quote": "He was trying to see who Jesus was, and couldn’t because of the crowd, because he was short."
+          },
           {
             "sourceId": "p1:19:4",
             "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
@@ -1278,7 +1287,7 @@
       {
         "id": "wrong-table",
         "supported": false,
-        "reason": "O claim afirma Zaqueu sentado à mesa com Jesus, mas a visualObservation imutável mostra homem nos galhos de árvore acima de pessoas no chão. Um homem na árvore não pode representar alguém sentado à mesa; a ação visível é incompatível com a fase de estar à mesa. A fonte descreve a subida na árvore como fase distinta, não estar à mesa nessa imagem.",
+        "reason": "A visualObservation mostra um homem nos galhos de uma árvore, o que contradiz a afirmação de que Zaqueu estava sentado à mesa com Jesus; ação incompatível com a fase visível.",
         "evidence": [
           {
             "sourceId": "p1:19:4",
@@ -1291,7 +1300,7 @@
       {
         "id": "sleep-illustration",
         "supported": true,
-        "reason": "Fonte afirma literalmente que Jesus estava na popa dormindo sobre almofada. A ilustração mostra homem de túnica vermelha deitado na popa do barco com outros homens próximos, ação compatível com 'in the stern, asleep on the cushion', sem exigir detalhes artísticos adicionais.",
+        "reason": "Jesus estava dormindo na popa do barco sobre uma almofada, compatível com a visualização de um homem deitado na popa enquanto outros estão próximos.",
         "evidence": [
           {
             "sourceId": "p2:4:38",
@@ -1304,7 +1313,7 @@
       {
         "id": "wrong-tree-action",
         "supported": false,
-        "reason": "Embora a fonte afirme que Zaqueu subiu na árvore, a visualObservation mostra quatro homens caminhando em estrada e ninguém em árvore. Homens caminhando não podem representar alguém subindo/estando em árvore; a ação visível é incompatível com a fase de subir na árvore, exigindo rejeição da ilustração para este claim.",
+        "reason": "A visualObservation mostra quatro homens caminhando em uma estrada sem ninguém em árvore, o que contradiz a afirmação de que Zaqueu subiu em uma árvore; ação incompatível com a fase visível.",
         "evidence": [
           {
             "sourceId": "p1:19:4",
