@@ -3,8 +3,8 @@
   "enabled": true,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "review_completed",
-  "message": "1 pauta(s) examinada(s); somente seleções aprovadas seguem para montagem.",
+  "health": "reviewing",
+  "message": "Revisando cenas da pauta kids-biblia-01; aprovação bíblica, visual e render ainda obrigatórios.",
   "policy": {
     "maxCallsPerDay": 250,
     "maxInputTokensPerCall": 120000,
@@ -7353,6 +7353,19 @@
       "outputTokens": 6153,
       "usageStatus": "provider_reported",
       "stopReason": "tool_use"
+    },
+    {
+      "id": "730481b4-0615-42b0-9ee5-b9691559ac97",
+      "day": "2026-10-21",
+      "stage": "pixels:kids-biblia-01:35915e7312dd9883",
+      "model": "claude-sonnet-4.6",
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-21T20:11:39.752Z",
+      "status": "reserved",
+      "payloadBytes": 77139,
+      "promptChars": 793,
+      "imageFingerprint": "68efecb6ec7f388a9b67a7fd6b6d6c3695d9189059f1dc22ea43e90c33480f74",
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
     }
   ],
   "entries": [
@@ -7503,8 +7516,8 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-21T16:11:56.158Z",
-  "lastRun": "39632097735",
+  "checkedAt": "2026-10-21T20:11:39.752Z",
+  "lastRun": "39668063444",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -11597,7 +11610,7 @@
     }
   },
   "accuracyGate": {
-    "checkedAt": "2026-10-21T16:09:30.837Z",
+    "checkedAt": "2026-10-21T20:11:34.922Z",
     "visualCases": 4,
     "factualCases": 6,
     "diversityCases": 2,
@@ -11614,13 +11627,13 @@
     "target": 12,
     "available": 6,
     "shortfall": 6,
-    "checkedAt": "2026-10-21T16:09:30.837Z"
+    "checkedAt": "2026-10-21T20:11:34.921Z"
   },
   "economy": {
-    "reusedPixelReads": 7,
-    "newPixelReads": 5,
-    "skippedCandidates": 11,
-    "checkedAt": "2026-10-21T16:11:56.158Z"
+    "reusedPixelReads": 1,
+    "newPixelReads": 0,
+    "skippedCandidates": 0,
+    "checkedAt": "2026-10-21T20:11:39.752Z"
   },
   "retryAfter": "2026-10-21T14:12:19.360Z"
 }
