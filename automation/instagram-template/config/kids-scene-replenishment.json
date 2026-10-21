@@ -7456,11 +7456,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-21T20:12:41.607Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 90146,
       "promptChars": 793,
       "imageFingerprint": "573c8ee679ad4db8d213b90ec1b5e73e377cfcdf9ee9722774b1a5a91040906c",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-21T20:12:49.545Z",
+      "reportedInputTokens": 29383,
+      "inputTokens": 29383,
+      "outputTokens": 1,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -7611,7 +7617,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-21T20:12:41.607Z",
+  "checkedAt": "2026-10-21T20:12:49.545Z",
   "lastRun": "39668063444",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -7918,12 +7924,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-01:f51dc986ca34ab90",
+    "stage": "pixels:kids-biblia-01:ec1d48ceccb64364",
     "value": {
       "visible": true,
       "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Duas zebras em pé lado a lado, com listras pretas e brancas, posicionadas no centro da composição em meio a vegetação verde densa. Ao fundo, há palmeiras altas à esquerda, árvores frondosas à direita e um céu azul claro, formando uma paisagem tropical ou de savana."
+      "childSuitable": false,
+      "observedEvent": "Ilustração de uma figura humana masculina sentada em rochas ao fundo à esquerda, observando três animais equinos (um em pé e dois deitados) agrupados no centro da cena em ambiente externo com vegetação verde e céu claro."
     }
   },
   "lastFactualEvaluation": {
@@ -11262,7 +11268,7 @@
     "reusedPixelReads": 6,
     "newPixelReads": 5,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-21T20:12:41.607Z"
+    "checkedAt": "2026-10-21T20:12:49.545Z"
   },
   "retryAfter": "2026-10-21T14:12:19.360Z"
 }
