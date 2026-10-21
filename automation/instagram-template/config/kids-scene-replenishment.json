@@ -3,8 +3,8 @@
   "enabled": true,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "awaiting_candidates",
-  "message": "0 pauta(s) examinada(s); somente seleções aprovadas seguem para montagem.",
+  "health": "reviewing",
+  "message": "Revisando cenas da pauta kids-biblia-20; aprovação bíblica, visual e render ainda obrigatórios.",
   "policy": {
     "maxCallsPerDay": 250,
     "maxInputTokensPerCall": 120000,
@@ -7239,6 +7239,19 @@
       "completedAt": "2026-10-21T13:12:19.360Z",
       "httpStatus": null,
       "error": "fetch failed"
+    },
+    {
+      "id": "6320b360-c307-4edb-82d0-c94e5288d994",
+      "day": "2026-10-21",
+      "stage": "pixels:kids-biblia-20:d514d98ac9625f17",
+      "model": "claude-sonnet-4.6",
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-21T16:09:37.224Z",
+      "status": "reserved",
+      "payloadBytes": 75220,
+      "promptChars": 793,
+      "imageFingerprint": "9c6895e5ef13d7969dd2d0a7a27deb67f880fd4ab4b82441bbe321396ca50200",
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
     }
   ],
   "entries": [
@@ -7389,8 +7402,8 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-21T13:53:51.906Z",
-  "lastRun": "39611897153",
+  "checkedAt": "2026-10-21T16:09:37.224Z",
+  "lastRun": "39632097735",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -11013,7 +11026,7 @@
     }
   },
   "accuracyGate": {
-    "checkedAt": "2026-10-21T13:53:50.605Z",
+    "checkedAt": "2026-10-21T16:09:30.837Z",
     "visualCases": 4,
     "factualCases": 6,
     "diversityCases": 2,
@@ -11028,15 +11041,15 @@
   },
   "reserve": {
     "target": 12,
-    "available": 0,
-    "shortfall": 12,
-    "checkedAt": "2026-10-21T13:53:50.604Z"
+    "available": 6,
+    "shortfall": 6,
+    "checkedAt": "2026-10-21T16:09:30.837Z"
   },
   "economy": {
-    "reusedPixelReads": 0,
+    "reusedPixelReads": 7,
     "newPixelReads": 0,
-    "skippedCandidates": 12,
-    "checkedAt": "2026-10-21T13:53:51.906Z"
+    "skippedCandidates": 3,
+    "checkedAt": "2026-10-21T16:09:37.224Z"
   },
   "retryAfter": "2026-10-21T14:12:19.360Z"
 }
