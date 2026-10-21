@@ -11772,103 +11772,25 @@
       "reason": "Render autoral falhou: Slide 6 rejeitado: fotografia repetida ou visualmente semelhante a outro cartão/cena.\n"
     }
   ],
-  "checkedAt": "2026-10-21T17:39:55.122Z",
+  "checkedAt": "2026-10-21T17:40:13.605Z",
   "workflowRun": "39645728981",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "art-direction:extracao-campos-v7",
-    "callId": "82deb2e9-7993-4889-bb19-d795300b3af3",
+    "stage": "learning-analysis",
+    "callId": "d84588f0-75ab-47f8-a53c-4398518f7cd8",
     "value": {
-      "palette": "ocean",
-      "frames": [
-        {
-          "layout": "workspace",
-          "labels": [
-            "Mesa de trabalho",
-            "Mensagem aberta",
-            "Pedido em análise"
-          ]
-        },
-        {
-          "layout": "conversation",
-          "labels": [
-            "Chat de pedido",
-            "Mensagem solta",
-            "Loja fictícia"
-          ]
-        },
-        {
-          "layout": "workflow",
-          "labels": [
-            "Definir campos",
-            "Extrair dados",
-            "Preservar origem"
-          ]
-        },
-        {
-          "layout": "checklist",
-          "labels": [
-            "Campo produto",
-            "Campo quantidade",
-            "Campo prazo"
-          ]
-        },
-        {
-          "layout": "decision",
-          "labels": [
-            "Pedir tabela",
-            "Manter origem",
-            "Sem suposição"
-          ]
-        },
-        {
-          "layout": "workspace",
-          "labels": [
-            "Campo ausente",
-            "Não informado",
-            "Sem adivinhar"
-          ]
-        },
-        {
-          "layout": "conversation",
-          "labels": [
-            "Tabela gerada",
-            "Mensagem original",
-            "Conferir campo"
-          ]
-        },
-        {
-          "layout": "workflow",
-          "labels": [
-            "Evitar suposição",
-            "Risco de erro",
-            "Manter dado real"
-          ]
-        },
-        {
-          "layout": "checklist",
-          "labels": [
-            "Pedido fictício",
-            "Canetas pedidas",
-            "Prazo ausente"
-          ]
-        },
-        {
-          "layout": "decision",
-          "labels": [
-            "Revisar prompt",
-            "Respeitar origem",
-            "Exercício fictício"
-          ]
-        },
-        {
-          "layout": "decision",
-          "labels": [
-            "Dúvida operacional",
-            "Pedido incompleto",
-            "Checar antes"
-          ]
-        }
+      "diagnosis": "Perfil com alcance baixo (3-38) e zero engajamento em métricas-alvo (salvamentos, compartilhamentos, comentários). Reels de afirmação atingiram maior alcance (25-38), mas sem conversão em ações. Perguntas em Feed tiveram scores intermediários (8.59-12.24) com alcance reduzido (4-8). Alertas performaram abaixo da média (4.88-5.4). Não há evidência de que formato ou hook influenciem engajamento dado volume amostral insuficiente e ausência total de ações registradas.",
+      "hypothesis": "Testar perguntas específicas sobre dilemas operacionais de IA em empresas no formato Reels pode gerar mais comentários por alcance do que afirmações genéricas, já que perguntas diretas criam convite implícito à resposta, mesmo que o alcance absoluto seja menor.",
+      "limitations": "Amostra pequena (16 posts), janela temporal restrita (24h), zero ações registradas em todas as métricas-alvo impossibilita validação causal. Alcance não se correlaciona com engajamento neste conjunto. Dados desatualizados para teste contínuo.",
+      "axis": "hook",
+      "variant": "specific-question",
+      "format": "REELS",
+      "metric": "comments",
+      "evidenceIds": [
+        "17897207760412702",
+        "18130297828822859",
+        "17959944321226712",
+        "18027287510700068"
       ]
     },
     "structured": true,
