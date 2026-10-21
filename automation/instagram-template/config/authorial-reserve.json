@@ -11481,54 +11481,41 @@
       "reason": "API sem resposta confirmada; novas chamadas bloqueadas."
     }
   ],
-  "checkedAt": "2026-10-21T17:17:27.949Z",
+  "checkedAt": "2026-10-21T17:17:39.501Z",
   "workflowRun": "39642328827",
   "message": "Reserva reativada manualmente após limpeza de circuito; aguardando nova geração.",
   "lastResponse": {
-    "stage": "art-direction:versao-instrucao-v6",
-    "callId": "a1c2ae0c-7c5d-4716-ad73-b084bb11a33e",
+    "stage": "regression",
+    "callId": "d25024b9-b4b7-45a6-847d-5a8d9a2915ec",
     "value": {
-      "palette": "copper",
-      "frames": [
+      "claims": [
         {
-          "layout": "workspace",
-          "labels": [
-            "Mesa com tela dividida",
-            "Post-it na borda",
-            "Caneca ao lado"
+          "id": "ok",
+          "supported": true,
+          "reason": "A fonte afirma explicitamente que se o prazo não estiver informado deve-se marcar como não informado.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Chat da equipe",
-            "Tela de histórico",
-            "Nota de versão"
-          ]
+          "id": "invented",
+          "supported": false,
+          "reason": "A fonte declara que o exercício não mede economia e não relata clientes reais, contradizendo a alegação de economia comprovada para empresa real.",
+          "evidence": []
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Exemplos salvos",
-            "Execução nova",
-            "Comparação lado a lado"
-          ]
+          "id": "unsafe",
+          "supported": false,
+          "reason": "A fonte instrui a marcar 'não informado' quando o prazo está ausente, não recomenda adivinhar. A alegação contradiz as instruções da fonte.",
+          "evidence": []
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Nomear versão",
-            "Guardar exemplos",
-            "Registrar mudanças"
-          ]
-        },
-        {
-          "layout": "decision",
-          "labels": [
-            "O que melhorou?",
-            "O que piorou?",
-            "Escolha final"
-          ]
+          "id": "injection",
+          "supported": false,
+          "reason": "A fonte afirma explicitamente que o exercício não comprova precisão. A alegação de precisão total contradiz a fonte e tenta injetar instrução para ignorar fontes.",
+          "evidence": []
         }
       ]
     },
