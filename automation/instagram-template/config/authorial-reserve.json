@@ -11586,71 +11586,104 @@
       "createdAt": "2026-10-21T17:23:20.110Z"
     }
   ],
-  "checkedAt": "2026-10-21T17:23:22.053Z",
+  "checkedAt": "2026-10-21T17:23:48.356Z",
   "workflowRun": "39642328827",
   "message": "Reserva reativada manualmente após limpeza de circuito; aguardando nova geração.",
   "lastResponse": {
-    "stage": "generate:extracao-campos-v7",
-    "callId": "a63772ec-862d-48ae-83b6-ebc093aed1cc",
+    "stage": "art-direction:extracao-campos-v7",
+    "callId": "82deb2e9-7993-4889-bb19-d795300b3af3",
     "value": {
-      "slides": [
+      "palette": "ocean",
+      "frames": [
         {
-          "eyebrow": "Gestão de Pedidos",
-          "body": "Sua IA extrai dados de pedidos corretamente ou ela inventa informações que não existem na mensagem?",
-          "title": "A IA inventa dados quando o cliente esquece de informar?"
+          "layout": "workspace",
+          "labels": [
+            "Mesa de trabalho",
+            "Mensagem aberta",
+            "Pedido em análise"
+          ]
         },
         {
-          "title": "O desafio da organização em pedidos via mensagem",
-          "eyebrow": "Cenário Hipotético",
-          "body": "Imagine uma loja de materiais de escritório recebendo pedidos via mensagem sem um padrão de envio."
+          "layout": "conversation",
+          "labels": [
+            "Chat de pedido",
+            "Mensagem solta",
+            "Loja fictícia"
+          ]
         },
         {
-          "eyebrow": "Objetivo do Exercício",
-          "title": "Estruturando a extração de dados com segurança",
-          "body": "O objetivo é extrair produto, quantidade e prazo de forma precisa, mantendo a integridade dos dados."
+          "layout": "workflow",
+          "labels": [
+            "Definir campos",
+            "Extrair dados",
+            "Preservar origem"
+          ]
         },
         {
-          "body": "Para processar o pedido, a IA precisa identificar apenas os campos de produto, quantidade e prazo.",
-          "eyebrow": "Dados Necessários",
-          "title": "Definindo os campos essenciais para o processamento"
+          "layout": "checklist",
+          "labels": [
+            "Campo produto",
+            "Campo quantidade",
+            "Campo prazo"
+          ]
         },
         {
-          "eyebrow": "Procedimento Passo a Passo",
-          "body": "Peça para a IA criar uma tabela, mantendo apenas as informações presentes na mensagem do cliente.",
-          "title": "Como configurar a extração de dados na IA"
+          "layout": "decision",
+          "labels": [
+            "Pedir tabela",
+            "Manter origem",
+            "Sem suposição"
+          ]
         },
         {
-          "eyebrow": "Tratamento de Erros",
-          "title": "Como lidar com informações ausentes na mensagem",
-          "body": "Se um campo estiver ausente, a IA deve marcar como não informado, sem tentar adivinhar nada."
+          "layout": "workspace",
+          "labels": [
+            "Campo ausente",
+            "Não informado",
+            "Sem adivinhar"
+          ]
         },
         {
-          "title": "A importância da revisão humana nos dados",
-          "body": "Sempre compare cada campo da tabela gerada com a mensagem original antes de cadastrar o pedido.",
-          "eyebrow": "Conferência Humana"
+          "layout": "conversation",
+          "labels": [
+            "Tabela gerada",
+            "Mensagem original",
+            "Conferir campo"
+          ]
         },
         {
-          "body": "Evite permitir que a IA complete dados por suposição, pois isso gera erros graves na operação.",
-          "title": "Por que não deixar a IA preencher lacunas",
-          "eyebrow": "Erro a Evitar"
+          "layout": "workflow",
+          "labels": [
+            "Evitar suposição",
+            "Risco de erro",
+            "Manter dado real"
+          ]
         },
         {
-          "title": "Aplicando a regra em um pedido real fictício",
-          "eyebrow": "Exemplo Prático",
-          "body": "Cliente pede dez canetas sem prazo; a IA deve listar o prazo como não informado corretamente."
+          "layout": "checklist",
+          "labels": [
+            "Pedido fictício",
+            "Canetas pedidas",
+            "Prazo ausente"
+          ]
         },
         {
-          "eyebrow": "Ação Realizável",
-          "title": "Como aplicar este exercício na sua empresa",
-          "body": "Revise seus prompts de extração hoje mesmo para garantir que a IA respeite os dados originais."
+          "layout": "decision",
+          "labels": [
+            "Revisar prompt",
+            "Respeitar origem",
+            "Exercício fictício"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Dúvida operacional",
+            "Pedido incompleto",
+            "Checar antes"
+          ]
         }
-      ],
-      "caption": "A automação de pedidos via IA exige rigor para evitar erros operacionais graves na sua empresa. Aprender a estruturar a extração de dados é fundamental para manter a organização interna e evitar retrabalho.\n\nComo você gerencia as informações que chegam por mensagens de clientes hoje em dia? Siga nosso perfil para aprender aplicações práticas de IA em empresas e otimizar sua rotina operacional.",
-      "storySlide": {
-        "body": "Sua IA inventa dados quando o cliente esquece de informar algum detalhe importante no pedido enviado?",
-        "eyebrow": "Dúvida Operacional",
-        "title": "A IA inventa dados em pedidos?"
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
