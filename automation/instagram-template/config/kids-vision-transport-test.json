@@ -659,7 +659,7 @@
     {
       "id": "3ca7e86e-00ad-40fb-985e-9245ad7a51a0",
       "day": "2026-10-21",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-mirror",
       "startedAt": "2026-10-21T21:35:14.232Z",
       "images": [
@@ -673,7 +673,12 @@
           "sha256": "0881776f99cc2d4ceaeca8929b84afdccf60642f9b649c4f273540d3b62102f0",
           "bytes": 46048
         }
-      ]
+      ],
+      "completedAt": "2026-10-21T21:35:26.964Z",
+      "reportedInputTokens": 30014,
+      "inputTokens": 30014,
+      "outputTokens": 1,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -1012,7 +1017,7 @@
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-21T21:35:14.232Z",
+  "checkedAt": "2026-10-21T21:35:26.964Z",
   "workflowRun": "39679743687",
   "summary": [
     {
@@ -1307,13 +1312,19 @@
   "visualDiversity": {
     "version": "visual-diversity-v1",
     "model": "claude-sonnet-4.6",
-    "checkedAt": "2026-10-21T21:35:11.350Z",
+    "checkedAt": "2026-10-21T21:35:26.964Z",
     "cases": [
       {
         "expected": true,
         "distinct": true,
         "reason": "As duas imagens apresentam enquadramentos e composições visuais diferentes. A primeira imagem mostra uma figura humana em um ambiente externo com vegetação ao fundo, enquanto a segunda imagem exibe uma cena diferente com elementos arquitetônicos ou objetos distintos, indicando que não se trata do mesmo desenho, recorte ou variação de compressão da mesma ilustração original.",
         "passed": true
+      },
+      {
+        "expected": false,
+        "distinct": true,
+        "reason": "As duas imagens mostram o mesmo desenho, mas com enquadramentos horizontalmente espelhados: na Cena 1 a árvore está à direita e o edifício à esquerda; na Cena 2 a árvore está à esquerda e o edifício à direita. A multidão também inverteu sua posição relativa em relação à árvore entre as duas cenas.",
+        "passed": false
       }
     ]
   }
