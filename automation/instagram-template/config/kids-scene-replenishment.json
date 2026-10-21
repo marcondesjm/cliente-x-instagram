@@ -3,8 +3,8 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "pilot_running",
-  "message": "Piloto diagnóstico da pauta kids-biblia-32 em execução; reposição recorrente permanece bloqueada.",
+  "health": "blocked",
+  "message": "Piloto sem avaliação: a pauta não possui candidato novo elegível. Nenhuma chamada de revisão foi realizada.",
   "policy": {
     "maxCallsPerDay": 250,
     "maxInputTokensPerCall": 120000,
@@ -7232,7 +7232,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-21T13:07:40.902Z",
+  "checkedAt": "2026-10-21T13:07:44.072Z",
   "lastRun": "39605137449",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -11119,6 +11119,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 0,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-21T13:07:40.902Z"
+    "checkedAt": "2026-10-21T13:07:44.072Z"
   }
 }
