@@ -5204,7 +5204,7 @@ async function main() {
   const illustratedPacks = visualReadyPacks(packs, account, path => {
   const rootPath = resolve(ROOT, path);
   if (existsSync(rootPath)) return true;
-  const projectRoot = resolve(ROOT, '..', '..');
+  const projectRoot = resolve(ROOT, '..', '..', '..');
   const projectPath = resolve(projectRoot, path.replace(/^\/+/, ''));
   return existsSync(projectPath);
 });
