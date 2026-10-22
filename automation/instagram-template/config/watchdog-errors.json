@@ -934,5 +934,22 @@
     "error": "Radar visual sem foto inédita e reserva autoral esgotada. Nenhuma publicação repetida foi enviada; consulte visual-selection.json.",
     "solution": "A reposição automática com Claude tenta criar e revisar conteúdo inédito para recuperar este horário. Se a cota diária terminou, aguarda a renovação e retoma pelo agendamento, sem botão ou pedido manual. O vigia só publica após aprovação factual, visual e contra repetição; o alerta permanece aberto até a publicação confirmada.",
     "failurePath": "automation/instagram-template/runs/failure-2026-10-22-194710.json"
+  },
+  {
+    "key": "sabedoria-kids:2026-10-22:10:39867328248",
+    "status": "open",
+    "account": "sabedoria-kids",
+    "date": "2026-10-22",
+    "slotIndex": 10,
+    "scheduledAt": "2026-10-22T21:00:00.000Z",
+    "scheduledPostId": null,
+    "failedAt": "2026-10-22T22:47:27.613Z",
+    "workflowRun": "39867328248",
+    "workflowName": "Instagram Sabedoria Kids",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/39867328248",
+    "stage": "unknown",
+    "error": "Radar ativo: a pauta selecionada nao possui uma fonte oficial registrada. Nenhum post foi publicado.",
+    "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o conteúdo ou dependência indicada antes da próxima tentativa.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-10-22-194727.json"
   }
 ]
