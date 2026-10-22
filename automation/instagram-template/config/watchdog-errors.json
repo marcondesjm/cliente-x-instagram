@@ -1,24 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-10-21:5:39688719868",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-10-21",
-    "slotIndex": 5,
-    "scheduledAt": "2026-10-21T16:00:00.000Z",
-    "scheduledPostId": null,
-    "failedAt": "2026-10-21T22:46:35.452Z",
-    "workflowRun": "39688719868",
-    "workflowName": "Instagram Watchdog Backup",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/39688719868",
-    "stage": "content-selection",
-    "error": "Radar visual sem foto inédita e reserva autoral esgotada. Nenhuma publicação repetida foi enviada; consulte visual-selection.json.",
-    "solution": "A reposição automática com Claude tenta criar e revisar conteúdo inédito para recuperar este horário. Se a cota diária terminou, aguarda a renovação e retoma pelo agendamento, sem botão ou pedido manual. O vigia só publica após aprovação factual, visual e contra repetição; o alerta permanece aberto até a publicação confirmada.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-10-21-194635.json",
-    "resolvedAt": "2026-10-21T23:43:25.004Z",
-    "resolvedRun": "39695002244"
-  },
-  {
     "key": "sabedoria-kids:2026-10-21:2:39688930318",
     "status": "resolved",
     "account": "sabedoria-kids",
@@ -926,5 +907,22 @@
     "error": "page.evaluate: Error: Foto abaixo de 600 x 300 pixels.\n    at eval (eval at evaluate (:302:30), <anonymous>:5:70)\n    at async <anonymous>:328:30",
     "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o conteúdo ou dependência indicada antes da próxima tentativa.",
     "failurePath": "automation/instagram-template/runs/failure-2026-10-22-163442.json"
+  },
+  {
+    "key": "sabedoria-kids:2026-10-22:7:39842329103",
+    "status": "open",
+    "account": "sabedoria-kids",
+    "date": "2026-10-22",
+    "slotIndex": 7,
+    "scheduledAt": "2026-10-22T17:00:00.000Z",
+    "scheduledPostId": null,
+    "failedAt": "2026-10-22T19:42:41.244Z",
+    "workflowRun": "39842329103",
+    "workflowName": "Instagram Sabedoria Kids",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/39842329103",
+    "stage": "unknown",
+    "error": "Slide 2 rejeitado: fotografia repetida ou visualmente semelhante a outro cartão/cena.",
+    "solution": "Verificar as imagens e o plano visual do pack: manter foto na capa, impedir fotos repetidas e respeitar os cartões internos explicitamente tipográficos. O vigia recupera o slot após a correção visual.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-10-22-164241.json"
   }
 ]
