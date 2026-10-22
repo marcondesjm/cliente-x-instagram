@@ -159,7 +159,12 @@ jobs:
         run: |
           for attempt in 1 2 3; do
             echo "Attempt $attempt to install Playwright Chromium..."
-            if timeout 300 npx playwright install --with-deps chromium; then
+            # Wait for any existing apt/dpkg locks to be released
+            while sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
+              echo "Waiting for dpkg lock to be released..."
+              sleep 5
+            done
+            if timeout 600 npx playwright install --with-deps chromium; then
               echo "Playwright Chromium installed successfully"
               break
             fi
@@ -167,8 +172,8 @@ jobs:
               echo "Failed to install Playwright Chromium after 3 attempts"
               exit 1
             fi
-            echo "Retrying in 10 seconds..."
-            sleep 10
+            echo "Retrying in 30 seconds..."
+            sleep 30
           done
 
       - name: Install FFmpeg for Reels
