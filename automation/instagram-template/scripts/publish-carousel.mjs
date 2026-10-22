@@ -5201,7 +5201,13 @@ async function main() {
   const supabasePacks = account.contentProfile?.curatedOnly ? [] : await loadSupabasePacks(env, args.account);
   const packs = mergePacks(supabasePacks, localPacks);
   validatePacks(packs);
-  const illustratedPacks = visualReadyPacks(packs, account, path => existsSync(resolve(ROOT, path)));
+  const illustratedPacks = visualReadyPacks(packs, account, path => {
+  const rootPath = resolve(ROOT, path);
+  if (existsSync(rootPath)) return true;
+  const projectRoot = resolve(ROOT, '..', '..');
+  const projectPath = resolve(projectRoot, path.replace(/^\/+/, ''));
+  return existsSync(projectPath);
+});
   if (requiresBibleIllustrations(account) && !illustratedPacks.length && !args.validateCopy) throw Object.assign(new Error('Acervo aguardando ilustrações bíblicas aprovadas; nenhum cartão vazio será publicado.'), {stage:'bible-visual-standard'});
 
   const today = args.planDate || todaySaoPaulo();
@@ -6085,7 +6091,13 @@ async function main() {
     : selectionMode === 'explore' ? 'candidate-novelty' : selectionMode === 'exploit' ? 'performance' : 'manual';
   const organicPotential = organicPotentialScore(pack, today, publicationHistory, selectionLearningContext);
   const methodAllowed = !dashboardPack && !scheduledPost && !seriesSelection;
-  assertBibleVisualStandard(pack, account, path => existsSync(resolve(ROOT, path)));
+  assertBibleVisualStandard(pack, account, path => {
+    const rootPath = resolve(ROOT, path);
+    if (existsSync(rootPath)) return true;
+    const projectRoot = resolve(ROOT, '..', '..');
+    const projectPath = resolve(projectRoot, path.replace(/^\/+/, ''));
+    return existsSync(projectPath);
+  });
   const enhancement = preparePackForPublication(pack, today, generationSlotIndex, account, publishMode, { allowIhc: methodAllowed });
   pack = enhancement.pack;
   pack.caption = fitInstagramCaption(account.account === 'cliente-x' ? ensureBusinessHashtags(pack.caption, pack.authorialTopic || pack.id) : pack.caption, pack);
