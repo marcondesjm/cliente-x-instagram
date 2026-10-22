@@ -75,9 +75,7 @@ jobs:
 
       - name: Install FFmpeg for automatic Reels
         if: steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
-        run: |
-          sudo apt-get install -y ffmpeg >/dev/null 2>&1 || true
-          ffmpeg -version | head -n 1
+        run: echo "FFmpeg skipped - using system binaries"
 
       - name: Select content slot
         if: steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
