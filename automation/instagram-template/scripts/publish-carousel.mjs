@@ -5954,7 +5954,9 @@ async function main() {
       const recentMedia = await fetchRecentMedia(userId, token);
       recentSelectionMedia = recentMedia;
       const dedupOptions = account.contentProfile?.visualStandard === 'illustrated-bible' ? { skipCoverTitleDedup: true } : {};
+      console.log(`DEBUG_BEFORE_PICK: automaticSelectionPacks.length=${automaticSelectionPacks.length}, publicationHistory.length=${publicationHistory.length}`);
       let fresh = pickFreshPack(automaticSelectionPacks, today, generationSlotIndex, recentMedia, publicationHistory, randomInt, selectionLearningContext, dedupOptions);
+      console.log(`DEBUG_AFTER_PICK: fresh.pack=${!!fresh.pack}, skippedDuplicates=${fresh.skippedDuplicates || 0}`);
       if (!fresh.pack && radar.enabled) {
         const currentWindow = Number(editorialResearch.maxAgeDays) || 7;
         for (const maxAgeDays of [15, 30].filter((days) => days > currentWindow)) {
