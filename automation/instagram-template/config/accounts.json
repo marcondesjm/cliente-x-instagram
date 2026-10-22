@@ -307,14 +307,59 @@
         "ihcHanahEnabled": false
       },
       "radar": {
-        "enabled": false,
-        "maxAgeDays": 60,
-        "keywords": [],
-        "excludeKeywords": [],
-        "sources": []
+        "enabled": true,
+        "maxAgeDays": 30,
+        "keywords": [
+          "crianças",
+          "infantil",
+          "bíblia",
+          "família",
+          "fé",
+          "ensino",
+          "história bíblica",
+          "versículo",
+          "kids",
+          "children",
+          "bible",
+          "family",
+          "faith"
+        ],
+        "excludeKeywords": [
+          "política",
+          "violência",
+          "adulto",
+          "politics",
+          "violence"
+        ],
+        "sources": [
+          {
+            "name": "Desiring God",
+            "url": "https://www.desiringgod.org/feed"
+          },
+          {
+            "name": "The Gospel Coalition",
+            "url": "https://www.thegospelcoalition.org/latest/feed/"
+          },
+          {
+            "name": "Christianity Today",
+            "url": "https://www.christianitytoday.com/ct/feed/"
+          },
+          {
+            "name": "Crossway",
+            "url": "https://www.crossway.org/articles/feed/"
+          },
+          {
+            "name": "Got Questions (Português)",
+            "url": "https://www.gotquestions.org/Portugues/rss.xml"
+          },
+          {
+            "name": "Bíblia Online — Devocional",
+            "url": "https://www.bibliaonline.com.br/rss"
+          }
+        ]
       },
       "visualDirection": "anatex-editorial",
-      "curatedOnly": true,
+      "curatedOnly": false,
       "biblicalSources": [
         {
           "name": "Bíblia para Crianças",
@@ -351,8 +396,7 @@
           "url": "https://www.freebibleimages.org/illustrations/zb-jesus-children/",
           "purpose": "Pesquisar ilustrações da passagem. Conferir a licença de cada conjunto antes do uso. Este conjunto de Marcos 10:13–16 é CC BY 4.0: creditar Gavin Thomson / Little Zebra Books e FreeBibleimages, informar licença e adaptações. Não presumir a mesma licença para outros conjuntos."
         }
-      ],
-      "visualStandard": "illustrated-bible"
+      ]
     },
     "brandSummary": {
       "description": "Sabedoria Kids ensina a Palavra de Deus às crianças com histórias bíblicas, explicações simples e atividades em família. Citações devem indicar a referência e a tradução; adaptações infantis devem ser identificadas. Variar temas e personagens sem inventar acontecimentos bíblicos.",
