@@ -96,7 +96,7 @@ on:
 jobs:
   instagram-feed:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     env:
       ACCOUNT: ${{ github.event.inputs.account || 'cliente-x' }}
       DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run || 'false' }}
