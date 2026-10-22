@@ -4356,7 +4356,7 @@ function findDuplicateCaption(media, caption) {
     if (!expectedTokens.size || !actualTokens.size) return false;
     let common = 0;
     for (const token of expectedTokens) if (actualTokens.has(token)) common += 1;
-    return common / Math.min(expectedTokens.size, actualTokens.size) >= 0.86;
+    return common / Math.min(expectedTokens.size, actualTokens.size) >= 0.70;
   });
 }
 
