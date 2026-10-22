@@ -71,7 +71,7 @@ jobs:
 
       - name: Install Playwright Chromium
         if: steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
-        run: echo "Using runner's native Chromium" || true
+        run: npx playwright install --with-deps chromium
 
       - name: Install FFmpeg for automatic Reels
         if: steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
