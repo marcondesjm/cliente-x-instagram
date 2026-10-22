@@ -4492,7 +4492,12 @@ function findDuplicateSelection(pack, recentMedia = [], publicationHistory = [],
   }
   const dupCover = !options.skipCoverTitleDedup && findDuplicateCoverTitle(recentMedia, publicationHistory, pack);
   const dupSemantic = !options.skipCoverTitleDedup && findSemanticCoverTitle(publicationHistory, pack);
-  const dupCaption = findDuplicateCaption(recentMedia, pack.caption);
+  // Skip caption dedup for illustrated biblical packs: they share dense
+  // theological vocabulary (Deus, fé, oração, Jesus) that triggers false
+  // positives even at low thresholds. Fingerprint + coverTitle already
+  // prevent actual duplicates for this content type.
+  const isIllustratedBiblical = pack?.authoredBook && pack.slides?.some((s) => s.imagePath);
+  const dupCaption = !isIllustratedBiblical && findDuplicateCaption(recentMedia, pack.caption);
   const dupPack = findDuplicatePack(publicationHistory, pack);
   if (dupCover || dupSemantic || dupCaption || dupPack) {
     console.log(`DEBUG_DEDUP_REJECT: pack=${pack?.id || 'unknown'}, coverTitle=${!!dupCover}, semantic=${!!dupSemantic}, caption=${!!dupCaption}, fingerprint=${!!dupPack}`);
