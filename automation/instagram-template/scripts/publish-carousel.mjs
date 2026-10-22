@@ -5201,15 +5201,11 @@ async function main() {
   const supabasePacks = account.contentProfile?.curatedOnly ? [] : await loadSupabasePacks(env, args.account);
   const packs = mergePacks(supabasePacks, localPacks);
   validatePacks(packs);
+  const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
   const illustratedPacks = visualReadyPacks(packs, account, path => {
-  const rootPath = resolve(ROOT, path);
-  if (existsSync(rootPath)) return true;
-  const projectRoot = resolve(ROOT, '..', '..', '..');
-  const projectPath = resolve(projectRoot, path.replace(/^\/+/, ''));
-  const found = existsSync(projectPath);
-  if (!found) console.log(`[PATH-DEBUG] MISSING: rootPath=${rootPath}, projectPath=${projectPath}, cwd=${process.cwd()}`);
-  return found;
-});
+    const absPath = isAbsolute(path) ? path : resolve(REPO_ROOT, path.replace(/^\/+/, ''));
+    return existsSync(absPath);
+  });
   if (requiresBibleIllustrations(account) && !illustratedPacks.length && !args.validateCopy) throw Object.assign(new Error('Acervo aguardando ilustrações bíblicas aprovadas; nenhum cartão vazio será publicado.'), {stage:'bible-visual-standard'});
 
   const today = args.planDate || todaySaoPaulo();
