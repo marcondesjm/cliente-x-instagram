@@ -4496,7 +4496,7 @@ function findDuplicateSelection(pack, recentMedia = [], publicationHistory = [],
   // theological vocabulary (Deus, fé, oração, Jesus) that triggers false
   // positives even at low thresholds. Fingerprint + coverTitle already
   // prevent actual duplicates for this content type.
-  const isIllustratedBiblical = pack?.authoredBook && pack.slides?.some((s) => s.imagePath);
+  const isIllustratedBiblical = (pack?.authoredBook || pack?.biblicalReference) && pack.slides?.some((s) => s.imagePath);
   const dupCaption = !isIllustratedBiblical && findDuplicateCaption(recentMedia, pack.caption);
   const dupPack = findDuplicatePack(publicationHistory, pack);
   if (dupCover || dupSemantic || dupCaption || dupPack) {
