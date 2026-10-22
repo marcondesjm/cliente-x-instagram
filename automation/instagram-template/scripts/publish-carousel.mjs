@@ -5206,7 +5206,9 @@ async function main() {
   if (existsSync(rootPath)) return true;
   const projectRoot = resolve(ROOT, '..', '..', '..');
   const projectPath = resolve(projectRoot, path.replace(/^\/+/, ''));
-  return existsSync(projectPath);
+  const found = existsSync(projectPath);
+  if (!found) console.log(`[PATH-DEBUG] MISSING: rootPath=${rootPath}, projectPath=${projectPath}, cwd=${process.cwd()}`);
+  return found;
 });
   if (requiresBibleIllustrations(account) && !illustratedPacks.length && !args.validateCopy) throw Object.assign(new Error('Acervo aguardando ilustrações bíblicas aprovadas; nenhum cartão vazio será publicado.'), {stage:'bible-visual-standard'});
 
