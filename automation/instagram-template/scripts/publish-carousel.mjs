@@ -5914,6 +5914,12 @@ async function main() {
     }
   }
 
+  console.log(`DEBUG_PACKS: Total=${packs.length}, Auto=${autoPacks.length}, Selection=${automaticSelectionPacks.length}`);
+  if (account.contentProfile?.curatedOnly) {
+    const illustratedCount = automaticSelectionPacks.filter(p => p.slides && p.slides[0] && p.slides[0].imagePath).length;
+    console.log(`DEBUG_ILLUSTRATED: ${illustratedCount} packs with images found in selection pool.`);
+  }
+
   const selectionSlotCron = (account.scheduleUtc || [])[generationSlotIndex] || '';
   const selectionSlotTime = scheduledPost?.scheduledFor || (selectionSlotCron ? cronToBrtTime(selectionSlotCron) : '');
   const selectionDiscovery = organicDiscoveryStrategy(today, generationSlotIndex, account);

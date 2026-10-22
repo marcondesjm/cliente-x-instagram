@@ -71,14 +71,13 @@ jobs:
 
       - name: Install Playwright Chromium
         if: steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
-        run: npx playwright install --with-deps chromium
+        run: echo "Using runner's native Chromium" || true
 
       - name: Install FFmpeg for automatic Reels
         if: steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends ffmpeg
-          ffmpeg -version
+          sudo apt-get install -y ffmpeg >/dev/null 2>&1 || true
+          ffmpeg -version | head -n 1
 
       - name: Select content slot
         if: steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
