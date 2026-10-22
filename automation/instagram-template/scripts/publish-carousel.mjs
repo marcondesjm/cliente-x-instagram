@@ -4490,10 +4490,14 @@ function findDuplicateSelection(pack, recentMedia = [], publicationHistory = [],
       || (!options.skipCoverTitleDedup && findSemanticCoverTitle(publicationHistory, pack))
       || findDuplicatePack(publicationHistory, pack);
   }
-  return (!options.skipCoverTitleDedup && findDuplicateCoverTitle(recentMedia, publicationHistory, pack))
-    || (!options.skipCoverTitleDedup && findSemanticCoverTitle(publicationHistory, pack))
-    || findDuplicateCaption(recentMedia, pack.caption)
-    || findDuplicatePack(publicationHistory, pack);
+  const dupCover = !options.skipCoverTitleDedup && findDuplicateCoverTitle(recentMedia, publicationHistory, pack);
+  const dupSemantic = !options.skipCoverTitleDedup && findSemanticCoverTitle(publicationHistory, pack);
+  const dupCaption = findDuplicateCaption(recentMedia, pack.caption);
+  const dupPack = findDuplicatePack(publicationHistory, pack);
+  if (dupCover || dupSemantic || dupCaption || dupPack) {
+    console.log(`DEBUG_DEDUP_REJECT: pack=${pack?.id || 'unknown'}, coverTitle=${!!dupCover}, semantic=${!!dupSemantic}, caption=${!!dupCaption}, fingerprint=${!!dupPack}`);
+  }
+  return dupCover || dupSemantic || dupCaption || dupPack;
 }
 
 function balanceResearchPacksByHistory(packs = [], publicationHistory = [], dateString = '', slotIndex = 0) {
