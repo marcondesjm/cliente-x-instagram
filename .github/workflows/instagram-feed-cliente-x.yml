@@ -157,13 +157,19 @@ jobs:
       - name: Install Playwright Chromium
         if: github.event_name == 'workflow_dispatch' || steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'
         run: |
-          # Skip download if Chromium is already available (ubuntu-latest has Chrome pre-installed)
-          if command -v google-chrome &> /dev/null || command -v chromium-browser &> /dev/null; then
-            echo "Chromium already available, skipping Playwright download"
-            export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-          else
-            npx playwright install --with-deps chromium
-          fi
+          for attempt in 1 2 3; do
+            echo "Attempt $attempt to install Playwright Chromium..."
+            if timeout 300 npx playwright install --with-deps chromium; then
+              echo "Playwright Chromium installed successfully"
+              break
+            fi
+            if [ $attempt -eq 3 ]; then
+              echo "Failed to install Playwright Chromium after 3 attempts"
+              exit 1
+            fi
+            echo "Retrying in 10 seconds..."
+            sleep 10
+          done
 
       - name: Install FFmpeg for Reels
         if: (github.event_name == 'workflow_dispatch' && (github.event.inputs.publish_mode == 'reel-only' || github.event.inputs.publish_mode == 'reel-and-story')) || (github.event_name != 'workflow_dispatch' && (steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true'))
