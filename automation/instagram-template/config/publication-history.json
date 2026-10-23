@@ -87167,6 +87167,168 @@
         },
         "editorialVariant": 4
       }
+    },
+    {
+      "feedFingerprint": "e00c06d5c94358aac1b011e7ad2003f24cf2ebeab246b793e767d8d7548511ca",
+      "storyFingerprint": "e00c06d5c94358aac1b011e7ad2003f24cf2ebeab246b793e767d8d7548511ca",
+      "storyContentKind": "news",
+      "storyCoverTitle": "É #FAKE vídeo de bandeira da Palestina erguida no topo da Torre Eiffel; cena foi criada com IA",
+      "captionFingerprint": "5243ce6ebbfddb814353711b4475517264bbb17fb7e35a3b5fc1bd142efda452",
+      "coverTitle": "É #FAKE vídeo de bandeira da Palestina erguida no topo da Torre Eiffel; cena foi criada com IA",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-02.png",
+      "avatarRotationStart": 5,
+      "publishedAt": "2026-10-23T20:37:34.804Z",
+      "slotDate": "2026-10-23",
+      "slotIndex": 4,
+      "scheduledAt": "2026-10-23T15:10:00.000Z",
+      "workflowRun": "40020232943",
+      "mediaId": "18129907729896126",
+      "storyMediaId": "18117459779005494",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18129907729896126/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"At7-Vy8S9CrhYJIfo_mSrtE\"}}",
+      "permalink": "https://www.instagram.com/reel/De2boQvExpv/",
+      "reelDurationSeconds": 18.05,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "G1 Tecnologia",
+          "sourceUrl": "https://g1.globo.com/fato-ou-fake/noticia/2026/10/21/e-fake-video-de-bandeira-da-palestina-erguida-no-topo-da-torre-eiffel-cena-foi-criada-com-ia.ghtml",
+          "sourceTitle": "É #FAKE vídeo de bandeira da Palestina erguida no topo da Torre Eiffel; cena foi criada com IA",
+          "imageUrl": "https://s2-g1.glbimg.com/9Yj0RpBCkJAdaFUBscK9b9geE8w=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/n/U/KqjkzvSqCcVAy5nN9zPg/fake-torre-eiffel-bandeira.jpg",
+          "imageSourcePageUrl": "https://g1.globo.com/fato-ou-fake/noticia/2026/10/21/e-fake-video-de-bandeira-da-palestina-erguida-no-topo-da-torre-eiffel-cena-foi-criada-com-ia.ghtml",
+          "imageCredit": "G1 Tecnologia",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "4b8f39ca2db6b43d172c4ce2d2716d8db4b14a1f7bf00cac8d6924d694399ae8",
+          "perceptualHash": "0000000101100000000000010010000000000001001000000000000100100000000000010010000000000001011000010000001101111001000000110000101100000011000010110000001100101001000000110010000100000011001000000000001100100000000000110010000000000011001000000000001100100000",
+          "reusedRelevantImage": false,
+          "approvedRevisionImageReuse": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://g1.globo.com/fato-ou-fake/noticia/2026/10/21/e-fake-video-de-bandeira-da-palestina-erguida-no-topo-da-torre-eiffel-cena-foi-criada-com-ia.ghtml",
+        "slideCount": 4,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-23-173542-slot-4/visual-candidate-2/radar-slide-01.avif",
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-23T20:12:57.206Z",
+        "ageHours": 0.38,
+        "freshness": "current",
+        "effectiveSamples": 166,
+        "effectiveReach": 4621,
+        "controlledSamples": 170,
+        "selectionModes": {
+          "exploit": 120,
+          "explore": 34,
+          "experiment": 16
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "midday",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "growthMode": true,
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|midday|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-atual",
+          "fonte-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "abertura-com-abandono-consistente"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "claudeExperiment": null,
+      "education": null,
+      "research": {
+        "id": "1f02feba3c11",
+        "source": "G1 Tecnologia",
+        "sourceUrl": "https://g1.globo.com/fato-ou-fake/noticia/2026/10/21/e-fake-video-de-bandeira-da-palestina-erguida-no-topo-da-torre-eiffel-cena-foi-criada-com-ia.ghtml",
+        "sourceTitle": "É #FAKE vídeo de bandeira da Palestina erguida no topo da Torre Eiffel; cena foi criada com IA",
+        "sourceImageUrl": "https://s2-g1.glbimg.com/9Yj0RpBCkJAdaFUBscK9b9geE8w=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/n/U/KqjkzvSqCcVAy5nN9zPg/fake-torre-eiffel-bandeira.jpg",
+        "publishedAt": "2026-10-21T03:00:01.000Z",
+        "researchedAt": "2026-10-23T20:35:31.654Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "É #FAKE vídeo de bandeira da Palestina erguida no topo da Torre Eiffel; cena foi criada com IA Reprodução Circula nas redes sociais um vídeo que supostamente mostra as bandeiras da Palestina e da Jordânia erguidas no topo da Torre Eiffel, na França, por manifestantes. É #FAKE. ✅ Siga o canal de Fato ou Fake no WhatsApp Selo Fake (Horizontal) g1 🔴 Como é o vídeo? Veja dois exemplos de legendas: \"Parabéns Emmanuel Macron, você destruiu a França\" e \"Paris caiu\". 800 pessoas detidas até sábado (17). ).",
+        "sourceFacts": [
+          "É #FAKE vídeo de bandeira da Palestina erguida no topo da Torre Eiffel; cena foi criada com IA Reprodução Circula nas redes sociais um vídeo que supostamente mostra as bandeiras da Palestina e da Jordânia erguidas no topo da Torre Eiffel, na França, por manifestantes. É #FAKE. ✅ Siga o canal de Fato ou Fake no WhatsApp Selo Fake (Horizontal) g1 🔴 Como é o vídeo? Veja dois exemplos de legendas: \"Parabéns Emmanuel Macron, você destruiu a França\" e \"Paris caiu\". 800 pessoas detidas até sábado (17). )."
+        ],
+        "coverage": {
+          "sourceFactCount": 1,
+          "coveredFactCount": 1,
+          "complete": false,
+          "scope": "feed-summary",
+          "reviewedAdaptation": false
+        },
+        "editorialVariant": 4
+      }
     }
   ],
   "sabedoria-kids": [
