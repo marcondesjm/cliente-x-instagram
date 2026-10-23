@@ -1,24 +1,5 @@
 [
   {
-    "key": "sabedoria-kids:2026-10-22:0:39826279656",
-    "status": "resolved",
-    "account": "sabedoria-kids",
-    "date": "2026-10-22",
-    "slotIndex": 0,
-    "scheduledAt": "2026-10-22T10:00:00.000Z",
-    "scheduledPostId": null,
-    "failedAt": "2026-10-22T17:51:47.102Z",
-    "workflowRun": "39826279656",
-    "workflowName": "Instagram Sabedoria Kids",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/39826279656",
-    "stage": "unknown",
-    "error": "browserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-linux64/chrome-headless-shell\n╔════════════════════════════════════════════════════════════╗\n║ Looks like Playwright was just installed or updated.       ║\n║ Please run the following command to download new browsers: ║\n║                                                            ║\n║     npx playwright install                                 ║\n║                                                            ║\n║ <3 Playwright Team                                         ║\n╚════════════════════════════════════════════════════════════╝",
-    "solution": "Reexecutar o workflow; se repetir, conferir instalação do Playwright no GitHub Actions.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-10-22-145147.json",
-    "resolvedAt": "2026-10-22T17:57:42.463Z",
-    "resolvedRun": "39826945498"
-  },
-  {
     "key": "cliente-x:2026-10-22:2:39828324424",
     "status": "resolved",
     "account": "cliente-x",
@@ -879,5 +860,22 @@
     "error": "Radar visual sem foto inédita e reserva autoral esgotada. Nenhuma publicação repetida foi enviada; consulte visual-selection.json.",
     "solution": "A reposição automática com Claude tenta criar e revisar conteúdo inédito para recuperar este horário. Se a cota diária terminou, aguarda a renovação e retoma pelo agendamento, sem botão ou pedido manual. O vigia só publica após aprovação factual, visual e contra repetição; o alerta permanece aberto até a publicação confirmada.",
     "failurePath": "automation/instagram-template/runs/failure-2026-10-23-145147.json"
+  },
+  {
+    "key": "sabedoria-kids:2026-10-23:4:40001865915",
+    "status": "open",
+    "account": "sabedoria-kids",
+    "date": "2026-10-23",
+    "slotIndex": 4,
+    "scheduledAt": "2026-10-23T14:00:00.000Z",
+    "scheduledPostId": null,
+    "failedAt": "2026-10-23T18:17:01.104Z",
+    "workflowRun": "40001865915",
+    "workflowName": "Instagram Sabedoria Kids",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/40001865915",
+    "stage": "bible-content-selection",
+    "error": "Conteúdo bíblico ilustrado inédito esgotado. Adicione novas pautas revisadas com imagens; nenhum conteúdo genérico será publicado.",
+    "solution": "Adicionar pautas bíblicas inéditas com ilustrações revisadas em todos os cartões, Story e créditos. O vigia retoma o horário pendente após a revisão; não repetir posts, voltar a cartões vazios ou renovar token por esse erro de conteúdo.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-10-23-151701.json"
   }
 ]
