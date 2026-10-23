@@ -695,11 +695,17 @@
     {
       "id": "61c72362-c72a-4313-815d-017a487cff22",
       "day": "2026-10-23",
-      "status": "reserved",
+      "status": "completed",
       "stage": "sonnet-forced-holdout:holdout-1",
       "startedAt": "2026-10-23T13:36:11.861Z",
       "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817",
-      "imageBytes": 66332
+      "imageBytes": 66332,
+      "completedAt": "2026-10-23T13:38:51.057Z",
+      "reportedInputTokens": 2305,
+      "inputTokens": 2305,
+      "outputTokens": 151,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -951,27 +957,6 @@
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
     },
     {
-      "id": "sonnet-forced-holdout:holdout-1",
-      "mode": "sonnet-forced-holdout",
-      "fixture": "holdout-1",
-      "model": "claude-sonnet-4.6",
-      "passed": true,
-      "value": {
-        "personInTree": false,
-        "openBooks": false,
-        "style": "illustration",
-        "description": "Ilustração colorida mostrando um grupo de seis homens com vestimentas e turbantes em tons de vermelho, azul, amarelo e verde, em estilo bíblico antigo. Um homem ao centro veste túnica vermelha sobre roupa clara e gesticula com a mão direita levantada enquanto conversa com outro homem à direita, que usa turbante listrado vermelho-amarelo-azul e também gesticula. Os demais homens observam ou participam da cena, com expressões faciais variadas. O fundo apresenta arcos arquitetônicos e céu claro, sem árvores nem livros abertos visíveis."
-      },
-      "expected": {
-        "personInTree": false,
-        "openBooks": false,
-        "style": "illustration"
-      },
-      "checkedAt": "2026-10-21T21:34:14.500Z",
-      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/08_FB_Zacchaeus_1024.jpg?1724237549",
-      "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817"
-    },
-    {
       "id": "sonnet-forced-holdout:holdout-2",
       "mode": "sonnet-forced-holdout",
       "fixture": "holdout-2",
@@ -1033,12 +1018,33 @@
       "checkedAt": "2026-10-21T21:34:59.425Z",
       "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/05_FB_Zacchaeus_1024.jpg?1724237549",
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
+    },
+    {
+      "id": "sonnet-forced-holdout:holdout-1",
+      "mode": "sonnet-forced-holdout",
+      "fixture": "holdout-1",
+      "model": "claude-sonnet-4.6",
+      "passed": true,
+      "value": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration",
+        "description": "A imagem é uma ilustração que mostra um grupo de homens reunidos em um ambiente interno. No centro, um homem com barba e túnica clara com uma faixa vermelha parece estar falando ou gesticulando para os outros. À esquerda, um homem de túnica azul e faixa listrada está sendo tocado no ombro pelo homem central. Outros homens com barbas e vestimentas tradicionais, incluindo turbantes ou coberturas de cabeça, estão ao redor, conversando ou ouvindo. Não há árvores nem livros abertos visíveis na cena."
+      },
+      "expected": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration"
+      },
+      "checkedAt": "2026-10-23T13:38:51.057Z",
+      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/08_FB_Zacchaeus_1024.jpg?1724237549",
+      "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817"
     }
   ],
   "circuit": null,
   "health": "blocked",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-23T13:36:11.862Z",
+  "checkedAt": "2026-10-23T13:38:51.057Z",
   "workflowRun": "39962484656",
   "summary": [
     {
