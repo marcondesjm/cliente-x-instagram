@@ -1,24 +1,5 @@
 [
   {
-    "key": "sabedoria-kids:2026-10-22:0:39824512630",
-    "status": "resolved",
-    "account": "sabedoria-kids",
-    "date": "2026-10-22",
-    "slotIndex": 0,
-    "scheduledAt": "2026-10-22T10:00:00.000Z",
-    "scheduledPostId": null,
-    "failedAt": "2026-10-22T17:39:21.935Z",
-    "workflowRun": "39824512630",
-    "workflowName": "Instagram Sabedoria Kids",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/39824512630",
-    "stage": "bible-content-selection",
-    "error": "Conteúdo bíblico ilustrado inédito esgotado. Adicione novas pautas revisadas com imagens; nenhum conteúdo genérico será publicado.",
-    "solution": "Adicionar pautas bíblicas inéditas com ilustrações revisadas em todos os cartões, Story e créditos. O vigia retoma o horário pendente após a revisão; não repetir posts, voltar a cartões vazios ou renovar token por esse erro de conteúdo.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-10-22-143921.json",
-    "resolvedAt": "2026-10-22T17:57:42.463Z",
-    "resolvedRun": "39826945498"
-  },
-  {
     "key": "sabedoria-kids:2026-10-22:0:39824735834",
     "status": "resolved",
     "account": "sabedoria-kids",
@@ -885,5 +866,22 @@
     "error": "Graph GET /17841404470203300 failed [400]: {\"error\":{\"message\":\"You cannot access the app till you log in to www.facebook.com and follow the instructions given.\",\"type\":\"OAuthException\",\"code\":190,\"error_data\":\"{\\\"checkpoint_url\\\":\\\"https:\\\\\\/\\\\\\/www.facebook.com\\\"}\",\"error_subcode\":459,\"fbtrace_id\":\"AmT6QE2rBaDH53yNIkzHuwD\"}}",
     "solution": "Gerar novo token Meta/Instagram, atualizar o secret da conta no Vercel e no GitHub, depois rodar validar acessos no painel.",
     "failurePath": "automation/instagram-template/runs/failure-2026-10-23-135942.json"
+  },
+  {
+    "key": "cliente-x:2026-10-22:4:39996381707",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-10-22",
+    "slotIndex": 4,
+    "scheduledAt": "2026-10-22T15:10:00.000Z",
+    "scheduledPostId": null,
+    "failedAt": "2026-10-23T17:37:28.646Z",
+    "workflowRun": "39996381707",
+    "workflowName": "Instagram Watchdog Backup",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/39996381707",
+    "stage": "Graph GET /17841404470203300",
+    "error": "Graph GET /17841404470203300 failed [400]: {\"error\":{\"message\":\"You cannot access the app till you log in to www.facebook.com and follow the instructions given.\",\"type\":\"OAuthException\",\"code\":190,\"error_data\":\"{\\\"checkpoint_url\\\":\\\"https:\\\\\\/\\\\\\/www.facebook.com\\\"}\",\"error_subcode\":459,\"fbtrace_id\":\"A1mRmz6-8Ps67I3RyLfDEPa\"}}",
+    "solution": "Gerar novo token Meta/Instagram, atualizar o secret da conta no Vercel e no GitHub, depois rodar validar acessos no painel.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-10-23-143728.json"
   }
 ]
