@@ -88127,6 +88127,162 @@
         },
         "editorialVariant": 1
       }
+    },
+    {
+      "feedFingerprint": "051fb5256e7062290e3ef89eae0e885bda3989b27f2959004d5efa330978bd17",
+      "storyFingerprint": "051fb5256e7062290e3ef89eae0e885bda3989b27f2959004d5efa330978bd17",
+      "storyContentKind": "news",
+      "storyCoverTitle": "TechCrunch Disrupt 2026: O Último Dia e os Rumos da Indústria de IA",
+      "captionFingerprint": "54a2ab91d0a14637909beabef14679da586b38eb3554c6cd3322921a748bb69c",
+      "coverTitle": "TechCrunch Disrupt 2026: O Último Dia e os Rumos da Indústria de IA",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-06.png",
+      "avatarRotationStart": 9,
+      "publishedAt": "2026-10-24T21:01:57.298Z",
+      "slotDate": "2026-10-24",
+      "slotIndex": 3,
+      "scheduledAt": "2026-10-24T14:50:00.000Z",
+      "workflowRun": "40132198978",
+      "mediaId": "18093002246688097",
+      "storyMediaId": "18173516386461346",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18093002246688097/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AgiyQedmKyVe7C9Qap6Tjay\"}}",
+      "permalink": "https://www.instagram.com/p/De5DPc3Fya0/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Nossa IA",
+          "sourceUrl": "https://nossa.ia.br/noticia/techcrunch-disrupt-2026-o-ultimo-dia-e-os-rumos-da-industria-de-ia/",
+          "sourceTitle": "TechCrunch Disrupt 2026: O Último Dia e os Rumos da Indústria de IA",
+          "imageUrl": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80",
+          "imageSourcePageUrl": "https://nossa.ia.br/noticia/techcrunch-disrupt-2026-o-ultimo-dia-e-os-rumos-da-industria-de-ia/",
+          "imageCredit": "Nossa IA",
+          "imageEvidence": "Main image metadata of the selected article.",
+          "imageHash": "dda9f54d80068ec1d0ccdf14637f77661bf99490a89741feb576811a6c006396",
+          "perceptualHash": "0000110001101001000010001110111001100011110110101100101100100101011000010101101101100001110100010110010111010100011001001110101001011100101011100000010011110000101010110011000101110010001100110011101110010011001011111000011100101111100011110010110110010111",
+          "reusedRelevantImage": false,
+          "approvedRevisionImageReuse": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://nossa.ia.br/noticia/techcrunch-disrupt-2026-o-ultimo-dia-e-os-rumos-da-industria-de-ia/",
+        "slideCount": 3,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-24-180106-slot-3/visual-candidate-3/radar-slide-01.avif",
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Main image metadata of the selected article."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-24T20:02:52.206Z",
+        "ageHours": 0.97,
+        "freshness": "current",
+        "effectiveSamples": 177,
+        "effectiveReach": 4801,
+        "controlledSamples": 181,
+        "selectionModes": {
+          "exploit": 126,
+          "explore": 38,
+          "experiment": 17
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "growthMode": true,
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|midday|utility",
+        "decisionReasons": [
+          "titulo-legivel",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 7.42,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "claudeExperiment": null,
+      "education": null,
+      "research": {
+        "id": "e2021b4e17a6",
+        "source": "Nossa IA",
+        "sourceUrl": "https://nossa.ia.br/noticia/techcrunch-disrupt-2026-o-ultimo-dia-e-os-rumos-da-industria-de-ia/",
+        "sourceTitle": "TechCrunch Disrupt 2026: O Último Dia e os Rumos da Indústria de IA",
+        "sourceImageUrl": "",
+        "publishedAt": "2026-10-15T14:19:25.000Z",
+        "researchedAt": "2026-10-24T21:00:54.068Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Acompanhe os principais insights e o encerramento do TechCrunch Disrupt 2026, evento que reúne mais de 10 mil líderes tecnológicos para debater o futuro da inovação.",
+        "sourceFacts": [
+          "Acompanhe os principais insights e o encerramento do TechCrunch Disrupt 2026, evento que reúne mais de 10 mil líderes tecnológicos para debater o futuro da inovação."
+        ],
+        "coverage": {
+          "sourceFactCount": 1,
+          "coveredFactCount": 1,
+          "complete": false,
+          "scope": "feed-summary",
+          "reviewedAdaptation": false
+        },
+        "editorialVariant": 5
+      }
     }
   ],
   "sabedoria-kids": [
