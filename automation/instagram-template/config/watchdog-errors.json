@@ -1,24 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-10-22:4:39990958253",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-10-22",
-    "slotIndex": 4,
-    "scheduledAt": "2026-10-22T15:10:00.000Z",
-    "scheduledPostId": null,
-    "failedAt": "2026-10-23T16:58:05.430Z",
-    "workflowRun": "39990958253",
-    "workflowName": "Instagram Feed Cliente X",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/39990958253",
-    "stage": "Graph GET /17841404470203300",
-    "error": "Graph GET /17841404470203300 failed [400]: {\"error\":{\"message\":\"You cannot access the app till you log in to www.facebook.com and follow the instructions given.\",\"type\":\"OAuthException\",\"code\":190,\"error_data\":\"{\\\"checkpoint_url\\\":\\\"https:\\\\\\/\\\\\\/www.facebook.com\\\"}\",\"error_subcode\":459,\"fbtrace_id\":\"ALE85Qu2L6YidypzinwjiT2\"}}",
-    "solution": "Gerar novo token Meta/Instagram, atualizar o secret da conta no Vercel e no GitHub, depois rodar validar acessos no painel.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-10-23-135805.json",
-    "resolvedAt": "2026-10-23T19:22:46.310Z",
-    "resolvedRun": "40009605938"
-  },
-  {
     "key": "cliente-x:2026-10-22:4:39991185070",
     "status": "resolved",
     "account": "cliente-x",
@@ -906,5 +887,22 @@
     "error": "Conteúdo bíblico ilustrado inédito esgotado. Adicione novas pautas revisadas com imagens; nenhum conteúdo genérico será publicado.",
     "solution": "Adicionar pautas bíblicas inéditas com ilustrações revisadas em todos os cartões, Story e créditos. O vigia retoma o horário pendente após a revisão; não repetir posts, voltar a cartões vazios ou renovar token por esse erro de conteúdo.",
     "failurePath": "automation/instagram-template/runs/failure-2026-10-24-135024.json"
+  },
+  {
+    "key": "cliente-x:2026-10-24:3:40116834951",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-10-24",
+    "slotIndex": 3,
+    "scheduledAt": "2026-10-24T14:50:00.000Z",
+    "scheduledPostId": null,
+    "failedAt": "2026-10-24T17:37:25.062Z",
+    "workflowRun": "40116834951",
+    "workflowName": "Instagram Watchdog Backup",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/40116834951",
+    "stage": "content-selection",
+    "error": "Radar visual sem foto inédita e reserva autoral esgotada. Nenhuma publicação repetida foi enviada; consulte visual-selection.json.",
+    "solution": "A reposição automática com Claude tenta criar e revisar conteúdo inédito para recuperar este horário. Se a cota diária terminou, aguarda a renovação e retoma pelo agendamento, sem botão ou pedido manual. O vigia só publica após aprovação factual, visual e contra repetição; o alerta permanece aberto até a publicação confirmada.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-10-24-143724.json"
   }
 ]
