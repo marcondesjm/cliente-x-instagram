@@ -3,8 +3,8 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "blocked",
-  "message": "Falha ou resposta não verificável do provedor. Sem nova tentativa paga automática.",
+  "health": "pilot_running",
+  "message": "Piloto diagnóstico da pauta kids-biblia-01 em execução; reposição recorrente permanece bloqueada.",
   "policy": {
     "maxCallsPerDay": 250,
     "maxInputTokensPerCall": 120000,
@@ -7926,8 +7926,8 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-26T20:44:14.239Z",
-  "lastRun": "40397031648",
+  "checkedAt": "2026-10-26T21:46:03.204Z",
+  "lastRun": "40406959366",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -11929,14 +11929,13 @@
   },
   "reasoningModel": "claude-sonnet-4.6",
   "pilotRun": {
-    "id": "fa342214-458b-456a-87e3-7fbb81b76fc6",
-    "packId": "kids-biblia-20",
-    "status": "rejected",
-    "startedAt": "2026-10-21T13:10:08.197Z",
-    "expiresAt": "2026-10-21T13:35:08.197Z",
+    "id": "6c46cb1e-4f8c-4d48-8ca4-85ab6879d0f4",
+    "packId": "kids-biblia-01",
+    "status": "running",
+    "startedAt": "2026-10-26T21:46:03.204Z",
+    "expiresAt": "2026-10-26T22:11:03.204Z",
     "maxCalls": 10,
-    "maxInputTokens": 1200000,
-    "completedAt": "2026-10-21T13:12:24.845Z"
+    "maxInputTokens": 1200000
   },
   "activationEvidence": {
     "checkedAt": "2026-10-18T15:01:37.215Z",
@@ -11975,8 +11974,8 @@
   },
   "economy": {
     "reusedPixelReads": 0,
-    "newPixelReads": 12,
+    "newPixelReads": 0,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-26T20:44:14.239Z"
+    "checkedAt": "2026-10-26T21:46:03.204Z"
   }
 }
