@@ -852,7 +852,7 @@
     {
       "id": "bb9fcfa7-7e2b-45f7-91cc-440897728bc2",
       "day": "2026-10-26",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-distinct",
       "startedAt": "2026-10-26T20:21:42.725Z",
       "images": [
@@ -866,7 +866,12 @@
           "sha256": "5deb818f6dba6ea2d625eb2e92a157a12599151861f70fa2d6ce80102df818b9",
           "bytes": 45919
         }
-      ]
+      ],
+      "completedAt": "2026-10-26T20:21:55.209Z",
+      "reportedInputTokens": 31186,
+      "inputTokens": 31186,
+      "outputTokens": 49,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -1205,7 +1210,7 @@
   "circuit": null,
   "health": "blocked",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-26T20:21:42.725Z",
+  "checkedAt": "2026-10-26T20:21:55.209Z",
   "workflowRun": "40394818249",
   "summary": [
     {
@@ -1494,21 +1499,15 @@
     ]
   },
   "visualDiversity": {
-    "version": "visual-diversity-v1",
+    "version": "visual-diversity-v2",
     "model": "claude-sonnet-4.6",
-    "checkedAt": "2026-10-26T19:54:11.919Z",
+    "checkedAt": "2026-10-26T20:21:55.209Z",
     "cases": [
       {
         "expected": true,
         "distinct": true,
-        "reason": "As duas imagens apresentam enquadramentos e composições visualmente diferentes: a Cena 1 mostra a figura na árvore de costas com o rosto oculto e uma multidão vista por trás em primeiro plano; a Cena 2 mostra a mesma figura na árvore de frente, com expressão visível, e inclui um personagem em destaque no canto inferior esquerdo olhando para cima. As posições dos personagens, ângulos de câmera e elementos em primeiro plano são concretamente distintos entre as ilustrações.",
+        "reason": "A Cena 2 não é um espelhamento nem um recorte da Cena 1: o ângulo de câmera muda drasticamente (a Cena 1 mostra a figura na árvore vista de costas com a multidão em primeiro plano; a Cena 2 traz um close frontal do homem sentado no galho com outro personagem em primeiro plano olhando para cima). Há também mudança na ação representada (subir vs. estar sentado) e nos participantes visíveis, configurando composição nova.",
         "passed": true
-      },
-      {
-        "expected": false,
-        "distinct": true,
-        "reason": "As duas imagens mostram o mesmo personagem subindo na mesma árvore com a mesma multidão abaixo, mas o enquadramento é espelhado horizontalmente: na Cena 1 a árvore está posicionada à direita do quadro e o edifício ao fundo fica à esquerda; na Cena 2 a árvore está à esquerda e o edifício ao fundo fica à direita. A composição espacial dos elementos (árvore, pessoa, edifício, tenda vermelha e multidão) foi invertida lateralmente, configurando um espelhamento concreto da ilustração original.",
-        "passed": false
       }
     ]
   },
