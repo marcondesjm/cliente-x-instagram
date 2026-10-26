@@ -88946,6 +88946,159 @@
         },
         "editorialVariant": 0
       }
+    },
+    {
+      "feedFingerprint": "e96352ecef189ff4397d2b4e0e1271393fb32ee639e628103886ed95bc57b1ce",
+      "storyFingerprint": "e96352ecef189ff4397d2b4e0e1271393fb32ee639e628103886ed95bc57b1ce",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Anthropic prepara IPO de até US$ 1,75 trilhão e testa apetite de Wall Street por IA",
+      "captionFingerprint": "3b84af4121e428c5241cc48fad781bdd253d5606a24ae8e40239fa69b21e48ea",
+      "coverTitle": "Anthropic prepara IPO de até US$ 1,75 trilhão e testa apetite de Wall Street por IA",
+      "coverAvatar": "docs/uploads/avatar-marcondes-rotation-03.png",
+      "avatarRotationStart": 6,
+      "publishedAt": "2026-10-26T14:37:35.368Z",
+      "slotDate": "2026-10-26",
+      "slotIndex": 0,
+      "scheduledAt": "2026-10-26T09:30:00.000Z",
+      "workflowRun": "40340691281",
+      "mediaId": "18181969045430579",
+      "storyMediaId": "17932413780164038",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18181969045430579/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"Atc-9UjkfijBiQoycN236Z3\"}}",
+      "permalink": "https://www.instagram.com/reel/De9gziIAt8V/",
+      "reelDurationSeconds": 13.7,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Exame",
+          "sourceUrl": "https://exame.com/exame-in/anthropic-prepara-ipo-de-ate-us-175-trilhao-e-testa-apetite-de-wall-street-por-ia/",
+          "sourceTitle": "Anthropic prepara IPO de até US$ 1,75 trilhão e testa apetite de Wall Street por IA",
+          "imageUrl": "https://classic.exame.com/wp-content/uploads/2025/09/Dario-Amodei.jpg",
+          "imageSourcePageUrl": "https://exame.com/exame-in/anthropic-prepara-ipo-de-ate-us-175-trilhao-e-testa-apetite-de-wall-street-por-ia/",
+          "imageCredit": "Exame",
+          "imageEvidence": "Main image metadata of the selected article.",
+          "imageHash": "a54d5598fce4f346fcc6c5e6541819f28ead05c1f8be2a1ebbae8cfc38ef5225",
+          "perceptualHash": "0000001111110110000000001111001000000000101110110000000110101011000000010000100111100001000110110111000101001111101100001010111100110000110001111010000100001111101000110001101110100111000110000110111110001100001110011000111000011100000011100001101001001110",
+          "reusedRelevantImage": false,
+          "approvedRevisionImageReuse": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://exame.com/exame-in/anthropic-prepara-ipo-de-ate-us-175-trilhao-e-testa-apetite-de-wall-street-por-ia/",
+        "slideCount": 3,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-26-113532-slot-0/visual-candidate-1/radar-slide-01.webp",
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Main image metadata of the selected article."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-26T07:49:44.400Z",
+        "ageHours": 6.76,
+        "freshness": "stale",
+        "effectiveSamples": 182,
+        "effectiveReach": 5312,
+        "controlledSamples": 186,
+        "selectionModes": {
+          "exploit": 129,
+          "explore": 40,
+          "experiment": 17
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": false,
+        "operatingMode": "editorial-fallback",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "morning",
+        "objective": "utility",
+        "primarySignal": "salvamentos",
+        "growthMode": true,
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|morning|utility",
+        "decisionReasons": [
+          "titulo-legivel",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente"
+        ],
+        "fatiguePenalty": 8.6,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "claudeExperiment": null,
+      "education": null,
+      "research": {
+        "id": "9eca7e6eb6d7",
+        "source": "Exame",
+        "sourceUrl": "https://exame.com/exame-in/anthropic-prepara-ipo-de-ate-us-175-trilhao-e-testa-apetite-de-wall-street-por-ia/",
+        "sourceTitle": "Anthropic prepara IPO de até US$ 1,75 trilhão e testa apetite de Wall Street por IA",
+        "sourceImageUrl": "",
+        "publishedAt": "2026-10-26T11:00:34.000Z",
+        "researchedAt": "2026-10-26T14:35:20.094Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Dona do Claude divulga prospecto para abrir capital ainda em novembro, em meio a dúvidas sobre o retorno dos investimentos bilionários em inteligência artificial",
+        "sourceFacts": [
+          "Dona do Claude divulga prospecto para abrir capital ainda em novembro, em meio a dúvidas sobre o retorno dos investimentos bilionários em inteligência artificial"
+        ],
+        "coverage": {
+          "sourceFactCount": 1,
+          "coveredFactCount": 1,
+          "complete": false,
+          "scope": "feed-summary",
+          "reviewedAdaptation": false
+        },
+        "editorialVariant": 1
+      }
     }
   ],
   "sabedoria-kids": [
