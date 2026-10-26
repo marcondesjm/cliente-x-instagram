@@ -816,7 +816,7 @@
     {
       "id": "f9ed34cf-f677-428f-a24c-6273d95028d7",
       "day": "2026-10-26",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-mirror",
       "startedAt": "2026-10-26T19:54:02.216Z",
       "images": [
@@ -830,7 +830,12 @@
           "sha256": "0881776f99cc2d4ceaeca8929b84afdccf60642f9b649c4f273540d3b62102f0",
           "bytes": 46048
         }
-      ]
+      ],
+      "completedAt": "2026-10-26T19:54:11.919Z",
+      "reportedInputTokens": 31159,
+      "inputTokens": 31159,
+      "outputTokens": 27,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -1169,7 +1174,7 @@
   "circuit": null,
   "health": "awaiting_retest",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-26T19:54:02.216Z",
+  "checkedAt": "2026-10-26T19:54:11.919Z",
   "workflowRun": "40390521366",
   "summary": [
     {
@@ -1468,13 +1473,19 @@
   "visualDiversity": {
     "version": "visual-diversity-v1",
     "model": "claude-sonnet-4.6",
-    "checkedAt": "2026-10-26T19:53:59.513Z",
+    "checkedAt": "2026-10-26T19:54:11.919Z",
     "cases": [
       {
         "expected": true,
         "distinct": true,
         "reason": "As duas imagens apresentam enquadramentos e composições visualmente diferentes: a Cena 1 mostra a figura na árvore de costas com o rosto oculto e uma multidão vista por trás em primeiro plano; a Cena 2 mostra a mesma figura na árvore de frente, com expressão visível, e inclui um personagem em destaque no canto inferior esquerdo olhando para cima. As posições dos personagens, ângulos de câmera e elementos em primeiro plano são concretamente distintos entre as ilustrações.",
         "passed": true
+      },
+      {
+        "expected": false,
+        "distinct": true,
+        "reason": "As duas imagens mostram o mesmo personagem subindo na mesma árvore com a mesma multidão abaixo, mas o enquadramento é espelhado horizontalmente: na Cena 1 a árvore está posicionada à direita do quadro e o edifício ao fundo fica à esquerda; na Cena 2 a árvore está à esquerda e o edifício ao fundo fica à direita. A composição espacial dos elementos (árvore, pessoa, edifício, tenda vermelha e multidão) foi invertida lateralmente, configurando um espelhamento concreto da ilustração original.",
+        "passed": false
       }
     ]
   },
