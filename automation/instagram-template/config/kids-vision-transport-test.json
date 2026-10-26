@@ -876,7 +876,7 @@
     {
       "id": "e4f0e8bf-b18e-438e-9aba-49d57d90b560",
       "day": "2026-10-26",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-mirror",
       "startedAt": "2026-10-26T20:21:57.668Z",
       "images": [
@@ -890,7 +890,12 @@
           "sha256": "0881776f99cc2d4ceaeca8929b84afdccf60642f9b649c4f273540d3b62102f0",
           "bytes": 46048
         }
-      ]
+      ],
+      "completedAt": "2026-10-26T20:22:10.430Z",
+      "reportedInputTokens": 31229,
+      "inputTokens": 31229,
+      "outputTokens": 34,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -1229,7 +1234,7 @@
   "circuit": null,
   "health": "blocked",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-26T20:21:57.668Z",
+  "checkedAt": "2026-10-26T20:22:10.430Z",
   "workflowRun": "40394818249",
   "summary": [
     {
@@ -1520,12 +1525,18 @@
   "visualDiversity": {
     "version": "visual-diversity-v2",
     "model": "claude-sonnet-4.6",
-    "checkedAt": "2026-10-26T20:21:55.209Z",
+    "checkedAt": "2026-10-26T20:22:10.430Z",
     "cases": [
       {
         "expected": true,
         "distinct": true,
         "reason": "A Cena 2 não é um espelhamento nem um recorte da Cena 1: o ângulo de câmera muda drasticamente (a Cena 1 mostra a figura na árvore vista de costas com a multidão em primeiro plano; a Cena 2 traz um close frontal do homem sentado no galho com outro personagem em primeiro plano olhando para cima). Há também mudança na ação representada (subir vs. estar sentado) e nos participantes visíveis, configurando composição nova.",
+        "passed": true
+      },
+      {
+        "expected": false,
+        "distinct": false,
+        "reason": "A segunda imagem é uma versão espelhada horizontalmente da primeira. Na Cena 1, o homem na árvore está posicionado no lado direito com o tronco inclinado para a direita, e o edifício com janela arqueada aparece à esquerda ao fundo. Na Cena 2, o homem na árvore está no lado esquerdo com o tronco inclinado para a esquerda, e o edifício com janela arqueada aparece à direita ao fundo. Todos os demais elementos — multidão em primeiro plano, tenda vermelha, folhagem verde, paleta de cores e estilo de ilustração — são idênticos, apenas invertidos lateralmente. Trata-se exclusivamente de espelhamento horizontal, sem mudança de ação, participantes, ângulo ou composição substancial.",
         "passed": true
       }
     ]
