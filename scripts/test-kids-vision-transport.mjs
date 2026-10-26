@@ -38,7 +38,7 @@ try {
     state.entries=state.entries.filter(e=>e.id!==id);state.entries.push({id,mode:mode.id,fixture:fixture.id,model:mode.model,passed,value,...(r.value===null?{responseExcerpt:r.invalidResponseText}:{}),expected:fixture.expected,checkedAt:new Date().toISOString(),sourceUrl:fixture.scene.imageUrl,imageHash:call.imageHash});
     if(blocked)state.circuit='invalid_usage_receipt';save();if(blocked)throw new Error('Recibo inválido no diagnóstico.');
   }
-  if(state.visualDiversity?.version!=='visual-diversity-v1' || Date.now()-Date.parse(state.visualDiversity?.checkedAt || 0)>=24*60*60*1000) {
+  if(state.visualDiversity?.version!=='visual-diversity-v2' || Date.now()-Date.parse(state.visualDiversity?.checkedAt || 0)>=24*60*60*1000) {
     const originals=await Promise.all([source.scenes[3],source.scenes[4]].map(async s=>{const r=await fetch(s.imageUrl,{redirect:'error',signal:AbortSignal.timeout(25000)});if(!r.ok)throw new Error('Fonte do teste de composição indisponível.');return Buffer.from(await r.arrayBuffer());}));
     const cases=[];
     for(const expected of [true,false]) {
@@ -46,11 +46,11 @@ try {
       const images=await labelledReviewImages(raw.map(bytes=>({bytes,id:randomUUID().replaceAll('-','').slice(0,16)})));
       const day=callAllowance(state),call={id:randomUUID(),day,status:'reserved',stage:expected?'diversity-distinct':'diversity-mirror',startedAt:new Date().toISOString(),images:reviewImageManifest(images)};state.calls.push(call);save();
       let result;
-      try {result=await sendVision({key,model:'claude-sonnet-4.6',images,prompt:'Compare SOMENTE os pixels das duas imagens individuais. distinct=false se representam o mesmo desenho, inclusive espelho, recorte ou compressão diferente. distinct=true se são ilustrações com ações, posições ou enquadramentos concretamente diferentes. O mesmo personagem, lugar ou tema não significa duplicação. Descreva a diferença visual concreta sem presumir história ou referência bíblica. Se não puder ver ambas, distinct=false e explique.',schema:{type:'object',additionalProperties:false,required:['distinct','reason'],properties:{distinct:{type:'boolean'},reason:{type:'string',minLength:12,maxLength:500}}},forceTool:true,maxOutputTokens:700});}
+      try {result=await sendVision({key,model:'claude-sonnet-4.6',images,prompt:'Compare as DUAS imagens para decidir se a segunda é uma composição realmente nova. distinct=false se a segunda for a mesma ilustração que a primeira transformada apenas por espelhamento horizontal, recorte, redimensionamento ou compressão. Num espelhamento horizontal, objetos e pessoas trocam de lado, mas continuam sendo a mesma cena; isso NÃO é diversidade. distinct=true SOMENTE se houver mudança visual substancial além dessas transformações, como outra ação, participantes, ângulo ou composição. Se a segunda for a versão espelhada da primeira, responda obrigatoriamente distinct=false. Descreva a diferença visual concreta sem presumir história ou referência bíblica. Se não puder ver ambas, distinct=false e explique.',schema:{type:'object',additionalProperties:false,required:['distinct','reason'],properties:{distinct:{type:'boolean'},reason:{type:'string',minLength:12,maxLength:500}}},forceTool:true,maxOutputTokens:700});}
       catch(error){call.status='failed';call.completedAt=new Date().toISOString();state.circuit='request_failed';save();throw new Error('Teste de composição interrompido; sem repetição automática.');}
       const {blocked,...usage}=normalizeProviderUsage(result.usage,state.policy,state.billingMode);Object.assign(call,{status:'completed',completedAt:new Date().toISOString(),...usage});
       cases.push({expected,distinct:result.value?.distinct,reason:result.value?.reason,passed:!blocked && result.value?.distinct===expected && typeof result.value?.reason==='string' && result.value.reason.length>=12});
-      state.visualDiversity={version:'visual-diversity-v1',model:'claude-sonnet-4.6',checkedAt:new Date().toISOString(),cases};save();
+      state.visualDiversity={version:'visual-diversity-v2',model:'claude-sonnet-4.6',checkedAt:new Date().toISOString(),cases};save();
       if(blocked)throw new Error('Recibo do teste de composição inválido.');
     }
   }
