@@ -3,8 +3,8 @@
   "enabled": true,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "blocked",
-  "message": "Conferência de composições distintas/espelhadas ausente ou reprovada.",
+  "health": "awaiting_candidates",
+  "message": "0 pauta(s) examinada(s); somente seleções aprovadas seguem para montagem.",
   "policy": {
     "maxCallsPerDay": 250,
     "maxInputTokensPerCall": 120000,
@@ -7663,8 +7663,8 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-26T20:24:10.321Z",
-  "lastRun": "40395189140",
+  "checkedAt": "2026-10-26T20:27:43.321Z",
+  "lastRun": "40395703151",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -11293,7 +11293,7 @@
     }
   },
   "accuracyGate": {
-    "checkedAt": "2026-10-21T20:11:34.922Z",
+    "checkedAt": "2026-10-26T20:27:41.821Z",
     "visualCases": 4,
     "factualCases": 6,
     "diversityCases": 2,
@@ -11310,13 +11310,13 @@
     "target": 12,
     "available": 0,
     "shortfall": 12,
-    "checkedAt": "2026-10-26T20:24:10.320Z"
+    "checkedAt": "2026-10-26T20:27:41.820Z"
   },
   "economy": {
     "reusedPixelReads": 0,
     "newPixelReads": 0,
-    "skippedCandidates": 0,
-    "checkedAt": "2026-10-26T20:24:10.321Z"
+    "skippedCandidates": 13,
+    "checkedAt": "2026-10-26T20:27:43.321Z"
   },
   "retryAfter": "2026-10-21T14:12:19.360Z"
 }
