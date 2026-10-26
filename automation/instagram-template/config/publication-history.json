@@ -89099,6 +89099,165 @@
         },
         "editorialVariant": 1
       }
+    },
+    {
+      "feedFingerprint": "6532f465d0392668ff850354071bc876ed7adcbbbfe75e0c4317648679fbecdb",
+      "storyFingerprint": "6532f465d0392668ff850354071bc876ed7adcbbbfe75e0c4317648679fbecdb",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Itaú compra startup de IA por R$ 2,9 bilhões",
+      "captionFingerprint": "43f06395e1f64b70737f9d1772c2257f9392e2f1b0248a44128c609c625c54dd",
+      "coverTitle": "Itaú compra startup de IA por R$ 2,9 bilhões",
+      "coverAvatar": "docs/uploads/avatar-marcondes-office-laptop.png",
+      "avatarRotationStart": 0,
+      "publishedAt": "2026-10-26T15:50:41.655Z",
+      "slotDate": "2026-10-26",
+      "slotIndex": 1,
+      "scheduledAt": "2026-10-26T11:10:00.000Z",
+      "workflowRun": "40352816909",
+      "mediaId": "18139462969634690",
+      "storyMediaId": "18077539313741417",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18139462969634690/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"A62atUCxhINqPs5rBZfA8NQ\"}}",
+      "permalink": "https://www.instagram.com/p/De9pOECFxU7/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Tecnoblog",
+          "sourceUrl": "https://tecnoblog.net/noticias/itau-compra-startup-de-ia-por-r-29-bilhoes/",
+          "sourceTitle": "Itaú compra startup de IA por R$ 2,9 bilhões",
+          "imageUrl": "https://files.tecnoblog.net/wp-content/uploads/2024/11/capa-itau-edited.png",
+          "imageSourcePageUrl": "https://tecnoblog.net/noticias/itau-compra-startup-de-ia-por-r-29-bilhoes/",
+          "imageCredit": "Tecnoblog",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "5920bd9246394d428568e9cb026406e799a9cbc0c64dcc4ecdd80e693211731e",
+          "perceptualHash": "0001000000010101100100000000010111000000110000111110000011100010011000000111001001110000001100010111000000110001011100001111000001110010011100000111000110110000011100100111000001110000011100011111000011100001111100001100001011110000000000111111000000000011",
+          "reusedRelevantImage": false,
+          "approvedRevisionImageReuse": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://tecnoblog.net/noticias/itau-compra-startup-de-ia-por-r-29-bilhoes/",
+        "slideCount": 3,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-26-124919-slot-1/visual-candidate-1/radar-slide-01.webp",
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-26T15:13:23.993Z",
+        "ageHours": 0.6,
+        "freshness": "current",
+        "effectiveSamples": 182,
+        "effectiveReach": 5312,
+        "controlledSamples": 186,
+        "selectionModes": {
+          "exploit": 129,
+          "explore": 40,
+          "experiment": 17
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "morning",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "growthMode": true,
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "FEED|morning|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "situacao-empresarial-reconhecivel",
+          "aplicacao-pratica-para-o-publico",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 8.04,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "claudeExperiment": null,
+      "education": null,
+      "research": {
+        "id": "e0bb5af028b6",
+        "source": "Tecnoblog",
+        "sourceUrl": "https://tecnoblog.net/noticias/itau-compra-startup-de-ia-por-r-29-bilhoes/",
+        "sourceTitle": "Itaú compra startup de IA por R$ 2,9 bilhões",
+        "sourceImageUrl": "https://files.tecnoblog.net/wp-content/uploads/2024/11/capa-itau-edited-340x191.png",
+        "publishedAt": "2026-10-26T15:21:54.000Z",
+        "researchedAt": "2026-10-26T15:49:05.269Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Banco já tinha participação na NeoSpace; negócio ainda depende de aprovação do Cade e do Banco Central. Itaú compra startup de IA por R$ 2,9 bilhões",
+        "sourceFacts": [
+          "Banco já tinha participação na NeoSpace; negócio ainda depende de aprovação do Cade e do Banco Central. Itaú compra startup de IA por R$ 2,9 bilhões"
+        ],
+        "coverage": {
+          "sourceFactCount": 1,
+          "coveredFactCount": 1,
+          "complete": false,
+          "scope": "feed-summary",
+          "reviewedAdaptation": false
+        },
+        "editorialVariant": 0
+      }
     }
   ],
   "sabedoria-kids": [
