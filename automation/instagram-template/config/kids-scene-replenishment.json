@@ -7760,11 +7760,14 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-26T20:41:08.087Z",
-      "status": "reserved",
+      "status": "failed",
       "payloadBytes": 0,
       "promptChars": 14709,
       "imageFingerprint": null,
-      "promptFingerprint": "8bfeb107cca59f0ee3afba481f8d3f91c9e66df081e59c8f329a9afecd5c3630"
+      "promptFingerprint": "8bfeb107cca59f0ee3afba481f8d3f91c9e66df081e59c8f329a9afecd5c3630",
+      "completedAt": "2026-10-26T20:44:10.753Z",
+      "httpStatus": null,
+      "error": "The operation was aborted due to timeout"
     }
   ],
   "entries": [
@@ -7921,9 +7924,9 @@
     "passed": true,
     "challengeHash": "695b8e040e170590676379d497155343c47a297353bad9921ba60f57ff3e5602"
   },
-  "circuit": null,
+  "circuit": "provider_temporarily_unavailable",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-26T20:41:08.088Z",
+  "checkedAt": "2026-10-26T20:44:10.753Z",
   "lastRun": "40397031648",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -11973,7 +11976,7 @@
     "reusedPixelReads": 0,
     "newPixelReads": 12,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-26T20:41:08.087Z"
+    "checkedAt": "2026-10-26T20:44:10.753Z"
   },
-  "retryAfter": "2026-10-21T14:12:19.360Z"
+  "retryAfter": "2026-10-26T21:44:10.753Z"
 }
