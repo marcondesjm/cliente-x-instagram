@@ -8062,11 +8062,18 @@
       "maxOutputTokens": 700,
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-27T22:08:38.419Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 73894,
       "promptChars": 793,
       "imageFingerprint": "b9300a6e938f89b9baaeda87baec5addcaf37a58a076513344e4d9037d423057",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-27T22:08:46.888Z",
+      "reportedInputTokens": 25111,
+      "reportedOutputTokens": 1,
+      "inputTokens": 25111,
+      "outputTokens": 1,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -8225,7 +8232,7 @@
   },
   "circuit": "invalid_usage_receipt",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-27T22:08:38.419Z",
+  "checkedAt": "2026-10-27T22:08:46.888Z",
   "lastRun": "40592337121",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -8537,12 +8544,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-02:c41c374435a2c878",
+    "stage": "pixels:kids-biblia-02:650459f562056db8",
     "value": {
       "visible": true,
-      "style": "photo",
-      "childSuitable": true,
-      "observedEvent": "Imagem abstrata mostrando uma superfície texturizada com gradiente de cores que vai do preto no canto inferior esquerdo para tons de verde-azulado e branco brilhante no canto superior direito, sem figuras ou objetos identificáveis."
+      "style": "illustration",
+      "childSuitable": false,
+      "observedEvent": "Um homem sem camisa está sentado ou agachado entre grandes folhas verdes, com a mão direita apoiada na testa. A cena é uma ilustração em estilo de desenho com aquarela verde vibrante ao fundo e linhas pretas definindo os contornos das folhas e da figura."
     }
   },
   "lastFactualEvaluation": {
@@ -11898,7 +11905,7 @@
     "reusedPixelReads": 3,
     "newPixelReads": 1,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-27T22:08:38.419Z"
+    "checkedAt": "2026-10-27T22:08:46.888Z"
   },
   "recoveredUsageReceipt": {
     "callId": "8ce52181-2d91-44c9-827e-1e9d1857ae8f",
