@@ -8239,11 +8239,19 @@
       "maxOutputTokens": 700,
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-27T22:15:06.716Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 73894,
       "promptChars": 793,
       "imageFingerprint": "b9300a6e938f89b9baaeda87baec5addcaf37a58a076513344e4d9037d423057",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-27T22:15:14.558Z",
+      "reportedInputTokens": 25111,
+      "reportedOutputTokens": 1,
+      "inputTokens": 25111,
+      "outputTokens": 1,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use",
+      "responseParsed": true
     }
   ],
   "entries": [
@@ -8402,7 +8410,7 @@
   },
   "circuit": "invalid_usage_receipt",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-27T22:15:06.716Z",
+  "checkedAt": "2026-10-27T22:15:14.558Z",
   "lastRun": "40593209704",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -8714,12 +8722,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-02:c41c374435a2c878",
+    "stage": "pixels:kids-biblia-02:650459f562056db8",
     "value": {
       "visible": true,
-      "style": "unknown",
-      "childSuitable": true,
-      "observedEvent": "Imagem abstrata com gradiente diagonal de tons escuros em preto e verde-azulado na parte inferior esquerda transicionando para branco luminoso no canto superior direito, sem figuras, objetos ou ações identificáveis."
+      "style": "illustration",
+      "childSuitable": false,
+      "observedEvent": "Homem sem camisa com a mão na testa, posicionado atrás de grandes folhas verdes em um ambiente de vegetação densa, desenhado em estilo ilustrativo com traços e aquarela."
     }
   },
   "lastFactualEvaluation": {
@@ -12075,7 +12083,7 @@
     "reusedPixelReads": 3,
     "newPixelReads": 1,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-27T22:15:06.716Z"
+    "checkedAt": "2026-10-27T22:15:14.558Z"
   },
   "recoveredUsageReceipt": {
     "callId": "8ce52181-2d91-44c9-827e-1e9d1857ae8f",
