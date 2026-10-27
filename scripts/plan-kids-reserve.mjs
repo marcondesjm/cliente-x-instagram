@@ -19,6 +19,6 @@ const assemble=recipes.some(r=>{
  return e?.status!=='ready'||e.renderVerified!==true||e.recipeFingerprint!==hash(r)||e.packFingerprint!==hash(p)||!(Date.parse(e.verifiedAt)+86400000>Date.now())||(r.selected||[]).some(s=>!fs.existsSync(s.path)||hash(fs.readFileSync(s.path))!==s.sha256);
 });
 const remaining=remainingSceneBudget(state),manual=['calibrate','pilot','activate'].includes(process.env.REVIEW_MODE);
-const review=manual||state.enabled&&!state.circuit&&!state.calls.some(c=>c.status==='reserved')&&remaining.maxCallsPerDay>=3&&remaining.maxInputTokensPerDay>=3*remaining.maxInputTokensPerCall;
+const review=manual||state.enabled&&!state.circuit&&!state.calls.some(c=>c.status==='reserved')&&remaining.maxCallsPerDay>=3&&remaining.maxInputTokensPerDay>=3*remaining.maxInputTokensPerCall&&remaining.maxOutputTokensPerDay>=3*remaining.maxOutputTokensPerCall;
 if(process.env.GITHUB_OUTPUT)fs.appendFileSync(process.env.GITHUB_OUTPUT,`review=${review}\nassemble=${assemble}\n`);
-console.log(JSON.stringify({review,assemble,recoveredInterruptedCall,quotaMode:usesProviderQuota(state)?'provider':'internal',remainingCalls:Number.isFinite(remaining.maxCallsPerDay)?remaining.maxCallsPerDay:null,target:state.policy.readyStockTarget,paidCalls:0}));
+console.log(JSON.stringify({review,assemble,recoveredInterruptedCall,quotaMode:usesProviderQuota(state)?'provider':'internal',remainingCalls:Number.isFinite(remaining.maxCallsPerDay)?remaining.maxCallsPerDay:null,remainingOutputTokens:remaining.maxOutputTokensPerDay,target:state.policy.readyStockTarget,paidCalls:0}));

@@ -54,7 +54,7 @@ async function paidCall(stage,image,prompt,maxOutputTokens=2200,schema=null,allo
   const forceTool=Boolean(schema && (/^(pixels|select|verify|facts):/.test(stage) || stage==='calibration'));
   const plain=state.responseFormat==='json' && !forceTool;
   const manifest=Array.isArray(image)?reviewImageManifest(image):null;
-  const call={id:randomUUID(),...(state.pilotRun?.status==='running'?{pilotId:state.pilotRun.id}:{}),day,stage,model,responseFormat:forceTool?'forced_tool':plain?'json':'tool',startedAt:now(),status:'reserved',payloadBytes:manifest?manifest.reduce((n,s)=>n+s.bytes,0):image?.length || 0,promptChars:prompt.length,imageFingerprint:manifest?hash(manifest):image?hash(image):null,promptFingerprint:hash(prompt)};
+  const call={id:randomUUID(),...(state.pilotRun?.status==='running'?{pilotId:state.pilotRun.id}:{}),day,stage,model,maxOutputTokens,responseFormat:forceTool?'forced_tool':plain?'json':'tool',startedAt:now(),status:'reserved',payloadBytes:manifest?manifest.reduce((n,s)=>n+s.bytes,0):image?.length || 0,promptChars:prompt.length,imageFingerprint:manifest?hash(manifest):image?hash(image):null,promptFingerprint:hash(prompt)};
   state.calls.push(call);save();
   if(reviewCircuitBlocked(state)){call.status='cancelled_before_send';save();throw new Error('Bloqueio concorrente aplicado antes do envio à API.');}
   let result;
@@ -67,11 +67,13 @@ async function paidCall(stage,image,prompt,maxOutputTokens=2200,schema=null,allo
     if(transient)state.retryAfter=new Date(Date.now()+60*60*1000).toISOString();save();
     throw new Error('Falha ou resposta não verificável do provedor. Sem nova tentativa paga automática.');
   }
-  const {blocked,...receipt}=normalizeProviderUsage(result.usage,state.policy,state.billingMode);
+  const boundedStructuredTool=result.structured===true && result.stopReason==='tool_use' && result.value && typeof result.value==='object' && !Array.isArray(result.value) && state.billingMode==='fixed_plan_user_confirmed';
+  const {blocked,...receipt}=normalizeProviderUsage(result.usage,state.policy,state.billingMode,{allowZeroOutput:boundedStructuredTool});
   Object.assign(call,{status:'completed',completedAt:now(),...receipt,stopReason:result.stopReason || null});
   state.lastResponse={stage,value:JSON.parse(JSON.stringify(result.value).replaceAll(key,'[redacted]'))};
   if(blocked)state.circuit=receipt.inputTokens>state.policy.maxInputTokensPerCall?'input_usage_above_limit':'invalid_usage_receipt';
   save();
+  if(blocked)throw new Error('Consumo ou recibo fora do limite; reposição pausada automaticamente.');
   if(reviewCircuitBlocked(state))throw new Error('Consumo ou recibo fora do limite; reposição pausada automaticamente.');
   if(result.stopReason!=='end_turn' && !(result.stopReason==='tool_use' && result.structured===true))throw new Error('Avaliação incompleta; não aprovada.');
   if(result.value===null) {
