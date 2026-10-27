@@ -62,7 +62,7 @@ async function paidCall(stage,image,prompt,maxOutputTokens=2200,schema=null,allo
   catch(error) {
     call.status='failed';call.completedAt=now();call.httpStatus=Number.isInteger(error.httpStatus)?error.httpStatus:null;
     call.error=String(error.message).replaceAll(key,'[redacted]').slice(0,350);
-    const transient=error.httpStatus===429 || error.httpStatus>=500 || /timeout|aborted|fetch failed/i.test(error.message);
+    const transient=error.httpStatus===429 || error.httpStatus>=500 || /timeout|aborted|fetch failed|terminated/i.test(error.message);
     state.circuit=transient?'provider_temporarily_unavailable':'provider_response_unconfirmed';
     if(transient)state.retryAfter=new Date(Date.now()+60*60*1000).toISOString();save();
     throw new Error('Falha ou resposta não verificável do provedor. Sem nova tentativa paga automática.');

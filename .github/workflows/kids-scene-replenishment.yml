@@ -35,6 +35,7 @@ jobs:
     timeout-minutes: 25
     outputs:
       assembly_needed: ${{ steps.after.outputs.assemble }}
+      activation_candidate: ${{ steps.after.outputs.activation_candidate }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -62,8 +63,9 @@ jobs:
         env:
           KIDS_VISION_ANTHROPIC_API_KEY: ${{ secrets.KIDS_VISION_ANTHROPIC_API_KEY }}
           REVIEW_MODE: ${{ inputs.mode || 'replenish' }}
-          KIDS_SCENE_PILOT_PACK_ID: ${{ inputs.pilot_pack || '' }}
+          KIDS_SCENE_PILOT_PACK_ID: ${{ inputs.pilot_pack || steps.plan.outputs.recovery_pilot }}
           KIDS_SCENE_TARGET_PACK_ID: ${{ inputs.target_pack || '' }}
+          AUTOMATIC_RECOVERY_PILOT: ${{ steps.plan.outputs.recovery_pilot != '' }}
         run: |
           if [ "$REVIEW_MODE" = calibrate ]; then
             node scripts/replenish-kids-scenes.mjs --calibrate --persist
@@ -71,13 +73,19 @@ jobs:
             node scripts/replenish-kids-scenes.mjs --pilot --persist
           elif [ "$REVIEW_MODE" = activate ]; then
             node scripts/replenish-kids-scenes.mjs --activate --persist
+          elif [ "$AUTOMATIC_RECOVERY_PILOT" = true ]; then
+            node scripts/replenish-kids-scenes.mjs --pilot --persist
           else
             node scripts/replenish-kids-scenes.mjs --persist
           fi
       - name: Check whether approved scenes need assembly
         id: after
         if: success()
-        run: node scripts/plan-kids-reserve.mjs
+        env:
+          REVIEW_MODE: ${{ inputs.mode || 'replenish' }}
+        run: |
+          node scripts/plan-kids-reserve.mjs
+          node -e "const s=require('./automation/instagram-template/config/kids-scene-replenishment.json'); const r=require('./automation/instagram-template/config/kids-reviewed-scenes.json'); const yes=(process.env.REVIEW_MODE==='pilot'||process.env.REVIEW_MODE==='replenish')&&!s.enabled&&!s.circuit&&s.pilotRun?.status==='reviewed'&&r.some(x=>x.id===s.pilotRun.packId&&x.status==='automatically-reviewed'); if(process.env.GITHUB_OUTPUT)require('fs').appendFileSync(process.env.GITHUB_OUTPUT,'activation_candidate='+yes+'\\n')"
       - name: Save review evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -119,3 +127,26 @@ jobs:
             automation/instagram-template/runs/sabedoria-kids/
             automation/instagram-template/config/kids-scene-automation.json
           if-no-files-found: ignore
+  activate-after-render:
+    needs: [replenish, assemble]
+    if: >-
+      always() &&
+      needs.replenish.result == 'success' &&
+      needs.replenish.outputs.activation_candidate == 'true' &&
+      (needs.assemble.result == 'success' || needs.assemble.result == 'skipped')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Refresh rendered state
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git pull --rebase origin main
+      - run: npm ci --ignore-scripts
+      - name: Activate only after complete pilot, fresh diagnostics and render proofs
+        run: node scripts/replenish-kids-scenes.mjs --activate --persist
