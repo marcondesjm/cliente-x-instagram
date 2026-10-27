@@ -960,7 +960,7 @@
     {
       "id": "4162c417-ecf0-43b2-87b8-b8f77b26a2a2",
       "day": "2026-10-27",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-distinct",
       "startedAt": "2026-10-27T22:02:14.891Z",
       "images": [
@@ -974,7 +974,12 @@
           "sha256": "5deb818f6dba6ea2d625eb2e92a157a12599151861f70fa2d6ce80102df818b9",
           "bytes": 45919
         }
-      ]
+      ],
+      "completedAt": "2026-10-27T22:02:29.562Z",
+      "reportedInputTokens": 31186,
+      "inputTokens": 31186,
+      "outputTokens": 45,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -1313,7 +1318,7 @@
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-27T22:02:14.891Z",
+  "checkedAt": "2026-10-27T22:02:29.562Z",
   "workflowRun": "40591372739",
   "summary": [
     {
@@ -1604,18 +1609,12 @@
   "visualDiversity": {
     "version": "visual-diversity-v2",
     "model": "claude-sonnet-4.6",
-    "checkedAt": "2026-10-26T20:22:10.430Z",
+    "checkedAt": "2026-10-27T22:02:29.562Z",
     "cases": [
       {
         "expected": true,
         "distinct": true,
-        "reason": "A Cena 2 não é um espelhamento nem um recorte da Cena 1: o ângulo de câmera muda drasticamente (a Cena 1 mostra a figura na árvore vista de costas com a multidão em primeiro plano; a Cena 2 traz um close frontal do homem sentado no galho com outro personagem em primeiro plano olhando para cima). Há também mudança na ação representada (subir vs. estar sentado) e nos participantes visíveis, configurando composição nova.",
-        "passed": true
-      },
-      {
-        "expected": false,
-        "distinct": false,
-        "reason": "A segunda imagem é uma versão espelhada horizontalmente da primeira. Na Cena 1, o homem na árvore está posicionado no lado direito com o tronco inclinado para a direita, e o edifício com janela arqueada aparece à esquerda ao fundo. Na Cena 2, o homem na árvore está no lado esquerdo com o tronco inclinado para a esquerda, e o edifício com janela arqueada aparece à direita ao fundo. Todos os demais elementos — multidão em primeiro plano, tenda vermelha, folhagem verde, paleta de cores e estilo de ilustração — são idênticos, apenas invertidos lateralmente. Trata-se exclusivamente de espelhamento horizontal, sem mudança de ação, participantes, ângulo ou composição substancial.",
+        "reason": "A segunda imagem apresenta mudança substancial de composição: o personagem na árvore está virado de frente com braços abertos e rosto visível, enquanto na primeira ele aparece de costas subindo; há um novo participante em primeiro plano à esquerda (homem de barba longa olhando para cima) que não existe na Cena 1; o ângulo de câmera e o enquadramento dos personagens no chão são diferentes, configurando nova cena e não mera transformação geométrica da original.",
         "passed": true
       }
     ]
