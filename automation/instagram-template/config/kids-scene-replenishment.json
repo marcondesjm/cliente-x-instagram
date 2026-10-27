@@ -8017,11 +8017,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-27T21:46:25.901Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 8089,
       "imageFingerprint": null,
-      "promptFingerprint": "be9b7fb35e53223c6c339f652e75bb28b2472b98f4125231e1095790e8b5d055"
+      "promptFingerprint": "be9b7fb35e53223c6c339f652e75bb28b2472b98f4125231e1095790e8b5d055",
+      "completedAt": "2026-10-27T21:48:34.760Z",
+      "reportedInputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": 0,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "end_turn"
     }
   ],
   "entries": [
@@ -8178,9 +8184,9 @@
     "passed": true,
     "challengeHash": "695b8e040e170590676379d497155343c47a297353bad9921ba60f57ff3e5602"
   },
-  "circuit": null,
+  "circuit": "invalid_usage_receipt",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-27T21:46:25.901Z",
+  "checkedAt": "2026-10-27T21:48:34.760Z",
   "lastRun": "40589202325",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -8492,13 +8498,8 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-02:2b04b7a8787b1af2",
-    "value": {
-      "visible": true,
-      "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Ilustração de paisagem natural mostrando uma cadeia de montanhas verdes ao fundo, um corpo de água azul-turquesa com ondas na parte inferior e nuvens brancas no céu claro; sem pessoas, objetos artificiais ou ação narrativa visível."
-    }
+    "stage": "select:kids-biblia-02",
+    "value": null
   },
   "lastFactualEvaluation": {
     "packId": "kids-biblia-27",
@@ -11852,6 +11853,6 @@
     "reusedPixelReads": 1,
     "newPixelReads": 7,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-27T21:46:25.901Z"
+    "checkedAt": "2026-10-27T21:48:34.760Z"
   }
 }
