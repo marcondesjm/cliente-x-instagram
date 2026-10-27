@@ -8194,11 +8194,18 @@
       "maxOutputTokens": 8000,
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-27T22:09:54.198Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 0,
       "promptChars": 9987,
       "imageFingerprint": null,
-      "promptFingerprint": "3c83ad2de3e0daa1e236e0a6de54241c301f628e8c8be74a563b3dde5a8463ec"
+      "promptFingerprint": "3c83ad2de3e0daa1e236e0a6de54241c301f628e8c8be74a563b3dde5a8463ec",
+      "completedAt": "2026-10-27T22:11:25.888Z",
+      "reportedInputTokens": 0,
+      "reportedOutputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": null,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "end_turn"
     }
   ],
   "entries": [
@@ -8357,7 +8364,7 @@
   },
   "circuit": "invalid_usage_receipt",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-27T22:09:54.198Z",
+  "checkedAt": "2026-10-27T22:11:25.888Z",
   "lastRun": "40592337121",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -8669,13 +8676,8 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-02:35915e7312dd9883",
-    "value": {
-      "visible": true,
-      "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Duas árvores frutíferas de copas verdes e troncos grossos em primeiro plano, com frutos amarelos à esquerda e roxos à direita, sobre um campo verde e colinas amarelas ao fundo, em estilo ilustração colorida."
-    }
+    "stage": "select:kids-biblia-02",
+    "value": null
   },
   "lastFactualEvaluation": {
     "packId": "kids-biblia-27",
@@ -12030,7 +12032,7 @@
     "reusedPixelReads": 5,
     "newPixelReads": 7,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-27T22:09:54.198Z"
+    "checkedAt": "2026-10-27T22:11:25.888Z"
   },
   "recoveredUsageReceipt": {
     "callId": "8ce52181-2d91-44c9-827e-1e9d1857ae8f",
