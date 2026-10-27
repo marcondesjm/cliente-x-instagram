@@ -984,7 +984,7 @@
     {
       "id": "6bb6b4c5-ea06-4739-8490-5c276d0f5716",
       "day": "2026-10-27",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-mirror",
       "startedAt": "2026-10-27T22:02:31.218Z",
       "images": [
@@ -998,7 +998,12 @@
           "sha256": "0881776f99cc2d4ceaeca8929b84afdccf60642f9b649c4f273540d3b62102f0",
           "bytes": 46048
         }
-      ]
+      ],
+      "completedAt": "2026-10-27T22:02:41.125Z",
+      "reportedInputTokens": 31229,
+      "inputTokens": 31229,
+      "outputTokens": 39,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -1337,7 +1342,7 @@
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-27T22:02:31.218Z",
+  "checkedAt": "2026-10-27T22:02:41.125Z",
   "workflowRun": "40591372739",
   "summary": [
     {
@@ -1628,12 +1633,18 @@
   "visualDiversity": {
     "version": "visual-diversity-v2",
     "model": "claude-sonnet-4.6",
-    "checkedAt": "2026-10-27T22:02:29.562Z",
+    "checkedAt": "2026-10-27T22:02:41.125Z",
     "cases": [
       {
         "expected": true,
         "distinct": true,
         "reason": "A segunda imagem apresenta mudança substancial de composição: o personagem na árvore está virado de frente com braços abertos e rosto visível, enquanto na primeira ele aparece de costas subindo; há um novo participante em primeiro plano à esquerda (homem de barba longa olhando para cima) que não existe na Cena 1; o ângulo de câmera e o enquadramento dos personagens no chão são diferentes, configurando nova cena e não mera transformação geométrica da original.",
+        "passed": true
+      },
+      {
+        "expected": false,
+        "distinct": false,
+        "reason": "A segunda imagem é uma versão espelhada horizontalmente da primeira: o homem na árvore troca de lado (aparece à esquerda em vez de à direita), os espectadores no primeiro plano também invertem suas posições relativas, e o edifício com janela arqueada passa do lado esquerdo para o direito. Não há mudança de ação, participantes, ângulo de câmera ou composição — trata-se exclusivamente de um espelhamento horizontal da mesma ilustração original.",
         "passed": true
       }
     ]
