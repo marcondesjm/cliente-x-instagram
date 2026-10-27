@@ -3212,6 +3212,7 @@ export function anatexSlideHtml(slide, index, total, account, style, renderConte
     body main.authorial-business-art.reel-mode :is(.save-cue,.swipe-cue) {bottom:220px!important;}
     /* Licensed Bible illustrations keep the whole scene visible. */
     body main.bible-illustration.has-sector-photo .headline { position:absolute;left:58px;right:58px;top:180px;width:auto;max-width:964px;margin:0;font-size:66px;line-height:1.06;text-align:left; }
+    body main.bible-illustration.has-sector-photo.role-proof .headline::before {display:none!important;content:none!important;}
     body main.bible-illustration.has-sector-photo .note { left:58px;right:58px;top:365px;bottom:auto;width:auto;height:auto;min-height:0;max-width:964px;padding:22px 28px;transform:none; }
     body main.bible-illustration.has-sector-photo .note .lead, body main.bible-illustration.has-sector-photo .note .emphasis, body main.bible-illustration.has-sector-photo .note .close {font-size:30px;line-height:1.2;}
     body main.bible-illustration.has-sector-photo .context-photo {display:block;left:58px;right:58px;top:570px;width:auto;height:620px;transform:none;background-color:white;background-size:contain;border:0;border-radius:24px;opacity:1;box-shadow:none;}
@@ -4065,6 +4066,8 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
     main.authorial-illustration .visual-card {background-size:contain !important;background-color:#101b31;}
     main.bible-illustration h1 {position:absolute;left:72px;right:72px;top:420px;max-width:936px;margin:0;font-size:66px;line-height:1.08;text-align:left;}
     main.bible-illustration h1::before {display:none;}
+    main.bible-illustration .headline {margin:0;}
+    main.bible-illustration .headline::before {display:none;content:none;}
     main.bible-illustration p {position:absolute;left:72px;right:72px;top:610px;max-width:936px;margin:0;font-size:36px;line-height:1.2;text-align:left;}
     main.bible-illustration .feed-cta {position:absolute;left:72px;top:740px;margin:0;font-size:28px;}
     main.bible-illustration .visual-card {display:block;left:72px;right:72px;top:850px;width:auto;height:460px;background-color:white;background-size:contain;box-shadow:none;}
