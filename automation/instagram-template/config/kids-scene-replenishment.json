@@ -8216,11 +8216,19 @@
       "maxOutputTokens": 700,
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-27T22:14:56.445Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 50415,
       "promptChars": 793,
       "imageFingerprint": "42f1aa8b8944272b9a8ee642a77b5e7463952c7dc2e9bb65122025ee6a34465a",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-27T22:15:05.101Z",
+      "reportedInputTokens": 17284,
+      "reportedOutputTokens": 1,
+      "inputTokens": 17284,
+      "outputTokens": 1,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use",
+      "responseParsed": true
     }
   ],
   "entries": [
@@ -8379,7 +8387,7 @@
   },
   "circuit": "invalid_usage_receipt",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-27T22:14:56.445Z",
+  "checkedAt": "2026-10-27T22:15:05.101Z",
   "lastRun": "40593209704",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -8691,8 +8699,13 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "select:kids-biblia-02",
-    "value": null
+    "stage": "pixels:kids-biblia-02:c41c374435a2c878",
+    "value": {
+      "visible": true,
+      "style": "unknown",
+      "childSuitable": true,
+      "observedEvent": "Imagem abstrata com gradiente diagonal de tons escuros em preto e verde-azulado na parte inferior esquerda transicionando para branco luminoso no canto superior direito, sem figuras, objetos ou ações identificáveis."
+    }
   },
   "lastFactualEvaluation": {
     "packId": "kids-biblia-27",
@@ -12047,7 +12060,7 @@
     "reusedPixelReads": 1,
     "newPixelReads": 0,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-27T22:14:56.445Z"
+    "checkedAt": "2026-10-27T22:15:05.101Z"
   },
   "recoveredUsageReceipt": {
     "callId": "8ce52181-2d91-44c9-827e-1e9d1857ae8f",
