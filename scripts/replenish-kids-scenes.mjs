@@ -68,8 +68,9 @@ async function paidCall(stage,image,prompt,maxOutputTokens=2200,schema=null,allo
     throw new Error('Falha ou resposta não verificável do provedor. Sem nova tentativa paga automática.');
   }
   const boundedStructuredTool=result.structured===true && result.stopReason==='tool_use' && result.value && typeof result.value==='object' && !Array.isArray(result.value) && state.billingMode==='fixed_plan_user_confirmed';
-  const {blocked,...receipt}=normalizeProviderUsage(result.usage,state.policy,state.billingMode,{allowZeroOutput:boundedStructuredTool});
-  Object.assign(call,{status:'completed',completedAt:now(),...receipt,stopReason:result.stopReason || null});
+  const boundedEmptySelection=state.pilotRun?.status==='running' && stage===`select:${state.pilotRun.packId}` && result.stopReason==='end_turn' && result.value===null && state.billingMode==='fixed_plan_user_confirmed';
+  const {blocked,...receipt}=normalizeProviderUsage(result.usage,state.policy,state.billingMode,{allowZeroOutput:boundedStructuredTool,allowMissingOutput:boundedStructuredTool||boundedEmptySelection});
+  Object.assign(call,{status:'completed',completedAt:now(),...receipt,stopReason:result.stopReason || null,responseParsed:result.value!==null});
   state.lastResponse={stage,value:JSON.parse(JSON.stringify(result.value).replaceAll(key,'[redacted]'))};
   if(blocked)state.circuit=receipt.inputTokens>state.policy.maxInputTokensPerCall?'input_usage_above_limit':'invalid_usage_receipt';
   save();
@@ -79,6 +80,7 @@ async function paidCall(stage,image,prompt,maxOutputTokens=2200,schema=null,allo
   if(result.value===null) {
     state.lastInvalidResponse={stage,callId:call.id,checkedAt:now(),stopReason:result.stopReason || null,excerpt:String(result.invalidResponseText || '').slice(0,5000)};save();
     if(allowUnverifiedImage && image && stage.startsWith('pixels:'))return null;
+    if(boundedEmptySelection && state.calls.filter(c=>c.pilotId===state.pilotRun.id && c.stage===stage && c.responseParsed===false).length===1)return null;
     console.log(JSON.stringify({stage,problem:'invalid_json',sanitizedResponse:result.invalidResponseText}));
     throw new Error('Resposta visual sem JSON válido; seleção não aprovada.');
   }
