@@ -7957,11 +7957,17 @@
       "model": "claude-sonnet-4.6",
       "responseFormat": "forced_tool",
       "startedAt": "2026-10-27T21:45:47.043Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 73894,
       "promptChars": 793,
       "imageFingerprint": "b9300a6e938f89b9baaeda87baec5addcaf37a58a076513344e4d9037d423057",
-      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430"
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-27T21:45:56.344Z",
+      "reportedInputTokens": 25111,
+      "inputTokens": 25111,
+      "outputTokens": 1,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -8120,7 +8126,7 @@
   },
   "circuit": null,
   "publicationTriggered": false,
-  "checkedAt": "2026-10-27T21:45:47.043Z",
+  "checkedAt": "2026-10-27T21:45:56.344Z",
   "lastRun": "40589202325",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -8432,12 +8438,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-02:3268fd9551168af4",
+    "stage": "pixels:kids-biblia-02:650459f562056db8",
     "value": {
       "visible": true,
       "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Dois golfinhos saltam sobre águas azul-turquesa em primeiro plano, com montanhas verdes ao fundo e quatro aves voando no céu nublado."
+      "childSuitable": false,
+      "observedEvent": "Homem sem camisa em meio a folhagem verde, com uma mão na testa e o corpo parcialmente coberto por grandes folhas."
     }
   },
   "lastFactualEvaluation": {
@@ -11792,6 +11798,6 @@
     "reusedPixelReads": 0,
     "newPixelReads": 4,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-27T21:45:47.043Z"
+    "checkedAt": "2026-10-27T21:45:56.344Z"
   }
 }
