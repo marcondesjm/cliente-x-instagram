@@ -900,11 +900,17 @@
     {
       "id": "c47552e3-bb31-48dd-a75c-f23338deb107",
       "day": "2026-10-27",
-      "status": "reserved",
+      "status": "completed",
       "stage": "sonnet-forced-holdout:holdout-1",
       "startedAt": "2026-10-27T22:01:17.958Z",
       "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817",
-      "imageBytes": 66332
+      "imageBytes": 66332,
+      "completedAt": "2026-10-27T22:01:28.459Z",
+      "reportedInputTokens": 22508,
+      "inputTokens": 22508,
+      "outputTokens": 36,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -1156,27 +1162,6 @@
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
     },
     {
-      "id": "sonnet-forced-holdout:holdout-1",
-      "mode": "sonnet-forced-holdout",
-      "fixture": "holdout-1",
-      "model": "claude-sonnet-4.6",
-      "passed": true,
-      "value": {
-        "personInTree": false,
-        "openBooks": false,
-        "style": "illustration",
-        "description": "Ilustração colorida mostrando um grupo de seis homens em trajes históricos do Oriente Médio, com túnicas vermelhas, azuis e amarelas e turbantes. Um homem ao centro veste túnica vermelha sobre camisa clara e gesticula com a mão direita levantada enquanto fala com outro homem à direita que usa turbante listrado vermelho, azul e amarelo. Outros quatro homens observam a interação, alguns sorrindo. O fundo é neutro em tons claros, sem árvores, livros ou elementos naturais visíveis."
-      },
-      "expected": {
-        "personInTree": false,
-        "openBooks": false,
-        "style": "illustration"
-      },
-      "checkedAt": "2026-10-26T19:52:56.105Z",
-      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/08_FB_Zacchaeus_1024.jpg?1724237549",
-      "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817"
-    },
-    {
       "id": "sonnet-forced-holdout:holdout-2",
       "mode": "sonnet-forced-holdout",
       "fixture": "holdout-2",
@@ -1238,12 +1223,33 @@
       "checkedAt": "2026-10-26T19:53:43.851Z",
       "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/05_FB_Zacchaeus_1024.jpg?1724237549",
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
+    },
+    {
+      "id": "sonnet-forced-holdout:holdout-1",
+      "mode": "sonnet-forced-holdout",
+      "fixture": "holdout-1",
+      "model": "claude-sonnet-4.6",
+      "passed": true,
+      "value": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration",
+        "description": "Ilustração colorida mostrando um grupo de homens vestidos com roupas típicas do Oriente Médio antigo, incluindo túnicas vermelhas, azuis e amarelas, turbantes e faixas na cabeça. Um homem ao centro, com túnica bege e manto vermelho, parece estar falando ou gestualizando com a mão levantada para outros homens que o cercam. Ao fundo há arcos arquitetônicos em tons claros, sugerindo um ambiente interno ou pátio. Todos os personagens têm barba e cabelos escuros. Não há árvores nem livros abertos visíveis na cena."
+      },
+      "expected": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration"
+      },
+      "checkedAt": "2026-10-27T22:01:28.459Z",
+      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/08_FB_Zacchaeus_1024.jpg?1724237549",
+      "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817"
     }
   ],
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-27T22:01:17.958Z",
+  "checkedAt": "2026-10-27T22:01:28.459Z",
   "workflowRun": "40591372739",
   "summary": [
     {
