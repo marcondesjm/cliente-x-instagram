@@ -20,7 +20,7 @@ const colors = {
   white: '#fffdf5'
 };
 
-function person({ x, y, scale = 1, robe = colors.purple, cloak = colors.robe, seated = false, walking = false, eyesOpen = true, staff = false, arm = 'down', facing = 1 }) {
+function person({ x, y, scale = 1, robe = colors.purple, cloak = colors.robe, seated = false, walking = false, eyesOpen = true, staff = false, arm = 'down', facing = 1, jesus = false }) {
   const transform = `translate(${x} ${y}) scale(${scale * facing} ${scale})`;
   const legs = seated
     ? `<path d="M-14 46 Q-25 61 -8 67 L13 63 Q23 59 13 52" fill="${colors.robe}" stroke="${colors.ink}" stroke-width="3"/><path d="M8 48 Q35 57 36 69 L9 69" fill="${colors.robe}" stroke="${colors.ink}" stroke-width="3"/>`
@@ -34,12 +34,15 @@ function person({ x, y, scale = 1, robe = colors.purple, cloak = colors.robe, se
       : `<path d="M-17 0 Q-26 18 -22 35 M17 0 Q27 18 23 35" fill="none" stroke="${colors.skin}" stroke-width="8" stroke-linecap="round"/>`;
   const stick = staff ? `<path d="M35 -15 Q53 -18 53 -4 L53 77" fill="none" stroke="#75523a" stroke-width="5" stroke-linecap="round"/>` : '';
   return `<g transform="${transform}">
+    ${jesus ? '<ellipse cx="0" cy="-42" rx="31" ry="8" fill="#ffe58a" stroke="#d49a36" stroke-width="2"/><path d="M0 -54v24 M-10 -42h20" stroke="#fff8db" stroke-width="3" stroke-linecap="round"/>' : ''}
     ${stick}${legs}
     <path d="M-22 -1 Q-25 21 -17 46 Q0 54 19 46 Q24 21 20 -1 Q0 -12 -22 -1Z" fill="${robe}" stroke="${colors.ink}" stroke-width="3"/>
+    ${jesus ? '<path d="M-17 4 L16 39" stroke="#b94d45" stroke-width="7" opacity=".95"/>' : ''}
     <path d="M-18 3 Q-37 -5 -39 11 L-29 29" fill="none" stroke="${colors.skin}" stroke-width="8" stroke-linecap="round"/>
     ${raisedArm}
     <path d="M-18 -35 Q-20 -57 0 -60 Q20 -56 18 -34 L15 -12 Q0 1 -15 -12Z" fill="${colors.skinLight}" stroke="${colors.ink}" stroke-width="3"/>
     <path d="M-20 -35 Q-18 -67 12 -64 Q27 -59 19 -34 Q9 -45 -8 -42 Q-12 -33 -20 -35Z" fill="${cloak}" stroke="${colors.ink}" stroke-width="3"/>
+    ${jesus ? '<path d="M-13 -21 Q0 -11 13 -21 L12 -5 Q0 7 -12 -5Z" fill="#76513e" stroke="#604132" stroke-width="2"/>' : ''}
     ${eyesOpen ? '<circle cx="6" cy="-31" r="2.4" fill="#302449"/>' : '<path d="M1 -31 q5 4 10 0" fill="none" stroke="#302449" stroke-width="2.5" stroke-linecap="round"/>'}
     <path d="M7 -22 q5 3 9 -1" fill="none" stroke="#8c4e46" stroke-width="2.5" stroke-linecap="round"/>
   </g>`;
@@ -70,34 +73,34 @@ function svgScene({ name, title, beat, width = 1080, height = 1350, warm = false
   let foreground = '';
   if (beat === 'cover') {
     foreground = `${person({ x: 700, y: ground + 120, scale: 1.8, robe: '#567ca3', cloak: '#c78359', seated: true, eyesOpen: false, staff: true, arm: 'down', facing: -1 })}
-      ${person({ x: 275, y: ground + 20, scale: 1.15, robe: colors.teal, cloak: colors.cream, walking: true, arm: 'open' })}
+      ${person({ x: 275, y: ground + 20, scale: 1.15, robe: '#fff4dc', cloak: '#c78359', walking: true, arm: 'open', jesus: true })}
       ${person({ x: 150, y: ground + 22, scale: .78, robe: colors.purple, cloak: '#d98f57', walking: true })}
       <path d="M680 ${ground + 178} q46 18 96 0" fill="none" stroke="#75523a" stroke-width="9" stroke-linecap="round"/>`;
   } else if (beat === 'hears') {
     foreground = `${person({ x: 690, y: ground + 145, scale: 1.7, robe: '#567ca3', cloak: '#c78359', seated: true, eyesOpen: false, staff: true, arm: 'raised', facing: -1 })}
-      ${person({ x: 270, y: ground + 15, scale: 1.1, robe: colors.teal, cloak: colors.cream, walking: true, arm: 'open' })}
+      ${person({ x: 270, y: ground + 15, scale: 1.1, robe: '#fff4dc', cloak: '#c78359', walking: true, arm: 'open', jesus: true })}
       ${person({ x: 420, y: ground + 5, scale: .92, robe: colors.purple, cloak: '#d98f57', walking: true })}
       ${person({ x: 530, y: ground + 25, scale: .85, robe: '#bb654f', cloak: '#f1cd77', walking: true })}
       <path d="M732 ${ground + 66} q35 -38 2 -68 M747 ${ground + 75} q57 -60 7 -110" fill="none" stroke="#d78d51" stroke-width="7" stroke-linecap="round" opacity=".8"/>`;
   } else if (beat === 'calls') {
     foreground = `${person({ x: 720, y: ground + 145, scale: 1.7, robe: '#567ca3', cloak: '#c78359', seated: true, eyesOpen: false, staff: true, arm: 'raised', facing: -1 })}
-      ${person({ x: 310, y: ground + 18, scale: 1.12, robe: colors.teal, cloak: colors.cream, walking: true })}
+      ${person({ x: 310, y: ground + 18, scale: 1.12, robe: '#fff4dc', cloak: '#c78359', walking: true, jesus: true })}
       ${person({ x: 460, y: ground + 8, scale: .95, robe: colors.purple, cloak: '#d98f57', walking: true })}
       <path d="M675 ${ground + 40} q28 -36 57 0" fill="none" stroke="#c47c52" stroke-width="8" stroke-linecap="round"/>`;
   } else if (beat === 'called') {
     foreground = `${person({ x: 700, y: ground + 100, scale: 1.35, robe: '#567ca3', cloak: '#c78359', seated: true, eyesOpen: false, staff: true, arm: 'open', facing: -1 })}
-      ${person({ x: 365, y: ground + 12, scale: 1.28, robe: colors.teal, cloak: colors.cream, walking: true, arm: 'open' })}
+      ${person({ x: 365, y: ground + 12, scale: 1.28, robe: '#fff4dc', cloak: '#c78359', walking: true, arm: 'open', jesus: true })}
       ${person({ x: 520, y: ground + 18, scale: .95, robe: colors.purple, cloak: '#d98f57', walking: true })}
       ${person({ x: 860, y: ground + 35, scale: .8, robe: '#bd704b', cloak: '#f0c96b', arm: 'open' })}
       <path d="M624 ${ground + 85} q18 -40 49 -12" fill="none" stroke="#d78d51" stroke-width="8" stroke-linecap="round"/>`;
   } else if (beat === 'healed') {
     foreground = `<circle cx="565" cy="${ground + 32}" r="170" fill="#fff4c5" opacity=".38" filter="url(#soft)"/>
-      ${person({ x: 565, y: ground + 65, scale: 1.5, robe: '#567ca3', cloak: '#c78359', walking: true, eyesOpen: true, arm: 'open' })}
+      ${person({ x: 565, y: ground + 65, scale: 1.5, robe: '#fff4dc', cloak: '#c78359', walking: true, eyesOpen: true, arm: 'open', jesus: true })}
       ${person({ x: 770, y: ground + 70, scale: 1.35, robe: colors.teal, cloak: colors.cream, walking: true, eyesOpen: true, arm: 'open' })}
       ${person({ x: 390, y: ground + 40, scale: .95, robe: colors.purple, cloak: '#d98f57', walking: true, arm: 'open' })}
       <g fill="#fff4c5" opacity=".9"><path d="M468 ${ground - 105} l12 -28 9 30 26 -18 -12 29 32 5 -31 11 13 25 -28 -17 -14 26 -2 -32 -29 -4 28 -12z"/><circle cx="478" cy="${ground - 36}" r="8"/><circle cx="855" cy="${ground - 77}" r="10"/></g>`;
   } else {
-    foreground = `${person({ x: 430, y: ground + 50, scale: 1.45, robe: '#567ca3', cloak: '#c78359', walking: true, eyesOpen: true, arm: 'open' })}
+    foreground = `${person({ x: 430, y: ground + 50, scale: 1.45, robe: '#fff4dc', cloak: '#c78359', walking: true, eyesOpen: true, arm: 'open', jesus: true })}
       ${person({ x: 645, y: ground + 50, scale: 1.35, robe: colors.teal, cloak: colors.cream, walking: true, eyesOpen: true, arm: 'open' })}
       ${person({ x: 820, y: ground + 45, scale: .93, robe: colors.purple, cloak: '#d98f57', walking: true })}
       <path d="M325 ${ground + 133} q120 55 280 8" fill="none" stroke="#efdcad" stroke-width="12" stroke-linecap="round"/>`;
@@ -125,7 +128,7 @@ try {
   const page = await browser.newPage({ viewport: { width: 1080, height: 1350 }, deviceScaleFactor: 1 });
   for (const [name, title, beat, warm] of scenes) {
     const height = 675;
-    const svg = svgScene({ name, title, beat, height, warm });
+    const svg = svgScene({ name, title, beat, height, warm }).replace(/[ \t]+$/gm, '');
     const svgPath = resolve(root, output, `${name}.svg`);
     const pngPath = resolve(root, output, `${name}.png`);
     await mkdir(dirname(svgPath), { recursive: true });
