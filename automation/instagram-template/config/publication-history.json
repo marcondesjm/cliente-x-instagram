@@ -90977,6 +90977,161 @@
         },
         "editorialVariant": 5
       }
+    },
+    {
+      "feedFingerprint": "b17c164f6b10ea2a8584f95f13956f5d39e1ac1dd2a57920153d942601be231f",
+      "storyFingerprint": "b17c164f6b10ea2a8584f95f13956f5d39e1ac1dd2a57920153d942601be231f",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Sony apresenta tela 3D que permite ter personagens de anime e companheiros de IA na sua mesa",
+      "captionFingerprint": "256a9099e9b20d43c9019ad90615e1461d927f40e6c532c783febfa6bb1cdc94",
+      "coverTitle": "Sony apresenta tela 3D que permite ter personagens de anime e companheiros de IA na sua mesa",
+      "coverAvatar": "docs/uploads/avatar-marcondes-lounge.png",
+      "avatarRotationStart": 3,
+      "publishedAt": "2026-10-28T16:06:28.952Z",
+      "slotDate": "2026-10-27",
+      "slotIndex": 6,
+      "scheduledAt": "2026-10-27T16:50:00.000Z",
+      "workflowRun": "40721727307",
+      "mediaId": "18144074506596382",
+      "storyMediaId": "18125941162929802",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18144074506596382/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AFNfJpcwrVlgCY6rGC7eyRn\"}}",
+      "permalink": "https://www.instagram.com/reel/DfC0kwvDxli/",
+      "reelDurationSeconds": 13.7,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Hardware.com.br",
+          "sourceUrl": "https://www.hardware.com.br/tecnologia/sony-tela-3d-anime-companheiros-ia/",
+          "sourceTitle": "Sony apresenta tela 3D que permite ter personagens de anime e companheiros de IA na sua mesa",
+          "imageUrl": "https://www.hardware.com.br/wp-content/uploads/2026/10/Sony-apresenta-tela-3D-que-permite-ter-personagens-de-anime-e-companheiros-de-IA-na-sua-mesa.jpg",
+          "imageSourcePageUrl": "https://www.hardware.com.br/tecnologia/sony-tela-3d-anime-companheiros-ia/",
+          "imageCredit": "Hardware.com.br",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "c368984910531eecb63813d7bfc76a042fe75c06dbf6e7258746191114458c58",
+          "perceptualHash": "1000101001110100000010110111011000000111010011000001100001101100010100001001110001010001101110100101001111001010010100111100101001010010100010000101001110001000010100101101000001010011111010000011101111100100100110111100100100011001110100010001100001010000",
+          "reusedRelevantImage": false,
+          "approvedRevisionImageReuse": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://www.hardware.com.br/tecnologia/sony-tela-3d-anime-companheiros-ia/",
+        "slideCount": 3,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-28-130517-slot-6/visual-candidate-1/radar-slide-01.jpg",
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "exploit",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-28T08:35:21.960Z",
+        "ageHours": 7.5,
+        "freshness": "stale",
+        "effectiveSamples": 194,
+        "effectiveReach": 6133,
+        "controlledSamples": 198,
+        "selectionModes": {
+          "exploit": 136,
+          "explore": 44,
+          "experiment": 18
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": false,
+        "operatingMode": "editorial-fallback",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "midday",
+        "objective": "conversion",
+        "primarySignal": "alcance de nao seguidores",
+        "growthMode": true,
+        "selectionMode": "exploit",
+        "experimentAxis": "performance",
+        "contextKey": "REELS|midday|conversion",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "dado-concreto",
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "situacao-empresarial-reconhecivel",
+          "aplicacao-pratica-para-o-publico",
+          "fadiga-editorial-recente",
+          "pauta-recente"
+        ],
+        "fatiguePenalty": 7.71,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "claudeExperiment": null,
+      "education": null,
+      "research": {
+        "id": "684d2088dc9d",
+        "source": "Hardware.com.br",
+        "sourceUrl": "https://www.hardware.com.br/tecnologia/sony-tela-3d-anime-companheiros-ia/",
+        "sourceTitle": "Sony apresenta tela 3D que permite ter personagens de anime e companheiros de IA na sua mesa",
+        "sourceImageUrl": "https://www.hardware.com.br/wp-content/uploads/2026/10/Sony-apresenta-tela-3D-que-permite-ter-personagens-de-anime-e-companheiros-de-IA-na-sua-mesa.jpg",
+        "publishedAt": "2026-10-28T14:49:01.000Z",
+        "researchedAt": "2026-10-28T16:05:11.223Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Novo display de seis polegadas dispensa óculos especiais e permite interagir com personagens virtuais por meio de aplicativos compatíveis",
+        "sourceFacts": [
+          "Novo display de seis polegadas dispensa óculos especiais e permite interagir com personagens virtuais por meio de aplicativos compatíveis"
+        ],
+        "coverage": {
+          "sourceFactCount": 1,
+          "coveredFactCount": 1,
+          "complete": false,
+          "scope": "feed-summary",
+          "reviewedAdaptation": false
+        },
+        "editorialVariant": 2
+      }
     }
   ],
   "sabedoria-kids": [
