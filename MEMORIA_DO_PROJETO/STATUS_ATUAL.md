@@ -1760,3 +1760,10 @@ Testes: validate-authorial-reserve, validate-authorial-slot-recovery (seletor re
 ## Teste imediato Claude confirmado — 18/10/2026, 14h03 BRT
 
 Workflow 39147349239 concluiu reposição e recuperação do Vigia com sucesso. Claude gerou e revisou authorial-e899f2dacb4bbaab (resumo-transferencia); capa e Story renderizados também inspecionados. Slot 2 de 18/10 marcado published no ledger. Reel 17961676122225215, Story 18035043506853486, permalink https://www.instagram.com/reel/DepLJi8kpCN/. Histórico persistido, sete alertas desse slot encerrados pelo run. Primeiro comentário sem ID e sem erro registrado; não afirmar envio de comentário. Consumo do dia: 19/20 chamadas; override temporário restrito a 18/10, sem aumento dos limites recorrentes.
+
+## 2026-10-28 — reposição Sabedoria Kids: Bartimeu
+
+- Falta de conteúdo ilustrado inédito no Vigia (run 40690113088) vinha do esgotamento do acervo elegível; não liberar material duplicado nem contornar a revisão Claude, que segue bloqueada por resposta visual não confirmada.
+- Criado o pack original `kids-biblia-38` (Marcos 10:46–52), com cinco cenas de carrossel e uma imagem de Story em arte vetorial própria. O gerador reproduz os seis PNGs em `docs/illustrations/sabedoria-kids/bartimaeus-healing/`.
+- Corrigido `publish-carousel.mjs`: layouts `bible-illustration` não entram no detector de similaridade de fotografias, evitando falso positivo entre cenas ilustradas.
+- Geração e renderização local render-only concluídas; cinco slides e Story gerados. Seleção local escolheu `kids-biblia-38` como próximo pack inédito entre 18 elegíveis; o histórico remoto Meta será consultado normalmente no fluxo agendado. Nenhuma publicação ou execução manual do workflow foi feita.

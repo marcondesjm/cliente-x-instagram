@@ -3702,7 +3702,8 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
       const downloadedImagePath = await downloadExternalSlideImage(slide.imageUrl, runDir, index + 1);
       slide = { ...slide, imagePath: downloadedImagePath, imageUrl: '' };
     }
-    if (slide.imagePath && slide.imageAsIllustration !== true && !String(style.name || '').startsWith('impact-carousel')) {
+    const isIllustration = slide.imageAsIllustration === true || slide.imageLayout === 'bible-illustration';
+    if (slide.imagePath && !isIllustration && !String(style.name || '').startsWith('impact-carousel')) {
       const source = resolve(ROOT, String(slide.imagePath).replace(/^\/+/, ''));
       if (!existsSync(source)) throw new Error(`Imagem do slide ${index + 1} nao encontrada: ${slide.imagePath}`);
       await assertDistinctPhoto(source, index);
@@ -3731,7 +3732,9 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
       await browser.close();
       throw new Error(`Slide ${index + 1} rejeitado: falta uma fotografia distinta.`);
     }
-    for (const photoUrl of new Set(photoUrls)) await assertDistinctPhoto(photoUrl, index);
+    if (!isIllustration) {
+      for (const photoUrl of new Set(photoUrls)) await assertDistinctPhoto(photoUrl, index);
+    }
     await page.evaluate(() => document.fonts.ready);
     const overlapCheck = await page.evaluate(() => {
       const headline = document.querySelector('.headline');
