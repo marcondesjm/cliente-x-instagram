@@ -1068,11 +1068,18 @@
     {
       "id": "fe82052c-7a8c-42f6-89bb-faafba1bc784",
       "day": "2026-10-29",
-      "status": "reserved",
+      "status": "completed",
       "stage": "sonnet-forced-holdout:holdout-4",
       "startedAt": "2026-10-29T12:08:33.304Z",
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572",
-      "imageBytes": 84542
+      "imageBytes": 84542,
+      "completedAt": "2026-10-29T12:08:42.855Z",
+      "reportedInputTokens": 28578,
+      "reportedOutputTokens": 1,
+      "inputTokens": 28578,
+      "outputTokens": 1,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -1324,27 +1331,6 @@
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
     },
     {
-      "id": "sonnet-forced-holdout:holdout-4",
-      "mode": "sonnet-forced-holdout",
-      "fixture": "holdout-4",
-      "model": "claude-sonnet-4.6",
-      "passed": true,
-      "value": {
-        "personInTree": true,
-        "openBooks": false,
-        "style": "illustration",
-        "description": "Ilustração colorida mostrando um homem sentado nos galhos de uma árvore frondosa, vestindo túnica azul com faixa vermelha na cintura e turbante amarelo. Abaixo da árvore, um grupo de homens barbados observa para cima; um deles à esquerda veste manto vermelho sobre túnica amarela. O ambiente é ao ar livre com folhagem verde abundante ao fundo. A cena retrata pessoas em trajes antigos reunidas sob uma árvore, sem livros abertos visíveis."
-      },
-      "expected": {
-        "personInTree": true,
-        "openBooks": false,
-        "style": "illustration"
-      },
-      "checkedAt": "2026-10-27T22:02:11.669Z",
-      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/05_FB_Zacchaeus_1024.jpg?1724237549",
-      "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
-    },
-    {
       "id": "sonnet-forced-holdout:holdout-1",
       "mode": "sonnet-forced-holdout",
       "fixture": "holdout-1",
@@ -1406,12 +1392,33 @@
       "checkedAt": "2026-10-29T12:08:30.171Z",
       "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/06_FB_Zacchaeus_1024.jpg?1724237549",
       "imageHash": "0e68d89f3b06e81914792cf90b2e067b890038d0529d6b9579fc219f5e7cf478"
+    },
+    {
+      "id": "sonnet-forced-holdout:holdout-4",
+      "mode": "sonnet-forced-holdout",
+      "fixture": "holdout-4",
+      "model": "claude-sonnet-4.6",
+      "passed": true,
+      "value": {
+        "personInTree": true,
+        "openBooks": false,
+        "style": "illustration",
+        "description": "Ilustração colorida mostrando um homem barbudo vestindo túnica azul com faixa vermelha e turbante amarelo sentado nos galhos de uma árvore frondosa. Abaixo, um grupo de homens com roupas antigas olha para cima; em primeiro plano à esquerda, um homem de barba longa e manto vermelho observa a cena. O fundo é composto por folhagem verde vibrante, caracterizando uma ilustração narrativa de estilo desenho animado ou livro infantil."
+      },
+      "expected": {
+        "personInTree": true,
+        "openBooks": false,
+        "style": "illustration"
+      },
+      "checkedAt": "2026-10-29T12:08:42.855Z",
+      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/05_FB_Zacchaeus_1024.jpg?1724237549",
+      "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
     }
   ],
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-29T12:08:33.304Z",
+  "checkedAt": "2026-10-29T12:08:42.855Z",
   "workflowRun": "40870385286",
   "summary": [
     {
