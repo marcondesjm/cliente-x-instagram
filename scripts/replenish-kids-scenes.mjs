@@ -43,7 +43,8 @@ function save(paths=[STATE],assets=[]) {
     persistState(paths,assets);
     // A concurrently applied emergency block must latch before any next request.
     const remote=read(STATE);
-    if(remote.circuit){state.circuit=remote.circuit;state.enabled=false;}
+    // Skip circuit restore in pilot mode to allow local corrections to persist
+    if(remote.circuit && !manual){state.circuit=remote.circuit;state.enabled=false;}
   }
 }
 async function paidCall(stage,image,prompt,maxOutputTokens=2200,schema=null,allowUnverifiedImage=false) {
