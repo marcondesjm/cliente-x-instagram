@@ -1036,11 +1036,18 @@
     {
       "id": "88c542eb-404e-4267-ab3a-fd1ef49463b9",
       "day": "2026-10-29",
-      "status": "reserved",
+      "status": "completed",
       "stage": "sonnet-forced-holdout:holdout-2",
       "startedAt": "2026-10-29T12:08:04.004Z",
       "imageHash": "34169359e67f7acc29d673c680eab8f7cc3bbe6cf27019b69da83c755945902e",
-      "imageBytes": 57096
+      "imageBytes": 57096,
+      "completedAt": "2026-10-29T12:08:15.946Z",
+      "reportedInputTokens": 19429,
+      "reportedOutputTokens": 29,
+      "inputTokens": 19429,
+      "outputTokens": 29,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -1292,27 +1299,6 @@
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
     },
     {
-      "id": "sonnet-forced-holdout:holdout-2",
-      "mode": "sonnet-forced-holdout",
-      "fixture": "holdout-2",
-      "model": "claude-sonnet-4.6",
-      "passed": true,
-      "value": {
-        "personInTree": false,
-        "openBooks": false,
-        "style": "illustration",
-        "description": "Ilustração colorida mostrando dois homens em trajes antigos conversando em um ambiente interno. O homem à esquerda está sentado, veste túnica amarela com manto vermelho e segura uma taça metálica; sobre a mesa há uma tigela com frutas vermelhas. O homem à direita está de pé, veste túnica azul com faixa vermelha e turbante amarelo, gesticulando com a mão enquanto fala. Ao fundo, vê-se uma parede clara e um vaso decorativo escuro. A cena representa uma interação entre duas figuras em vestimentas históricas, sem árvores ou livros abertos visíveis."
-      },
-      "expected": {
-        "personInTree": false,
-        "openBooks": false,
-        "style": "illustration"
-      },
-      "checkedAt": "2026-10-27T22:01:44.798Z",
-      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/07_FB_Zacchaeus_1024.jpg?1724237549",
-      "imageHash": "34169359e67f7acc29d673c680eab8f7cc3bbe6cf27019b69da83c755945902e"
-    },
-    {
       "id": "sonnet-forced-holdout:holdout-3",
       "mode": "sonnet-forced-holdout",
       "fixture": "holdout-3",
@@ -1374,12 +1360,33 @@
       "checkedAt": "2026-10-29T12:08:01.136Z",
       "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/08_FB_Zacchaeus_1024.jpg?1724237549",
       "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817"
+    },
+    {
+      "id": "sonnet-forced-holdout:holdout-2",
+      "mode": "sonnet-forced-holdout",
+      "fixture": "holdout-2",
+      "model": "claude-sonnet-4.6",
+      "passed": true,
+      "value": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration",
+        "description": "Ilustração colorida mostrando dois homens em um ambiente interno com paredes claras e uma abertura ao fundo. O homem à esquerda, sentado, tem cabelos castanhos longos e barba, veste túnica amarela com manto vermelho sobre o ombro esquerdo e segura um copo metálico nas mãos; diante dele há uma mesa de madeira com uma tigela contendo frutos vermelhos. O homem à direita está de pé, com barba escura, vestindo túnica azul com faixas vermelhas horizontais e lenço amarelo na cabeça, gesticulando com as duas mãos abertas em direção ao homem sentado. Ao fundo à esquerda, observa-se parte de um vaso ou jarro decorativo. A cena retrata uma conversa entre os dois personagens em estilo de desenho animado bíblico, sem presença de árvores ou livros abertos."
+      },
+      "expected": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration"
+      },
+      "checkedAt": "2026-10-29T12:08:15.946Z",
+      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/07_FB_Zacchaeus_1024.jpg?1724237549",
+      "imageHash": "34169359e67f7acc29d673c680eab8f7cc3bbe6cf27019b69da83c755945902e"
     }
   ],
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-29T12:08:04.004Z",
+  "checkedAt": "2026-10-29T12:08:15.946Z",
   "workflowRun": "40870385286",
   "summary": [
     {
