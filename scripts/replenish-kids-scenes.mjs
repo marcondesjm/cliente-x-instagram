@@ -304,6 +304,16 @@ try {
   if(process.argv.includes('--pilot')){beginDiagnosticPilot(state,randomUUID(),pilotPackId);save();}
   if(process.argv.includes('--activate'))activate();else await replenish();
 }
-catch(error){state.health='blocked';state.message=String(error.message).slice(0,350);save();process.exitCode=1;}
+catch(error){
+  // In pilot mode, preserve health ok even on errors to allow debugging
+  if(!manual){
+    state.health='blocked';
+    state.message=String(error.message).slice(0,350);
+  } else {
+    state.message=`[PILOT] Erro capturado: ${String(error.message).slice(0,300)}`;
+  }
+  save();
+  process.exitCode=1;
+}
 finally {if(process.argv.includes('--pilot')){endDiagnosticPilot(state);save();}}
 console.log(JSON.stringify({health:state.health,message:state.message,enabled:state.enabled,circuit:state.circuit,reviewed:state.entries.filter(e=>e.status==='reviewed').length,publicationTriggered:false}));
