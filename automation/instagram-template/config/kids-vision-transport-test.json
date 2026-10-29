@@ -1084,7 +1084,7 @@
     {
       "id": "67871b45-4b0b-4d3a-99f9-3f0139e8fac3",
       "day": "2026-10-29",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-distinct",
       "startedAt": "2026-10-29T12:08:46.097Z",
       "images": [
@@ -1098,7 +1098,13 @@
           "sha256": "5deb818f6dba6ea2d625eb2e92a157a12599151861f70fa2d6ce80102df818b9",
           "bytes": 45919
         }
-      ]
+      ],
+      "completedAt": "2026-10-29T12:08:59.796Z",
+      "reportedInputTokens": 31186,
+      "reportedOutputTokens": 42,
+      "inputTokens": 31186,
+      "outputTokens": 42,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -1437,7 +1443,7 @@
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-29T12:08:46.097Z",
+  "checkedAt": "2026-10-29T12:08:59.796Z",
   "workflowRun": "40870385286",
   "summary": [
     {
@@ -1732,18 +1738,12 @@
   "visualDiversity": {
     "version": "visual-diversity-v2",
     "model": "claude-sonnet-4.6",
-    "checkedAt": "2026-10-27T22:02:41.125Z",
+    "checkedAt": "2026-10-29T12:08:59.796Z",
     "cases": [
       {
         "expected": true,
         "distinct": true,
-        "reason": "A segunda imagem apresenta mudança substancial de composição: o personagem na árvore está virado de frente com braços abertos e rosto visível, enquanto na primeira ele aparece de costas subindo; há um novo participante em primeiro plano à esquerda (homem de barba longa olhando para cima) que não existe na Cena 1; o ângulo de câmera e o enquadramento dos personagens no chão são diferentes, configurando nova cena e não mera transformação geométrica da original.",
-        "passed": true
-      },
-      {
-        "expected": false,
-        "distinct": false,
-        "reason": "A segunda imagem é uma versão espelhada horizontalmente da primeira: o homem na árvore troca de lado (aparece à esquerda em vez de à direita), os espectadores no primeiro plano também invertem suas posições relativas, e o edifício com janela arqueada passa do lado esquerdo para o direito. Não há mudança de ação, participantes, ângulo de câmera ou composição — trata-se exclusivamente de um espelhamento horizontal da mesma ilustração original.",
+        "reason": "A segunda imagem apresenta mudança substancial de composição: na Cena 1 o homem está de costas subindo na árvore e Jesus não aparece; na Cena 2 o homem já está sentado no galho voltado para frente, com Jesus visível em primeiro plano à esquerda olhando para ele. Há diferença clara de ângulo, ação (subir vs. sentado) e participantes (Jesus presente apenas na segunda), configurando nova composição e não mera transformação da primeira.",
         "passed": true
       }
     ]
