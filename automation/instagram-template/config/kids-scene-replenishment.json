@@ -3,9 +3,9 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "ok",
-  "message": "",
-  "circuit": "",
+  "health": "blocked",
+  "message": "Piloto exige rotina desativada, uma pauta explícita e nenhum bloqueio de consumo ou transporte não conciliável.",
+  "circuit": "provider_response_unconfirmed",
   "policy": {
     "maxCallsPerDay": 250,
     "maxInputTokensPerCall": 120000,
@@ -8427,10 +8427,9 @@
     "passed": true,
     "challengeHash": "695b8e040e170590676379d497155343c47a297353bad9921ba60f57ff3e5602"
   },
-  "circuit": "provider_response_unconfirmed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-29T12:43:09.022Z",
-  "lastRun": null,
+  "checkedAt": "2026-10-29T12:50:00.696Z",
+  "lastRun": "40876430438",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -12103,7 +12102,7 @@
     "reusedPixelReads": 0,
     "newPixelReads": 0,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-29T12:43:09.022Z"
+    "checkedAt": "2026-10-29T12:50:00.696Z"
   },
   "recoveredUsageReceipt": {
     "callId": "8ce52181-2d91-44c9-827e-1e9d1857ae8f",
