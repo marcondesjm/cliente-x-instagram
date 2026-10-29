@@ -1,10 +1,10 @@
 {
   "account": "sabedoria-kids",
-  "enabled": true,
+  "enabled": false,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "ok",
-  "message": "[PILOT] Erro capturado: Piloto exige rotina desativada, uma pauta explícita e nenhum bloqueio de consumo ou transporte não conciliável.",
+  "health": "pilot_running",
+  "message": "Piloto diagnóstico da pauta kids-biblia-01 em execução; reposição recorrente permanece bloqueada.",
   "circuit": null,
   "policy": {
     "maxCallsPerDay": 250,
@@ -8428,8 +8428,8 @@
     "challengeHash": "695b8e040e170590676379d497155343c47a297353bad9921ba60f57ff3e5602"
   },
   "publicationTriggered": false,
-  "checkedAt": "2026-10-29T16:01:08.376Z",
-  "lastRun": "40907203612",
+  "checkedAt": "2026-10-29T16:10:23.738Z",
+  "lastRun": "40908717008",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -12053,15 +12053,14 @@
   },
   "reasoningModel": "claude-sonnet-4.6",
   "pilotRun": {
-    "id": "a2a55bb7-bf49-49ca-92e4-ff27c8b969a5",
-    "packId": "kids-biblia-02",
-    "status": "rejected",
-    "startedAt": "2026-10-27T22:14:49.231Z",
-    "expiresAt": "2026-10-27T22:39:49.231Z",
+    "id": "8782e0f8-55ba-48a0-8b3d-5aeb708dd7df",
+    "packId": "kids-biblia-01",
+    "status": "running",
+    "startedAt": "2026-10-29T16:10:23.737Z",
+    "expiresAt": "2026-10-29T16:35:23.737Z",
     "maxCalls": 10,
     "maxInputTokens": 1200000,
-    "maxOutputTokens": 80000,
-    "completedAt": "2026-10-27T22:17:29.293Z"
+    "maxOutputTokens": 80000
   },
   "activationEvidence": {
     "checkedAt": "2026-10-18T15:01:37.215Z",
@@ -12102,7 +12101,7 @@
     "reusedPixelReads": 0,
     "newPixelReads": 0,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-29T16:01:08.376Z"
+    "checkedAt": "2026-10-29T16:10:23.738Z"
   },
   "recoveredUsageReceipt": {
     "callId": "8ce52181-2d91-44c9-827e-1e9d1857ae8f",
