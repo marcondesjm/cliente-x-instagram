@@ -91733,6 +91733,163 @@
         },
         "editorialVariant": 3
       }
+    },
+    {
+      "feedFingerprint": "48050cd36a92be839fed4a727ae4067da796f86a47e066942c96b273e8dc6a7d",
+      "storyFingerprint": "48050cd36a92be839fed4a727ae4067da796f86a47e066942c96b273e8dc6a7d",
+      "storyContentKind": "news",
+      "storyCoverTitle": "TVs da LG perdem acesso à IA da Microsoft",
+      "captionFingerprint": "fbc762d55f5800a22136b7d5a04b10d21e3ce549f2365a59e9fb5862e56b777b",
+      "coverTitle": "TVs da LG perdem acesso à IA da Microsoft",
+      "coverAvatar": "docs/uploads/avatar-marcondes-meeting-tablet.png",
+      "avatarRotationStart": 1,
+      "publishedAt": "2026-10-29T14:19:53.315Z",
+      "slotDate": "2026-10-29",
+      "slotIndex": 0,
+      "scheduledAt": "2026-10-29T09:30:00.000Z",
+      "workflowRun": "40889914171",
+      "mediaId": "18118378538094687",
+      "storyMediaId": "17913565299473169",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18118378538094687/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AKo_Se9mst7n6mQylnP-owH\"}}",
+      "permalink": "https://www.instagram.com/reel/DfFNLCwAGUn/",
+      "reelDurationSeconds": 13.7,
+      "publishedFormat": "REEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "Tecnoblog",
+          "sourceUrl": "https://tecnoblog.net/noticias/microsoft-encerra-suporte-ao-copilot-em-smart-tvs-da-lg/",
+          "sourceTitle": "TVs da LG perdem acesso à IA da Microsoft",
+          "imageUrl": "https://files.tecnoblog.net/wp-content/uploads/2025/12/41jzmk3w3z6g1-edited.jpeg",
+          "imageSourcePageUrl": "https://tecnoblog.net/noticias/microsoft-encerra-suporte-ao-copilot-em-smart-tvs-da-lg/",
+          "imageCredit": "Tecnoblog",
+          "imageEvidence": "Image supplied by the selected article feed.",
+          "imageHash": "538d2f5c67ff5a2b2a04ea5de4276579bdcc710e49cf8e0812767a25dd192c6a",
+          "perceptualHash": "0011101011100100101110011110111000110001111011000011100011100001001000001101000100101010110100110110101010110011001010011011001100101011111100110110101011110111011000011111011101100010111011000110001010101100011100000110110001110011011011000110000101001100",
+          "reusedRelevantImage": false,
+          "approvedRevisionImageReuse": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://tecnoblog.net/noticias/microsoft-encerra-suporte-ao-copilot-em-smart-tvs-da-lg/",
+        "slideCount": 3,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-29-111843-slot-0/visual-candidate-2/radar-slide-01.jpg",
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Image supplied by the selected article feed."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "explore",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-29T13:04:11.671Z",
+        "ageHours": 1.24,
+        "freshness": "current",
+        "effectiveSamples": 197,
+        "effectiveReach": 6221,
+        "controlledSamples": 201,
+        "selectionModes": {
+          "exploit": 139,
+          "explore": 44,
+          "experiment": 18
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "REELS",
+        "daypart": "morning",
+        "objective": "utility",
+        "primarySignal": "salvamentos",
+        "growthMode": true,
+        "selectionMode": "explore",
+        "experimentAxis": "candidate-novelty",
+        "contextKey": "REELS|morning|utility",
+        "decisionReasons": [
+          "imagem-editorial",
+          "titulo-legivel",
+          "aderencia-ao-perfil",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico",
+          "abertura-com-abandono-consistente",
+          "views-acima-de-pares-comparaveis"
+        ],
+        "fatiguePenalty": 9,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "claudeExperiment": null,
+      "education": null,
+      "research": {
+        "id": "198a920bc79b",
+        "source": "Tecnoblog",
+        "sourceUrl": "https://tecnoblog.net/noticias/microsoft-encerra-suporte-ao-copilot-em-smart-tvs-da-lg/",
+        "sourceTitle": "TVs da LG perdem acesso à IA da Microsoft",
+        "sourceImageUrl": "https://files.tecnoblog.net/wp-content/uploads/2025/12/41jzmk3w3z6g1-edited-340x191.jpeg",
+        "publishedAt": "2026-10-29T09:51:59.000Z",
+        "researchedAt": "2026-10-29T14:18:31.941Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Integração com o Copilot acaba até o final do ano, mas ainda não tem dia certo para acontecer. Decisão impacta o Brasil. TVs da LG perdem acesso à IA da Microsoft",
+        "sourceFacts": [
+          "Integração com o Copilot acaba até o final do ano, mas ainda não tem dia certo para acontecer. Decisão impacta o Brasil. TVs da LG perdem acesso à IA da Microsoft"
+        ],
+        "coverage": {
+          "sourceFactCount": 1,
+          "coveredFactCount": 1,
+          "complete": false,
+          "scope": "feed-summary",
+          "reviewedAdaptation": false
+        },
+        "editorialVariant": 0
+      }
     }
   ],
   "sabedoria-kids": [
