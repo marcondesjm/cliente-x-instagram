@@ -31,7 +31,7 @@ const manual=process.argv.includes('--pilot') || process.argv.includes('--calibr
 if(manual){
   state.health='ok';
   state.message='';
-  state.enabled=true;
+  state.enabled=false; // Must be false for beginDiagnosticPilot to succeed
   state.circuit=null;
 }
 const pilotPackId=process.argv.includes('--pilot')?String(process.env.KIDS_SCENE_PILOT_PACK_ID || ''):'';
