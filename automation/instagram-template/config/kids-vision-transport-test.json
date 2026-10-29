@@ -1109,7 +1109,7 @@
     {
       "id": "eb8fbab9-d959-4d1d-9399-7906f32186ba",
       "day": "2026-10-29",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-mirror",
       "startedAt": "2026-10-29T12:09:01.633Z",
       "images": [
@@ -1123,7 +1123,13 @@
           "sha256": "0881776f99cc2d4ceaeca8929b84afdccf60642f9b649c4f273540d3b62102f0",
           "bytes": 46048
         }
-      ]
+      ],
+      "completedAt": "2026-10-29T12:09:20.412Z",
+      "reportedInputTokens": 31229,
+      "reportedOutputTokens": 1,
+      "inputTokens": 31229,
+      "outputTokens": 1,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -1462,7 +1468,7 @@
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-29T12:09:01.633Z",
+  "checkedAt": "2026-10-29T12:09:20.412Z",
   "workflowRun": "40870385286",
   "summary": [
     {
@@ -1757,12 +1763,18 @@
   "visualDiversity": {
     "version": "visual-diversity-v2",
     "model": "claude-sonnet-4.6",
-    "checkedAt": "2026-10-29T12:08:59.796Z",
+    "checkedAt": "2026-10-29T12:09:20.412Z",
     "cases": [
       {
         "expected": true,
         "distinct": true,
         "reason": "A segunda imagem apresenta mudança substancial de composição: na Cena 1 o homem está de costas subindo na árvore e Jesus não aparece; na Cena 2 o homem já está sentado no galho voltado para frente, com Jesus visível em primeiro plano à esquerda olhando para ele. Há diferença clara de ângulo, ação (subir vs. sentado) e participantes (Jesus presente apenas na segunda), configurando nova composição e não mera transformação da primeira.",
+        "passed": true
+      },
+      {
+        "expected": false,
+        "distinct": false,
+        "reason": "A segunda imagem é uma versão espelhada horizontalmente da primeira. A figura que sobe na árvore, a multidão em primeiro plano e o edifício ao fundo trocam de lado, mas todos os elementos visuais, cores, poses e composição permanecem idênticos, caracterizando apenas um espelhamento e não uma nova cena.",
         "passed": true
       }
     ]
