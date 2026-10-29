@@ -1,10 +1,10 @@
 {
   "account": "sabedoria-kids",
-  "enabled": true,
+  "enabled": false,
   "provider": "claude-ss",
   "model": "claude-sonnet-4.6",
-  "health": "ok",
-  "message": "[PILOT] Erro capturado: Piloto exige rotina desativada, uma pauta explícita e nenhum bloqueio de consumo ou transporte não conciliável.",
+  "health": "review_completed",
+  "message": "1 pauta(s) examinada(s); somente seleções aprovadas seguem para montagem.",
   "circuit": null,
   "policy": {
     "maxCallsPerDay": 250,
@@ -8271,6 +8271,167 @@
       "completedAt": "2026-10-27T22:17:24.632Z",
       "httpStatus": null,
       "error": "terminated"
+    },
+    {
+      "id": "21f69ef8-f10a-48e9-b821-ac3287417914",
+      "pilotId": "8782e0f8-55ba-48a0-8b3d-5aeb708dd7df",
+      "day": "2026-10-29",
+      "stage": "pixels:kids-biblia-01:c41c374435a2c878",
+      "model": "claude-sonnet-4.6",
+      "maxOutputTokens": 700,
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-29T16:10:34.425Z",
+      "status": "completed",
+      "payloadBytes": 50415,
+      "promptChars": 793,
+      "imageFingerprint": "42f1aa8b8944272b9a8ee642a77b5e7463952c7dc2e9bb65122025ee6a34465a",
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-29T16:10:48.883Z",
+      "reportedInputTokens": 17284,
+      "reportedOutputTokens": 1,
+      "inputTokens": 17284,
+      "outputTokens": 1,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use",
+      "responseParsed": true
+    },
+    {
+      "id": "957a7c55-3b7c-4289-a670-cbcd558c349d",
+      "pilotId": "8782e0f8-55ba-48a0-8b3d-5aeb708dd7df",
+      "day": "2026-10-29",
+      "stage": "pixels:kids-biblia-01:35915e7312dd9883",
+      "model": "claude-sonnet-4.6",
+      "maxOutputTokens": 700,
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-29T16:10:51.515Z",
+      "status": "completed",
+      "payloadBytes": 77139,
+      "promptChars": 793,
+      "imageFingerprint": "68efecb6ec7f388a9b67a7fd6b6d6c3695d9189059f1dc22ea43e90c33480f74",
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-29T16:11:04.949Z",
+      "reportedInputTokens": 26192,
+      "reportedOutputTokens": 1,
+      "inputTokens": 26192,
+      "outputTokens": 1,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use",
+      "responseParsed": true
+    },
+    {
+      "id": "e2b0ad58-56ff-43a6-a490-8d16dc373c59",
+      "pilotId": "8782e0f8-55ba-48a0-8b3d-5aeb708dd7df",
+      "day": "2026-10-29",
+      "stage": "pixels:kids-biblia-01:2b04b7a8787b1af2",
+      "model": "claude-sonnet-4.6",
+      "maxOutputTokens": 700,
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-29T16:11:08.412Z",
+      "status": "completed",
+      "payloadBytes": 72718,
+      "promptChars": 793,
+      "imageFingerprint": "eaa5940b0975eaf2709665eb62bb2b6f24d8afa90c6e228d3b41725552c18b8b",
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-29T16:11:22.846Z",
+      "reportedInputTokens": 24719,
+      "reportedOutputTokens": 1,
+      "inputTokens": 24719,
+      "outputTokens": 1,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use",
+      "responseParsed": true
+    },
+    {
+      "id": "cc243061-997c-44ca-8de0-ccdac06b0cf1",
+      "pilotId": "8782e0f8-55ba-48a0-8b3d-5aeb708dd7df",
+      "day": "2026-10-29",
+      "stage": "pixels:kids-biblia-01:3268fd9551168af4",
+      "model": "claude-sonnet-4.6",
+      "maxOutputTokens": 700,
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-29T16:11:26.719Z",
+      "status": "completed",
+      "payloadBytes": 75236,
+      "promptChars": 793,
+      "imageFingerprint": "cc538cba2608dbe6b7c1ab717c7572acfb2682919e78d9468db0d70af9983412",
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-29T16:11:36.776Z",
+      "reportedInputTokens": 25558,
+      "reportedOutputTokens": 1,
+      "inputTokens": 25558,
+      "outputTokens": 1,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use",
+      "responseParsed": true
+    },
+    {
+      "id": "3d0c80d0-8d78-4710-905f-c55bb8cf8175",
+      "pilotId": "8782e0f8-55ba-48a0-8b3d-5aeb708dd7df",
+      "day": "2026-10-29",
+      "stage": "pixels:kids-biblia-01:650459f562056db8",
+      "model": "claude-sonnet-4.6",
+      "maxOutputTokens": 700,
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-29T16:11:41.398Z",
+      "status": "completed",
+      "payloadBytes": 73894,
+      "promptChars": 793,
+      "imageFingerprint": "b9300a6e938f89b9baaeda87baec5addcaf37a58a076513344e4d9037d423057",
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-29T16:11:52.077Z",
+      "reportedInputTokens": 25111,
+      "reportedOutputTokens": 1,
+      "inputTokens": 25111,
+      "outputTokens": 1,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use",
+      "responseParsed": true
+    },
+    {
+      "id": "e0707012-7324-4025-93e0-5b37891b2e88",
+      "pilotId": "8782e0f8-55ba-48a0-8b3d-5aeb708dd7df",
+      "day": "2026-10-29",
+      "stage": "pixels:kids-biblia-01:bd37b6a7600b45eb",
+      "model": "claude-sonnet-4.6",
+      "maxOutputTokens": 700,
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-29T16:11:53.768Z",
+      "status": "completed",
+      "payloadBytes": 66333,
+      "promptChars": 793,
+      "imageFingerprint": "c5b9b55550f308415ee0772bbe74f117ebb45bda66840022094903d2284e7f6b",
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-29T16:12:03.594Z",
+      "reportedInputTokens": 22590,
+      "reportedOutputTokens": 1,
+      "inputTokens": 22590,
+      "outputTokens": 1,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use",
+      "responseParsed": true
+    },
+    {
+      "id": "a604c57e-77fe-4aee-9dc4-466fa1c1c182",
+      "pilotId": "8782e0f8-55ba-48a0-8b3d-5aeb708dd7df",
+      "day": "2026-10-29",
+      "stage": "pixels:kids-biblia-01:203de61859a6908c",
+      "model": "claude-sonnet-4.6",
+      "maxOutputTokens": 700,
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-10-29T16:12:07.037Z",
+      "status": "completed",
+      "payloadBytes": 70065,
+      "promptChars": 793,
+      "imageFingerprint": "a8e354e5b297b4ed516c752d162bb1df59d55425f8c357a1edb5a7be36ca7a29",
+      "promptFingerprint": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "completedAt": "2026-10-29T16:12:18.158Z",
+      "reportedInputTokens": 23834,
+      "reportedOutputTokens": 1,
+      "inputTokens": 23834,
+      "outputTokens": 1,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use",
+      "responseParsed": true
     }
   ],
   "entries": [
@@ -8403,20 +8564,20 @@
       "message": "Seleção visual não aprovada. Não há combinação completa de cenas compatíveis e distintas para todos os cartões e Story. "
     },
     {
-      "id": "kids-biblia-01",
-      "title": "Deus criou um mundo cheio de vida",
-      "fingerprint": "1ecec8998013f07de869efb39b83cf9e6a7f77dc2c99f4d94ea202ef5c7ba215",
-      "checkedAt": "2026-10-26T21:46:06.676Z",
-      "status": "rejected",
-      "message": "Vínculo bíblico não aponta a um versículo exato da passagem."
-    },
-    {
       "id": "kids-biblia-02",
       "title": "O descanso também faz parte da semana",
       "fingerprint": "da99bd545ec9bcbca0638685c30a8069cdbb1cf4e3613d94069e86c3411f4c0d",
       "checkedAt": "2026-10-27T22:14:52.349Z",
       "status": "rejected",
       "message": "Falha ou resposta não verificável do provedor. Sem nova tentativa paga automática."
+    },
+    {
+      "id": "kids-biblia-01",
+      "title": "Deus criou um mundo cheio de vida",
+      "fingerprint": "1ecec8998013f07de869efb39b83cf9e6a7f77dc2c99f4d94ea202ef5c7ba215",
+      "checkedAt": "2026-10-29T16:10:27.595Z",
+      "status": "rejected",
+      "message": "Faltam seis cenas com leitura individual confirmada."
     }
   ],
   "calibration": {
@@ -8428,8 +8589,8 @@
     "challengeHash": "695b8e040e170590676379d497155343c47a297353bad9921ba60f57ff3e5602"
   },
   "publicationTriggered": false,
-  "checkedAt": "2026-10-29T16:01:08.376Z",
-  "lastRun": "40907203612",
+  "checkedAt": "2026-10-29T16:12:26.690Z",
+  "lastRun": "40908717008",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -8639,9 +8800,9 @@
       "checkedAt": "2026-10-19T05:31:35.633Z"
     },
     "1ecec8998013f07de869efb39b83cf9e6a7f77dc2c99f4d94ea202ef5c7ba215": {
-      "reason": "Vínculo bíblico não aponta a um versículo exato da passagem.",
+      "reason": "Faltam seis cenas com leitura individual confirmada.",
       "kind": "editorial",
-      "checkedAt": "2026-10-26T21:49:18.862Z"
+      "checkedAt": "2026-10-29T16:12:22.235Z"
     }
   },
   "lastEvaluation": {
@@ -8740,12 +8901,12 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-02:650459f562056db8",
+    "stage": "pixels:kids-biblia-01:203de61859a6908c",
     "value": {
       "visible": true,
       "style": "illustration",
-      "childSuitable": false,
-      "observedEvent": "Homem sem camisa com a mão na testa, posicionado atrás de grandes folhas verdes em um ambiente de vegetação densa, desenhado em estilo ilustrativo com traços e aquarela."
+      "childSuitable": true,
+      "observedEvent": "Ilustração dividida diagonalmente: à esquerda, montanhas verdes com sol nascendo ou se pondo atrás dos picos e nuvens amarelas no céu; à direita, céu noturno azul escuro com uma lua cheia amarela e estrelas brancas espalhadas."
     }
   },
   "lastFactualEvaluation": {
@@ -8857,12 +9018,80 @@
   },
   "responseFormat": "json",
   "pixelCache": {
+    "abd894d207d2871b99e534f31eba31836bfdb8fd2b3545d9a9a1448b27f1a926": {
+      "version": "kids-scene-review-v4-visual",
+      "model": "claude-sonnet-4.6",
+      "promptHash": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "checkedAt": "2026-10-29T16:12:20.272Z",
+      "callId": "a604c57e-77fe-4aee-9dc4-466fa1c1c182",
+      "observation": {
+        "id": "203de61859a6908c",
+        "sha256": "abd894d207d2871b99e534f31eba31836bfdb8fd2b3545d9a9a1448b27f1a926",
+        "imageHash": "a8e354e5b297b4ed516c752d162bb1df59d55425f8c357a1edb5a7be36ca7a29",
+        "imageBytes": 70065,
+        "visible": true,
+        "style": "illustration",
+        "childSuitable": true,
+        "observedEvent": "Ilustração dividida diagonalmente: à esquerda, montanhas verdes com sol nascendo ou se pondo atrás dos picos e nuvens amarelas no céu; à direita, céu noturno azul escuro com uma lua cheia amarela e estrelas brancas espalhadas."
+      }
+    },
+    "01a592a084fa131c85951d6298cf8c09afb058df942e339e101a5e90f1c643db": {
+      "version": "kids-scene-review-v4-visual",
+      "model": "claude-sonnet-4.6",
+      "promptHash": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "checkedAt": "2026-10-29T16:12:05.405Z",
+      "callId": "e0707012-7324-4025-93e0-5b37891b2e88",
+      "observation": {
+        "id": "bd37b6a7600b45eb",
+        "sha256": "01a592a084fa131c85951d6298cf8c09afb058df942e339e101a5e90f1c643db",
+        "imageHash": "c5b9b55550f308415ee0772bbe74f117ebb45bda66840022094903d2284e7f6b",
+        "imageBytes": 66333,
+        "visible": true,
+        "style": "illustration",
+        "childSuitable": true,
+        "observedEvent": "Ilustração de folhas largas e verdes sobrepostas em primeiro plano, com gotas d'água visíveis na superfície, enquadrando ao fundo silhuetas de árvores e vegetação densa em tons de verde claro e amarelo. A composição é estática, sem figuras humanas ou animais discerníveis, focada inteiramente na representação gráfica da folhagem tropical."
+      }
+    },
+    "9eddf02ae194b7a9ab83898d1110b068415f5f8a343b57da5848ed2426c34000": {
+      "version": "kids-scene-review-v4-visual",
+      "model": "claude-sonnet-4.6",
+      "promptHash": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "checkedAt": "2026-10-29T16:11:38.590Z",
+      "callId": "cc243061-997c-44ca-8de0-ccdac06b0cf1",
+      "observation": {
+        "id": "3268fd9551168af4",
+        "sha256": "9eddf02ae194b7a9ab83898d1110b068415f5f8a343b57da5848ed2426c34000",
+        "imageHash": "cc538cba2608dbe6b7c1ab717c7572acfb2682919e78d9468db0d70af9983412",
+        "imageBytes": 75236,
+        "visible": true,
+        "style": "illustration",
+        "childSuitable": true,
+        "observedEvent": "Dois golfinhos saltam sobre águas azul-turquesa em primeiro plano, com montanhas verdes ao fundo e quatro aves voando no céu nublado; composição horizontal em estilo de ilustração colorida."
+      }
+    },
+    "8dc2e490969f10c351022af26e587bd07b055f04e0e30a17b3da8b84b15edc4e": {
+      "version": "kids-scene-review-v4-visual",
+      "model": "claude-sonnet-4.6",
+      "promptHash": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
+      "checkedAt": "2026-10-29T16:11:24.885Z",
+      "callId": "e2b0ad58-56ff-43a6-a490-8d16dc373c59",
+      "observation": {
+        "id": "2b04b7a8787b1af2",
+        "sha256": "8dc2e490969f10c351022af26e587bd07b055f04e0e30a17b3da8b84b15edc4e",
+        "imageHash": "eaa5940b0975eaf2709665eb62bb2b6f24d8afa90c6e228d3b41725552c18b8b",
+        "imageBytes": 72718,
+        "visible": true,
+        "style": "illustration",
+        "childSuitable": true,
+        "observedEvent": "Ilustração de uma paisagem com montanhas verdes ao fundo, corpo de água azul-turquesa em primeiro plano e céu claro com nuvens brancas delineadas."
+      }
+    },
     "11e31d48bec8f94616081ac2b75b9adb6e09763becabc5a4c1359fcb1cb11599": {
       "version": "kids-scene-review-v4-visual",
       "model": "claude-sonnet-4.6",
       "promptHash": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
-      "checkedAt": "2026-10-27T22:09:52.455Z",
-      "callId": "706869b8-538a-4c9b-bd32-e1cd1e04a15e",
+      "checkedAt": "2026-10-29T16:11:06.773Z",
+      "callId": "957a7c55-3b7c-4289-a670-cbcd558c349d",
       "observation": {
         "id": "35915e7312dd9883",
         "sha256": "11e31d48bec8f94616081ac2b75b9adb6e09763becabc5a4c1359fcb1cb11599",
@@ -8871,7 +9100,7 @@
         "visible": true,
         "style": "illustration",
         "childSuitable": true,
-        "observedEvent": "Duas árvores frutíferas de copas verdes e troncos grossos em primeiro plano, com frutos amarelos à esquerda e roxos à direita, sobre um campo verde e colinas amarelas ao fundo, em estilo ilustração colorida."
+        "observedEvent": "Ilustração de duas árvores frutíferas com troncos grossos e copas verdes densas, uma com frutos amarelos e outra com frutos roxos, posicionadas lado a lado em um campo verde com colinas amareladas ao fundo sob céu claro."
       }
     },
     "086fc190206738003277e355c6d1808f5171f50e36b3c06c8b14c7cf9b8202ae": {
@@ -8908,57 +9137,6 @@
         "observedEvent": "Duas zebras com listras pretas e brancas estão lado a lado em um ambiente de vegetação verde densa, com palmeiras e árvores ao fundo sob céu azul claro; a composição é uma ilustração estilizada com contornos marcados."
       }
     },
-    "abd894d207d2871b99e534f31eba31836bfdb8fd2b3545d9a9a1448b27f1a926": {
-      "version": "kids-scene-review-v4-visual",
-      "model": "claude-sonnet-4.6",
-      "promptHash": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
-      "checkedAt": "2026-10-27T22:09:16.906Z",
-      "callId": "ca64b87a-e850-4376-93fe-794f428e828d",
-      "observation": {
-        "id": "203de61859a6908c",
-        "sha256": "abd894d207d2871b99e534f31eba31836bfdb8fd2b3545d9a9a1448b27f1a926",
-        "imageHash": "a8e354e5b297b4ed516c752d162bb1df59d55425f8c357a1edb5a7be36ca7a29",
-        "imageBytes": 70065,
-        "visible": true,
-        "style": "illustration",
-        "childSuitable": true,
-        "observedEvent": "Ilustração dividida diagonalmente: à esquerda, montanhas verdes com sol nascendo ou se pondo e nuvens amarelas; à direita, céu noturno azul escuro com lua cheia amarela e estrelas brancas. Não há pessoas, animais ou objetos de ação identificáveis além dos elementos celestes e do relevo."
-      }
-    },
-    "01a592a084fa131c85951d6298cf8c09afb058df942e339e101a5e90f1c643db": {
-      "version": "kids-scene-review-v4-visual",
-      "model": "claude-sonnet-4.6",
-      "promptHash": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
-      "checkedAt": "2026-10-27T22:09:01.438Z",
-      "callId": "0c79147f-a378-44be-9cde-fc53c74ade92",
-      "observation": {
-        "id": "bd37b6a7600b45eb",
-        "sha256": "01a592a084fa131c85951d6298cf8c09afb058df942e339e101a5e90f1c643db",
-        "imageHash": "c5b9b55550f308415ee0772bbe74f117ebb45bda66840022094903d2284e7f6b",
-        "imageBytes": 66333,
-        "visible": true,
-        "style": "illustration",
-        "childSuitable": true,
-        "observedEvent": "Ilustração de grandes folhas verdes em primeiro plano com gotas de água e furos, sobre fundo de vegetação verde-amarelada em tons planos e traços definidos."
-      }
-    },
-    "8dc2e490969f10c351022af26e587bd07b055f04e0e30a17b3da8b84b15edc4e": {
-      "version": "kids-scene-review-v4-visual",
-      "model": "claude-sonnet-4.6",
-      "promptHash": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
-      "checkedAt": "2026-10-27T21:46:24.005Z",
-      "callId": "f7c3ffb8-e54d-406a-b215-2191a1ee97a0",
-      "observation": {
-        "id": "2b04b7a8787b1af2",
-        "sha256": "8dc2e490969f10c351022af26e587bd07b055f04e0e30a17b3da8b84b15edc4e",
-        "imageHash": "eaa5940b0975eaf2709665eb62bb2b6f24d8afa90c6e228d3b41725552c18b8b",
-        "imageBytes": 72718,
-        "visible": true,
-        "style": "illustration",
-        "childSuitable": true,
-        "observedEvent": "Ilustração de paisagem natural mostrando uma cadeia de montanhas verdes ao fundo, um corpo de água azul-turquesa com ondas na parte inferior e nuvens brancas no céu claro; sem pessoas, objetos artificiais ou ação narrativa visível."
-      }
-    },
     "e249bbc26368ad40b5935eff2cce0f24d094ab464b4e692e633ae589cadb7289": {
       "version": "kids-scene-review-v4-visual",
       "model": "claude-sonnet-4.6",
@@ -8974,23 +9152,6 @@
         "style": "illustration",
         "childSuitable": true,
         "observedEvent": "Ilustração em aquarela e nanquim de um corpo d'água azul-turquesa com ondulações circulares na superfície, ladeado por falésias rochosas íngremes de tons amarelo-ocre que se estendem até montanhas ao fundo sob céu azul claro. Não há pessoas, animais ou objetos identificáveis além da paisagem natural composta por água, rochas e relevo montanhoso."
-      }
-    },
-    "9eddf02ae194b7a9ab83898d1110b068415f5f8a343b57da5848ed2426c34000": {
-      "version": "kids-scene-review-v4-visual",
-      "model": "claude-sonnet-4.6",
-      "promptHash": "00c42e768758a8342f2607e5395b106347612dc9ea9e281e052238ab29cc0430",
-      "checkedAt": "2026-10-27T21:45:45.175Z",
-      "callId": "e22b8e5b-d2ff-4044-b8fe-5b9bf5765596",
-      "observation": {
-        "id": "3268fd9551168af4",
-        "sha256": "9eddf02ae194b7a9ab83898d1110b068415f5f8a343b57da5848ed2426c34000",
-        "imageHash": "cc538cba2608dbe6b7c1ab717c7572acfb2682919e78d9468db0d70af9983412",
-        "imageBytes": 75236,
-        "visible": true,
-        "style": "illustration",
-        "childSuitable": true,
-        "observedEvent": "Dois golfinhos saltam sobre águas azul-turquesa em primeiro plano, com montanhas verdes ao fundo e quatro aves voando no céu nublado."
       }
     },
     "cd628f1d5fd1e9fdfae16ec16d72948aa74b2ad787082c50a1666f26aea16775": {
@@ -12053,15 +12214,15 @@
   },
   "reasoningModel": "claude-sonnet-4.6",
   "pilotRun": {
-    "id": "a2a55bb7-bf49-49ca-92e4-ff27c8b969a5",
-    "packId": "kids-biblia-02",
+    "id": "8782e0f8-55ba-48a0-8b3d-5aeb708dd7df",
+    "packId": "kids-biblia-01",
     "status": "rejected",
-    "startedAt": "2026-10-27T22:14:49.231Z",
-    "expiresAt": "2026-10-27T22:39:49.231Z",
+    "startedAt": "2026-10-29T16:10:23.737Z",
+    "expiresAt": "2026-10-29T16:35:23.737Z",
     "maxCalls": 10,
     "maxInputTokens": 1200000,
     "maxOutputTokens": 80000,
-    "completedAt": "2026-10-27T22:17:29.293Z"
+    "completedAt": "2026-10-29T16:12:26.690Z"
   },
   "activationEvidence": {
     "checkedAt": "2026-10-18T15:01:37.215Z",
@@ -12100,9 +12261,9 @@
   },
   "economy": {
     "reusedPixelReads": 0,
-    "newPixelReads": 0,
+    "newPixelReads": 7,
     "skippedCandidates": 0,
-    "checkedAt": "2026-10-29T16:01:08.376Z"
+    "checkedAt": "2026-10-29T16:12:26.690Z"
   },
   "recoveredUsageReceipt": {
     "callId": "8ce52181-2d91-44c9-827e-1e9d1857ae8f",
