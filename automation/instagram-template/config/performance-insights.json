@@ -54842,21 +54842,28 @@
           "claudeExperiment": null,
           "mediaType": "VIDEO",
           "mediaProductType": "REELS",
-          "viewGrowth": null,
+          "viewGrowth": {
+            "from": "2026-10-29T22:21:44.786Z",
+            "to": "2026-10-30T00:29:50.560Z",
+            "previousViews": 4,
+            "currentViews": 4,
+            "delta": 0,
+            "percent": 0
+          },
           "latestObservation": {
-            "windowHours": 2,
-            "collectedAt": "2026-10-29T22:21:44.786Z",
-            "ageHours": 2.32,
+            "windowHours": null,
+            "collectedAt": "2026-10-30T00:29:50.560Z",
+            "ageHours": 4.46,
             "metrics": {
-              "reach": 2,
+              "reach": 3,
               "saved": 0,
               "shares": 0,
               "totalInteractions": 0,
               "views": 4,
-              "watchTime": 40727,
+              "watchTime": 41328,
               "durationSeconds": 13.7,
-              "averageWatchTime": 10181,
-              "skipRate": 66.7,
+              "averageWatchTime": 8265,
+              "skipRate": 100,
               "reposts": 0,
               "follows": null,
               "profileVisits": null,
@@ -54865,7 +54872,7 @@
             },
             "performance": {
               "modelVersion": "nerion-adaptive-v1.4.0",
-              "score": 1.82,
+              "score": 1.8,
               "rates": {
                 "share": 0,
                 "save": 0,
@@ -54875,21 +54882,21 @@
                 "follow": 0,
                 "repost": 0,
                 "profileVisit": 0,
-                "skip": 0.667,
-                "retention": 0.74314,
-                "viewsPerReach": 2
+                "skip": 1,
+                "retention": 0.60328,
+                "viewsPerReach": 1.33333
               },
               "objectiveScores": {
-                "discovery": 17.6,
+                "discovery": 13.28,
                 "utility": 0,
                 "conversation": 0,
                 "conversion": 0,
-                "retention": 64.06
+                "retention": 45.25
               },
               "distribution": {
                 "views": 4,
-                "reach": 2,
-                "confidence": 0.1,
+                "reach": 3,
+                "confidence": 0.12,
                 "low": true,
                 "band": "critical"
               }
@@ -54944,8 +54951,126 @@
           "objective": "utility",
           "daypart": "evening",
           "durationSeconds": null,
-          "observations": [],
-          "claudeExperiment": null
+          "observations": [
+            {
+              "windowHours": 2,
+              "collectedAt": "2026-10-30T00:29:51.129Z",
+              "ageHours": 2.05,
+              "metrics": {
+                "reach": 3,
+                "saved": 0,
+                "shares": 0,
+                "totalInteractions": 0,
+                "views": 10,
+                "watchTime": null,
+                "durationSeconds": null,
+                "averageWatchTime": null,
+                "skipRate": null,
+                "reposts": 0,
+                "follows": 0,
+                "profileVisits": 0,
+                "likes": 0,
+                "comments": 0
+              },
+              "performance": {
+                "modelVersion": "nerion-adaptive-v1.4.0",
+                "score": 6.31,
+                "rates": {
+                  "share": 0,
+                  "save": 0,
+                  "comment": 0,
+                  "like": 0,
+                  "interaction": 0,
+                  "follow": 0,
+                  "repost": 0,
+                  "profileVisit": 0,
+                  "skip": null,
+                  "retention": null,
+                  "viewsPerReach": 3
+                },
+                "objectiveScores": {
+                  "discovery": 36.5,
+                  "utility": 0,
+                  "conversation": 0,
+                  "conversion": 0,
+                  "retention": null
+                },
+                "distribution": {
+                  "views": 10,
+                  "reach": 3,
+                  "confidence": 0.25,
+                  "low": true,
+                  "band": "critical"
+                }
+              },
+              "unavailableMetrics": {
+                "ig_reels_video_view_total_time": "(#100) The Media Insights API does not support the ig_reels_video_view_total_time metric for this media product type.",
+                "ig_reels_avg_watch_time": "(#100) The Media Insights API does not support the ig_reels_avg_watch_time metric for this media product type.",
+                "reels_skip_rate": "(#100) The Media Insights API does not support the reels_skip_rate metric for this media product type."
+              }
+            }
+          ],
+          "claudeExperiment": null,
+          "mediaType": "CAROUSEL_ALBUM",
+          "mediaProductType": "FEED",
+          "viewGrowth": null,
+          "latestObservation": {
+            "windowHours": 2,
+            "collectedAt": "2026-10-30T00:29:51.129Z",
+            "ageHours": 2.05,
+            "metrics": {
+              "reach": 3,
+              "saved": 0,
+              "shares": 0,
+              "totalInteractions": 0,
+              "views": 10,
+              "watchTime": null,
+              "durationSeconds": null,
+              "averageWatchTime": null,
+              "skipRate": null,
+              "reposts": 0,
+              "follows": 0,
+              "profileVisits": 0,
+              "likes": 0,
+              "comments": 0
+            },
+            "performance": {
+              "modelVersion": "nerion-adaptive-v1.4.0",
+              "score": 6.31,
+              "rates": {
+                "share": 0,
+                "save": 0,
+                "comment": 0,
+                "like": 0,
+                "interaction": 0,
+                "follow": 0,
+                "repost": 0,
+                "profileVisit": 0,
+                "skip": null,
+                "retention": null,
+                "viewsPerReach": 3
+              },
+              "objectiveScores": {
+                "discovery": 36.5,
+                "utility": 0,
+                "conversation": 0,
+                "conversion": 0,
+                "retention": null
+              },
+              "distribution": {
+                "views": 10,
+                "reach": 3,
+                "confidence": 0.25,
+                "low": true,
+                "band": "critical"
+              }
+            },
+            "unavailableMetrics": {
+              "ig_reels_video_view_total_time": "(#100) The Media Insights API does not support the ig_reels_video_view_total_time metric for this media product type.",
+              "ig_reels_avg_watch_time": "(#100) The Media Insights API does not support the ig_reels_avg_watch_time metric for this media product type.",
+              "reels_skip_rate": "(#100) The Media Insights API does not support the reels_skip_rate metric for this media product type."
+            }
+          }
         }
       ],
       "models": {
@@ -54964,7 +55089,7 @@
               "samples": 3,
               "totalReach": 217,
               "eligible": true,
-              "averageScore": 21.90815830289473,
+              "averageScore": 21.908158302894726,
               "learnedScore": 39.46555936358553,
               "confidence": 0.375
             },
@@ -55868,7 +55993,7 @@
               "score": 48.07,
               "windowHours": 2,
               "medianViews": 9,
-              "peers": 81,
+              "peers": 82,
               "maturityWeight": 0.25
             },
             "18078723530391733": {
@@ -55973,7 +56098,7 @@
               "score": 51.42,
               "windowHours": 2,
               "medianViews": 9,
-              "peers": 81,
+              "peers": 82,
               "maturityWeight": 0.25
             },
             "18383115544239319": {
@@ -55994,7 +56119,7 @@
               "score": 50.52,
               "windowHours": 2,
               "medianViews": 9,
-              "peers": 81,
+              "peers": 82,
               "maturityWeight": 0.25
             },
             "17997394923037864": {
@@ -56386,7 +56511,7 @@
               "score": 51.42,
               "windowHours": 2,
               "medianViews": 9,
-              "peers": 81,
+              "peers": 82,
               "maturityWeight": 0.25
             },
             "17914683633288878": {
@@ -56394,6 +56519,13 @@
               "windowHours": 2,
               "medianViews": 4,
               "peers": 108,
+              "maturityWeight": 0.25
+            },
+            "18358212436173152": {
+              "score": 50.52,
+              "windowHours": 2,
+              "medianViews": 9,
+              "peers": 82,
               "maturityWeight": 0.25
             }
           },
@@ -56405,7 +56537,7 @@
               "viewsConfidence": 0,
               "matureSamples": 13,
               "lowDistributionSamples": 0,
-              "recencyWeight": 7.81,
+              "recencyWeight": 7.805,
               "confidence": 0.905,
               "averageScore": 50.41,
               "learnedScore": 50.37
@@ -56417,7 +56549,7 @@
               "viewsConfidence": 0,
               "matureSamples": 18,
               "lowDistributionSamples": 0,
-              "recencyWeight": 10.506,
+              "recencyWeight": 10.498,
               "confidence": 1,
               "averageScore": 51.05,
               "learnedScore": 51.05
@@ -56429,7 +56561,7 @@
               "viewsConfidence": 0,
               "matureSamples": 21,
               "lowDistributionSamples": 0,
-              "recencyWeight": 13.952,
+              "recencyWeight": 13.942,
               "confidence": 1,
               "averageScore": 48.79,
               "learnedScore": 48.79
@@ -56441,7 +56573,7 @@
               "viewsConfidence": 0,
               "matureSamples": 13,
               "lowDistributionSamples": 0,
-              "recencyWeight": 6.77,
+              "recencyWeight": 6.765,
               "confidence": 1,
               "averageScore": 49.68,
               "learnedScore": 49.68
@@ -56453,7 +56585,7 @@
               "viewsConfidence": 0,
               "matureSamples": 35,
               "lowDistributionSamples": 0,
-              "recencyWeight": 23.392,
+              "recencyWeight": 23.375,
               "confidence": 1,
               "averageScore": 56.3,
               "learnedScore": 56.3
@@ -56465,7 +56597,7 @@
               "viewsConfidence": 0,
               "matureSamples": 17,
               "lowDistributionSamples": 0,
-              "recencyWeight": 12.49,
+              "recencyWeight": 12.481,
               "confidence": 1,
               "averageScore": 50.31,
               "learnedScore": 50.31
@@ -56477,7 +56609,7 @@
               "viewsConfidence": 0,
               "matureSamples": 16,
               "lowDistributionSamples": 0,
-              "recencyWeight": 9.126,
+              "recencyWeight": 9.12,
               "confidence": 1,
               "averageScore": 56.55,
               "learnedScore": 56.55
@@ -56489,7 +56621,7 @@
               "viewsConfidence": 0,
               "matureSamples": 19,
               "lowDistributionSamples": 0,
-              "recencyWeight": 12.001,
+              "recencyWeight": 11.992,
               "confidence": 1,
               "averageScore": 50.38,
               "learnedScore": 50.38
@@ -56501,7 +56633,7 @@
               "viewsConfidence": 0,
               "matureSamples": 8,
               "lowDistributionSamples": 0,
-              "recencyWeight": 5.334,
+              "recencyWeight": 5.33,
               "confidence": 0.345,
               "averageScore": 47.48,
               "learnedScore": 49.13
@@ -56513,22 +56645,22 @@
               "viewsConfidence": 0,
               "matureSamples": 2,
               "lowDistributionSamples": 0,
-              "recencyWeight": 1.146,
+              "recencyWeight": 1.145,
               "confidence": 0.062,
               "averageScore": 55.85,
               "learnedScore": 50.36
             },
             "ti inside": {
-              "samples": 17,
-              "totalReach": 244,
+              "samples": 18,
+              "totalReach": 247,
               "viewsOnlySamples": 0,
               "viewsConfidence": 0,
               "matureSamples": 17,
               "lowDistributionSamples": 0,
-              "recencyWeight": 13.953,
+              "recencyWeight": 14.94,
               "confidence": 1,
-              "averageScore": 49.39,
-              "learnedScore": 49.39
+              "averageScore": 49.47,
+              "learnedScore": 49.47
             },
             "aws machine learning": {
               "samples": 1,
@@ -56537,7 +56669,7 @@
               "viewsConfidence": 0,
               "matureSamples": 1,
               "lowDistributionSamples": 0,
-              "recencyWeight": 0.786,
+              "recencyWeight": 0.785,
               "confidence": 0.01,
               "averageScore": 52.13,
               "learnedScore": 50.02
@@ -56545,16 +56677,16 @@
           },
           "topics": {
             "vendas": {
-              "samples": 183,
-              "totalReach": 6145,
+              "samples": 184,
+              "totalReach": 6148,
               "viewsOnlySamples": 0,
               "viewsConfidence": 0,
               "matureSamples": 179,
               "lowDistributionSamples": 0,
-              "recencyWeight": 116.604,
+              "recencyWeight": 117.516,
               "confidence": 1,
-              "averageScore": 51.74,
-              "learnedScore": 51.74
+              "averageScore": 51.73,
+              "learnedScore": 51.73
             },
             "dados": {
               "samples": 6,
@@ -56563,22 +56695,22 @@
               "viewsConfidence": 0,
               "matureSamples": 4,
               "lowDistributionSamples": 0,
-              "recencyWeight": 4.052,
+              "recencyWeight": 4.049,
               "confidence": 0.245,
               "averageScore": 45.88,
               "learnedScore": 48.99
             },
             "empresa": {
-              "samples": 8,
-              "totalReach": 102,
+              "samples": 9,
+              "totalReach": 105,
               "viewsOnlySamples": 0,
               "viewsConfidence": 0,
               "matureSamples": 8,
               "lowDistributionSamples": 0,
-              "recencyWeight": 4.973,
-              "confidence": 0.51,
-              "averageScore": 44,
-              "learnedScore": 46.94
+              "recencyWeight": 5.967,
+              "confidence": 0.525,
+              "averageScore": 45.09,
+              "learnedScore": 47.42
             },
             "automação": {
               "samples": 4,
@@ -56587,7 +56719,7 @@
               "viewsConfidence": 0,
               "matureSamples": 4,
               "lowDistributionSamples": 0,
-              "recencyWeight": 2.309,
+              "recencyWeight": 2.308,
               "confidence": 0.16,
               "averageScore": 46.04,
               "learnedScore": 49.37
@@ -56599,7 +56731,7 @@
               "viewsConfidence": 0,
               "matureSamples": 12,
               "lowDistributionSamples": 0,
-              "recencyWeight": 8.008,
+              "recencyWeight": 8.002,
               "confidence": 0.72,
               "averageScore": 45.68,
               "learnedScore": 46.89
@@ -56611,7 +56743,7 @@
               "viewsConfidence": 0,
               "matureSamples": 4,
               "lowDistributionSamples": 0,
-              "recencyWeight": 2.296,
+              "recencyWeight": 2.294,
               "confidence": 0.612,
               "averageScore": 60.57,
               "learnedScore": 56.47
@@ -56623,7 +56755,7 @@
               "viewsConfidence": 0,
               "matureSamples": 3,
               "lowDistributionSamples": 0,
-              "recencyWeight": 2.068,
+              "recencyWeight": 2.067,
               "confidence": 0.15,
               "averageScore": 50.92,
               "learnedScore": 50.14
@@ -56647,7 +56779,7 @@
               "viewsConfidence": 0,
               "matureSamples": 1,
               "lowDistributionSamples": 0,
-              "recencyWeight": 0.565,
+              "recencyWeight": 0.564,
               "confidence": 0.008,
               "averageScore": 35,
               "learnedScore": 49.88
@@ -56659,7 +56791,7 @@
               "viewsConfidence": 0,
               "matureSamples": 2,
               "lowDistributionSamples": 0,
-              "recencyWeight": 1.36,
+              "recencyWeight": 1.359,
               "confidence": 0.056,
               "averageScore": 53.08,
               "learnedScore": 50.17
@@ -56671,7 +56803,7 @@
               "viewsConfidence": 0,
               "matureSamples": 2,
               "lowDistributionSamples": 0,
-              "recencyWeight": 1.311,
+              "recencyWeight": 1.31,
               "confidence": 0.048,
               "averageScore": 51.54,
               "learnedScore": 50.07
@@ -56683,7 +56815,7 @@
               "viewsConfidence": 0,
               "matureSamples": 1,
               "lowDistributionSamples": 0,
-              "recencyWeight": 0.711,
+              "recencyWeight": 0.71,
               "confidence": 0.003,
               "averageScore": 35,
               "learnedScore": 49.95
@@ -56697,22 +56829,22 @@
               "viewsConfidence": 0,
               "matureSamples": 102,
               "lowDistributionSamples": 0,
-              "recencyWeight": 69.217,
+              "recencyWeight": 69.166,
               "confidence": 1,
               "averageScore": 51.64,
               "learnedScore": 51.64
             },
             "pergunta": {
-              "samples": 40,
-              "totalReach": 474,
+              "samples": 41,
+              "totalReach": 477,
               "viewsOnlySamples": 0,
               "viewsConfidence": 0,
               "matureSamples": 36,
               "lowDistributionSamples": 0,
-              "recencyWeight": 25.424,
+              "recencyWeight": 26.403,
               "confidence": 1,
-              "averageScore": 48.88,
-              "learnedScore": 48.88
+              "averageScore": 48.94,
+              "learnedScore": 48.94
             },
             "alerta": {
               "samples": 10,
@@ -56721,7 +56853,7 @@
               "viewsConfidence": 0,
               "matureSamples": 9,
               "lowDistributionSamples": 0,
-              "recencyWeight": 6.301,
+              "recencyWeight": 6.296,
               "confidence": 1,
               "averageScore": 55.03,
               "learnedScore": 55.03
@@ -56733,7 +56865,7 @@
               "viewsConfidence": 0,
               "matureSamples": 38,
               "lowDistributionSamples": 0,
-              "recencyWeight": 24.142,
+              "recencyWeight": 24.125,
               "confidence": 1,
               "averageScore": 52.25,
               "learnedScore": 52.25
@@ -56745,7 +56877,7 @@
               "viewsConfidence": 0,
               "matureSamples": 6,
               "lowDistributionSamples": 0,
-              "recencyWeight": 4.264,
+              "recencyWeight": 4.261,
               "confidence": 0.335,
               "averageScore": 47.54,
               "learnedScore": 49.18
@@ -56760,7 +56892,7 @@
             "viewsConfidence": 0,
             "matureSamples": 13,
             "lowDistributionSamples": 7,
-            "recencyWeight": 7.81,
+            "recencyWeight": 7.805,
             "confidence": 0.905,
             "averageScore": 13.51,
             "learnedScore": 16.97
@@ -56772,7 +56904,7 @@
             "viewsConfidence": 0,
             "matureSamples": 18,
             "lowDistributionSamples": 10,
-            "recencyWeight": 10.506,
+            "recencyWeight": 10.498,
             "confidence": 1,
             "averageScore": 11.5,
             "learnedScore": 11.5
@@ -56784,7 +56916,7 @@
             "viewsConfidence": 0,
             "matureSamples": 21,
             "lowDistributionSamples": 12,
-            "recencyWeight": 13.952,
+            "recencyWeight": 13.942,
             "confidence": 1,
             "averageScore": 10.87,
             "learnedScore": 10.87
@@ -56796,7 +56928,7 @@
             "viewsConfidence": 0,
             "matureSamples": 13,
             "lowDistributionSamples": 7,
-            "recencyWeight": 6.77,
+            "recencyWeight": 6.765,
             "confidence": 1,
             "averageScore": 12.66,
             "learnedScore": 12.66
@@ -56808,7 +56940,7 @@
             "viewsConfidence": 0,
             "matureSamples": 35,
             "lowDistributionSamples": 9,
-            "recencyWeight": 23.392,
+            "recencyWeight": 23.375,
             "confidence": 1,
             "averageScore": 15.46,
             "learnedScore": 15.46
@@ -56820,7 +56952,7 @@
             "viewsConfidence": 0,
             "matureSamples": 17,
             "lowDistributionSamples": 4,
-            "recencyWeight": 12.49,
+            "recencyWeight": 12.481,
             "confidence": 1,
             "averageScore": 10.62,
             "learnedScore": 10.62
@@ -56832,7 +56964,7 @@
             "viewsConfidence": 0,
             "matureSamples": 16,
             "lowDistributionSamples": 5,
-            "recencyWeight": 9.126,
+            "recencyWeight": 9.12,
             "confidence": 1,
             "averageScore": 13.49,
             "learnedScore": 13.49
@@ -56844,7 +56976,7 @@
             "viewsConfidence": 0,
             "matureSamples": 19,
             "lowDistributionSamples": 7,
-            "recencyWeight": 12.001,
+            "recencyWeight": 11.992,
             "confidence": 1,
             "averageScore": 11.75,
             "learnedScore": 11.75
@@ -56856,7 +56988,7 @@
             "viewsConfidence": 0,
             "matureSamples": 8,
             "lowDistributionSamples": 4,
-            "recencyWeight": 5.334,
+            "recencyWeight": 5.33,
             "confidence": 0.6,
             "averageScore": 12.21,
             "learnedScore": 27.33
@@ -56868,22 +57000,22 @@
             "viewsConfidence": 0,
             "matureSamples": 2,
             "lowDistributionSamples": 1,
-            "recencyWeight": 1.146,
+            "recencyWeight": 1.145,
             "confidence": 0.2,
             "averageScore": 9.63,
             "learnedScore": 41.93
           },
           "ti inside": {
-            "samples": 17,
-            "totalReach": 244,
+            "samples": 18,
+            "totalReach": 247,
             "viewsOnlySamples": 0,
             "viewsConfidence": 0,
             "matureSamples": 17,
             "lowDistributionSamples": 9,
-            "recencyWeight": 13.953,
+            "recencyWeight": 14.94,
             "confidence": 1,
-            "averageScore": 13.1,
-            "learnedScore": 13.1
+            "averageScore": 12.65,
+            "learnedScore": 12.65
           },
           "aws machine learning": {
             "samples": 1,
@@ -56892,7 +57024,7 @@
             "viewsConfidence": 0,
             "matureSamples": 1,
             "lowDistributionSamples": 0,
-            "recencyWeight": 0.786,
+            "recencyWeight": 0.785,
             "confidence": 0.01,
             "averageScore": 42.36,
             "learnedScore": 49.92
@@ -56900,16 +57032,16 @@
         },
         "topics": {
           "vendas": {
-            "samples": 183,
-            "totalReach": 6145,
+            "samples": 184,
+            "totalReach": 6148,
             "viewsOnlySamples": 0,
             "viewsConfidence": 0,
             "matureSamples": 179,
             "lowDistributionSamples": 74,
-            "recencyWeight": 116.604,
+            "recencyWeight": 117.516,
             "confidence": 1,
-            "averageScore": 12.93,
-            "learnedScore": 12.93
+            "averageScore": 12.87,
+            "learnedScore": 12.87
           },
           "dados": {
             "samples": 6,
@@ -56918,22 +57050,22 @@
             "viewsConfidence": 0,
             "matureSamples": 4,
             "lowDistributionSamples": 2,
-            "recencyWeight": 4.052,
+            "recencyWeight": 4.049,
             "confidence": 0.4,
             "averageScore": 5.43,
             "learnedScore": 32.17
           },
           "empresa": {
-            "samples": 8,
-            "totalReach": 102,
+            "samples": 9,
+            "totalReach": 105,
             "viewsOnlySamples": 0,
             "viewsConfidence": 0,
             "matureSamples": 8,
             "lowDistributionSamples": 4,
-            "recencyWeight": 4.973,
+            "recencyWeight": 5.967,
             "confidence": 0.6,
-            "averageScore": 11.65,
-            "learnedScore": 26.99
+            "averageScore": 10.76,
+            "learnedScore": 26.45
           },
           "automação": {
             "samples": 4,
@@ -56942,7 +57074,7 @@
             "viewsConfidence": 0,
             "matureSamples": 4,
             "lowDistributionSamples": 2,
-            "recencyWeight": 2.309,
+            "recencyWeight": 2.308,
             "confidence": 0.4,
             "averageScore": 12.78,
             "learnedScore": 35.11
@@ -56954,7 +57086,7 @@
             "viewsConfidence": 0,
             "matureSamples": 12,
             "lowDistributionSamples": 6,
-            "recencyWeight": 8.008,
+            "recencyWeight": 8.002,
             "confidence": 0.72,
             "averageScore": 13.58,
             "learnedScore": 23.78
@@ -56966,7 +57098,7 @@
             "viewsConfidence": 0,
             "matureSamples": 4,
             "lowDistributionSamples": 1,
-            "recencyWeight": 2.296,
+            "recencyWeight": 2.294,
             "confidence": 0.612,
             "averageScore": 12.4,
             "learnedScore": 26.99
@@ -56978,7 +57110,7 @@
             "viewsConfidence": 0,
             "matureSamples": 3,
             "lowDistributionSamples": 0,
-            "recencyWeight": 2.068,
+            "recencyWeight": 2.067,
             "confidence": 0.15,
             "averageScore": 14.23,
             "learnedScore": 44.63
@@ -57002,7 +57134,7 @@
             "viewsConfidence": 0,
             "matureSamples": 1,
             "lowDistributionSamples": 1,
-            "recencyWeight": 0.565,
+            "recencyWeight": 0.564,
             "confidence": 0.008,
             "averageScore": 4.8,
             "learnedScore": 49.64
@@ -57014,7 +57146,7 @@
             "viewsConfidence": 0,
             "matureSamples": 2,
             "lowDistributionSamples": 0,
-            "recencyWeight": 1.36,
+            "recencyWeight": 1.359,
             "confidence": 0.056,
             "averageScore": 16.8,
             "learnedScore": 48.14
@@ -57026,7 +57158,7 @@
             "viewsConfidence": 0,
             "matureSamples": 2,
             "lowDistributionSamples": 1,
-            "recencyWeight": 1.311,
+            "recencyWeight": 1.31,
             "confidence": 0.2,
             "averageScore": 7.87,
             "learnedScore": 41.57
@@ -57038,7 +57170,7 @@
             "viewsConfidence": 0,
             "matureSamples": 1,
             "lowDistributionSamples": 1,
-            "recencyWeight": 0.711,
+            "recencyWeight": 0.71,
             "confidence": 0.003,
             "averageScore": 2.25,
             "learnedScore": 49.86
@@ -57046,16 +57178,16 @@
         },
         "formats": {
           "FEED": {
-            "samples": 88,
-            "totalReach": 1336,
+            "samples": 89,
+            "totalReach": 1339,
             "viewsOnlySamples": 0,
             "viewsConfidence": 0,
             "matureSamples": 84,
             "lowDistributionSamples": 14,
-            "recencyWeight": 56.275,
+            "recencyWeight": 57.231,
             "confidence": 1,
-            "averageScore": 16.68,
-            "learnedScore": 16.68
+            "averageScore": 16.5,
+            "learnedScore": 16.5
           },
           "REELS": {
             "samples": 113,
@@ -57064,7 +57196,7 @@
             "viewsConfidence": 0,
             "matureSamples": 107,
             "lowDistributionSamples": 69,
-            "recencyWeight": 73.073,
+            "recencyWeight": 73.02,
             "confidence": 1,
             "averageScore": 9.14,
             "learnedScore": 9.14
@@ -57072,16 +57204,16 @@
         },
         "audiences": {
           "vendas": {
-            "samples": 184,
-            "totalReach": 6148,
+            "samples": 185,
+            "totalReach": 6151,
             "viewsOnlySamples": 0,
             "viewsConfidence": 0,
             "matureSamples": 180,
             "lowDistributionSamples": 75,
-            "recencyWeight": 117.315,
+            "recencyWeight": 118.226,
             "confidence": 1,
-            "averageScore": 12.86,
-            "learnedScore": 12.86
+            "averageScore": 12.81,
+            "learnedScore": 12.81
           },
           "tecnologia": {
             "samples": 3,
@@ -57090,7 +57222,7 @@
             "viewsConfidence": 0,
             "matureSamples": 2,
             "lowDistributionSamples": 2,
-            "recencyWeight": 2.107,
+            "recencyWeight": 2.105,
             "confidence": 0.4,
             "averageScore": 6.59,
             "learnedScore": 32.64
@@ -57102,7 +57234,7 @@
             "viewsConfidence": 0,
             "matureSamples": 9,
             "lowDistributionSamples": 6,
-            "recencyWeight": 9.239,
+            "recencyWeight": 9.232,
             "confidence": 0.6,
             "averageScore": 8.73,
             "learnedScore": 25.24
@@ -57114,7 +57246,7 @@
             "viewsConfidence": 0,
             "matureSamples": 0,
             "lowDistributionSamples": 0,
-            "recencyWeight": 0.688,
+            "recencyWeight": 0.687,
             "confidence": 0.003,
             "averageScore": 4.49,
             "learnedScore": 49.86
@@ -57128,22 +57260,22 @@
             "viewsConfidence": 0,
             "matureSamples": 102,
             "lowDistributionSamples": 38,
-            "recencyWeight": 69.217,
+            "recencyWeight": 69.166,
             "confidence": 1,
             "averageScore": 13.94,
             "learnedScore": 13.94
           },
           "pergunta": {
-            "samples": 40,
-            "totalReach": 474,
+            "samples": 41,
+            "totalReach": 477,
             "viewsOnlySamples": 0,
             "viewsConfidence": 0,
             "matureSamples": 36,
             "lowDistributionSamples": 22,
-            "recencyWeight": 25.424,
+            "recencyWeight": 26.403,
             "confidence": 1,
-            "averageScore": 9.91,
-            "learnedScore": 9.91
+            "averageScore": 9.78,
+            "learnedScore": 9.78
           },
           "alerta": {
             "samples": 10,
@@ -57152,7 +57284,7 @@
             "viewsConfidence": 0,
             "matureSamples": 9,
             "lowDistributionSamples": 3,
-            "recencyWeight": 6.301,
+            "recencyWeight": 6.296,
             "confidence": 1,
             "averageScore": 11.06,
             "learnedScore": 11.06
@@ -57164,7 +57296,7 @@
             "viewsConfidence": 0,
             "matureSamples": 38,
             "lowDistributionSamples": 17,
-            "recencyWeight": 24.142,
+            "recencyWeight": 24.125,
             "confidence": 1,
             "averageScore": 11.88,
             "learnedScore": 11.88
@@ -57176,7 +57308,7 @@
             "viewsConfidence": 0,
             "matureSamples": 6,
             "lowDistributionSamples": 3,
-            "recencyWeight": 4.264,
+            "recencyWeight": 4.261,
             "confidence": 0.6,
             "averageScore": 7.85,
             "learnedScore": 24.71
@@ -57190,7 +57322,7 @@
             "viewsConfidence": 0,
             "matureSamples": 3,
             "lowDistributionSamples": 1,
-            "recencyWeight": 1.735,
+            "recencyWeight": 1.733,
             "confidence": 0.2,
             "averageScore": 0,
             "learnedScore": 40
@@ -57202,7 +57334,7 @@
             "viewsConfidence": 0,
             "matureSamples": 6,
             "lowDistributionSamples": 5,
-            "recencyWeight": 3.149,
+            "recencyWeight": 3.147,
             "confidence": 0.6,
             "averageScore": 0,
             "learnedScore": 20
@@ -57214,7 +57346,7 @@
             "viewsConfidence": 0,
             "matureSamples": 16,
             "lowDistributionSamples": 1,
-            "recencyWeight": 10.478,
+            "recencyWeight": 10.47,
             "confidence": 1,
             "averageScore": 0,
             "learnedScore": 0
@@ -57226,7 +57358,7 @@
             "viewsConfidence": 0,
             "matureSamples": 16,
             "lowDistributionSamples": 11,
-            "recencyWeight": 11.055,
+            "recencyWeight": 11.047,
             "confidence": 1,
             "averageScore": 0.49,
             "learnedScore": 0.49
@@ -57238,7 +57370,7 @@
             "viewsConfidence": 0,
             "matureSamples": 11,
             "lowDistributionSamples": 1,
-            "recencyWeight": 6.702,
+            "recencyWeight": 6.697,
             "confidence": 1,
             "averageScore": 0,
             "learnedScore": 0
@@ -57250,7 +57382,7 @@
             "viewsConfidence": 0,
             "matureSamples": 8,
             "lowDistributionSamples": 3,
-            "recencyWeight": 4.26,
+            "recencyWeight": 4.257,
             "confidence": 1,
             "averageScore": 1.23,
             "learnedScore": 1.23
@@ -57262,7 +57394,7 @@
             "viewsConfidence": 0,
             "matureSamples": 29,
             "lowDistributionSamples": 17,
-            "recencyWeight": 18.508,
+            "recencyWeight": 18.495,
             "confidence": 1,
             "averageScore": 0,
             "learnedScore": 0
@@ -57274,7 +57406,7 @@
             "viewsConfidence": 0,
             "matureSamples": 18,
             "lowDistributionSamples": 3,
-            "recencyWeight": 12.514,
+            "recencyWeight": 12.505,
             "confidence": 1,
             "averageScore": 0,
             "learnedScore": 0
@@ -57286,7 +57418,7 @@
             "viewsConfidence": 0,
             "matureSamples": 7,
             "lowDistributionSamples": 7,
-            "recencyWeight": 5.448,
+            "recencyWeight": 5.444,
             "confidence": 0.6,
             "averageScore": 0,
             "learnedScore": 20
@@ -57298,7 +57430,7 @@
             "viewsConfidence": 0,
             "matureSamples": 5,
             "lowDistributionSamples": 1,
-            "recencyWeight": 2.64,
+            "recencyWeight": 2.638,
             "confidence": 0.265,
             "averageScore": 0,
             "learnedScore": 36.75
@@ -57310,7 +57442,7 @@
             "viewsConfidence": 0,
             "matureSamples": 12,
             "lowDistributionSamples": 8,
-            "recencyWeight": 8.459,
+            "recencyWeight": 8.453,
             "confidence": 1,
             "averageScore": 0,
             "learnedScore": 0
@@ -57322,7 +57454,7 @@
             "viewsConfidence": 0,
             "matureSamples": 6,
             "lowDistributionSamples": 1,
-            "recencyWeight": 3.251,
+            "recencyWeight": 3.248,
             "confidence": 0.43,
             "averageScore": 0,
             "learnedScore": 28.5
@@ -57334,7 +57466,7 @@
             "viewsConfidence": 0,
             "matureSamples": 8,
             "lowDistributionSamples": 3,
-            "recencyWeight": 5.073,
+            "recencyWeight": 5.069,
             "confidence": 0.6,
             "averageScore": 29.61,
             "learnedScore": 37.76
@@ -57346,7 +57478,7 @@
             "viewsConfidence": 0,
             "matureSamples": 4,
             "lowDistributionSamples": 2,
-            "recencyWeight": 2.382,
+            "recencyWeight": 2.381,
             "confidence": 0.4,
             "averageScore": 0,
             "learnedScore": 30
@@ -57358,7 +57490,7 @@
             "viewsConfidence": 0,
             "matureSamples": 4,
             "lowDistributionSamples": 2,
-            "recencyWeight": 3.117,
+            "recencyWeight": 3.115,
             "confidence": 0.4,
             "averageScore": 0,
             "learnedScore": 30
@@ -57370,7 +57502,7 @@
             "viewsConfidence": 0,
             "matureSamples": 9,
             "lowDistributionSamples": 6,
-            "recencyWeight": 6.569,
+            "recencyWeight": 6.564,
             "confidence": 1,
             "averageScore": 0,
             "learnedScore": 0
@@ -57382,22 +57514,22 @@
             "viewsConfidence": 0,
             "matureSamples": 7,
             "lowDistributionSamples": 3,
-            "recencyWeight": 4.628,
+            "recencyWeight": 4.624,
             "confidence": 0.93,
             "averageScore": 33.57,
             "learnedScore": 34.72
           },
           "FEED|evening|utility": {
-            "samples": 9,
-            "totalReach": 89,
+            "samples": 10,
+            "totalReach": 92,
             "viewsOnlySamples": 0,
             "viewsConfidence": 0,
             "matureSamples": 8,
             "lowDistributionSamples": 0,
-            "recencyWeight": 7.17,
-            "confidence": 0.445,
+            "recencyWeight": 8.162,
+            "confidence": 0.46,
             "averageScore": 0,
-            "learnedScore": 27.75
+            "learnedScore": 27
           },
           "FEED|morning|conversation": {
             "samples": 2,
@@ -57406,7 +57538,7 @@
             "viewsConfidence": 0,
             "matureSamples": 2,
             "lowDistributionSamples": 1,
-            "recencyWeight": 1.242,
+            "recencyWeight": 1.241,
             "confidence": 0.2,
             "averageScore": 0,
             "learnedScore": 40
@@ -57418,7 +57550,7 @@
             "viewsConfidence": 0,
             "matureSamples": 4,
             "lowDistributionSamples": 4,
-            "recencyWeight": 4.076,
+            "recencyWeight": 4.073,
             "confidence": 0.6,
             "averageScore": 18.79,
             "learnedScore": 31.27
@@ -57430,7 +57562,7 @@
             "viewsConfidence": 0,
             "matureSamples": 5,
             "lowDistributionSamples": 3,
-            "recencyWeight": 4.538,
+            "recencyWeight": 4.535,
             "confidence": 1,
             "averageScore": 0,
             "learnedScore": 0
@@ -57442,18 +57574,18 @@
             "viewsConfidence": 0,
             "matureSamples": 3,
             "lowDistributionSamples": 0,
-            "recencyWeight": 2.354,
+            "recencyWeight": 2.353,
             "confidence": 0.153,
             "averageScore": 31.54,
             "learnedScore": 47.18
           }
         }
       },
-      "updatedAt": "2026-10-29T23:57:57.827Z",
+      "updatedAt": "2026-10-30T00:29:51.154Z",
       "weeklyGrowth": {
         "current": {
-          "posts": 35,
-          "reach": 1603,
+          "posts": 36,
+          "reach": 1606,
           "interactions": 22,
           "shares": 0,
           "saved": 1,
@@ -57470,7 +57602,7 @@
           "profileVisits": 3
         },
         "change": {
-          "reach": 139.3,
+          "reach": 139.7,
           "interactions": -55.1,
           "follows": null,
           "profileVisits": 0
@@ -57479,11 +57611,11 @@
       "readiness": {
         "modelVersion": "nerion-adaptive-v1.4.0",
         "productStage": "stable",
-        "updatedAt": "2026-10-29T23:57:57.827Z",
+        "updatedAt": "2026-10-30T00:29:51.154Z",
         "ageHours": 0,
         "freshness": "current",
-        "effectiveSamples": 201,
-        "effectiveReach": 6259,
+        "effectiveSamples": 202,
+        "effectiveReach": 6262,
         "controlledSamples": 206,
         "selectionModes": {
           "exploit": 140,
@@ -57889,13 +58021,13 @@
             "date": "2026-10-29",
             "firstCollectedAt": "2026-10-29T05:50:19.711Z",
             "firstFollowers": 2638,
-            "collectedAt": "2026-10-29T23:57:53.461Z",
+            "collectedAt": "2026-10-30T00:29:49.339Z",
             "followers": 2635
           }
         ],
         "status": "available",
         "lastError": null,
-        "lastAttemptAt": "2026-10-29T23:57:53.461Z",
+        "lastAttemptAt": "2026-10-30T00:29:49.339Z",
         "profileVisits": {
           "date": "2026-10-28",
           "value": 13,
@@ -57908,10 +58040,10 @@
         "status": "available",
         "lastError": null,
         "followers": 2635,
-        "collectedAt": "2026-10-29T23:57:53.461Z",
+        "collectedAt": "2026-10-30T00:29:49.339Z",
         "dailyDelta": -3,
         "comparisonFrom": "2026-10-29T01:47:35.860Z",
-        "comparisonTo": "2026-10-29T23:57:53.461Z",
+        "comparisonTo": "2026-10-30T00:29:49.339Z",
         "observedDays": 54,
         "profileVisits": {
           "date": "2026-10-28",
@@ -58296,7 +58428,7 @@
             "date": "2026-10-29",
             "firstCollectedAt": "2026-10-29T05:50:19.711Z",
             "firstFollowers": 2638,
-            "collectedAt": "2026-10-29T23:57:53.461Z",
+            "collectedAt": "2026-10-30T00:29:49.339Z",
             "followers": 2635
           }
         ],
@@ -58436,6 +58568,6 @@
       }
     }
   },
-  "updatedAt": "2026-10-29T23:57:57.827Z",
+  "updatedAt": "2026-10-30T00:29:51.154Z",
   "modelVersion": "nerion-adaptive-v1.4.0"
 }
