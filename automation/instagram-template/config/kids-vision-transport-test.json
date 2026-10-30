@@ -1261,9 +1261,15 @@
     {
       "id": "b7b1c787-4028-45aa-89f9-f66099e7955a",
       "day": "2026-10-30",
-      "status": "reserved",
+      "status": "completed",
       "stage": "event-grounding-v2",
-      "startedAt": "2026-10-30T15:09:33.070Z"
+      "startedAt": "2026-10-30T15:09:33.070Z",
+      "completedAt": "2026-10-30T15:10:08.258Z",
+      "reportedInputTokens": 1988,
+      "reportedOutputTokens": 23,
+      "inputTokens": 1988,
+      "outputTokens": 23,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -1602,7 +1608,7 @@
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-30T15:09:33.070Z",
+  "checkedAt": "2026-10-30T15:10:08.259Z",
   "workflowRun": "41077697224",
   "summary": [
     {
@@ -1642,7 +1648,7 @@
     "version": "depicted-event-v4",
     "model": "claude-sonnet-4.6",
     "passed": true,
-    "checkedAt": "2026-10-29T12:09:44.137Z",
+    "checkedAt": "2026-10-30T15:10:08.259Z",
     "taskFingerprint": "24a3d96350ad5e68eec4ef675e4a33577dc5379d0b6c66576eea86e58d75a818",
     "task": {
       "scopeReference": "Trechos WEB fornecidos, sem ampliar o relato.",
@@ -1805,15 +1811,11 @@
       {
         "id": "absent-appearance",
         "supported": false,
-        "reason": "As fontes não mencionam Jesus aparecendo pessoalmente às mulheres diante do túmulo. Os versículos descrevem dois homens em vestes resplandecentes (p0:24:4), não Jesus.",
+        "reason": "As fontes não mencionam Jesus aparecendo pessoalmente às mulheres no túmulo. Os versículos descrevem dois homens em roupas resplandecentes (p0:24:4), não Jesus. A ausência de aparição pessoal torna a afirmação insustentável.",
         "evidence": [
           {
             "sourceId": "p0:24:4",
             "quote": "While they were greatly perplexed about this, behold, two men stood by them in dazzling clothing."
-          },
-          {
-            "sourceId": "p0:24:5",
-            "quote": "Becoming terrified, they bowed their faces down to the earth.\nThey said to them, \"Why do you seek the living among the dead?"
           }
         ],
         "expected": false,
@@ -1822,8 +1824,12 @@
       {
         "id": "zacchaeus-house",
         "supported": true,
-        "reason": "A fonte confirma que Zaqueu recebeu Jesus em sua casa com alegria após descer da árvore.",
+        "reason": "O texto confirma que Zaqueu recebeu Jesus em sua casa. A visualObservation descreve um homem de pé ao lado de outro sentado à mesa em ambiente interno, o que é compatível com a recepção na casa.",
         "evidence": [
+          {
+            "sourceId": "p1:19:5",
+            "quote": "When Jesus came to the place, he looked up and saw him, and said to him,\n\"Zacchaeus, hurry and come down, for today I must stay at your house.\""
+          },
           {
             "sourceId": "p1:19:6",
             "quote": "He hurried, came down, and received him joyfully."
@@ -1835,8 +1841,12 @@
       {
         "id": "tree-action",
         "supported": true,
-        "reason": "A fonte confirma explicitamente que Zaqueu subiu em uma árvore sicômoro para ver Jesus.",
+        "reason": "O texto confirma que Zaqueu subiu em uma árvore para ver Jesus. A visualObservation descreve um homem nos galhos de uma árvore acima de pessoas no chão, o que é perfeitamente compatível com a ação descrita.",
         "evidence": [
+          {
+            "sourceId": "p1:19:3",
+            "quote": "He was trying to see who Jesus was, and couldn't because of the crowd, because he was short."
+          },
           {
             "sourceId": "p1:19:4",
             "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
@@ -1848,7 +1858,7 @@
       {
         "id": "wrong-table",
         "supported": false,
-        "reason": "A visualObservation mostra um homem nos galhos de uma árvore, mas o text afirma que Zaqueu estava sentado à mesa com Jesus. A ação visível (homem na árvore) é incompatível com a fase descrita no text (sentado à mesa).",
+        "reason": "A visualObservation mostra um homem nos galhos de uma árvore, mas o claim diz que Zaqueu estava sentado à mesa com Jesus. Há contradição concreta de ação: estar numa árvore é incompatível com estar sentado à mesa. A ilustração representa a fase da subida na árvore, não a recepção na casa.",
         "evidence": [
           {
             "sourceId": "p1:19:4",
@@ -1861,11 +1871,11 @@
       {
         "id": "sleep-illustration",
         "supported": true,
-        "reason": "A fonte confirma que Jesus estava dormindo na popa do barco sobre uma almofada.",
+        "reason": "O texto confirma que Jesus dormia na popa do barco. A visualObservation descreve um homem deitado na popa de um barco enquanto outros estão próximos, o que é compatível com a descrição bíblica.",
         "evidence": [
           {
             "sourceId": "p2:4:38",
-            "quote": "He himself was in the stern, asleep on the cushion, and they woke him up, and told him, \"Teacher, don’t you care that we are dying?\""
+            "quote": "He himself was in the stern, asleep on the cushion, and they woke him up, and told him, \"Teacher, don't you care that we are dying?\""
           }
         ],
         "expected": true,
@@ -1874,7 +1884,7 @@
       {
         "id": "wrong-tree-action",
         "supported": false,
-        "reason": "A visualObservation mostra quatro homens caminhando em uma estrada sem ninguém em árvore, mas o text afirma que Zaqueu subiu em uma árvore. A ação visível é incompatível com o acontecimento descrito.",
+        "reason": "A visualObservation mostra quatro homens caminhando em uma estrada sem ninguém em árvore, mas o claim diz que Zaqueu subiu em uma árvore. Há contradição concreta: homens caminhando não podem representar alguém subindo numa árvore. A ilustração não mostra a ação descrita.",
         "evidence": [
           {
             "sourceId": "p1:19:4",
