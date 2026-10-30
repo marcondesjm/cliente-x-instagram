@@ -1236,7 +1236,7 @@
     {
       "id": "9a9bafc7-d27d-427a-a8f5-29ec2486a773",
       "day": "2026-10-30",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-mirror",
       "startedAt": "2026-10-30T15:09:11.393Z",
       "images": [
@@ -1250,7 +1250,13 @@
           "sha256": "0881776f99cc2d4ceaeca8929b84afdccf60642f9b649c4f273540d3b62102f0",
           "bytes": 46048
         }
-      ]
+      ],
+      "completedAt": "2026-10-30T15:09:30.971Z",
+      "reportedInputTokens": 1357,
+      "reportedOutputTokens": 161,
+      "inputTokens": 1357,
+      "outputTokens": 161,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -1589,7 +1595,7 @@
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-30T15:09:11.393Z",
+  "checkedAt": "2026-10-30T15:09:30.972Z",
   "workflowRun": "41077697224",
   "summary": [
     {
@@ -1876,12 +1882,18 @@
   "visualDiversity": {
     "version": "visual-diversity-v2",
     "model": "claude-sonnet-4.6",
-    "checkedAt": "2026-10-30T15:09:09.326Z",
+    "checkedAt": "2026-10-30T15:09:30.972Z",
     "cases": [
       {
         "expected": true,
         "distinct": true,
         "reason": "Cena 1 mostra um homem de costas subindo no tronco de uma árvore, visto de baixo, com multidão vista por trás e prédio/toldo ao fundo. Cena 2 mostra um homem de frente, sentado num galho sorrindo, com um homem barbudo em primeiro plano olhando para cima e multidão de frente; enquadramento e ângulo diferentes. Não é espelhamento, recorte ou redimensionamento da primeira; é composição nova.",
+        "passed": true
+      },
+      {
+        "expected": false,
+        "distinct": false,
+        "reason": "A segunda imagem é a mesma ilustração da primeira apenas espelhada horizontalmente: o homem subido na árvore passa do lado direito para o esquerdo, a árvore troca de lado, e a construção com a janela e a pessoa observando passa da esquerda para a direita. Mesmos elementos (multidão de costas com turbantes amarelos/vermelhos, toldo listrado vermelho, roupas idênticas, mesmo ângulo e composição). Não há mudança de ação, participantes, ângulo ou composição — apenas espelhamento, portanto não é uma composição nova.",
         "passed": true
       }
     ]
