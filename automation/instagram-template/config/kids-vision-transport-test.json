@@ -1211,7 +1211,7 @@
     {
       "id": "2fb87cd8-2e96-42ef-9537-f7c39c89d547",
       "day": "2026-10-30",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-distinct",
       "startedAt": "2026-10-30T15:08:51.185Z",
       "images": [
@@ -1225,7 +1225,13 @@
           "sha256": "5deb818f6dba6ea2d625eb2e92a157a12599151861f70fa2d6ce80102df818b9",
           "bytes": 45919
         }
-      ]
+      ],
+      "completedAt": "2026-10-30T15:09:09.326Z",
+      "reportedInputTokens": 1357,
+      "reportedOutputTokens": 35,
+      "inputTokens": 1357,
+      "outputTokens": 35,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -1564,7 +1570,7 @@
   "circuit": null,
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-10-30T15:08:51.185Z",
+  "checkedAt": "2026-10-30T15:09:09.326Z",
   "workflowRun": "41077697224",
   "summary": [
     {
@@ -1851,18 +1857,12 @@
   "visualDiversity": {
     "version": "visual-diversity-v2",
     "model": "claude-sonnet-4.6",
-    "checkedAt": "2026-10-29T12:09:20.412Z",
+    "checkedAt": "2026-10-30T15:09:09.326Z",
     "cases": [
       {
         "expected": true,
         "distinct": true,
-        "reason": "A segunda imagem apresenta mudança substancial de composição: na Cena 1 o homem está de costas subindo na árvore e Jesus não aparece; na Cena 2 o homem já está sentado no galho voltado para frente, com Jesus visível em primeiro plano à esquerda olhando para ele. Há diferença clara de ângulo, ação (subir vs. sentado) e participantes (Jesus presente apenas na segunda), configurando nova composição e não mera transformação da primeira.",
-        "passed": true
-      },
-      {
-        "expected": false,
-        "distinct": false,
-        "reason": "A segunda imagem é uma versão espelhada horizontalmente da primeira. A figura que sobe na árvore, a multidão em primeiro plano e o edifício ao fundo trocam de lado, mas todos os elementos visuais, cores, poses e composição permanecem idênticos, caracterizando apenas um espelhamento e não uma nova cena.",
+        "reason": "Cena 1 mostra um homem de costas subindo no tronco de uma árvore, visto de baixo, com multidão vista por trás e prédio/toldo ao fundo. Cena 2 mostra um homem de frente, sentado num galho sorrindo, com um homem barbudo em primeiro plano olhando para cima e multidão de frente; enquadramento e ângulo diferentes. Não é espelhamento, recorte ou redimensionamento da primeira; é composição nova.",
         "passed": true
       }
     ]
