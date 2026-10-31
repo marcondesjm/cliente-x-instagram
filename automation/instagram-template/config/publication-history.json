@@ -93480,6 +93480,166 @@
       "claudeExperiment": null,
       "education": null,
       "research": null
+    },
+    {
+      "feedFingerprint": "b9515f1cbcc52831db9b8f6277bc4f044e4b42eae170776ebab5204cacf5c96b",
+      "storyFingerprint": "b9515f1cbcc52831db9b8f6277bc4f044e4b42eae170776ebab5204cacf5c96b",
+      "storyContentKind": "news",
+      "storyCoverTitle": "Os superpoderes que a IA proporciona",
+      "captionFingerprint": "3c95055f7be9656d50a9c079a517bae1430054c8c8fd63334dac3d0b49aa1b2b",
+      "coverTitle": "Os superpoderes que a IA proporciona",
+      "coverAvatar": "docs/uploads/avatar-marcondes-presentation.png",
+      "avatarRotationStart": 2,
+      "publishedAt": "2026-10-31T16:08:26.202Z",
+      "slotDate": "2026-10-31",
+      "slotIndex": 5,
+      "scheduledAt": "2026-10-31T16:00:00.000Z",
+      "workflowRun": "41217998322",
+      "mediaId": "18133771645858370",
+      "storyMediaId": "17938384251402149",
+      "firstCommentId": null,
+      "firstCommentError": "Graph POST /18133771645858370/comments failed [400]: {\"error\":{\"message\":\"(#10) Application does not have permission for this action\",\"type\":\"OAuthException\",\"code\":10,\"fbtrace_id\":\"AuWg-hRCNZTuDmGEnZaGDTl\"}}",
+      "permalink": "https://www.instagram.com/p/DfKjNr6GEH8/",
+      "reelDurationSeconds": null,
+      "publishedFormat": "CAROUSEL",
+      "publicationFallback": null,
+      "visualSources": [
+        {
+          "source": "TI Inside",
+          "sourceUrl": "https://tiinside.com.br/30/10/2026/os-superpoderes-que-a-ia-proporciona/",
+          "sourceTitle": "Os superpoderes que a IA proporciona",
+          "imageUrl": "https://tiinside.com.br/wp-content/uploads/2026/10/Armando-Ribeiro-2026.jpg",
+          "imageSourcePageUrl": "https://tiinside.com.br/30/10/2026/os-superpoderes-que-a-ia-proporciona/",
+          "imageCredit": "TI Inside",
+          "imageEvidence": "Main image metadata of the selected article.",
+          "imageHash": "0691148da1f23604ebc76b2fe645ee23b1206ca8e5a47da030cd17f605d3bc26",
+          "perceptualHash": "1000011100111111100011100001111110001100010011110000100001101111000110000110011100011010101000100110100010100011001010100101001000110010010101110001100101110010010100000001111000101001000111010100010100011111100111100001101100111011011000010001001100001111",
+          "reusedRelevantImage": false,
+          "approvedRevisionImageReuse": false
+        }
+      ],
+      "visualAgent": {
+        "agent": "Nerion Visual Cloud",
+        "version": "nerion-visual-agent-v1.1.1",
+        "status": "approved",
+        "policy": "relevant-cover-distinct-photos-typographic-fallback",
+        "sourceUrl": "https://tiinside.com.br/30/10/2026/os-superpoderes-que-a-ia-proporciona/",
+        "slideCount": 4,
+        "approvedVisuals": 1,
+        "rejectedVisuals": 0,
+        "slideImagePaths": [
+          "/home/runner/work/cliente-x-instagram/cliente-x-instagram/automation/instagram-template/runs/cliente-x/2026-10-31-130724-slot-5/visual-candidate-6/radar-slide-01.jpg",
+          null,
+          null,
+          null
+        ],
+        "decisions": [
+          {
+            "slide": 1,
+            "mode": "distinct-editorial-photo",
+            "reason": "Main image metadata of the selected article."
+          },
+          {
+            "slide": 2,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 3,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          },
+          {
+            "slide": 4,
+            "mode": "typographic-card",
+            "reason": "No additional distinct relevant photograph available; use the approved typographic layout"
+          }
+        ]
+      },
+      "selectionMode": "experiment",
+      "learning": {
+        "modelVersion": "nerion-adaptive-v1.4.0",
+        "productStage": "stable",
+        "updatedAt": "2026-10-31T15:32:27.642Z",
+        "ageHours": 0.58,
+        "freshness": "current",
+        "effectiveSamples": 205,
+        "effectiveReach": 6313,
+        "controlledSamples": 209,
+        "selectionModes": {
+          "exploit": 143,
+          "explore": 47,
+          "experiment": 19
+        },
+        "confidenceLevel": "high",
+        "autonomousReady": true,
+        "learningEnabled": true,
+        "operatingMode": "assisted-learning",
+        "criteria": {
+          "moderate": {
+            "effectiveSamples": 30,
+            "effectiveReach": 200,
+            "controlledSamples": 10
+          },
+          "high": {
+            "effectiveSamples": 50,
+            "effectiveReach": 1000,
+            "controlledSamples": 30,
+            "selectionModes": {
+              "exploit": 10,
+              "explore": 5,
+              "experiment": 3
+            }
+          }
+        }
+      },
+      "learningContext": {
+        "format": "FEED",
+        "daypart": "midday",
+        "objective": "utility",
+        "primarySignal": "compartilhamentos",
+        "growthMode": true,
+        "selectionMode": "experiment",
+        "experimentAxis": "topic-angle",
+        "contextKey": "FEED|midday|utility",
+        "decisionReasons": [
+          "relevancia-empresarial",
+          "aderencia-ao-perfil",
+          "contexto-aprofundado",
+          "fadiga-editorial-recente",
+          "pauta-recente",
+          "fonte-com-baixo-historico",
+          "tema-com-baixo-historico",
+          "contexto-com-baixo-historico"
+        ],
+        "fatiguePenalty": 8.09,
+        "modelVersion": "nerion-adaptive-v1.4.0"
+      },
+      "editorialSeries": null,
+      "claudeExperiment": null,
+      "education": null,
+      "research": {
+        "id": "87e1b4e7e362",
+        "source": "TI Inside",
+        "sourceUrl": "https://tiinside.com.br/30/10/2026/os-superpoderes-que-a-ia-proporciona/",
+        "sourceTitle": "Os superpoderes que a IA proporciona",
+        "sourceImageUrl": "",
+        "publishedAt": "2026-10-30T22:02:47.000Z",
+        "researchedAt": "2026-10-31T16:07:15.842Z",
+        "theme": "ensino prático de IA para atendimento, vendas e operação de negócios",
+        "sourceFact": "Nos últimos dias, o mundo vem sendo sacudido por alertas de líderes de empresas de inteligência artificial e de autoridades no Conselho de Segurança da ONU acerca do risco de perda de controle humano sobre sistemas autônomos. Leia-se, perda de controle sobre a IA. O debate ganhou força diante de evidências de que certos agentes de IA podem ser capazes de burlar salvaguardas de segurança e da divergência entre países sobre a necessidade de uma governança global. A discussão é antiga e deve ir longe.",
+        "sourceFacts": [
+          "Nos últimos dias, o mundo vem sendo sacudido por alertas de líderes de empresas de inteligência artificial e de autoridades no Conselho de Segurança da ONU acerca do risco de perda de controle humano sobre sistemas autônomos. Leia-se, perda de controle sobre a IA. O debate ganhou força diante de evidências de que certos agentes de IA podem ser capazes de burlar salvaguardas de segurança e da divergência entre países sobre a necessidade de uma governança global. A discussão é antiga e deve ir longe."
+        ],
+        "coverage": {
+          "sourceFactCount": 1,
+          "coveredFactCount": 1,
+          "complete": false,
+          "scope": "feed-summary",
+          "reviewedAdaptation": false
+        },
+        "editorialVariant": 3
+      }
     }
   ],
   "sabedoria-kids": [
