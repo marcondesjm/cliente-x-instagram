@@ -4787,6 +4787,31 @@ export function pickFreshPack(packs, dateString, slotIndex, recentMedia = [], pu
     const selected = selectWithControlledExploration(freshCandidates, dateString, slotIndex, chooseIndex, publicationHistory, learningContext);
     return { pack: selected.pack, packIndex: selected.originalIndex, organicPotential: selected.organicPotential, selectionMode: selected.selectionMode, experimentAxis: selected.experimentAxis, skippedDuplicates: candidates.length - freshCandidates.length };
   }
+
+  // Mecanismo de reciclagem automática: permite republicar packs antigos após 30 dias
+  const RECYCLE_AGE_DAYS = 30;
+  const today = new Date(dateString);
+  const recyclableCandidates = candidates.filter(({ pack }) => {
+    const lastPublished = publicationHistory.find(h => h.id === pack.id || h.fingerprint === packContentFingerprint(pack));
+    if (!lastPublished) return false;
+    const publishedDate = new Date(lastPublished.publishedAt || lastPublished.date);
+    const daysSincePublished = Math.floor((today - publishedDate) / (1000 * 60 * 60 * 24));
+    return daysSincePublished >= RECYCLE_AGE_DAYS;
+  });
+
+  if (recyclableCandidates.length) {
+    console.log(`Reciclagem automática: ${recyclableCandidates.length} packs antigos (30+ dias) disponíveis para republicação.`);
+    const selected = selectWithControlledExploration(recyclableCandidates, dateString, slotIndex, chooseIndex, publicationHistory, learningContext);
+    return {
+      pack: selected.pack,
+      packIndex: selected.originalIndex,
+      organicPotential: selected.organicPotential,
+      selectionMode: 'recycled',
+      experimentAxis: selected.experimentAxis,
+      skippedDuplicates: candidates.length - freshCandidates.length - recyclableCandidates.length
+    };
+  }
+
   return {
     pack: null,
     packIndex: null,
