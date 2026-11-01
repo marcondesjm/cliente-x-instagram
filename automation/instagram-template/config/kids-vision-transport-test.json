@@ -1363,7 +1363,7 @@
     {
       "id": "f5f2a072-e005-4221-919b-5debdf17119a",
       "day": "2026-11-01",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-mirror",
       "startedAt": "2026-11-01T15:19:10.474Z",
       "images": [
@@ -1377,7 +1377,13 @@
           "sha256": "0881776f99cc2d4ceaeca8929b84afdccf60642f9b649c4f273540d3b62102f0",
           "bytes": 46048
         }
-      ]
+      ],
+      "completedAt": "2026-11-01T15:19:17.571Z",
+      "reportedInputTokens": 31229,
+      "reportedOutputTokens": 27,
+      "inputTokens": 31229,
+      "outputTokens": 27,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -1716,7 +1722,7 @@
   "circuit": null,
   "health": "blocked",
   "publicationTriggered": false,
-  "checkedAt": "2026-11-01T15:19:10.474Z",
+  "checkedAt": "2026-11-01T15:19:17.571Z",
   "workflowRun": "41320476278",
   "summary": [
     {
@@ -2007,13 +2013,19 @@
   "visualDiversity": {
     "version": "visual-diversity-v2",
     "model": "claude-sonnet-4.6",
-    "checkedAt": "2026-11-01T15:19:09.076Z",
+    "checkedAt": "2026-11-01T15:19:17.571Z",
     "cases": [
       {
         "expected": true,
         "distinct": false,
         "reason": "A segunda imagem é a versão espelhada horizontalmente da primeira imagem. Os mesmos elementos visuais estão presentes, apenas com orientação invertida (esquerda/direita trocados), sem mudança de ação, participantes, ângulo ou composição substancial.",
         "passed": false
+      },
+      {
+        "expected": false,
+        "distinct": false,
+        "reason": "Não consigo visualizar as imagens diretamente no formato fornecido (base64 truncado na transcrição). Sem acesso às imagens completas para comparação visual, não posso confirmar diferenças substanciais de composição, ação, participantes ou ângulo. Por precaução e seguindo a instrução de que \"se não puder ver ambas, distinct=false\", retorno false explicando a limitação técnica de visualização.",
+        "passed": true
       }
     ]
   },
