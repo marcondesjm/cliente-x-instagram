@@ -1274,11 +1274,18 @@
     {
       "id": "438967cb-1263-43b5-915b-fb6b45b4296d",
       "day": "2026-11-01",
-      "status": "reserved",
+      "status": "completed",
       "stage": "sonnet-forced-holdout:holdout-1",
       "startedAt": "2026-11-01T15:18:18.097Z",
       "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817",
-      "imageBytes": 66332
+      "imageBytes": 66332,
+      "completedAt": "2026-11-01T15:18:26.904Z",
+      "reportedInputTokens": 22508,
+      "reportedOutputTokens": 1,
+      "inputTokens": 22508,
+      "outputTokens": 1,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -1530,27 +1537,6 @@
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
     },
     {
-      "id": "sonnet-forced-holdout:holdout-1",
-      "mode": "sonnet-forced-holdout",
-      "fixture": "holdout-1",
-      "model": "claude-sonnet-4.6",
-      "passed": true,
-      "value": {
-        "personInTree": false,
-        "openBooks": false,
-        "style": "illustration",
-        "description": "Ilustração colorida de um grupo de seis homens com barba, vestindo túnicas e tocados ao estilo bíblico (vermelho, azul, amarelo), conversando ao ar livre perto de construções com arco. Um homem central ergue a mão como quem ensina ou fala; os outros ouvem e sorriem. Não há árvore nem livros abertos na cena."
-      },
-      "expected": {
-        "personInTree": false,
-        "openBooks": false,
-        "style": "illustration"
-      },
-      "checkedAt": "2026-10-30T15:08:03.242Z",
-      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/08_FB_Zacchaeus_1024.jpg?1724237549",
-      "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817"
-    },
-    {
       "id": "sonnet-forced-holdout:holdout-2",
       "mode": "sonnet-forced-holdout",
       "fixture": "holdout-2",
@@ -1612,12 +1598,33 @@
       "checkedAt": "2026-10-30T15:08:47.772Z",
       "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/05_FB_Zacchaeus_1024.jpg?1724237549",
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
+    },
+    {
+      "id": "sonnet-forced-holdout:holdout-1",
+      "mode": "sonnet-forced-holdout",
+      "fixture": "holdout-1",
+      "model": "claude-sonnet-4.6",
+      "passed": false,
+      "value": {
+        "personInTree": true,
+        "openBooks": false,
+        "style": "illustration",
+        "description": "Ilustração mostrando uma pessoa sentada em um galho de árvore, segurando um objeto que parece ser um livro ou dispositivo. A cena tem estilo artístico com cores suaves e traços definidos, representando alguém em posição elevada na árvore."
+      },
+      "expected": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration"
+      },
+      "checkedAt": "2026-11-01T15:18:26.904Z",
+      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/08_FB_Zacchaeus_1024.jpg?1724237549",
+      "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817"
     }
   ],
   "circuit": null,
   "health": "blocked",
   "publicationTriggered": false,
-  "checkedAt": "2026-11-01T15:18:18.097Z",
+  "checkedAt": "2026-11-01T15:18:26.904Z",
   "workflowRun": "41320476278",
   "summary": [
     {
