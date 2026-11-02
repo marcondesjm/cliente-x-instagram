@@ -1490,7 +1490,7 @@
     {
       "id": "7af75b8b-0da1-413c-b819-967f6d009359",
       "day": "2026-11-02",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-mirror",
       "startedAt": "2026-11-02T18:33:32.768Z",
       "images": [
@@ -1504,7 +1504,13 @@
           "sha256": "0881776f99cc2d4ceaeca8929b84afdccf60642f9b649c4f273540d3b62102f0",
           "bytes": 46048
         }
-      ]
+      ],
+      "completedAt": "2026-11-02T18:33:44.124Z",
+      "reportedInputTokens": 31229,
+      "reportedOutputTokens": 1,
+      "inputTokens": 31229,
+      "outputTokens": 1,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -1843,7 +1849,7 @@
   "circuit": null,
   "health": "blocked",
   "publicationTriggered": false,
-  "checkedAt": "2026-11-02T18:33:32.768Z",
+  "checkedAt": "2026-11-02T18:33:44.124Z",
   "workflowRun": "41501421589",
   "summary": [
     {
@@ -2138,13 +2144,19 @@
   "visualDiversity": {
     "version": "visual-diversity-v2",
     "model": "claude-sonnet-4.6",
-    "checkedAt": "2026-11-02T18:33:31.024Z",
+    "checkedAt": "2026-11-02T18:33:44.124Z",
     "cases": [
       {
         "expected": true,
         "distinct": false,
         "reason": "A segunda imagem é uma versão espelhada horizontalmente da primeira. Os elementos visuais, incluindo a disposição das pessoas, objetos e cenário, são idênticos, apenas invertidos lateralmente. Não há mudança substancial na ação, participantes, ângulo ou composição além do espelhamento.",
         "passed": false
+      },
+      {
+        "expected": false,
+        "distinct": false,
+        "reason": "Não é possível visualizar as imagens fornecidas, pois o conteúdo base64 está truncado ou inacessível. Sem a capacidade de analisar visualmente ambas as cenas, não posso confirmar se há diferença substancial. Conforme instrução, quando não é possível ver ambas as imagens, deve-se retornar distinct=false e explicar a limitação.",
+        "passed": true
       }
     ]
   },
