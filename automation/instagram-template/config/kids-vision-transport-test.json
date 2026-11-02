@@ -1465,7 +1465,7 @@
     {
       "id": "ec5da083-c4af-46bf-9ade-8a145fd116a4",
       "day": "2026-11-02",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-distinct",
       "startedAt": "2026-11-02T18:33:21.162Z",
       "images": [
@@ -1479,7 +1479,13 @@
           "sha256": "5deb818f6dba6ea2d625eb2e92a157a12599151861f70fa2d6ce80102df818b9",
           "bytes": 45919
         }
-      ]
+      ],
+      "completedAt": "2026-11-02T18:33:31.024Z",
+      "reportedInputTokens": 31186,
+      "reportedOutputTokens": 27,
+      "inputTokens": 31186,
+      "outputTokens": 27,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -1818,7 +1824,7 @@
   "circuit": null,
   "health": "blocked",
   "publicationTriggered": false,
-  "checkedAt": "2026-11-02T18:33:21.162Z",
+  "checkedAt": "2026-11-02T18:33:31.024Z",
   "workflowRun": "41501421589",
   "summary": [
     {
@@ -2113,19 +2119,13 @@
   "visualDiversity": {
     "version": "visual-diversity-v2",
     "model": "claude-sonnet-4.6",
-    "checkedAt": "2026-11-01T15:19:17.571Z",
+    "checkedAt": "2026-11-02T18:33:31.024Z",
     "cases": [
       {
         "expected": true,
         "distinct": false,
-        "reason": "A segunda imagem é a versão espelhada horizontalmente da primeira imagem. Os mesmos elementos visuais estão presentes, apenas com orientação invertida (esquerda/direita trocados), sem mudança de ação, participantes, ângulo ou composição substancial.",
+        "reason": "A segunda imagem é uma versão espelhada horizontalmente da primeira. Os elementos visuais, incluindo a disposição das pessoas, objetos e cenário, são idênticos, apenas invertidos lateralmente. Não há mudança substancial na ação, participantes, ângulo ou composição além do espelhamento.",
         "passed": false
-      },
-      {
-        "expected": false,
-        "distinct": false,
-        "reason": "Não consigo visualizar as imagens diretamente no formato fornecido (base64 truncado na transcrição). Sem acesso às imagens completas para comparação visual, não posso confirmar diferenças substanciais de composição, ação, participantes ou ângulo. Por precaução e seguindo a instrução de que \"se não puder ver ambas, distinct=false\", retorno false explicando a limitação técnica de visualização.",
-        "passed": true
       }
     ]
   },
