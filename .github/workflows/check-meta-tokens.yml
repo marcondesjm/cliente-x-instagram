@@ -1,0 +1,88 @@
+name: Check Meta Token Validity
+
+on:
+  schedule:
+    # Executa toda segunda-feira às 9h UTC (6h BRT)
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+    inputs:
+      account:
+        description: 'Conta específica para verificar (deixe vazio para todas)'
+        required: false
+        type: string
+
+jobs:
+  check-tokens:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Verificar tokens da Meta
+        id: check
+        env:
+          CLIENTE_X_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.CLIENTE_X_INSTAGRAM_ACCESS_TOKEN }}
+          CLIENTE_X_INSTAGRAM_USER_ID: ${{ secrets.CLIENTE_X_INSTAGRAM_USER_ID }}
+          CLIENTE_TURISMO_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.CLIENTE_TURISMO_INSTAGRAM_ACCESS_TOKEN }}
+          CLIENTE_TURISMO_INSTAGRAM_USER_ID: ${{ secrets.CLIENTE_TURISMO_INSTAGRAM_USER_ID }}
+          SABEDORIA_KIDS_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.SABEDORIA_KIDS_INSTAGRAM_ACCESS_TOKEN }}
+          SABEDORIA_KIDS_INSTAGRAM_USER_ID: ${{ secrets.SABEDORIA_KIDS_INSTAGRAM_USER_ID }}
+          RADIOIEQPC_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.RADIOIEQPC_INSTAGRAM_ACCESS_TOKEN }}
+          RADIOIEQPC_INSTAGRAM_USER_ID: ${{ secrets.RADIOIEQPC_INSTAGRAM_USER_ID }}
+          MELIORIFISIOTERAPIA_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.MELIORIFISIOTERAPIA_INSTAGRAM_ACCESS_TOKEN }}
+          MELIORIFISIOTERAPIA_INSTAGRAM_USER_ID: ${{ secrets.MELIORIFISIOTERAPIA_INSTAGRAM_USER_ID }}
+          IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
+        run: |
+          ACCOUNT_ARG=""
+          if [ -n "${{ github.event.inputs.account }}" ]; then
+            ACCOUNT_ARG="--account ${{ github.event.inputs.account }}"
+          fi
+          node scripts/check-meta-tokens.mjs $ACCOUNT_ARG || true
+
+      - name: Commitar atualizações do accounts.json
+        if: github.event_name != 'workflow_dispatch' || github.event.inputs.account == ''
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add automation/instagram-template/config/accounts.json
+          git diff --staged --quiet || git commit -m "Atualizar status dos tokens Meta [skip ci]" && git push || echo "Nenhuma alteração para commitar"
+
+      - name: Notificar sobre tokens problemáticos
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = `## ⚠️ Alerta: Tokens da Meta com problemas
+
+            Alguns tokens de acesso do Instagram estão expirados ou inválidos e precisam ser renovados.
+
+            ### Como renovar:
+            1. Acesse [developers.facebook.com/apps](https://developers.facebook.com/apps)
+            2. Selecione o app correspondente à conta
+            3. Gere um novo token de acesso de longa duração (60 dias)
+            4. Atualize no Vercel em **Settings > Environment Variables**
+            5. Redeploye a aplicação
+
+            ### Contas configuradas:
+            - cliente-x (Marcondes)
+            - cliente-turismo (Mapa Turismo)
+            - sabedoria-kids (Sabedoria Kids)
+            - radioieqpc (Rádio IEQ)
+            - meliorifisioterapia (Meliori)
+
+            Execute \`node scripts/check-meta-tokens.mjs\` localmente para ver detalhes específicos.`;
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🚨 Tokens da Meta expirados ou inválidos',
+              body: body,
+              labels: ['token-expired', 'needs-attention']
+            });
