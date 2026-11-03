@@ -196,7 +196,7 @@
       contentEl.innerHTML = '<div class="loading">Verificando tokens...</div>';
 
       try {
-        const res = await fetch('/api/meta-token-status');
+        const res = await fetch('/api/state?action=meta-tokens');
         const data = await res.json();
 
         if (!data.success) {

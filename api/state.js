@@ -1,3 +1,72 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+const ROOT = process.cwd();
+const ACCOUNTS_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'accounts.json');
+
+async function checkMetaTokenValidity(accessToken, userId) {
+ if (!accessToken || !userId) return { valid: false, error: 'Não configurado' };
+ try {
+ const response = await fetch(
+ `https://graph.facebook.com/v23.0/${encodeURIComponent(userId)}?fields=id,username&access_token=${encodeURIComponent(accessToken)}`,
+ { signal: AbortSignal.timeout(10000) }
+ );
+ const data = await response.json().catch(() => ({}));
+ if (!response.ok || data.error) {
+ return { valid: false, error: data.error?.message || `HTTP ${response.status}`, isExpired: true };
+ }
+ return { valid: true, username: data.username || userId };
+ } catch (error) {
+ return { valid: false, error: error.message };
+ }
+}
+
+async function handleMetaTokenStatus(req, res) {
+ if (req.method !== 'GET') return res.status(405).json({ error: 'Método não permitido' });
+ try {
+ const accounts = JSON.parse(readFileSync(ACCOUNTS_PATH, 'utf8'));
+ const results = [];
+ for (const account of accounts) {
+ const accessToken = process.env[account.accessTokenEnv];
+ const userId = process.env[account.userIdEnv];
+ if (!accessToken || !userId) {
+ results.push({ account: account.account, brandName: account.brandName, status: 'not_configured', message: 'Token não configurado' });
+ continue;
+ }
+ const validity = await checkMetaTokenValidity(accessToken, userId);
+ let daysUntilExpiry = null;
+ if (account.metaTokenExpiry) {
+ const expiry = new Date(account.metaTokenExpiry);
+ daysUntilExpiry = Math.ceil((expiry.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+ } else if (validity.valid) {
+ daysUntilExpiry = 540;
+ }
+ let status = 'valid';
+ let alert = null;
+ if (!validity.valid) {
+ status = 'expired';
+ alert = { type: 'critical', message: 'Token expirado ou inválido. Renovar imediatamente.' };
+ } else if (daysUntilExpiry !== null && daysUntilExpiry <= 7) {
+ status = 'expiring_soon';
+ alert = { type: 'warning', message: `Token expira em ~${daysUntilExpiry} dias.` };
+ }
+ results.push({
+ account: account.account,
+ brandName: account.brandName,
+ status,
+ daysUntilExpiry,
+ metaTokenExpiry: account.metaTokenExpiry,
+ alert,
+ validity: validity.valid ? { username: validity.username } : null
+ });
+ }
+ return res.status(200).json({ success: true, timestamp: new Date().toISOString(), accounts: results });
+ } catch (error) {
+ console.error('Erro ao verificar tokens Meta:', error);
+ return res.status(500).json({ success: false, error: error.message });
+ }
+}
+
 import pinterestHandler from '../lib/pinterest-api.js';
 import licensedMediaHandler from '../lib/licensed-media-api.js';
 import {watchdogQuotaWait} from '../lib/watchdog-quota-wait.js';
@@ -2442,6 +2511,11 @@ async function publishThreadsTest(account, text) {
 }
 
 export default async function handler(req, res) {
+  // Endpoint interno para verificar status dos tokens Meta (sem contar como função extra)
+  if (req.query?.action === 'meta-tokens') {
+    return handleMetaTokenStatus(req, res);
+  }
+
   if (req.query?.pinterest === '1') return pinterestHandler(req, res);
   if (req.query?.licensedMedia === '1') return licensedMediaHandler(req, res);
   if (req.query?.claudeControl === "1") return claudeControlHandler(req, res);
