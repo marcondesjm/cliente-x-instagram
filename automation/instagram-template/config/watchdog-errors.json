@@ -1,22 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-11-02:0:41549242993",
-    "status": "open",
-    "account": "cliente-x",
-    "date": "2026-11-02",
-    "slotIndex": 0,
-    "scheduledAt": "2026-11-02T09:30:00.000Z",
-    "scheduledPostId": null,
-    "failedAt": "2026-11-02T23:58:33.053Z",
-    "workflowRun": "41549242993",
-    "workflowName": "Instagram Watchdog Backup",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/41549242993",
-    "stage": "Graph GET /17841404470203300",
-    "error": "Graph GET /17841404470203300 failed [400]: {\"error\":{\"message\":\"Error validating access token: Session has expired on Monday, 02-Nov-26 04:26:25 PST. The current time is Monday, 02-Nov-26 15:58:32 PST.\",\"code\":190,\"type\":\"OAuthException\",\"error_subcode\":463,\"fbtrace_id\":\"A-IGfuXtgFMskuAHyGLeghL\"}}",
-    "solution": "Gerar novo token Meta/Instagram, atualizar o secret da conta no Vercel e no GitHub, depois rodar validar acessos no painel.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-11-02-205832.json"
-  },
-  {
     "key": "cliente-x:2026-11-02:0:41551312630",
     "status": "open",
     "account": "cliente-x",
@@ -848,5 +831,22 @@
     "error": "Conteúdo bíblico ilustrado inédito esgotado. Adicione novas pautas revisadas com imagens; nenhum conteúdo genérico será publicado.",
     "solution": "Adicionar pautas bíblicas inéditas com ilustrações revisadas em todos os cartões, Story e créditos. O vigia retoma o horário pendente após a revisão; não repetir posts, voltar a cartões vazios ou renovar token por esse erro de conteúdo.",
     "failurePath": "automation/instagram-template/runs/failure-2026-11-03-203627.json"
+  },
+  {
+    "key": "sabedoria-kids:2026-11-03:0:41741227663",
+    "status": "open",
+    "account": "sabedoria-kids",
+    "date": "2026-11-03",
+    "slotIndex": 0,
+    "scheduledAt": "2026-11-03T10:00:00.000Z",
+    "scheduledPostId": null,
+    "failedAt": "2026-11-03T23:43:26.440Z",
+    "workflowRun": "41741227663",
+    "workflowName": "Instagram Sabedoria Kids",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/41741227663",
+    "stage": "bible-content-selection",
+    "error": "Conteúdo bíblico ilustrado inédito esgotado. Adicione novas pautas revisadas com imagens; nenhum conteúdo genérico será publicado.",
+    "solution": "Adicionar pautas bíblicas inéditas com ilustrações revisadas em todos os cartões, Story e créditos. O vigia retoma o horário pendente após a revisão; não repetir posts, voltar a cartões vazios ou renovar token por esse erro de conteúdo.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-11-03-204326.json"
   }
 ]
