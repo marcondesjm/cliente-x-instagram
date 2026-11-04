@@ -1617,7 +1617,7 @@
     {
       "id": "269f6f49-0f6a-48f9-b657-77c8b4ee79e0",
       "day": "2026-11-04",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-mirror",
       "startedAt": "2026-11-04T16:26:43.228Z",
       "images": [
@@ -1631,7 +1631,13 @@
           "sha256": "0881776f99cc2d4ceaeca8929b84afdccf60642f9b649c4f273540d3b62102f0",
           "bytes": 46048
         }
-      ]
+      ],
+      "completedAt": "2026-11-04T16:26:52.236Z",
+      "reportedInputTokens": 31229,
+      "reportedOutputTokens": 30,
+      "inputTokens": 31229,
+      "outputTokens": 30,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -1970,7 +1976,7 @@
   "circuit": null,
   "health": "blocked",
   "publicationTriggered": false,
-  "checkedAt": "2026-11-04T16:26:43.228Z",
+  "checkedAt": "2026-11-04T16:26:52.236Z",
   "workflowRun": "41866980019",
   "summary": [
     {
@@ -2261,13 +2267,19 @@
   "visualDiversity": {
     "version": "visual-diversity-v2",
     "model": "claude-sonnet-4.6",
-    "checkedAt": "2026-11-04T16:26:41.579Z",
+    "checkedAt": "2026-11-04T16:26:52.236Z",
     "cases": [
       {
         "expected": true,
         "distinct": false,
         "reason": "A segunda imagem é idêntica à primeira em termos de composição, elementos visuais, cores e disposição dos objetos. Não há mudança substancial como nova ação, diferentes participantes, ângulo alterado ou recomposição da cena. Trata-se da mesma ilustração sem variações significativas além de possíveis ajustes menores de qualidade ou compressão.",
         "passed": false
+      },
+      {
+        "expected": false,
+        "distinct": false,
+        "reason": "A segunda imagem é uma versão espelhada horizontalmente da primeira imagem. Os elementos visuais, incluindo a figura central com vestes brancas e o fundo, são idênticos em conteúdo, apenas invertidos lateralmente. De acordo com as instruções, espelhamento horizontal não constitui uma composição nova ou distinta.",
+        "passed": true
       }
     ]
   },
