@@ -1642,9 +1642,15 @@
     {
       "id": "cc20d161-1917-45d9-b165-ca666a8e8d85",
       "day": "2026-11-04",
-      "status": "reserved",
+      "status": "completed",
       "stage": "event-grounding-v2",
-      "startedAt": "2026-11-04T16:26:54.132Z"
+      "startedAt": "2026-11-04T16:26:54.132Z",
+      "completedAt": "2026-11-04T16:27:39.742Z",
+      "reportedInputTokens": 1988,
+      "reportedOutputTokens": 24,
+      "inputTokens": 1988,
+      "outputTokens": 24,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -1983,7 +1989,7 @@
   "circuit": null,
   "health": "blocked",
   "publicationTriggered": false,
-  "checkedAt": "2026-11-04T16:26:54.132Z",
+  "checkedAt": "2026-11-04T16:27:39.743Z",
   "workflowRun": "41866980019",
   "summary": [
     {
@@ -2023,7 +2029,7 @@
     "version": "depicted-event-v4",
     "model": "claude-sonnet-4.6",
     "passed": true,
-    "checkedAt": "2026-11-02T18:34:05.467Z",
+    "checkedAt": "2026-11-04T16:27:39.743Z",
     "taskFingerprint": "24a3d96350ad5e68eec4ef675e4a33577dc5379d0b6c66576eea86e58d75a818",
     "task": {
       "scopeReference": "Trechos WEB fornecidos, sem ampliar o relato.",
@@ -2186,7 +2192,7 @@
       {
         "id": "absent-appearance",
         "supported": false,
-        "reason": "As fontes não relatam que Jesus apareceu pessoalmente às mulheres diante do túmulo. Os versículos mencionam dois homens em vestes resplandecentes (p0:24:4) e as mulheres encontrando o túmulo vazio (p0:24:3), mas nenhuma aparição pessoal de Jesus nesse momento.",
+        "reason": "As fontes não mencionam Jesus aparecendo pessoalmente às mulheres no túmulo. Os versículos descrevem dois homens em vestes resplandecentes (p0:24:4) que falam com elas, mas não há citação de aparição pessoal de Jesus neste trecho.",
         "evidence": [
           {
             "sourceId": "p0:24:3",
@@ -2203,7 +2209,7 @@
       {
         "id": "zacchaeus-house",
         "supported": true,
-        "reason": "A fonte confirma que Zaqueu recebeu Jesus em sua casa. A visualObservation descreve um homem de pé ao lado de outro sentado à mesa em ambiente interno, o que é compatível com o relato de recepção na casa.",
+        "reason": "O texto afirma que Zaqueu recebeu Jesus em sua casa (p1:19:6). A visualObservation mostra um homem de pé ao lado de outro sentado à mesa em ambiente interno, o que é compatível com o recebimento de Jesus na casa de Zaqueu.",
         "evidence": [
           {
             "sourceId": "p1:19:5",
@@ -2220,8 +2226,12 @@
       {
         "id": "tree-action",
         "supported": true,
-        "reason": "A fonte confirma que Zaqueu subiu numa árvore para ver Jesus. A visualObservation mostra um homem nos galhos de uma árvore acima de pessoas no chão, o que é compatível com a ação descrita.",
+        "reason": "O texto confirma que Zaqueu subiu numa árvore para ver Jesus (p1:19:4). A visualObservation mostra um homem nos galhos de uma árvore acima de pessoas no chão, o que é perfeitamente compatível com a ação descrita.",
         "evidence": [
+          {
+            "sourceId": "p1:19:3",
+            "quote": "He was trying to see who Jesus was, and couldn't because of the crowd, because he was short."
+          },
           {
             "sourceId": "p1:19:4",
             "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
@@ -2233,7 +2243,7 @@
       {
         "id": "wrong-table",
         "supported": false,
-        "reason": "O text afirma que Zaqueu estava sentado à mesa com Jesus, mas a visualObservation mostra um homem nos galhos de uma árvore, não sentado à mesa. Há contradição concreta entre a ação visível (homem na árvore) e a ação descrita no text (sentado à mesa).",
+        "reason": "A visualObservation mostra um homem nos galhos de uma árvore, o que contradiz a claim de que Zaqueu estava sentado à mesa com Jesus. A ilustração representa a fase da subida na árvore, não o momento posterior do recebimento em casa.",
         "evidence": [
           {
             "sourceId": "p1:19:4",
@@ -2246,7 +2256,7 @@
       {
         "id": "sleep-illustration",
         "supported": true,
-        "reason": "A fonte confirma que Jesus dormia na popa do barco. A visualObservation descreve um homem deitado na popa de um barco, o que é compatível com a ação de dormir na parte de trás do barco.",
+        "reason": "O texto confirma que Jesus estava dormindo na popa do barco (p2:4:38). A visualObservation mostra um homem deitado na popa de um barco enquanto outros estão próximos, o que é compatível com a descrição bíblica.",
         "evidence": [
           {
             "sourceId": "p2:4:38",
@@ -2259,7 +2269,7 @@
       {
         "id": "wrong-tree-action",
         "supported": false,
-        "reason": "O text afirma que Zaqueu subiu em uma árvore para ver Jesus, mas a visualObservation mostra quatro homens caminhando em uma estrada, sem ninguém em árvore. Há contradição concreta: homens caminhando não podem representar alguém subindo numa árvore.",
+        "reason": "A visualObservation mostra quatro homens caminhando em uma estrada sem ninguém em árvore, o que contradiz a claim de que Zaqueu subiu numa árvore. A ilustração não representa a ação descrita no texto.",
         "evidence": [
           {
             "sourceId": "p1:19:4",
