@@ -1528,11 +1528,18 @@
     {
       "id": "d3252934-911c-4940-b986-f5387b40b356",
       "day": "2026-11-04",
-      "status": "reserved",
+      "status": "completed",
       "stage": "sonnet-forced-holdout:holdout-1",
       "startedAt": "2026-11-04T16:25:35.465Z",
       "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817",
-      "imageBytes": 66332
+      "imageBytes": 66332,
+      "completedAt": "2026-11-04T16:25:46.379Z",
+      "reportedInputTokens": 22508,
+      "reportedOutputTokens": 1,
+      "inputTokens": 22508,
+      "outputTokens": 1,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -1784,27 +1791,6 @@
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
     },
     {
-      "id": "sonnet-forced-holdout:holdout-1",
-      "mode": "sonnet-forced-holdout",
-      "fixture": "holdout-1",
-      "model": "claude-sonnet-4.6",
-      "passed": false,
-      "value": {
-        "personInTree": true,
-        "openBooks": false,
-        "style": "illustration",
-        "description": "Ilustração de uma pessoa vestindo roupas brancas sentada em um galho de árvore frondosa com folhas verdes. A figura está posicionada no meio da copa da árvore, rodeada por folhagem densa. O fundo mostra céu azul claro com algumas nuvens brancas dispersas. Não há livros ou objetos abertos visíveis na cena."
-      },
-      "expected": {
-        "personInTree": false,
-        "openBooks": false,
-        "style": "illustration"
-      },
-      "checkedAt": "2026-11-02T18:32:39.503Z",
-      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/08_FB_Zacchaeus_1024.jpg?1724237549",
-      "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817"
-    },
-    {
       "id": "sonnet-forced-holdout:holdout-2",
       "mode": "sonnet-forced-holdout",
       "fixture": "holdout-2",
@@ -1866,12 +1852,33 @@
       "checkedAt": "2026-11-02T18:33:18.429Z",
       "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/05_FB_Zacchaeus_1024.jpg?1724237549",
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
+    },
+    {
+      "id": "sonnet-forced-holdout:holdout-1",
+      "mode": "sonnet-forced-holdout",
+      "fixture": "holdout-1",
+      "model": "claude-sonnet-4.6",
+      "passed": true,
+      "value": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration",
+        "description": "Ilustração mostrando um grupo de pessoas reunidas em círculo ao redor de uma mesa com livros abertos, em ambiente interno com estantes de livros ao fundo. As figuras estão sentadas ou em pé, aparentemente estudando ou discutindo os textos sobre a mesa. A cena tem estilo artístico com cores suaves e traços definidos, representando uma reunião de estudo ou discussão acadêmica."
+      },
+      "expected": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration"
+      },
+      "checkedAt": "2026-11-04T16:25:46.379Z",
+      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/08_FB_Zacchaeus_1024.jpg?1724237549",
+      "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817"
     }
   ],
   "circuit": null,
   "health": "blocked",
   "publicationTriggered": false,
-  "checkedAt": "2026-11-04T16:25:35.466Z",
+  "checkedAt": "2026-11-04T16:25:46.379Z",
   "workflowRun": "41866980019",
   "summary": [
     {
