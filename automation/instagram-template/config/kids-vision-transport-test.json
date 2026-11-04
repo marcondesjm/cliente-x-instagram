@@ -1592,7 +1592,7 @@
     {
       "id": "f1c1fae3-5216-421a-830a-082abec3f212",
       "day": "2026-11-04",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-distinct",
       "startedAt": "2026-11-04T16:26:33.192Z",
       "images": [
@@ -1606,7 +1606,13 @@
           "sha256": "5deb818f6dba6ea2d625eb2e92a157a12599151861f70fa2d6ce80102df818b9",
           "bytes": 45919
         }
-      ]
+      ],
+      "completedAt": "2026-11-04T16:26:41.579Z",
+      "reportedInputTokens": 31186,
+      "reportedOutputTokens": 48,
+      "inputTokens": 31186,
+      "outputTokens": 48,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -1945,7 +1951,7 @@
   "circuit": null,
   "health": "blocked",
   "publicationTriggered": false,
-  "checkedAt": "2026-11-04T16:26:33.192Z",
+  "checkedAt": "2026-11-04T16:26:41.579Z",
   "workflowRun": "41866980019",
   "summary": [
     {
@@ -2236,19 +2242,13 @@
   "visualDiversity": {
     "version": "visual-diversity-v2",
     "model": "claude-sonnet-4.6",
-    "checkedAt": "2026-11-02T18:33:44.124Z",
+    "checkedAt": "2026-11-04T16:26:41.579Z",
     "cases": [
       {
         "expected": true,
         "distinct": false,
-        "reason": "A segunda imagem é uma versão espelhada horizontalmente da primeira. Os elementos visuais, incluindo a disposição das pessoas, objetos e cenário, são idênticos, apenas invertidos lateralmente. Não há mudança substancial na ação, participantes, ângulo ou composição além do espelhamento.",
+        "reason": "A segunda imagem é idêntica à primeira em termos de composição, elementos visuais, cores e disposição dos objetos. Não há mudança substancial como nova ação, diferentes participantes, ângulo alterado ou recomposição da cena. Trata-se da mesma ilustração sem variações significativas além de possíveis ajustes menores de qualidade ou compressão.",
         "passed": false
-      },
-      {
-        "expected": false,
-        "distinct": false,
-        "reason": "Não é possível visualizar as imagens fornecidas, pois o conteúdo base64 está truncado ou inacessível. Sem a capacidade de analisar visualmente ambas as cenas, não posso confirmar se há diferença substancial. Conforme instrução, quando não é possível ver ambas as imagens, deve-se retornar distinct=false e explicar a limitação.",
-        "passed": true
       }
     ]
   },
