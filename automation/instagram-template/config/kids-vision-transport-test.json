@@ -1576,11 +1576,18 @@
     {
       "id": "3439e705-c2f1-4d9c-89cb-c4dfd7e7c09c",
       "day": "2026-11-04",
-      "status": "reserved",
+      "status": "completed",
       "stage": "sonnet-forced-holdout:holdout-4",
       "startedAt": "2026-11-04T16:26:21.440Z",
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572",
-      "imageBytes": 84542
+      "imageBytes": 84542,
+      "completedAt": "2026-11-04T16:26:29.652Z",
+      "reportedInputTokens": 28578,
+      "reportedOutputTokens": 22,
+      "inputTokens": 28578,
+      "outputTokens": 22,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -1832,27 +1839,6 @@
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
     },
     {
-      "id": "sonnet-forced-holdout:holdout-4",
-      "mode": "sonnet-forced-holdout",
-      "fixture": "holdout-4",
-      "model": "claude-sonnet-4.6",
-      "passed": true,
-      "value": {
-        "personInTree": true,
-        "openBooks": false,
-        "style": "illustration",
-        "description": "Ilustração de uma pessoa sentada em um galho de árvore frondosa, vestindo roupas simples. A árvore tem folhagem densa verde e tronco marrom. Ao redor há grama e algumas flores pequenas no chão. O fundo mostra céu azul claro com nuvens brancas. A pessoa está posicionada no centro da composição, olhando para frente com expressão serena."
-      },
-      "expected": {
-        "personInTree": true,
-        "openBooks": false,
-        "style": "illustration"
-      },
-      "checkedAt": "2026-11-02T18:33:18.429Z",
-      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/05_FB_Zacchaeus_1024.jpg?1724237549",
-      "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
-    },
-    {
       "id": "sonnet-forced-holdout:holdout-1",
       "mode": "sonnet-forced-holdout",
       "fixture": "holdout-1",
@@ -1914,12 +1900,33 @@
       "checkedAt": "2026-11-04T16:26:18.637Z",
       "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/06_FB_Zacchaeus_1024.jpg?1724237549",
       "imageHash": "0e68d89f3b06e81914792cf90b2e067b890038d0529d6b9579fc219f5e7cf478"
+    },
+    {
+      "id": "sonnet-forced-holdout:holdout-4",
+      "mode": "sonnet-forced-holdout",
+      "fixture": "holdout-4",
+      "model": "claude-sonnet-4.6",
+      "passed": true,
+      "value": {
+        "personInTree": true,
+        "openBooks": false,
+        "style": "illustration",
+        "description": "Ilustração artística mostrando uma pessoa sentada em um galho de árvore grande com folhagem densa. A figura está posicionada no centro da composição, rodeada por folhas verdes vibrantes. O estilo é pictórico com cores suaves e traços artísticos, criando uma atmosfera serena e contemplativa. Não há livros visíveis na cena."
+      },
+      "expected": {
+        "personInTree": true,
+        "openBooks": false,
+        "style": "illustration"
+      },
+      "checkedAt": "2026-11-04T16:26:29.652Z",
+      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/05_FB_Zacchaeus_1024.jpg?1724237549",
+      "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
     }
   ],
   "circuit": null,
   "health": "blocked",
   "publicationTriggered": false,
-  "checkedAt": "2026-11-04T16:26:21.440Z",
+  "checkedAt": "2026-11-04T16:26:29.652Z",
   "workflowRun": "41866980019",
   "summary": [
     {
