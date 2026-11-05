@@ -1,8 +1,44 @@
 {
   "rewrites": [
     {
-      "source": "/api/meta-token-status",
-      "destination": "/api/meta-token-status.js"
+      "source": "/api/validate",
+      "destination": "/api/render?validate=1"
+    },
+    {
+      "source": "/",
+      "destination": "/docs/dashboard.html"
+    },
+    {
+      "source": "/bio",
+      "destination": "/docs/bio.html"
+    },
+    {
+      "source": "/bio/",
+      "destination": "/docs/bio.html"
+    },
+    {
+      "source": "/plataforma",
+      "destination": "/docs/plataforma.html"
+    },
+    {
+      "source": "/plataforma/",
+      "destination": "/docs/plataforma.html"
+    },
+    {
+      "source": "/ativar",
+      "destination": "/docs/ativar.html"
+    },
+    {
+      "source": "/ativar/",
+      "destination": "/docs/ativar.html"
+    },
+    {
+      "source": "/briefing",
+      "destination": "/docs/briefing.html"
+    },
+    {
+      "source": "/briefing/",
+      "destination": "/docs/briefing.html"
     }
   ],
   "headers": [
@@ -44,44 +80,6 @@
           "value": "attachment; filename=\"Sabedoria-Kids-Reposicao-Cenas-v1.pdf\""
         }
       ]
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/docs/dashboard.html"
-    },
-    {
-      "source": "/bio",
-      "destination": "/docs/bio.html"
-    },
-    {
-      "source": "/bio/",
-      "destination": "/docs/bio.html"
-    },
-    {
-      "source": "/plataforma",
-      "destination": "/docs/plataforma.html"
-    },
-    {
-      "source": "/plataforma/",
-      "destination": "/docs/plataforma.html"
-    },
-    {
-      "source": "/ativar",
-      "destination": "/docs/ativar.html"
-    },
-    {
-      "source": "/ativar/",
-      "destination": "/docs/ativar.html"
-    },
-    {
-      "source": "/briefing",
-      "destination": "/docs/briefing.html"
-    },
-    {
-      "source": "/briefing/",
-      "destination": "/docs/briefing.html"
     }
   ],
   "functions": {
