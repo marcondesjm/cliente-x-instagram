@@ -2062,7 +2062,9 @@ function directMessageText(automation, req) {
 }
 
 async function instagramRequest(path, accessToken, body) {
-  const response = await fetch(`https://graph.instagram.com/v23.0/${path}`, {
+  // Instagram Login tokens use Instagram Graph; Facebook/system tokens use Facebook Graph.
+  const graphHost = String(accessToken || '').startsWith('IG') ? 'graph.instagram.com' : 'graph.facebook.com';
+  const response = await fetch(`https://${graphHost}/v23.0/${path}`, {
     method: 'POST',
     headers: { authorization: `Bearer ${accessToken}`, 'content-type': 'application/json' },
     body: JSON.stringify(body)
