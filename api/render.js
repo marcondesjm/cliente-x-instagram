@@ -1,4 +1,4 @@
-import { requireAdmin } from '../lib/auth.js';
+import { canAccessAccount, requireAdmin } from '../lib/auth.js';
 
 const OWNER = 'marcondesjm';
 const REPO = 'cliente-x-instagram';
@@ -8,18 +8,31 @@ function validDate(value = '') {
 }
 
 export default async function handler(req, res) {
-  if (!requireAdmin(req, res)) return;
+  const session = requireAdmin(req, res);
+  if (!session) return;
 
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Metodo nao permitido.' });
     return;
   }
 
-  const date = String(req.body?.previewDate || '').trim();
+  const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo' }).format(new Date());
+  const date = String(req.body?.previewDate || today).trim();
   const slotIndex = Number(req.body?.slotIndex);
   const account = String(req.body?.account || 'cliente-x').trim();
-  if (!validDate(date) || !Number.isInteger(slotIndex) || slotIndex < 0 || slotIndex > 12) {
-    res.status(400).json({ error: 'Informe uma data valida e um horario entre 0 e 12.' });
+  if (!canAccessAccount(session, account)) {
+    res.status(403).json({ error: 'Seu usuario nao tem acesso a esta conta.' });
+    return;
+  }
+  const pack = req.body?.pack;
+  const explicitPack = pack && Array.isArray(pack.slides) && pack.slides.length > 0;
+  const packJson = explicitPack ? JSON.stringify(pack) : '';
+  if (packJson.length > 60000) {
+    res.status(400).json({ error: 'Conteudo muito grande para gerar a previa.' });
+    return;
+  }
+  if (!validDate(date) || !Number.isSafeInteger(slotIndex) || slotIndex < 0 || (!explicitPack && slotIndex > 12)) {
+    res.status(400).json({ error: 'Informe uma data valida e um horario entre 0 e 12, ou envie o conteudo selecionado para previa.' });
     return;
   }
   const token = String(process.env.GITHUB_TOKEN || '').trim();
@@ -35,7 +48,7 @@ export default async function handler(req, res) {
       'x-github-api-version': '2022-11-28',
       'content-type': 'application/json'
     },
-    body: JSON.stringify({ ref: 'main', inputs: { account, preview_date: date, slot_index: String(slotIndex) } })
+    body: JSON.stringify({ ref: 'main', inputs: { account, preview_date: date, slot_index: String(slotIndex), pack_json: packJson } })
   });
   if (!response.ok) {
     res.status(response.status).json({ error: `Nao consegui iniciar a renderizacao real: GitHub HTTP ${response.status}.` });
