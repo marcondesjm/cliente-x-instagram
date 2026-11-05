@@ -16,6 +16,12 @@ export default async function handler(req, res) {
     return;
   }
 
+  if (req.query?.validate === '1') {
+    res.setHeader('cache-control', 'no-store');
+    res.status(200).json({ ok: true, stdout: 'A validacao completa roda automaticamente no GitHub Actions antes de publicar.' });
+    return;
+  }
+
   const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo' }).format(new Date());
   const date = String(req.body?.previewDate || today).trim();
   const slotIndex = Number(req.body?.slotIndex);
