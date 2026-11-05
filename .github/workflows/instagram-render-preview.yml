@@ -15,6 +15,11 @@ on:
         required: true
         default: "0"
 
+      pack_json:
+        description: Explicit editor content (independent of schedule slots)
+        required: false
+        default: ""
+
 permissions:
   contents: write
 
@@ -39,6 +44,7 @@ jobs:
           ACCOUNT: ${{ inputs.account }}
           PREVIEW_DATE: ${{ inputs.preview_date }}
           SLOT_INDEX: ${{ inputs.slot_index }}
+          INSTAGRAM_TEMPLATE_PACK_JSON: ${{ inputs.pack_json }}
         run: |
           INSTAGRAM_TEMPLATE_SLOT_INDEX="$SLOT_INDEX" npm run instagram -- --account "$ACCOUNT" --render-only --plan-date "$PREVIEW_DATE"
           RUN_DIR="$(find automation/instagram-template/runs/$ACCOUNT -maxdepth 1 -type d -name "*-slot-$SLOT_INDEX-render-only" -printf '%T@ %p\n' | sort -n | tail -1 | cut -d' ' -f2-)"
