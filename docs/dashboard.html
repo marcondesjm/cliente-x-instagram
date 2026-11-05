@@ -6365,8 +6365,29 @@
       try {
         const payload = await api(path, {
           method: 'POST',
-          body: JSON.stringify({ slotIndex: appState.selectedPack })
+          body: bodyWithAccount({
+            slotIndex: appState.selectedPack,
+            ...(path === '/api/render' ? { pack: currentPack() } : {})
+          })
         });
+        if (path === '/api/render' && payload.pending) {
+          const preview = document.getElementById('dailyPlanPreview');
+          const status = document.getElementById('dailyPlanPreviewStatus');
+          preview.classList.add('active');
+          status.textContent = 'Renderizando conteúdo selecionado';
+          const images = await waitForOfficialPreviewImages(payload.imageUrls || []);
+          if (!images.length) {
+            setMessage('Prévia oficial solicitada. Acompanhe a geração em Render Instagram Preview no GitHub Actions.', 'warn');
+            return;
+          }
+          setPreviewImages(images, `previa-conteudo-${appState.selectedPack}.jpg`);
+          document.getElementById('dailyPlanPreviewTitle').textContent = currentPack()?.slides?.[0]?.title || 'Conteúdo selecionado';
+          document.getElementById('dailyPlanPreviewCaption').textContent = currentPack()?.caption || '';
+          status.textContent = 'JPG oficial do conteúdo selecionado';
+          preview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          setMessage('Prévia oficial do conteúdo selecionado pronta.', 'good');
+          return;
+        }
         const output = [payload.stdout, payload.stderr].filter(Boolean).join('\n').trim();
         setMessage(payload.ok ? `Concluído.\n${output}` : `Falhou.\n${output}`, payload.ok ? 'good' : 'bad');
       } catch (error) {
@@ -7944,6 +7965,7 @@
         runServerAction('/api/validate', event.currentTarget, 'Validando');
       });
       document.getElementById('renderSlot').addEventListener('click', (event) => {
+        syncEditorToState();
         runServerAction('/api/render', event.currentTarget, 'Renderizando');
       });
       document.getElementById('dailyPlan').addEventListener('click', async (event) => {
