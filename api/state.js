@@ -747,11 +747,8 @@ export function synchronizeDailyPlan(plan = [], publishedSlots = [], publication
   });
 }
 
-function maskSecret(value = '') {
-  const text = String(value || '');
-  if (!text) return '';
-  if (text.length <= 10) return `${text.slice(0, 2)}...${text.slice(-2)}`;
-  return `${text.slice(0, 6)}...${text.slice(-4)}`;
+export function maskSecret(value = '') {
+  return value ? 'Configurado · valor protegido' : '';
 }
 
 function secretStatuses(accounts = readJson(ACCOUNTS_PATH)) {
@@ -766,7 +763,7 @@ function secretStatuses(accounts = readJson(ACCOUNTS_PATH)) {
       key,
       configured: Boolean(value),
       masked: maskSecret(value),
-      length: value.length
+      length: undefined
     };
   });
 }
@@ -1286,7 +1283,7 @@ async function readGithubConfig(filePath, ref = 'main') {
 }
 
 async function writeGithubConfig(filePath, data, sha, message) {
-  await githubJson(`contents/${filePath}`, {
+  return githubJson(`contents/${filePath}`, {
     method: 'PUT',
     body: JSON.stringify({
       message,
@@ -1465,7 +1462,7 @@ async function addAccountToPanelUser(email, accountKey) {
   return users.map((item) => ({ email: item.email, role: item.role || 'user', accounts: item.accounts || [] }));
 }
 
-async function testInstagramAccountConnection(account = {}) {
+export async function testInstagramAccountConnection(account = {}) {
   const accessToken = String(process.env[account.accessTokenEnv] || '').trim();
   const userId = String(process.env[account.userIdEnv] || '').trim();
   if (!accessToken || !userId) {
@@ -1473,7 +1470,8 @@ async function testInstagramAccountConnection(account = {}) {
   }
 
   const graphBase = account.instagramLogin === 'instagram' ? 'https://graph.instagram.com/v23.0' : 'https://graph.facebook.com/v22.0';
-  const profileResponse = await fetch(`${graphBase}/${encodeURIComponent(userId)}?fields=id,username,account_type,media_count&access_token=${encodeURIComponent(accessToken)}`);
+  const profileFields = account.instagramLogin === 'instagram' ? 'id,username,account_type,media_count' : 'id,username,media_count';
+  const profileResponse = await fetch(`${graphBase}/${encodeURIComponent(userId)}?fields=${profileFields}&access_token=${encodeURIComponent(accessToken)}`);
   const profile = await profileResponse.json().catch(() => ({}));
   if (!profileResponse.ok || profile.error) {
     throw userError(profile.error?.message || `Meta recusou a conexão: HTTP ${profileResponse.status}.`, profileResponse.status);
@@ -2070,7 +2068,13 @@ async function instagramRequest(path, accessToken, body) {
     body: JSON.stringify(body)
   });
   const result = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(result?.error?.message || `Instagram HTTP ${response.status}`);
+  if (!response.ok) {
+    const error = new Error(result?.error?.message || `Instagram HTTP ${response.status}`);
+    error.code = result?.error?.code || null;
+    error.subcode = result?.error?.error_subcode || null;
+    error.httpStatus = response.status;
+    throw error;
+  }
   return result;
 }
 
@@ -2135,7 +2139,14 @@ function keywordMatches(text, automation) {
   return terms.some((term) => padded.includes(` ${term} `));
 }
 
-async function handleInstagramWebhook(body, raw, signature, req) {
+export function ownDirectComment(value = {}, account = {}, accountId = '') {
+  const authorId = String(value.from?.id || '');
+  const authorName = String(value.from?.username || '').replace(/^@/, '').toLowerCase();
+  const expected = String(account.expectedUsername || '').replace(/^@/, '').toLowerCase();
+  return Boolean((authorId && authorId === String(accountId)) || (authorName && expected && authorName === expected));
+}
+
+export async function handleInstagramWebhook(body, raw, signature, req) {
   if (!verifyInstagramWebhookSignature(raw, signature)) throw userError('Assinatura do webhook da Meta invalida.', 401);
   if (body?.object !== 'instagram') return { ignored: true, reason: 'object' };
 
@@ -2157,6 +2168,7 @@ async function handleInstagramWebhook(body, raw, signature, req) {
     for (const change of Array.isArray(entry.changes) ? entry.changes : []) {
       if (change.field !== 'comments') continue;
       const value = change.value || {};
+      if (ownDirectComment(value, account, entry.id)) continue;
       const commentId = String(value.id || value.comment_id || '');
       const mediaId = String(value.media?.id || value.media_id || '');
       if (!commentId || group.deliveries.some((item) => String(item.commentId) === commentId)) continue;
@@ -2171,8 +2183,14 @@ async function handleInstagramWebhook(body, raw, signature, req) {
         automationId: automation.id || null,
         automationName: automation.name || automation.keyword,
         receivedAt: new Date().toISOString(),
-        status: 'failed'
+        status: 'pending',
+        attempts: 1
       };
+      // Reserve the comment before sending. The GitHub SHA is a compare-and-swap
+      // lock: concurrent webhook deliveries cannot both acquire the same version.
+      group.deliveries.push(delivery);
+      const reservation = await writeGithubConfig(DIRECT_AUTOMATIONS_FILE_PATH, automationsFile.data, automationsFile.sha, 'Reserve Instagram Direct comment before sending');
+      automationsFile.sha = reservation.content.sha;
       try {
         const privateReply = await instagramRequest(`${encodeURIComponent(entry.id)}/messages`, token, {
           recipient: { comment_id: commentId },
@@ -2182,21 +2200,43 @@ async function handleInstagramWebhook(body, raw, signature, req) {
         delivery.messageId = privateReply.message_id || null;
         delivery.recipientId = privateReply.recipient_id || null;
         if (automation.publicReply) {
-          const publicReply = await instagramRequest(`${encodeURIComponent(commentId)}/replies`, token, { message: automation.publicReply });
-          delivery.publicReplyId = publicReply.id || null;
+          try {
+            const publicReply = await instagramRequest(`${encodeURIComponent(commentId)}/replies`, token, { message: automation.publicReply });
+            delivery.publicReplyId = publicReply.id || null;
+          } catch (error) {
+            delivery.publicReplyError = String(error.message || error).slice(0, 300);
+          }
         }
         processed += 1;
       } catch (error) {
+        delivery.status = 'failed';
         delivery.error = String(error.message || error).slice(0, 300);
+        delivery.errorCode = error.code || null;
+        delivery.errorSubcode = error.subcode || null;
+        delivery.httpStatus = error.httpStatus || null;
       }
-      group.deliveries.push(delivery);
+      delivery.completedAt = new Date().toISOString();
       group.deliveries = retainedDirectDeliveries(group.deliveries);
       changed = true;
     }
   }
 
   if (changed) {
-    await writeGithubConfig(DIRECT_AUTOMATIONS_FILE_PATH, automationsFile.data, automationsFile.sha, 'Record Instagram Direct automation delivery');
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      const latest = await readGithubConfig(DIRECT_AUTOMATIONS_FILE_PATH);
+      for (const updated of automationsFile.data) {
+        const target = latest.data.find(item => item.account === updated.account);
+        if (!target) continue;
+        const completed = new Map((updated.deliveries || []).filter(item => item.completedAt).map(item => [String(item.commentId), item]));
+        target.deliveries = (target.deliveries || []).map(item => completed.get(String(item.commentId)) || item);
+      }
+      try {
+        await writeGithubConfig(DIRECT_AUTOMATIONS_FILE_PATH, latest.data, latest.sha, 'Record Instagram Direct automation delivery');
+        break;
+      } catch (error) {
+        if (error.statusCode !== 409 || attempt === 2) throw error;
+      }
+    }
   }
   return { processed };
 }
@@ -2803,6 +2843,10 @@ export default async function handler(req, res) {
   }
 
   const session = getSession(req);
+  if (req.query?.status === '1' && !session) {
+    res.status(401).json({ error: 'Login admin obrigatorio.' });
+    return;
+  }
   const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
   const allowedAccounts = session && !isOwner(session)
     ? accounts.filter((item) => canAccessAccount(session, item))
@@ -2852,6 +2896,27 @@ export default async function handler(req, res) {
   if (session && !canAccessAccount(session, accounts.find((item) => item.account === accountKey) || accountKey)) {
     accountKey = allowedAccounts[0]?.account || accountKey;
   }
+  if (req.query?.status === '1') {
+    requireConfiguredAccount(allowedAccounts, accountKey);
+    const [errors, history] = await Promise.all([
+      readWatchdogErrors(), readConfigGroups(PUBLICATION_HISTORY_FILE_PATH, PUBLICATION_HISTORY_PATH)
+    ]);
+    res.setHeader('cache-control', 'no-store');
+    res.status(200).json({
+      checkedAt: new Date().toISOString(), selectedAccount: accountKey,
+      watchdogErrors: errors.filter(item => !item.account || item.account === accountKey).slice(-10).reverse(),
+      calendarPublications: (history[accountKey] || []).filter(item => item.mediaId && item.publishedAt).map(item => ({
+        date: brtDateAndTime(item.publishedAt).date, title: item.coverTitle || 'Publicado',
+        permalink: item.permalink || '', mediaId: item.mediaId, storyMediaId: item.storyMediaId || ''
+      })),
+      accounts: allowedAccounts.map(item => ({ account: item.account, brandName: item.brandName,
+        expectedUsername: item.expectedUsername, clientProfile: item.clientProfile || null,
+        onboarding: item.onboarding || null,
+        credentialConfigured: Boolean(process.env[item.accessTokenEnv] && process.env[item.userIdEnv])
+      }))
+    });
+    return;
+  }
   const content = await readConfigGroups(CONTENT_FILE_PATH, CONTENT_PATH);
   const account = requireConfiguredAccount(allowedAccounts, accountKey);
   const accountSummaries = allowedAccounts.map((item) => ({
@@ -2860,7 +2925,8 @@ export default async function handler(req, res) {
     brandName: item.brandName,
     footerText: item.footerText,
     clientProfile: item.clientProfile || null,
-    onboarding: item.onboarding || null
+    onboarding: item.onboarding || null,
+    credentialConfigured: Boolean(process.env[item.accessTokenEnv] && process.env[item.userIdEnv])
   }));
   const group = content.find((item) => item.account === accountKey);
   const scheduledGroups = await readScheduledGroups();
@@ -2962,6 +3028,7 @@ export default async function handler(req, res) {
     },
     users: session && isOwner(session) ? publicUsers() : [],
     maintenance: MAINTENANCE,
+    checkedAt: new Date().toISOString(),
     watchdogErrors: watchdogErrors.filter((item) => !item.account || item.account === accountKey).slice(-10).reverse(),
     accessConfig: accessConfigForAccount(account),
     secrets: session ? secretStatuses(accounts) : [],
