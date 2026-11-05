@@ -279,6 +279,8 @@
     main[data-active-view="schedule"],
     main[data-active-view="weekly"],
     main[data-active-view="direct-history"],
+    main[data-active-view="direct"],
+    main[data-active-view="integrations"],
     main[data-active-view="posting-logic"] {
       grid-template-columns: minmax(0, 1fr);
     }
@@ -293,7 +295,9 @@
     main[data-active-view="bio"] > .grid { width: 100%; }
     main[data-active-view="schedule"] > .grid { width: 100%; }
     main[data-active-view="weekly"] > .grid { width: 100%; }
-    main[data-active-view="direct-history"] > .grid { width: 100%; }
+    main[data-active-view="direct-history"] > .grid,
+    main[data-active-view="direct"] > .grid,
+    main[data-active-view="integrations"] > aside.grid { width: 100%; }
     main[data-active-view="posting-logic"] > .grid,
     main[data-active-view="posting-logic"] > aside.grid { width: 100%; }
 
@@ -1788,14 +1792,17 @@
       <button type="button" data-dashboard-view="growth">Melhorar Instagram</button>
       <button type="button" data-dashboard-view="content">Conteúdo</button>
       <button type="button" data-dashboard-view="posting-logic">Lógica da postagem</button>
+      <button type="button" data-dashboard-view="direct">Automações do Direct</button>
       <button type="button" data-dashboard-view="direct-history">Histórico do Direct</button>
       <button type="button" data-dashboard-view="schedule">Agenda</button>
       <button type="button" data-dashboard-view="weekly">Grade semanal</button>
       <button type="button" data-dashboard-view="bio">Página Bio</button>
       <button type="button" data-dashboard-view="clients">Clientes</button>
       <button type="button" data-dashboard-view="billing">Cobrança</button>
+      <button type="button" data-dashboard-view="integrations">Integrações</button>
       <button type="button" data-dashboard-view="system">Sistema</button>
     </nav>
+    <div class="message" id="operationalFreshness" role="status">Conferindo status da operação…</div>
 
     <main>
       <section class="grid">
@@ -2509,7 +2516,7 @@
             </div>
             <div class="document-box" id="postingLogicRadarBox">
               <strong>Radar de notícias deste cliente</strong>
-              <span>Configure assuntos e fontes oficiais do nicho. O Radar só usa estes sites para sugerir pautas automáticas.</span>
+              <span>Configure assuntos e fontes do nicho. Separe anúncios dos fornecedores de notícias de veículos jornalísticos; revise a fonte original antes de publicar.</span>
               <label class="check" style="align-items:center;">
                 <input id="activeRadarEnabled" type="checkbox">
                 <div>
@@ -2526,7 +2533,7 @@
                 <input id="activeRadarExcludeKeywords" placeholder="Ex.: eventos, vagas, resultados financeiros">
               </label>
               <label>
-                Fontes oficiais
+                Fontes de notícias e anúncios
                 <textarea id="activeRadarSources" rows="5" placeholder="Nome da fonte | https://site-oficial.com/feed.xml&#10;Outra fonte | https://site-oficial.com/noticias/rss"></textarea>
               </label>
               <label>
@@ -2962,14 +2969,16 @@
     const DASHBOARD_GROUPS = {
       growth: ['growthPanel'],
       overview: ['instagramShowcase', 'latestPostTitle', 'performanceLearningPanel'],
-      content: ['packSelect', 'directAutomationStatus'],
+      content: ['packSelect'],
+      direct: ['directAutomationStatus'],
       'posting-logic': ['activeProfileStatus'],
       'direct-history': ['directHistoryPanel'],
       schedule: ['timeline', 'queueStatus'],
       weekly: ['weeklyProgramsPanel'],
       bio: ['bioPagePanel'],
       clients: ['clientPortfolio', 'newAccountStatus', 'usersStatus'],
-      billing: ['stripeSetupStatus', 'accessStatus'],
+      billing: ['stripeSetupStatus'],
+      integrations: ['accessStatus'],
       system: ['systemCapabilitiesGrid', 'healthStatus', 'watchdogPanel', 'versionStatus', 'maintenanceStatus']
     };
 
@@ -3024,6 +3033,9 @@
       const box = document.getElementById('editorMessage');
       const status = document.getElementById('editorStatus');
       box.textContent = message;
+      if (document.getElementById('operationalFreshness') && /publica|agend|GitHub Actions/i.test(message)) {
+        document.getElementById('operationalFreshness').textContent = message;
+      }
       status.textContent = level === 'good' ? 'Salvo' : level === 'bad' ? 'Atenção' : 'Local';
       status.className = `status-pill ${level}`;
     }
@@ -3356,6 +3368,7 @@
         const statusLabels = { onboarding: 'Em implantação', active: 'Ativo', paused: 'Pausado' };
         const automatic = client.approvalMode !== 'approval';
         const instagramConnected = account.onboarding?.status === 'connected';
+        const instagramStatus = instagramConnected ? 'autorização Meta registrada' : account.credentialConfigured ? 'credencial cadastrada; valide a conexão' : 'conexão pendente';
         return `<div class="check">
           <span class="dot ${client.status === 'paused' || !instagramConnected ? 'warn' : 'good'}"></span>
           <div>
@@ -3363,7 +3376,7 @@
             <span>${escapeHtml(planLabels[client.plan] || client.plan || 'Operação própria')} · ${escapeHtml(statusLabels[client.status] || client.status || 'Ativo')} · ${automatic ? 'publicação automática' : 'com aprovação'}</span>
             <span>${escapeHtml(client.contactName || 'Responsável não informado')}${client.monthlyPrice ? ` · R$ ${Number(client.monthlyPrice).toFixed(2).replace('.', ',')}/mês` : ''}</span>
             <span>Cobrança: ${escapeHtml(billing.status || (client.stripeCustomerId ? 'configurando' : 'não vinculada'))}</span>
-            <span>Instagram: ${instagramConnected ? 'conectado pela Meta' : 'aguardando autorização do cliente'}</span>
+            <span>Instagram: ${escapeHtml(instagramStatus)}</span>
             ${appState.sessionRole === 'owner' ? `<div class="access-actions">
               ${client.email ? `<button type="button" data-billing-checkout data-client-account="${escapeHtml(account.account)}" data-client-plan="${escapeHtml(client.plan || 'starter')}">Gerar pagamento</button>` : ''}
               ${client.status === 'paused'
@@ -4435,7 +4448,7 @@
       const totalPages = Math.max(1, Math.ceil(filteredDeliveries.length / DIRECT_HISTORY_PAGE_SIZE));
       directHistoryPage = Math.min(Math.max(1, directHistoryPage), totalPages);
       const pageDeliveries = filteredDeliveries.slice((directHistoryPage - 1) * DIRECT_HISTORY_PAGE_SIZE, directHistoryPage * DIRECT_HISTORY_PAGE_SIZE);
-      const statusLabels = { sent: 'Enviado', failed: 'Falhou', pending: 'Pendente' };
+      const statusLabels = { sent: 'Enviado', failed: 'Falhou', pending: 'Envio reservado; conferindo resultado' };
       const dateFormatter = new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: 'long', year: 'numeric' });
       const timeFormatter = new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit' });
       const groupedDeliveries = pageDeliveries.reduce((groups, item) => {
@@ -4463,7 +4476,7 @@
           const date = new Date(item.receivedAt);
           const time = Number.isNaN(date.getTime()) ? '--:--' : timeFormatter.format(date);
           const comment = item.commentText || item.keyword || 'Comentário não registrado';
-          const error = item.error ? ` · ${item.error}` : '';
+          const error = item.error ? ` · ${item.error}${item.errorCode ? ` (Meta ${item.errorCode}${item.errorSubcode ? '/' + item.errorSubcode : ''})` : ''}` : item.publicReplyError ? ` · Direct entregue; resposta pública falhou: ${item.publicReplyError}` : '';
           const campaign = item.automationName ? ` · automação: ${item.automationName}` : '';
           return `<div class="check"><span class="dot ${item.status === 'sent' ? 'good' : 'warn'}"></span><div><strong>@${escapeHtml(item.username || 'contato')}</strong><span>${escapeHtml(time)} · comentário: “${escapeHtml(comment)}”${escapeHtml(campaign)} · ${escapeHtml(statusLabels[item.status] || item.status || 'Pendente')}${escapeHtml(error)}</span></div></div>`;
         }).join('')}</section>`).join('')
@@ -5338,7 +5351,7 @@
       const list = document.getElementById('weeklyPrograms');
       const programs = appState.weeklyPrograms || [];
       if (!programs.length) {
-        list.innerHTML = '<div class="empty">Nenhum programa recorrente cadastrado. Adicione a grade da rádio por dia e horário.</div>';
+        list.innerHTML = '<div class="empty">Nenhum conteúdo recorrente cadastrado. Organize séries, aulas ou programas por dia e horário.</div>';
         renderWeeklyProgramPreview();
         return;
       }
@@ -5719,7 +5732,7 @@
         publishNow,
         account: appState.selectedAccount
       };
-      setMessage(publishNow ? 'Buscando notícia oficial: 7 dias, depois 15 e até 30 dias...' : 'Salvando agendamento...', 'warn');
+      setMessage(publishNow ? 'Enviando solicitação de publicação; aguardando execução e confirmação da Meta…' : 'Salvando agendamento...', 'warn');
       try {
         const payload = await api(publishNow ? '/api/publish-now' : '/api/scheduled-posts', {
           method: 'POST',
@@ -7589,7 +7602,7 @@
           : payload.publishingPermission === true
             ? 'Permissão de publicação confirmada'
             : 'Permissão será confirmada na primeira publicação';
-        result.innerHTML = `<strong>Conexão aprovada</strong><div class="account-test-details"><span>@${escapeHtml(payload.username || payload.instagramUserId)}</span><span>${escapeHtml(payload.accountType || 'Conta profissional')} · ${escapeHtml(String(payload.mediaCount ?? '—'))} mídias</span><span>${escapeHtml(permission)}</span></div>`;
+        result.innerHTML = `<strong>Conexão aprovada</strong><div class="account-test-details"><span>@${escapeHtml(payload.username || payload.instagramUserId)}</span><span>${escapeHtml(payload.accountType || 'Tipo não informado pela API')} · ${escapeHtml(String(payload.mediaCount ?? '—'))} mídias</span><span>${escapeHtml(permission)}</span></div>`;
       } catch (error) {
         result.textContent = `Teste não aprovado: ${error.message}`;
       } finally {
@@ -7680,6 +7693,27 @@
       return `Alcance/insights não liberado: ${error || 'sem retorno da Graph API'}.`;
     }
 
+    let operationalRefreshPending = false;
+    async function refreshOperationalStatus() {
+      if (operationalRefreshPending || document.visibilityState !== 'visible' || !appState.selectedAccount) return;
+      operationalRefreshPending = true;
+      const account = appState.selectedAccount;
+      const freshness = document.getElementById('operationalFreshness');
+      try {
+        const snapshot = await api(withAccount('/api/state?status=1'));
+        if (account !== appState.selectedAccount) return;
+        appState.watchdogErrors = snapshot.watchdogErrors || [];
+        appState.calendarPublications = snapshot.calendarPublications || [];
+        appState.accounts = snapshot.accounts || appState.accounts;
+        renderTopErrorMetric(); renderWatchdog(); renderSystemCapabilities();
+        renderEditorialCalendar(); renderClientPortfolio();
+        const at = new Date(snapshot.checkedAt).toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+        freshness.textContent = `Status atualizado às ${at} (Brasília). Publicado somente com confirmação da Meta.`;
+      } catch (error) {
+        freshness.textContent = `Não foi possível atualizar o status. Os dados exibidos podem estar desatualizados: ${error.message}`;
+      } finally { operationalRefreshPending = false; }
+    }
+
     async function boot() {
       setupDashboardNavigation();
       renderSchedule();
@@ -7701,12 +7735,13 @@
       }
       setInterval(renderSchedule, 60_000);
       setInterval(() => {
-        if (document.visibilityState === 'visible') loadPrivateMetrics();
+        if (document.visibilityState === 'visible') { loadPrivateMetrics(); refreshOperationalStatus(); }
       }, 60_000);
       document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'visible') loadPrivateMetrics();
+        if (document.visibilityState === 'visible') { loadPrivateMetrics(); refreshOperationalStatus(); }
       });
-      window.addEventListener('focus', () => loadPrivateMetrics());
+      window.addEventListener('focus', () => { loadPrivateMetrics(); refreshOperationalStatus(); });
+      refreshOperationalStatus();
     }
 
     function bindEvents() {
