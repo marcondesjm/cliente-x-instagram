@@ -906,7 +906,7 @@
   },
   {
     "key": "cliente-x:2026-11-06:10:42292588358",
-    "status": "open",
+    "status": "resolved",
     "account": "cliente-x",
     "date": "2026-11-06",
     "slotIndex": 10,
@@ -919,6 +919,8 @@
     "stage": "content-selection",
     "error": "Radar visual sem foto inédita e reserva autoral esgotada. Nenhuma publicação repetida foi enviada; consulte visual-selection.json.",
     "solution": "A reposição automática com Claude tenta criar e revisar conteúdo inédito para recuperar este horário. Se a cota diária terminou, aguarda a renovação e retoma pelo agendamento, sem botão ou pedido manual. O vigia só publica após aprovação factual, visual e contra repetição; o alerta permanece aberto até a publicação confirmada.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-11-06-180100.json"
+    "failurePath": "automation/instagram-template/runs/failure-2026-11-06-180100.json",
+    "resolvedAt": "2026-11-06T21:30:13.799Z",
+    "resolvedRun": "42296846796"
   }
 ]
