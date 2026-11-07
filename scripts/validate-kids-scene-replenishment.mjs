@@ -71,7 +71,8 @@ const scripture={translation:{identifier:'web',license:'Public Domain'},verses:[
 const fake=async()=>new Response(JSON.stringify(scripture));
 assert.equal((await loadPassage('Gênesis 1:1',fake)).verses.length,1);
 await assert.rejects(loadPassage('Gênesis 1:1–2',fake),/incompleta/);
-const {image,expected}=await calibrationImage();assert.equal(expected.code.length,6);assert.equal(image.length<10000,true);
+const {image,expected}=await calibrationImage();assert.equal(expected.code.length,6);assert.equal(image.length<100000,true);
+const calibrationMetadata=await sharp(image).metadata();assert.equal(calibrationMetadata.width,960);assert.equal(calibrationMetadata.height,720);
 const recipe=JSON.parse(fs.readFileSync('automation/instagram-template/config/kids-reviewed-scenes.json'))[0];
 const photo=fs.readFileSync(recipe.selected[0].path),mirror=await sharp(photo).flop().jpeg().toBuffer();
 const a={sha256:hash(photo),visualHash:await visualSignature(photo),mirrorHash:await visualSignature(photo,true)};
