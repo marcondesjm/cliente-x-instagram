@@ -1824,7 +1824,7 @@
     {
       "id": "423e0435-8fd4-483f-b147-ae954880e080",
       "day": "2026-11-07",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-distinct",
       "startedAt": "2026-11-07T19:40:00.290Z",
       "images": [
@@ -1838,7 +1838,13 @@
           "sha256": "5deb818f6dba6ea2d625eb2e92a157a12599151861f70fa2d6ce80102df818b9",
           "bytes": 45919
         }
-      ]
+      ],
+      "completedAt": "2026-11-07T19:42:00.647Z",
+      "reportedInputTokens": 1089,
+      "reportedOutputTokens": 100,
+      "inputTokens": 1089,
+      "outputTokens": 100,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -2177,7 +2183,7 @@
   "circuit": null,
   "health": "blocked",
   "publicationTriggered": false,
-  "checkedAt": "2026-11-07T19:40:00.290Z",
+  "checkedAt": "2026-11-07T19:42:00.648Z",
   "workflowRun": "42406734245",
   "summary": [
     {
@@ -2471,19 +2477,13 @@
   },
   "visualDiversity": {
     "version": "visual-diversity-v2",
-    "model": "claude-sonnet-4.6",
-    "checkedAt": "2026-11-04T16:26:52.236Z",
+    "model": "claude-sonnet-5",
+    "checkedAt": "2026-11-07T19:42:00.648Z",
     "cases": [
       {
         "expected": true,
-        "distinct": false,
-        "reason": "A segunda imagem é idêntica à primeira em termos de composição, elementos visuais, cores e disposição dos objetos. Não há mudança substancial como nova ação, diferentes participantes, ângulo alterado ou recomposição da cena. Trata-se da mesma ilustração sem variações significativas além de possíveis ajustes menores de qualidade ou compressão.",
-        "passed": false
-      },
-      {
-        "expected": false,
-        "distinct": false,
-        "reason": "A segunda imagem é uma versão espelhada horizontalmente da primeira imagem. Os elementos visuais, incluindo a figura central com vestes brancas e o fundo, são idênticos em conteúdo, apenas invertidos lateralmente. De acordo com as instruções, espelhamento horizontal não constitui uma composição nova ou distinta.",
+        "distinct": true,
+        "reason": "Na primeira imagem, a pessoa na árvore aparece de costas, com a multidão vista por trás e construções ao fundo. Na segunda, a pessoa na árvore está de frente, com braços abertos, e há um homem de perfil em destaque à esquerda e rostos voltados para cima. São mudanças de ângulo, pose e composição, não um espelhamento ou recorte.",
         "passed": true
       }
     ]
