@@ -3,9 +3,9 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-sonnet-5",
-  "health": "blocked",
-  "message": "O servidor não confirmou a leitura real dos pixels; nenhuma cena nova será aprovada.",
-  "circuit": "pixel_reading_not_confirmed",
+  "health": "ok",
+  "message": "",
+  "circuit": null,
   "policy": {
     "maxCallsPerDay": 250,
     "maxInputTokensPerCall": 120000,
@@ -8454,6 +8454,20 @@
       "usageStatus": "provider_reported",
       "stopReason": "tool_use",
       "responseParsed": true
+    },
+    {
+      "id": "5201a495-c8bf-453f-b0c2-e2628e64ab69",
+      "day": "2026-11-07",
+      "stage": "calibration",
+      "model": "claude-sonnet-5",
+      "maxOutputTokens": 250,
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-11-07T19:55:15.102Z",
+      "status": "reserved",
+      "payloadBytes": 3992,
+      "promptChars": 418,
+      "imageFingerprint": "43e33bfb1ef2859deac681a7bfce8b5cbc0f95766a5e8180d39eb614bbbabc62",
+      "promptFingerprint": "1899afb49c740cb4ae56aa02c5ff6a25febd6c880af1a386065420905a36d75d"
     }
   ],
   "entries": [
@@ -8611,8 +8625,8 @@
     "challengeHash": "544585a0c2abfb4d59a0d37ac921384401cd50f0e73b3ee51bfbf23bfa6e05e0"
   },
   "publicationTriggered": false,
-  "checkedAt": "2026-11-07T19:51:44.795Z",
-  "lastRun": "42408135338",
+  "checkedAt": "2026-11-07T19:55:15.103Z",
+  "lastRun": "42408454591",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -12283,7 +12297,7 @@
     "reusedPixelReads": 0,
     "newPixelReads": 0,
     "skippedCandidates": 0,
-    "checkedAt": "2026-11-07T19:51:44.795Z"
+    "checkedAt": "2026-11-07T19:55:15.103Z"
   },
   "recoveredUsageReceipt": {
     "callId": "8ce52181-2d91-44c9-827e-1e9d1857ae8f",
