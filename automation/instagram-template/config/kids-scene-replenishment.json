@@ -8441,11 +8441,19 @@
       "maxOutputTokens": 250,
       "responseFormat": "forced_tool",
       "startedAt": "2026-11-07T19:51:13.002Z",
-      "status": "reserved",
+      "status": "completed",
       "payloadBytes": 4301,
       "promptChars": 418,
       "imageFingerprint": "544585a0c2abfb4d59a0d37ac921384401cd50f0e73b3ee51bfbf23bfa6e05e0",
-      "promptFingerprint": "1899afb49c740cb4ae56aa02c5ff6a25febd6c880af1a386065420905a36d75d"
+      "promptFingerprint": "1899afb49c740cb4ae56aa02c5ff6a25febd6c880af1a386065420905a36d75d",
+      "completedAt": "2026-11-07T19:51:41.718Z",
+      "reportedInputTokens": 12608,
+      "reportedOutputTokens": 3104,
+      "inputTokens": 12608,
+      "outputTokens": 3104,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use",
+      "responseParsed": true
     }
   ],
   "entries": [
@@ -8603,7 +8611,7 @@
     "challengeHash": "695b8e040e170590676379d497155343c47a297353bad9921ba60f57ff3e5602"
   },
   "publicationTriggered": false,
-  "checkedAt": "2026-11-07T19:51:13.002Z",
+  "checkedAt": "2026-11-07T19:51:41.718Z",
   "lastRun": "42408135338",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
@@ -8915,12 +8923,10 @@
     "previousCircuit": "semantic_false_positive"
   },
   "lastResponse": {
-    "stage": "pixels:kids-biblia-01:203de61859a6908c",
+    "stage": "calibration",
     "value": {
-      "visible": true,
-      "style": "illustration",
-      "childSuitable": true,
-      "observedEvent": "Ilustração dividida diagonalmente: à esquerda, montanhas verdes com sol nascendo ou se pondo atrás dos picos e nuvens amarelas no céu; à direita, céu noturno azul escuro com uma lua cheia amarela e estrelas brancas espalhadas."
+      "code": "unreadable",
+      "colors": []
     }
   },
   "lastFactualEvaluation": {
@@ -12277,7 +12283,7 @@
     "reusedPixelReads": 0,
     "newPixelReads": 0,
     "skippedCandidates": 0,
-    "checkedAt": "2026-11-07T19:51:13.002Z"
+    "checkedAt": "2026-11-07T19:51:41.718Z"
   },
   "recoveredUsageReceipt": {
     "callId": "8ce52181-2d91-44c9-827e-1e9d1857ae8f",
