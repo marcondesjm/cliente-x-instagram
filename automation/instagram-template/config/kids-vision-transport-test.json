@@ -1849,7 +1849,7 @@
     {
       "id": "9afad288-5d1c-4cc1-ac71-699cbc3878ce",
       "day": "2026-11-07",
-      "status": "reserved",
+      "status": "completed",
       "stage": "diversity-mirror",
       "startedAt": "2026-11-07T19:42:02.196Z",
       "images": [
@@ -1863,7 +1863,13 @@
           "sha256": "0881776f99cc2d4ceaeca8929b84afdccf60642f9b649c4f273540d3b62102f0",
           "bytes": 46048
         }
-      ]
+      ],
+      "completedAt": "2026-11-07T19:42:42.026Z",
+      "reportedInputTokens": 1086,
+      "reportedOutputTokens": 79,
+      "inputTokens": 1086,
+      "outputTokens": 79,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -2202,7 +2208,7 @@
   "circuit": null,
   "health": "blocked",
   "publicationTriggered": false,
-  "checkedAt": "2026-11-07T19:42:02.196Z",
+  "checkedAt": "2026-11-07T19:42:42.026Z",
   "workflowRun": "42406734245",
   "summary": [
     {
@@ -2497,12 +2503,18 @@
   "visualDiversity": {
     "version": "visual-diversity-v2",
     "model": "claude-sonnet-5",
-    "checkedAt": "2026-11-07T19:42:00.648Z",
+    "checkedAt": "2026-11-07T19:42:42.026Z",
     "cases": [
       {
         "expected": true,
         "distinct": true,
         "reason": "Na primeira imagem, a pessoa na árvore aparece de costas, com a multidão vista por trás e construções ao fundo. Na segunda, a pessoa na árvore está de frente, com braços abertos, e há um homem de perfil em destaque à esquerda e rostos voltados para cima. São mudanças de ângulo, pose e composição, não um espelhamento ou recorte.",
+        "passed": true
+      },
+      {
+        "expected": false,
+        "distinct": false,
+        "reason": "A segunda imagem é um espelhamento horizontal da primeira: a árvore com a pessoa passa da direita para a esquerda, enquanto a janela com uma figura passa da esquerda para a direita. As pessoas, os galhos e o toldo mantêm os mesmos detalhes, apenas invertidos.",
         "passed": true
       }
     ]
