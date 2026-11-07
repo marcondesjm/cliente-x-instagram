@@ -60,14 +60,21 @@
  }
  function setBusy(value){busy=value;el('claudeControl').querySelectorAll('button,input').forEach(n=>n.disabled=value);}
  async function act(action){
-  if(busy||!current)return;setBusy(true);el('claudeFeedback').textContent='Enviando solicitação…';const activeScope=scope;
+  if(busy)return;
+  const requestedScope=scope;
+  if(!current){await load(requestedScope,'owner',true);if(scope!==requestedScope||!current)return;}
+  setBusy(true);el('claudeFeedback').textContent='Enviando solicitação…';const activeScope=scope;
   try{
    const body={action,scope,revision:current.revision};
    if(action==='settings')Object.assign(body,{dailyLimit:Number(el('claudeDailyLimit').value),todayLimit:el('claudeTodayLimit').value===''?null:Number(el('claudeTodayLimit').value),enabled:el('claudeEnabled').checked,quotaMode:el('claudeProviderMode').checked?'provider':'internal'});
    const data=await request(body);if(scope!==activeScope)return;
    if(data.saved)render(data);
    el('claudeFeedback').textContent=data.saved?'Configuração salva na nuvem.':data.message;
-   if(data.accepted)current=null;
+   if(data.accepted){
+    current=null;
+    await load(activeScope,'owner',true);
+    if(scope===activeScope)el('claudeFeedback').textContent=data.message;
+   }
   }catch(e){if(scope===activeScope)el('claudeFeedback').textContent=e.message;}
   finally{if(scope===activeScope)setBusy(false);}
  }
