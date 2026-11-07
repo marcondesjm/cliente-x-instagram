@@ -1760,11 +1760,18 @@
     {
       "id": "523ff55c-9425-4288-bbe8-2a1803468c62",
       "day": "2026-11-07",
-      "status": "reserved",
+      "status": "completed",
       "stage": "sonnet-forced-holdout:holdout-1",
       "startedAt": "2026-11-07T19:34:33.370Z",
       "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817",
-      "imageBytes": 66332
+      "imageBytes": 66332,
+      "completedAt": "2026-11-07T19:35:46.567Z",
+      "reportedInputTokens": 1056,
+      "reportedOutputTokens": 135,
+      "inputTokens": 1056,
+      "outputTokens": 135,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -2037,27 +2044,6 @@
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
     },
     {
-      "id": "sonnet-forced-holdout:holdout-1",
-      "mode": "sonnet-forced-holdout",
-      "fixture": "holdout-1",
-      "model": "claude-sonnet-4.6",
-      "passed": false,
-      "value": {
-        "personInTree": false,
-        "openBooks": false,
-        "style": "unknown",
-        "description": "Não foi possível visualizar a imagem fornecida, portanto não há detalhes visuais observáveis a relatar."
-      },
-      "expected": {
-        "personInTree": false,
-        "openBooks": false,
-        "style": "illustration"
-      },
-      "checkedAt": "2026-11-07T18:51:16.930Z",
-      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/08_FB_Zacchaeus_1024.jpg?1724237549",
-      "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817"
-    },
-    {
       "id": "sonnet-forced-holdout:holdout-2",
       "mode": "sonnet-forced-holdout",
       "fixture": "holdout-2",
@@ -2098,12 +2084,33 @@
       "checkedAt": "2026-11-07T18:52:59.900Z",
       "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/06_FB_Zacchaeus_1024.jpg?1724237549",
       "imageHash": "0e68d89f3b06e81914792cf90b2e067b890038d0529d6b9579fc219f5e7cf478"
+    },
+    {
+      "id": "sonnet-forced-holdout:holdout-1",
+      "mode": "sonnet-forced-holdout",
+      "fixture": "holdout-1",
+      "model": "claude-sonnet-5",
+      "passed": true,
+      "value": {
+        "description": "Ilustração de seis homens com barbas e roupas longas coloridas, reunidos próximos uns dos outros. O homem ao centro veste túnica clara e manto vermelho, sorri e mantém uma mão erguida. À frente dele, um homem com roupa azul e cobertura amarela na cabeça sorri. Outro homem aparece de costas no primeiro plano, com tecido amarelo sobre a cabeça. Ao fundo há paredes claras e uma abertura em arco à esquerda. Não há árvores nem livros visíveis.",
+        "openBooks": false,
+        "personInTree": false,
+        "style": "illustration"
+      },
+      "expected": {
+        "personInTree": false,
+        "openBooks": false,
+        "style": "illustration"
+      },
+      "checkedAt": "2026-11-07T19:35:46.567Z",
+      "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/08_FB_Zacchaeus_1024.jpg?1724237549",
+      "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817"
     }
   ],
   "circuit": null,
   "health": "blocked",
   "publicationTriggered": false,
-  "checkedAt": "2026-11-07T19:34:33.371Z",
+  "checkedAt": "2026-11-07T19:35:46.567Z",
   "workflowRun": "42406734245",
   "summary": [
     {
