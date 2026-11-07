@@ -1874,9 +1874,15 @@
     {
       "id": "7e24c59a-7799-42af-a938-3479c0d828c0",
       "day": "2026-11-07",
-      "status": "reserved",
+      "status": "completed",
       "stage": "event-grounding-v2",
-      "startedAt": "2026-11-07T19:42:43.995Z"
+      "startedAt": "2026-11-07T19:42:43.995Z",
+      "completedAt": "2026-11-07T19:44:08.381Z",
+      "reportedInputTokens": 2678,
+      "reportedOutputTokens": 866,
+      "inputTokens": 2678,
+      "outputTokens": 866,
+      "usageStatus": "provider_reported"
     }
   ],
   "entries": [
@@ -2215,7 +2221,7 @@
   "circuit": null,
   "health": "blocked",
   "publicationTriggered": false,
-  "checkedAt": "2026-11-07T19:42:43.995Z",
+  "checkedAt": "2026-11-07T19:44:08.382Z",
   "workflowRun": "42406734245",
   "summary": [
     {
@@ -2253,9 +2259,9 @@
   "semanticConclusion": "Resultados iniciais não se sustentaram no piloto completo. Sonnet inventou cama; Haiku recusou imagem anexada. Nenhuma ativação.",
   "eventGrounding": {
     "version": "depicted-event-v4",
-    "model": "claude-sonnet-4.6",
+    "model": "claude-sonnet-5",
     "passed": true,
-    "checkedAt": "2026-11-04T16:27:39.743Z",
+    "checkedAt": "2026-11-07T19:44:08.382Z",
     "taskFingerprint": "24a3d96350ad5e68eec4ef675e4a33577dc5379d0b6c66576eea86e58d75a818",
     "task": {
       "scopeReference": "Trechos WEB fornecidos, sem ampliar o relato.",
@@ -2418,11 +2424,11 @@
       {
         "id": "absent-appearance",
         "supported": false,
-        "reason": "As fontes não mencionam Jesus aparecendo pessoalmente às mulheres no túmulo. Os versículos descrevem dois homens em vestes resplandecentes (p0:24:4) que falam com elas, mas não há citação de aparição pessoal de Jesus neste trecho.",
+        "reason": "Os trechos não relatam Jesus aparecendo pessoalmente às mulheres no túmulo. Relatam a ausência de seu corpo e a presença de dois homens.",
         "evidence": [
           {
             "sourceId": "p0:24:3",
-            "quote": "They entered in, and didn't find the Lord Jesus' body."
+            "quote": "They entered in, and didn’t find the Lord Jesus’ body."
           },
           {
             "sourceId": "p0:24:4",
@@ -2435,15 +2441,19 @@
       {
         "id": "zacchaeus-house",
         "supported": true,
-        "reason": "O texto afirma que Zaqueu recebeu Jesus em sua casa (p1:19:6). A visualObservation mostra um homem de pé ao lado de outro sentado à mesa em ambiente interno, o que é compatível com o recebimento de Jesus na casa de Zaqueu.",
+        "reason": "Jesus anuncia que ficará na casa de Zaqueu, que o recebe alegremente; o relato confirma a hospedagem. A cena interna com dois homens é compatível com essa recepção, sem exigir que o texto descreva a mesa ou suas posições.",
         "evidence": [
           {
             "sourceId": "p1:19:5",
-            "quote": "When Jesus came to the place, he looked up and saw him, and said to him,\n\"Zacchaeus, hurry and come down, for today I must stay at your house.\""
+            "quote": "When Jesus came to the place, he looked up and saw him, and said to him,\n“Zacchaeus, hurry and come down, for today I must stay at your house.”"
           },
           {
             "sourceId": "p1:19:6",
             "quote": "He hurried, came down, and received him joyfully."
+          },
+          {
+            "sourceId": "p1:19:7",
+            "quote": "When they saw it, they all murmured, saying, “He has gone in to lodge with a man who is a sinner.”"
           }
         ],
         "expected": true,
@@ -2452,11 +2462,15 @@
       {
         "id": "tree-action",
         "supported": true,
-        "reason": "O texto confirma que Zaqueu subiu numa árvore para ver Jesus (p1:19:4). A visualObservation mostra um homem nos galhos de uma árvore acima de pessoas no chão, o que é perfeitamente compatível com a ação descrita.",
+        "reason": "O relato identifica Zaqueu e afirma que subiu em uma árvore para ver Jesus. O homem já nos galhos representa o resultado dessa subida, sem contradizer a ação narrada.",
         "evidence": [
           {
+            "sourceId": "p1:19:2",
+            "quote": "There was a man named Zacchaeus. He was a chief tax collector, and he was rich."
+          },
+          {
             "sourceId": "p1:19:3",
-            "quote": "He was trying to see who Jesus was, and couldn't because of the crowd, because he was short."
+            "quote": "He was trying to see who Jesus was, and couldn’t because of the crowd, because he was short."
           },
           {
             "sourceId": "p1:19:4",
@@ -2469,11 +2483,15 @@
       {
         "id": "wrong-table",
         "supported": false,
-        "reason": "A visualObservation mostra um homem nos galhos de uma árvore, o que contradiz a claim de que Zaqueu estava sentado à mesa com Jesus. A ilustração representa a fase da subida na árvore, não o momento posterior do recebimento em casa.",
+        "reason": "Nenhum trecho fornecido afirma que Zaqueu estava sentado à mesa com Jesus. Além disso, o desenho mostra um homem nos galhos de uma árvore, ação incompatível com estar sentado à mesa.",
         "evidence": [
           {
             "sourceId": "p1:19:4",
             "quote": "He ran on ahead, and climbed up into a sycamore tree to see him, for he was going to pass that way."
+          },
+          {
+            "sourceId": "p1:19:6",
+            "quote": "He hurried, came down, and received him joyfully."
           }
         ],
         "expected": false,
@@ -2482,11 +2500,11 @@
       {
         "id": "sleep-illustration",
         "supported": true,
-        "reason": "O texto confirma que Jesus estava dormindo na popa do barco (p2:4:38). A visualObservation mostra um homem deitado na popa de um barco enquanto outros estão próximos, o que é compatível com a descrição bíblica.",
+        "reason": "A fonte afirma que ele dormia na popa, sobre uma almofada. O homem deitado na popa com outros homens próximos é compatível com esse momento, sem precisar representar também o despertar.",
         "evidence": [
           {
             "sourceId": "p2:4:38",
-            "quote": "He himself was in the stern, asleep on the cushion, and they woke him up, and told him, \"Teacher, don't you care that we are dying?\""
+            "quote": "He himself was in the stern, asleep on the cushion, and they woke him up, and told him, “Teacher, don’t you care that we are dying?”"
           }
         ],
         "expected": true,
@@ -2495,7 +2513,7 @@
       {
         "id": "wrong-tree-action",
         "supported": false,
-        "reason": "A visualObservation mostra quatro homens caminhando em uma estrada sem ninguém em árvore, o que contradiz a claim de que Zaqueu subiu numa árvore. A ilustração não representa a ação descrita no texto.",
+        "reason": "Embora a subida de Zaqueu esteja expressamente narrada, o desenho mostra apenas homens caminhando na estrada, sem ninguém em uma árvore. A ação visível é incompatível com o acontecimento proposto.",
         "evidence": [
           {
             "sourceId": "p1:19:4",
