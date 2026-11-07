@@ -21,7 +21,7 @@ const modes=[{id:'sonnet-forced-holdout',model:visionModel,transport:'base64',to
 try {
   if(recoverTransientCalls(state))save();
   for(const mode of modes.filter(m=>m.id==='sonnet-forced-holdout'))for(const fixture of (mode.holdout?holdoutFixtures:fixtures)) {
-    const id=mode.id+':'+fixture.id;if(state.entries.some(e=>e.id===id && e.model===mode.model && Date.now()-Date.parse(e.checkedAt)<24*60*60*1000))continue;
+    const id=mode.id+':'+fixture.id;if(state.entries.some(e=>e.id===id && e.model===mode.model && e.passed===true && Date.now()-Date.parse(e.checkedAt)<24*60*60*1000))continue;
     const day=callAllowance(state);
     const response=await fetch(fixture.scene.imageUrl,{redirect:'error',signal:AbortSignal.timeout(25000)});
     if(!response.ok || !/image\/jpeg/.test(response.headers.get('content-type') || ''))throw new Error('Fonte de teste indisponível.');
