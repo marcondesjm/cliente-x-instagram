@@ -1887,11 +1887,18 @@
     {
       "id": "c0b8aad5-9d21-43c4-8c30-9136198890f5",
       "day": "2026-11-07",
-      "status": "reserved",
+      "status": "completed",
       "stage": "sonnet-forced-holdout:holdout-4",
       "startedAt": "2026-11-07T19:45:05.916Z",
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572",
-      "imageBytes": 84542
+      "imageBytes": 84542,
+      "completedAt": "2026-11-07T19:45:48.056Z",
+      "reportedInputTokens": 1056,
+      "reportedOutputTokens": 121,
+      "inputTokens": 1056,
+      "outputTokens": 121,
+      "usageStatus": "provider_reported",
+      "stopReason": "tool_use"
     }
   ],
   "entries": [
@@ -2210,19 +2217,19 @@
       "mode": "sonnet-forced-holdout",
       "fixture": "holdout-4",
       "model": "claude-sonnet-5",
-      "passed": false,
+      "passed": true,
       "value": {
-        "personInTree": false,
+        "description": "Ilustração de um homem de barba, roupa azul, faixa vermelha e sandálias sentado sobre um galho de uma árvore, com os braços erguidos entre os ramos. Ao redor do tronco, vários homens com barbas e vestes de cores variadas olham para cima. Um homem de cabelos longos ocupa o primeiro plano à esquerda. A copa tem muitas folhas verdes. Não há livros abertos visíveis.",
         "openBooks": false,
-        "style": "unknown",
-        "description": "Nenhuma imagem foi fornecida ou está visível para observação."
+        "personInTree": true,
+        "style": "illustration"
       },
       "expected": {
         "personInTree": true,
         "openBooks": false,
         "style": "illustration"
       },
-      "checkedAt": "2026-11-07T19:39:57.488Z",
+      "checkedAt": "2026-11-07T19:45:48.056Z",
       "sourceUrl": "https://media.freebibleimages.org/stories/FB_Zacchaeus/source-jpeg/05_FB_Zacchaeus_1024.jpg?1724237549",
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
     }
@@ -2230,7 +2237,7 @@
   "circuit": null,
   "health": "blocked",
   "publicationTriggered": false,
-  "checkedAt": "2026-11-07T19:45:05.917Z",
+  "checkedAt": "2026-11-07T19:45:48.056Z",
   "workflowRun": "42407616965",
   "summary": [
     {
