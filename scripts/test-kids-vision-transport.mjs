@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import sharp from 'sharp';
 import {randomUUID,createHash} from 'node:crypto';
-import {sendVision,callAllowance,labelledReviewImages,reviewImageManifest} from '../lib/kids-scene-vision.js';
+import {sendVision,callAllowance,labelledReviewImages,reviewImageManifest,recoverTransientCalls} from '../lib/kids-scene-vision.js';
 import {normalizeProviderUsage} from '../lib/platform-editorial-validation.js';
 import {loadPassage} from '../lib/kids-bible-passage.js';
 import {groundingPrompt,groundingSchema,inspectGrounding,groundingFingerprint} from '../lib/editorial-grounding.js';
@@ -19,6 +19,7 @@ const fixtures=[{id:'scene-a',scene:source.scenes[0],expected:{personInTree:fals
 const holdoutFixtures=[7,6,5,4].map((index,i)=>({id:'holdout-'+(i+1),scene:source.scenes[index],expected:{personInTree:index===4,openBooks:false,style:'illustration'}}));
 const modes=[{id:'sonnet-forced-holdout',model:visionModel,transport:'base64',tool:true,holdout:true},{id:'base64-json',model:visionModel,transport:'base64',tool:false},{id:'url-json',model:visionModel,transport:'url',tool:false},{id:'base64-tool',model:visionModel,transport:'base64',tool:true},{id:'haiku-base64-json',model:'claude-haiku-4.5',transport:'base64',tool:false},{id:'haiku-holdout',model:'claude-haiku-4.5',transport:'base64',tool:false,holdout:true}];
 try {
+  if(recoverTransientCalls(state))save();
   for(const mode of modes.filter(m=>m.id==='sonnet-forced-holdout'))for(const fixture of (mode.holdout?holdoutFixtures:fixtures)) {
     const id=mode.id+':'+fixture.id;if(state.entries.some(e=>e.id===id && e.model===mode.model && Date.now()-Date.parse(e.checkedAt)<24*60*60*1000))continue;
     const day=callAllowance(state);
