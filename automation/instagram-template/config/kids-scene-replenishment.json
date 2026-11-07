@@ -3,9 +3,9 @@
   "enabled": false,
   "provider": "claude-ss",
   "model": "claude-sonnet-5",
-  "health": "blocked",
-  "message": "[PILOT] Erro capturado: O servidor não confirmou a leitura real dos pixels; nenhuma cena nova será aprovada.",
-  "circuit": "pixel_reading_not_confirmed",
+  "health": "ok",
+  "message": "",
+  "circuit": null,
   "policy": {
     "maxCallsPerDay": 250,
     "maxInputTokensPerCall": 120000,
@@ -8476,6 +8476,20 @@
       "usageStatus": "provider_reported",
       "stopReason": "tool_use",
       "responseParsed": true
+    },
+    {
+      "id": "f1692d7a-c255-44f0-9d7c-404d8e4251ce",
+      "day": "2026-11-07",
+      "stage": "calibration",
+      "model": "claude-sonnet-5",
+      "maxOutputTokens": 250,
+      "responseFormat": "forced_tool",
+      "startedAt": "2026-11-07T20:01:00.232Z",
+      "status": "reserved",
+      "payloadBytes": 17693,
+      "promptChars": 418,
+      "imageFingerprint": "dea4beae2c084d967296e3699b3c4ff44bec3479a0235c4085fa6030e7a3a1b1",
+      "promptFingerprint": "1899afb49c740cb4ae56aa02c5ff6a25febd6c880af1a386065420905a36d75d"
     }
   ],
   "entries": [
@@ -8633,8 +8647,8 @@
     "challengeHash": "43e33bfb1ef2859deac681a7bfce8b5cbc0f95766a5e8180d39eb614bbbabc62"
   },
   "publicationTriggered": false,
-  "checkedAt": "2026-11-07T19:55:42.627Z",
-  "lastRun": "42408454591",
+  "checkedAt": "2026-11-07T20:01:00.232Z",
+  "lastRun": "42408885576",
   "billingMode": "fixed_plan_user_confirmed",
   "manualRepairAt": "2026-10-17",
   "rejections": {
@@ -12305,7 +12319,7 @@
     "reusedPixelReads": 0,
     "newPixelReads": 0,
     "skippedCandidates": 0,
-    "checkedAt": "2026-11-07T19:55:42.627Z"
+    "checkedAt": "2026-11-07T20:01:00.232Z"
   },
   "recoveredUsageReceipt": {
     "callId": "8ce52181-2d91-44c9-827e-1e9d1857ae8f",
