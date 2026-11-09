@@ -1903,11 +1903,13 @@
     {
       "id": "d3aebf17-4c5e-4f6d-aa9d-364cb343c62c",
       "day": "2026-11-09",
-      "status": "reserved",
+      "status": "failed",
       "stage": "sonnet-forced-holdout:holdout-1",
       "startedAt": "2026-11-09T18:56:18.374Z",
       "imageHash": "a82f166020bb4d821ece5251c8ad9bb5639e757e29e4139963f31d0dcf1a7817",
-      "imageBytes": 66332
+      "imageBytes": 66332,
+      "completedAt": "2026-11-09T18:56:41.832Z",
+      "httpStatus": 503
     }
   ],
   "entries": [
@@ -2243,10 +2245,10 @@
       "imageHash": "1fc7803be2d9f51e105324e20b4f35f1e04f8481bb0de8a7311f7fe9c0f55572"
     }
   ],
-  "circuit": null,
+  "circuit": "request_failed",
   "health": "completed",
   "publicationTriggered": false,
-  "checkedAt": "2026-11-09T18:56:18.375Z",
+  "checkedAt": "2026-11-09T18:56:41.832Z",
   "workflowRun": "42678383454",
   "summary": [
     {
