@@ -12809,71 +12809,104 @@
       "createdAt": "2026-11-12T17:07:33.020Z"
     }
   ],
-  "checkedAt": "2026-11-12T17:07:34.965Z",
+  "checkedAt": "2026-11-12T17:07:55.286Z",
   "workflowRun": "43265059449",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "generate:pedido-duplicado-v8",
-    "callId": "174232ba-216b-4e57-a9dc-0497487911ff",
+    "stage": "art-direction:pedido-duplicado-v8",
+    "callId": "9b9de411-4242-46c2-925c-c364a80dc3bd",
     "value": {
-      "slides": [
+      "palette": "ocean",
+      "frames": [
         {
-          "eyebrow": "Exercício Fictício",
-          "title": "O mesmo pedido chegou duas vezes no sistema?",
-          "body": "Imagine uma prestadora de serviços recebendo solicitações idênticas e precisando evitar tarefas repetidas no fluxo."
+          "layout": "workspace",
+          "labels": [
+            "Solicitação",
+            "Identificador",
+            "Fluxo"
+          ]
         },
         {
-          "eyebrow": "Contexto",
-          "title": "Cenário hipotético de atendimento com múltiplos canais",
-          "body": "Clientes enviam orçamentos por diferentes meios e a equipe precisa organizar as entradas sem criar retrabalho."
+          "layout": "conversation",
+          "labels": [
+            "Cliente",
+            "Canal",
+            "Diálogo"
+          ]
         },
         {
-          "eyebrow": "Objetivo",
-          "title": "Organizar o fluxo antes de automatizar qualquer etapa",
-          "body": "Definir uma regra clara para identificar registros repetidos e direcioná-los para conferência humana adequada."
+          "layout": "workflow",
+          "labels": [
+            "Recebe",
+            "Verifica",
+            "Encaminha"
+          ]
         },
         {
-          "eyebrow": "Dados Necessários",
-          "title": "Identificador único para cada solicitação recebida",
-          "body": "Cada pedido deve ter um código próprio que permita consultar o histórico antes de gerar nova tarefa."
+          "layout": "checklist",
+          "labels": [
+            "Solicita",
+            "Confirma",
+            "Registra"
+          ]
         },
         {
-          "eyebrow": "Procedimento",
-          "title": "Consultar o registro antes de criar nova demanda",
-          "body": "O sistema verifica se o identificador já existe e encaminha para revisão caso encontre correspondência anterior."
+          "layout": "decision",
+          "labels": [
+            "Duplicado",
+            "Conferir",
+            "Aguardar"
+          ]
         },
         {
-          "eyebrow": "Informação Ausente",
-          "title": "Solicitar dados quando o identificador estiver incompleto",
-          "body": "Peça ao cliente as informações faltantes antes de seguir adiante para manter a integridade do cadastro."
+          "layout": "workspace",
+          "labels": [
+            "Solicitação",
+            "Identificador",
+            "Fluxo"
+          ]
         },
         {
-          "eyebrow": "Conferência Humana",
-          "title": "Validar exceções antes de descartar ou prosseguir",
-          "body": "Um profissional analisa os casos sinalizados como duplicados para confirmar se são realmente repetições."
+          "layout": "conversation",
+          "labels": [
+            "Cliente",
+            "Canal",
+            "Diálogo"
+          ]
         },
         {
-          "eyebrow": "Erro a Evitar",
-          "title": "Confiar apenas na automação sem testes prévios",
-          "body": "A implementação exige validação constante pois regras mal ajustadas podem perder solicitações legítimas."
+          "layout": "workflow",
+          "labels": [
+            "Recebe",
+            "Verifica",
+            "Encaminha"
+          ]
         },
         {
-          "eyebrow": "Exemplo Prático",
-          "title": "Reenvio do orçamento para testar a regra definida",
-          "body": "Simule o mesmo pedido novamente e verifique se o sistema reconheceu a duplicidade conforme o esperado."
+          "layout": "checklist",
+          "labels": [
+            "Solicita",
+            "Confirma",
+            "Registra"
+          ]
         },
         {
-          "eyebrow": "Próximo Passo",
-          "title": "Mapeie seus pontos de entrada de pedidos hoje",
-          "body": "Liste todos os canais onde sua empresa recebe solicitações para planejar uma identificação única consistente."
+          "layout": "decision",
+          "labels": [
+            "Duplicado",
+            "Conferir",
+            "Aguardar"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Tarefa",
+            "Duplicata",
+            "Revisão"
+          ]
         }
-      ],
-      "caption": "Este exercício fictício mostra como estruturar a verificação de duplicidade em pedidos antes de automatizar processos empresariais. A situação é hipotética e serve para treinar o raciocínio lógico necessário na gestão de demandas repetitivas.\n\nVocê já mapeou quantos canais diferentes recebem solicitações na sua empresa? Acompanhe o perfil para aprender aplicações práticas de inteligência artificial em rotinas operacionais reais.",
-      "storySlide": {
-        "eyebrow": "Rotina Diária",
-        "title": "Quantas vezes você criou tarefas iguais esta semana?",
-        "body": "Veja no feed um exercício fictício sobre organização de pedidos duplicados em prestadoras de serviços."
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
