@@ -12792,70 +12792,70 @@
       "reason": "Pauta bloqueada por repetição."
     }
   ],
-  "checkedAt": "2026-11-12T17:06:34.987Z",
+  "checkedAt": "2026-11-12T17:07:30.694Z",
   "workflowRun": "43265059449",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "generate:extracao-campos-v8",
-    "callId": "ff633fc1-650f-48e4-b1e4-7e2871e59f97",
+    "stage": "generate:pedido-duplicado-v8",
+    "callId": "174232ba-216b-4e57-a9dc-0497487911ff",
     "value": {
       "slides": [
         {
           "eyebrow": "Exercício Fictício",
-          "title": "Como organizar um pedido incompleto recebido por mensagem?",
-          "body": "Este exercício hipotético ensina a estruturar solicitações de orçamento sem inventar dados ausentes."
+          "title": "O mesmo pedido chegou duas vezes no sistema?",
+          "body": "Imagine uma prestadora de serviços recebendo solicitações idênticas e precisando evitar tarefas repetidas no fluxo."
         },
         {
           "eyebrow": "Contexto",
-          "title": "Cenário de prestadora de serviços com pedidos vagos",
-          "body": "Imagine uma empresa fictícia recebendo mensagens confusas de clientes pedindo orçamentos sem detalhes essenciais."
+          "title": "Cenário hipotético de atendimento com múltiplos canais",
+          "body": "Clientes enviam orçamentos por diferentes meios e a equipe precisa organizar as entradas sem criar retrabalho."
         },
         {
           "eyebrow": "Objetivo",
-          "title": "Extrair informações mantendo a integridade dos dados originais",
-          "body": "O foco é preservar exatamente o que foi escrito pelo cliente sem suposições automáticas da inteligência artificial."
+          "title": "Organizar o fluxo antes de automatizar qualquer etapa",
+          "body": "Definir uma regra clara para identificar registros repetidos e direcioná-los para conferência humana adequada."
         },
         {
           "eyebrow": "Dados Necessários",
-          "title": "Defina campos obrigatórios antes de solicitar a tabela",
-          "body": "Estabeleça previamente que produto, quantidade e prazo são os únicos campos relevantes para este exercício."
+          "title": "Identificador único para cada solicitação recebida",
+          "body": "Cada pedido deve ter um código próprio que permita consultar o histórico antes de gerar nova tarefa."
         },
         {
           "eyebrow": "Procedimento",
-          "title": "Solicite à IA uma tabela fiel à mensagem original",
-          "body": "Peça para a ferramenta transcrever as informações recebidas mantendo a redação exata do solicitante fictício."
+          "title": "Consultar o registro antes de criar nova demanda",
+          "body": "O sistema verifica se o identificador já existe e encaminha para revisão caso encontre correspondência anterior."
         },
         {
           "eyebrow": "Informação Ausente",
-          "title": "Marque como não informado em vez de completar",
-          "body": "Oriente a inteligência artificial a registrar explicitamente a ausência de dados sem tentar preencher lacunas sozinha."
+          "title": "Solicitar dados quando o identificador estiver incompleto",
+          "body": "Peça ao cliente as informações faltantes antes de seguir adiante para manter a integridade do cadastro."
         },
         {
           "eyebrow": "Conferência Humana",
-          "title": "Compare cada campo com a mensagem original do cliente",
-          "body": "Revise manualmente linha por linha para confirmar que a tabela reflete apenas o que foi realmente dito."
+          "title": "Validar exceções antes de descartar ou prosseguir",
+          "body": "Um profissional analisa os casos sinalizados como duplicados para confirmar se são realmente repetições."
         },
         {
           "eyebrow": "Erro a Evitar",
-          "title": "Não aceite sugestões automáticas para dados faltantes",
-          "body": "Corrija imediatamente qualquer tentativa da ferramenta de inferir valores que não constam na solicitação inicial."
+          "title": "Confiar apenas na automação sem testes prévios",
+          "body": "A implementação exige validação constante pois regras mal ajustadas podem perder solicitações legítimas."
         },
         {
-          "eyebrow": "Exemplo Fictício",
-          "title": "Cliente pede reforma sem especificar metragem ou data",
-          "body": "A tabela resultante deve mostrar claramente que metragem e prazo permanecem vazios conforme a mensagem original."
+          "eyebrow": "Exemplo Prático",
+          "title": "Reenvio do orçamento para testar a regra definida",
+          "body": "Simule o mesmo pedido novamente e verifique se o sistema reconheceu a duplicidade conforme o esperado."
         },
         {
-          "eyebrow": "Conclusão",
-          "title": "Adote este protocolo no próximo atendimento simulado",
-          "body": "Pratique essa rotina de extração fiel para desenvolver critérios claros antes de automatizar processos reais."
+          "eyebrow": "Próximo Passo",
+          "title": "Mapeie seus pontos de entrada de pedidos hoje",
+          "body": "Liste todos os canais onde sua empresa recebe solicitações para planejar uma identificação única consistente."
         }
       ],
-      "caption": "Neste exercício fictício, praticamos a extração de dados de pedidos incompletos sem permitir que a inteligência artificial invente informações. O objetivo é treinar a conferência humana e preservar a integridade da mensagem original do cliente em cenários simulados de orçamento.\n\nVocê já precisou corrigir dados que foram preenchidos automaticamente de forma equivocada? Acompanhe o perfil para mais exercícios práticos de IA aplicada a empresas.",
+      "caption": "Este exercício fictício mostra como estruturar a verificação de duplicidade em pedidos antes de automatizar processos empresariais. A situação é hipotética e serve para treinar o raciocínio lógico necessário na gestão de demandas repetitivas.\n\nVocê já mapeou quantos canais diferentes recebem solicitações na sua empresa? Acompanhe o perfil para aprender aplicações práticas de inteligência artificial em rotinas operacionais reais.",
       "storySlide": {
         "eyebrow": "Rotina Diária",
-        "title": "Sua equipe revisa dados extraídos por IA?",
-        "body": "Veja no feed um exercício completo sobre como conferir pedidos fictícios sem aceitar suposições automáticas."
+        "title": "Quantas vezes você criou tarefas iguais esta semana?",
+        "body": "Veja no feed um exercício fictício sobre organização de pedidos duplicados em prestadoras de serviços."
       }
     },
     "structured": true,
