@@ -6218,6 +6218,14 @@ async function main() {
   const visualAgent = assertVisualAgentPlan(visualPack, buildVisualAgentPlan(visualPack, researchVisualSources));
   const researchSlideImagePaths = visualAgent.slideImagePaths;
   const researchSourceImagePath = researchSlideImagePaths[0] || null;
+  const hasDistinctEditorialCover = Boolean(researchSourceImagePath);
+  if (pack.research?.sourceUrl && !hasDistinctEditorialCover) {
+    // Sem foto pertinente, o Feed e o Story passam para arte tipográfica
+    // gerada pelo próprio renderer. Não usar fotos genéricas ou de outra pauta.
+    pack.slides = pack.slides.map(slide => ({ ...slide, typographicOnly: true }));
+    if (pack.storySlide) pack.storySlide = { ...pack.storySlide, typographicOnly: true };
+    console.warn('Radar visual: nenhuma foto pertinente aprovada; usando arte editorial tipográfica de contingência.');
+  }
   writeFileSync(join(runDir, 'visual-agent.json'), JSON.stringify(visualAgent, null, 2), 'utf8');
   console.log(`Agente Visual ${CLOUD_VISUAL_AGENT_VERSION}: ${visualAgent.status}; ${visualAgent.approvedVisuals} fotos distintas aprovadas.`);
   if (researchVisualSources.length) {
