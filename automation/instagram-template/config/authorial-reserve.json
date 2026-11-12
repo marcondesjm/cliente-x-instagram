@@ -14066,104 +14066,71 @@
       "reason": "API sem resposta confirmada; novas chamadas bloqueadas."
     }
   ],
-  "checkedAt": "2026-11-12T18:58:02.356Z",
+  "checkedAt": "2026-11-12T18:58:59.606Z",
   "workflowRun": "43285011395",
   "message": "API sem resposta confirmada; novas chamadas bloqueadas.",
   "lastResponse": {
-    "stage": "art-direction:extracao-campos-v9",
-    "callId": "82108e82-cd4d-407e-b4d8-1a327afa2115",
+    "stage": "generate:pedido-duplicado-v9",
+    "callId": "ea8179a6-4322-49d6-99d2-49f4e4b427dc",
     "value": {
-      "palette": "copper",
-      "frames": [
+      "caption": "Imagine uma distribuidora fictícia recebendo solicitações comerciais repetidas por canais diferentes. Sem um identificador único, a equipe pode criar tarefas redundantes e gerar retrabalho operacional desnecessário para todos os envolvidos no processo interno.\n\nO exercício propõe atribuir um código padrão e consultar o registro antes de qualquer nova criação de demanda. Você já mapeou como sua empresa identifica solicitações repetidas? Acompanhe o perfil para mais exercícios práticos de IA aplicada a negócios.",
+      "slides": [
         {
-          "layout": "workspace",
-          "labels": [
-            "Mensagem vaga",
-            "Campos obrigatórios",
-            "Tela de cadastro"
-          ]
+          "body": "Este exercício fictício aborda o risco de tarefas repetidas em uma distribuidora hipotética.",
+          "eyebrow": "Cenário",
+          "title": "Entenda o contexto do exercício proposto"
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Chat interno",
-            "Dados fictícios",
-            "Solicitação clara"
-          ]
+          "body": "O objetivo é organizar um fluxo de conferência prévia antes de registrar novas demandas internas.",
+          "eyebrow": "Objetivo",
+          "title": "Defina a meta da verificação inicial"
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Fluxo de extração",
-            "Texto original",
-            "Estrutura fiel"
-          ]
+          "body": "Atribua um identificador único ao pedido recebido para permitir a consulta posterior no sistema.",
+          "eyebrow": "Dados",
+          "title": "Padronize o identificador do pedido"
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Produto definido",
-            "Quantidade clara",
-            "Prazo explícito"
-          ]
+          "body": "Consulte a base de registros existente para confirmar se aquele identificador já foi processado anteriormente.",
+          "eyebrow": "Procedimento",
+          "title": "Verifique o histórico antes de criar"
         },
         {
-          "layout": "decision",
-          "labels": [
-            "Gerar tabela",
-            "Preservar texto",
-            "Sempre conferir"
-          ]
+          "body": "Encaminhe a solicitação para conferência humana caso o identificador já conste na base de dados.",
+          "eyebrow": "Fluxo",
+          "title": "Desvie para revisão quando houver duplicidade"
         },
         {
-          "layout": "workspace",
-          "labels": [
-            "Campo vazio",
-            "Não informado",
-            "Sem suposição"
-          ]
+          "body": "Solicite informações complementares ao remetente quando o identificador estiver incompleto ou ausente.",
+          "eyebrow": "Exceção",
+          "title": "Trate a falta de informação com clareza"
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Lado a lado",
-            "Verificação manual",
-            "Fidelidade ao texto"
-          ]
+          "body": "Um colaborador deve validar manualmente a decisão de reenvio ou descarte da tarefa duplicada.",
+          "eyebrow": "Validação",
+          "title": "Mantenha a conferência humana obrigatória"
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Bloqueio automático",
-            "Alerta de lacuna",
-            "Revisão humana"
-          ]
+          "body": "Evite assumir que a automação resolve sozinha a duplicidade sem testes prévios de validação.",
+          "eyebrow": "Atenção",
+          "title": "Não ignore a etapa de teste"
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Item correto",
-            "Qtd confirmada",
-            "Prazo ausente"
-          ]
+          "body": "Reenvie o mesmo pedido fictício para confirmar se o sistema bloqueia corretamente a segunda entrada.",
+          "eyebrow": "Exemplo",
+          "title": "Simule o reenvio para testar"
         },
         {
-          "layout": "decision",
-          "labels": [
-            "Conferir antes",
-            "Validar origem",
-            "Cadastrar seguro"
-          ]
-        },
-        {
-          "layout": "decision",
-          "labels": [
-            "Pedido incompleto",
-            "Exercício no feed",
-            "Rotina segura"
-          ]
+          "body": "Documente o fluxo testado e ajuste as regras de identificação conforme os resultados observados.",
+          "eyebrow": "Conclusão",
+          "title": "Registre e refine o procedimento"
         }
-      ]
+      ],
+      "storySlide": {
+        "body": "Como sua equipe lida com solicitações repetidas hoje? Veja o exercício completo no feed.",
+        "eyebrow": "Rotina",
+        "title": "Você confere pedidos antes de criar tarefas?"
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
