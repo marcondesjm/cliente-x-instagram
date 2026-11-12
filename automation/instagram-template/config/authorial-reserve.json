@@ -11979,71 +11979,104 @@
       "createdAt": "2026-11-12T16:54:51.173Z"
     }
   ],
-  "checkedAt": "2026-11-12T16:54:53.100Z",
+  "checkedAt": "2026-11-12T16:55:43.477Z",
   "workflowRun": "43263302535",
   "message": "API sem resposta confirmada; novas chamadas bloqueadas.",
   "lastResponse": {
-    "stage": "generate:teste-variacoes-v7",
-    "callId": "1d58107d-8bb8-40a9-93bd-e2beaa779485",
+    "stage": "art-direction:teste-variacoes-v7",
+    "callId": "5dfa7e91-feb2-4626-936b-e6e30170f6ec",
     "value": {
-      "caption": "Este exercício fictício mostra como testar instruções de IA com variações de pedido antes de aplicar na rotina da loja. Você escreve versões com abreviação, erro e dado ausente para comparar os campos extraídos e ajustar o rascunho até reduzir divergências.\n\nComo você organiza testes de instrução hoje? Acompanhe o perfil para aprender aplicações práticas de inteligência artificial em empresas e transformar rotinas operacionais com exercícios realizáveis.",
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "body": "Imagine um cliente enviando pedido por mensagem com abreviações ou erros e a extração falhar.",
-          "eyebrow": "Cenário Hipotético",
-          "title": "E se o pedido vier incompleto?"
+          "layout": "workspace",
+          "labels": [
+            "Pedido incompleto",
+            "Mensagem com erro",
+            "Extração falha"
+          ]
         },
         {
-          "body": "O teste usa uma loja fictícia de materiais de escritório para simular variações reais de escrita.",
-          "eyebrow": "Contexto do Exercício",
-          "title": "Simulação com mensagens variadas"
+          "layout": "conversation",
+          "labels": [
+            "Loja fictícia",
+            "Variações de texto",
+            "Simulação segura"
+          ]
         },
         {
-          "body": "O objetivo é comparar campos extraídos em cada versão para ajustar a instrução antes da rotina.",
-          "eyebrow": "Objetivo do Teste",
-          "title": "Ajustar instrução com segurança"
+          "layout": "workflow",
+          "labels": [
+            "Campos extraídos",
+            "Comparação lado a lado",
+            "Ajuste da instrução"
+          ]
         },
         {
-          "body": "Você precisa do pedido original e das versões modificadas para executar o mesmo rascunho sempre.",
-          "eyebrow": "Dados Necessários",
-          "title": "Reúna as variações do texto"
+          "layout": "checklist",
+          "labels": [
+            "Pedido original",
+            "Versões modificadas",
+            "Rascunho fixo"
+          ]
         },
         {
-          "body": "Execute o rascunho de instrução em cada versão do pedido e anote todas as divergências encontradas.",
-          "eyebrow": "Procedimento Inicial",
-          "title": "Rode e compare os resultados"
+          "layout": "decision",
+          "labels": [
+            "Executar rascunho",
+            "Anotar divergência",
+            "Manter registro"
+          ]
         },
         {
-          "body": "Quando faltar informação essencial, registre o campo vazio em vez de permitir preenchimento automático.",
-          "eyebrow": "Informação Ausente",
-          "title": "Trate dados faltantes com rigor"
+          "layout": "workspace",
+          "labels": [
+            "Campo vazio",
+            "Dado ausente",
+            "Sem preenchimento"
+          ]
         },
         {
-          "body": "Revise manualmente cada comparação anotada para validar se a divergência exige ajuste real.",
-          "eyebrow": "Conferência Humana",
-          "title": "Valide antes de corrigir"
+          "layout": "conversation",
+          "labels": [
+            "Revisão manual",
+            "Validar divergência",
+            "Conferência humana"
+          ]
         },
         {
-          "body": "Evite alterar a instrução sem repetir o conjunto completo de variações após cada mudança feita.",
-          "eyebrow": "Erro a Evitar",
-          "title": "Não pule a repetição do teste"
+          "layout": "workflow",
+          "labels": [
+            "Repetir conjunto",
+            "Não pular etapa",
+            "Ciclo completo"
+          ]
         },
         {
-          "body": "Um pedido de caneta azul com quantidade abreviada revela se o modelo entende variações comuns.",
-          "eyebrow": "Exemplo Fictício",
-          "title": "Variação simples no material"
+          "layout": "checklist",
+          "labels": [
+            "Caneta azul",
+            "Quantidade abreviada",
+            "Variação comum"
+          ]
         },
         {
-          "body": "Crie suas próprias variações de pedido e repita o ciclo de teste antes de usar na operação.",
-          "eyebrow": "Próximo Passo",
-          "title": "Aplique o exercício agora"
+          "layout": "decision",
+          "labels": [
+            "Criar variações",
+            "Testar antes",
+            "Aplicar na rotina"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Instrução frágil",
+            "Texto alterado",
+            "Resistência ao teste"
+          ]
         }
-      ],
-      "storySlide": {
-        "body": "Você já precisou ajustar uma instrução porque o resultado mudou com pequenas alterações no texto?",
-        "eyebrow": "Rotina Operacional",
-        "title": "Sua instrução resiste a variações?"
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
