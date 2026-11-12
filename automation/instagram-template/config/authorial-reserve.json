@@ -12368,104 +12368,71 @@
       "reason": "Render autoral falhou: Slide 6 rejeitado: fotografia repetida ou visualmente semelhante a outro cartão/cena.\n"
     }
   ],
-  "checkedAt": "2026-11-12T16:57:58.588Z",
+  "checkedAt": "2026-11-12T16:59:04.646Z",
   "workflowRun": "43263302535",
   "message": "API sem resposta confirmada; novas chamadas bloqueadas.",
   "lastResponse": {
-    "stage": "art-direction:versao-instrucao-v7",
-    "callId": "1277d3bf-ff65-47bc-95a3-9f5b5a9d7aa2",
+    "stage": "generate:medicao-rascunho-v7",
+    "callId": "db305cd1-a5b0-40af-b276-6e3343e716c1",
     "value": {
-      "palette": "ocean",
-      "frames": [
+      "slides": [
         {
-          "layout": "workspace",
-          "labels": [
-            "Versão registrada",
-            "Exemplos fixos",
-            "Comparação clara"
-          ]
+          "eyebrow": "Atendimento Fictício",
+          "title": "Como revisar respostas de IA antes de enviar ao cliente?",
+          "body": "Este exercício hipotético ensina a conferir rascunhos automáticos em uma loja fictícia de materiais."
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Nome e data",
-            "Instrução atual",
-            "Rastreabilidade"
-          ]
+          "eyebrow": "Cenário do Exercício",
+          "title": "Uma loja fictícia recebe pedidos incompletos por mensagem",
+          "body": "Imagine uma papelaria que atende empresas e precisa confirmar itens sem dados completos no texto."
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Critérios esperados",
-            "Entrada fictícia",
-            "Saída registrada"
-          ]
+          "eyebrow": "Objetivo da Prática",
+          "title": "Definir critérios claros para validar cada resposta gerada",
+          "body": "O foco é estabelecer regras de correção e clareza antes de qualquer teste real com clientes."
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Versão",
-            "Data",
-            "Exemplos"
-          ]
+          "eyebrow": "Dados Necessários",
+          "title": "Reúna mensagens originais e catálogos atualizados de produtos",
+          "body": "Separe exemplos fictícios de pedidos e listas oficiais para usar como base da comparação manual."
         },
         {
-          "layout": "decision",
-          "labels": [
-            "Base inicial",
-            "Mesmos exemplos",
-            "Anotações"
-          ]
+          "eyebrow": "Procedimento Inicial",
+          "title": "Compare o rascunho da IA com os critérios definidos previamente",
+          "body": "Leia cada resposta gerada e marque trechos que fogem das regras de tom ou precisão estabelecidas."
         },
         {
-          "layout": "workspace",
-          "labels": [
-            "Dado faltante",
-            "Solicitação",
-            "Campos incompletos"
-          ]
+          "eyebrow": "Informação Ausente",
+          "title": "Sinalize campos faltantes em vez de preencher automaticamente",
+          "body": "Quando o pedido não trouxer código ou quantidade, anote a lacuna para confirmação humana posterior."
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Revisão",
-            "Colaborador",
-            "Confirmação"
-          ]
+          "eyebrow": "Conferência Humana",
+          "title": "Revise as anotações antes de aprovar qualquer fluxo automático",
+          "body": "Um responsável deve validar as correções apontadas e decidir se o rascunho está apto para uso."
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Exemplos alterados",
-            "Comparação prejudicada",
-            "Causa oculta"
-          ]
+          "eyebrow": "Erro Frequente",
+          "title": "Evite liberar respostas sem revisão mesmo em cenários simples",
+          "body": "A pressa em automatizar pode consolidar vícios de linguagem ou informações desatualizadas no atendimento."
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Dois testes",
-            "Mesmo pedido",
-            "Resumo claro"
-          ]
+          "eyebrow": "Exemplo Fictício",
+          "title": "Cliente pede canetas azuis mas esquece de informar a marca",
+          "body": "A resposta correta solicita a marca específica antes de confirmar preço e prazo de entrega fictícios."
         },
         {
-          "layout": "decision",
-          "labels": [
-            "Tabela simples",
-            "Versões",
-            "Diferenças"
-          ]
-        },
-        {
-          "layout": "decision",
-          "labels": [
-            "Versão em uso",
-            "Teste em andamento",
-            "Próximo passo"
-          ]
+          "eyebrow": "Ação Realizável",
+          "title": "Teste o fluxo revisado em uma etapa limitada e segura",
+          "body": "Escolha um único turno ou canal para aplicar o procedimento e observar ajustes necessários na prática."
         }
-      ]
+      ],
+      "caption": "Neste exercício hipotético, praticamos a revisão de rascunhos de atendimento em uma loja fictícia de materiais de escritório. A proposta é definir critérios de clareza, identificar informações ausentes e validar correções manualmente antes de qualquer automação.\n\nVocê já criou um checklist próprio para conferir respostas geradas por inteligência artificial? Acompanhe o perfil para mais exercícios práticos sobre aplicações empresariais seguras e úteis no dia a dia.",
+      "storySlide": {
+        "eyebrow": "Rotina Diária",
+        "title": "Você confere os rascunhos automáticos antes de responder?",
+        "body": "Veja no feed um exercício fictício para organizar essa revisão em atendimentos de lojas de escritório."
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
