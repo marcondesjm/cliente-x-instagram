@@ -13228,71 +13228,104 @@
       "createdAt": "2026-11-12T17:15:18.399Z"
     }
   ],
-  "checkedAt": "2026-11-12T17:15:20.187Z",
+  "checkedAt": "2026-11-12T17:15:44.267Z",
   "workflowRun": "43266516891",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "generate:fila-prioridade-v8",
-    "callId": "97f017d5-dcff-4d42-afd8-2a870f296ab1",
+    "stage": "art-direction:fila-prioridade-v8",
+    "callId": "8e0fae33-4a33-4eec-a8b7-901d463de45a",
     "value": {
-      "slides": [
+      "palette": "ocean",
+      "frames": [
         {
-          "eyebrow": "Exercício Fictício",
-          "title": "Como classificar pedidos de orçamento com critérios claros?",
-          "body": "Defina regras explícitas de prioridade antes de solicitar qualquer sugestão automática de classificação."
+          "labels": [
+            "Regras claras",
+            "Pedidos na mesa",
+            "Fila inicial"
+          ],
+          "layout": "workspace"
         },
         {
-          "eyebrow": "Contexto Hipotético",
-          "title": "Prestadora fictícia recebe múltiplos pedidos simultâneos",
-          "body": "Imagine uma empresa de serviços recebendo diversos orçamentos sem ordem definida de atendimento inicial."
+          "labels": [
+            "Pedidos juntos",
+            "Ordem indefinida",
+            "Mesa de triagem"
+          ],
+          "layout": "conversation"
         },
         {
-          "eyebrow": "Objetivo do Exercício",
-          "title": "Organizar a fila usando critérios objetivos e revisáveis",
-          "body": "Buscamos criar uma sequência lógica baseada em dados concretos e não em suposições vagas."
+          "labels": [
+            "Critérios claros",
+            "Fila revisável",
+            "Sequência lógica"
+          ],
+          "layout": "workflow"
         },
         {
-          "eyebrow": "Dados Necessários",
-          "title": "Prazo informado e tipo de solicitação são essenciais",
-          "body": "A classificação exige informações completas sobre urgência declarada e categoria específica do serviço."
+          "labels": [
+            "Prazo informado",
+            "Tipo de serviço",
+            "Dados completos"
+          ],
+          "layout": "checklist"
         },
         {
-          "eyebrow": "Procedimento Inicial",
-          "title": "Solicite à IA uma justificativa para cada classificação",
-          "body": "Peça que a ferramenta explique o motivo de cada posição sugerida na fila de atendimento."
+          "labels": [
+            "Sugestão da IA",
+            "Justificativa",
+            "Posição na fila"
+          ],
+          "layout": "decision"
         },
         {
-          "eyebrow": "Informação Ausente",
-          "title": "Trate dados faltantes como pendência e não como urgência",
-          "body": "Solicitações incompletas devem aguardar complementação antes de receberem qualquer prioridade automática."
+          "labels": [
+            "Dados faltantes",
+            "Pendência",
+            "Sem urgência"
+          ],
+          "layout": "workspace"
         },
         {
-          "eyebrow": "Conferência Humana",
-          "title": "Compare a justificativa gerada com seus critérios originais",
-          "body": "Valide se a explicação apresentada pela ferramenta respeita as regras definidas inicialmente pela equipe."
+          "labels": [
+            "Justificativa",
+            "Regras iniciais",
+            "Conferência humana"
+          ],
+          "layout": "conversation"
         },
         {
-          "eyebrow": "Erro a Evitar",
-          "title": "Não altere a fila baseando-se apenas em características pessoais",
-          "body": "Evite inferir urgência pelo tom da mensagem ou perfil do cliente sem dados objetivos."
+          "labels": [
+            "Tom da mensagem",
+            "Perfil pessoal",
+            "Manter fila"
+          ],
+          "layout": "workflow"
         },
         {
-          "eyebrow": "Exemplo Prático",
-          "title": "Pedido urgente sem prazo definido volta para triagem",
-          "body": "Uma solicitação marcada como prioritária mas sem data retorna ao início para esclarecimento."
+          "labels": [
+            "Pedido urgente",
+            "Prazo ausente",
+            "Volta à triagem"
+          ],
+          "layout": "checklist"
         },
         {
-          "eyebrow": "Ação Realizável",
-          "title": "Revise casos ambíguos antes de mudar a ordem oficial",
-          "body": "Confira manualmente situações duvidosas para garantir coerência entre critérios e prática diária."
+          "labels": [
+            "Caso ambíguo",
+            "Revisão manual",
+            "Ordem oficial"
+          ],
+          "layout": "decision"
+        },
+        {
+          "labels": [
+            "Pergunta em foco",
+            "Fila ao redor",
+            "Escolha manual"
+          ],
+          "layout": "decision"
         }
-      ],
-      "caption": "Este exercício fictício mostra como organizar pedidos de orçamento definindo critérios explícitos antes de usar inteligência artificial. A situação hipotética ilustra a importância de validar justificativas e tratar informações ausentes sem pressa.\n\nVocê já definiu regras claras para classificar solicitações na sua empresa? Acompanhe o perfil para aprender aplicações práticas de IA em negócios.",
-      "storySlide": {
-        "eyebrow": "Rotina Diária",
-        "title": "Como você decide qual pedido atender primeiro?",
-        "body": "Veja no feed um exercício fictício sobre classificação de orçamentos com critérios claros e revisão humana."
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
