@@ -13664,71 +13664,104 @@
       "createdAt": "2026-11-12T17:24:03.330Z"
     }
   ],
-  "checkedAt": "2026-11-12T17:24:05.161Z",
+  "checkedAt": "2026-11-12T17:24:29.393Z",
   "workflowRun": "43266516891",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "generate:resumo-transferencia-v8",
-    "callId": "13456ad3-6f3f-46bd-975d-b16dea5be982",
+    "stage": "art-direction:resumo-transferencia-v8",
+    "callId": "0b72acaa-1a87-4fbb-983f-e35c08a1a57e",
     "value": {
-      "slides": [
+      "palette": "ocean",
+      "frames": [
         {
-          "eyebrow": "Exercício Fictício",
-          "title": "Como organizar um pedido de orçamento antes de repassar?",
-          "body": "Imagine uma prestadora fictícia recebendo solicitações incompletas e veja como estruturar o repasse interno."
+          "layout": "workspace",
+          "labels": [
+            "Solicitação",
+            "Contexto",
+            "Pendências"
+          ]
         },
         {
-          "eyebrow": "Contexto do Exercício",
-          "title": "Cenário hipotético de atendimento comercial",
-          "body": "Uma empresa simulada recebe pedidos por mensagem e precisa transferir informações sem perder dados essenciais."
+          "layout": "conversation",
+          "labels": [
+            "Cliente",
+            "Resumo",
+            "Aguardando"
+          ]
         },
         {
-          "eyebrow": "Objetivo da Prática",
-          "title": "Separar fatos confirmados das pendências reais",
-          "body": "O exercício busca distinguir o que foi dito pelo cliente daquilo que ainda falta esclarecer."
+          "layout": "workflow",
+          "labels": [
+            "Extrair",
+            "Marcar",
+            "Encaminhar"
+          ]
         },
         {
-          "eyebrow": "Dados Necessários",
-          "title": "Informações mínimas para iniciar o orçamento",
-          "body": "Reúna escopo básico, prazo desejado e contato válido antes de encaminhar qualquer solicitação interna."
+          "layout": "checklist",
+          "labels": [
+            "Escopo",
+            "Prazo",
+            "Contato"
+          ]
         },
         {
-          "eyebrow": "Procedimento Inicial",
-          "title": "Extraia o pedido original do cliente",
-          "body": "Copie a solicitação exata enviada pelo cliente para preservar o contexto inicial da conversa fictícia."
+          "layout": "decision",
+          "labels": [
+            "Validar",
+            "Confirmar",
+            "Pendentes"
+          ]
         },
         {
-          "eyebrow": "Tratamento de Ausência",
-          "title": "Marque claramente cada informação pendente",
-          "body": "Identifique e sinalize os campos vazios para evitar que a equipe assuma dados não confirmados."
+          "layout": "workspace",
+          "labels": [
+            "Solicitação",
+            "Contexto",
+            "Pendências"
+          ]
         },
         {
-          "eyebrow": "Conferência Humana",
-          "title": "Valide o resumo contra a conversa original",
-          "body": "Compare o texto estruturado com o histórico para assegurar fidelidade total ao pedido fictício."
+          "layout": "conversation",
+          "labels": [
+            "Cliente",
+            "Resumo",
+            "Aguardando"
+          ]
         },
         {
-          "eyebrow": "Erro a Evitar",
-          "title": "Nunca invente detalhes para completar lacunas",
-          "body": "Preencher espaços vazios com suposições compromete a qualidade do atendimento e gera retrabalho futuro."
+          "layout": "workflow",
+          "labels": [
+            "Extrair",
+            "Marcar",
+            "Encaminhar"
+          ]
         },
         {
-          "eyebrow": "Exemplo Fictício",
-          "title": "Resumo separado em pedido e pendências",
-          "body": "Cliente pediu reforma de sala comercial mas não informou metragem nem prazo desejado para execução."
+          "layout": "checklist",
+          "labels": [
+            "Escopo",
+            "Prazo",
+            "Contato"
+          ]
         },
         {
-          "eyebrow": "Ação Realizável",
-          "title": "Encaminhe apenas o contexto necessário agora",
-          "body": "Envie à próxima pessoa somente as informações validadas e liste as pendências para resolução posterior."
+          "layout": "decision",
+          "labels": [
+            "Validar",
+            "Confirmar",
+            "Pendentes"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Decisão",
+            "Encaminhar",
+            "Pendentes"
+          ]
         }
-      ],
-      "caption": "Este exercício fictício ensina a separar pedidos confirmados de informações pendentes antes de repassar demandas internas na sua empresa. A prática evita suposições e mantém a qualidade do atendimento mesmo com dados incompletos.\n\nComo você organiza hoje as solicitações que chegam sem todas as informações necessárias? Acompanhe o perfil para aprender aplicações práticas de inteligência artificial em rotinas empresariais reais.",
-      "storySlide": {
-        "eyebrow": "Rotina Diária",
-        "title": "Você sabe lidar com pedidos incompletos?",
-        "body": "Veja no feed um exercício fictício sobre como organizar solicitações antes de repassar para outra pessoa."
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
