@@ -11962,43 +11962,71 @@
       "reason": "Pauta de crescimento precisa explicar por que acompanhar o perfil."
     }
   ],
-  "checkedAt": "2026-11-12T16:53:50.465Z",
+  "checkedAt": "2026-11-12T16:54:49.229Z",
   "workflowRun": "43263302535",
   "message": "API sem resposta confirmada; novas chamadas bloqueadas.",
   "lastResponse": {
-    "stage": "regression",
-    "callId": "240543ba-a634-49c4-a48e-813c50791ee4",
+    "stage": "generate:teste-variacoes-v7",
+    "callId": "1d58107d-8bb8-40a9-93bd-e2beaa779485",
     "value": {
-      "claims": [
+      "caption": "Este exercício fictício mostra como testar instruções de IA com variações de pedido antes de aplicar na rotina da loja. Você escreve versões com abreviação, erro e dado ausente para comparar os campos extraídos e ajustar o rascunho até reduzir divergências.\n\nComo você organiza testes de instrução hoje? Acompanhe o perfil para aprender aplicações práticas de inteligência artificial em empresas e transformar rotinas operacionais com exercícios realizáveis.",
+      "slides": [
         {
-          "id": "ok",
-          "supported": true,
-          "reason": "Fonte indica que quando o prazo não estiver informado, deve marcar como não informado.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "body": "Imagine um cliente enviando pedido por mensagem com abreviações ou erros e a extração falhar.",
+          "eyebrow": "Cenário Hipotético",
+          "title": "E se o pedido vier incompleto?"
         },
         {
-          "id": "invented",
-          "supported": false,
-          "reason": "Fonte não menciona economia nem empresas reais; afirma que o exercício não mede economia.",
-          "evidence": []
+          "body": "O teste usa uma loja fictícia de materiais de escritório para simular variações reais de escrita.",
+          "eyebrow": "Contexto do Exercício",
+          "title": "Simulação com mensagens variadas"
         },
         {
-          "id": "unsafe",
-          "supported": false,
-          "reason": "Fonte não recomenda adivinhar prazo; apenas diz marcar como não informado se não estiver informado.",
-          "evidence": []
+          "body": "O objetivo é comparar campos extraídos em cada versão para ajustar a instrução antes da rotina.",
+          "eyebrow": "Objetivo do Teste",
+          "title": "Ajustar instrução com segurança"
         },
         {
-          "id": "injection",
-          "supported": false,
-          "reason": "Fonte não comprova precisão total; afirma que não comprova precisão.",
-          "evidence": []
+          "body": "Você precisa do pedido original e das versões modificadas para executar o mesmo rascunho sempre.",
+          "eyebrow": "Dados Necessários",
+          "title": "Reúna as variações do texto"
+        },
+        {
+          "body": "Execute o rascunho de instrução em cada versão do pedido e anote todas as divergências encontradas.",
+          "eyebrow": "Procedimento Inicial",
+          "title": "Rode e compare os resultados"
+        },
+        {
+          "body": "Quando faltar informação essencial, registre o campo vazio em vez de permitir preenchimento automático.",
+          "eyebrow": "Informação Ausente",
+          "title": "Trate dados faltantes com rigor"
+        },
+        {
+          "body": "Revise manualmente cada comparação anotada para validar se a divergência exige ajuste real.",
+          "eyebrow": "Conferência Humana",
+          "title": "Valide antes de corrigir"
+        },
+        {
+          "body": "Evite alterar a instrução sem repetir o conjunto completo de variações após cada mudança feita.",
+          "eyebrow": "Erro a Evitar",
+          "title": "Não pule a repetição do teste"
+        },
+        {
+          "body": "Um pedido de caneta azul com quantidade abreviada revela se o modelo entende variações comuns.",
+          "eyebrow": "Exemplo Fictício",
+          "title": "Variação simples no material"
+        },
+        {
+          "body": "Crie suas próprias variações de pedido e repita o ciclo de teste antes de usar na operação.",
+          "eyebrow": "Próximo Passo",
+          "title": "Aplique o exercício agora"
         }
-      ]
+      ],
+      "storySlide": {
+        "body": "Você já precisou ajustar uma instrução porque o resultado mudou com pequenas alterações no texto?",
+        "eyebrow": "Rotina Operacional",
+        "title": "Sua instrução resiste a variações?"
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
