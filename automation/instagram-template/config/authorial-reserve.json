@@ -13850,104 +13850,71 @@
       "reason": "Render autoral falhou: Slide 6 rejeitado: diagrama autoral duplicado.\n"
     }
   ],
-  "checkedAt": "2026-11-12T17:47:53.033Z",
+  "checkedAt": "2026-11-12T17:48:30.439Z",
   "workflowRun": "43272966524",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "art-direction:resumo-transferencia-v8",
-    "callId": "0b72acaa-1a87-4fbb-983f-e35c08a1a57e",
+    "stage": "generate:extracao-campos-v9",
+    "callId": "e4670b2e-1373-49de-94ea-e91ee6dddc95",
     "value": {
-      "palette": "ocean",
-      "frames": [
+      "slides": [
         {
-          "layout": "workspace",
-          "labels": [
-            "Solicitação",
-            "Contexto",
-            "Pendências"
-          ]
+          "eyebrow": "Exercício Fictício",
+          "title": "Como organizar pedidos incompletos recebidos por mensagem?",
+          "body": "Imagine uma distribuidora fictícia recebendo solicitações comerciais vagas e sem dados essenciais para cadastro."
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Cliente",
-            "Resumo",
-            "Aguardando"
-          ]
+          "eyebrow": "Contexto",
+          "title": "O cenário hipotético da distribuidora sem dados reais",
+          "body": "Este exercício simula consultas internas e externas sem utilizar informações verdadeiras de clientes ou empresas."
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Extrair",
-            "Marcar",
-            "Encaminhar"
-          ]
+          "eyebrow": "Objetivo",
+          "title": "Estruturar informações preservando a mensagem original do solicitante",
+          "body": "A meta é extrair campos específicos mantendo a integridade dos dados fornecidos na conversa inicial."
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Escopo",
-            "Prazo",
-            "Contato"
-          ]
+          "eyebrow": "Dados Necessários",
+          "title": "Defina produto, quantidade e prazo antes de começar",
+          "body": "Estabeleça previamente quais variáveis são obrigatórias para transformar a mensagem em um registro estruturado."
         },
         {
-          "layout": "decision",
-          "labels": [
-            "Validar",
-            "Confirmar",
-            "Pendentes"
-          ]
+          "eyebrow": "Procedimento",
+          "title": "Solicite à IA uma tabela fiel ao texto recebido",
+          "body": "Peça que a ferramenta organize as informações extraídas exatamente como foram escritas pelo solicitante fictício."
         },
         {
-          "layout": "workspace",
-          "labels": [
-            "Solicitação",
-            "Contexto",
-            "Pendências"
-          ]
+          "eyebrow": "Informação Ausente",
+          "title": "Marque campos vazios sem tentar completar por suposição",
+          "body": "Registre explicitamente como não informado qualquer dado que não apareça claramente na mensagem original."
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Cliente",
-            "Resumo",
-            "Aguardando"
-          ]
+          "eyebrow": "Conferência Humana",
+          "title": "Compare cada campo preenchido com a mensagem original",
+          "body": "Verifique manualmente se a tabela gerada corresponde fielmente ao pedido antes de prosseguir com o cadastro."
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Extrair",
-            "Marcar",
-            "Encaminhar"
-          ]
+          "eyebrow": "Erro a Evitar",
+          "title": "Nunca aceite preenchimentos automáticos de dados faltantes",
+          "body": "Evite que a inteligência artificial invente prazos ou quantidades quando o solicitante esquecer de informá-los."
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Escopo",
-            "Prazo",
-            "Contato"
-          ]
+          "eyebrow": "Exemplo Fictício",
+          "title": "Pedido de parafusos sem prazo definido na mensagem",
+          "body": "A tabela mostra o item e a quantidade corretos, mas indica ausência clara do prazo de entrega solicitado."
         },
         {
-          "layout": "decision",
-          "labels": [
-            "Validar",
-            "Confirmar",
-            "Pendentes"
-          ]
-        },
-        {
-          "layout": "decision",
-          "labels": [
-            "Decisão",
-            "Encaminhar",
-            "Pendentes"
-          ]
+          "eyebrow": "Conclusão",
+          "title": "Revise sempre a extração antes de registrar o pedido",
+          "body": "Adote a conferência humana como etapa obrigatória para manter a confiabilidade dos cadastros comerciais diários."
         }
-      ]
+      ],
+      "caption": "Este exercício fictício ensina a estruturar pedidos vagos usando inteligência artificial sem inventar dados ausentes. A prática envolve definir campos obrigatórios, solicitar tabelas fiéis e marcar lacunas explicitamente antes de qualquer cadastro comercial.\n\nVocê já precisou devolver uma solicitação porque faltavam informações essenciais? Acompanhe o perfil para aprender aplicações práticas de inteligência artificial em rotinas empresariais reais.",
+      "storySlide": {
+        "eyebrow": "Rotina Comercial",
+        "title": "Sua equipe devolve pedidos por falta de informação?",
+        "body": "Confira no feed um exercício fictício sobre organização de solicitações comerciais incompletas com inteligência artificial."
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
