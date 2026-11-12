@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import {usesProviderQuota} from '../lib/editorial-daily-budget.js';
 import {persistState} from './persist-instagram-state.mjs';
 import {recoveryPlan} from '../lib/authorial-recovery.js';
 import {isAuthorialShortage} from '../lib/authorial-recovery.js';
@@ -15,9 +16,16 @@ function releaseExpiredProviderBlock(budget, now) {
  const dayInBrasilia = new Intl.DateTimeFormat('en-CA', {
   timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit'
  });
- // Keep uncertain calls in the ledger. Reopen only after their quota day ends.
- if (!Number.isFinite(completedAt) || completedAt >= now.getTime() ||
-     dayInBrasilia.format(completedAt) >= dayInBrasilia.format(now)) return false;
+ if (!Number.isFinite(completedAt) || completedAt >= now.getTime()) return false;
+ if (last.failureKind === 'local_validation') return false;
+
+ const today = dayInBrasilia.format(now);
+ if (dayInBrasilia.format(completedAt) === today) {
+  // The fixed plan can absorb one bounded retry while the failed call stays in the ledger.
+  if (!usesProviderQuota(budget) || now.getTime() - completedAt < 30 * 60_000) return false;
+  if (budget.authorialProviderRetryDay === today) return false;
+  budget.authorialProviderRetryDay = today;
+ }
 
  budget.circuit = null;
  return true;
