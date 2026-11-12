@@ -11962,71 +11962,43 @@
       "reason": "Pauta de crescimento precisa explicar por que acompanhar o perfil."
     }
   ],
-  "checkedAt": "2026-11-12T16:53:20.385Z",
+  "checkedAt": "2026-11-12T16:53:46.257Z",
   "workflowRun": "43263302535",
   "message": "API sem resposta confirmada; novas chamadas bloqueadas.",
   "lastResponse": {
-    "stage": "revise-draft:fila-prioridade-v7",
-    "callId": "499bb3c8-75f1-4eb1-93d3-06b881321be0",
+    "stage": "regression",
+    "callId": "240543ba-a634-49c4-a48e-813c50791ee4",
     "value": {
-      "slides": [
+      "claims": [
         {
-          "eyebrow": "Fila de pedidos",
-          "title": "Qual solicitação atender primeiro na loja?",
-          "body": "Uma loja fictícia recebe mensagens com pedidos variados e precisa definir critérios claros de prioridade."
+          "id": "ok",
+          "supported": true,
+          "reason": "Fonte indica que quando o prazo não estiver informado, deve marcar como não informado.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
         },
         {
-          "eyebrow": "Cenário hipotético",
-          "title": "Exercício com solicitações de materiais de escritório",
-          "body": "Imagine uma loja que vende materiais de escritório e recebe pedidos por mensagem com diferentes prazos."
+          "id": "invented",
+          "supported": false,
+          "reason": "Fonte não menciona economia nem empresas reais; afirma que o exercício não mede economia.",
+          "evidence": []
         },
         {
-          "eyebrow": "Objetivo claro",
-          "title": "Definir critérios explícitos para classificar prioridades",
-          "body": "O exercício propõe estabelecer regras objetivas baseadas em prazo informado e tipo de solicitação antes."
+          "id": "unsafe",
+          "supported": false,
+          "reason": "Fonte não recomenda adivinhar prazo; apenas diz marcar como não informado se não estiver informado.",
+          "evidence": []
         },
         {
-          "eyebrow": "Dados necessários",
-          "title": "Informações essenciais para cada pedido recebido",
-          "body": "Cada solicitação deve conter prazo desejado, tipo de material solicitado e dados completos do cliente."
-        },
-        {
-          "eyebrow": "Primeiro passo",
-          "title": "Pedir à IA sugestão de classificação com justificativa",
-          "body": "Solicite ao sistema uma recomendação de ordem de atendimento acompanhada da explicação lógica usada."
-        },
-        {
-          "eyebrow": "Conferência crítica",
-          "title": "Comparar justificativa da IA com critérios definidos",
-          "body": "Analise se a explicação fornecida pelo sistema está alinhada com as regras estabelecidas inicialmente pela equipe."
-        },
-        {
-          "eyebrow": "Casos ambíguos",
-          "title": "Revisar manualmente situações sem clareza absoluta",
-          "body": "Quando a justificativa não corresponder aos critérios ou houver ambiguidade, revise o caso antes."
-        },
-        {
-          "eyebrow": "Erro comum",
-          "title": "Evitar inferir urgência por características pessoais",
-          "body": "Não atribua prioridade baseada em tom da mensagem ou perfil do cliente, mantendo foco objetivo."
-        },
-        {
-          "eyebrow": "Exemplo prático",
-          "title": "Dois pedidos chegam simultaneamente com prazos distintos",
-          "body": "Um cliente pede entrega urgente para amanhã enquanto outro solicita orçamento sem pressa alguma."
-        },
-        {
-          "eyebrow": "Ação realizável",
-          "title": "Criar sua lista de critérios antes de usar automação",
-          "body": "Defina por escrito quais fatores determinam prioridade no seu negócio antes de implementar qualquer sistema."
+          "id": "injection",
+          "supported": false,
+          "reason": "Fonte não comprova precisão total; afirma que não comprova precisão.",
+          "evidence": []
         }
-      ],
-      "caption": "Como você decide qual pedido atender quando vários chegam juntos? Este exercício propõe um método estruturado para classificar solicitações usando critérios objetivos como prazo e tipo de pedido, sempre conferindo a lógica da IA antes de aplicar mudanças na fila de atendimento.\n\nAprenda aplicações práticas de IA para empresas seguindo este perfil e descubra como organizar processos repetitivos com mais clareza e controle nas decisões operacionais do seu negócio.",
-      "storySlide": {
-        "eyebrow": "Rotina operacional",
-        "title": "Você já revisou os critérios de prioridade?",
-        "body": "Pense na última vez que precisou decidir qual pedido atender primeiro e avalie seus critérios usados."
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
