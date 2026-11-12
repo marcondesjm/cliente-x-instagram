@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..600&family=Instrument+Serif:ital@1&display=swap");
+
+.mjm-tipografia {
+  --mjm-fonte-principal: "Bricolage Grotesque", system-ui, sans-serif;
+  --mjm-fonte-destaque: "Instrument Serif", Georgia, serif;
+
+  font-family: var(--mjm-fonte-principal);
+  font-optical-sizing: auto;
+  font-weight: 400;
+}
+
+.mjm-tipografia .mjm-titulo {
+  font-weight: 500;
+}
+
+.mjm-tipografia .mjm-subtitulo,
+.mjm-tipografia .mjm-botao {
+  font-family: var(--mjm-fonte-principal);
+  font-weight: 600;
+}
+
+.mjm-tipografia .mjm-destaque {
+  font-family: var(--mjm-fonte-destaque);
+  font-style: italic;
+  font-weight: 400;
+}
