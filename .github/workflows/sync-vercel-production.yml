@@ -1,0 +1,44 @@
+name: Sync Vercel production branch
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Pushes made by GITHUB_TOKEN do not start push workflows.
+    - cron: '7,22,37,52 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-vercel-production-branch
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+      - name: Sync changes required by production
+        shell: bash
+        run: |
+          git fetch --prune origin '+refs/heads/*:refs/remotes/origin/*'
+          if git show-ref --verify --quiet refs/remotes/origin/vercel-production; then
+            deployed=origin/vercel-production
+            git diff --quiet "$deployed" origin/main -- . \
+              ':(exclude)automation/instagram-template/config/authorial-reserve.json' \
+              ':(exclude)automation/instagram-template/config/editorial-api-validation.json' \
+              ':(exclude)automation/instagram-template/config/published-slots.json' \
+              ':(exclude)automation/instagram-template/config/publication-history.json' \
+              ':(exclude)automation/instagram-template/config/watchdog-errors.json' \
+              ':(exclude)automation/instagram-template/runs/**' || result=$?
+            case "${result:-0}" in
+              0) echo 'Only operational records changed.'; exit 0 ;;
+              1) ;;
+              *) exit "$result" ;;
+            esac
+          fi
+          git push origin refs/remotes/origin/main:refs/heads/vercel-production
