@@ -10,8 +10,14 @@ assert.deepEqual(partial.slideImagePaths,['/photo-0.jpg',null,null]);
 const repeated = assertVisualAgentPlan(pack,buildVisualAgentPlan(pack,[sources[0],sources[0],sources[2]]));
 assert.equal(repeated.approvedVisuals,2);
 assert.equal(new Set(repeated.slideImagePaths.filter(Boolean)).size,2);
-for (const photos of [[],sources.map(s=>({...s,reusedRelevantImage:true})),sources.map(s=>({...s,sourceUrl:'https://example.com/unrelated'}))]) {
-  assert.throws(()=>assertVisualAgentPlan(pack,buildVisualAgentPlan(pack,photos)),/foto real da matéria/);
+const noPhotos = assertVisualAgentPlan(pack, buildVisualAgentPlan(pack, []));
+assert.equal(noPhotos.status, 'typographic-fallback');
+assert.equal(noPhotos.approvedVisuals, 0);
+assert.deepEqual(noPhotos.slideImagePaths, [null, null, null]);
+for (const photos of [sources.map(s=>({...s,reusedRelevantImage:true})),sources.map(s=>({...s,sourceUrl:'https://example.com/unrelated'}))]) {
+  const plan = assertVisualAgentPlan(pack, buildVisualAgentPlan(pack, photos));
+  assert.equal(plan.approvedVisuals, 0);
+  assert.equal(plan.status, 'typographic-fallback');
 }
 assert.doesNotThrow(()=>assertVisualAgentPlan({slides:[{}]},buildVisualAgentPlan({slides:[{}]})));
 console.log('Visual plan: relevant cover required; extra distinct photos accepted; typographic fallback used without repetition.');
