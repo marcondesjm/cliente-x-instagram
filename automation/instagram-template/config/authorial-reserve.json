@@ -13012,71 +13012,104 @@
       "createdAt": "2026-11-12T17:13:09.758Z"
     }
   ],
-  "checkedAt": "2026-11-12T17:13:11.791Z",
+  "checkedAt": "2026-11-12T17:13:53.399Z",
   "workflowRun": "43266516891",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "generate:base-respostas-v8",
-    "callId": "7e892d43-cd34-4a9a-9e1a-a3c64f2e43cc",
+    "stage": "art-direction:base-respostas-v8",
+    "callId": "b18c20c9-dfd3-483b-add1-da54547ac226",
     "value": {
-      "caption": "Neste exercício fictício, uma prestadora de serviços usa IA para rascunhar orçamentos com base em política interna revisada. O modelo deve citar o trecho exato da fonte e a conferência humana valida se a referência existe mesmo no documento original antes do envio.\n\nQuando a resposta não aparece na política, marque a dúvida para revisão manual em vez de aceitar a geração automática. Você já organizou um fluxo assim na sua empresa? Acompanhe o perfil para mais aplicações práticas de IA em negócios.",
-      "slides": [
+      "palette": "ocean",
+      "frames": [
         {
-          "body": "Imagine uma prestadora fictícia que precisa responder pedidos de orçamento usando apenas sua política comercial interna como fonte.",
-          "eyebrow": "Cenário Hipotético",
-          "title": "Como validar respostas de IA em orçamentos comerciais?"
+          "layout": "workspace",
+          "labels": [
+            "Orçamento",
+            "Política interna",
+            "Rascunho IA"
+          ]
         },
         {
-          "body": "Este exercício educativo mostra um método de conferência para rascunhos gerados por inteligência artificial em rotinas comerciais.",
-          "eyebrow": "Contexto do Exercício",
-          "title": "Entenda o cenário deste exercício educativo autoral"
+          "layout": "conversation",
+          "labels": [
+            "Equipe",
+            "Briefing",
+            "Fonte única"
+          ]
         },
         {
-          "body": "O objetivo é treinar a conferência de citações geradas pela IA contra a fonte original antes de qualquer envio ao cliente.",
-          "eyebrow": "Objetivo Prático",
-          "title": "Conferir a origem da resposta antes do envio"
+          "layout": "workflow",
+          "labels": [
+            "Rascunho",
+            "Trecho citado",
+            "Conferência"
+          ]
         },
         {
-          "body": "Mantenha uma lista atualizada de respostas aprovadas com fonte clara e data de revisão para usar como base exclusiva.",
-          "eyebrow": "Dados Necessários",
-          "title": "Organize a política comercial como fonte única"
+          "layout": "checklist",
+          "labels": [
+            "Lista aprovada",
+            "Data revisão",
+            "Fonte documentada"
+          ]
         },
         {
-          "body": "Solicite um rascunho baseado apenas na política e exija que a IA indique o trecho exato usado para cada resposta.",
-          "eyebrow": "Procedimento Inicial",
-          "title": "Peça o rascunho com citação do trecho usado"
+          "layout": "decision",
+          "labels": [
+            "Pedido orçamento",
+            "Rascunho trecho",
+            "Política comercial"
+          ]
         },
         {
-          "body": "Leia o documento original para confirmar se o trecho citado realmente existe e corresponde à resposta gerada pelo modelo.",
-          "eyebrow": "Validação Humana",
-          "title": "Verifique a citação diretamente na fonte original"
+          "layout": "workspace",
+          "labels": [
+            "Documento original",
+            "Trecho verificado",
+            "Resposta cliente"
+          ]
         },
         {
-          "body": "Marque a dúvida para revisão humana quando a resposta não estiver na política ou a citação não for localizada na fonte.",
-          "eyebrow": "Informação Ausente",
-          "title": "Encaminhe para revisão quando a fonte faltar"
+          "layout": "conversation",
+          "labels": [
+            "Dúvida marcada",
+            "Revisão humana",
+            "Fonte ausente"
+          ]
         },
         {
-          "body": "Evite confiar apenas na citação gerada pela IA sem verificar o documento original, pois o texto pode parecer correto mas ser inexistente.",
-          "eyebrow": "Erro a Evitar",
-          "title": "Não aceite a citação sem conferência direta"
+          "layout": "workflow",
+          "labels": [
+            "Citação gerada",
+            "Verificação direta",
+            "Erro identificado"
+          ]
         },
         {
-          "body": "No exemplo fictício, o rascunho menciona prazo especial, mas a verificação mostra que esse trecho não existe na política vigente.",
-          "eyebrow": "Exemplo Fictício",
-          "title": "Veja como identificar uma citação inexistente"
+          "layout": "checklist",
+          "labels": [
+            "Prazo especial",
+            "Trecho inexistente",
+            "Política vigente"
+          ]
         },
         {
-          "body": "Adote este fluxo de conferência em sua rotina comercial para revisar rascunhos de IA com base em fontes internas documentadas.",
-          "eyebrow": "Ação Realizável",
-          "title": "Aplique a conferência de fonte na sua operação"
+          "layout": "decision",
+          "labels": [
+            "Rotina comercial",
+            "Conferência fonte",
+            "Resposta final"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Validação fonte",
+            "Rascunho IA",
+            "Resposta cliente"
+          ]
         }
-      ],
-      "storySlide": {
-        "body": "Sua equipe confere a fonte original antes de enviar respostas comerciais geradas por inteligência artificial aos clientes?",
-        "eyebrow": "Rotina Comercial",
-        "title": "Como você valida rascunhos de IA hoje?"
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
