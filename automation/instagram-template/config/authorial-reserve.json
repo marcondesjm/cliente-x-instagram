@@ -13444,61 +13444,88 @@
       "createdAt": "2026-11-12T17:17:01.851Z"
     }
   ],
-  "checkedAt": "2026-11-12T17:17:03.449Z",
+  "checkedAt": "2026-11-12T17:17:56.555Z",
   "workflowRun": "43266516891",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "generate:teste-variacoes-v8",
-    "callId": "8d955c6e-6bc3-4a7f-b02b-aa28eb73ecad",
+    "stage": "art-direction:teste-variacoes-v8",
+    "callId": "0927b888-77b2-415a-bf67-78b8a3ac0fd6",
     "value": {
-      "caption": "Este exercício fictício mostra como testar instruções de IA com variações de pedidos antes de adotar na rotina empresarial. A prestadora hipotética de serviços cria versões com abreviação, erro e dado ausente para comparar extrações e ajustar o rascunho de instrução sem prometer precisão absoluta.\n\nVocê já comparou saídas da IA com entradas diferentes para identificar falhas na instrução? Acompanhe o perfil para aprender aplicações práticas de inteligência artificial em empresas e organizar rotinas com mais clareza no dia a dia.",
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "body": "Imagine um pedido fictício com abreviação ou erro de digitação chegando ao atendimento da sua empresa hoje.",
-          "eyebrow": "Cenário Hipotético",
-          "title": "E se o pedido do cliente vier incompleto ou com erros?"
+          "layout": "workspace",
+          "labels": [
+            "Pedido incompleto",
+            "Erro de digitação",
+            "Tela de atendimento"
+          ]
         },
         {
-          "body": "Uma prestadora fictícia de serviços recebe orçamentos variados e precisa extrair dados padronizados para responder.",
-          "eyebrow": "Contexto do Exercício",
-          "title": "Entenda o cenário proposto para este teste educativo"
+          "layout": "conversation",
+          "labels": [
+            "Orçamento variado",
+            "Extração de dados",
+            "Resposta padronizada"
+          ]
         },
         {
-          "body": "O objetivo é comparar campos extraídos em versões distintas para anotar divergências e corrigir a instrução inicial.",
-          "eyebrow": "Objetivo do Teste",
-          "title": "Ajustar a instrução antes de usar na rotina diária"
+          "layout": "workflow",
+          "labels": [
+            "Comparar campos",
+            "Anotar divergência",
+            "Corrigir instrução"
+          ]
         },
         {
-          "body": "Escreva um pedido base e crie versões com abreviação, erro de digitação e informação essencial totalmente ausente.",
-          "eyebrow": "Dados Necessários",
-          "title": "Prepare as variações do pedido fictício para teste"
+          "layout": "checklist",
+          "labels": [
+            "Pedido base",
+            "Versão abreviada",
+            "Info ausente"
+          ]
         },
         {
-          "body": "Execute o mesmo rascunho de instrução em cada versão do pedido e registre os campos extraídos pela ferramenta.",
-          "eyebrow": "Procedimento Inicial",
-          "title": "Rode a instrução original em todas as variações"
+          "layout": "decision",
+          "labels": [
+            "Mesma instrução",
+            "Campos extraídos",
+            "Registro de teste"
+          ]
         },
         {
-          "body": "Anote cada divergência entre os resultados obtidos e identifique quais campos falharam nas versões alteradas do texto.",
-          "eyebrow": "Comparação de Saídas",
-          "title": "Mapeie onde a extração perdeu dados relevantes"
+          "layout": "workspace",
+          "labels": [
+            "Mapear falhas",
+            "Dados perdidos",
+            "Revisão de saída"
+          ]
         },
         {
-          "body": "Defina como a ferramenta deve sinalizar informações ausentes em vez de preencher lacunas com suposições não solicitadas.",
-          "eyebrow": "Informação Ausente",
-          "title": "Estabeleça regras claras para dados faltantes"
+          "layout": "conversation",
+          "labels": [
+            "Sinalizar ausência",
+            "Evitar suposição",
+            "Regra clara"
+          ]
         },
         {
-          "body": "Revise manualmente os campos extraídos e valide se a correção da instrução resolveu as falhas mapeadas anteriormente.",
-          "eyebrow": "Conferência Humana",
-          "title": "Valide o ajuste antes de aplicar na operação real"
+          "layout": "workflow",
+          "labels": [
+            "Revisão manual",
+            "Validar correção",
+            "Teste educativo"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Equipe em análise",
+            "Instrução sob teste",
+            "Validação humana"
+          ]
         }
-      ],
-      "storySlide": {
-        "body": "Sua equipe sabe identificar quando a instrução falha ao processar pedidos com erros ou dados incompletos?",
-        "eyebrow": "Rotina de Testes",
-        "title": "Como você valida instruções de IA hoje?"
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
