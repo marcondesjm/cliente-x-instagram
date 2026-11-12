@@ -12571,104 +12571,71 @@
       "reason": "Render autoral falhou: Slide 6 rejeitado: fotografia repetida ou visualmente semelhante a outro cartão/cena.\n"
     }
   ],
-  "checkedAt": "2026-11-12T17:03:22.582Z",
+  "checkedAt": "2026-11-12T17:04:18.687Z",
   "workflowRun": "43265059449",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "art-direction:medicao-rascunho-v7",
-    "callId": "fe831899-5cde-4d20-8979-57bf14087e77",
+    "stage": "generate:resumo-transferencia-v7",
+    "callId": "f95a890d-b40d-4f9d-9b97-69d4a9913f5b",
     "value": {
-      "palette": "orchid",
-      "frames": [
+      "slides": [
         {
-          "layout": "workspace",
-          "labels": [
-            "Review AI",
-            "Check drafts",
-            "Fictitious store"
-          ]
+          "eyebrow": "Exercício Fictício",
+          "title": "Como organizar um pedido incompleto recebido por mensagem?",
+          "body": "Este exercício hipotético ensina a separar informações confirmadas das pendências em atendimentos por texto."
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Fictitious store",
-            "Incomplete orders",
-            "Confirm items"
-          ]
+          "eyebrow": "Contexto",
+          "title": "Cenário de loja fictícia de materiais de escritório",
+          "body": "Imagine uma loja fictícia recebendo pedidos confusos por mensagem e precisando repassar dados claros ao atendente."
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Define criteria",
-            "Validate responses",
-            "Establish rules"
-          ]
+          "eyebrow": "Objetivo",
+          "title": "Estruturar resumo antes de transferir o atendimento",
+          "body": "O foco é criar um resumo organizado que destaque apenas o contexto necessário para quem continuará o atendimento."
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Collect messages",
-            "Update catalogs",
-            "Separate examples"
-          ]
+          "eyebrow": "Dados Necessários",
+          "title": "Identificar itens, quantidades e prazos na conversa",
+          "body": "Extraia da mensagem fictícia os produtos solicitados, as quantidades desejadas e qualquer prazo mencionado pelo cliente."
         },
         {
-          "layout": "decision",
-          "labels": [
-            "Compare draft",
-            "Match criteria",
-            "Mark off‑tone"
-          ]
+          "eyebrow": "Procedimento",
+          "title": "Separar pedido confirmado das informações pendentes",
+          "body": "Divida o resumo em duas listas distintas para visualizar rapidamente o que está claro e o que falta confirmar."
         },
         {
-          "layout": "workspace",
-          "labels": [
-            "Signal missing",
-            "Avoid auto‑fill",
-            "Note gaps"
-          ]
+          "eyebrow": "Informação Ausente",
+          "title": "Marcar como pendente tudo que não foi informado",
+          "body": "Registre explicitamente cada dado faltante sem inventar detalhes ou supor preferências do cliente fictício."
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Human review",
-            "Validate corrections",
-            "Approve flow"
-          ]
+          "eyebrow": "Conferência Humana",
+          "title": "Revisar o resumo contra a conversa original",
+          "body": "Compare ponto a ponto o resumo gerado com a mensagem inicial para assegurar fidelidade total às informações."
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Avoid releasing",
-            "Prevent bugs",
-            "Delay automation"
-          ]
+          "eyebrow": "Erro a Evitar",
+          "title": "Nunca preencher lacunas com suposições automáticas",
+          "body": "Evite completar dados ausentes com base em padrões anteriores pois isso gera retrabalho e frustração no atendimento."
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Ask for brand",
-            "Confirm fictitious",
-            "Blue pens request"
-          ]
+          "eyebrow": "Exemplo Fictício",
+          "title": "Cliente pede canetas mas esquece de informar cor",
+          "body": "O resumo lista canetas azuis como confirmadas e marca a cor dos marcadores como pendente até nova confirmação."
         },
         {
-          "layout": "decision",
-          "labels": [
-            "Test revised flow",
-            "Limited safe step",
-            "Observe adjustments"
-          ]
-        },
-        {
-          "layout": "decision",
-          "labels": [
-            "Daily routine",
-            "Check drafts",
-            "Organize review"
-          ]
+          "eyebrow": "Conclusão",
+          "title": "Encaminhar apenas o contexto validado ao próximo atendente",
+          "body": "Transfira o atendimento com o resumo revisado para que o colega inicie já sabendo exatamente o que falta resolver."
         }
-      ]
+      ],
+      "caption": "Este exercício fictício mostra como estruturar pedidos incompletos recebidos por mensagem em uma loja de materiais de escritório. A prática consiste em separar dados confirmados de pendências, revisar contra a conversa original e encaminhar apenas o contexto válido ao próximo atendente.\n\nVocê já precisou reabrir conversas antigas porque o resumo estava confuso? Acompanhe o perfil para aprender aplicações práticas de inteligência artificial na rotina empresarial e melhorar a organização do seu atendimento diário.",
+      "storySlide": {
+        "eyebrow": "Rotina",
+        "title": "Como você organiza pedidos incompletos hoje?",
+        "body": "Veja no feed um exercício fictício sobre estruturar resumos de atendimento sem perder informações essenciais da conversa."
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
