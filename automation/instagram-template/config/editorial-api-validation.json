@@ -20,7 +20,7 @@
     },
     "quotaMode": "provider"
   },
-  "circuit": null,
+  "circuit": "provider_response_unconfirmed",
   "calls": [
     {
       "id": "ac092fea-7563-4b58-a6b6-4e3b6913fe8f",
@@ -2578,9 +2578,12 @@
       "id": "1bac1794-3334-47a1-b094-fcf86f05c064",
       "day": "2026-11-12",
       "stage": "authorial:review:pedido-duplicado-v9",
-      "status": "reserved",
+      "status": "failed",
       "startedAt": "2026-11-12T18:59:50.561Z",
-      "promptFingerprint": "afc5c26bf4bd84b8ee28e58db57e53d7089e80abf51fb874defdf627835135e2"
+      "promptFingerprint": "afc5c26bf4bd84b8ee28e58db57e53d7089e80abf51fb874defdf627835135e2",
+      "completedAt": "2026-11-12T19:02:52.263Z",
+      "httpStatus": null,
+      "failureKind": "timeout"
     }
   ],
   "entries": [
