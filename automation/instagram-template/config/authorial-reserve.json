@@ -12588,71 +12588,104 @@
       "createdAt": "2026-11-12T17:04:20.840Z"
     }
   ],
-  "checkedAt": "2026-11-12T17:04:22.893Z",
+  "checkedAt": "2026-11-12T17:05:14.013Z",
   "workflowRun": "43265059449",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "generate:resumo-transferencia-v7",
-    "callId": "f95a890d-b40d-4f9d-9b97-69d4a9913f5b",
+    "stage": "art-direction:resumo-transferencia-v7",
+    "callId": "9169f62b-d76f-43a0-b274-2ed9f14fd665",
     "value": {
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "eyebrow": "Exercício Fictício",
-          "title": "Como organizar um pedido incompleto recebido por mensagem?",
-          "body": "Este exercício hipotético ensina a separar informações confirmadas das pendências em atendimentos por texto."
+          "layout": "workspace",
+          "labels": [
+            "Pedido por mensagem",
+            "Resumo estruturado",
+            "Contexto claro"
+          ]
         },
         {
-          "eyebrow": "Contexto",
-          "title": "Cenário de loja fictícia de materiais de escritório",
-          "body": "Imagine uma loja fictícia recebendo pedidos confusos por mensagem e precisando repassar dados claros ao atendente."
+          "layout": "conversation",
+          "labels": [
+            "Mensagem do cliente",
+            "Itens solicitados",
+            "Prazo citado"
+          ]
         },
         {
-          "eyebrow": "Objetivo",
-          "title": "Estruturar resumo antes de transferir o atendimento",
-          "body": "O foco é criar um resumo organizado que destaque apenas o contexto necessário para quem continuará o atendimento."
+          "layout": "workflow",
+          "labels": [
+            "Separar confirmados",
+            "Listar pendências",
+            "Organizar resumo"
+          ]
         },
         {
-          "eyebrow": "Dados Necessários",
-          "title": "Identificar itens, quantidades e prazos na conversa",
-          "body": "Extraia da mensagem fictícia os produtos solicitados, as quantidades desejadas e qualquer prazo mencionado pelo cliente."
+          "layout": "checklist",
+          "labels": [
+            "Produtos listados",
+            "Quantidades claras",
+            "Prazos definidos"
+          ]
         },
         {
-          "eyebrow": "Procedimento",
-          "title": "Separar pedido confirmado das informações pendentes",
-          "body": "Divida o resumo em duas listas distintas para visualizar rapidamente o que está claro e o que falta confirmar."
+          "layout": "decision",
+          "labels": [
+            "Dado informado",
+            "Campo vazio",
+            "Marcar pendente"
+          ]
         },
         {
-          "eyebrow": "Informação Ausente",
-          "title": "Marcar como pendente tudo que não foi informado",
-          "body": "Registre explicitamente cada dado faltante sem inventar detalhes ou supor preferências do cliente fictício."
+          "layout": "workspace",
+          "labels": [
+            "Lacuna explícita",
+            "Sem suposição",
+            "Registro fiel"
+          ]
         },
         {
-          "eyebrow": "Conferência Humana",
-          "title": "Revisar o resumo contra a conversa original",
-          "body": "Compare ponto a ponto o resumo gerado com a mensagem inicial para assegurar fidelidade total às informações."
+          "layout": "conversation",
+          "labels": [
+            "Conversa original",
+            "Resumo gerado",
+            "Conferência ponto a ponto"
+          ]
         },
         {
-          "eyebrow": "Erro a Evitar",
-          "title": "Nunca preencher lacunas com suposições automáticas",
-          "body": "Evite completar dados ausentes com base em padrões anteriores pois isso gera retrabalho e frustração no atendimento."
+          "layout": "workflow",
+          "labels": [
+            "Evitar atalhos",
+            "Não completar dados",
+            "Prevenir retrabalho"
+          ]
         },
         {
-          "eyebrow": "Exemplo Fictício",
-          "title": "Cliente pede canetas mas esquece de informar cor",
-          "body": "O resumo lista canetas azuis como confirmadas e marca a cor dos marcadores como pendente até nova confirmação."
+          "layout": "checklist",
+          "labels": [
+            "Canetas azuis",
+            "Cor pendente",
+            "Aguardar confirmação"
+          ]
         },
         {
-          "eyebrow": "Conclusão",
-          "title": "Encaminhar apenas o contexto validado ao próximo atendente",
-          "body": "Transfira o atendimento com o resumo revisado para que o colega inicie já sabendo exatamente o que falta resolver."
+          "layout": "decision",
+          "labels": [
+            "Resumo validado",
+            "Contexto seguro",
+            "Transferir atendimento"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Seu processo hoje",
+            "Exercício no feed",
+            "Prática segura"
+          ]
         }
-      ],
-      "caption": "Este exercício fictício mostra como estruturar pedidos incompletos recebidos por mensagem em uma loja de materiais de escritório. A prática consiste em separar dados confirmados de pendências, revisar contra a conversa original e encaminhar apenas o contexto válido ao próximo atendente.\n\nVocê já precisou reabrir conversas antigas porque o resumo estava confuso? Acompanhe o perfil para aprender aplicações práticas de inteligência artificial na rotina empresarial e melhorar a organização do seu atendimento diário.",
-      "storySlide": {
-        "eyebrow": "Rotina",
-        "title": "Como você organiza pedidos incompletos hoje?",
-        "body": "Veja no feed um exercício fictício sobre estruturar resumos de atendimento sem perder informações essenciais da conversa."
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
