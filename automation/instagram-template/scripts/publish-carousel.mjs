@@ -3687,6 +3687,7 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
   const imagePaths = [];
   const photoPage = await browser.newPage();
   const seenPhotos = [];
+  const seenEditorialArt = new Set();
   const assertDistinctPhoto = async (path, index) => {
     const signature = await photoSignature(photoPage, path);
     if (seenPhotos.some(prior => similarPhoto(prior, signature))) {
@@ -3706,7 +3707,16 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
     if (slide.imagePath && !isIllustration && !String(style.name || '').startsWith('impact-carousel')) {
       const source = resolve(ROOT, String(slide.imagePath).replace(/^\/+/, ''));
       if (!existsSync(source)) throw new Error(`Imagem do slide ${index + 1} nao encontrada: ${slide.imagePath}`);
-      await assertDistinctPhoto(source, index);
+      if (renderContext.businessArt && /^docs\/illustrations\/cliente-x\/authorial-[a-f0-9]{16}\/(?:cover|slide-(?:[2-9]|10))\.png$/.test(String(slide.imagePath))) {
+        const hash = createHash('sha256').update(readFileSync(source)).digest('hex');
+        if (seenEditorialArt.has(hash)) {
+          await browser.close();
+          throw new Error(`Slide ${index + 1} rejeitado: diagrama autoral duplicado.`);
+        }
+        seenEditorialArt.add(hash);
+      } else {
+        await assertDistinctPhoto(source, index);
+      }
       const finishedArtwork = slide.imageIsFinalArtwork === true || String(slide.imagePath).replace(/^\//, '').startsWith(MEDIA_PREFIX) || /(?:^|\/)docs\/(?:illustrations|generated)\//.test(String(slide.imagePath)) || Boolean(renderContext.businessArt);
       const needsHeadline = account.account === 'cliente-x' && index === 0 && !finishedArtwork;
       const customImagePath = join(runDir, `slide-${String(index + 1).padStart(2, '0')}${needsHeadline ? '.jpg' : extname(source).toLowerCase() || '.jpg'}`);
