@@ -1,32 +1,14 @@
 import fs from 'node:fs';
-import {usesProviderQuota} from '../lib/editorial-daily-budget.js';
+import {authorialProviderRetry} from '../lib/editorial-daily-budget.js';
 import {persistState} from './persist-instagram-state.mjs';
 import {recoveryPlan} from '../lib/authorial-recovery.js';
 import {isAuthorialShortage} from '../lib/authorial-recovery.js';
 import {solutionForWatchdogError} from './watchdog-error-classification.mjs';
 const C='automation/instagram-template/config/',P=C+'authorial-reserve.json',read=p=>JSON.parse(fs.readFileSync(p,'utf8').replace(/^\uFEFF/,''));
 function releaseExpiredProviderBlock(budget, now) {
- if (budget.circuit !== 'provider_response_unconfirmed' || budget.calls.some(call => call.status === 'reserved')) return false;
-
- const last = budget.calls.at(-1);
- if (last?.status !== 'failed' || !last.stage?.startsWith('authorial:')) return false;
- if (last.httpStatus != null && ![408, 429, 500, 502, 503, 504, 529].includes(last.httpStatus)) return false;
-
- const completedAt = Date.parse(last.completedAt);
- const dayInBrasilia = new Intl.DateTimeFormat('en-CA', {
-  timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit'
- });
- if (!Number.isFinite(completedAt) || completedAt >= now.getTime()) return false;
- if (last.failureKind === 'local_validation') return false;
-
- const today = dayInBrasilia.format(now);
- if (dayInBrasilia.format(completedAt) === today) {
-  // The fixed plan can absorb one bounded retry while the failed call stays in the ledger.
-  if (!usesProviderQuota(budget) || now.getTime() - completedAt < 30 * 60_000) return false;
-  if (budget.authorialProviderRetryDay === today) return false;
-  budget.authorialProviderRetryDay = today;
- }
-
+ const retry = authorialProviderRetry(budget, now);
+ if (!retry?.ready) return false;
+ if (retry.sameDay) budget.authorialProviderRetryDay = retry.day;
  budget.circuit = null;
  return true;
 }
