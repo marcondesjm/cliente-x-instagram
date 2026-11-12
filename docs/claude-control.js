@@ -10,7 +10,7 @@
  <label>Limite total só para hoje<br><input id="claudeTodayLimit" type="number" min="1" max="250" placeholder="Usar normal" style="width:150px"></label>
  <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="claudeEnabled" style="width:auto;margin:0"> Reposição automática ativa</label><button class="btn" type="submit">Salvar controles</button></form>
  <p>No modo Gateway, os tetos numéricos internos ficam desativados. O provedor aplica a cota do plano; o saldo real não é sincronizado aqui. Os valores acima ficam guardados para o modo interno. Pausa, revisão e proteção contra falhas continuam ativas.</p>
- <p id="claudeHealth"></p><div style="display:flex;flex-wrap:wrap;gap:10px"><button class="btn" id="claudeRefresh" type="button">Atualizar dados</button><button class="btn" id="claudeRun" type="button">Repor conteúdo</button><button class="btn" id="claudeAudit" type="button">Executar auditoria editorial</button><button class="btn" id="claudeCalibrate" type="button">Executar calibração visual</button></div>
+ <p id="claudeHealth"></p><p id="claudeRecovery" hidden></p><div style="display:flex;flex-wrap:wrap;gap:10px"><button class="btn" id="claudeRefresh" type="button">Atualizar dados</button><button class="btn" id="claudeRun" type="button">Repor conteúdo</button><button class="btn" id="claudeAudit" type="button">Executar auditoria editorial</button><button class="btn" id="claudeCalibrate" type="button">Executar calibração visual</button></div>
  <p id="claudeRunNote"></p><p>Auditoria e calibração também consomem chamadas. Não publicam conteúdo.</p><button class="btn" id="claudeLearn" type="button">Analisar desempenho com Claude</button><p id="claudeStrategy" style="white-space:pre-line;overflow-wrap:anywhere"></p><p id="claudeFeedback" role="status" aria-live="polite"></p>
  <details><summary>Chamadas recentes</summary><ul id="claudeHistory" style="overflow-wrap:anywhere"></ul></details>
  <details><summary>Estoque e avaliações</summary><p id="claudeEntries" style="overflow-wrap:anywhere"></p></details>
@@ -36,9 +36,22 @@
   el('claudeBudgetScope').textContent=scope==='cliente-x'?'Esta cota é compartilhada entre reserva autoral e auditorias editoriais.':'Esta cota controla as avaliações de cenas bíblicas do Sabedoria Kids.';
   el('claudeDailyLimit').value=data.policy.dailyLimit;el('claudeTodayLimit').value=data.policy.todayLimit??'';el('claudeEnabled').checked=data.enabled;
   el('claudeHealth').textContent=data.circuit?`Bloqueio registrado: ${data.circuit}. Consulte a execução antes de retomar.`:`Dia: ${data.day} (Brasília). Próxima tentativa registrada: ${time(data.nextAttemptAt)}. Pausar não interrompe uma tarefa já iniciada.`;
+  const recovery=scope==='cliente-x'?data.recovery:null;
+  const recoveryLines=[];
+  if(recovery){
+   const stock=data.stock||{};
+   recoveryLines.push(Number.isInteger(stock.available)?`Reserva do Radar e do Vigia: ${stock.available} pautas inéditas elegíveis${stock.target?'; meta de '+stock.target:''}.`:'Saldo da reserva aguardando checagem.');
+   if(recovery.retryEligibleAt)recoveryLines.push(recovery.retryReady
+     ?'A reposição pode tentar novamente pelo agendamento ou pelo botão abaixo.'
+     :`Nova tentativa permitida a partir de ${time(recovery.retryEligibleAt)} pelo agendamento.`);
+   else if(data.nextAttemptAt)recoveryLines.push(`Próxima tentativa registrada: ${time(data.nextAttemptAt)}.`);
+  }
+  el('claudeRecovery').hidden=!recovery;
+  el('claudeRecovery').textContent=recoveryLines.join(' ');
   el('claudeRun').textContent=scope==='cliente-x'?'Repor conteúdo e recuperar horário':'Repor cenas e montar prévias';
   el('claudeRunNote').textContent=scope==='cliente-x'?'Consome chamadas. Conteúdo aprovado pode publicar Feed/Reel e Story para recuperar um horário pendente.':'Consome chamadas. Revê cenas e monta conteúdo aprovado; a publicação depende da agenda existente.';
-  el('claudeHistory').innerHTML=data.history.length?data.history.map(c=>`<li><strong>${esc(states[c.status]||c.status)}</strong> · ${esc(c.stage)}<br><small>${esc(time(c.completedAt||c.startedAt))} · ${c.inputTokens===null?'tokens estimados':esc(c.inputTokens)+' tokens de entrada'}</small></li>`).join(''):'<li>Nenhuma chamada registrada.</li>';
+  const failures={local_validation:'Validação local',http_error:'Erro HTTP',timeout:'Tempo limite',invalid_json:'Resposta inválida',transport_or_response:'Falha de transporte ou resposta'};
+  el('claudeHistory').innerHTML=data.history.length?data.history.map(c=>`<li><strong>${esc(states[c.status]||c.status)}</strong> · ${esc(c.stage)}${c.failureKind?' · '+esc(failures[c.failureKind]||'Falha registrada'):''}${c.httpStatus?' · HTTP '+esc(c.httpStatus):''}<br><small>${esc(time(c.completedAt||c.startedAt))} · ${c.inputTokens===null?'tokens estimados':esc(c.inputTokens)+' tokens de entrada'}</small></li>`).join(''):'<li>Nenhuma chamada registrada.</li>';
   const balance=Number.isInteger(data.stock?.available)?`Estoque inédito elegível: ${data.stock.available}. Meta: ${data.stock.target||'não definida'}. Lote: até ${data.stock.batch||1}. Última checagem: ${time(data.stock.checkedAt)}. Pautas já publicadas não entram nesse saldo. `:'';
   const economy=data.economy?`Estudo dos pixels: ${data.economy.reusedPixelReads||0} leituras reaproveitadas, ${data.economy.newPixelReads||0} novas leituras confirmadas, ${data.economy.skippedCandidates||0} candidatos sem mudança ignorados. `:'';
   el('claudeEntries').textContent=balance+economy+(data.entries.length?data.entries.map(e=>`${e.id}: ${states[e.status]||e.status}`).join(' · '):'Nenhuma pauta registrada.');
