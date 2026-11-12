@@ -12774,104 +12774,71 @@
       "reason": "Render autoral falhou: Slide 6 rejeitado: fotografia repetida ou visualmente semelhante a outro cartão/cena.\n"
     }
   ],
-  "checkedAt": "2026-11-12T17:05:31.335Z",
+  "checkedAt": "2026-11-12T17:06:28.961Z",
   "workflowRun": "43265059449",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "art-direction:resumo-transferencia-v7",
-    "callId": "9169f62b-d76f-43a0-b274-2ed9f14fd665",
+    "stage": "generate:extracao-campos-v8",
+    "callId": "ff633fc1-650f-48e4-b1e4-7e2871e59f97",
     "value": {
-      "palette": "copper",
-      "frames": [
+      "slides": [
         {
-          "layout": "workspace",
-          "labels": [
-            "Pedido por mensagem",
-            "Resumo estruturado",
-            "Contexto claro"
-          ]
+          "eyebrow": "Exercício Fictício",
+          "title": "Como organizar um pedido incompleto recebido por mensagem?",
+          "body": "Este exercício hipotético ensina a estruturar solicitações de orçamento sem inventar dados ausentes."
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Mensagem do cliente",
-            "Itens solicitados",
-            "Prazo citado"
-          ]
+          "eyebrow": "Contexto",
+          "title": "Cenário de prestadora de serviços com pedidos vagos",
+          "body": "Imagine uma empresa fictícia recebendo mensagens confusas de clientes pedindo orçamentos sem detalhes essenciais."
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Separar confirmados",
-            "Listar pendências",
-            "Organizar resumo"
-          ]
+          "eyebrow": "Objetivo",
+          "title": "Extrair informações mantendo a integridade dos dados originais",
+          "body": "O foco é preservar exatamente o que foi escrito pelo cliente sem suposições automáticas da inteligência artificial."
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Produtos listados",
-            "Quantidades claras",
-            "Prazos definidos"
-          ]
+          "eyebrow": "Dados Necessários",
+          "title": "Defina campos obrigatórios antes de solicitar a tabela",
+          "body": "Estabeleça previamente que produto, quantidade e prazo são os únicos campos relevantes para este exercício."
         },
         {
-          "layout": "decision",
-          "labels": [
-            "Dado informado",
-            "Campo vazio",
-            "Marcar pendente"
-          ]
+          "eyebrow": "Procedimento",
+          "title": "Solicite à IA uma tabela fiel à mensagem original",
+          "body": "Peça para a ferramenta transcrever as informações recebidas mantendo a redação exata do solicitante fictício."
         },
         {
-          "layout": "workspace",
-          "labels": [
-            "Lacuna explícita",
-            "Sem suposição",
-            "Registro fiel"
-          ]
+          "eyebrow": "Informação Ausente",
+          "title": "Marque como não informado em vez de completar",
+          "body": "Oriente a inteligência artificial a registrar explicitamente a ausência de dados sem tentar preencher lacunas sozinha."
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Conversa original",
-            "Resumo gerado",
-            "Conferência ponto a ponto"
-          ]
+          "eyebrow": "Conferência Humana",
+          "title": "Compare cada campo com a mensagem original do cliente",
+          "body": "Revise manualmente linha por linha para confirmar que a tabela reflete apenas o que foi realmente dito."
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Evitar atalhos",
-            "Não completar dados",
-            "Prevenir retrabalho"
-          ]
+          "eyebrow": "Erro a Evitar",
+          "title": "Não aceite sugestões automáticas para dados faltantes",
+          "body": "Corrija imediatamente qualquer tentativa da ferramenta de inferir valores que não constam na solicitação inicial."
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Canetas azuis",
-            "Cor pendente",
-            "Aguardar confirmação"
-          ]
+          "eyebrow": "Exemplo Fictício",
+          "title": "Cliente pede reforma sem especificar metragem ou data",
+          "body": "A tabela resultante deve mostrar claramente que metragem e prazo permanecem vazios conforme a mensagem original."
         },
         {
-          "layout": "decision",
-          "labels": [
-            "Resumo validado",
-            "Contexto seguro",
-            "Transferir atendimento"
-          ]
-        },
-        {
-          "layout": "decision",
-          "labels": [
-            "Seu processo hoje",
-            "Exercício no feed",
-            "Prática segura"
-          ]
+          "eyebrow": "Conclusão",
+          "title": "Adote este protocolo no próximo atendimento simulado",
+          "body": "Pratique essa rotina de extração fiel para desenvolver critérios claros antes de automatizar processos reais."
         }
-      ]
+      ],
+      "caption": "Neste exercício fictício, praticamos a extração de dados de pedidos incompletos sem permitir que a inteligência artificial invente informações. O objetivo é treinar a conferência humana e preservar a integridade da mensagem original do cliente em cenários simulados de orçamento.\n\nVocê já precisou corrigir dados que foram preenchidos automaticamente de forma equivocada? Acompanhe o perfil para mais exercícios práticos de IA aplicada a empresas.",
+      "storySlide": {
+        "eyebrow": "Rotina Diária",
+        "title": "Sua equipe revisa dados extraídos por IA?",
+        "body": "Veja no feed um exercício completo sobre como conferir pedidos fictícios sem aceitar suposições automáticas."
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
