@@ -14299,104 +14299,71 @@
       "reason": "API sem resposta confirmada (timeout); novas chamadas bloqueadas."
     }
   ],
-  "checkedAt": "2026-11-13T04:55:51.946Z",
+  "checkedAt": "2026-11-13T04:57:47.507Z",
   "workflowRun": "43368542559",
   "message": "API sem resposta confirmada (timeout); novas chamadas bloqueadas.",
   "lastResponse": {
-    "stage": "art-direction:pedido-duplicado-v9",
-    "callId": "6c88f729-4305-4d51-96be-472f13e034ab",
+    "stage": "generate:base-respostas-v9",
+    "callId": "329fe045-f22f-47af-aafe-35daefc985c5",
     "value": {
-      "palette": "copper",
-      "frames": [
+      "slides": [
         {
-          "layout": "workspace",
-          "labels": [
-            "pedido fictício",
-            "tela de entrada",
-            "risco de duplicidade"
-          ]
+          "eyebrow": "Exercício hipotético",
+          "title": "A IA pode responder dúvidas comerciais usando apenas a política da empresa?",
+          "body": "Imagine uma distribuidora fictícia que precisa organizar respostas de atendimento com inteligência artificial."
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "meta do fluxo",
-            "conferência prévia",
-            "demanda interna"
-          ]
+          "eyebrow": "Contexto do exercício",
+          "title": "Uma situação hipotética para treinar o uso de IA no atendimento comercial",
+          "body": "Neste cenário fictício, a equipe recebe consultas sobre prazos e condições de uma distribuidora imaginária."
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "identificador único",
-            "campo padronizado",
-            "registro inicial"
-          ]
+          "eyebrow": "Objetivo",
+          "title": "Montar um rascunho de resposta baseado somente na política comercial interna",
+          "body": "O propósito é pedir à ferramenta um texto apoiado exclusivamente nas regras disponíveis na lista interna."
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "base de registros",
-            "busca por ID",
-            "histórico consultado"
-          ]
+          "eyebrow": "Dados necessários",
+          "title": "A lista de respostas deve conter fonte e data de revisão atualizada",
+          "body": "Reúna o documento interno com as diretrizes comerciais antes de iniciar qualquer solicitação à ferramenta."
         },
         {
-          "layout": "decision",
-          "labels": [
-            "ID existente",
-            "desvio para revisão",
-            "conferência humana"
-          ]
+          "eyebrow": "Procedimento inicial",
+          "title": "Peça à ferramenta um rascunho citando o trecho exato utilizado como base",
+          "body": "Solicite que a resposta indique claramente qual parte do documento serviu de apoio para cada afirmação."
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "ID incompleto",
-            "solicitar dados",
-            "retorno ao remetente"
-          ]
+          "eyebrow": "Informação ausente",
+          "title": "Marque a dúvida para revisão humana quando a resposta não estiver na política",
+          "body": "Caso o trecho solicitado não conste no documento, sinalize o ponto para análise posterior da equipe."
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "validação manual",
-            "decisão de descarte",
-            "aprovador humano"
-          ]
+          "eyebrow": "Conferência humana",
+          "title": "Leia o trecho original porque a citação gerada não atesta sua validade",
+          "body": "Abra o documento base e compare o texto indicado pela ferramenta com a redação original disponível."
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "teste obrigatório",
-            "cenário de falha",
-            "verificação prévia"
-          ]
+          "eyebrow": "Erro a evitar",
+          "title": "Evite enviar o rascunho ao cliente sem validar a origem de cada informação",
+          "body": "Encaminhar um texto sem verificar a referência pode gerar orientações divergentes da política vigente."
         },
         {
-          "layout": "decision",
-          "labels": [
-            "reenvio simulado",
-            "bloqueio esperado",
-            "segunda entrada"
-          ]
+          "eyebrow": "Exemplo fictício",
+          "title": "Um pedido hipotético sobre prazo de entrega na distribuidora imaginária",
+          "body": "Suponha uma consulta sobre frete onde o rascunho aponta o parágrafo três da tabela de prazos."
         },
         {
-          "layout": "workspace",
-          "labels": [
-            "fluxo documentado",
-            "ajuste de regra",
-            "refinamento pós-teste"
-          ]
-        },
-        {
-          "layout": "decision",
-          "labels": [
-            "rotina da equipe",
-            "convite ao feed",
-            "exercício completo"
-          ]
+          "eyebrow": "Conclusão",
+          "title": "Revise a política comercial antes de usar a ferramenta em consultas reais",
+          "body": "Comece organizando suas diretrizes internas para estruturar esse exercício na rotina da sua equipe."
         }
-      ]
+      ],
+      "caption": "Imagine uma distribuidora fictícia que precisa responder consultas comerciais usando apenas sua política interna. O exercício propõe manter uma lista de respostas com fonte e data de revisão, pedindo um rascunho que indique o trecho usado. Depois, é preciso conferir o texto original, pois a citação gerada não atesta validade, e marcar dúvidas ausentes para revisão humana.\n\nComo você organiza as regras comerciais antes de solicitar um rascunho? Acompanhe o perfil para aprender aplicações práticas de inteligência artificial em empresas.",
+      "storySlide": {
+        "eyebrow": "Rotina comercial",
+        "title": "Você já precisou responder uma dúvida urgente sem ter a regra comercial à mão?",
+        "body": "No feed mostro um exercício hipotético para organizar essas respostas usando a política interna."
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
