@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { extractArticleFacts, paginateArticleFacts, buildResearchPack } from '../lib/editorial-research.js';
+import { extractArticleFacts, paginateArticleFacts, buildResearchPack, researchFreshEditorialPacks, filterValidEditorialPacks, factualSummary } from '../lib/editorial-research.js';
 import { validatePack, preparePackForPublication, assertCarouselPublishingLimit, splitCreativeDescription, approvedRevisionImageReuse } from '../automation/instagram-template/scripts/publish-carousel.mjs';
 
 const paragraphs = Array.from({ length: 14 }, (_, i) => `O ponto ${i + 1} apresenta uma informação distinta sobre a supervisão de agentes e a responsabilidade das empresas.`);
@@ -9,6 +9,10 @@ const long = 'Uma explicação importante sobre a responsabilidade humana e os c
 assert.equal(paginateArticleFacts([long]).map(card => card.body).join(' '), long);
 assert(paginateArticleFacts([long]).every(card => card.body.length <= 340));
 assert.equal(paginateArticleFacts(['A pesquisa contou 3,2 mil líderes e mediu 4.5 pontos. O resultado preserva todos os números.']).map(card => card.body).join(' '), 'A pesquisa contou 3,2 mil líderes e mediu 4.5 pontos. O resultado preserva todos os números.');
+const twoSentences = 'O contexto foi confirmado pela equipe. A decisão será comunicada em uma reunião amanhã.';
+assert.deepEqual(paginateArticleFacts([twoSentences], 80, { completeSentences: true }).map(card => card.body),
+  ['O contexto foi confirmado pela equipe.', 'A decisão será comunicada em uma reunião amanhã.']);
+assert.throws(() => paginateArticleFacts([long.replaceAll('.', '')], 340, { completeSentences: true }), /precisa de adaptação/);
 const item = { title: 'Empresas definem responsáveis pela supervisão de agentes de IA', summary: paragraphs[0], source: 'Fonte de teste', url: 'https://example.com/agentes', publishedAt: '2026-10-17T12:00:00Z', articleFacts: facts };
 const pack = buildResearchPack(item, new Date('2026-10-17T15:00:00Z'), { niche: 'IA', keywords: ['agentes'] });
 assert.equal(pack.slides.length, 16);
@@ -25,11 +29,36 @@ assert.throws(() => validatePack(broken), /incompleto/);
 assert.throws(() => assertCarouselPublishingLimit(pack, 'feed-only'), /API da Meta/);
 assert.doesNotThrow(() => assertCarouselPublishingLimit(pack, 'feed-only', { renderOnly: true }));
 assert.doesNotThrow(() => assertCarouselPublishingLimit({ slides: pack.slides.slice(0, 10) }, 'feed-only'));
-assert.throws(() => buildResearchPack({ ...item, articleFacts: [...facts, ...paragraphs] }, undefined, { niche: 'IA', keywords: ['agentes'] }), /sem cortar o final/);
+assert.throws(() => buildResearchPack({ ...item, articleFacts: Array.from({length: 21}, (_, index) => `Ponto ${index}. ${'A equipe faz uma conferência independente antes de autorizar a próxima etapa. '.repeat(3)}`.trim()) }, undefined, { niche: 'IA', keywords: ['agentes'] }), /sem cortar o final/);
 const revision = { ...pack, publicationRevision: { allowSourceImageReuse: true, previousMediaId: 'old-post' } };
 const history = [{ mediaId: 'old-post', research: { sourceUrl: item.url } }];
 assert.equal(approvedRevisionImageReuse(revision, history, true), true);
 assert.equal(approvedRevisionImageReuse(revision, history, false), false);
 assert.equal(approvedRevisionImageReuse(revision, [{ mediaId: 'old-post', research: { sourceUrl: 'https://example.com/other' } }], true), false);
 assert.equal(approvedRevisionImageReuse(revision, [], true), false);
+// The Tinder post originally reached publication with only this RSS excerpt.
+const title = 'Tinder proíbe que agentes de IA conversem pelos usuários';
+const summary = 'Match Group quer impedir que assistentes escolham perfis e enviem mensagens no lugar das pessoas.';
+const tinder = { ...item, title, summary: summary + ' ' + title, articleFacts: [] };
+const radarOptions = { niche: 'IA', keywords: ['ai'], now: new Date('2026-10-17T15:00:00Z') };
+assert.equal(factualSummary(tinder), summary);
+const cachedSummary = buildResearchPack(tinder, radarOptions.now, radarOptions);
+assert.deepEqual(filterValidEditorialPacks([cachedSummary, pack], validatePack), [pack]);
+const feed = 'https://example.com/feed';
+const feedXml = content => `<rss><channel><item><title>${title}</title><link>${tinder.url}</link><pubDate>${tinder.publishedAt}</pubDate><description>${tinder.summary}</description>${content}</item></channel></rss>`;
+const collect = content => researchFreshEditorialPacks({
+  ...radarOptions,
+  sources: [{ name: 'Fonte de teste', url: feed }],
+  fetchImpl: async url => url === feed ? new Response(feedXml(content)) : new Response('', { status: 403 })
+});
+assert.equal((await collect('')).packs.length, 0);
+const recovered = await collect(`<content:encoded><![CDATA[${paragraphs.slice(0, 3).map(p => `<p>${p}</p>`).join('')}]]></content:encoded>`);
+assert.equal(recovered.packs.length, 1);
+const full = recovered.packs[0];
+validatePack(full);
+assert.equal(full.research.coverage.scope, 'article');
+assert.equal(full.slides.at(-2).body, paragraphs[2]);
+assert(full.caption.includes(paragraphs[2]));
+assert.equal(full.slides.at(-1).eyebrow, 'FONTE DA NOTÍCIA');
+assert.equal(extractArticleFacts('<article><p>Este artigo é exclusivo para membros de um plano.</p><p>Conteúdos e newsletters exclusivas</p></article>').length, 0);
 console.log('OK: 14 parágrafos preservados; conclusão, paginação, IHC, omissões e limites de publicação verificados.');
