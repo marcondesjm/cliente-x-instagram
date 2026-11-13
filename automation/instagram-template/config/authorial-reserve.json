@@ -14405,7 +14405,7 @@
       "reason": "Direção de arte incompleta ou repetida."
     }
   ],
-  "checkedAt": "2026-11-13T07:18:54.063Z",
+  "checkedAt": "2026-11-13T07:18:55.823Z",
   "workflowRun": "43384685368",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
@@ -14490,29 +14490,27 @@
   },
   "learningStrategy": {
     "version": "claude-editorial-strategy-v1",
-    "id": "d84588f0-75ab-47f8-a53c-4398518f7cd8",
+    "id": "f498b214-b39d-415f-ad6b-0389e4a54e9a",
     "status": "active",
-    "createdAt": "2026-10-21T17:40:15.391Z",
-    "expiresAt": "2026-10-22T17:40:15.391Z",
-    "dataUpdatedAt": "2026-10-21T17:07:14.724Z",
-    "contextFingerprint": "a3c826917a2693131712c3529e719a72a250d05e9c9c2a43767e3f528eaaf051",
-    "diagnosis": "Perfil com alcance baixo (3-38) e zero engajamento em métricas-alvo (salvamentos, compartilhamentos, comentários). Reels de afirmação atingiram maior alcance (25-38), mas sem conversão em ações. Perguntas em Feed tiveram scores intermediários (8.59-12.24) com alcance reduzido (4-8). Alertas performaram abaixo da média (4.88-5.4). Não há evidência de que formato ou hook influenciem engajamento dado volume amostral insuficiente e ausência total de ações registradas.",
-    "hypothesis": "Testar perguntas específicas sobre dilemas operacionais de IA em empresas no formato Reels pode gerar mais comentários por alcance do que afirmações genéricas, já que perguntas diretas criam convite implícito à resposta, mesmo que o alcance absoluto seja menor.",
-    "limitations": "Amostra pequena (16 posts), janela temporal restrita (24h), zero ações registradas em todas as métricas-alvo impossibilita validação causal. Alcance não se correlaciona com engajamento neste conjunto. Dados desatualizados para teste contínuo.",
+    "createdAt": "2026-11-13T07:18:55.822Z",
+    "expiresAt": "2026-11-14T07:18:55.822Z",
+    "dataUpdatedAt": "2026-11-13T02:37:18.053Z",
+    "contextFingerprint": "9557802e5c048d414638bbd954584e35a1b36fd49de25c70defb9baec96b3908",
+    "diagnosis": "O perfil publica majoritariamente notícias de tecnologia e fofocas do setor em vez de exercícios práticos voltados para a operação de negócios, desalinhando com o nicho de ensino prático e gerando alcance inexpressivo e zero salvamentos.",
+    "hypothesis": "Testar aberturas com situações hipotéticas explícitas do cotidiano operacional em posts de feed, focando em problemas reais de atendimento e vendas, para estimular salvamentos como prova de utilidade prática.",
+    "limitations": "O alcance geral é muito baixo e o volume de interações como salvamentos e compartilhamentos é nulo na janela analisada, impedindo qualquer inferência causal sobre o que realmente gera utilidade para donos de negócios.",
     "axis": "hook",
-    "variant": "specific-question",
-    "format": "REELS",
-    "metric": "comments",
+    "variant": "fictional-scenario",
+    "format": "FEED",
+    "metric": "saved",
     "evidenceIds": [
-      "17897207760412702",
-      "18130297828822859",
-      "17959944321226712",
-      "18027287510700068"
+      "17914726587516141",
+      "18162826879547411"
     ]
   },
   "learningAnalysis": {
     "status": "accepted",
-    "callId": "d84588f0-75ab-47f8-a53c-4398518f7cd8",
-    "checkedAt": "2026-10-21T17:40:15.391Z"
+    "callId": "f498b214-b39d-415f-ad6b-0389e4a54e9a",
+    "checkedAt": "2026-11-13T07:18:55.822Z"
   }
 }
