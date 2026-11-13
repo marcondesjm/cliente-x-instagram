@@ -1654,6 +1654,7 @@ async function updateAccountProfile(body = {}, session = null) {
   const brandSummary = normalizeBrandSummary(body.brandSummary || accountsFile.data[index].brandSummary || {});
   const brandPalette = {
     ...normalizeBrandPalette(body.brandPalette || accountsFile.data[index].brandPalette || {}),
+    ...(accountsFile.data[index].brandPalette?.template === 'mjm-digital' && { template: 'mjm-digital' }),
     enabled: Boolean(body.brandPaletteEnabled)
   };
   const avatarUrls = Array.isArray(body.avatarUrls)

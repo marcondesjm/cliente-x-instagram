@@ -12,6 +12,7 @@ import { isIP } from 'node:net';
 import { basename, dirname, extname, isAbsolute, join, relative, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import {composePhotoHeadline} from '../../../lib/licensed-media-art.js';
+import { mjmEditorialHtml, usesMjmEditorialArt, MJM_EDITORIAL_PALETTE } from '../../../lib/mjm-editorial-art.js';
 import {MEDIA_CONFIG,MEDIA_PREFIX,mediaCredits,withMediaCredits,sha256} from '../../../lib/licensed-media.js';
 import { ensureBusinessHashtags } from '../../../lib/business-hashtags.js';
 import { spawnSync } from 'node:child_process';
@@ -3251,6 +3252,10 @@ export function anatexSlideHtml(slide, index, total, account, style, renderConte
 function styleWithBrandPalette(style, account = {}, { dateString = todaySaoPaulo(), slotIndex = 0, variationSeed = 0 } = {}) {
   const palette = account.brandPalette || {};
   if (!palette.enabled) return style;
+  if (usesMjmEditorialArt(account)) {
+    const { background, card, secondary, text } = MJM_EDITORIAL_PALETTE;
+    return { ...style, bgTop: background, bgBottom: card, accent: secondary, text, muted: text, slidePalettes: [] };
+  }
   if (!validHexColor(palette.primary) && !validHexColor(palette.secondary) && !validHexColor(palette.background)) {
     return style;
   }
@@ -3589,7 +3594,48 @@ async function launchChromium() {
   return executablePath ? chromium.launch({ executablePath }) : chromium.launch();
 }
 
+function mjmPublicationHtml(slide, index, total, renderContext, story = false) {
+  const reel = ['reel-only', 'reel-and-story'].includes(renderContext.publishMode);
+  const explicitImage = fileCssImage(slide.imagePath);
+  const researchImage = fileCssImage(story ? renderContext.researchSourceImagePath : renderContext.researchSlideImagePaths?.[index - 1]);
+  const body = String(slide.body || '');
+  const visualCue = slide.visualCue || visualCueForAccount({ account: 'cliente-x' }, slide.title || '');
+  const fallbackImage = !slide.researchSource && !slide.typographicOnly && (story || index === 1)
+    ? sectorPhotoCssImage(visualCue, story ? 0 : index, renderContext)
+    : '';
+  return mjmEditorialHtml({
+    title: slide.title,
+    eyebrow: slide.eyebrow,
+    body,
+    source: slide.researchSource,
+    image: explicitImage || researchImage || fallbackImage,
+    index,
+    total,
+    height: story || reel ? STORY_HEIGHT : FEED_HEIGHT,
+    story,
+    reel,
+    feedContinuation: renderContext.publishMode !== 'story-only',
+    escape: htmlText
+  });
+}
+
+async function assertMjmLayout(page, label) {
+  const fits = await page.evaluate(async () => {
+    await document.fonts.ready;
+    const article = document.querySelector('.mjm-editorial article');
+    const header = document.querySelector('.mjm-editorial header img');
+    const footer = document.querySelector('.mjm-editorial footer');
+    return header.complete && header.naturalWidth > 0
+      && document.fonts.check('500 42px "Bricolage Grotesque"')
+      && document.fonts.check('italic 400 42px "Instrument Serif"')
+      && article.lastElementChild.getBoundingClientRect().bottom <= article.getBoundingClientRect().bottom
+      && footer.getBoundingClientRect().bottom <= innerHeight;
+  });
+  if (!fits) throw new Error(`${label} da MJM Digital excede o espaço disponível ou tem fontes indisponíveis.`);
+}
+
 function slideHtml(slide, index, total, account, style, renderContext = {}) {
+  if (usesMjmEditorialArt(account)) return mjmPublicationHtml(slide, index, total, renderContext);
   if (style.layout === 'anatex-editorial' || account.contentProfile?.visualDirection === 'anatex-editorial') {
     return anatexSlideHtml(slide, index, total, account, style, renderContext);
   }
@@ -3682,6 +3728,7 @@ function slideHtml(slide, index, total, account, style, renderContext = {}) {
 async function renderSlides(runDir, slides, account, style, renderContext = {}) {
   const browser = await launchChromium();
   const isReelMode = renderContext.publishMode === 'reel-only' || renderContext.publishMode === 'reel-and-story';
+  const branded = usesMjmEditorialArt(account);
   const outputHeight = isReelMode ? STORY_HEIGHT : FEED_HEIGHT;
   const page = await browser.newPage({ viewport: { width: FEED_WIDTH, height: outputHeight }, deviceScaleFactor: 1 });
   const imagePaths = [];
@@ -3714,11 +3761,12 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
       }
       seenEditorialArt.add(hash);
     }
-    if (slide.imagePath && !isIllustration && !String(style.name || '').startsWith('impact-carousel')) {
+    const finishedArtwork = slide.imageIsFinalArtwork === true || String(slide.imagePath || '').replace(/^\//, '').startsWith(MEDIA_PREFIX) || /(?:^|\/)docs\/(?:illustrations|generated)\//.test(String(slide.imagePath || '')) || Boolean(renderContext.businessArt);
+    if (slide.imagePath && !isIllustration && !String(style.name || '').startsWith('impact-carousel')
+      && (!branded || finishedArtwork)) {
       const source = resolve(ROOT, String(slide.imagePath).replace(/^\/+/, ''));
       if (!existsSync(source)) throw new Error(`Imagem do slide ${index + 1} nao encontrada: ${slide.imagePath}`);
       if (!isEditorialArt) await assertDistinctPhoto(source, index);
-      const finishedArtwork = slide.imageIsFinalArtwork === true || String(slide.imagePath).replace(/^\//, '').startsWith(MEDIA_PREFIX) || /(?:^|\/)docs\/(?:illustrations|generated)\//.test(String(slide.imagePath)) || Boolean(renderContext.businessArt);
       const needsHeadline = account.account === 'cliente-x' && index === 0 && !finishedArtwork;
       const customImagePath = join(runDir, `slide-${String(index + 1).padStart(2, '0')}${needsHeadline ? '.jpg' : extname(source).toLowerCase() || '.jpg'}`);
       if (needsHeadline) {
@@ -3738,7 +3786,7 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
     const photoUrls = await page.evaluate(() => [...document.querySelectorAll('.context-photo')]
       .filter(element => getComputedStyle(element).display !== 'none' && element.getBoundingClientRect().width > 0)
       .flatMap(element => [...getComputedStyle(element).backgroundImage.matchAll(/url\(["']?(.*?)["']?\)/g)].map(match => match[1])));
-    const typographicCard = index > 0 && Boolean(slide.researchSource || slide.typographicOnly === true);
+    const typographicCard = index > 0 && Boolean(branded || slide.researchSource || slide.typographicOnly === true);
     if (String(style.name || '').startsWith('impact-carousel') && !photoUrls.length && !typographicCard) {
       await browser.close();
       throw new Error(`Slide ${index + 1} rejeitado: falta uma fotografia distinta.`);
@@ -3746,7 +3794,8 @@ async function renderSlides(runDir, slides, account, style, renderContext = {}) 
     if (!isIllustration && !isEditorialArt) {
       for (const photoUrl of new Set(photoUrls)) await assertDistinctPhoto(photoUrl, index);
     }
-    await page.evaluate(() => document.fonts.ready);
+    if (branded) await assertMjmLayout(page, `Slide ${index + 1}`);
+    else await page.evaluate(() => document.fonts.ready);
     const overlapCheck = await page.evaluate(() => {
       const headline = document.querySelector('.headline');
       const note = document.querySelector('.note');
@@ -4105,6 +4154,7 @@ function anatexStoryHtml(slide, account, style, renderContext = {}) {
 }
 
 function storyHtml(slide, account, style, renderContext = {}) {
+  if (usesMjmEditorialArt(account)) return mjmPublicationHtml(slide, 1, 1, renderContext, true);
   if (style.layout === 'anatex-editorial' || account.contentProfile?.visualDirection === 'anatex-editorial') {
     return anatexStoryHtml(slide, account, style, renderContext);
   }
@@ -4187,10 +4237,13 @@ async function renderStory(runDir, pack, account, style, renderContext = {}) {
   const imagePath = join(runDir, 'story.jpg');
   writeFileSync(htmlPath, html, 'utf8');
   await page.goto(`file://${htmlPath.replace(/\\/g, '/')}`);
+  if (usesMjmEditorialArt(account)) await assertMjmLayout(page, 'Story');
   const photoReady = await page.evaluate(async () => {
     const main = document.querySelector('main');
-    if (!main.classList.contains('has-story-photo')) return !main.querySelector('.news-context-story');
-    const card = main.querySelector('.visual-card');
+    const card = main.classList.contains('mjm-editorial')
+      ? main.querySelector('.context-photo')
+      : main.classList.contains('has-story-photo') && main.querySelector('.visual-card');
+    if (!card) return !main.querySelector('.news-context-story');
     const urls = [...getComputedStyle(card).backgroundImage.matchAll(/url\(["']?(.*?)["']?\)/g)].map((match) => match[1]);
     if (!urls.length || getComputedStyle(card).display === 'none') return false;
     return (await Promise.all(urls.map((url) => new Promise((resolve) => {
@@ -5754,12 +5807,12 @@ async function main() {
     if (!impactStoryProbe.includes('height: 720px')) {
       throw new Error('Story com foto voltou a deixar vazio excessivo no rodape.');
     }
-    const reelNavigationProbe = impactStoryStyle ? slideHtml({
+    const reelNavigationProbe = impactStoryStyle ? anatexSlideHtml({
       eyebrow: 'VALE ENTENDER',
       title: 'Uma pauta recente sobre inteligência artificial.',
       body: 'O vídeo apresenta os pontos em sequência.'
     }, 1, 5, account, impactStoryStyle, { publishMode: 'reel-and-story' }) : '';
-    const carouselNavigationProbe = impactStoryStyle ? slideHtml({
+    const carouselNavigationProbe = impactStoryStyle ? anatexSlideHtml({
       eyebrow: 'VALE ENTENDER',
       title: 'Uma pauta recente sobre inteligência artificial.',
       body: 'O carrossel apresenta os pontos em sequência.'
@@ -5776,7 +5829,7 @@ async function main() {
       || !reelNavigationProbe.includes('min-height: 760px')) {
       throw new Error('Cartão tipográfico do Reel voltou a deixar a metade inferior vazia.');
     }
-    const reelInternalPhotoProbe = impactStoryStyle ? slideHtml({
+    const reelInternalPhotoProbe = impactStoryStyle ? anatexSlideHtml({
       eyebrow: 'NA PRATICA',
       title: 'A aplicação encontra espaço na empresa.',
       body: 'A imagem contextualiza o uso sem cobrir a explicação.',
@@ -5788,7 +5841,7 @@ async function main() {
       throw new Error('Quadro interno do Reel voltou a ficar sem fotografia ou a sobrepor o avatar pessoal.');
     }
     const fallbackContextProbe = carouselFallbackRenderContext({ publishMode: 'reel-and-story' });
-    const fallbackNavigationProbe = impactStoryStyle ? slideHtml({
+    const fallbackNavigationProbe = impactStoryStyle ? anatexSlideHtml({
       eyebrow: 'VALE ENTENDER',
       title: 'Uma pauta recente sobre inteligência artificial.',
       body: 'O fallback apresenta os pontos no formato correto do Feed.'
@@ -5809,7 +5862,7 @@ async function main() {
       researchUrl: 'https://example.com/materia'
     };
     const editorialFramingImage = join(ROOT, 'docs', 'uploads', 'book-claude-briefing.png');
-    const editorialFramingProbe = impactStoryStyle ? slideHtml(editorialFramingSlide, 1, 5, account, impactStoryStyle, {
+    const editorialFramingProbe = impactStoryStyle ? anatexSlideHtml(editorialFramingSlide, 1, 5, account, impactStoryStyle, {
       publishMode: 'reel-and-story',
       researchSlideImagePaths: [editorialFramingImage],
       researchSourceImagePath: editorialFramingImage

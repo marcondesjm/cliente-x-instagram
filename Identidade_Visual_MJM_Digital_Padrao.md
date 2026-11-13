@@ -38,3 +38,10 @@ Carregue [tipografia.css](docs/mjm-digital/tipografia.css) e aplique a classe `m
 ```
 
 Ajuste o caminho do CSS à localização do HTML no projeto.
+
+
+## Carrosséis e legendas do Instagram
+
+- Use o verde-petróleo no fundo, verde acinzentado na caixa de leitura, cinza-prata no texto e dourado nos destaques. Aplique a logo original. A tipografia dos slides segue os pesos do guia. A legenda usa o texto nativo do Instagram.
+- Na capa, apresente a pauta ou a pergunta. Nos slides seguintes, explique o que aconteceu ou como fazer, com exemplos, etapas ou listas curtas conforme o assunto. Feche com a conclusão ou com uma ação que o leitor possa testar.
+- Escreva a legenda para que ela possa ser entendida sozinha. Use parágrafos curtos para desenvolver o contexto, os pontos principais e a conclusão. Em notícias, informe a data e a fonte e identifique a leitura prática para empresas. Em exercícios autorais, inclua um exemplo ou erro comum e a ação sugerida.
