@@ -14715,104 +14715,260 @@
       }
     }
   ],
-  "checkedAt": "2026-11-13T08:06:49.478Z",
+  "checkedAt": "2026-11-13T08:09:00.612Z",
   "workflowRun": "43389378040",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "art-direction:resumo-transferencia-v9",
-    "callId": "dee98412-0250-4d09-8a85-e700aa3c7a82",
+    "stage": "review:resumo-transferencia-v9",
+    "callId": "fd0366e1-c02d-4597-8888-baa357a2d86d",
     "value": {
-      "palette": "ocean",
-      "frames": [
+      "claims": [
         {
-          "layout": "workspace",
-          "labels": [
-            "chat comercial",
-            "mensagem longa",
-            "pedido central"
+          "id": "slide-1",
+          "supported": true,
+          "reason": "O briefing propõe o cenário de uma distribuidora fictícia com consultas comerciais.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "dúvida de produto",
-            "pergunta de pedido",
-            "mensagem misturada"
+          "id": "slide-2",
+          "supported": true,
+          "reason": "O briefing define o cenário como um exercício educativo com conversa fictícia e solicitações internas.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "solicitação ativa",
-            "dado confirmado",
-            "lacuna pendente"
+          "id": "slide-3",
+          "supported": true,
+          "reason": "O briefing instrui a pedir um resumo separado em pedido, informações confirmadas e pendências.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "produto citado",
-            "quantidade pedida",
-            "pedido principal"
+          "id": "slide-4",
+          "supported": true,
+          "reason": "O briefing orienta a separar o pedido do cliente e as informações confirmadas.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "decision",
-          "labels": [
-            "bloco comercial",
-            "dados fornecidos",
-            "perguntas internas"
+          "id": "slide-5",
+          "supported": true,
+          "reason": "O briefing propõe dividir a mensagem em pedido, dados e perguntas para organizar o atendimento.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "workspace",
-          "labels": [
-            "campo em branco",
-            "info ausente",
-            "marcação pendente"
+          "id": "slide-6",
+          "supported": true,
+          "reason": "O briefing exige marcar como pendente o que não foi informado pelo cliente.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "resumo gerado",
-            "mensagem original",
-            "ponto a ponto"
+          "id": "slide-7",
+          "supported": true,
+          "reason": "O briefing instrui a conferir o resumo gerado contra a conversa original.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "contexto útil",
-            "mensagem completa",
-            "filtro de envio"
+          "id": "slide-8",
+          "supported": true,
+          "reason": "O briefing determina encaminhar apenas o contexto necessário à pessoa que continuará o atendimento.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "produto listado",
-            "endereço ok",
-            "prazo pendente"
+          "id": "slide-9",
+          "supported": true,
+          "reason": "O briefing permite desenvolver uma situação específica na distribuidora fictícia, marcando pendências.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "decision",
-          "labels": [
-            "chat da equipe",
-            "separação manual",
-            "teste prático"
+          "id": "slide-10",
+          "supported": true,
+          "reason": "O briefing pede o desenvolvimento de um exercício prático de organização de atendimento.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "decision",
-          "labels": [
-            "conversa cheia",
-            "contexto filtrado",
-            "decisão de envio"
+          "id": "caption",
+          "supported": true,
+          "reason": "A legenda resume o exercício fictício e inclui o aviso de conteúdo autoral com apoio de IA.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            },
+            {
+              "sourceId": "label"
+            }
+          ]
+        },
+        {
+          "id": "story",
+          "supported": true,
+          "reason": "O story convida para o exercício prático de organizar atendimentos comerciais longos, alinhado ao briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-1",
+          "supported": true,
+          "reason": "Rótulos de ilustração fictícia alinhados ao cenário de chat comercial do briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-2",
+          "supported": true,
+          "reason": "Rótulos de ilustração fictícia alinhados ao cenário de mensagens misturadas do briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-3",
+          "supported": true,
+          "reason": "Rótulos de ilustração fictícia alinhados à separação de solicitações e pendências do briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-4",
+          "supported": true,
+          "reason": "Rótulos de ilustração fictícia alinhados à extração de dados do pedido do briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-5",
+          "supported": true,
+          "reason": "Rótulos de ilustração fictícia alinhados à divisão em blocos de leitura do briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-6",
+          "supported": true,
+          "reason": "Rótulos de ilustração fictícia alinhados à marcação de informações ausentes do briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-7",
+          "supported": true,
+          "reason": "Rótulos de ilustração fictícia alinhados à conferência do resumo contra a mensagem original.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-8",
+          "supported": true,
+          "reason": "Rótulos de ilustração fictícia alinhados ao filtro de envio de contexto útil do briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-9",
+          "supported": true,
+          "reason": "Rótulos de ilustração fictícia alinhados ao exemplo específico com pendências do briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-10",
+          "supported": true,
+          "reason": "Rótulos de ilustração fictícia alinhados ao teste prático de separação manual proposto.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-11",
+          "supported": true,
+          "reason": "Rótulos de ilustração fictícia alinhados à decisão de envio de contexto filtrado do briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         }
-      ]
+      ],
+      "decision": "reject",
+      "supported": true,
+      "novel": false,
+      "practical": true,
+      "visualMatch": true,
+      "reason": "O conteúdo é suportado pelas fontes e visualmente coerente, mas falha no critério de novidade. O exercício de organizar pedidos incompletos, extrair campos e resumir o contexto antes de repassar o atendimento comercial já foi abordado exaustivamente no histórico recente (ex: 'Como organizar um pedido incompleto recebido por mensagem?' e 'Como organizar um pedido de orçamento antes de repassar?'). A mudança para uma 'distribuidora fictícia' não configura diferença concreta de conteúdo, violando a diretriz de que trocar o cenário não comprova novidade.",
+      "growth": {
+        "hookSpecific": true,
+        "payoffDelivered": true,
+        "followReason": true,
+        "shareReason": true
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
