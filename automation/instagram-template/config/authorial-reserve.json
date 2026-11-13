@@ -16521,104 +16521,261 @@
       }
     }
   ],
-  "checkedAt": "2026-11-13T13:00:08.593Z",
+  "checkedAt": "2026-11-13T13:02:25.322Z",
   "workflowRun": "43428882349",
   "message": "API sem resposta confirmada (timeout); novas chamadas bloqueadas.",
   "lastResponse": {
-    "stage": "art-direction:base-respostas-v10",
-    "callId": "484a9793-8d50-4b36-bb03-474ff2debe66",
+    "stage": "review:base-respostas-v10",
+    "callId": "f8e09eb1-f207-4bf3-be20-ff9c7f92faa5",
     "value": {
-      "palette": "copper",
-      "frames": [
+      "claims": [
         {
-          "layout": "workspace",
-          "labels": [
-            "Mensagens do aluno",
-            "Política interna",
-            "Dúvida de horário"
+          "id": "slide-1",
+          "supported": true,
+          "reason": "O texto descreve o cenário de uma escola fictícia de cursos livres com dúvidas sobre horários via mensagem, exatamente como proposto no briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Equipe de suporte",
-            "Chat de matrícula",
-            "Fontes oficiais"
+          "id": "slide-2",
+          "supported": true,
+          "reason": "O contexto de organizar o atendimento com IA usando apenas fontes internas está alinhado com a diretriz de basear o rascunho apenas na política.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Rascunho gerado",
-            "Texto restrito",
-            "Base documental"
+          "id": "slide-3",
+          "supported": true,
+          "reason": "O objetivo de treinar a elaboração de respostas restritas ao documento oficial reflete a exigência de pedir um rascunho baseado apenas na política.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Versão do PDF",
-            "Data de validade",
-            "Arquivo mestre"
+          "id": "slide-4",
+          "supported": true,
+          "reason": "A menção à lista de respostas com fonte e data de revisão corresponde literalmente à instrução de manter uma lista com esses dados.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "decision",
-          "labels": [
-            "Prompt inicial",
-            "Trecho exigido",
-            "Citação clara"
+          "id": "slide-5",
+          "supported": true,
+          "reason": "O procedimento de pedir um rascunho citando o trecho exato da política usada segue a regra de exigir que o rascunho indique o trecho usado.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "workspace",
-          "labels": [
-            "Fila de revisão",
-            "Caso não mapeado",
-            "Alerta de ausência"
+          "id": "slide-6",
+          "supported": true,
+          "reason": "A instrução de marcar a dúvida para revisão quando a resposta faltar na política é uma cópia direta da diretriz do briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Conferência humana",
-            "Texto original",
-            "Envio ao aluno"
+          "id": "slide-7",
+          "supported": true,
+          "reason": "A necessidade de conferência humana do trecho original no documento fonte sustenta a regra de que uma citação gerada não comprova sua validade.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Citação não lida",
-            "Dado desatualizado",
-            "Falha de checagem"
+          "id": "slide-8",
+          "supported": true,
+          "reason": "O erro de aceitar a citação sem abrir o documento original ilustra o risco de não conferir o trecho na fonte, conforme o briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Curso noturno",
-            "Vagas diurnas",
-            "Revisão manual"
+          "id": "slide-9",
+          "supported": true,
+          "reason": "O exemplo do aluno perguntando sobre o curso noturno e a política mencionando vagas diurnas desenvolve uma situação específica de dúvida de horários e inscrições.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "decision",
-          "labels": [
-            "Mapeamento de docs",
-            "Rotina de equipe",
-            "Próximo passo"
+          "id": "slide-10",
+          "supported": true,
+          "reason": "A conclusão prática de revisar a política e organizar a lista de fontes reforça a diretriz de manter uma lista de respostas com fonte e data.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         },
         {
-          "layout": "decision",
-          "labels": [
-            "Busca da equipe",
-            "Resposta oficial",
-            "Alinhamento interno"
+          "id": "caption",
+          "supported": true,
+          "reason": "A legenda resume o exercício fictício, a verificação humana e o aviso de que é um conteúdo educativo autoral, alinhado ao briefing e ao label.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            },
+            {
+              "sourceId": "label"
+            }
+          ]
+        },
+        {
+          "id": "story",
+          "supported": true,
+          "reason": "O story convida para ver o exercício sobre alinhar política comercial e rascunhos, refletindo o cenário proposto.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-1",
+          "supported": true,
+          "reason": "Os rótulos da ilustração correspondem aos elementos do cenário de mensagens de aluno e política interna.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-2",
+          "supported": true,
+          "reason": "Os rótulos de equipe de suporte e fontes oficiais refletem o uso de documentos internos para responder dúvidas de matrícula.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-3",
+          "supported": true,
+          "reason": "Os rótulos de rascunho gerado e base documental ilustram a exigência de respostas restritas à política.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-4",
+          "supported": true,
+          "reason": "Os rótulos de versão do PDF e data de validade representam a lista de respostas com fonte e data de revisão.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-5",
+          "supported": true,
+          "reason": "Os rótulos de trecho exigido e citação clara ilustram a regra de indicar o trecho usado no rascunho.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-6",
+          "supported": true,
+          "reason": "Os rótulos de fila de revisão e alerta de ausência representam a ação de marcar a dúvida para revisão quando a resposta faltar.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-7",
+          "supported": true,
+          "reason": "Os rótulos de conferência humana e texto original ilustram a necessidade de conferir o trecho na fonte.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-8",
+          "supported": true,
+          "reason": "Os rótulos de citação não lida e falha de checagem ilustram o erro de não conferir a validade da citação gerada.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-9",
+          "supported": true,
+          "reason": "Os rótulos de curso noturno, vagas diurnas e revisão manual ilustram o exemplo fictício desenvolvido no briefing.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-10",
+          "supported": true,
+          "reason": "Os rótulos de mapeamento de docs e rotina de equipe ilustram a conclusão prática de organizar a lista de fontes.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ]
+        },
+        {
+          "id": "art-11",
+          "supported": true,
+          "reason": "Os rótulos de busca da equipe e resposta oficial refletem o contexto de usar fontes internas para o atendimento.",
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
           ]
         }
-      ]
+      ],
+      "decision": "reject",
+      "supported": true,
+      "novel": true,
+      "practical": true,
+      "visualMatch": false,
+      "reason": "O conteúdo textual e a estrutura do exercício estão totalmente suportados pelas fontes, com uma situação específica e hipotética bem desenvolvida. No entanto, a revisão visual não pode ser concluída para todos os 10 renders do carrossel, pois as descrições de alguns slides não foram fornecidas, o que exige a reprovação pelo critério de inspeção visual completa.",
+      "experimentApplied": true,
+      "growth": {
+        "hookSpecific": true,
+        "payoffDelivered": true,
+        "followReason": true,
+        "shareReason": true
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
