@@ -61,4 +61,17 @@ assert.equal(full.slides.at(-2).body, paragraphs[2]);
 assert(full.caption.includes(paragraphs[2]));
 assert.equal(full.slides.at(-1).eyebrow, 'FONTE DA NOTÍCIA');
 assert.equal(extractArticleFacts('<article><p>Este artigo é exclusivo para membros de um plano.</p><p>Conteúdos e newsletters exclusivas</p></article>').length, 0);
+const ibmTitle = 'IBM Digital Sovereignty Index: In the AI Era, Control Is No Longer Enough. Enterprises Must Prove It.';
+const englishBody = 'Control you can’t prove is becoming a business liability.';
+const englishCached = structuredClone(pack);
+englishCached.slides[0].title = ibmTitle;
+assert.equal(filterValidEditorialPacks([englishCached], validatePack).length, 0);
+const mixedCached = structuredClone(pack);
+mixedCached.storySlide = { title: 'Entenda o contexto', body: englishBody };
+assert.equal(filterValidEditorialPacks([mixedCached], validatePack).length, 0);
+assert.throws(() => buildResearchPack({ ...item, title: ibmTitle, articleFacts: [...facts, englishBody] },
+  radarOptions.now, { ...radarOptions, requireArticleCoverage: true }), /português/);
+const portugueseWithBrand = structuredClone(pack);
+portugueseWithBrand.slides[0].title = 'IBM divulga pesquisa sobre soberania digital na era da IA';
+assert.deepEqual(filterValidEditorialPacks([portugueseWithBrand], validatePack), [portugueseWithBrand]);
 console.log('OK: 14 parágrafos preservados; conclusão, paginação, IHC, omissões e limites de publicação verificados.');
