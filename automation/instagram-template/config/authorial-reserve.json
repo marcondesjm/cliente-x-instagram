@@ -16315,71 +16315,104 @@
       "createdAt": "2026-11-13T12:58:37.752Z"
     }
   ],
-  "checkedAt": "2026-11-13T12:58:39.410Z",
+  "checkedAt": "2026-11-13T12:59:54.910Z",
   "workflowRun": "43428882349",
   "message": "API sem resposta confirmada (timeout); novas chamadas bloqueadas.",
   "lastResponse": {
-    "stage": "generate:base-respostas-v10",
-    "callId": "262efd31-2f3d-4abc-9438-2ab5d224fb4d",
+    "stage": "art-direction:base-respostas-v10",
+    "callId": "484a9793-8d50-4b36-bb03-474ff2debe66",
     "value": {
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "eyebrow": "Exercício hipotético",
-          "title": "E se a dúvida do aluno não estiver na política comercial?",
-          "body": "Imagine uma escola fictícia de cursos livres recebendo perguntas sobre horários via mensagem."
+          "layout": "workspace",
+          "labels": [
+            "Mensagens do aluno",
+            "Política interna",
+            "Dúvida de horário"
+          ]
         },
         {
-          "eyebrow": "Contexto do exercício",
-          "title": "Uma situação fictícia para organizar o atendimento com IA",
-          "body": "Neste cenário hipotético, a equipe precisa responder dúvidas de matrícula usando apenas fontes internas."
+          "layout": "conversation",
+          "labels": [
+            "Equipe de suporte",
+            "Chat de matrícula",
+            "Fontes oficiais"
+          ]
         },
         {
-          "eyebrow": "Objetivo da prática",
-          "title": "Montar um rascunho de resposta baseado exclusivamente na política",
-          "body": "O propósito é treinar a elaboração de respostas restritas ao documento oficial vigente."
+          "layout": "workflow",
+          "labels": [
+            "Rascunho gerado",
+            "Texto restrito",
+            "Base documental"
+          ]
         },
         {
-          "eyebrow": "Dados necessários",
-          "title": "A lista de respostas deve conter fonte e data de revisão",
-          "body": "Reúna o documento interno atualizado antes de solicitar qualquer rascunho à ferramenta."
+          "layout": "checklist",
+          "labels": [
+            "Versão do PDF",
+            "Data de validade",
+            "Arquivo mestre"
+          ]
         },
         {
-          "eyebrow": "Procedimento inicial",
-          "title": "Peça um rascunho citando o trecho exato da política usada",
-          "body": "Solicite que a resposta indique claramente qual parte do documento serviu como base."
+          "layout": "decision",
+          "labels": [
+            "Prompt inicial",
+            "Trecho exigido",
+            "Citação clara"
+          ]
         },
         {
-          "eyebrow": "Tratamento de ausência",
-          "title": "Marque a dúvida para revisão quando a resposta faltar na política",
-          "body": "Se o documento não cobrir a pergunta, registre o caso para análise posterior."
+          "layout": "workspace",
+          "labels": [
+            "Fila de revisão",
+            "Caso não mapeado",
+            "Alerta de ausência"
+          ]
         },
         {
-          "eyebrow": "Conferência humana",
-          "title": "Leia o trecho original antes de enviar a resposta ao aluno",
-          "body": "Uma citação gerada pela ferramenta precisa ser conferida diretamente no documento fonte."
+          "layout": "conversation",
+          "labels": [
+            "Conferência humana",
+            "Texto original",
+            "Envio ao aluno"
+          ]
         },
         {
-          "eyebrow": "Erro a evitar",
-          "title": "Aceitar a citação gerada sem abrir o documento original",
-          "body": "Confiar cegamente no texto produzido cria o risco de repassar informações desatualizadas."
+          "layout": "workflow",
+          "labels": [
+            "Citação não lida",
+            "Dado desatualizado",
+            "Falha de checagem"
+          ]
         },
         {
-          "eyebrow": "Exemplo fictício",
-          "title": "Aluno pergunta sobre inscrição no curso noturno de ilustração",
-          "body": "A política menciona vagas diurnas, então a dúvida segue para revisão manual da coordenação."
+          "layout": "checklist",
+          "labels": [
+            "Curso noturno",
+            "Vagas diurnas",
+            "Revisão manual"
+          ]
         },
         {
-          "eyebrow": "Conclusão prática",
-          "title": "Revise a política comercial e organize sua lista de fontes hoje",
-          "body": "Comece mapeando os documentos oficiais disponíveis para estruturar esse exercício na rotina."
+          "layout": "decision",
+          "labels": [
+            "Mapeamento de docs",
+            "Rotina de equipe",
+            "Próximo passo"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Busca da equipe",
+            "Resposta oficial",
+            "Alinhamento interno"
+          ]
         }
-      ],
-      "caption": "Imagine uma escola fictícia de cursos livres onde alunos perguntam sobre horários de inscrição por mensagem. Para organizar esse atendimento, você pode manter uma lista interna de respostas com fonte e data de revisão. Ao pedir um rascunho, exija a indicação do trecho usado e confira essa citação no documento original, pois o texto gerado precisa de verificação humana. Quando a resposta faltar na política, marque a dúvida para revisão manual.\n\nComo você organiza as fontes de resposta no seu negócio hoje? Acompanhe o perfil para aprender aplicações práticas de inteligência artificial em empresas.",
-      "storySlide": {
-        "eyebrow": "Rotina de atendimento",
-        "title": "Sua equipe sabe onde buscar a resposta oficial?",
-        "body": "Veja no feed um exercício completo sobre como alinhar política comercial e rascunhos."
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
