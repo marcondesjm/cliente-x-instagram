@@ -273,6 +273,7 @@
       min-width: 0;
     }
 
+    main[data-active-view="brand"],
     main[data-active-view="clients"],
     main[data-active-view="system"],
     main[data-active-view="bio"],
@@ -1733,6 +1734,44 @@
     .calendar-legend{display:flex;flex-wrap:wrap;gap:18px;font-size:12px;margin:16px 0 22px}.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}.calendar-weekday{text-align:center;font-size:12px;padding:8px 0}
     .calendar-day{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:78px;padding:8px 2px;background:white;color:#27354a;border:1px solid #e4e2f4;border-radius:14px;cursor:pointer}.calendar-day small{font-size:11px}.calendar-day.planned{background:#effcf3;border-color:#a5ebbc}.calendar-day.published{background:#eef6ff;border-color:#96b9ee}.calendar-day.selected{outline:2px solid #8d46ca;outline-offset:-2px}.calendar-detail{margin-top:20px;font-size:14px;line-height:1.7}.calendar-detail ul{padding-left:20px}.calendar-detail a,#calendarBibleSources a{color:#63409b}#calendarBibleSources{margin-top:18px;font-size:13px;line-height:1.7}
     @media(max-width:600px){.editorial-calendar{padding:12px}.calendar-grid{gap:4px}.calendar-day{min-height:68px;border-radius:9px}.calendar-day small{font-size:9px}.calendar-head h2{font-size:20px}}
+
+    @font-face {
+      font-family: "Bricolage Grotesque";
+      src: url("/lib/assets/mjm-digital/BricolageGrotesque.woff2") format("woff2");
+      font-weight: 400 600;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Instrument Serif";
+      src: url("/lib/assets/mjm-digital/InstrumentSerif-Italic.woff2") format("woff2");
+      font-style: italic;
+      font-display: swap;
+    }
+    #brandIdentityPanel[hidden], #brandIdentityTab[hidden] { display: none; }
+    #brandIdentityPanel { display: grid; gap: 24px; }
+    #brandIdentityPanel .panel-head { flex-wrap: wrap; }
+    .brand-identity-sample {
+      display: grid; gap: 14px; padding: clamp(20px, 4vw, 42px);
+      background: #08201a; color: #c9cbcb; border: 1px solid #253530; border-radius: 14px;
+      font: 400 1rem/1.45 "Bricolage Grotesque", system-ui, sans-serif;
+    }
+    .brand-identity-sample img { width: min(150px, 100%); height: auto; }
+    .brand-identity-sample p { color: inherit; margin: 0; }
+    .brand-identity-sample .brand-identity-title { font-size: clamp(1.85rem, 5vw, 3.5rem); font-weight: 500; line-height: 1.05; }
+    .brand-identity-sample em { display: block; color: #caa14f; font: italic 400 1em/1.08 "Instrument Serif", Georgia, serif; }
+    .brand-identity-palette {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+      gap: 10px; padding: 0; margin: 12px 0 0; list-style: none;
+    }
+    .brand-identity-color {
+      display: grid; gap: 4px; padding: 14px; min-height: 100px;
+      border: 1px solid #68736e; border-radius: 10px;
+      background: var(--swatch); color: var(--swatch-text);
+    }
+    .brand-identity-color code { color: inherit; font-size: .9rem; }
+    .brand-identity-type { display: flex; flex-wrap: wrap; gap: 12px 28px; margin: 12px 0 0; }
+    .brand-identity-type div { display: grid; gap: 4px; }
+    .brand-identity-type dd { margin: 0; }
   </style>
 </head>
 <body>
@@ -1792,6 +1831,7 @@
       <button type="button" data-dashboard-view="growth">Melhorar Instagram</button>
       <button type="button" data-dashboard-view="content">Conteúdo</button>
       <button type="button" data-dashboard-view="posting-logic">Lógica da postagem</button>
+      <button type="button" data-dashboard-view="brand" id="brandIdentityTab" hidden>Identidade visual</button>
       <button type="button" data-dashboard-view="direct">Automações do Direct</button>
       <button type="button" data-dashboard-view="direct-history">Histórico do Direct</button>
       <button type="button" data-dashboard-view="schedule">Agenda</button>
@@ -1806,6 +1846,39 @@
 
     <main>
       <section class="grid">
+        <section class="panel" id="brandIdentityPanel" aria-labelledby="brandIdentityTitle" hidden>
+          <div class="panel-head">
+            <h2 id="brandIdentityTitle">Identidade visual da MJM Digital</h2>
+            <a class="button" href="/docs/mjm-digital/Guia_de_Identidade_Visual_MJM_Digital.pdf" target="_blank" rel="noopener">Abrir guia da marca (PDF)</a>
+          </div>
+          <div class="brand-identity-sample">
+            <img src="/lib/assets/mjm-digital/logo.png" alt="MJM Digital" width="150">
+            <p class="brand-identity-title">Criação de sites <em>para sua empresa</em></p>
+            <p>Apresente seus serviços e facilite o contato com a sua empresa.</p>
+          </div>
+          <div>
+            <h3>Paleta de cores</h3>
+            <ul class="brand-identity-palette">
+              <li class="brand-identity-color" style="--swatch:#08201A;--swatch-text:#FFFFFF"><strong>Verde-petróleo escuro</strong><code>#08201A</code><span>Fundo principal</span></li>
+              <li class="brand-identity-color" style="--swatch:#CAA14F;--swatch-text:#08201A"><strong>Dourado ocre</strong><code>#CAA14F</code><span>Destaques e botões</span></li>
+              <li class="brand-identity-color" style="--swatch:#C9CBCB;--swatch-text:#08201A"><strong>Cinza-prata</strong><code>#C9CBCB</code><span>Texto sobre fundo escuro</span></li>
+              <li class="brand-identity-color" style="--swatch:#000000;--swatch-text:#FFFFFF"><strong>Preto</strong><code>#000000</code><span>Aplicações monocromáticas</span></li>
+              <li class="brand-identity-color" style="--swatch:#253530;--swatch-text:#FFFFFF"><strong>Verde acinzentado</strong><code>#253530</code><span>Cards e áreas secundárias</span></li>
+              <li class="brand-identity-color" style="--swatch:#976E43;--swatch-text:#000000"><strong>Bronze</strong><code>#976E43</code><span>Detalhes gráficos</span></li>
+              <li class="brand-identity-color" style="--swatch:#C48138;--swatch-text:#08201A"><strong>Âmbar queimado</strong><code>#C48138</code><span>Ícones sobre fundo escuro</span></li>
+              <li class="brand-identity-color" style="--swatch:#3E3D37;--swatch-text:#FFFFFF"><strong>Cinza asfalto</strong><code>#3E3D37</code><span>Texto sobre fundo claro</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Tipografia</h3>
+            <dl class="brand-identity-type">
+              <div><dt><strong>Títulos</strong></dt><dd>Bricolage Grotesque 500</dd></div>
+              <div><dt><strong>Subtítulos e botões</strong></dt><dd>Bricolage Grotesque 600</dd></div>
+              <div><dt><strong>Texto corrido</strong></dt><dd>Bricolage Grotesque 400</dd></div>
+              <div><dt><strong>Destaques</strong></dt><dd>Instrument Serif Italic 400</dd></div>
+            </dl>
+          </div>
+        </section>
         <div class="panel" id="growthPanel">
           <div class="panel-head"><div><div class="section-label">Plano de ação · v6.11</div><h2>Melhorar Instagram</h2></div><span class="status-pill" id="growthProgress">0 de 5 ações</span></div>
           <p>Transforme aplicações de IA em conteúdo útil e acompanhe as conversas que chegam ao seu negócio.</p>
@@ -2972,6 +3045,7 @@
       content: ['packSelect'],
       direct: ['directAutomationStatus'],
       'posting-logic': ['activeProfileStatus'],
+      brand: ['brandIdentityPanel'],
       'direct-history': ['directHistoryPanel'],
       schedule: ['timeline', 'queueStatus'],
       weekly: ['weeklyProgramsPanel'],
@@ -2983,7 +3057,8 @@
     };
 
     function activateDashboardView(view = 'overview') {
-      const selected = DASHBOARD_GROUPS[view] ? view : 'overview';
+      const canViewBrand = appState.selectedAccount === 'cliente-x';
+      const selected = DASHBOARD_GROUPS[view] && (view !== 'brand' || canViewBrand) ? view : 'overview';
       document.querySelector('main')?.setAttribute('data-active-view', selected);
       document.querySelectorAll('[data-dashboard-group]').forEach((element) => {
         element.classList.toggle('dashboard-view-hidden', element.dataset.dashboardGroup !== selected);
@@ -3478,7 +3553,17 @@
       `).join('');
     }
 
+    function renderBrandIdentity() {
+      const available = appState.selectedAccount === 'cliente-x';
+      document.getElementById('brandIdentityTab').hidden = !available;
+      document.getElementById('brandIdentityPanel').hidden = !available;
+      if (!available && document.querySelector('main')?.dataset.activeView === 'brand') {
+        activateDashboardView('overview');
+      }
+    }
+
     function renderActiveProfile() {
+      renderBrandIdentity();
       const account = appState.account || {};
       const profile = account.contentProfile || {};
       const radar = profile.radar || {};
@@ -3641,6 +3726,7 @@
 
     async function switchAccount(event) {
       appState.selectedAccount = event.target.value || '';
+      renderBrandIdentity();
       appState.editorialApiReview = { account: appState.selectedAccount, loading: true };
       renderEditorialApiReview();
       accountViewVersion++;
