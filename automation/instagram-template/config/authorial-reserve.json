@@ -14370,104 +14370,71 @@
       "reason": "Texto da ilustração inválido."
     }
   ],
-  "checkedAt": "2026-11-13T05:02:26.521Z",
+  "checkedAt": "2026-11-13T05:04:25.481Z",
   "workflowRun": "43368542559",
   "message": "API sem resposta confirmada (timeout); novas chamadas bloqueadas.",
   "lastResponse": {
-    "stage": "art-direction:fila-prioridade-v9",
-    "callId": "837173f2-e0c9-4331-9f94-c711b6ce5b48",
+    "stage": "generate:teste-variacoes-v9",
+    "callId": "f24bc4b8-0b3e-4f66-a076-064850dd0554",
     "value": {
-      "frames": [
+      "slides": [
         {
-          "layout": "workspace",
-          "labels": [
-            "Distribuidora",
-            "Consultas",
-            "Solicitações"
-          ]
+          "eyebrow": "Exercício fictício",
+          "title": "Seu time entende pedidos escritos de formas diferentes pela IA?",
+          "body": "Imagine uma distribuidora fictícia testando como a inteligência artificial lê solicitações comerciais variadas."
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Pedidos",
-            "Sem ordem",
-            "Fila"
-          ]
+          "eyebrow": "Contexto do exercício",
+          "title": "Uma distribuidora hipotética recebendo consultas por mensagem",
+          "body": "Neste cenário fictício, clientes enviam pedidos de orçamento com abreviações, erros e campos faltando."
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Critérios",
-            "Prazo",
-            "Regras"
-          ]
+          "eyebrow": "Objetivo do teste",
+          "title": "Observar como a mesma instrução reage a textos variados",
+          "body": "O propósito é comparar as respostas geradas antes de aplicar qualquer rascunho na rotina diária."
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Tipo",
-            "Prazo",
-            "Dados"
-          ]
+          "eyebrow": "Dados necessários",
+          "title": "Quatro versões de um mesmo pedido fictício para testar",
+          "body": "Escreva o pedido original e crie variações com abreviação, erro de digitação e informação ausente."
         },
         {
-          "layout": "decision",
-          "labels": [
-            "IA",
-            "Justificativa",
-            "Classificação"
-          ]
+          "eyebrow": "Primeiro passo",
+          "title": "Execute o rascunho de instrução em cada versão criada",
+          "body": "Aplique exatamente o mesmo comando nas quatro variações do pedido para manter a comparação equilibrada."
         },
         {
-          "layout": "workspace",
-          "labels": [
-            "Comparar",
-            "Critérios",
-            "Verificar"
-          ]
+          "eyebrow": "Segundo passo",
+          "title": "Compare os campos extraídos e anote as divergências encontradas",
+          "body": "Revise lado a lado o que a ferramenta extraiu de cada versão e registre onde os resultados diferem."
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Incompletos",
-            "Lista",
-            "Prazo"
-          ]
+          "eyebrow": "Informação ausente",
+          "title": "Como tratar dados que o cliente esqueceu de mencionar",
+          "body": "Defina no rascunho qual campo vazio deve pausar o fluxo até alguém solicitar o dado faltante."
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Ambíguos",
-            "Análise",
-            "Revisão"
-          ]
+          "eyebrow": "Conferência humana",
+          "title": "Revise o resultado antes de repassar ao setor comercial",
+          "body": "Reserve uma etapa de leitura humana para validar os campos preenchidos antes de seguir o atendimento."
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Urgência",
-            "Pessoais",
-            "Vieses"
-          ]
+          "eyebrow": "Erro a evitar",
+          "title": "Usar a instrução na rotina sem repetir o teste ajustado",
+          "body": "Corrija o rascunho conforme as divergências anotadas e rode novamente o conjunto completo de variações."
         },
         {
-          "layout": "decision",
-          "labels": [
-            "Escritos",
-            "Humana",
-            "Fila"
-          ]
-        },
-        {
-          "layout": "decision",
-          "labels": [
-            "Critério",
-            "Próximo",
-            "Pedidos"
-          ]
+          "eyebrow": "Conclusão prática",
+          "title": "Comece hoje o teste com um pedido da sua operação",
+          "body": "Escolha uma solicitação real, crie as variações fictícias e execute o exercício antes de automatizar algo."
         }
       ],
-      "palette": "orchid"
+      "caption": "Imagine uma distribuidora fictícia recebendo pedidos por mensagem. Alguns chegam com abreviações, outros com erros de digitação ou campos vazios. Antes de usar qualquer rascunho de instrução na rotina, vale testar como ele reage a essas variações. O exercício consiste em escrever um pedido original, criar versões alteradas, aplicar o mesmo comando em todas e comparar o que foi extraído.\n\nQual campo ausente costuma travar o atendimento no seu negócio? Acompanhe este perfil para aprender aplicações práticas de inteligência artificial em empresas.",
+      "storySlide": {
+        "eyebrow": "Rotina comercial",
+        "title": "Você já precisou pedir o mesmo dado duas vezes ao cliente?",
+        "body": "No feed há um exercício fictício para testar instruções antes de aplicá-las na rotina da empresa."
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
