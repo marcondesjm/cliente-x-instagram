@@ -14405,15 +14405,24 @@
       "reason": "Direção de arte incompleta ou repetida."
     }
   ],
-  "checkedAt": "2026-11-13T07:18:12.760Z",
+  "checkedAt": "2026-11-13T07:18:54.063Z",
   "workflowRun": "43384685368",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "art-direction:teste-variacoes-v9",
-    "callId": "bb9f58c0-6065-4879-9a4d-e59eae7a9cd6",
+    "stage": "learning-analysis",
+    "callId": "f498b214-b39d-415f-ad6b-0389e4a54e9a",
     "value": {
-      "frames": [],
-      "palette": "ocean"
+      "diagnosis": "O perfil publica majoritariamente notícias de tecnologia e fofocas do setor em vez de exercícios práticos voltados para a operação de negócios, desalinhando com o nicho de ensino prático e gerando alcance inexpressivo e zero salvamentos.",
+      "hypothesis": "Testar aberturas com situações hipotéticas explícitas do cotidiano operacional em posts de feed, focando em problemas reais de atendimento e vendas, para estimular salvamentos como prova de utilidade prática.",
+      "limitations": "O alcance geral é muito baixo e o volume de interações como salvamentos e compartilhamentos é nulo na janela analisada, impedindo qualquer inferência causal sobre o que realmente gera utilidade para donos de negócios.",
+      "axis": "hook",
+      "variant": "fictional-scenario",
+      "format": "FEED",
+      "metric": "saved",
+      "evidenceIds": [
+        "17914726587516141",
+        "18162826879547411"
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
