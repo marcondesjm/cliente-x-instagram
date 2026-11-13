@@ -17192,61 +17192,88 @@
       "draftRevisionCallId": "b3887f46-b6cf-4ce9-bc4f-14795e7e4b51"
     }
   ],
-  "checkedAt": "2026-11-13T13:06:30.835Z",
+  "checkedAt": "2026-11-13T13:06:56.752Z",
   "workflowRun": "43428882349",
   "message": "API sem resposta confirmada (timeout); novas chamadas bloqueadas.",
   "lastResponse": {
-    "stage": "revise-draft:fila-prioridade-v10",
-    "callId": "b3887f46-b6cf-4ce9-bc4f-14795e7e4b51",
+    "stage": "art-direction:fila-prioridade-v10",
+    "callId": "dfd06b97-865a-4c61-9bc2-994b287acff9",
     "value": {
-      "slides": [
+      "palette": "ocean",
+      "frames": [
         {
-          "eyebrow": "Cenário empresarial",
-          "title": "E se a IA priorizar errado as dúvidas de matrícula?",
-          "body": "Imagine uma empresa fictícia onde a inteligência artificial ordena sozinha os pedidos de inscrição recebidos."
+          "layout": "workspace",
+          "labels": [
+            "Mensagem de matrícula",
+            "Ordenação automática",
+            "Fila de inscrição"
+          ]
         },
         {
-          "eyebrow": "Contexto do exercício",
-          "title": "O cenário proposto para esta prática educativa",
-          "body": "Neste exemplo hipotético, alunos enviam mensagens sobre horários e vagas em cursos livres variados."
+          "layout": "conversation",
+          "labels": [
+            "Dúvida de horário",
+            "curso livre",
+            "aluno fictício"
+          ]
         },
         {
-          "eyebrow": "Objetivo da atividade",
-          "title": "Definir critérios claros antes de usar a ferramenta",
-          "body": "A meta é classificar cada solicitação por prazo informado e tipo de dúvida escolar específica."
+          "layout": "workflow",
+          "labels": [
+            "Critério de prazo",
+            "type de dúvida",
+            "classificação"
+          ]
         },
         {
-          "eyebrow": "Dados necessários",
-          "title": "Quais informações alimentar o exercício proposto",
-          "body": "Reúna o texto original da mensagem, o curso desejado e o prazo mencionado pelo aluno fictício."
+          "layout": "checklist",
+          "labels": [
+            "Texto original",
+            "curso desejado",
+            "prazo informado"
+          ]
         },
         {
-          "eyebrow": "Procedimento inicial",
-          "title": "Pedir à IA uma sugestão com justificativa escrita",
-          "body": "Solicite que a ferramenta classifique a mensagem e explique detalhadamente o motivo daquela escolha."
+          "layout": "decision",
+          "labels": [
+            "Sugestão da IA",
+            "justificativa escrita",
+            "explicação detalhada"
+          ]
         },
         {
-          "eyebrow": "Comparação de critérios",
-          "title": "Conferir a justificativa gerada com as regras definidas",
-          "body": "Leia a explicação da inteligência artificial e verifique se ela respeita os critérios estabelecidos anteriormente."
+          "layout": "workspace",
+          "labels": [
+            "Justificativa gerada",
+            "critérios definidos",
+            "verificação de regras"
+          ]
         },
         {
-          "eyebrow": "Informação ausente",
-          "title": "Como tratar mensagens sem prazo ou curso definido",
-          "body": "Separe manualmente toda solicitação incompleta antes de permitir qualquer mudança automática na fila."
+          "layout": "conversation",
+          "labels": [
+            "Mensagem incompleta",
+            "sem prazo",
+            "revisão manual"
+          ]
         },
         {
-          "eyebrow": "Conferência humana",
-          "title": "Revisar casos ambíguos antes de alterar a ordem",
-          "body": "Analise pessoalmente cada pedido duvidoso para evitar classificações incorretas no atendimento escolar fictício."
+          "layout": "workflow",
+          "labels": [
+            "Caso ambíguo",
+            "análise pessoal",
+            "ordem corrigida"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Primeira resposta",
+            "decisão de atendimento",
+            "fila de prioridade"
+          ]
         }
-      ],
-      "caption": "Imagine uma empresa fictícia de cursos livres recebendo várias mensagens sobre matrículas e horários ao mesmo tempo. Sem critérios claros, a inteligência artificial pode sugerir uma ordem de atendimento distante da necessidade real dos alunos. O primeiro passo prático é definir regras simples, como prazo informado e tipo de solicitação, antes de pedir qualquer classificação à ferramenta.\n\nVocê já separou quais dados são essenciais para organizar sua fila de atendimento? Acompanhe este perfil para aprender aplicações práticas de inteligência artificial em empresas.",
-      "storySlide": {
-        "eyebrow": "Rotina de atendimento",
-        "title": "Como você decide qual mensagem responder primeiro?",
-        "body": "Veja no feed um exercício hipotético para classificar solicitações escolares com inteligência artificial."
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
