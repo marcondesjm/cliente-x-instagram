@@ -14509,71 +14509,104 @@
       "createdAt": "2026-11-13T08:05:20.289Z"
     }
   ],
-  "checkedAt": "2026-11-13T08:05:22.137Z",
+  "checkedAt": "2026-11-13T08:06:33.923Z",
   "workflowRun": "43389378040",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "generate:resumo-transferencia-v9",
-    "callId": "40c090b2-c227-436b-a285-0b679ce3c3d5",
+    "stage": "art-direction:resumo-transferencia-v9",
+    "callId": "dee98412-0250-4d09-8a85-e700aa3c7a82",
     "value": {
-      "slides": [
+      "palette": "ocean",
+      "frames": [
         {
-          "eyebrow": "Atendimento com IA",
-          "title": "Como separar o pedido real do cliente em uma conversa longa?",
-          "body": "Imagine uma distribuidora fictícia recebendo mensagens comerciais misturadas por chat."
+          "layout": "workspace",
+          "labels": [
+            "chat comercial",
+            "mensagem longa",
+            "pedido central"
+          ]
         },
         {
-          "eyebrow": "Contexto hipotético",
-          "title": "O cenário deste exercício prático de organização",
-          "body": "Um comprador fictício envia dúvidas sobre produtos e pedidos na mesma mensagem longa."
+          "layout": "conversation",
+          "labels": [
+            "dúvida de produto",
+            "pergunta de pedido",
+            "mensagem misturada"
+          ]
         },
         {
-          "eyebrow": "Objetivo claro",
-          "title": "Organizar as informações antes de repassar o atendimento",
-          "body": "O propósito é separar solicitações, dados confirmados e pendências de forma estruturada."
+          "layout": "workflow",
+          "labels": [
+            "solicitação ativa",
+            "dado confirmado",
+            "lacuna pendente"
+          ]
         },
         {
-          "eyebrow": "Dados necessários",
-          "title": "Quais elementos extrair da conversa inicial do cliente",
-          "body": "Identifique o pedido principal, os produtos citados e as quantidades solicitadas pelo comprador."
+          "layout": "checklist",
+          "labels": [
+            "produto citado",
+            "quantidade pedida",
+            "pedido principal"
+          ]
         },
         {
-          "eyebrow": "Procedimento inicial",
-          "title": "Divida a mensagem original em blocos distintos de leitura",
-          "body": "Separe o texto bruto entre solicitação comercial, dados fornecidos e perguntas internas do cliente."
+          "layout": "decision",
+          "labels": [
+            "bloco comercial",
+            "dados fornecidos",
+            "perguntas internas"
+          ]
         },
         {
-          "eyebrow": "Tratamento de lacunas",
-          "title": "Marque como pendente aquilo que o cliente esqueceu de informar",
-          "body": "Registre explicitamente cada informação ausente para evitar suposições durante o atendimento seguinte."
+          "layout": "workspace",
+          "labels": [
+            "campo em branco",
+            "info ausente",
+            "marcação pendente"
+          ]
         },
         {
-          "eyebrow": "Conferência humana",
-          "title": "Revise o resumo gerado contra a mensagem original completa",
-          "body": "Compare ponto a ponto para verificar se nenhuma solicitação relevante ficou de fora."
+          "layout": "conversation",
+          "labels": [
+            "resumo gerado",
+            "mensagem original",
+            "ponto a ponto"
+          ]
         },
         {
-          "eyebrow": "Erro frequente",
-          "title": "Evite encaminhar a conversa inteira para o próximo responsável",
-          "body": "Repassar apenas o contexto necessário poupa tempo de quem vai continuar o atendimento comercial."
+          "layout": "workflow",
+          "labels": [
+            "contexto útil",
+            "mensagem completa",
+            "filtro de envio"
+          ]
         },
         {
-          "eyebrow": "Exemplo fictício",
-          "title": "Aplicando o método em um pedido de uma distribuidora imaginária",
-          "body": "O resumo lista o produto solicitado, confirma o endereço e marca o prazo como pendente."
+          "layout": "checklist",
+          "labels": [
+            "produto listado",
+            "endereço ok",
+            "prazo pendente"
+          ]
         },
         {
-          "eyebrow": "Próximo passo",
-          "title": "Teste esse exercício com uma conversa recente da sua equipe",
-          "body": "Escolha um atendimento passado e pratique a separação manual antes de usar qualquer ferramenta."
+          "layout": "decision",
+          "labels": [
+            "chat da equipe",
+            "separação manual",
+            "teste prático"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "conversa cheia",
+            "contexto filtrado",
+            "decisão de envio"
+          ]
         }
-      ],
-      "caption": "Imagine uma distribuidora fictícia onde compradores enviam pedidos misturados com dúvidas comerciais pelo chat. Separar o que é solicitação real do que é apenas comentário exige atenção antes de repassar o atendimento para outra pessoa da equipe.\n\nO exercício propõe dividir a mensagem em pedido, dados confirmados e pendências, marcando claramente o que falta. Sua equipe já organiza conversas assim antes de transferir contextos? Acompanhe este perfil para aprender aplicações práticas de inteligência artificial em empresas.",
-      "storySlide": {
-        "eyebrow": "Rotina comercial",
-        "title": "Sua equipe repassa conversas inteiras ou apenas o contexto útil?",
-        "body": "No feed você encontra um exercício prático para organizar atendimentos comerciais longos."
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
