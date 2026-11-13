@@ -16279,70 +16279,70 @@
       "createdAt": "2026-11-13T12:54:28.545Z"
     }
   ],
-  "checkedAt": "2026-11-13T12:54:30.106Z",
+  "checkedAt": "2026-11-13T12:56:27.192Z",
   "workflowRun": "43428882349",
   "message": "API sem resposta confirmada (timeout); novas chamadas bloqueadas.",
   "lastResponse": {
-    "stage": "generate:pedido-duplicado-v10",
-    "callId": "e562dc74-b698-4027-a9e6-8245c08b6981",
+    "stage": "revise-draft:pedido-duplicado-v10",
+    "callId": "4a785b50-d350-49af-948a-f0ea670230bc",
     "value": {
       "slides": [
         {
-          "eyebrow": "Dúvida inicial",
-          "title": "Horário de atendimento e inscrições",
-          "body": "Como organizar pedidos incompletos de matrícula na escola fictícia Marcondes hoje?"
+          "eyebrow": "Cenário hipotético",
+          "title": "Imagine uma escola fictícia recebendo matrículas incompletas",
+          "body": "Suponha que uma escola fictícia receba pedidos de matrícula sem horário definido para as aulas."
         },
         {
-          "eyebrow": "Contexto do cenário",
-          "title": "Escola fictícia Marcondes",
-          "body": "A escola recebe matrículas com horários e datas que frequentemente estão ausentes"
+          "eyebrow": "Contexto do exercício",
+          "title": "Escola de cursos livres em situação simulada",
+          "body": "Neste exercício educativo, cada pedido recebe um identificador único antes de qualquer ação."
         },
         {
-          "eyebrow": "Objetivo do exercício",
-          "title": "Identificar dados necessários",
-          "body": "Extrair horário e data de inscrição para agendar as aulas corretamente"
+          "eyebro": "Objetivo proposto",
+          "title": "Verificar registros anteriores ao criar tarefas",
+          "body": "O objetivo é consultar se esse identificador já existe no sistema antes de criar nova tarefa."
         },
         {
           "eyebrow": "Dados requisitados",
-          "title": "Informações do pedido",
-          "body": "Precisamos de horário escolhido e data de inscrição para prosseguir com segurança"
+          "title": "Informações necessárias para prosseguir",
+          "body": "Precisamos atribuir um identificador ao pedido e verificar se ele já foi registrado anteriormente."
         },
         {
-          "eyebrow": "Passo um",
-          "title": "Primeiro passo",
-          "body": "Verificar se o horário está completo na mensagem recebida pelo atendente"
+          "eyebrow": "Primeiro passo",
+          "title": "Consulta prévia do identificador",
+          "body": "Consulte o registro existente para confirmar se o identificador já consta na base de dados."
         },
         {
-          "eyebrow": "Tratamento de lacunas",
-          "title": "Lidando com dados faltantes",
-          "body": "Se o horário estiver ausente, solicitar ao aluno novamente para confirmar a informação"
+          "eyebrow": "Tratamento de duplicidade",
+          "title": "Encaminhamento para conferência manual",
+          "body": "Se o identificador já existir, encaminhe o pedido para conferência em vez de criar outra tarefa."
         },
         {
           "eyebrow": "Revisão humana",
-          "title": "Validação do resultado",
-          "body": "Confirmar com o responsável que o horário foi corretamente registrado no sistema"
+          "title": "Validação responsável do processo",
+          "body": "A regra depende da implementação correta e dos testes realizados pela equipe responsável."
         },
         {
-          "eyebrow": "Erro comum",
-          "title": "Risco de omissão",
-          "body": "Não registrar a inscrição sem horário pode causar conflitos operacionais na escola"
+          "eyebrow": "Teste sugerido",
+          "title": "Simulação de reenvio de pedido",
+          "body": "Teste o fluxo reenviando o mesmo pedido fictício e verifique se o registro foi identificado."
         },
         {
           "eyebrow": "Exemplo prático",
-          "title": "Cenário de aplicação",
-          "body": "Marcondes recebe matrículas com horário 14h e data 15 de novembro corretamente"
+          "title": "Aplicação do cenário simulado",
+          "body": "Imagine que o aluno fictício envie novamente a solicitação de matrícula para o mesmo curso."
         },
         {
           "eyebrow": "Próximo passo",
-          "title": "Ação recomendada",
-          "body": "Organizar o pedido completo e atualizar o sistema imediatamente para evitar erros"
+          "title": "Organização do fluxo educativo",
+          "body": "Organize o pedido completo conforme o teste e atualize o procedimento para novos exercícios."
         }
       ],
-      "caption": "Marcondes Machado, dono de uma escola de cursos livres, recebe matrículas com horários e datas que frequentemente estão ausentes. Como organizar esses pedidos incompletos para garantir a agendamento correto? A resposta está no carrossel abaixo. Siga o perfil para aprender a aplicar IA em processos de atendimento e vendas.",
+      "caption": "Imagine uma escola fictícia de cursos livres que recebe pedidos de matrícula sem informações completas sobre horários.\\n\\nComo organizar esses pedidos atribuindo um identificador e consultando registros anteriores antes de criar novas tarefas? O desenvolvimento deste exercício educativo está nos cartões acima. Acompanhe o perfil para explorar mais simulações de atendimento.",
       "storySlide": {
-        "eyebrow": "Dúvida inicial",
-        "title": "Horário de atendimento e inscrições",
-        "body": "Como organizar pedidos incompletos de matrícula na escola fictícia Marcondes hoje?"
+        "eyebrow": "Cenário hipotético",
+        "title": "Imagine uma escola fictícia recebendo matrículas incompletas",
+        "body": "Suponha que uma escola fictícia receba pedidos de matrícula sem horário definido para as aulas."
       }
     },
     "structured": true,
