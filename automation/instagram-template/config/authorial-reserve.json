@@ -16245,260 +16245,70 @@
       }
     }
   ],
-  "checkedAt": "2026-11-13T12:54:08.700Z",
+  "checkedAt": "2026-11-13T12:54:26.752Z",
   "workflowRun": "43428882349",
   "message": "API sem resposta confirmada (timeout); novas chamadas bloqueadas.",
   "lastResponse": {
-    "stage": "review:extracao-campos-v10",
-    "callId": "6fcfe07a-028d-4efe-ab45-1d5e84743848",
+    "stage": "generate:pedido-duplicado-v10",
+    "callId": "e562dc74-b698-4027-a9e6-8245c08b6981",
     "value": {
-      "claims": [
+      "slides": [
         {
-          "id": "slide-1",
-          "supported": true,
-          "reason": "O slide introduz o exercício hipotético de matrícula incompleta, alinhado ao cenário de escola fictícia do briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Dúvida inicial",
+          "title": "Horário de atendimento e inscrições",
+          "body": "Como organizar pedidos incompletos de matrícula na escola fictícia Marcondes hoje?"
         },
         {
-          "id": "slide-2",
-          "supported": true,
-          "reason": "Contextualiza a escola fictícia de cursos livres e as mensagens incompletas, conforme solicitado no briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Contexto do cenário",
+          "title": "Escola fictícia Marcondes",
+          "body": "A escola recebe matrículas com horários e datas que frequentemente estão ausentes"
         },
         {
-          "id": "slide-3",
-          "supported": true,
-          "reason": "Define o objetivo de montar uma tabela fiel à mensagem original, preservando os dados recebidos.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Objetivo do exercício",
+          "title": "Identificar dados necessários",
+          "body": "Extrair horário e data de inscrição para agendar as aulas corretamente"
         },
         {
-          "id": "slide-4",
-          "supported": true,
-          "reason": "Lista os campos produto, quantidade e prazo, exatamente como definido no briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Dados requisitados",
+          "title": "Informações do pedido",
+          "body": "Precisamos de horário escolhido e data de inscrição para prosseguir com segurança"
         },
         {
-          "id": "slide-5",
-          "supported": true,
-          "reason": "Instrui a pedir à IA uma tabela sem acrescentar informações extras, seguindo a diretriz de não supor.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Passo um",
+          "title": "Primeiro passo",
+          "body": "Verificar se o horário está completo na mensagem recebida pelo atendente"
         },
         {
-          "id": "slide-6",
-          "supported": true,
-          "reason": "Orienta a marcar campos ausentes como não informado, evitando suposições, conforme o briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Tratamento de lacunas",
+          "title": "Lidando com dados faltantes",
+          "body": "Se o horário estiver ausente, solicitar ao aluno novamente para confirmar a informação"
         },
         {
-          "id": "slide-7",
-          "supported": true,
-          "reason": "Estabelece a conferência humana comparando a tabela com a mensagem original antes de cadastrar.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Revisão humana",
+          "title": "Validação do resultado",
+          "body": "Confirmar com o responsável que o horário foi corretamente registrado no sistema"
         },
         {
-          "id": "slide-8",
-          "supported": true,
-          "reason": "Destaca o erro de completar lacunas por suposição, reforçando a instrução do briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Erro comum",
+          "title": "Risco de omissão",
+          "body": "Não registrar a inscrição sem horário pode causar conflitos operacionais na escola"
         },
         {
-          "id": "slide-9",
-          "supported": true,
-          "reason": "Apresenta um exemplo fictício específico de oficina de cerâmica, atendendo ao pedido de desenvolver uma situação própria.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Exemplo prático",
+          "title": "Cenário de aplicação",
+          "body": "Marcondes recebe matrículas com horário 14h e data 15 de novembro corretamente"
         },
         {
-          "id": "slide-10",
-          "supported": true,
-          "reason": "Propõe a revisão do rascunho com a equipe como ação realizável para fechar o cadastro.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "caption",
-          "supported": true,
-          "reason": "A legenda resume o exercício, inclui o aviso de conteúdo fictício com apoio de IA e as hashtags solicitadas.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            },
-            {
-              "sourceId": "label"
-            }
-          ]
-        },
-        {
-          "id": "story",
-          "supported": true,
-          "reason": "O story convida para o exercício completo no feed, lidando com pedidos incompletos.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-1",
-          "supported": true,
-          "reason": "Rótulo de ilustração fictícia compatível com o slide 1 e o briefing.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-2",
-          "supported": true,
-          "reason": "Rótulo de ilustração fictícia compatível com o slide 2.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-3",
-          "supported": true,
-          "reason": "Rótulo de ilustração fictícia compatível com o slide 3.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-4",
-          "supported": true,
-          "reason": "Rótulo de ilustração fictícia compatível com o slide 4.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-5",
-          "supported": true,
-          "reason": "Rótulo de ilustração fictícia compatível com o slide 5.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-6",
-          "supported": true,
-          "reason": "Rótulo de ilustração fictícia compatível com o slide 6.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-7",
-          "supported": true,
-          "reason": "Rótulo de ilustração fictícia compatível com o slide 7.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-8",
-          "supported": true,
-          "reason": "Rótulo de ilustração fictícia compatível com o slide 8.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-9",
-          "supported": true,
-          "reason": "Rótulo de ilustração fictícia compatível com o slide 9.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-10",
-          "supported": true,
-          "reason": "Rótulo de ilustração fictícia compatível com o slide 10.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
-        },
-        {
-          "id": "art-11",
-          "supported": true,
-          "reason": "Rótulo de ilustração fictícia compatível com o story.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "eyebrow": "Próximo passo",
+          "title": "Ação recomendada",
+          "body": "Organizar o pedido completo e atualizar o sistema imediatamente para evitar erros"
         }
       ],
-      "decision": "approve",
-      "supported": true,
-      "novel": true,
-      "practical": true,
-      "visualMatch": true,
-      "reason": "O carrossel e o story aplicam corretamente o briefing ao criar um exercício hipotético e completo sobre o tratamento de inscrições incompletas em uma escola fictícia. O eixo hook experimental foi aplicado com sucesso na capa. O conteúdo é prático, visualmente coerente e não repete exercícios anteriores do histórico, garantindo novidade e utilidade.",
-      "experimentApplied": true,
-      "growth": {
-        "hookSpecific": true,
-        "payoffDelivered": true,
-        "followReason": true,
-        "shareReason": true
+      "caption": "Marcondes Machado, dono de uma escola de cursos livres, recebe matrículas com horários e datas que frequentemente estão ausentes. Como organizar esses pedidos incompletos para garantir a agendamento correto? A resposta está no carrossel abaixo. Siga o perfil para aprender a aplicar IA em processos de atendimento e vendas.",
+      "storySlide": {
+        "eyebrow": "Dúvida inicial",
+        "title": "Horário de atendimento e inscrições",
+        "body": "Como organizar pedidos incompletos de matrícula na escola fictícia Marcondes hoje?"
       }
     },
     "structured": true,
