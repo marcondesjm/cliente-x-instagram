@@ -14369,71 +14369,104 @@
       "createdAt": "2026-11-13T05:01:45.066Z"
     }
   ],
-  "checkedAt": "2026-11-13T05:01:46.483Z",
+  "checkedAt": "2026-11-13T05:02:23.642Z",
   "workflowRun": "43368542559",
   "message": "API sem resposta confirmada (timeout); novas chamadas bloqueadas.",
   "lastResponse": {
-    "stage": "generate:fila-prioridade-v9",
-    "callId": "bea4c732-a53c-40ec-a7af-375e0b880666",
+    "stage": "art-direction:fila-prioridade-v9",
+    "callId": "837173f2-e0c9-4331-9f94-c711b6ce5b48",
     "value": {
-      "slides": [
+      "frames": [
         {
-          "eyebrow": "Exercício hipotético",
-          "title": "Como decidir qual pedido atender primeiro na sua distribuidora?",
-          "body": "Imagine uma distribuidora fictícia recebendo consultas comerciais e solicitações internas ao mesmo tempo."
+          "layout": "workspace",
+          "labels": [
+            "Distribuidora",
+            "Consultas",
+            "Solicitações"
+          ]
         },
         {
-          "eyebrow": "Contexto do exercício",
-          "title": "Uma situação hipotética para organizar a fila de atendimento",
-          "body": "Neste cenário fictício, pedidos chegam sem ordem clara e a equipe precisa de um critério definido."
+          "layout": "conversation",
+          "labels": [
+            "Pedidos",
+            "Sem ordem",
+            "Fila"
+          ]
         },
         {
-          "eyebrow": "Objetivo proposto",
-          "title": "Definir critérios explícitos antes de pedir sugestões à IA",
-          "body": "O objetivo deste exercício é estabelecer regras claras de prioridade baseadas no prazo informado."
+          "layout": "workflow",
+          "labels": [
+            "Critérios",
+            "Prazo",
+            "Regras"
+          ]
         },
         {
-          "eyebrow": "Dados necessários",
-          "title": "Quais informações alimentarão a classificação neste exercício",
-          "body": "Você precisará informar o tipo de solicitação e o prazo declarado por cada pedido fictício."
+          "layout": "checklist",
+          "labels": [
+            "Tipo",
+            "Prazo",
+            "Dados"
+          ]
         },
         {
-          "eyebrow": "Procedimento inicial",
-          "title": "Peça à IA uma sugestão acompanhada de justificativa escrita",
-          "body": "Solicite que a inteligência artificial classifique os pedidos e explique o motivo de cada escolha."
+          "layout": "decision",
+          "labels": [
+            "IA",
+            "Justificativa",
+            "Classificação"
+          ]
         },
         {
-          "eyebrow": "Conferência de critérios",
-          "title": "Compare a justificativa gerada com as regras definidas antes",
-          "body": "Leia a explicação da IA e verifique se ela respeita os critérios de prazo e tipo."
+          "layout": "workspace",
+          "labels": [
+            "Comparar",
+            "Critérios",
+            "Verificar"
+          ]
         },
         {
-          "eyebrow": "Informação ausente",
-          "title": "O que fazer quando o pedido chega sem prazo declarado",
-          "body": "Separe os pedidos incompletos em uma lista própria antes de tentar qualquer classificação automática."
+          "layout": "conversation",
+          "labels": [
+            "Incompletos",
+            "Lista",
+            "Prazo"
+          ]
         },
         {
-          "eyebrow": "Revisão humana",
-          "title": "Analise os casos ambíguos antes de reorganizar a fila",
-          "body": "Avalie pessoalmente as situações em que a justificativa da IA parecer vaga ou insuficiente."
+          "layout": "workflow",
+          "labels": [
+            "Ambíguos",
+            "Análise",
+            "Revisão"
+          ]
         },
         {
-          "eyebrow": "Erro a evitar",
-          "title": "Nunca infira urgência por características pessoais do solicitante",
-          "body": "Classificar pedidos pelo perfil de quem solicita introduz vieses e ignora os critérios estabelecidos."
+          "layout": "checklist",
+          "labels": [
+            "Urgência",
+            "Pessoais",
+            "Vieses"
+          ]
         },
         {
-          "eyebrow": "Aplicação prática",
-          "title": "Revise sua próxima fila usando critérios escritos e revisão humana",
-          "body": "Escreva suas próprias regras de prioridade e peça à IA apenas sugestões acompanhadas de justificativas."
+          "layout": "decision",
+          "labels": [
+            "Escritos",
+            "Humana",
+            "Fila"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Critério",
+            "Próximo",
+            "Pedidos"
+          ]
         }
       ],
-      "caption": "Imagine uma distribuidora fictícia recebendo consultas comerciais e solicitações internas simultaneamente. Sem critérios claros, a equipe atende quem grita mais alto. Neste exercício, você define regras baseadas no prazo informado e no tipo de solicitação, pede à IA uma sugestão com justificativa e compara essa resposta com seus critérios antes de mover qualquer pedido.\n\nComo você decide hoje qual tarefa atender primeiro na sua operação? Acompanhe este perfil para estudar aplicações práticas de inteligência artificial em rotinas empresariais reais.",
-      "storySlide": {
-        "eyebrow": "Rotina diária",
-        "title": "Qual critério você usa para escolher o próximo pedido?",
-        "body": "Veja no feed um exercício hipotético sobre como classificar solicitações usando critérios escritos."
-      }
+      "palette": "orchid"
     },
     "structured": true,
     "stopReason": "tool_use",
