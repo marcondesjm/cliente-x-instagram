@@ -2002,7 +2002,8 @@ function businessInboxSettings(group) {
   return {
     enabled: saved.enabled !== false && process.env.CLIENTE_X_INSTAGRAM_INBOX_BOT === 'true',
     claude: saved.claude !== false,
-    whatsapp: saved.whatsapp !== false
+    whatsapp: saved.whatsapp !== false,
+    copy: businessInboxCopy(saved.copy)
   };
 }
 
@@ -2026,7 +2027,7 @@ async function updateBusinessInbox(body, session) {
       group = { account: account.account, automations: [], deliveries: [] };
       file.data.push(group);
     }
-    group.inboxBot = { enabled, claude, whatsapp };
+    group.inboxBot = { enabled, claude, whatsapp, copy: businessInboxCopy(body.settings.copy ?? group.inboxBot?.copy) };
     try {
       await writeGithubConfig(DIRECT_AUTOMATIONS_FILE_PATH, file.data, file.sha, 'Update Instagram inbox bot settings');
       return { ok: true, settings: businessInboxSettings(group) };
@@ -2188,17 +2189,37 @@ export function ownDirectComment(value = {}, account = {}, accountId = '') {
   return Boolean((authorId && authorId === String(accountId)) || (authorName && expected && authorName === expected));
 }
 
-const businessDirectOptionsText = '1 — Site ou landing page\n2 — Automação com IA\n3 — Pedir orçamento\n4 — Falar com o Marcondes';
+const BUSINESS_INBOX_COPY = Object.freeze({
+  "intro": "Olá! Sou o assistente da MJM Digital. Responda com o número da opção:",
+  "retry": "Não consegui identificar sua escolha. Responda com 1, 2, 3 ou 4.",
+  "label1": "Site ou landing page",
+  "label2": "Automação com IA",
+  "label3": "Pedir orçamento",
+  "label4": "Falar com o Marcondes",
+  "human": "Pode deixar aqui seu nome e um resumo do pedido. O Marcondes pode dar continuidade pelo Direct.",
+  "quote": "Para pedir um orçamento, me conte qual é o seu negócio e o que você precisa. O Marcondes pode avaliar os detalhes por aqui.",
+  "details": "Obrigado pelos detalhes! Sua mensagem fica aqui no Direct para o Marcondes continuar o atendimento e conversar com você sobre o projeto.",
+  "landing": "Fazemos sim! Qual é o seu tipo de negócio e o que a landing page precisa fazer? Por exemplo, receber contatos pelo WhatsApp, captar cadastros ou apresentar uma oferta.",
+  "site": "Desenvolvemos sites e landing pages para apresentar seus serviços e facilitar o contato com clientes. Qual é o seu tipo de negócio e o que você precisa que o site faça?",
+  "automation": "Ajudamos empresas a aplicar IA e automação em atendimento, vendas e tarefas repetitivas. Qual processo você quer automatizar?",
+  "support": "Ajudamos empresas a automatizar o atendimento. Qual parte desse processo você quer automatizar?"
+});
+const businessDirectMenu = { next: 'services', key: 'intro' };
+const businessDirectRetryMenu = { next: 'services', key: 'retry' };
 
-const businessDirectMenu = {
-  next: 'services',
-  reply: 'Olá! Sou o assistente da MJM Digital. Responda com o número da opção:\n\n' + businessDirectOptionsText
-};
+function businessInboxCopy(input) {
+  return Object.fromEntries(Object.entries(BUSINESS_INBOX_COPY).map(([key, fallback]) => {
+    const max = key.startsWith('label') ? 45 : 240;
+    const value = typeof input?.[key] === 'string' ? input[key].trim().slice(0, max) : '';
+    return [key, value || fallback];
+  }));
+}
 
-const businessDirectRetryMenu = {
-  next: businessDirectMenu.next,
-  reply: 'Não consegui identificar sua escolha. Responda com 1, 2, 3 ou 4.\n\n' + businessDirectOptionsText
-};
+function formatBusinessInboxReply(plan, copy) {
+  if (plan.key !== 'intro' && plan.key !== 'retry') return copy[plan.key];
+  const options = [1, 2, 3, 4].map(number => number + ' — ' + copy['label' + number]);
+  return copy[plan.key] + '\n\n' + options.join('\n');
+}
 
 const businessDirectChoices = {
   '1': 'landing page',
@@ -2218,29 +2239,29 @@ export function businessDirectReply(value, stage = '') {
   const text = option ? normalizeDirectMatchText(businessDirectChoices[option]) : choice;
   if (!text) return null;
   if (/\b(humano|atendente|falar com (uma pessoa|o marcondes))\b/.test(text)) {
-    return { next: 'handoff', reply: 'Pode deixar aqui seu nome e um resumo do pedido. O Marcondes pode dar continuidade pelo Direct.' };
+    return { next: 'handoff', key: 'human' };
   }
   if (/\b(preco|precos|orcamento|valor|valores|quanto custa|prazo)\b/.test(text)) {
-    return { next: 'details', reply: 'Para pedir um orçamento, me conte qual é o seu negócio e o que você precisa. O Marcondes pode avaliar os detalhes por aqui.' };
+    return { next: 'details', key: 'quote' };
   }
   if (stage === 'details' && /^(tenho|somos|trabalho|vendemos|meu negocio|minha empresa|e para|para uma|para um)\b/.test(text)) {
-    return { next: 'handoff', reply: 'Obrigado pelos detalhes! Sua mensagem fica aqui no Direct para o Marcondes continuar o atendimento e conversar com você sobre o projeto.' };
+    return { next: 'handoff', key: 'details' };
   }
   if (/\b(land(?:ing)?\s*pages?|pagina de (vendas|captura))\b/.test(text)) {
-    return { next: 'details', reply: 'Fazemos sim! Qual é o seu tipo de negócio e o que a landing page precisa fazer? Por exemplo, receber contatos pelo WhatsApp, captar cadastros ou apresentar uma oferta.' };
+    return { next: 'details', key: 'landing' };
   }
   if (/\b(site|sites|landing|pagina|paginas|portfolio|vitrine)\b/.test(text)) {
-    return { next: 'details', reply: 'Desenvolvemos sites e landing pages para apresentar seus serviços e facilitar o contato com clientes. Qual é o seu tipo de negócio e o que você precisa que o site faça?' };
+    return { next: 'details', key: 'site' };
   }
   if (/\b(automacao|automacoes|ia|inteligencia artificial|chatbot)\b/.test(text)) {
-    return { next: 'details', reply: 'Ajudamos empresas a aplicar IA e automação em atendimento, vendas e tarefas repetitivas. Qual processo você quer automatizar?' };
+    return { next: 'details', key: 'automation' };
   }
   if (/^(servicos|o que voces fazem)$/.test(text)) return businessDirectMenu;
   if (stage === 'details' && text.length >= 8 && !/^(obrigad[oa]|valeu|tudo bem|legal|perfeito)( mesmo| e voce)?$/.test(text)) {
-    return { next: 'handoff', reply: 'Obrigado pelos detalhes! Sua mensagem fica aqui no Direct para o Marcondes continuar o atendimento e conversar com você sobre o projeto.' };
+    return { next: 'handoff', key: 'details' };
   }
   if (/\b(instagram|atendimento)\b/.test(text)) {
-    return { next: 'details', reply: 'Ajudamos empresas a automatizar o atendimento. Qual parte desse processo você quer automatizar?' };
+    return { next: 'details', key: 'support' };
   }
   return null;
 }
@@ -2256,11 +2277,7 @@ export function businessWhatsappReply(details) {
   return 'Se preferir continuar pelo WhatsApp, abra a mensagem preenchida e toque em Enviar: https://wa.me/5548996029392?text=' + encodeURIComponent(message.toWellFormed());
 }
 
-const BUSINESS_CLAUDE_REPLIES = {
-  sites: 'Podemos criar uma página para apresentar seus serviços e receber contatos. Qual é seu tipo de negócio e o que a página precisa fazer?',
-  automation: 'A MJM Digital pode ajudar com automações de atendimento, vendas e tarefas repetitivas. O que você gostaria de automatizar?',
-  clarification: 'Você procura um site, uma landing page ou uma automação? Se puder, me conte o que quer resolver.'
-};
+const BUSINESS_CLAUDE_REPLIES = { sites: 'site', automation: 'automation' };
 
 async function businessClaudeReply(value, stage, request = fetch) {
   if (stage === 'details' || stage === 'handoff') return null;
@@ -2289,7 +2306,7 @@ async function businessClaudeReply(value, stage, request = fetch) {
     const body = await response.json();
     const decision = body.content?.find(item => item.type === 'text')?.text?.trim().toLowerCase();
     if (!Object.hasOwn(BUSINESS_CLAUDE_REPLIES, decision)) return fallback;
-    return decision === 'clarification' ? fallback : { next: 'details', reply: BUSINESS_CLAUDE_REPLIES[decision] };
+    return { next: 'details', key: BUSINESS_CLAUDE_REPLIES[decision] };
   } catch {
     return fallback;
   }
@@ -2344,9 +2361,10 @@ export async function handleInstagramWebhook(body, raw, signature, req) {
         const replyPlan = businessDirectReply(inbound.text, stage) || (inboxSettings.claude ? await businessClaudeReply(inbound.text, stage) : null);
         const selectedReply = replyPlan || businessDirectFallback(inbound.text, stage);
         if (!selectedReply) continue;
+        const selectedText = formatBusinessInboxReply(selectedReply, inboxSettings.copy);
         const replyText = selectedReply.next === 'handoff' && inboxSettings.whatsapp
-          ? selectedReply.reply + '\n\n' + businessWhatsappReply(stage === 'details' ? inbound.text : '')
-          : selectedReply.reply;
+          ? selectedText + '\n\n' + businessWhatsappReply(stage === 'details' ? inbound.text : '')
+          : selectedText;
         const delivery = {
           inboundMessageId: inbound.id,
           inboundAt: inbound.timestamp,
