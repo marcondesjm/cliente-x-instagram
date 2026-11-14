@@ -2188,9 +2188,16 @@ export function ownDirectComment(value = {}, account = {}, accountId = '') {
   return Boolean((authorId && authorId === String(accountId)) || (authorName && expected && authorName === expected));
 }
 
+const businessDirectOptionsText = '1 — Site ou landing page\n2 — Automação com IA\n3 — Pedir orçamento\n4 — Falar com o Marcondes';
+
 const businessDirectMenu = {
   next: 'services',
-  reply: 'Olá! Sou o assistente da MJM Digital. Responda com o número da opção:\n\n1 — Site ou landing page\n2 — Automação com IA\n3 — Pedir orçamento\n4 — Falar com o Marcondes'
+  reply: 'Olá! Sou o assistente da MJM Digital. Responda com o número da opção:\n\n' + businessDirectOptionsText
+};
+
+const businessDirectRetryMenu = {
+  next: businessDirectMenu.next,
+  reply: 'Não consegui identificar sua escolha. Responda com 1, 2, 3 ou 4.\n\n' + businessDirectOptionsText
 };
 
 const businessDirectChoices = {
@@ -2204,8 +2211,10 @@ export function businessDirectReply(value, stage = '') {
   const choice = normalizeDirectMatchText(value);
   if (/^(menu|opcoes|voltar ao menu|oi|ola|opa|bom dia|boa tarde|boa noite)( tudo bem)?$/.test(choice)) return businessDirectMenu;
   if (stage === 'handoff') return null;
-  const option = stage === 'services' ? choice.match(/^(?:opcao )?([1-4])$/)?.[1] : null;
-  if (stage === 'services' && !option && /^(?:opcao )?\d+$/.test(choice)) return businessDirectMenu;
+  const option = stage === 'services' && !/^\s*[-+]/.test(value)
+    ? choice.match(/^(?:opcao )?([1-4])$/)?.[1]
+    : null;
+  if (stage === 'services' && !option && /^(?:opcao )?\d/.test(choice)) return businessDirectRetryMenu;
   const text = option ? normalizeDirectMatchText(businessDirectChoices[option]) : choice;
   if (!text) return null;
   if (/\b(humano|atendente|falar com (uma pessoa|o marcondes))\b/.test(text)) {
@@ -2234,6 +2243,11 @@ export function businessDirectReply(value, stage = '') {
     return { next: 'details', reply: 'Ajudamos empresas a automatizar o atendimento. Qual parte desse processo você quer automatizar?' };
   }
   return null;
+}
+
+function businessDirectFallback(text, stage) {
+  if (!text.trim()) return null;
+  return stage === 'services' ? businessDirectRetryMenu : businessDirectMenu;
 }
 
 export function businessWhatsappReply(details) {
@@ -2328,7 +2342,7 @@ export async function handleInstagramWebhook(body, raw, signature, req) {
           inbound.timestamp - item.inboundAt < 24 * 60 * 60 * 1000);
         const stage = previous?.conversationStage;
         const replyPlan = businessDirectReply(inbound.text, stage) || (inboxSettings.claude ? await businessClaudeReply(inbound.text, stage) : null);
-        const selectedReply = replyPlan || (inbound.text.trim() ? businessDirectMenu : null);
+        const selectedReply = replyPlan || businessDirectFallback(inbound.text, stage);
         if (!selectedReply) continue;
         const replyText = selectedReply.next === 'handoff' && inboxSettings.whatsapp
           ? selectedReply.reply + '\n\n' + businessWhatsappReply(stage === 'details' ? inbound.text : '')
