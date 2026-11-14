@@ -2149,6 +2149,45 @@ export function ownDirectComment(value = {}, account = {}, accountId = '') {
   return Boolean((authorId && authorId === String(accountId)) || (authorName && expected && authorName === expected));
 }
 
+export function businessDirectReply(value) {
+  const text = normalizeDirectMatchText(value);
+  if (!text) return '';
+  const prefix = 'Olá! Sou o assistente da MJM Digital. ';
+  if (/\b(humano|atendente|pessoa|marcondes)\b/.test(text)) {
+    return prefix + 'Pode deixar aqui seu nome e um resumo do pedido para o Marcondes dar continuidade pelo Direct.';
+  }
+  if (/\b(preco|precos|orcamento|valor|valores|quanto|prazo)\b/.test(text)) {
+    return prefix + 'Para pedir um orçamento, me diga qual é o seu negócio, qual serviço você procura e o que deseja alcançar. O Marcondes pode avaliar os detalhes por aqui.';
+  }
+  if (/\b(site|sites|landing|pagina|paginas|portfolio|vitrine)\b/.test(text)) {
+    return prefix + 'Desenvolvemos sites e landing pages para apresentar seus serviços e facilitar o contato com seus clientes. Qual é o seu tipo de negócio e o que você precisa que o site faça?';
+  }
+  if (/\b(automacao|automacoes|ia|inteligencia artificial|instagram|atendimento|chatbot)\b/.test(text)) {
+    return prefix + 'Ajudamos empresas a aplicar IA e automação em atendimento, vendas e tarefas repetitivas. Qual processo você quer automatizar?';
+  }
+  if (/^(oi|ola|opa|bom dia|boa tarde|boa noite|servicos|o que voces fazem)[!?. ]*$/.test(text)) {
+    return prefix + 'Trabalhamos com criação de sites, landing pages e automações com IA. Qual desses serviços você está procurando?';
+  }
+  return '';
+}
+
+function businessDirectEvent(event, accountId, now = Date.now()) {
+  const sender = String(event?.sender?.id || '');
+  const recipient = String(event?.recipient?.id || '');
+  const id = String(event?.message?.mid || '');
+  const timestamp = Number(event?.timestamp);
+  if (!sender || !accountId || sender === accountId || recipient !== accountId ||
+      !id || event.message.is_echo || event.message.is_deleted || event.message.is_unsupported ||
+      typeof event.message.text !== 'string' || !Number.isFinite(timestamp) ||
+      timestamp > now + 60_000 || now - timestamp >= 24 * 60 * 60 * 1000) return null;
+  const reply = businessDirectReply(event.message.text);
+  return reply ? { id, sender, reply } : null;
+}
+
+function directDeliveryKey(item) {
+  return item.inboundMessageId ? `message:${item.inboundMessageId}` : `comment:${item.commentId}`;
+}
+
 export async function handleInstagramWebhook(body, raw, signature, req) {
   if (!verifyInstagramWebhookSignature(raw, signature)) throw userError('Assinatura do webhook da Meta invalida.', 401);
   if (body?.object !== 'instagram') return { ignored: true, reason: 'object' };
@@ -2160,13 +2199,48 @@ export async function handleInstagramWebhook(body, raw, signature, req) {
 
   for (const entry of Array.isArray(body.entry) ? body.entry : []) {
     const account = accounts.find((item) => String(process.env[item.userIdEnv] || '') === String(entry.id || ''));
-    if (!account) continue;
+    if (!account || !entry.id) continue;
     const group = automationsFile.data.find((item) => item.account === account.account);
     const automations = directAutomationList(group).filter((item) => item?.enabled);
     const messagingTokenEnv = account.accessTokenEnv.replace(/_INSTAGRAM_ACCESS_TOKEN$/, '_INSTAGRAM_MESSAGING_ACCESS_TOKEN');
     const token = String(process.env[messagingTokenEnv] || process.env[account.accessTokenEnv] || '').trim();
-    if (!group || !automations.length || !token) continue;
+    if (!group || !token) continue;
     group.deliveries = retainedDirectDeliveries(group.deliveries);
+
+    if (account.account === 'cliente-x' && process.env.CLIENTE_X_INSTAGRAM_INBOX_BOT === 'true') {
+      for (const event of Array.isArray(entry.messaging) ? entry.messaging : []) {
+        const inbound = businessDirectEvent(event, String(entry.id));
+        if (!inbound || group.deliveries.some(item => item.inboundMessageId === inbound.id)) continue;
+        const delivery = {
+          inboundMessageId: inbound.id,
+          automationName: 'Atendimento MJM Digital',
+          receivedAt: new Date().toISOString(),
+          status: 'pending',
+          attempts: 1
+        };
+        group.deliveries.push(delivery);
+        const reservation = await writeGithubConfig(DIRECT_AUTOMATIONS_FILE_PATH, automationsFile.data, automationsFile.sha, 'Reserve Instagram inbox reply before sending');
+        automationsFile.sha = reservation.content.sha;
+        try {
+          const reply = await instagramRequest(`${encodeURIComponent(entry.id)}/messages`, token, {
+            recipient: { id: inbound.sender },
+            message: { text: inbound.reply }
+          });
+          delivery.status = 'sent';
+          delivery.messageId = reply.message_id || null;
+          processed += 1;
+        } catch (error) {
+          delivery.status = 'failed';
+          delivery.error = 'A Meta não confirmou o envio da resposta automática.';
+          delivery.errorCode = error.code || null;
+          delivery.errorSubcode = error.subcode || null;
+          delivery.httpStatus = error.httpStatus || null;
+        }
+        delivery.completedAt = new Date().toISOString();
+        group.deliveries = retainedDirectDeliveries(group.deliveries);
+        changed = true;
+      }
+    }
 
     for (const change of Array.isArray(entry.changes) ? entry.changes : []) {
       if (change.field !== 'comments') continue;
@@ -2230,8 +2304,8 @@ export async function handleInstagramWebhook(body, raw, signature, req) {
       for (const updated of automationsFile.data) {
         const target = latest.data.find(item => item.account === updated.account);
         if (!target) continue;
-        const completed = new Map((updated.deliveries || []).filter(item => item.completedAt).map(item => [String(item.commentId), item]));
-        target.deliveries = (target.deliveries || []).map(item => completed.get(String(item.commentId)) || item);
+        const completed = new Map((updated.deliveries || []).filter(item => item.completedAt).map(item => [directDeliveryKey(item), item]));
+        target.deliveries = (target.deliveries || []).map(item => completed.get(directDeliveryKey(item)) || item);
       }
       try {
         await writeGithubConfig(DIRECT_AUTOMATIONS_FILE_PATH, latest.data, latest.sha, 'Record Instagram Direct automation delivery');
