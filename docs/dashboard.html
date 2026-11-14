@@ -1973,6 +1973,23 @@
               <label><input type="checkbox" id="businessInboxEnabled"> Responder mensagens recebidas</label>
               <label><input type="checkbox" id="businessInboxClaude"> Usar Claude para identificar o serviço</label>
               <label><input type="checkbox" id="businessInboxWhatsapp"> Oferecer link para o WhatsApp (48) 99602-9392</label>
+              <details>
+                <summary>Editar menu e respostas</summary>
+                <p>Edite os textos abaixo. Os números continuam associados aos serviços indicados. Um campo vazio volta ao texto padrão.</p>
+                <label>Mensagem inicial do menu<textarea rows="2" maxlength="240" data-business-inbox-copy="intro"></textarea></label>
+                <label>Mensagem para escolha inválida<textarea rows="2" maxlength="240" data-business-inbox-copy="retry"></textarea></label>
+                <label>Nome da opção 1 (Site ou landing page)<input maxlength="45" data-business-inbox-copy="label1"></label>
+                <label>Nome da opção 2 (Automação com IA)<input maxlength="45" data-business-inbox-copy="label2"></label>
+                <label>Nome da opção 3 (Pedir orçamento)<input maxlength="45" data-business-inbox-copy="label3"></label>
+                <label>Nome da opção 4 (Falar com o Marcondes)<input maxlength="45" data-business-inbox-copy="label4"></label>
+                <label>Resposta sobre landing page<textarea rows="2" maxlength="240" data-business-inbox-copy="landing"></textarea></label>
+                <label>Resposta sobre automação com IA<textarea rows="2" maxlength="240" data-business-inbox-copy="automation"></textarea></label>
+                <label>Resposta para pedido de orçamento<textarea rows="2" maxlength="240" data-business-inbox-copy="quote"></textarea></label>
+                <label>Resposta para falar com o Marcondes<textarea rows="2" maxlength="240" data-business-inbox-copy="human"></textarea></label>
+                <label>Resposta sobre criação de site<textarea rows="2" maxlength="240" data-business-inbox-copy="site"></textarea></label>
+                <label>Confirmação após receber os detalhes<textarea rows="2" maxlength="240" data-business-inbox-copy="details"></textarea></label>
+                <label>Resposta sobre automação do atendimento<textarea rows="2" maxlength="240" data-business-inbox-copy="support"></textarea></label>
+              </details>
               <button type="button" class="primary" id="saveBusinessInbox">Salvar chatbot</button>
               <div class="access-result" id="businessInboxResult" role="status"></div>
             </fieldset>
@@ -4501,6 +4518,9 @@
       document.getElementById('businessInboxEnabled').checked = settings.enabled;
       document.getElementById('businessInboxClaude').checked = settings.claude;
       document.getElementById('businessInboxWhatsapp').checked = settings.whatsapp;
+      for (const field of panel.querySelectorAll('[data-business-inbox-copy]')) {
+        field.value = settings.copy?.[field.dataset.businessInboxCopy] || '';
+      }
     }
 
     document.getElementById('saveBusinessInbox').addEventListener('click', async (event) => {
@@ -4515,7 +4535,8 @@
           action: 'update-business-inbox', account, settings: {
             enabled: document.getElementById('businessInboxEnabled').checked,
             claude: document.getElementById('businessInboxClaude').checked,
-            whatsapp: document.getElementById('businessInboxWhatsapp').checked
+            whatsapp: document.getElementById('businessInboxWhatsapp').checked,
+            copy: Object.fromEntries(Array.from(document.querySelectorAll('[data-business-inbox-copy]'), field => [field.dataset.businessInboxCopy, field.value]))
           }
         }) });
         if (appState.selectedAccount === account) {
