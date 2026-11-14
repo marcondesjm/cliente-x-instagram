@@ -2202,7 +2202,7 @@ const businessDirectChoices = {
 
 export function businessDirectReply(value, stage = '') {
   const choice = normalizeDirectMatchText(value);
-  if (/^(menu|opcoes|voltar ao menu)$/.test(choice)) return businessDirectMenu;
+  if (/^(menu|opcoes|voltar ao menu|oi|ola|opa|bom dia|boa tarde|boa noite)( tudo bem)?$/.test(choice)) return businessDirectMenu;
   if (stage === 'handoff') return null;
   const option = stage === 'services' ? choice.match(/^(?:opcao )?([1-4])$/)?.[1] : null;
   if (stage === 'services' && !option && /^(?:opcao )?\d+$/.test(choice)) return businessDirectMenu;
@@ -2226,9 +2226,7 @@ export function businessDirectReply(value, stage = '') {
   if (/\b(automacao|automacoes|ia|inteligencia artificial|chatbot)\b/.test(text)) {
     return { next: 'details', reply: 'Ajudamos empresas a aplicar IA e automação em atendimento, vendas e tarefas repetitivas. Qual processo você quer automatizar?' };
   }
-  if (/^(oi|ola|opa|bom dia|boa tarde|boa noite|servicos|o que voces fazem)$/.test(text)) {
-    return businessDirectMenu;
-  }
+  if (/^(servicos|o que voces fazem)$/.test(text)) return businessDirectMenu;
   if (stage === 'details' && text.length >= 8 && !/^(obrigad[oa]|valeu|tudo bem|legal|perfeito)( mesmo| e voce)?$/.test(text)) {
     return { next: 'handoff', reply: 'Obrigado pelos detalhes! Sua mensagem fica aqui no Direct para o Marcondes continuar o atendimento e conversar com você sobre o projeto.' };
   }
