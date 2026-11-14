@@ -2149,26 +2149,35 @@ export function ownDirectComment(value = {}, account = {}, accountId = '') {
   return Boolean((authorId && authorId === String(accountId)) || (authorName && expected && authorName === expected));
 }
 
-export function businessDirectReply(value) {
+export function businessDirectReply(value, stage = '') {
   const text = normalizeDirectMatchText(value);
-  if (!text) return '';
-  const prefix = 'Olá! Sou o assistente da MJM Digital. ';
-  if (/\b(humano|atendente|pessoa|marcondes)\b/.test(text)) {
-    return prefix + 'Pode deixar aqui seu nome e um resumo do pedido para o Marcondes dar continuidade pelo Direct.';
+  if (!text) return null;
+  if (/\b(humano|atendente|falar com (uma pessoa|o marcondes))\b/.test(text)) {
+    return { next: 'handoff', reply: 'Pode deixar aqui seu nome e um resumo do pedido. O Marcondes pode dar continuidade pelo Direct.' };
   }
-  if (/\b(preco|precos|orcamento|valor|valores|quanto|prazo)\b/.test(text)) {
-    return prefix + 'Para pedir um orçamento, me diga qual é o seu negócio, qual serviço você procura e o que deseja alcançar. O Marcondes pode avaliar os detalhes por aqui.';
+  if (stage === 'handoff') return null;
+  if (/\b(preco|precos|orcamento|valor|valores|quanto custa|prazo)\b/.test(text)) {
+    return { next: 'details', reply: 'Para pedir um orçamento, me conte qual é o seu negócio e o que você precisa. O Marcondes pode avaliar os detalhes por aqui.' };
+  }
+  if (/\b(land(?:ing)?\s*pages?|pagina de (vendas|captura))\b/.test(text)) {
+    return { next: 'details', reply: 'Fazemos sim! Qual é o seu tipo de negócio e o que a landing page precisa fazer? Por exemplo, receber contatos pelo WhatsApp, captar cadastros ou apresentar uma oferta.' };
   }
   if (/\b(site|sites|landing|pagina|paginas|portfolio|vitrine)\b/.test(text)) {
-    return prefix + 'Desenvolvemos sites e landing pages para apresentar seus serviços e facilitar o contato com seus clientes. Qual é o seu tipo de negócio e o que você precisa que o site faça?';
+    return { next: 'details', reply: 'Desenvolvemos sites e landing pages para apresentar seus serviços e facilitar o contato com clientes. Qual é o seu tipo de negócio e o que você precisa que o site faça?' };
   }
-  if (/\b(automacao|automacoes|ia|inteligencia artificial|instagram|atendimento|chatbot)\b/.test(text)) {
-    return prefix + 'Ajudamos empresas a aplicar IA e automação em atendimento, vendas e tarefas repetitivas. Qual processo você quer automatizar?';
+  if (/\b(automacao|automacoes|ia|inteligencia artificial|chatbot)\b/.test(text)) {
+    return { next: 'details', reply: 'Ajudamos empresas a aplicar IA e automação em atendimento, vendas e tarefas repetitivas. Qual processo você quer automatizar?' };
   }
-  if (/^(oi|ola|opa|bom dia|boa tarde|boa noite|servicos|o que voces fazem)[!?. ]*$/.test(text)) {
-    return prefix + 'Trabalhamos com criação de sites, landing pages e automações com IA. Qual desses serviços você está procurando?';
+  if (/^(oi|ola|opa|bom dia|boa tarde|boa noite|servicos|o que voces fazem)$/.test(text)) {
+    return { next: 'services', reply: 'Olá! Sou o assistente da MJM Digital. Trabalhamos com criação de sites, landing pages e automações com IA. Qual desses serviços você está procurando?' };
   }
-  return '';
+  if (stage === 'details' && text.length >= 8 && !/^(obrigad[oa]|valeu|tudo bem|legal|perfeito)( mesmo| e voce)?$/.test(text)) {
+    return { next: 'handoff', reply: 'Obrigado pelos detalhes! Sua mensagem fica aqui no Direct para o Marcondes continuar o atendimento e conversar com você sobre o projeto.' };
+  }
+  if (/\b(instagram|atendimento)\b/.test(text)) {
+    return { next: 'details', reply: 'Ajudamos empresas a automatizar o atendimento. Qual parte desse processo você quer automatizar?' };
+  }
+  return null;
 }
 
 function businessDirectEvent(event, accountId, now = Date.now()) {
@@ -2180,8 +2189,7 @@ function businessDirectEvent(event, accountId, now = Date.now()) {
       !id || event.message.is_echo || event.message.is_deleted || event.message.is_unsupported ||
       typeof event.message.text !== 'string' || !Number.isFinite(timestamp) ||
       timestamp > now + 60_000 || now - timestamp >= 24 * 60 * 60 * 1000) return null;
-  const reply = businessDirectReply(event.message.text);
-  return reply ? { id, sender, reply } : null;
+  return { id, sender, text: event.message.text, timestamp };
 }
 
 function directDeliveryKey(item) {
@@ -2211,8 +2219,18 @@ export async function handleInstagramWebhook(body, raw, signature, req) {
       for (const event of Array.isArray(entry.messaging) ? entry.messaging : []) {
         const inbound = businessDirectEvent(event, String(entry.id));
         if (!inbound || group.deliveries.some(item => item.inboundMessageId === inbound.id)) continue;
+        const conversationKey = createHmac('sha256', process.env.INSTAGRAM_APP_SECRET)
+          .update(JSON.stringify([String(entry.id), inbound.sender])).digest('hex');
+        const previous = group.deliveries.findLast(item => item.conversationKey === conversationKey &&
+          item.status === 'sent' && item.inboundAt <= inbound.timestamp &&
+          inbound.timestamp - item.inboundAt < 24 * 60 * 60 * 1000);
+        const replyPlan = businessDirectReply(inbound.text, previous?.conversationStage);
+        if (!replyPlan) continue;
         const delivery = {
           inboundMessageId: inbound.id,
+          inboundAt: inbound.timestamp,
+          conversationKey,
+          conversationStage: replyPlan.next,
           automationName: 'Atendimento MJM Digital',
           receivedAt: new Date().toISOString(),
           status: 'pending',
@@ -2224,7 +2242,7 @@ export async function handleInstagramWebhook(body, raw, signature, req) {
         try {
           const reply = await instagramRequest(`${encodeURIComponent(entry.id)}/messages`, token, {
             recipient: { id: inbound.sender },
-            message: { text: inbound.reply }
+            message: { text: replyPlan.reply }
           });
           delivery.status = 'sent';
           delivery.messageId = reply.message_id || null;
