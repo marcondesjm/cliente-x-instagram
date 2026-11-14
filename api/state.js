@@ -2159,6 +2159,9 @@ export function businessDirectReply(value, stage = '') {
   if (/\b(preco|precos|orcamento|valor|valores|quanto custa|prazo)\b/.test(text)) {
     return { next: 'details', reply: 'Para pedir um orçamento, me conte qual é o seu negócio e o que você precisa. O Marcondes pode avaliar os detalhes por aqui.' };
   }
+  if (stage === 'details' && /^(tenho|somos|trabalho|vendemos|meu negocio|minha empresa|e para|para uma|para um)\b/.test(text)) {
+    return { next: 'handoff', reply: 'Obrigado pelos detalhes! Sua mensagem fica aqui no Direct para o Marcondes continuar o atendimento e conversar com você sobre o projeto.' };
+  }
   if (/\b(land(?:ing)?\s*pages?|pagina de (vendas|captura))\b/.test(text)) {
     return { next: 'details', reply: 'Fazemos sim! Qual é o seu tipo de negócio e o que a landing page precisa fazer? Por exemplo, receber contatos pelo WhatsApp, captar cadastros ou apresentar uma oferta.' };
   }
@@ -2178,6 +2181,51 @@ export function businessDirectReply(value, stage = '') {
     return { next: 'details', reply: 'Ajudamos empresas a automatizar o atendimento. Qual parte desse processo você quer automatizar?' };
   }
   return null;
+}
+
+export function businessWhatsappReply(details) {
+  const brief = String(details || '').replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, 300);
+  const message = 'Olá, Marcondes! Vim pelo Instagram da MJM Digital.' + (brief ? '\nMeu projeto: ' + brief : '');
+  return 'Se preferir continuar pelo WhatsApp, abra a mensagem preenchida e toque em Enviar: https://wa.me/5548996029392?text=' + encodeURIComponent(message.toWellFormed());
+}
+
+const BUSINESS_CLAUDE_REPLIES = {
+  sites: 'Podemos criar uma página para apresentar seus serviços e receber contatos. Qual é seu tipo de negócio e o que a página precisa fazer?',
+  automation: 'A MJM Digital pode ajudar com automações de atendimento, vendas e tarefas repetitivas. O que você gostaria de automatizar?',
+  clarification: 'Você procura um site, uma landing page ou uma automação? Se puder, me conte o que quer resolver.'
+};
+
+async function businessClaudeReply(value, stage, request = fetch) {
+  if (stage === 'details' || stage === 'handoff') return null;
+  const terms = normalizeDirectMatchText(value).match(/\b(empresa|negocio|divulgar|clientes|vendas|leads|captar|formulario|online|loja|projeto|digital|atender|responder|mensagens|tarefas|processos|agenda|whatsapp|integracao|integrar|crm)\b/g);
+  if (!terms?.length) return null;
+  const fallback = { next: 'services', reply: BUSINESS_CLAUDE_REPLIES.clarification };
+  const key = process.env.CLAUDE_SS_API_KEY;
+  if (!key) return fallback;
+  try {
+    // Only fixed vocabulary is shared with the configured provider.
+    const response = await request('https://claude-ss.ia.br/v1/messages', {
+      method: 'POST',
+      redirect: 'error',
+      signal: AbortSignal.timeout(2400),
+      headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' },
+      body: JSON.stringify({
+        model: 'claude-haiku-4.5',
+        max_tokens: 20,
+        messages: [{
+          role: 'user',
+          content: 'Classifique as palavras a seguir em uma opção: sites, automation ou clarification. Na dúvida, use clarification. Responda só com a opção. Palavras: ' + [...new Set(terms)].join(', ')
+        }]
+      })
+    });
+    if (!response.ok) return fallback;
+    const body = await response.json();
+    const decision = body.content?.find(item => item.type === 'text')?.text?.trim().toLowerCase();
+    if (!Object.hasOwn(BUSINESS_CLAUDE_REPLIES, decision)) return fallback;
+    return { next: decision === 'clarification' ? 'services' : 'details', reply: BUSINESS_CLAUDE_REPLIES[decision] };
+  } catch {
+    return fallback;
+  }
 }
 
 function businessDirectEvent(event, accountId, now = Date.now()) {
@@ -2224,8 +2272,12 @@ export async function handleInstagramWebhook(body, raw, signature, req) {
         const previous = group.deliveries.findLast(item => item.conversationKey === conversationKey &&
           item.status === 'sent' && item.inboundAt <= inbound.timestamp &&
           inbound.timestamp - item.inboundAt < 24 * 60 * 60 * 1000);
-        const replyPlan = businessDirectReply(inbound.text, previous?.conversationStage);
+        const stage = previous?.conversationStage;
+        const replyPlan = businessDirectReply(inbound.text, stage) || await businessClaudeReply(inbound.text, stage);
         if (!replyPlan) continue;
+        const replyText = replyPlan.next === 'handoff'
+          ? replyPlan.reply + '\n\n' + businessWhatsappReply(stage === 'details' ? inbound.text : '')
+          : replyPlan.reply;
         const delivery = {
           inboundMessageId: inbound.id,
           inboundAt: inbound.timestamp,
@@ -2242,7 +2294,7 @@ export async function handleInstagramWebhook(body, raw, signature, req) {
         try {
           const reply = await instagramRequest(`${encodeURIComponent(entry.id)}/messages`, token, {
             recipient: { id: inbound.sender },
-            message: { text: replyPlan.reply }
+            message: { text: replyText }
           });
           delivery.status = 'sent';
           delivery.messageId = reply.message_id || null;
