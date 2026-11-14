@@ -1,24 +1,5 @@
 [
   {
-    "key": "cliente-x:2026-11-12:2:43312867815",
-    "status": "resolved",
-    "account": "cliente-x",
-    "date": "2026-11-12",
-    "slotIndex": 2,
-    "scheduledAt": "2026-11-12T12:00:00.000Z",
-    "scheduledPostId": null,
-    "failedAt": "2026-11-12T21:44:10.814Z",
-    "workflowRun": "43312867815",
-    "workflowName": "Instagram Watchdog Backup",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/43312867815",
-    "stage": "content-selection",
-    "error": "Radar visual sem foto inédita e reserva autoral esgotada. Nenhuma publicação repetida foi enviada; consulte visual-selection.json.",
-    "solution": "A reposição automática com Claude tenta criar e revisar conteúdo inédito para recuperar este horário. Se a cota diária terminou, aguarda a renovação e retoma pelo agendamento, sem botão ou pedido manual. O vigia só publica após aprovação factual, visual e contra repetição; o alerta permanece aberto até a publicação confirmada.",
-    "failurePath": "automation/instagram-template/runs/failure-2026-11-12-184410.json",
-    "resolvedAt": "2026-11-13T02:11:25.819Z",
-    "resolvedRun": "43349927683"
-  },
-  {
     "key": "cliente-x:2026-11-12:2:43314159334",
     "status": "resolved",
     "account": "cliente-x",
@@ -894,5 +875,22 @@
     "error": "Conteúdo bíblico ilustrado inédito esgotado. Adicione novas pautas revisadas com imagens; nenhum conteúdo genérico será publicado.",
     "solution": "Adicionar pautas bíblicas inéditas com ilustrações revisadas em todos os cartões, Story e créditos. O vigia retoma o horário pendente após a revisão; não repetir posts, voltar a cartões vazios ou renovar token por esse erro de conteúdo.",
     "failurePath": "automation/instagram-template/runs/failure-2026-11-13-205850.json"
+  },
+  {
+    "key": "cliente-x:2026-11-13:9:43533286669",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-11-13",
+    "slotIndex": 9,
+    "scheduledAt": "2026-11-13T19:00:00.000Z",
+    "scheduledPostId": null,
+    "failedAt": "2026-11-14T00:19:35.911Z",
+    "workflowRun": "43533286669",
+    "workflowName": "Instagram Feed Cliente X",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/43533286669",
+    "stage": "education-library",
+    "error": "Biblioteca educativa sem aula inédita elegível. Acrescente uma demonstração revisada; notícias genéricas não serão usadas como preenchimento.",
+    "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o conteúdo ou dependência indicada antes da próxima tentativa.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-11-13-211935.json"
   }
 ]
