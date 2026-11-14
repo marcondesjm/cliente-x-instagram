@@ -2188,13 +2188,29 @@ export function ownDirectComment(value = {}, account = {}, accountId = '') {
   return Boolean((authorId && authorId === String(accountId)) || (authorName && expected && authorName === expected));
 }
 
+const businessDirectMenu = {
+  next: 'services',
+  reply: 'Olá! Sou o assistente da MJM Digital. Responda com o número da opção:\n\n1 — Site ou landing page\n2 — Automação com IA\n3 — Pedir orçamento\n4 — Falar com o Marcondes'
+};
+
+const businessDirectChoices = {
+  '1': 'landing page',
+  '2': 'automação',
+  '3': 'orçamento',
+  '4': 'atendente'
+};
+
 export function businessDirectReply(value, stage = '') {
-  const text = normalizeDirectMatchText(value);
+  const choice = normalizeDirectMatchText(value);
+  if (/^(menu|opcoes|voltar ao menu)$/.test(choice)) return businessDirectMenu;
+  if (stage === 'handoff') return null;
+  const option = stage === 'services' ? choice.match(/^(?:opcao )?([1-4])$/)?.[1] : null;
+  if (stage === 'services' && !option && /^(?:opcao )?\d+$/.test(choice)) return businessDirectMenu;
+  const text = option ? normalizeDirectMatchText(businessDirectChoices[option]) : choice;
   if (!text) return null;
   if (/\b(humano|atendente|falar com (uma pessoa|o marcondes))\b/.test(text)) {
     return { next: 'handoff', reply: 'Pode deixar aqui seu nome e um resumo do pedido. O Marcondes pode dar continuidade pelo Direct.' };
   }
-  if (stage === 'handoff') return null;
   if (/\b(preco|precos|orcamento|valor|valores|quanto custa|prazo)\b/.test(text)) {
     return { next: 'details', reply: 'Para pedir um orçamento, me conte qual é o seu negócio e o que você precisa. O Marcondes pode avaliar os detalhes por aqui.' };
   }
@@ -2211,7 +2227,7 @@ export function businessDirectReply(value, stage = '') {
     return { next: 'details', reply: 'Ajudamos empresas a aplicar IA e automação em atendimento, vendas e tarefas repetitivas. Qual processo você quer automatizar?' };
   }
   if (/^(oi|ola|opa|bom dia|boa tarde|boa noite|servicos|o que voces fazem)$/.test(text)) {
-    return { next: 'services', reply: 'Olá! Sou o assistente da MJM Digital. Trabalhamos com criação de sites, landing pages e automações com IA. Qual desses serviços você está procurando?' };
+    return businessDirectMenu;
   }
   if (stage === 'details' && text.length >= 8 && !/^(obrigad[oa]|valeu|tudo bem|legal|perfeito)( mesmo| e voce)?$/.test(text)) {
     return { next: 'handoff', reply: 'Obrigado pelos detalhes! Sua mensagem fica aqui no Direct para o Marcondes continuar o atendimento e conversar com você sobre o projeto.' };
@@ -2238,7 +2254,7 @@ async function businessClaudeReply(value, stage, request = fetch) {
   if (stage === 'details' || stage === 'handoff') return null;
   const terms = normalizeDirectMatchText(value).match(/\b(empresa|negocio|divulgar|clientes|vendas|leads|captar|formulario|online|loja|projeto|digital|atender|responder|mensagens|tarefas|processos|agenda|whatsapp|integracao|integrar|crm)\b/g);
   if (!terms?.length) return null;
-  const fallback = { next: 'services', reply: BUSINESS_CLAUDE_REPLIES.clarification };
+  const fallback = businessDirectMenu;
   const key = process.env.CLAUDE_SS_API_KEY;
   if (!key) return fallback;
   try {
@@ -2261,7 +2277,7 @@ async function businessClaudeReply(value, stage, request = fetch) {
     const body = await response.json();
     const decision = body.content?.find(item => item.type === 'text')?.text?.trim().toLowerCase();
     if (!Object.hasOwn(BUSINESS_CLAUDE_REPLIES, decision)) return fallback;
-    return { next: decision === 'clarification' ? 'services' : 'details', reply: BUSINESS_CLAUDE_REPLIES[decision] };
+    return decision === 'clarification' ? fallback : { next: 'details', reply: BUSINESS_CLAUDE_REPLIES[decision] };
   } catch {
     return fallback;
   }
@@ -2314,15 +2330,16 @@ export async function handleInstagramWebhook(body, raw, signature, req) {
           inbound.timestamp - item.inboundAt < 24 * 60 * 60 * 1000);
         const stage = previous?.conversationStage;
         const replyPlan = businessDirectReply(inbound.text, stage) || (inboxSettings.claude ? await businessClaudeReply(inbound.text, stage) : null);
-        if (!replyPlan) continue;
-        const replyText = replyPlan.next === 'handoff' && inboxSettings.whatsapp
-          ? replyPlan.reply + '\n\n' + businessWhatsappReply(stage === 'details' ? inbound.text : '')
-          : replyPlan.reply;
+        const selectedReply = replyPlan || (!stage && normalizeDirectMatchText(inbound.text) ? businessDirectMenu : null);
+        if (!selectedReply) continue;
+        const replyText = selectedReply.next === 'handoff' && inboxSettings.whatsapp
+          ? selectedReply.reply + '\n\n' + businessWhatsappReply(stage === 'details' ? inbound.text : '')
+          : selectedReply.reply;
         const delivery = {
           inboundMessageId: inbound.id,
           inboundAt: inbound.timestamp,
           conversationKey,
-          conversationStage: replyPlan.next,
+          conversationStage: selectedReply.next,
           automationName: 'Atendimento MJM Digital',
           receivedAt: new Date().toISOString(),
           status: 'pending',
