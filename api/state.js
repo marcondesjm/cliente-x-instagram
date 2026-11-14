@@ -2328,7 +2328,7 @@ export async function handleInstagramWebhook(body, raw, signature, req) {
           inbound.timestamp - item.inboundAt < 24 * 60 * 60 * 1000);
         const stage = previous?.conversationStage;
         const replyPlan = businessDirectReply(inbound.text, stage) || (inboxSettings.claude ? await businessClaudeReply(inbound.text, stage) : null);
-        const selectedReply = replyPlan || (!stage && normalizeDirectMatchText(inbound.text) ? businessDirectMenu : null);
+        const selectedReply = replyPlan || (inbound.text.trim() ? businessDirectMenu : null);
         if (!selectedReply) continue;
         const replyText = selectedReply.next === 'handoff' && inboxSettings.whatsapp
           ? selectedReply.reply + '\n\n' + businessWhatsappReply(stage === 'details' ? inbound.text : '')
