@@ -1968,6 +1968,14 @@
               <button type="button" id="uploadDirectMaterial">Anexar material</button>
               <button class="primary" type="button" id="saveDirectAutomation">Salvar automações</button>
             </div>
+            <fieldset id="businessInboxSettings" hidden>
+              <legend>Chatbot do Direct · MJM Digital</legend>
+              <label><input type="checkbox" id="businessInboxEnabled"> Responder mensagens recebidas</label>
+              <label><input type="checkbox" id="businessInboxClaude"> Usar Claude para identificar o serviço</label>
+              <label><input type="checkbox" id="businessInboxWhatsapp"> Oferecer link para o WhatsApp (48) 99602-9392</label>
+              <button type="button" class="primary" id="saveBusinessInbox">Salvar chatbot</button>
+              <div class="access-result" id="businessInboxResult" role="status"></div>
+            </fieldset>
             <div class="access-result" id="directAutomationResult">Preencha a campanha e salve no projeto.</div>
           </div>
         </div>
@@ -3252,6 +3260,7 @@
         appState.scheduledPosts = state.scheduledPosts || [];
         appState.weeklyPrograms = state.weeklyPrograms || [];
         appState.bioPage = state.bioPage || null;
+        appState.businessInbox = state.businessInbox || null;
         appState.directAutomation = state.directAutomation || { automation: null, automations: [], deliveries: [] };
         appState.secrets = state.secrets || [];
         appState.accessConfig = state.accessConfig || [];
@@ -4484,7 +4493,45 @@
       return automations;
     }
 
+    function renderBusinessInbox() {
+      const panel = document.getElementById('businessInboxSettings');
+      const settings = appState.selectedAccount === 'cliente-x' ? appState.businessInbox : null;
+      panel.hidden = !settings;
+      if (!settings) return;
+      document.getElementById('businessInboxEnabled').checked = settings.enabled;
+      document.getElementById('businessInboxClaude').checked = settings.claude;
+      document.getElementById('businessInboxWhatsapp').checked = settings.whatsapp;
+    }
+
+    document.getElementById('saveBusinessInbox').addEventListener('click', async (event) => {
+      const account = appState.selectedAccount;
+      if (account !== 'cliente-x') return;
+      const button = event.currentTarget;
+      const result = document.getElementById('businessInboxResult');
+      button.disabled = true;
+      result.textContent = 'Salvando chatbot...';
+      try {
+        const payload = await api('/api/state', { method: 'POST', body: JSON.stringify({
+          action: 'update-business-inbox', account, settings: {
+            enabled: document.getElementById('businessInboxEnabled').checked,
+            claude: document.getElementById('businessInboxClaude').checked,
+            whatsapp: document.getElementById('businessInboxWhatsapp').checked
+          }
+        }) });
+        if (appState.selectedAccount === account) {
+          appState.businessInbox = payload.settings;
+          renderBusinessInbox();
+        }
+        result.textContent = 'Configuração do chatbot salva.';
+      } catch (error) {
+        result.textContent = error.message;
+      } finally {
+        button.disabled = false;
+      }
+    });
+
     function renderDirectAutomation() {
+      renderBusinessInbox();
       const group = appState.directAutomation || {};
       const automations = directAutomations();
       directAutomationIndex = Math.min(Math.max(0, directAutomationIndex), Math.max(0, automations.length - 1));

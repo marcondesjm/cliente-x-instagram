@@ -1997,6 +1997,45 @@ function directAutomationConnected(account = {}) {
   );
 }
 
+function businessInboxSettings(group) {
+  const saved = group?.inboxBot || {};
+  return {
+    enabled: saved.enabled !== false && process.env.CLIENTE_X_INSTAGRAM_INBOX_BOT === 'true',
+    claude: saved.claude !== false,
+    whatsapp: saved.whatsapp !== false
+  };
+}
+
+async function updateBusinessInbox(body, session) {
+  const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
+  const account = accounts.find(item => item.account === 'cliente-x');
+  if (body.account !== 'cliente-x' || !account || !canAccessAccount(session, account)) {
+    throw userError('Seu usuário não pode alterar este chatbot.', 403);
+  }
+  const { enabled, claude, whatsapp } = body.settings || {};
+  if ([enabled, claude, whatsapp].some(value => typeof value !== 'boolean')) {
+    throw userError('Informe as três opções do chatbot.');
+  }
+  if (enabled && process.env.CLIENTE_X_INSTAGRAM_INBOX_BOT !== 'true') {
+    throw userError('A ativação do chatbot está desabilitada na Vercel.');
+  }
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const file = await readGithubConfig(DIRECT_AUTOMATIONS_FILE_PATH);
+    let group = file.data.find(item => item.account === account.account);
+    if (!group) {
+      group = { account: account.account, automations: [], deliveries: [] };
+      file.data.push(group);
+    }
+    group.inboxBot = { enabled, claude, whatsapp };
+    try {
+      await writeGithubConfig(DIRECT_AUTOMATIONS_FILE_PATH, file.data, file.sha, 'Update Instagram inbox bot settings');
+      return { ok: true, settings: businessInboxSettings(group) };
+    } catch (error) {
+      if (error.statusCode !== 409 || attempt === 2) throw error;
+    }
+  }
+}
+
 async function updateDirectAutomation(body = {}, session = null) {
   const accountKey = normalizeAccountKey(body.account);
   const accounts = await readConfigGroups(ACCOUNTS_FILE_PATH, ACCOUNTS_PATH);
@@ -2263,7 +2302,8 @@ export async function handleInstagramWebhook(body, raw, signature, req) {
     if (!group || !token) continue;
     group.deliveries = retainedDirectDeliveries(group.deliveries);
 
-    if (account.account === 'cliente-x' && process.env.CLIENTE_X_INSTAGRAM_INBOX_BOT === 'true') {
+    const inboxSettings = businessInboxSettings(group);
+    if (account.account === 'cliente-x' && inboxSettings.enabled) {
       for (const event of Array.isArray(entry.messaging) ? entry.messaging : []) {
         const inbound = businessDirectEvent(event, String(entry.id));
         if (!inbound || group.deliveries.some(item => item.inboundMessageId === inbound.id)) continue;
@@ -2273,9 +2313,9 @@ export async function handleInstagramWebhook(body, raw, signature, req) {
           item.status === 'sent' && item.inboundAt <= inbound.timestamp &&
           inbound.timestamp - item.inboundAt < 24 * 60 * 60 * 1000);
         const stage = previous?.conversationStage;
-        const replyPlan = businessDirectReply(inbound.text, stage) || await businessClaudeReply(inbound.text, stage);
+        const replyPlan = businessDirectReply(inbound.text, stage) || (inboxSettings.claude ? await businessClaudeReply(inbound.text, stage) : null);
         if (!replyPlan) continue;
-        const replyText = replyPlan.next === 'handoff'
+        const replyText = replyPlan.next === 'handoff' && inboxSettings.whatsapp
           ? replyPlan.reply + '\n\n' + businessWhatsappReply(stage === 'details' ? inbound.text : '')
           : replyPlan.reply;
         const delivery = {
@@ -2803,6 +2843,10 @@ export default async function handler(req, res) {
         res.status(200).json(result);
         return;
       }
+      if (body.action === 'update-business-inbox') {
+        const result = await updateBusinessInbox(body, session);
+        res.setHeader('cache-control', 'no-store'); res.status(200).json(result); return;
+      }
       if (body.action === 'update-direct-automation') {
         const result = await updateDirectAutomation(body, session);
         res.setHeader('cache-control', 'no-store'); res.status(200).json(result); return;
@@ -3209,6 +3253,7 @@ export default async function handler(req, res) {
     },
     weeklyPrograms,
     bioPage,
+    businessInbox: accountKey === 'cliente-x' ? businessInboxSettings(directAutomationGroup) : null,
     directAutomation: {
       ...(directAutomationGroup || { account: accountKey, automation: null, automations: [], deliveries: [] }),
       connected: directAutomationConnected(account)
