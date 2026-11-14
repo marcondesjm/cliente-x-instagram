@@ -2274,7 +2274,7 @@ function businessDirectFallback(text, stage) {
 export function businessWhatsappReply(details) {
   const brief = String(details || '').replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, 300);
   const message = 'Olá, Marcondes! Vim pelo Instagram da MJM Digital.' + (brief ? '\nMeu projeto: ' + brief : '');
-  return 'Se preferir continuar pelo WhatsApp, abra a mensagem preenchida e toque em Enviar: https://wa.me/5548996029392?text=' + encodeURIComponent(message.toWellFormed());
+  return 'Se preferir falar com a MJM Digital pelo WhatsApp, abra a mensagem preenchida e toque em Enviar: https://wa.me/554896029392?text=' + encodeURIComponent(message.toWellFormed());
 }
 
 const BUSINESS_CLAUDE_REPLIES = { sites: 'site', automation: 'automation' };
