@@ -18119,16 +18119,30 @@
       "reason": "Resposta estruturada ou recibo da API inválido."
     }
   ],
-  "checkedAt": "2026-11-16T19:51:45.480Z",
+  "checkedAt": "2026-11-16T19:51:56.352Z",
   "workflowRun": "43943556088",
   "message": "Resposta estruturada ou recibo da API inválido.",
   "lastResponse": {
-    "stage": "review:teste-variacoes-v10",
-    "callId": "dd32a582-6428-4b04-9675-f7705c8214e9",
-    "value": null,
-    "structured": false,
-    "stopReason": "end_turn",
-    "invalidResponse": "O modelo Fable 5 esta com alta demanda no momento. Tente novamente em alguns instantes."
+    "stage": "learning-analysis",
+    "callId": "aaa0e42d-5503-44b1-a052-a8a8736e2381",
+    "value": {
+      "diagnosis": "O perfil demonstra baixo engajamento em métricas principais (salvamentos, compartilhamentos), com comentários sendo o único indicador significativo de interação. O alcance varia drasticamente (5-121), indicando inconsistência na distribuição. O formato REELS parece mais eficaz, com scores mais altos em alguns casos. A abordagem consultiva e não sensacionalista da conta está alinhada com seu nicho, mas a falta de conteúdo que gere salvamentos/compartilhamentos limita o crescimento orgânico. A confiança alta no conteúdo não se traduz em métricas de conversão, sugerindo uma desconexão entre a utilidade demonstrada e o comportamento do público.",
+      "hypothesis": "Tópicos que exploram dilemas práticos e situações hipotéticas de IA no ambiente de negócios geram mais comentários do que afirmações ou dados. Cenários que colocam os leitores em situações de tomada de decisão (ex: 'E se sua IA tomasse uma decisão errada sobre um cliente?') podem aumentar o engajamento em comentários, que é a única métrica de interação significativa atualmente.",
+      "limitations": "A análise está limitada a uma janela de 24 horas, não pode estabelecer causalidade, e depende exclusivamente dos dados fornecidos. O baixo volume de métricas de salvamentos/compartilhamentos em todos os posts sugere uma limitação inerente ao formato ou ao público. A confiança alta no conteúdo não garante engajamento, indicando que a relevância por si só pode não ser suficiente para gerar ações. A experimentação atual (variant com 1 post alcançando 7 pessoas) não mostra melhoria significativa, sugerindo que o problema pode estar na proposta editorial em si, e não apenas na execução.",
+      "axis": "hook",
+      "variant": "specific-question",
+      "format": "REELS",
+      "metric": "comments",
+      "evidenceIds": [
+        "18107872889290849",
+        "18114190028273532",
+        "18107599115574584",
+        "18210971344373344"
+      ]
+    },
+    "structured": true,
+    "stopReason": "tool_use",
+    "invalidResponse": null
   },
   "regression": {
     "bindingVersion": "exact-source-id-v1",
