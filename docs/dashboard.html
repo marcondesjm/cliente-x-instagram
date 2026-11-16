@@ -2403,6 +2403,11 @@
             </div>
           </div>
           <div class="message" id="watchdogActionMessage" role="status" aria-live="polite" hidden></div>
+          <div id="publicationMonitor" hidden>
+            <h3>Monitoramento de postagem</h3>
+            <div class="checks" id="publicationMonitorRows" aria-live="polite"></div>
+            <p id="publicationMonitorFreshness"></p>
+          </div>
           <div class="checks" id="watchdogPanel">
             <div class="check">
               <span class="dot good"></span>
@@ -3227,6 +3232,7 @@
         document.getElementById('adminPassword').value = '';
         showApp(session);
         await runOperationalCheck();
+        refreshOperationalStatus();
       } catch (loginError) {
         error.textContent = loginError.message;
       } finally {
@@ -3242,6 +3248,7 @@
       });
       appState.adminEmail = null;
       appState.sessionRole = null;
+      renderPublicationMonitor(null);
       showLogin('Sessão encerrada.');
     }
 
@@ -3763,7 +3770,9 @@
       directHistoryDate = '';
       directHistoryPage = 1;
       setMessage(`Carregando conta ${appState.selectedAccount}...`, 'warn');
+      renderPublicationMonitor(null);
       await loadState();
+      refreshOperationalStatus();
     }
 
     function renderMaintenance(maintenance) {
@@ -7847,15 +7856,87 @@
       return `Alcance/insights não liberado: ${error || 'sem retorno da Graph API'}.`;
     }
 
+    const monitorDate = (value) => Date.parse(value)
+      ? new Date(value).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }) : '';
+
+    function addPublicationMonitorRow(label, detail, tone, runId) {
+      const row = document.createElement('div');
+      row.className = 'check';
+      const dot = document.createElement('span');
+      dot.className = `dot ${tone}`;
+      const content = document.createElement('div');
+      const title = document.createElement('strong');
+      title.textContent = label;
+      const description = document.createElement('span');
+      description.textContent = detail;
+      content.append(title, description);
+      if (/^[1-9][0-9]*$/.test(String(runId))) {
+        const link = document.createElement('a');
+        link.href = `https://github.com/marcondesjm/cliente-x-instagram/actions/runs/${runId}`;
+        link.textContent = 'Ver execução';
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        content.append(link);
+      }
+      row.append(dot, content);
+      document.getElementById('publicationMonitorRows').append(row);
+    }
+
+    function renderPublicationMonitor(monitor, checkedAt) {
+      const panel = document.getElementById('publicationMonitor');
+      panel.hidden = !monitor;
+      if (!monitor) {
+        document.getElementById('publicationMonitorRows').replaceChildren();
+        return;
+      }
+      document.getElementById('publicationMonitorRows').replaceChildren();
+      const statuses = {
+        queued: ['Na fila', 'warn'], in_progress: ['Em execução', 'warn'],
+        success: ['Execução concluída', 'good'], failure: ['Falhou', 'bad'],
+        cancelled: ['Cancelada', 'warn'], skipped: ['Ignorada', 'warn'],
+        timed_out: ['Tempo limite excedido', 'bad']
+      };
+      for (const workflow of monitor.workflows) {
+        const [label, tone] = !workflow.available ? ['Consulta indisponível', 'warn']
+          : !workflow.id ? ['Nenhuma execução registrada', 'warn']
+          : statuses[workflow.conclusion || workflow.status] || ['Status indisponível', 'warn'];
+        const at = monitorDate(workflow.updatedAt);
+        addPublicationMonitorRow(workflow.label, at ? `${label} · ${at}` : label, tone, workflow.id);
+      }
+      const stockLabels = {
+        provider_blocked: 'Aguardando recuperação do provedor',
+        waiting_daily_budget: 'Aguardando renovação da cota',
+        waiting_review_backoff: 'Aguardando nova tentativa de revisão',
+        replenish_for_incident: 'Reposição solicitada para o horário pendente',
+        recover_ready: 'Conteúdo aprovado disponível',
+        maintain_stock: 'Reposição de estoque prevista',
+        stock_sufficient: 'Estoque suficiente',
+        disabled: 'Reposição desativada'
+      };
+      const stock = monitor.stock;
+      const retryAt = Date.parse(stock?.nextAttemptAt) > Date.now() ? monitorDate(stock.nextAttemptAt) : '';
+      const stockLabel = stockLabels[stock?.phase] || 'Status da reposição indisponível';
+      addPublicationMonitorRow('Reserva de conteúdo', retryAt ? `${stockLabel} · Nova tentativa a partir de ${retryAt}` : stockLabel,
+        ['recover_ready', 'stock_sufficient'].includes(stock?.phase) ? 'good' : 'warn');
+      const confirmation = monitor.confirmed;
+      addPublicationMonitorRow('Última postagem automática confirmada',
+        confirmation ? monitorDate(confirmation.publishedAt)
+          : monitor.confirmationAvailable ? 'Nenhuma confirmação registrada' : 'Histórico automático indisponível',
+        confirmation ? 'good' : 'warn', confirmation?.runId);
+      document.getElementById('publicationMonitorFreshness').textContent =
+        `Consultado em ${monitorDate(checkedAt)} (Brasília). Atualiza a cada 20 segundos com o painel visível.`;
+    }
+
     let operationalRefreshPending = false;
     async function refreshOperationalStatus() {
-      if (operationalRefreshPending || document.visibilityState !== 'visible' || !appState.selectedAccount) return;
+      if (operationalRefreshPending || document.visibilityState !== 'visible' || !appState.selectedAccount || !appState.sessionRole) return;
       operationalRefreshPending = true;
       const account = appState.selectedAccount;
       const freshness = document.getElementById('operationalFreshness');
       try {
         const snapshot = await api(withAccount('/api/state?status=1'));
-        if (account !== appState.selectedAccount) return;
+        if (account !== appState.selectedAccount || !appState.sessionRole) return;
+        renderPublicationMonitor(snapshot.publicationMonitor, snapshot.checkedAt);
         appState.watchdogErrors = snapshot.watchdogErrors || [];
         appState.calendarPublications = snapshot.calendarPublications || [];
         appState.accounts = snapshot.accounts || appState.accounts;
@@ -7864,6 +7945,8 @@
         const at = new Date(snapshot.checkedAt).toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo' });
         freshness.textContent = `Status atualizado às ${at} (Brasília). Publicado somente com confirmação da Meta.`;
       } catch (error) {
+        if (account !== appState.selectedAccount || !appState.sessionRole) return;
+        document.getElementById('publicationMonitorFreshness').textContent = 'Consulta indisponível. Os dados exibidos podem estar desatualizados.';
         freshness.textContent = `Não foi possível atualizar o status. Os dados exibidos podem estar desatualizados: ${error.message}`;
       } finally { operationalRefreshPending = false; }
     }
@@ -7889,8 +7972,9 @@
       }
       setInterval(renderSchedule, 60_000);
       setInterval(() => {
-        if (document.visibilityState === 'visible') { loadPrivateMetrics(); refreshOperationalStatus(); }
+        if (document.visibilityState === 'visible') loadPrivateMetrics();
       }, 60_000);
+      setInterval(refreshOperationalStatus, 20_000);
       document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'visible') { loadPrivateMetrics(); refreshOperationalStatus(); }
       });
