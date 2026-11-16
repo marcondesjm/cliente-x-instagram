@@ -17920,71 +17920,104 @@
       "createdAt": "2026-11-16T19:01:05.413Z"
     }
   ],
-  "checkedAt": "2026-11-16T19:01:07.054Z",
+  "checkedAt": "2026-11-16T19:01:53.687Z",
   "workflowRun": "43934195098",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "generate:teste-variacoes-v10",
-    "callId": "f9e5bae9-acc6-4597-83b2-45734af48c78",
+    "stage": "art-direction:teste-variacoes-v10",
+    "callId": "ae7b9f73-73f2-48bf-b505-a878eba2d127",
     "value": {
-      "storySlide": {
-        "title": "IA falha em pedidos incompletos?",
-        "eyebrow": "Dúvida de rotina",
-        "body": "Como você organiza pedidos de matrícula que chegam incompletos? Veja como testar sua IA antes de automatizar."
-      },
-      "slides": [
+      "palette": "copper",
+      "frames": [
         {
-          "body": "Como garantir que a IA extraia dados corretos de pedidos de matrícula recebidos?",
-          "title": "O pedido do aluno chegou incompleto?",
-          "eyebrow": "Dúvida de rotina"
+          "layout": "workspace",
+          "labels": [
+            "Pedido recebido",
+            "Dados faltando",
+            "Tela de chat"
+          ]
         },
         {
-          "eyebrow": "Contexto hipotético",
-          "title": "Cenário de escola de cursos livres",
-          "body": "Imagine uma escola de cursos livres recebendo pedidos de matrícula via mensagens de texto."
+          "layout": "conversation",
+          "labels": [
+            "Escola cursos",
+            "Mensagens texto",
+            "Dúvidas alunos"
+          ]
         },
         {
-          "body": "O objetivo é testar a capacidade da IA em extrair dados de pedidos variados.",
-          "eyebrow": "Objetivo do exercício",
-          "title": "Validar a extração de dados"
+          "layout": "workflow",
+          "labels": [
+            "Rascunho prompt",
+            "Teste variação",
+            "Anotar falhas"
+          ]
         },
         {
-          "eyebrow": "Dados necessários",
-          "body": "Você precisará de um rascunho de instrução e quatro versões de pedidos de matrícula.",
-          "title": "Prepare seu material de teste"
+          "layout": "checklist",
+          "labels": [
+            "Instrução base",
+            "Quatro pedidos",
+            "Material pronto"
+          ]
         },
         {
-          "title": "Crie variações de pedidos",
-          "body": "Escreva um pedido completo, um com abreviações, um com erros e um faltando dados.",
-          "eyebrow": "Passo um"
+          "layout": "decision",
+          "labels": [
+            "Pedido completo",
+            "Com abreviação",
+            "Com erros"
+          ]
         },
         {
-          "body": "Execute a mesma instrução em cada versão e anote as divergências nos campos extraídos.",
-          "title": "Execute e compare resultados",
-          "eyebrow": "Passo dois"
+          "layout": "workspace",
+          "labels": [
+            "Executar prompt",
+            "Campos extraídos",
+            "Comparar saída"
+          ]
         },
         {
-          "eyebrow": "Passo três",
-          "title": "Trate informações ausentes",
-          "body": "Defina como a IA deve agir quando uma informação essencial estiver ausente no pedido."
+          "layout": "conversation",
+          "labels": [
+            "Info essencial",
+            "Campo ausente",
+            "Regra de ação"
+          ]
         },
         {
-          "body": "Sempre revise manualmente as extrações feitas pela IA antes de confirmar a matrícula final.",
-          "title": "Realize a conferência humana",
-          "eyebrow": "Passo quatro"
+          "layout": "workflow",
+          "labels": [
+            "Revisão manual",
+            "Conferência",
+            "Confirmar dados"
+          ]
         },
         {
-          "eyebrow": "Erro a evitar",
-          "body": "Evite confiar cegamente na IA sem antes testar como ela lida com erros comuns.",
-          "title": "Não ignore os testes iniciais"
+          "layout": "checklist",
+          "labels": [
+            "Teste inicial",
+            "Erros comuns",
+            "Validar antes"
+          ]
         },
         {
-          "title": "Ajuste antes de automatizar",
-          "body": "Aplique este teste em sua rotina para ajustar instruções antes de automatizar processos.",
-          "eyebrow": "Conclusão prática"
+          "layout": "decision",
+          "labels": [
+            "Ajustar prompt",
+            "Rotina real",
+            "Automatizar"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Pedido incompleto",
+            "Testar IA",
+            "Antes de usar"
+          ]
         }
-      ],
-      "caption": "A automação de pedidos em uma escola de cursos livres exige atenção constante aos detalhes. Quando a IA processa mensagens, variações na escrita ou dados ausentes podem comprometer a qualidade da extração.\n\nEste exercício propõe um teste prático para identificar falhas antes de implementar a rotina. Ao comparar rascunhos com diferentes níveis de qualidade, você entende como a IA se comporta e ajusta suas instruções para obter respostas mais consistentes.\n\nComo você lida com pedidos incompletos no seu dia a dia? Acompanhe nosso perfil para aprender aplicações práticas de IA em empresas."
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
