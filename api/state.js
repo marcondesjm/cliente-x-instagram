@@ -2475,6 +2475,47 @@ export async function handleInstagramWebhook(body, raw, signature, req) {
   return { processed };
 }
 
+const CLIENTE_X_WORKFLOWS = [
+  ['Feed automático', 'instagram-feed-cliente-x.yml'],
+  ['Vigia de backup', 'instagram-watchdog-backup.yml'],
+  ['Reposição autoral', 'authorial-reserve.yml']
+];
+
+const monitorConfig = (name) => githubJson(
+  `contents/automation/instagram-template/config/${name}.json?ref=main`,
+  { headers: { accept: 'application/vnd.github.raw+json' }, signal: AbortSignal.timeout(5000) }
+);
+
+async function readPublicationMonitor() {
+  const results = await Promise.allSettled([
+    ...CLIENTE_X_WORKFLOWS.map(([, workflow]) => githubJson(
+      `actions/workflows/${workflow}/runs?branch=main&per_page=1`,
+      { signal: AbortSignal.timeout(5000) }
+    )),
+    monitorConfig('published-slots'),
+    monitorConfig('authorial-reserve')
+  ]);
+  const workflows = CLIENTE_X_WORKFLOWS.map(([label], index) => {
+    const result = results[index];
+    const run = result.value?.workflow_runs?.[0];
+    return {
+      label, available: result.status === 'fulfilled',
+      id: run?.id, status: run?.status, conclusion: run?.conclusion, updatedAt: run?.updated_at
+    };
+  });
+  const ledger = results[CLIENTE_X_WORKFLOWS.length];
+  const confirmation = Array.isArray(ledger.value) ? ledger.value
+    .filter((entry) => entry.account === 'cliente-x' && entry.status === 'published' && Date.parse(entry.publishedAt))
+    .reduce((latest, entry) => !latest || Date.parse(entry.publishedAt) > Date.parse(latest.publishedAt) ? entry : latest, null) : null;
+  const stock = results[CLIENTE_X_WORKFLOWS.length + 1].value?.automaticRecovery;
+  return {
+    workflows,
+    confirmationAvailable: Array.isArray(ledger.value),
+    confirmed: confirmation && { publishedAt: confirmation.publishedAt, runId: confirmation.workflowRun },
+    stock: stock ? { phase: stock.phase, nextAttemptAt: stock.nextAttemptAt, checkedAt: stock.checkedAt } : null
+  };
+}
+
 async function readWatchdogErrors() {
   return readConfigGroups(WATCHDOG_ERRORS_FILE_PATH, WATCHDOG_ERRORS_PATH);
 }
@@ -3136,12 +3177,13 @@ export default async function handler(req, res) {
   }
   if (req.query?.status === '1') {
     requireConfiguredAccount(allowedAccounts, accountKey);
-    const [errors, history] = await Promise.all([
-      readWatchdogErrors(), readConfigGroups(PUBLICATION_HISTORY_FILE_PATH, PUBLICATION_HISTORY_PATH)
+    const [errors, history, publicationMonitor] = await Promise.all([
+      readWatchdogErrors(), readConfigGroups(PUBLICATION_HISTORY_FILE_PATH, PUBLICATION_HISTORY_PATH),
+      accountKey === 'cliente-x' ? readPublicationMonitor() : null
     ]);
     res.setHeader('cache-control', 'no-store');
     res.status(200).json({
-      checkedAt: new Date().toISOString(), selectedAccount: accountKey,
+      checkedAt: new Date().toISOString(), selectedAccount: accountKey, publicationMonitor,
       watchdogErrors: errors.filter(item => !item.account || item.account === accountKey).slice(-10).reverse(),
       calendarPublications: (history[accountKey] || []).filter(item => item.mediaId && item.publishedAt).map(item => ({
         date: brtDateAndTime(item.publishedAt).date, title: item.coverTitle || 'Publicado',
