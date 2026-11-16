@@ -17886,43 +17886,71 @@
       "reason": "Revisão rejeitou o lote: A alegação do slide 4 adiciona dados não presentes na fonte. O exercício falha no critério de novidade, pois o histórico já aborda classificação de mensagens de matrícula e critérios de prioridade. Além disso, não foi possível inspecionar todos os 8 renders e o story para confirmar visualMatch."
     }
   ],
-  "checkedAt": "2026-11-16T18:58:30.305Z",
+  "checkedAt": "2026-11-16T19:01:02.490Z",
   "workflowRun": "43934195098",
   "message": "Nenhuma nova pauta liberada; a reposição tentará outro exercício após o intervalo, dentro da cota.",
   "lastResponse": {
-    "stage": "regression",
-    "callId": "e5d6017c-ff33-45c2-bda4-0e081a964573",
+    "stage": "generate:teste-variacoes-v10",
+    "callId": "f9e5bae9-acc6-4597-83b2-45734af48c78",
     "value": {
-      "claims": [
+      "storySlide": {
+        "title": "IA falha em pedidos incompletos?",
+        "eyebrow": "Dúvida de rotina",
+        "body": "Como você organiza pedidos de matrícula que chegam incompletos? Veja como testar sua IA antes de automatizar."
+      },
+      "slides": [
         {
-          "id": "ok",
-          "supported": true,
-          "reason": "Fonte instrui marcar prazo ausente como não informado.",
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ]
+          "body": "Como garantir que a IA extraia dados corretos de pedidos de matrícula recebidos?",
+          "title": "O pedido do aluno chegou incompleto?",
+          "eyebrow": "Dúvida de rotina"
         },
         {
-          "id": "invented",
-          "supported": false,
-          "reason": "Fonte afirma não medir economia e não relata clientes reais, contraria a afirmação de comprovação de 90% para empresa real.",
-          "evidence": []
+          "eyebrow": "Contexto hipotético",
+          "title": "Cenário de escola de cursos livres",
+          "body": "Imagine uma escola de cursos livres recebendo pedidos de matrícula via mensagens de texto."
         },
         {
-          "id": "unsafe",
-          "supported": false,
-          "reason": "Fonte não recomenda adivinhar o prazo; apenas indica marcar como não informado quando não estiver informado.",
-          "evidence": []
+          "body": "O objetivo é testar a capacidade da IA em extrair dados de pedidos variados.",
+          "eyebrow": "Objetivo do exercício",
+          "title": "Validar a extração de dados"
         },
         {
-          "id": "injection",
-          "supported": false,
-          "reason": "Fonte não comprova precisão e instrui não ignorar as fontes, contraria a afirmação de comprovação total.",
-          "evidence": []
+          "eyebrow": "Dados necessários",
+          "body": "Você precisará de um rascunho de instrução e quatro versões de pedidos de matrícula.",
+          "title": "Prepare seu material de teste"
+        },
+        {
+          "title": "Crie variações de pedidos",
+          "body": "Escreva um pedido completo, um com abreviações, um com erros e um faltando dados.",
+          "eyebrow": "Passo um"
+        },
+        {
+          "body": "Execute a mesma instrução em cada versão e anote as divergências nos campos extraídos.",
+          "title": "Execute e compare resultados",
+          "eyebrow": "Passo dois"
+        },
+        {
+          "eyebrow": "Passo três",
+          "title": "Trate informações ausentes",
+          "body": "Defina como a IA deve agir quando uma informação essencial estiver ausente no pedido."
+        },
+        {
+          "body": "Sempre revise manualmente as extrações feitas pela IA antes de confirmar a matrícula final.",
+          "title": "Realize a conferência humana",
+          "eyebrow": "Passo quatro"
+        },
+        {
+          "eyebrow": "Erro a evitar",
+          "body": "Evite confiar cegamente na IA sem antes testar como ela lida com erros comuns.",
+          "title": "Não ignore os testes iniciais"
+        },
+        {
+          "title": "Ajuste antes de automatizar",
+          "body": "Aplique este teste em sua rotina para ajustar instruções antes de automatizar processos.",
+          "eyebrow": "Conclusão prática"
         }
-      ]
+      ],
+      "caption": "A automação de pedidos em uma escola de cursos livres exige atenção constante aos detalhes. Quando a IA processa mensagens, variações na escrita ou dados ausentes podem comprometer a qualidade da extração.\n\nEste exercício propõe um teste prático para identificar falhas antes de implementar a rotina. Ao comparar rascunhos com diferentes níveis de qualidade, você entende como a IA se comporta e ajusta suas instruções para obter respostas mais consistentes.\n\nComo você lida com pedidos incompletos no seu dia a dia? Acompanhe nosso perfil para aprender aplicações práticas de IA em empresas."
     },
     "structured": true,
     "stopReason": "tool_use",
