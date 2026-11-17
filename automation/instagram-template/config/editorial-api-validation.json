@@ -20,7 +20,7 @@
     },
     "quotaMode": "provider"
   },
-  "circuit": null,
+  "circuit": "provider_response_unconfirmed",
   "calls": [
     {
       "id": "ac092fea-7563-4b58-a6b6-4e3b6913fe8f",
@@ -3118,9 +3118,12 @@
       "id": "291451d2-6325-40e1-baa8-64a6f23c255e",
       "day": "2026-11-17",
       "stage": "authorial:generate:versao-instrucao-v10",
-      "status": "reserved",
+      "status": "failed",
       "startedAt": "2026-11-17T03:15:18.276Z",
-      "promptFingerprint": "ab7e8b3f3bd88d2eafd516ff808bcd76b796a2f14726fcffcd2e5dc1f9c2600b"
+      "promptFingerprint": "ab7e8b3f3bd88d2eafd516ff808bcd76b796a2f14726fcffcd2e5dc1f9c2600b",
+      "completedAt": "2026-11-17T03:18:20.283Z",
+      "httpStatus": null,
+      "failureKind": "timeout"
     }
   ],
   "entries": [
