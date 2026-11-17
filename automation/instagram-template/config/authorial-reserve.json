@@ -18153,71 +18153,104 @@
       "createdAt": "2026-11-17T03:58:47.649Z"
     }
   ],
-  "checkedAt": "2026-11-17T03:58:49.526Z",
+  "checkedAt": "2026-11-17T03:59:11.264Z",
   "workflowRun": "44013492988",
   "message": "API sem resposta confirmada (timeout); novas chamadas bloqueadas.",
   "lastResponse": {
-    "stage": "generate:versao-instrucao-v10",
-    "callId": "359b8028-27b0-4664-90dd-7b76dd7f9c80",
+    "stage": "art-direction:versao-instrucao-v10",
+    "callId": "6989d973-976d-497c-ade0-764b7b0bb550",
     "value": {
-      "slides": [
+      "palette": "ocean",
+      "frames": [
         {
-          "body": "Guarde a instrução com versão e data, teste os mesmos exemplos e compare antes de escolher.",
-          "eyebrow": "Exercício hipotético",
-          "title": "A IA mudou a resposta após você editar o texto?"
+          "layout": "workspace",
+          "labels": [
+            "Instrução",
+            "Versão",
+            "Data"
+          ]
         },
         {
-          "body": "Imagine uma escola fictícia que recebe perguntas sobre horários e inscrições e usa IA para responder.",
-          "eyebrow": "Contexto",
-          "title": "Escola fictícia de cursos livres com dúvidas de horário"
+          "layout": "conversation",
+          "labels": [
+            "Perguntas",
+            "Horários",
+            "Inscrições"
+          ]
         },
         {
-          "body": "O exercício é guardar cada instrução com nome e data para comparar mudanças com critério.",
-          "eyebrow": "Objetivo",
-          "title": "Comparar versões sem perder o histórico"
+          "layout": "workflow",
+          "labels": [
+            "Instrução",
+            "Histórico",
+            "Critério"
+          ]
         },
         {
-          "body": "Mantenha exemplos de entrada fictícios e os critérios esperados para cada resposta da IA.",
-          "eyebrow": "Dados necessários",
-          "title": "Exemplos fictícios e critérios esperados"
+          "layout": "checklist",
+          "labels": [
+            "Exemplo",
+            "Entrada",
+            "Critério"
+          ]
         },
         {
-          "body": "Salve a instrução com versão e data, rode os mesmos exemplos e compare as respostas.",
-          "eyebrow": "Procedimento",
-          "title": "Nomeie, teste e compare as versões"
+          "layout": "workflow",
+          "labels": [
+            "Nomear",
+            "Testar",
+            "Comparar"
+          ]
         },
         {
-          "body": "Quando um exemplo não tiver resposta esperada, anote a lacuna em vez de inventar critério.",
-          "eyebrow": "Informação ausente",
-          "title": "Se faltar dado, registre a lacuna"
+          "layout": "decision",
+          "labels": [
+            "Lacuna",
+            "Anotação",
+            "Dado"
+          ]
         },
         {
-          "body": "Registre o que melhorou e o que piorou antes de escolher a versão final.",
-          "eyebrow": "Conferência humana",
-          "title": "Revise o que melhorou e o que piorou"
+          "layout": "checklist",
+          "labels": [
+            "Melhorou",
+            "Piorou",
+            "Revisão"
+          ]
         },
         {
-          "body": "Trocar título, data ou nome de empresa não mostra que a versão é melhor.",
-          "eyebrow": "Erro a evitar",
-          "title": "Não troque rótulo por novidade"
+          "layout": "conversation",
+          "labels": [
+            "Rótulo",
+            "Novidade",
+            "Comparação"
+          ]
         },
         {
-          "body": "No exemplo fictício, a versão nova responde o horário, mas perde o prazo de inscrição.",
-          "eyebrow": "Exemplo fictício",
-          "title": "Pergunta sobre horário de inscrição"
+          "layout": "workflow",
+          "labels": [
+            "Horário",
+            "Prazo",
+            "Inscrição"
+          ]
         },
         {
-          "body": "Volte ao cenário inicial e escolha a versão que passou no mesmo teste com registro.",
-          "eyebrow": "Conclusão",
-          "title": "Escolha a versão com registro e teste"
+          "layout": "decision",
+          "labels": [
+            "Versão",
+            "Registro",
+            "Teste"
+          ]
+        },
+        {
+          "layout": "decision",
+          "labels": [
+            "Exercício",
+            "Exemplos",
+            "Versão"
+          ]
         }
-      ],
-      "caption": "Imagine uma escola fictícia de cursos livres que usa IA para responder dúvidas sobre horários e inscrições. O exercício propõe guardar a instrução usada com nome de versão e data, manter exemplos fictícios de entrada e critérios esperados, e comparar respostas quando a instrução mudar.\n\nOs passos principais são nomear a versão atual, executar os mesmos exemplos nas duas versões e registrar o que melhorou e o que piorou. Se faltar informação, anote a lacuna em vez de inventar critério. Um erro comum é trocar título, data ou nome de empresa e achar que isso mostra novidade. A escolha final deve vir do teste comparado.\n\nQual parte da sua rotina você testaria primeiro com esse método? Acompanhe o perfil para aprender aplicações práticas de IA em empresas.",
-      "storySlide": {
-        "body": "No feed, veja o exercício completo para comparar versões de instrução com exemplos fictícios.",
-        "eyebrow": "Story",
-        "title": "Você testa a instrução antes de trocar?"
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
