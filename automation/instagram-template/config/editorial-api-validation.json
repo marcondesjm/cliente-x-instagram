@@ -20,7 +20,7 @@
     },
     "quotaMode": "provider"
   },
-  "circuit": null,
+  "circuit": "provider_response_unconfirmed",
   "calls": [
     {
       "id": "ac092fea-7563-4b58-a6b6-4e3b6913fe8f",
@@ -3159,9 +3159,12 @@
       "id": "149d9f65-cf65-4aff-95e5-e651543939f5",
       "day": "2026-11-17",
       "stage": "authorial:generate:medicao-rascunho-v10",
-      "status": "reserved",
+      "status": "failed",
       "startedAt": "2026-11-17T03:59:14.847Z",
-      "promptFingerprint": "bebe12423c2e30501823f83c509b6631d5aeaf73ee187d18243380083eeec3ea"
+      "promptFingerprint": "bebe12423c2e30501823f83c509b6631d5aeaf73ee187d18243380083eeec3ea",
+      "completedAt": "2026-11-17T04:01:02.244Z",
+      "httpStatus": null,
+      "failureKind": "transport_or_response"
     }
   ],
   "entries": [
