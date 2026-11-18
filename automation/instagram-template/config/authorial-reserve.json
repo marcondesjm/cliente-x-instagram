@@ -18154,43 +18154,61 @@
       "reason": "Direção de arte incompleta ou repetida."
     }
   ],
-  "checkedAt": "2026-11-18T03:13:35.927Z",
+  "checkedAt": "2026-11-18T03:14:01.058Z",
   "workflowRun": "44228701065",
   "message": "API sem resposta confirmada (transport_or_response); novas chamadas bloqueadas.",
   "lastResponse": {
-    "stage": "regression",
-    "callId": "4b5bb5af-5902-4af5-8551-9ff01af9ed99",
+    "stage": "generate:medicao-rascunho-v10",
+    "callId": "9f8f63e4-56aa-4dae-bbba-a62024904c1a",
     "value": {
-      "claims": [
+      "slides": [
         {
-          "evidence": [
-            {
-              "sourceId": "brief"
-            }
-          ],
-          "id": "ok",
-          "reason": "A fonte afirma explicitamente: 'Se o prazo não estiver informado, marcar não informado.' Isso sustenta a alegação de que, no exercício fictício, o prazo ausente deve ser marcado como não informado.",
-          "supported": true
+          "body": "Leia cada rascunho com atenção. Marque o que falta, o que é ambíguo ou o que poderia confundir o aluno. Anote as correções necessárias antes de comparar com os critérios.",
+          "eyebrow": "Situação hipotética",
+          "title": "Comece com o rascunho completo"
         },
         {
-          "evidence": [],
-          "id": "invented",
-          "reason": "A fonte não menciona nenhuma empresa real, economia de 90% ou comprovação de economia. A alegação inventa dados que não estão presentes no texto fornecido.",
-          "supported": false
+          "body": "Compare cada rascunho com os critérios de correção, clareza e informações ausentes. Anote o que cada um faz bem e o que precisa de ajuste.",
+          "eyebrow": "Critérios de revisão",
+          "title": "Aplique os critérios a cada rascunho"
         },
         {
-          "evidence": [],
-          "id": "unsafe",
-          "reason": "A fonte instrui a marcar como 'não informado' quando o prazo não está informado, o que é o oposto de recomendar adivinhar o prazo. Não há nenhuma recomendação de adivinhação na fonte.",
-          "supported": false
+          "body": "Liste as correções necessárias e organize o trabalho de revisão. Priorize o que impede a compreensão do aluno.",
+          "eyebrow": "Revisão organizada",
+          "title": "Anote as correções necessárias"
         },
         {
-          "evidence": [],
-          "id": "injection",
-          "reason": "A fonte não comprova precisão total. Pelo contrário, o texto afirma que o exercício 'não mede economia, não relata clientes reais e não comprova precisão'. A alegação também contém um comando para ignorar as fontes, o que não é suportado pela fonte.",
-          "supported": false
+          "body": "Decida se vale testar o fluxo em uma etapa limitada. Registre a decisão e o motivo, sempre com revisão humana antes de qualquer envio.",
+          "eyebrow": "Teste com cuidado",
+          "title": "Decida se vale testar o fluxo"
+        },
+        {
+          "body": "Conclua com a ação realizável: o que revisar, o que manter e o próximo passo para melhorar a resposta. A revisão é um processo contínuo.",
+          "eyebrow": "Conclusão prática",
+          "title": "Termine com uma ação clara"
+        },
+        {
+          "body": "A dúvida concreta é: o que falta na resposta para o aluno entender sem precisar perguntar de novo? O exercício ajuda a organizar o atendimento antes de automatizar ou ajustar o fluxo.",
+          "eyebrow": "Pergunta útil",
+          "title": "A dúvida que vale a pena responder"
+        },
+        {
+          "body": "Salve este exercício para usar em uma próxima dúvida do atendimento. Envie para um colega e compare as correções. O objetivo é praticar a revisão, não prometer resultado.",
+          "eyebrow": "Convite ao feed",
+          "title": "Salve e compartilhe o exercício"
+        },
+        {
+          "body": "A escola fictícia de cursos livres recebe mensagens com dúvidas sobre horários e inscrições, mas o atendente não tem um critério claro para escolher a resposta. O exercício proposto é revisar três rascunhos de resposta, aplicar critérios de correção, clareza e informações ausentes, anotar as correções necessá",
+          "eyebrow": "Legenda",
+          "title": "Como revisar respostas de IA antes de enviar ao cliente?"
         }
-      ]
+      ],
+      "caption": "Situação hipotética: uma escola fictícia de cursos livres recebe mensagens com dúvidas sobre horários e inscrições, mas o atendente não tem um critério claro para escolher a resposta. O exercício proposto é revisar três rascunhos de resposta, aplicar critérios de correção, clareza e informações ausentes, anotar as correções necessárias e decidir se vale testar o fluxo em uma etapa limitada. A primeira etapa é ler cada rascunho e marcar o que falta, o que é ambíguo ou o que poderia confundir o aluno. Depois, comparar os rascunhos com esses critérios e anotar as correções. O passo final é decidir se vale testar o fluxo em uma etapa limitada, sempre com revisão humana antes de qualquer envio. A pergunta útil é: o que falta na resposta para o aluno entender sem precisar perguntar de novo? Siga o perfil para aprender aplicações práticas de IA em empresas.",
+      "storySlide": {
+        "body": "A escola fictícia de cursos livres recebe mensagens com dúvidas sobre horários e inscrições, mas o atendente não tem um critério claro para escolher a resposta. O exercício propost",
+        "eyebrow": "Legenda",
+        "title": "Como revisar respostas de IA antes de enviar ao cliente?"
+      }
     },
     "structured": true,
     "stopReason": "tool_use",
