@@ -18188,61 +18188,88 @@
       "createdAt": "2026-11-18T03:14:03.137Z"
     }
   ],
-  "checkedAt": "2026-11-18T03:14:05.144Z",
+  "checkedAt": "2026-11-18T03:14:11.903Z",
   "workflowRun": "44228701065",
   "message": "API sem resposta confirmada (transport_or_response); novas chamadas bloqueadas.",
   "lastResponse": {
-    "stage": "generate:medicao-rascunho-v10",
-    "callId": "9f8f63e4-56aa-4dae-bbba-a62024904c1a",
+    "stage": "art-direction:medicao-rascunho-v10",
+    "callId": "61bd2e54-f7ca-407b-8ec2-debc12343c36",
     "value": {
-      "slides": [
+      "palette": "orchid",
+      "frames": [
         {
-          "body": "Leia cada rascunho com atenção. Marque o que falta, o que é ambíguo ou o que poderia confundir o aluno. Anote as correções necessárias antes de comparar com os critérios.",
-          "eyebrow": "Situação hipotética",
-          "title": "Comece com o rascunho completo"
+          "labels": [
+            "Rascunho completo",
+            "Marca o que falta",
+            "Anota correções"
+          ],
+          "layout": "workspace"
         },
         {
-          "body": "Compare cada rascunho com os critérios de correção, clareza e informações ausentes. Anote o que cada um faz bem e o que precisa de ajuste.",
-          "eyebrow": "Critérios de revisão",
-          "title": "Aplique os critérios a cada rascunho"
+          "labels": [
+            "Critério de correção",
+            "Critério de clareza",
+            "Critério de informação ausente"
+          ],
+          "layout": "conversation"
         },
         {
-          "body": "Liste as correções necessárias e organize o trabalho de revisão. Priorize o que impede a compreensão do aluno.",
-          "eyebrow": "Revisão organizada",
-          "title": "Anote as correções necessárias"
+          "labels": [
+            "Lista de correções",
+            "Ordena revisão",
+            "Prioriza compreensão"
+          ],
+          "layout": "workflow"
         },
         {
-          "body": "Decida se vale testar o fluxo em uma etapa limitada. Registre a decisão e o motivo, sempre com revisão humana antes de qualquer envio.",
-          "eyebrow": "Teste com cuidado",
-          "title": "Decida se vale testar o fluxo"
+          "labels": [
+            "Decisão de teste",
+            "Registra motivo",
+            "Revisão humana antes do envio"
+          ],
+          "layout": "checklist"
         },
         {
-          "body": "Conclua com a ação realizável: o que revisar, o que manter e o próximo passo para melhorar a resposta. A revisão é um processo contínuo.",
-          "eyebrow": "Conclusão prática",
-          "title": "Termine com uma ação clara"
+          "labels": [
+            "O que revisar",
+            "O que manter",
+            "Próximo passo"
+          ],
+          "layout": "decision"
         },
         {
-          "body": "A dúvida concreta é: o que falta na resposta para o aluno entender sem precisar perguntar de novo? O exercício ajuda a organizar o atendimento antes de automatizar ou ajustar o fluxo.",
-          "eyebrow": "Pergunta útil",
-          "title": "A dúvida que vale a pena responder"
+          "labels": [
+            "O que falta",
+            "O que é ambíguo",
+            "O que confundir"
+          ],
+          "layout": "workspace"
         },
         {
-          "body": "Salve este exercício para usar em uma próxima dúvida do atendimento. Envie para um colega e compare as correções. O objetivo é praticar a revisão, não prometer resultado.",
-          "eyebrow": "Convite ao feed",
-          "title": "Salve e compartilhe o exercício"
+          "labels": [
+            "Salva exercício",
+            "Envia para colega",
+            "Compara correções"
+          ],
+          "layout": "conversation"
         },
         {
-          "body": "A escola fictícia de cursos livres recebe mensagens com dúvidas sobre horários e inscrições, mas o atendente não tem um critério claro para escolher a resposta. O exercício proposto é revisar três rascunhos de resposta, aplicar critérios de correção, clareza e informações ausentes, anotar as correções necessá",
-          "eyebrow": "Legenda",
-          "title": "Como revisar respostas de IA antes de enviar ao cliente?"
+          "labels": [
+            "Dúvida sobre horário",
+            "Dúvida sobre inscrição",
+            "Atendente sem critério claro"
+          ],
+          "layout": "workflow"
+        },
+        {
+          "labels": [
+            "Composição Story",
+            "Decision",
+            "Diferente do Feed"
+          ],
+          "layout": "decision"
         }
-      ],
-      "caption": "Situação hipotética: uma escola fictícia de cursos livres recebe mensagens com dúvidas sobre horários e inscrições, mas o atendente não tem um critério claro para escolher a resposta. O exercício proposto é revisar três rascunhos de resposta, aplicar critérios de correção, clareza e informações ausentes, anotar as correções necessárias e decidir se vale testar o fluxo em uma etapa limitada. A primeira etapa é ler cada rascunho e marcar o que falta, o que é ambíguo ou o que poderia confundir o aluno. Depois, comparar os rascunhos com esses critérios e anotar as correções. O passo final é decidir se vale testar o fluxo em uma etapa limitada, sempre com revisão humana antes de qualquer envio. A pergunta útil é: o que falta na resposta para o aluno entender sem precisar perguntar de novo? Siga o perfil para aprender aplicações práticas de IA em empresas.",
-      "storySlide": {
-        "body": "A escola fictícia de cursos livres recebe mensagens com dúvidas sobre horários e inscrições, mas o atendente não tem um critério claro para escolher a resposta. O exercício propost",
-        "eyebrow": "Legenda",
-        "title": "Como revisar respostas de IA antes de enviar ao cliente?"
-      }
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
