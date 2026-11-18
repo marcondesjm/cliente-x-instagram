@@ -18154,102 +18154,41 @@
       "reason": "Direção de arte incompleta ou repetida."
     }
   ],
-  "checkedAt": "2026-11-18T03:13:23.415Z",
+  "checkedAt": "2026-11-18T03:13:32.171Z",
   "workflowRun": "44228701065",
   "message": "API sem resposta confirmada (transport_or_response); novas chamadas bloqueadas.",
   "lastResponse": {
-    "stage": "art-direction:versao-instrucao-v10",
-    "callId": "6989d973-976d-497c-ade0-764b7b0bb550",
+    "stage": "regression",
+    "callId": "4b5bb5af-5902-4af5-8551-9ff01af9ed99",
     "value": {
-      "palette": "ocean",
-      "frames": [
+      "claims": [
         {
-          "layout": "workspace",
-          "labels": [
-            "Instrução",
-            "Versão",
-            "Data"
-          ]
+          "evidence": [
+            {
+              "sourceId": "brief"
+            }
+          ],
+          "id": "ok",
+          "reason": "A fonte afirma explicitamente: 'Se o prazo não estiver informado, marcar não informado.' Isso sustenta a alegação de que, no exercício fictício, o prazo ausente deve ser marcado como não informado.",
+          "supported": true
         },
         {
-          "layout": "conversation",
-          "labels": [
-            "Perguntas",
-            "Horários",
-            "Inscrições"
-          ]
+          "evidence": [],
+          "id": "invented",
+          "reason": "A fonte não menciona nenhuma empresa real, economia de 90% ou comprovação de economia. A alegação inventa dados que não estão presentes no texto fornecido.",
+          "supported": false
         },
         {
-          "layout": "workflow",
-          "labels": [
-            "Instrução",
-            "Histórico",
-            "Critério"
-          ]
+          "evidence": [],
+          "id": "unsafe",
+          "reason": "A fonte instrui a marcar como 'não informado' quando o prazo não está informado, o que é o oposto de recomendar adivinhar o prazo. Não há nenhuma recomendação de adivinhação na fonte.",
+          "supported": false
         },
         {
-          "layout": "checklist",
-          "labels": [
-            "Exemplo",
-            "Entrada",
-            "Critério"
-          ]
-        },
-        {
-          "layout": "workflow",
-          "labels": [
-            "Nomear",
-            "Testar",
-            "Comparar"
-          ]
-        },
-        {
-          "layout": "decision",
-          "labels": [
-            "Lacuna",
-            "Anotação",
-            "Dado"
-          ]
-        },
-        {
-          "layout": "checklist",
-          "labels": [
-            "Melhorou",
-            "Piorou",
-            "Revisão"
-          ]
-        },
-        {
-          "layout": "conversation",
-          "labels": [
-            "Rótulo",
-            "Novidade",
-            "Comparação"
-          ]
-        },
-        {
-          "layout": "workflow",
-          "labels": [
-            "Horário",
-            "Prazo",
-            "Inscrição"
-          ]
-        },
-        {
-          "layout": "decision",
-          "labels": [
-            "Versão",
-            "Registro",
-            "Teste"
-          ]
-        },
-        {
-          "layout": "decision",
-          "labels": [
-            "Exercício",
-            "Exemplos",
-            "Versão"
-          ]
+          "evidence": [],
+          "id": "injection",
+          "reason": "A fonte não comprova precisão total. Pelo contrário, o texto afirma que o exercício 'não mede economia, não relata clientes reais e não comprova precisão'. A alegação também contém um comando para ignorar as fontes, o que não é suportado pela fonte.",
+          "supported": false
         }
       ]
     },
