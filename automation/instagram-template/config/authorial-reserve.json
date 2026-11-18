@@ -18746,65 +18746,65 @@
       "reason": "Reserva educativa não aceita fontes inventadas, números ou promessa de resultado."
     }
   ],
-  "checkedAt": "2026-11-18T03:15:36.082Z",
+  "checkedAt": "2026-11-18T03:15:46.857Z",
   "workflowRun": "44228701065",
   "message": "API sem resposta confirmada (transport_or_response); novas chamadas bloqueadas.",
   "lastResponse": {
-    "stage": "revise-draft:resumo-transferencia-v10",
-    "callId": "06dc5628-8a12-401d-88c5-176b0e8005d0",
+    "stage": "generate:extracao-campos-v11",
+    "callId": "2f8057ec-a664-496c-bc12-13ddbdf0142c",
     "value": {
-      "caption": "Situação hipotética: uma escola fictícia de cursos livres recebe uma mensagem com dúvidas sobre horários e inscrições, mas sem informar o que falta. O exercício ensina a separar o que foi confirmado, marcar o que falta como pendente, conferir o resumo com a conversa e encaminhar apenas o contexto necessário à pessoa que continuará o atendimento. O objetivo é organizar a comunicação sem inventar dados ou decisões. Pergunta útil: como evitar que um pedido incompleto gere retrabalho? Convite natural: acompanhe o perfil para aprender aplicações práticas de IA em empresas.",
+      "caption": "Carrossel educativo sobre como uma IA deve tratar um pedido de orçamento incompleto, sem inventar dados. A situação hipotética começa com um cliente que enviou uma mensagem vaga e o exercício mostra como registrar cada campo, marcar o que falta e deixar uma pessoa revisar antes de fechar. O conteúdo é didático, sem prometer economia, precisão ou resultado.",
       "slides": [
         {
-          "body": "A escola fictícia recebe uma mensagem com dúvidas sobre horários e inscrições, mas sem informar o que falta. O primeiro passo é separar o que foi confirmado daquilo que não foi informado.",
-          "eyebrow": "Exercício fictício",
-          "title": "O que falta na mensagem do aluno"
+          "body": "Comece perguntando o que a IA deve fazer quando uma mensagem de cliente não tem tudo o que o cadastro exige. A dúvida é prática e aparece no atendimento, vendas e operação de qualquer negócio.",
+          "eyebrow": "Situação hipotética",
+          "title": "O que fazer com um pedido incompleto?"
         },
         {
-          "body": "Registre apenas os dados presentes na conversa, como o curso mencionado e a dúvida sobre horários. Não acrescente informações que não foram ditas.",
-          "eyebrow": "Etapa 1",
-          "title": "Liste o que a mensagem confirmou"
+          "body": "O objetivo é registrar o pedido sem inventar o que falta. A IA deve manter as informações recebidas, indicar cada campo ausente e deixar uma pessoa revisar antes de fechar o cadastro.",
+          "eyebrow": "Objetivo do exercício",
+          "title": "Registrar sem completar por suposição"
         },
         {
-          "body": "Identifique os itens ausentes, como data de inscrição, modalidade ou preferência de horário. Marque cada um como pendente para não ficar escondido.",
-          "eyebrow": "Etapa 2",
-          "title": "Marque o que está pendente"
+          "body": "Liste os campos produto, quantidade e prazo. Se algum não vier na mensagem, deixe-o marcado como não informado. A tabela deve preservar o que foi recebido e não acrescentar detalhes que não estavam na solicitação.",
+          "eyebrow": "Dados necessários",
+          "title": "Campos a serem preservados"
         },
         {
-          "body": "Reescreva a situação com as informações confirmadas e as pendências separadas. O resumo deve servir como base para quem continuará o atendimento.",
-          "eyebrow": "Etapa 3",
-          "title": "Construa um resumo curto"
+          "body": "Leia a mensagem, copie cada informação para a tabela e compare cada campo com a mensagem original. Quando algo não existir, marque como não informado. A conferência é feita por uma pessoa, não pela própria IA.",
+          "eyebrow": "Procedimento em passos",
+          "title": "Copiar, comparar e marcar o que falta"
         },
         {
-          "body": "Compare o resumo com a mensagem original. Corrija o que estiver incorreto e remova detalhes que não foram confirmados.",
-          "eyebrow": "Etapa 4",
-          "title": "Verifique o resumo contra a conversa"
+          "body": "Se o campo estiver vazio, não use suposição. Marque como não informado e deixe a pessoa responsável decidir o que complementar. A ausência registrada é mais segura do que um valor adivinhado.",
+          "eyebrow": "Tratamento da informação ausente",
+          "title": "Não completar o que não veio"
         },
         {
-          "body": "Envie ao próximo atendente apenas o resumo e as pendências. Não inclua dados reais, sensíveis ou decisões inventadas.",
-          "eyebrow": "Etapa 5",
-          "title": "Encaminhe apenas o contexto necessário"
+          "body": "Antes de finalizar, confira se o pedido está fiel à mensagem original. Verifique produto, quantidade e prazo, e veja se algum campo ficou sem resposta. O cadastro só avança depois da revisão humana.",
+          "eyebrow": "Conferência humana",
+          "title": "Revisar antes de fechar o cadastro"
         },
         {
-          "body": "Não repasse a conversa inteira se o próximo atendente já puder ler o resumo. Mantenha o encaminhamento curto e focado.",
-          "eyebrow": "Cuidado",
-          "title": "Evite repetir a dúvida sem contexto"
+          "body": "O erro comum é preencher o campo vazio com um valor estimado. Isso transforma uma solicitação incompleta em um registro falso. O correto é manter a ausência visível e pedir o complemento.",
+          "eyebrow": "Erro a evitar",
+          "title": "Não adivinhar o que falta"
         },
         {
-          "body": "O aluno pergunta sobre horários e inscrição, mas não informa a modalidade. O resumo deve indicar a dúvida sobre horário e a pendência da modalidade.",
+          "body": "Imagine um cliente que escreveu apenas o produto e a quantidade, sem prazo. O sistema recebe o produto e a quantidade, mas o prazo fica marcado como não informado. A equipe pergunta o prazo antes de enviar o orçamento.",
           "eyebrow": "Exemplo fictício",
-          "title": "Matrícula sem horário definido"
+          "title": "Pedido com produto e quantidade, mas sem prazo"
         },
         {
-          "body": "Separe o confirmado, marque o pendente, confira o resumo e envie apenas o contexto necessário. Assim o próximo atendente começa com menos retrabalho.",
-          "eyebrow": "Conclusão",
-          "title": "Organize antes de encaminhar"
+          "body": "O exercício mostra que a IA ajuda a organizar, mas não substitui a verificação. O dono do negócio ganha um cadastro mais confiável, sem perder informações que ainda não foram informadas.",
+          "eyebrow": "Conclusão prática",
+          "title": "O que o exercício entrega"
         }
       ],
       "storySlide": {
-        "body": "Uma mensagem de dúvida chega sem o horário escolhido. O que o atendente deve fazer antes de responder? O carrossel mostra um exercício fictício com uma escola de cursos livres.",
-        "eyebrow": "Dúvida do aluno",
-        "title": "O que fazer quando a mensagem não termina no meio"
+        "body": "Seu cliente mandou uma mensagem de orçamento sem o prazo e você não tem certeza do que registrar. O que faz primeiro?",
+        "eyebrow": "Pergunta do feed",
+        "title": "Pedido incompleto: o que registrar?"
       }
     },
     "structured": true,
