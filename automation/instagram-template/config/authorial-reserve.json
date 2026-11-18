@@ -18305,16 +18305,19 @@
     ]
   },
   "automaticRecovery": {
-    "pending": false,
-    "pendingSlot": null,
+    "pending": true,
+    "pendingSlot": {
+      "date": "2026-11-17",
+      "slotIndex": 2
+    },
     "available": 0,
     "recoveryReady": false,
-    "run": false,
-    "phase": "provider_blocked",
+    "run": true,
+    "phase": "replenish_for_incident",
     "budgetRenewsAt": "2026-10-19T03:00:00.000Z",
-    "nextAttemptAt": null,
-    "checkedAt": "2026-11-18T02:57:55.740Z",
-    "workflowRun": "44226926118",
+    "nextAttemptAt": "2026-11-18T03:12:43.838Z",
+    "checkedAt": "2026-11-18T03:12:44.272Z",
+    "workflowRun": "44228701065",
     "retryAfter": "2026-11-13T13:29:27.950Z"
   },
   "learningStrategy": {
