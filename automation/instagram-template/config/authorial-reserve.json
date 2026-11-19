@@ -18782,7 +18782,7 @@
       "reason": "Pauta de crescimento precisa explicar por que acompanhar o perfil."
     }
   ],
-  "checkedAt": "2026-11-19T03:20:16.991Z",
+  "checkedAt": "2026-11-19T03:20:18.817Z",
   "workflowRun": "44450488133",
   "message": "API sem resposta confirmada (timeout); novas chamadas bloqueadas.",
   "lastResponse": {
@@ -18871,28 +18871,28 @@
   },
   "learningStrategy": {
     "version": "claude-editorial-strategy-v1",
-    "id": "f498b214-b39d-415f-ad6b-0389e4a54e9a",
+    "id": "2d9a5697-928a-4dac-a944-7771bcc9453f",
     "status": "active",
-    "createdAt": "2026-11-13T07:18:55.822Z",
-    "expiresAt": "2026-11-14T07:18:55.822Z",
-    "dataUpdatedAt": "2026-11-13T02:37:18.053Z",
-    "contextFingerprint": "9557802e5c048d414638bbd954584e35a1b36fd49de25c70defb9baec96b3908",
-    "diagnosis": "O perfil publica majoritariamente notícias de tecnologia e fofocas do setor em vez de exercícios práticos voltados para a operação de negócios, desalinhando com o nicho de ensino prático e gerando alcance inexpressivo e zero salvamentos.",
-    "hypothesis": "Testar aberturas com situações hipotéticas explícitas do cotidiano operacional em posts de feed, focando em problemas reais de atendimento e vendas, para estimular salvamentos como prova de utilidade prática.",
-    "limitations": "O alcance geral é muito baixo e o volume de interações como salvamentos e compartilhamentos é nulo na janela analisada, impedindo qualquer inferência causal sobre o que realmente gera utilidade para donos de negócios.",
+    "createdAt": "2026-11-19T03:20:18.817Z",
+    "expiresAt": "2026-11-20T03:20:18.817Z",
+    "dataUpdatedAt": "2026-11-19T02:04:10.385Z",
+    "contextFingerprint": "7f39e003affef064430622567428ebd102a46564c0df8c29577ce3f6c41d0985",
+    "diagnosis": "O perfil atua majoritariamente como agregador de notícias macroeconômicas e de tecnologia, afastando-se do nicho de ensino prático para operação de negócios. O único post que abordou uma dor operacional cotidiana (instabilidade no Outlook) obteve alcance de cento e vinte e um, muito superior à média dos Reels de notícias, indicando que o público responde a problemas que afetam diretamente a rotina da empresa.",
+    "hypothesis": "Testar aberturas baseadas em perguntas específicas sobre falhas operacionais cotidianas e gargalos de atendimento aumentará a identificação do dono de negócio, elevando a taxa de comentários ao trocar o noticiário por utilidade imediata e cenários reconhecíveis.",
+    "limitations": "A base apresenta volume baixo de interações, com salvamentos e compartilhamentos zerados, impedindo conclusões causais. O pico de alcance no post do Outlook pode ser um evento sazonal de busca por soluções de TI, e não necessariamente um padrão consolidado de consumo de conteúdo educativo prático.",
     "axis": "hook",
-    "variant": "fictional-scenario",
-    "format": "FEED",
-    "metric": "saved",
+    "variant": "specific-question",
+    "format": "REELS",
+    "metric": "comments",
     "evidenceIds": [
-      "17914726587516141",
-      "18162826879547411"
+      "18034511840910327",
+      "18100782704394729",
+      "18138506275658693"
     ]
   },
   "learningAnalysis": {
-    "status": "rejected",
-    "callId": "aaa0e42d-5503-44b1-a052-a8a8736e2381",
-    "checkedAt": "2026-11-16T19:51:58.101Z",
-    "reason": "Diagnóstico fora dos limites."
+    "status": "accepted",
+    "callId": "2d9a5697-928a-4dac-a944-7771bcc9453f",
+    "checkedAt": "2026-11-19T03:20:18.817Z"
   }
 }
