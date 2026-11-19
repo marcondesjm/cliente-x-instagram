@@ -18782,66 +18782,25 @@
       "reason": "Pauta de crescimento precisa explicar por que acompanhar o perfil."
     }
   ],
-  "checkedAt": "2026-11-19T03:19:08.956Z",
+  "checkedAt": "2026-11-19T03:20:16.991Z",
   "workflowRun": "44450488133",
   "message": "API sem resposta confirmada (timeout); novas chamadas bloqueadas.",
   "lastResponse": {
-    "stage": "revise-draft:extracao-campos-v11",
-    "callId": "2e49fb65-640c-4187-af4e-8a5f558ab9f4",
+    "stage": "learning-analysis",
+    "callId": "2d9a5697-928a-4dac-a944-7771bcc9453f",
     "value": {
-      "caption": "Carrossel educativo sobre como uma IA deve tratar um pedido de orçamento incompleto, sem inventar dados. A situação hipotética começa com um cliente que enviou uma mensagem vaga e o exercício mostra como registrar cada campo, marcar o que falta e deixar uma pessoa revisar antes de fechar. O conteúdo é didático, sem prometer economia, precisão ou resultado.",
-      "slides": [
-        {
-          "body": "Comece perguntando o que a IA deve fazer quando uma mensagem de cliente não tem tudo o que o cadastro exige. A dúvida é prática e aparece no atendimento, vendas e operação de qualquer negócio.",
-          "eyebrow": "Situação hipotética",
-          "title": "O que fazer com um pedido incompleto?"
-        },
-        {
-          "body": "O objetivo é registrar o pedido sem inventar o que falta. A IA deve manter as informações recebidas, indicar cada campo ausente e deixar uma pessoa revisar antes de fechar o cadastro.",
-          "eyebrow": "Objetivo do exercício",
-          "title": "Registrar sem completar por suposição"
-        },
-        {
-          "body": "Liste os campos produto, quantidade e prazo. Se algum não vier na mensagem, deixe-o marcado como não informado. A tabela deve preservar o que foi recebido e não acrescentar detalhes que não estavam na solicitação.",
-          "eyebrow": "Dados necessários",
-          "title": "Campos a serem preservados"
-        },
-        {
-          "body": "Leia a mensagem, copie cada informação para a tabela e compare cada campo com a mensagem original. Quando algo não existir, marque como não informado. A conferência é feita por uma pessoa, não pela própria IA.",
-          "eyebrow": "Procedimento em passos",
-          "title": "Copiar, comparar e marcar o que falta"
-        },
-        {
-          "body": "Se o campo estiver vazio, não use suposição. Marque como não informado e deixe a pessoa responsável decidir o que complementar. A ausência registrada é mais segura do que um valor adivinhado.",
-          "eyebrow": "Tratamento da informação ausente",
-          "title": "Não completar o que não veio"
-        },
-        {
-          "body": "Antes de finalizar, confira se o pedido está fiel à mensagem original. Verifique produto, quantidade e prazo, e veja se algum campo ficou sem resposta. O cadastro só avança depois da revisão humana.",
-          "eyebrow": "Conferência humana",
-          "title": "Revisar antes de fechar o cadastro"
-        },
-        {
-          "body": "O erro comum é preencher o campo vazio com um valor estimado. Isso transforma uma solicitação incompleta em um registro falso. O correto é manter a ausência visível e pedir o complemento.",
-          "eyebrow": "Erro a evitar",
-          "title": "Não adivinhar o que falta"
-        },
-        {
-          "body": "Imagine um cliente que escreveu apenas o produto e a quantidade, sem prazo. O sistema recebe o produto e a quantidade, mas o prazo fica marcado como não informado. A equipe pergunta o prazo antes de enviar o orçamento.",
-          "eyebrow": "Exemplo fictício",
-          "title": "Pedido com produto e quantidade, mas sem prazo"
-        },
-        {
-          "body": "O exercício mostra que a IA ajuda a organizar, mas não substitui a verificação. O dono do negócio ganha um cadastro mais confiável, sem perder informações que ainda não foram informadas.",
-          "eyebrow": "Conclusão prática",
-          "title": "O que o exercício entrega"
-        }
-      ],
-      "storySlide": {
-        "body": "Seu cliente mandou uma mensagem de orçamento sem o prazo e você não tem certeza do que registrar. O que faz primeiro?",
-        "eyebrow": "Pergunta do feed",
-        "title": "Pedido incompleto: o que registrar?"
-      }
+      "diagnosis": "O perfil atua majoritariamente como agregador de notícias macroeconômicas e de tecnologia, afastando-se do nicho de ensino prático para operação de negócios. O único post que abordou uma dor operacional cotidiana (instabilidade no Outlook) obteve alcance de cento e vinte e um, muito superior à média dos Reels de notícias, indicando que o público responde a problemas que afetam diretamente a rotina da empresa.",
+      "hypothesis": "Testar aberturas baseadas em perguntas específicas sobre falhas operacionais cotidianas e gargalos de atendimento aumentará a identificação do dono de negócio, elevando a taxa de comentários ao trocar o noticiário por utilidade imediata e cenários reconhecíveis.",
+      "limitations": "A base apresenta volume baixo de interações, com salvamentos e compartilhamentos zerados, impedindo conclusões causais. O pico de alcance no post do Outlook pode ser um evento sazonal de busca por soluções de TI, e não necessariamente um padrão consolidado de consumo de conteúdo educativo prático.",
+      "axis": "hook",
+      "variant": "specific-question",
+      "format": "REELS",
+      "metric": "comments",
+      "evidenceIds": [
+        "18034511840910327",
+        "18100782704394729",
+        "18138506275658693"
+      ]
     },
     "structured": true,
     "stopReason": "tool_use",
