@@ -20,7 +20,7 @@
     },
     "quotaMode": "provider"
   },
-  "circuit": null,
+  "circuit": "invalid_usage_receipt",
   "calls": [
     {
       "id": "ac092fea-7563-4b58-a6b6-4e3b6913fe8f",
@@ -3417,10 +3417,17 @@
       "id": "b2fc547d-d53a-44ef-a630-33d23717f7b8",
       "day": "2026-11-19",
       "stage": "media-library:headline",
-      "status": "reserved",
+      "status": "completed",
       "model": "claude-fable-5.1",
       "startedAt": "2026-11-19T21:50:53.849Z",
-      "promptFingerprint": "e178bc0bece901e511df2f717199c210814f3ecf7fd7dd17d00d88375a69d620"
+      "promptFingerprint": "e178bc0bece901e511df2f717199c210814f3ecf7fd7dd17d00d88375a69d620",
+      "completedAt": "2026-11-19T21:52:30.088Z",
+      "reportedInputTokens": 0,
+      "reportedOutputTokens": 0,
+      "inputTokens": null,
+      "outputTokens": null,
+      "usageStatus": "unconfirmed_counted_at_maximum",
+      "stopReason": "end_turn"
     }
   ],
   "entries": [
