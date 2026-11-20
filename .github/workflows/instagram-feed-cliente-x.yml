@@ -97,6 +97,8 @@ jobs:
   instagram-feed:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
+    outputs:
+      facebook_media_id: ${{ steps.facebook_payload.outputs.media_id }}
     env:
       ACCOUNT: ${{ github.event.inputs.account || 'cliente-x' }}
       DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run || 'false' }}
@@ -251,6 +253,20 @@ jobs:
             git push origin HEAD:main
           fi
 
+      - name: Prepare Facebook payload
+        id: facebook_payload
+        if: success() && env.ACCOUNT == 'cliente-x' && env.DRY_RUN != 'true' && (github.event_name != 'workflow_dispatch' || inputs.scheduled_only == 'true') && (steps.scheduled_queue.outputs.has_due == 'true' || steps.auto_slot.outputs.has_due == 'true')
+        run: node scripts/publish-facebook-page.mjs collect
+
+      - name: Upload Facebook payload
+        if: steps.facebook_payload.outputs.media_id != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: facebook-payload-${{ steps.facebook_payload.outputs.media_id }}
+          path: ${{ runner.temp }}/facebook-payload.json
+          retention-days: 7
+          if-no-files-found: error
+
       - name: Upload run logs
         if: always()
         uses: actions/upload-artifact@v4
@@ -258,3 +274,73 @@ jobs:
           name: instagram-template-runs
           path: automation/instagram-template/runs/
           if-no-files-found: ignore
+
+  facebook-page:
+    name: Publicar na Página MJM Digital
+    needs: instagram-feed
+    if: needs.instagram-feed.outputs.facebook_media_id != ''
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    permissions:
+      contents: read
+    env:
+      FACEBOOK_PAGE_ID: ${{ vars.CLIENTE_X_FACEBOOK_PAGE_ID }}
+      FACEBOOK_PAGE_TOKEN: ${{ secrets.CLIENTE_X_FACEBOOK_PAGE_ACCESS_TOKEN }}
+      INSTAGRAM_MEDIA_ID: ${{ needs.instagram-feed.outputs.facebook_media_id }}
+    steps:
+      - name: Check Facebook configuration
+        id: config
+        run: |
+          if [[ -n "$FACEBOOK_PAGE_ID" && -n "$FACEBOOK_PAGE_TOKEN" ]]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Facebook aguardando configuração do ID e do token da Página MJM Digital." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.config.outputs.ready == 'true'
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        if: steps.config.outputs.ready == 'true'
+        with:
+          node-version: "22"
+
+      - uses: actions/download-artifact@v4
+        if: steps.config.outputs.ready == 'true'
+        with:
+          name: facebook-payload-${{ needs.instagram-feed.outputs.facebook_media_id }}
+          path: ${{ runner.temp }}
+
+      - name: Prepare media on Facebook
+        if: steps.config.outputs.ready == 'true'
+        run: node scripts/publish-facebook-page.mjs prepare
+
+      # Reservar antes da chamada final impede que uma reexecução duplique
+      # uma publicação que a Meta aceitou sem devolver confirmação.
+      - name: Reserve Facebook publication
+        id: reserve
+        if: steps.config.outputs.ready == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: facebook-attempt-${{ needs.instagram-feed.outputs.facebook_media_id }}
+          path: ${{ runner.temp }}/facebook-attempt.txt
+          overwrite: false
+          retention-days: 90
+          if-no-files-found: error
+
+      - name: Publish on Facebook
+        if: steps.config.outputs.ready == 'true'
+        run: node scripts/publish-facebook-page.mjs publish
+
+      - name: Report Facebook failure
+        if: failure()
+        env:
+          RESERVATION: ${{ steps.reserve.outcome }}
+        run: |
+          if [[ "$RESERVATION" == 'success' || "$RESERVATION" == 'failure' ]]; then
+            echo "Facebook sem confirmação. Confira a Página antes de repetir para evitar duplicação." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Facebook falhou antes do envio final. É possível reexecutar apenas o job do Facebook." >> "$GITHUB_STEP_SUMMARY"
+          fi
