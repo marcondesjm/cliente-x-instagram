@@ -282,7 +282,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 8
     permissions:
-      contents: read
+      contents: write
     env:
       FACEBOOK_PAGE_ID: ${{ vars.CLIENTE_X_FACEBOOK_PAGE_ID }}
       FACEBOOK_PAGE_TOKEN: ${{ secrets.CLIENTE_X_FACEBOOK_PAGE_ACCESS_TOKEN }}
@@ -331,11 +331,32 @@ jobs:
           if-no-files-found: error
 
       - name: Publish on Facebook
+        id: facebook_publish
         if: steps.config.outputs.ready == 'true'
         run: node scripts/publish-facebook-page.mjs publish
 
+      - name: Update Facebook dashboard history
+        id: facebook_history
+        if: steps.facebook_publish.outcome == 'success'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/publish-facebook-page.mjs record
+
+      - name: Preserve Facebook confirmation if history fails
+        if: failure() && steps.facebook_history.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: facebook-confirmation-${{ needs.instagram-feed.outputs.facebook_media_id }}
+          path: ${{ runner.temp }}/facebook-receipt.json
+          retention-days: 90
+          if-no-files-found: error
+
+      - name: Report Facebook history failure
+        if: failure() && steps.facebook_history.outcome == 'failure'
+        run: echo "A Meta confirmou a publicação. O histórico do painel ainda precisa ser atualizado." >> "$GITHUB_STEP_SUMMARY"
+
       - name: Report Facebook failure
-        if: failure()
+        if: failure() && steps.facebook_publish.outcome != 'success'
         env:
           RESERVATION: ${{ steps.reserve.outcome }}
         run: |

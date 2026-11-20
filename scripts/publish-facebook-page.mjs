@@ -1,5 +1,6 @@
 import { appendFileSync, existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { facebookPublication, FACEBOOK_HISTORY_PATH } from '../lib/facebook-publication-history.js';
 
 const {
   FACEBOOK_PAGE_ID: pageId,
@@ -15,6 +16,7 @@ const graphBase = 'https://graph.facebook.com/v27.0';
 const payloadPath = join(temp, 'facebook-payload.json');
 const preparedPath = join(temp, 'facebook-prepared.json');
 const attemptsPath = join(temp, 'facebook-attempt.txt');
+const receiptPath = join(temp, 'facebook-receipt.json');
 const validId = (value) => /^\d+$/.test(String(value ?? ''));
 const readJson = (path) => JSON.parse(readFileSync(path, 'utf8'));
 
@@ -130,6 +132,7 @@ async function publish() {
       const { status } = await graph(`${videoId}?fields=status`, 'Consultar publicação do Reel');
       const phase = status?.publishing_phase;
       if (phase?.status === 'complete' && phase.publish_status === 'published') {
+        saveReceipt(facebookId, 'reel', caption);
         appendFileSync(summary, `Facebook · Reel publicado na Página MJM Digital (ID ${facebookId}).\n`);
         return;
       }
@@ -145,7 +148,53 @@ async function publish() {
   ]));
   const result = await graph(`${pageId}/feed`, 'Publicar fotos na Página', { message: caption, ...attached });
   if (!/^\d+(?:_\d+)?$/.test(String(result.id))) throw new Error('A Meta não devolveu o ID da publicação.');
+  saveReceipt(result.id, 'photos', caption);
   appendFileSync(summary, `Facebook · Fotos publicadas na Página MJM Digital (ID ${result.id}).\n`);
+}
+
+function saveReceipt(id, format, caption) {
+  const post = facebookPublication({
+    id: String(id), pageId, format, publishedAt: new Date().toISOString(),
+    title: String(caption || '').split('\n').map((line) => line.trim()).find(Boolean)?.slice(0, 180)
+  });
+  if (!post) throw new Error('O recibo da publicação no Facebook é inválido.');
+  writeFileSync(receiptPath, JSON.stringify(post));
+}
+
+async function record() {
+  const post = facebookPublication(readJson(receiptPath));
+  const { GITHUB_TOKEN: token, GITHUB_API_URL: apiUrl, GITHUB_REPOSITORY: repo } = process.env;
+  if (!post || !token || !apiUrl || !repo) throw new Error('Histórico do Facebook indisponível.');
+  const url = `${apiUrl}/repos/${repo}/contents/${FACEBOOK_HISTORY_PATH}`;
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    Accept: 'application/vnd.github+json',
+    'Content-Type': 'application/json',
+    'X-GitHub-Api-Version': '2022-11-28'
+  };
+
+  for (let attempt = 0; attempt < 4; attempt++) {
+    const current = await fetch(`${url}?ref=main`, { headers, signal: AbortSignal.timeout(10_000) });
+    if (!current.ok && current.status !== 404) throw new Error(`Leitura do histórico: GitHub HTTP ${current.status}.`);
+    const file = current.ok ? await current.json() : null;
+    const previous = file ? JSON.parse(Buffer.from(file.content, 'base64').toString('utf8')) : [];
+    if (!Array.isArray(previous)) throw new Error('O histórico existente do Facebook é inválido.');
+    if (previous.some((entry) => entry.id === post.id)) return;
+    const posts = [...previous, post].sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt)).slice(0, 100);
+    const saved = await fetch(url, {
+      method: 'PUT', headers, signal: AbortSignal.timeout(10_000),
+      body: JSON.stringify({
+        message: 'Record confirmed Facebook publication',
+        branch: 'main',
+        ...(file ? { sha: file.sha } : {}),
+        content: Buffer.from(`${JSON.stringify(posts, null, 2)}\n`).toString('base64')
+      })
+    });
+    if (saved.ok) return;
+    if (![409, 422].includes(saved.status) || attempt === 3) {
+      throw new Error(`Gravação do histórico: GitHub HTTP ${saved.status}.`);
+    }
+  }
 }
 
 try {
@@ -153,6 +202,7 @@ try {
   if (action === 'collect') collect();
   else if (action === 'prepare') await prepare();
   else if (action === 'publish') await publish();
+  else if (action === 'record') await record();
   else throw new Error('Etapa de publicação do Facebook inválida.');
 } catch (error) {
   console.error(error.message);
