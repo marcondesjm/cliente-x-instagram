@@ -1,22 +1,5 @@
 [
   {
-    "key": "sabedoria-kids:2026-11-19:0:44580363593",
-    "status": "open",
-    "account": "sabedoria-kids",
-    "date": "2026-11-19",
-    "slotIndex": 0,
-    "scheduledAt": "2026-11-19T10:00:00.000Z",
-    "scheduledPostId": null,
-    "failedAt": "2026-11-19T17:45:07.856Z",
-    "workflowRun": "44580363593",
-    "workflowName": "Instagram Sabedoria Kids",
-    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/44580363593",
-    "stage": "github-actions",
-    "error": "Workflow falhou antes de gerar failure.json.",
-    "solution": "Abrir o run do GitHub Actions, copiar a etapa que falhou e corrigir o conteúdo ou dependência indicada antes da próxima tentativa.",
-    "failurePath": null
-  },
-  {
     "key": "cliente-x:2026-11-18:1:44589426739",
     "status": "open",
     "account": "cliente-x",
@@ -872,5 +855,22 @@
     "error": "Radar visual sem foto inédita e reserva autoral esgotada. Nenhuma publicação repetida foi enviada; consulte visual-selection.json.",
     "solution": "A reposição automática com Claude tenta criar e revisar conteúdo inédito para recuperar este horário. Se a cota diária terminou, aguarda a renovação e retoma pelo agendamento, sem botão ou pedido manual. O vigia só publica após aprovação factual, visual e contra repetição; o alerta permanece aberto até a publicação confirmada.",
     "failurePath": "automation/instagram-template/runs/failure-2026-11-20-171824.json"
+  },
+  {
+    "key": "cliente-x:2026-11-20:4:44811395524",
+    "status": "open",
+    "account": "cliente-x",
+    "date": "2026-11-20",
+    "slotIndex": 4,
+    "scheduledAt": "2026-11-20T15:10:00.000Z",
+    "scheduledPostId": null,
+    "failedAt": "2026-11-20T20:28:55.080Z",
+    "workflowRun": "44811395524",
+    "workflowName": "Instagram Watchdog Backup",
+    "runUrl": "https://github.com/marcondesjm/cliente-x-instagram/actions/runs/44811395524",
+    "stage": "content-selection",
+    "error": "Radar visual sem foto inédita e reserva autoral esgotada. Nenhuma publicação repetida foi enviada; consulte visual-selection.json.",
+    "solution": "A reposição automática com Claude tenta criar e revisar conteúdo inédito para recuperar este horário. Se a cota diária terminou, aguarda a renovação e retoma pelo agendamento, sem botão ou pedido manual. O vigia só publica após aprovação factual, visual e contra repetição; o alerta permanece aberto até a publicação confirmada.",
+    "failurePath": "automation/instagram-template/runs/failure-2026-11-20-172855.json"
   }
 ]
