@@ -2,7 +2,7 @@ import { canAccessAccount, requireAdmin } from '../lib/auth.js';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { accountFromBody, requireConfiguredAccount } from '../lib/accounts.js';
-import { EDITORIAL_SOURCES, normalizeEditorialSources, researchFreshEditorialPacks } from '../lib/editorial-research.js';
+import { editorialSourcesForAccount, researchFreshEditorialPacks } from '../lib/editorial-research.js';
 
 const OWNER = 'marcondesjm';
 const REPO = 'cliente-x-instagram';
@@ -26,7 +26,6 @@ function publishedResearch(accountKey) {
 
 function activeRadar(account) {
   const saved = account.contentProfile?.radar || {};
-  const sources = normalizeEditorialSources(saved.sources);
   return {
     enabled: typeof saved.enabled === 'boolean' ? saved.enabled : account.account === 'cliente-x',
     // A conta pode consultar diretamente ate 30 dias, sempre mantendo fonte
@@ -34,7 +33,7 @@ function activeRadar(account) {
     maxAgeDays: Math.max(1, Math.min(30, Number(saved.maxAgeDays) || 30)),
     keywords: Array.isArray(saved.keywords) ? saved.keywords : [],
     excludeKeywords: Array.isArray(saved.excludeKeywords) ? saved.excludeKeywords : [],
-    sources: sources.length ? sources : (account.account === 'cliente-x' ? EDITORIAL_SOURCES : [])
+    sources: editorialSourcesForAccount(account)
   };
 }
 

@@ -17,7 +17,7 @@ import {MEDIA_CONFIG,MEDIA_PREFIX,mediaCredits,withMediaCredits,sha256} from '..
 import { ensureBusinessHashtags } from '../../../lib/business-hashtags.js';
 import { spawnSync } from 'node:child_process';
 import { buildBrandContext } from '../../../lib/brand-analysis.js';
-import { buildResearchPack, decodeEditorialEntities, filterValidEditorialPacks, EDITORIAL_SOURCES, extractArticleFacts, extractEditorialImageUrl, factualSummary, isPredominantlyEnglish, isUsableEditorialFact, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
+import { buildResearchPack, decodeEditorialEntities, filterValidEditorialPacks, EDITORIAL_SOURCES, editorialSourcesForAccount, extractArticleFacts, extractEditorialImageUrl, factualSummary, isPredominantlyEnglish, isUsableEditorialFact, matchesConfiguredEditorialIntent, normalizeEditorialSources, researchFreshEditorialPacks } from '../../../lib/editorial-research.js';
 import { summarizePerformanceLearning, retentionHookAdjustment } from '../../../lib/performance-learning.js';
 import { assertVisualAgentPlan, buildVisualAgentPlan, CLOUD_VISUAL_AGENT_VERSION } from '../../../lib/visual-agent.js';
 import { editorialImageCandidates } from '../../../lib/editorial-image-fallbacks.js';
@@ -1661,13 +1661,12 @@ function planForAutomaticSlots(account, localPacks, dateString) {
 
 function radarConfigForAccount(account = {}) {
   const saved = account.contentProfile?.radar || {};
-  const sources = normalizeEditorialSources(saved.sources);
   return {
     enabled: typeof saved.enabled === 'boolean' ? saved.enabled : account.account === 'cliente-x',
     maxAgeDays: Math.max(1, Math.min(90, Number(saved.maxAgeDays) || 60)),
     keywords: Array.isArray(saved.keywords) ? saved.keywords.map((item) => String(item || '').trim()).filter(Boolean).slice(0, 30) : [],
     excludeKeywords: Array.isArray(saved.excludeKeywords) ? saved.excludeKeywords.map((item) => String(item || '').trim()).filter(Boolean).slice(0, 30) : [],
-    sources: sources.length ? sources : (account.account === 'cliente-x' ? EDITORIAL_SOURCES : [])
+    sources: editorialSourcesForAccount(account)
   };
 }
 
@@ -1722,10 +1721,49 @@ function writeRadarCache(configDir, accountKey, result = {}) {
   const path = radarCachePath(configDir);
   const cache = existsSync(path) ? readJson(path) : {};
   cache[accountKey] = {
+    ...cache[accountKey],
     researchedAt: result.researchedAt || new Date().toISOString(),
     maxAgeDays: result.maxAgeDays || 7,
     packs: result.packs
   };
+  writeJson(path, cache);
+}
+
+const NEWS_VISUAL_LIMIT = 20;
+const NEWS_RESERVE_LIMIT = 24;
+const NEWS_RESERVE_MIN_READY = 3;
+
+function newsReserveConfigKey(radar) {
+  return sha256(JSON.stringify({
+    sources: radar.sources.map(source => [source.name, source.url]).sort(),
+    keywords: [...radar.keywords].sort(),
+    excludeKeywords: [...radar.excludeKeywords].sort(),
+    maxAgeDays: radar.maxAgeDays
+  }));
+}
+
+export function eligibleNewsReserve(reserve, radar, now = Date.now()) {
+  if (reserve?.configKey !== newsReserveConfigKey(radar) || !Array.isArray(reserve.entries)) return [];
+  const maxNewsAge = Math.min(14, radar.maxAgeDays) * 86400000;
+  return reserve.entries.filter(({ pack, visual, validatedAt }) => {
+    const age = now - Date.parse(pack?.research?.publishedAt);
+    const visualAge = now - Date.parse(validatedAt);
+    return age >= 0 && age <= maxNewsAge && visualAge >= 0 && visualAge <= 48 * 3600000
+      && /^https:\/\//i.test(pack?.research?.sourceUrl || '') && /^https:\/\//i.test(visual?.imageUrl || '');
+  }).slice(0, NEWS_RESERVE_LIMIT);
+}
+
+function readNewsReserve(configDir, accountKey, radar) {
+  const path = radarCachePath(configDir);
+  return existsSync(path) ? eligibleNewsReserve(readJson(path)?.[accountKey]?.visualNewsReserve, radar) : [];
+}
+
+function writeNewsReserve(configDir, accountKey, radar, entries) {
+  const path = radarCachePath(configDir);
+  const cache = existsSync(path) ? readJson(path) : {};
+  const configKey = newsReserveConfigKey(radar);
+  const eligible = eligibleNewsReserve({ configKey, entries }, radar);
+  cache[accountKey] = { ...cache[accountKey], visualNewsReserve: { configKey, entries: eligible } };
   writeJson(path, cache);
 }
 
@@ -1980,7 +2018,7 @@ function normalizedEditorialImageUrl(value = '') {
   }
 }
 
-async function downloadEditorialImage(sourceImageUrl = '', runDir = '', fileStem = 'radar-source-image') {
+async function downloadEditorialImage(sourceImageUrl = '', runDir = '', fileStem = 'radar-source-image', signal) {
   if (!/^https:\/\//i.test(sourceImageUrl)) return null;
   // WordPress costuma anunciar no feed uma miniatura como `-340x191.webp`.
   // Ela pode ficar abaixo do limite de qualidade embora o original esteja no
@@ -2002,7 +2040,8 @@ async function downloadEditorialImage(sourceImageUrl = '', runDir = '', fileStem
             accept: 'image/avif,image/webp,image/png,image/jpeg',
             'user-agent': 'Mozilla/5.0 Cliente-X-Radar/1.0'
           },
-          redirect: 'follow'
+          redirect: 'follow',
+          signal
         }, 'radar-source-image');
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const contentType = String(response.headers.get('content-type') || '').split(';')[0].toLowerCase();
@@ -2060,7 +2099,12 @@ async function downloadResearchSlideImages(pack = {}, editorialPacks = [], publi
   const photoBrowser = await launchChromium();
   const photoPage = await photoBrowser.newPage();
   try {
-  for await (const alternative of editorialImageCandidates(pack.research, fetch, editorialPacks)) {
+  const fetchPhotoPage = options.signal
+    ? (url, init) => fetch(url, { ...init, signal: AbortSignal.any([options.signal, init.signal]) })
+    : fetch;
+  const candidates = editorialImageCandidates(pack.research, fetchPhotoPage, editorialPacks, options.prevalidatedVisual);
+  for await (const alternative of candidates) {
+    if (options.signal?.aborted) break;
     const candidate = {
       source: pack.research.source,
       sourceUrl: pack.research.sourceUrl,
@@ -2069,7 +2113,7 @@ async function downloadResearchSlideImages(pack = {}, editorialPacks = [], publi
       imageUrl: normalizedEditorialImageUrl(alternative.imageUrl)
     };
     if (!candidate.imageUrl || currentUrls.has(photoIdentity(candidate.imageUrl)) || (!options.allowSourceImageReuse && priorUrls.has(photoIdentity(candidate.imageUrl)))) continue;
-    const downloaded = await downloadEditorialImage(candidate.imageUrl, runDir, `radar-slide-${String(selected.length + 1).padStart(2, '0')}`);
+    const downloaded = await downloadEditorialImage(candidate.imageUrl, runDir, `radar-slide-${String(selected.length + 1).padStart(2, '0')}`, options.signal);
     if (!downloaded || currentHashes.has(downloaded.imageHash) || (!options.allowSourceImageReuse && (priorHashes.has(downloaded.imageHash) || priorUrls.has(photoIdentity(downloaded.imageUrl))))) continue;
     let perceptualHash;
     try { perceptualHash = await photoSignature(photoPage, downloaded.path); }
@@ -5375,6 +5419,17 @@ async function main() {
       }
     }
   }
+  const radarNewsOnly = account.account === 'cliente-x' && radar.enabled;
+  const visualNewsReserve = new Map(
+    (radarNewsOnly && !args.validateCopy ? readNewsReserve(args.configDir, account.account, radar) : [])
+      .map(entry => [entry.pack.research.sourceUrl, entry])
+  );
+  if (visualNewsReserve.size) {
+    const articles = new Map(editorialResearch.packs.map(candidate => [candidate.research?.sourceUrl, candidate]));
+    for (const [url, entry] of visualNewsReserve) if (!articles.has(url)) articles.set(url, entry.pack);
+    editorialResearch.packs = [...articles.values()];
+    console.log(`Radar editorial: ${visualNewsReserve.size} notícia(s) com foto pré-validada na reserva.`);
+  }
   // Validate candidates independently: an unrelated malformed news item must
   // not abort a scheduled book post or prevent selection of other valid news.
   editorialResearch.packs = filterValidEditorialPacks(
@@ -5392,7 +5447,7 @@ async function main() {
   const baseSelectionPacks = profilePacks.length ? mergePacks(profilePacks, illustratedPacks) : illustratedPacks;
   let useResearchThisSlot = radar.enabled && editorialResearch.packs.length > 0;
   let usedEditorialReserveThisSlot = false;
-  let automaticSelectionPacks = useResearchThisSlot
+  let automaticSelectionPacks = useResearchThisSlot || (radarNewsOnly && !args.validateCopy && !args.renderOnly && !args.dryRun)
     ? editorialResearch.packs
     : baseSelectionPacks;
   if (useResearchThisSlot) {
@@ -5577,7 +5632,10 @@ async function main() {
     if (!matchesConfiguredEditorialIntent('Empresas adotam agentes de IA para automatizar tarefas', radarKeywords)) {
       throw new Error('Filtro semantico do Radar rejeitou uma pauta valida sobre agentes de IA.');
     }
-    if (normalizeEditorialSources(EDITORIAL_SOURCES).length !== EDITORIAL_SOURCES.length) {
+    const sampleRadarSources = Array.from({ length: 105 }, (_, index) => ({ name: `Fonte ${index}`, url: `https://news.example/${index}` }));
+    if (normalizeEditorialSources(sampleRadarSources).length !== 100
+      || normalizeEditorialSources(EDITORIAL_SOURCES).length !== EDITORIAL_SOURCES.length
+      || editorialSourcesForAccount({ account: 'cliente-x' }).length <= EDITORIAL_SOURCES.length) {
       throw new Error('Rodizio do Radar descartou fontes oficiais configuradas.');
     }
     const editorialImageProbe = extractEditorialImageUrl(`
@@ -5913,7 +5971,7 @@ async function main() {
       ,storyCampaignImageGuard: 'explicit-image-prominent'
       ,radarSourceImageGuard: 'og-image-https-with-safe-fallback'
       ,editorialImageFramingGuard: 'contain-no-crop-feed-reel-story'
-      ,checkedRadarSources: EDITORIAL_SOURCES.length
+      ,checkedRadarSources: radar.sources.length
     }, null, 2));
     return;
   }
@@ -6082,6 +6140,9 @@ async function main() {
         }
       }
       if (!fresh.pack) {
+        if (radarNewsOnly) {
+          throw Object.assign(new Error('Radar de notícias sem pauta inédita elegível. A próxima coleta consultará novamente as fontes cadastradas.'), { stage: 'content-selection' });
+        }
         if (radar.enabled) {
           const reserveFresh = pickFreshPack([...baseSelectionPacks, ...reservePacks], today, generationSlotIndex, recentMedia, publicationHistory, randomInt, selectionLearningContext);
           if (reserveFresh.pack) {
@@ -6154,31 +6215,68 @@ async function main() {
     let bestVisualCandidate = null;
     // Evaluate fresh articles and keep the one with the most usable photos.
     // A real cover is mandatory; remaining cards may use the approved typographic layout.
-    for (let attempt = 0; attempt < 8; attempt += 1) {
+    const visualLimit = radarNewsOnly ? NEWS_VISUAL_LIMIT : 8;
+    const passedNews = new Set();
+    for (let attempt = 0; attempt < visualLimit; attempt += 1) {
       const probe = preparePackForPublication(pack, today, generationSlotIndex, account, publishMode, { allowIhc: true }).pack;
       const visualProbe = publishMode === 'story-only' ? { ...probe, slides: probe.slides.slice(0, 1) } : probe;
       const candidateDir = join(runDir, `visual-candidate-${attempt + 1}`);
       mkdirSync(candidateDir, { recursive: true });
-      const sources = await downloadResearchSlideImages(probe, editorialResearch.packs, publicationHistory, candidateDir, visualProbe.slides.length);
+      const url = pack.research.sourceUrl;
+      const stored = visualNewsReserve.get(url);
+      const sources = await downloadResearchSlideImages(probe, editorialResearch.packs, publicationHistory, candidateDir, visualProbe.slides.length, radarNewsOnly ? {
+        signal: AbortSignal.timeout(15_000),
+        prevalidatedVisual: stored?.visual
+      } : {});
       const plan = buildVisualAgentPlan(visualProbe, sources);
+      if (radarNewsOnly) {
+        visualNewsReserve.delete(url);
+        if (plan.approvedVisuals > 0) {
+          const cover = sources.find(source => source.path === plan.slideImagePaths[0]);
+          const { imageUrl, imageSourcePageUrl, imageCredit, imageEvidence } = cover;
+          visualNewsReserve.set(url, {
+            pack,
+            visual: { imageUrl, imageSourcePageUrl, imageCredit, imageEvidence },
+            validatedAt: new Date().toISOString()
+          });
+          passedNews.add(url);
+        }
+      }
       visualAttempts.push({ sourceUrl: probe.research.sourceUrl, status: plan.status, required: visualProbe.slides.length, approved: plan.approvedVisuals });
       writeFileSync(join(runDir, 'visual-selection.json'), JSON.stringify(visualAttempts, null, 2), 'utf8');
       if (plan.approvedVisuals > (bestVisualCandidate?.plan.approvedVisuals || 0)) {
         bestVisualCandidate = { pack, packIndex, selectionMode, skippedDuplicates, sources, plan };
       }
-      if (plan.approvedVisuals >= visualProbe.slides.length) break;
-      rejectedSources.add(pack.research.sourceUrl);
-      console.log(`Radar visual: pauta possui ${plan.approvedVisuals}/${visualProbe.slides.length} fotos distintas; buscando uma fonte inédita com cobertura visual melhor.`);
-      if (attempt === 7) break;
+      if (!radarNewsOnly && plan.approvedVisuals >= visualProbe.slides.length) break;
+      if (radarNewsOnly && bestVisualCandidate && (publishMode === 'story-only' || passedNews.size >= NEWS_RESERVE_MIN_READY)) break;
+      rejectedSources.add(url);
+      console.log(`Radar visual: pauta possui ${plan.approvedVisuals}/${visualProbe.slides.length} fotos distintas; avaliando outra notícia inédita.`);
+      if (attempt + 1 === visualLimit) break;
       const candidates = automaticSelectionPacks.filter(candidate => candidate.research?.sourceUrl && !rejectedSources.has(candidate.research.sourceUrl));
-      const next = pickFreshPack(candidates, today, generationSlotIndex, recentSelectionMedia, publicationHistory, randomInt, selectionLearningContext);
+      const choose = pool => pickFreshPack(pool, today, generationSlotIndex, recentSelectionMedia, publicationHistory, randomInt, selectionLearningContext);
+      let next = radarNewsOnly && !bestVisualCandidate
+        ? choose(candidates.filter(candidate => visualNewsReserve.has(candidate.research.sourceUrl)))
+        : { pack: null };
+      if (!next.pack && radarNewsOnly) next = choose(candidates.filter(candidate => candidate.research.sourceImageUrl));
+      if (!next.pack) next = choose(candidates);
       if (!next.pack) break;
       pack = next.pack;
       packIndex = `news-visual-${next.packIndex}`;
       selectionMode = next.selectionMode;
       skippedDuplicates = next.skippedDuplicates;
     }
+    if (radarNewsOnly && !args.dryRun && !args.renderOnly) {
+      // Keep the selected candidate until publication succeeds. The standard
+      // history guard excludes it from the next selection after confirmation.
+      const publishedUrls = new Set(publicationHistory.map(entry => entry.research?.sourceUrl));
+      const entries = [...visualNewsReserve.values()].filter(entry => !publishedUrls.has(entry.pack.research.sourceUrl)).reverse();
+      writeNewsReserve(args.configDir, account.account, radar, entries);
+      console.log(`Radar visual: ${visualAttempts.length} notícia(s) testada(s), ${entries.length} candidata(s) na reserva antes de expiração.`);
+    }
     if (!bestVisualCandidate) {
+      if (radarNewsOnly) {
+        throw Object.assign(new Error('Radar de notícias sem foto inédita válida; as próximas coletas consultarão novamente as fontes. Consulte visual-selection.json.'), { stage: 'content-selection' });
+      }
       const reserve = pickEditorialVisualReserve([...baseSelectionPacks, ...reservePacks], today, generationSlotIndex, recentSelectionMedia, publicationHistory, randomInt, selectionLearningContext);
       if (!reserve.pack) throw Object.assign(new Error('Radar visual sem foto inédita e reserva autoral esgotada. Nenhuma publicação repetida foi enviada; consulte visual-selection.json.'), { stage: 'content-selection' });
       pack = reserve.pack;
