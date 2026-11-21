@@ -1935,6 +1935,16 @@
           </div>
         </div>
 
+        <section class="panel" id="facebookPublicationsPanel" aria-labelledby="facebookPublicationsHeading" hidden>
+          <div class="panel-head">
+            <div>
+              <div class="section-label">Facebook · MJM Digital</div>
+              <h2 id="facebookPublicationsHeading">Publicações recentes no Facebook</h2>
+            </div>
+          </div>
+          <div class="checks" id="facebookPublicationsList"></div>
+        </section>
+
         <div class="panel">
           <div class="panel-head">
             <div>
@@ -3771,6 +3781,7 @@
       directHistoryPage = 1;
       setMessage(`Carregando conta ${appState.selectedAccount}...`, 'warn');
       renderPublicationMonitor(null);
+      renderFacebookPublications(null);
       await loadState();
       refreshOperationalStatus();
     }
@@ -7927,6 +7938,42 @@
         `Consultado em ${monitorDate(checkedAt)} (Brasília). Atualiza a cada 20 segundos com o painel visível.`;
     }
 
+    function renderFacebookPublications(history) {
+      const panel = document.getElementById('facebookPublicationsPanel');
+      const list = document.getElementById('facebookPublicationsList');
+      panel.hidden = appState.selectedAccount !== 'cliente-x';
+      if (panel.hidden) {
+        list.replaceChildren();
+        return;
+      }
+      if (!history?.posts?.length) {
+        list.textContent = !history ? 'Carregando publicações do Facebook…' : history.available
+          ? 'Nenhuma publicação confirmada registrada no painel.'
+          : 'Não foi possível consultar as publicações do Facebook.';
+        return;
+      }
+      list.replaceChildren(...history.posts.map((post) => {
+        const row = document.createElement('div');
+        row.className = 'check';
+        const dot = document.createElement('span');
+        dot.className = 'dot good';
+        const details = document.createElement('div');
+        const name = document.createElement('strong');
+        const link = document.createElement('a');
+        link.href = post.permalink;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        const type = post.format === 'reel' ? 'Reel' : 'Fotos';
+        link.textContent = post.title || type;
+        name.append(link);
+        const meta = document.createElement('span');
+        meta.textContent = `${type} · ${monitorDate(post.publishedAt)}`;
+        details.append(name, meta);
+        row.append(dot, details);
+        return row;
+      }));
+    }
+
     let operationalRefreshPending = false;
     async function refreshOperationalStatus() {
       if (operationalRefreshPending || document.visibilityState !== 'visible' || !appState.selectedAccount || !appState.sessionRole) return;
@@ -7937,6 +7984,7 @@
         const snapshot = await api(withAccount('/api/state?status=1'));
         if (account !== appState.selectedAccount || !appState.sessionRole) return;
         renderPublicationMonitor(snapshot.publicationMonitor, snapshot.checkedAt);
+        renderFacebookPublications(snapshot.facebookPublications);
         appState.watchdogErrors = snapshot.watchdogErrors || [];
         appState.calendarPublications = snapshot.calendarPublications || [];
         appState.accounts = snapshot.accounts || appState.accounts;
@@ -7947,6 +7995,9 @@
       } catch (error) {
         if (account !== appState.selectedAccount || !appState.sessionRole) return;
         document.getElementById('publicationMonitorFreshness').textContent = 'Consulta indisponível. Os dados exibidos podem estar desatualizados.';
+        if (account === 'cliente-x' && document.getElementById('facebookPublicationsPanel').hidden) {
+          renderFacebookPublications({ available: false, posts: [] });
+        }
         freshness.textContent = `Não foi possível atualizar o status. Os dados exibidos podem estar desatualizados: ${error.message}`;
       } finally { operationalRefreshPending = false; }
     }

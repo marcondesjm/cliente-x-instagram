@@ -34,6 +34,7 @@ import { educationEvidence, recentComparisonStartDate } from '../lib/education-e
 import { loadPerformanceInsights } from './private-metrics.js';
 import { educationLearningModel } from '../lib/education-learning.js';
 import { saveInstagramGithubSecrets } from '../lib/github-secrets.js';
+import { FACEBOOK_HISTORY_PATH, loadFacebookPublications } from '../lib/facebook-publication-history.js';
 
 const ROOT = process.cwd();
 const CONTENT_PATH = join(ROOT, 'automation', 'instagram-template', 'config', 'content-packs.json');
@@ -3177,13 +3178,17 @@ export default async function handler(req, res) {
   }
   if (req.query?.status === '1') {
     requireConfiguredAccount(allowedAccounts, accountKey);
-    const [errors, history, publicationMonitor] = await Promise.all([
+    const [errors, history, publicationMonitor, facebookPublications] = await Promise.all([
       readWatchdogErrors(), readConfigGroups(PUBLICATION_HISTORY_FILE_PATH, PUBLICATION_HISTORY_PATH),
-      accountKey === 'cliente-x' ? readPublicationMonitor() : null
+      accountKey === 'cliente-x' ? readPublicationMonitor() : null,
+      accountKey === 'cliente-x' ? loadFacebookPublications(() => githubJson(
+        `contents/${FACEBOOK_HISTORY_PATH}?ref=main`,
+        { headers: { accept: 'application/vnd.github.raw+json' }, signal: AbortSignal.timeout(5000) }
+      )) : null
     ]);
     res.setHeader('cache-control', 'no-store');
     res.status(200).json({
-      checkedAt: new Date().toISOString(), selectedAccount: accountKey, publicationMonitor,
+      checkedAt: new Date().toISOString(), selectedAccount: accountKey, publicationMonitor, facebookPublications,
       watchdogErrors: errors.filter(item => !item.account || item.account === accountKey).slice(-10).reverse(),
       calendarPublications: (history[accountKey] || []).filter(item => item.mediaId && item.publishedAt).map(item => ({
         date: brtDateAndTime(item.publishedAt).date, title: item.coverTitle || 'Publicado',
