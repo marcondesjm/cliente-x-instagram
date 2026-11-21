@@ -178,29 +178,27 @@
       position: sticky;
       top: 10px;
       z-index: 20;
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 145px), 1fr));
       gap: 8px;
       margin-top: 14px;
       padding: 8px;
-      overflow-x: auto;
       border: 1px solid var(--line);
       border-radius: 18px;
       background: rgba(255,255,255,.92);
       box-shadow: var(--shadow);
       backdrop-filter: blur(18px);
-      scrollbar-width: none;
     }
 
-    .dashboard-nav::-webkit-scrollbar { display: none; }
-
     .dashboard-nav button {
-      flex: 1 0 auto;
+      min-width: 0;
       min-height: 42px;
       border: 0;
       border-radius: 12px;
       background: transparent;
       color: var(--muted);
-      white-space: nowrap;
+      white-space: normal;
+      overflow-wrap: anywhere;
     }
 
     .dashboard-nav button.active {
@@ -1658,7 +1656,8 @@
       .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .actions { justify-content: stretch; }
       .actions > * { flex: 1 1 180px; }
-      .dashboard-nav button { flex: 0 0 auto; padding-inline: 16px; }
+      .dashboard-nav { position: static; }
+      .dashboard-nav button { padding-inline: 10px; }
       .logic-quick-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .panel-head {
         align-items: stretch;
