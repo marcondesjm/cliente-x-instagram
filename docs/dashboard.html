@@ -1738,7 +1738,7 @@
     @font-face {
       font-family: "Bricolage Grotesque";
       src: url("/lib/assets/mjm-digital/BricolageGrotesque.woff2") format("woff2");
-      font-weight: 400 600;
+      font-weight: 400 800;
       font-display: swap;
     }
     @font-face {
@@ -1747,18 +1747,41 @@
       font-style: italic;
       font-display: swap;
     }
+    #appShell[data-mjm-brand] {
+      --mjm-petrol: #08201A;
+      --mjm-lime: #D2FF00;
+      --mjm-silver: #C9CBCB;
+      --mjm-muted-green: #253530;
+      --mjm-mineral: #F4F4ED;
+    }
+    #appShell[data-mjm-brand] > header { background: var(--mjm-mineral); }
+    #appShell[data-mjm-brand] .dashboard-nav {
+      background: var(--mjm-petrol);
+      border-color: var(--mjm-muted-green);
+    }
+    #appShell[data-mjm-brand] .dashboard-nav button { color: var(--mjm-silver); }
+    #appShell[data-mjm-brand] .dashboard-nav button.active,
+    #appShell[data-mjm-brand] button.primary {
+      background: var(--mjm-lime);
+      border-color: var(--mjm-petrol);
+      color: var(--mjm-petrol);
+    }
+    #appShell[data-mjm-brand] .dashboard-nav button:focus-visible {
+      outline: 2px solid var(--mjm-silver);
+      outline-offset: 2px;
+    }
     #brandIdentityPanel[hidden], #brandIdentityTab[hidden] { display: none; }
     #brandIdentityPanel { display: grid; gap: 24px; }
     #brandIdentityPanel .panel-head { flex-wrap: wrap; }
     .brand-identity-sample {
       display: grid; gap: 14px; padding: clamp(20px, 4vw, 42px);
-      background: #08201a; color: #c9cbcb; border: 1px solid #253530; border-radius: 14px;
+      background: var(--mjm-petrol); color: var(--mjm-silver); border: 1px solid var(--mjm-muted-green); border-radius: 14px;
       font: 400 1rem/1.45 "Bricolage Grotesque", system-ui, sans-serif;
     }
     .brand-identity-sample img { width: min(150px, 100%); height: auto; }
     .brand-identity-sample p { color: inherit; margin: 0; }
-    .brand-identity-sample .brand-identity-title { font-size: clamp(1.85rem, 5vw, 3.5rem); font-weight: 500; line-height: 1.05; }
-    .brand-identity-sample em { display: block; color: #caa14f; font: italic 400 1em/1.08 "Instrument Serif", Georgia, serif; }
+    .brand-identity-sample .brand-identity-title { font-size: clamp(1.85rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.05; }
+    .brand-identity-sample em { display: block; color: var(--mjm-lime); font: italic 400 1em/1.08 "Instrument Serif", Georgia, serif; }
     .brand-identity-palette {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
       gap: 10px; padding: 0; margin: 12px 0 0; list-style: none;
@@ -1849,7 +1872,7 @@
         <section class="panel" id="brandIdentityPanel" aria-labelledby="brandIdentityTitle" hidden>
           <div class="panel-head">
             <h2 id="brandIdentityTitle">Identidade visual da MJM Digital</h2>
-            <a class="button" href="/docs/mjm-digital/Guia_de_Identidade_Visual_MJM_Digital.pdf" target="_blank" rel="noopener">Abrir guia da marca (PDF)</a>
+            <a class="button" href="/docs/mjm-digital/Guia_de_Identidade_Visual_MJM_Digital.pdf" target="_blank" rel="noopener">Guia original da marca (PDF)</a>
           </div>
           <div class="brand-identity-sample">
             <img src="/lib/assets/mjm-digital/logo.png" alt="MJM Digital" width="150">
@@ -1859,20 +1882,17 @@
           <div>
             <h3>Paleta de cores</h3>
             <ul class="brand-identity-palette">
-              <li class="brand-identity-color" style="--swatch:#08201A;--swatch-text:#FFFFFF"><strong>Verde-petróleo escuro</strong><code>#08201A</code><span>Fundo principal</span></li>
-              <li class="brand-identity-color" style="--swatch:#CAA14F;--swatch-text:#08201A"><strong>Dourado ocre</strong><code>#CAA14F</code><span>Destaques e botões</span></li>
-              <li class="brand-identity-color" style="--swatch:#C9CBCB;--swatch-text:#08201A"><strong>Cinza-prata</strong><code>#C9CBCB</code><span>Texto sobre fundo escuro</span></li>
-              <li class="brand-identity-color" style="--swatch:#000000;--swatch-text:#FFFFFF"><strong>Preto</strong><code>#000000</code><span>Aplicações monocromáticas</span></li>
-              <li class="brand-identity-color" style="--swatch:#253530;--swatch-text:#FFFFFF"><strong>Verde acinzentado</strong><code>#253530</code><span>Cards e áreas secundárias</span></li>
-              <li class="brand-identity-color" style="--swatch:#976E43;--swatch-text:#000000"><strong>Bronze</strong><code>#976E43</code><span>Detalhes gráficos</span></li>
-              <li class="brand-identity-color" style="--swatch:#C48138;--swatch-text:#08201A"><strong>Âmbar queimado</strong><code>#C48138</code><span>Ícones sobre fundo escuro</span></li>
-              <li class="brand-identity-color" style="--swatch:#3E3D37;--swatch-text:#FFFFFF"><strong>Cinza asfalto</strong><code>#3E3D37</code><span>Texto sobre fundo claro</span></li>
+              <li class="brand-identity-color" style="--swatch:var(--mjm-petrol);--swatch-text:var(--mjm-silver)"><strong>Verde-petróleo escuro</strong><code>#08201A</code><span>Fundo principal da marca</span></li>
+              <li class="brand-identity-color" style="--swatch:var(--mjm-lime);--swatch-text:var(--mjm-petrol)"><strong>Lima elétrico</strong><code>#D2FF00</code><span>Letra J, destaques e botões</span></li>
+              <li class="brand-identity-color" style="--swatch:var(--mjm-silver);--swatch-text:var(--mjm-petrol)"><strong>Cinza-prata</strong><code>#C9CBCB</code><span>Texto sobre fundo escuro</span></li>
+              <li class="brand-identity-color" style="--swatch:var(--mjm-muted-green);--swatch-text:var(--mjm-silver)"><strong>Verde acinzentado</strong><code>#253530</code><span>Cartões e áreas secundárias</span></li>
+              <li class="brand-identity-color" style="--swatch:var(--mjm-mineral);--swatch-text:var(--mjm-petrol)"><strong>Branco mineral</strong><code>#F4F4ED</code><span>Fundos claros da interface</span></li>
             </ul>
           </div>
           <div>
             <h3>Tipografia</h3>
             <dl class="brand-identity-type">
-              <div><dt><strong>Títulos</strong></dt><dd>Bricolage Grotesque 500</dd></div>
+              <div><dt><strong>Títulos</strong></dt><dd>Bricolage Grotesque 800</dd></div>
               <div><dt><strong>Subtítulos e botões</strong></dt><dd>Bricolage Grotesque 600</dd></div>
               <div><dt><strong>Texto corrido</strong></dt><dd>Bricolage Grotesque 400</dd></div>
               <div><dt><strong>Destaques</strong></dt><dd>Instrument Serif Italic 400</dd></div>
@@ -3598,6 +3618,7 @@
 
     function renderBrandIdentity() {
       const available = appState.selectedAccount === 'cliente-x';
+      document.getElementById('appShell').toggleAttribute('data-mjm-brand', available);
       document.getElementById('brandIdentityTab').hidden = !available;
       document.getElementById('brandIdentityPanel').hidden = !available;
       if (!available && document.querySelector('main')?.dataset.activeView === 'brand') {
