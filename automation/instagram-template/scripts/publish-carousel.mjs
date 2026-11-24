@@ -21,6 +21,7 @@ import { buildResearchPack, decodeEditorialEntities, filterValidEditorialPacks, 
 import { summarizePerformanceLearning, retentionHookAdjustment } from '../../../lib/performance-learning.js';
 import { assertVisualAgentPlan, buildVisualAgentPlan, CLOUD_VISUAL_AGENT_VERSION } from '../../../lib/visual-agent.js';
 import { editorialImageCandidates } from '../../../lib/editorial-image-fallbacks.js';
+import { searchWikimediaEditorialPhotos, wikimediaPhotoCaption, WIKIMEDIA_USER_AGENT } from '../../../lib/wikimedia-editorial-photos.js';
 import { photoSignature, similarPhoto, photoIdentity } from '../../../lib/photo-uniqueness.js';
 import { readyAuthorialPacks, approvedGeneratedPack } from '../../../lib/authorial-reserve.js';
 import {growthEnabled,growthDiscoveryStrategy,growthEditorialSignals} from '../../../lib/audience-growth.js';
@@ -1005,8 +1006,8 @@ function normalizeCaptionBlocks(caption = '') {
     .filter(Boolean);
 }
 
-function fitInstagramCaption(caption = '', pack = {}) {
-  const clean = normalizeCaptionBlocks(caption).join('\n\n');
+function fitInstagramCaption(caption = '', pack = {}, photoCredit = '') {
+  const clean = [...normalizeCaptionBlocks(caption), photoCredit].filter(Boolean).join('\n\n');
   if (clean.length <= INSTAGRAM_CAPTION_MAX_LENGTH) return clean;
 
   const hashtags = splitCaptionParts(clean).hashtags || DEFAULT_INSTAGRAM_HASHTAGS;
@@ -1016,6 +1017,7 @@ function fitInstagramCaption(caption = '', pack = {}) {
     sourceTitle ? `Título original: ${sourceTitle}` : '',
     sourceUrl ? `Fonte oficial: ${sourceUrl}` : '',
     RADAR_MATERIAL_CTA,
+    photoCredit,
     hashtags
   ].filter(Boolean);
   const requiredText = requiredBlocks.join('\n\n');
@@ -1023,7 +1025,7 @@ function fitInstagramCaption(caption = '', pack = {}) {
   const bodyBlocks = normalizeCaptionBlocks(clean)
     .filter((block) => !block.startsWith('#'))
     .filter((block) => !block.includes(FREE_PROMPTS_CTA_MARKER))
-    .filter((block) => block !== RADAR_MATERIAL_CTA)
+    .filter((block) => block !== RADAR_MATERIAL_CTA && block !== photoCredit)
     .filter((block) => !sourceUrl || !block.includes(sourceUrl))
     .filter((block) => !sourceTitle || !block.includes(sourceTitle));
   const fittedBody = [];
@@ -2024,7 +2026,8 @@ async function downloadEditorialImage(sourceImageUrl = '', runDir = '', fileStem
   // Ela pode ficar abaixo do limite de qualidade embora o original esteja no
   // mesmo endereço. Tente a versão original antes de aceitar a miniatura.
   const originalImageUrl = sourceImageUrl.replace(/-\d{2,4}x\d{2,4}(?=\.[a-z0-9]+(?:\?|$))/i, '');
-  const candidates = [...new Set([originalImageUrl, sourceImageUrl])];
+  const wikimedia = /^https:\/\/(?:upload|thumb)\.wikimedia\.org\//i.test(sourceImageUrl);
+  const candidates = wikimedia ? [sourceImageUrl] : [...new Set([originalImageUrl, sourceImageUrl])];
   try {
     const extensions = new Map([
       ['image/jpeg', '.jpg'],
@@ -2038,9 +2041,9 @@ async function downloadEditorialImage(sourceImageUrl = '', runDir = '', fileStem
         const response = await fetchWithContext(candidateUrl, {
           headers: {
             accept: 'image/avif,image/webp,image/png,image/jpeg',
-            'user-agent': 'Mozilla/5.0 Cliente-X-Radar/1.0'
+            'user-agent': wikimedia ? WIKIMEDIA_USER_AGENT : 'Mozilla/5.0 Cliente-X-Radar/1.0'
           },
-          redirect: 'follow',
+          redirect: wikimedia ? 'error' : 'follow',
           signal
         }, 'radar-source-image');
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -2102,9 +2105,7 @@ async function downloadResearchSlideImages(pack = {}, editorialPacks = [], publi
   const fetchPhotoPage = options.signal
     ? (url, init) => fetch(url, { ...init, signal: AbortSignal.any([options.signal, init.signal]) })
     : fetch;
-  const candidates = editorialImageCandidates(pack.research, fetchPhotoPage, editorialPacks, options.prevalidatedVisual);
-  for await (const alternative of candidates) {
-    if (options.signal?.aborted) break;
+  const selectPhoto = async (alternative, signal) => {
     const candidate = {
       source: pack.research.source,
       sourceUrl: pack.research.sourceUrl,
@@ -2112,13 +2113,13 @@ async function downloadResearchSlideImages(pack = {}, editorialPacks = [], publi
       ...alternative,
       imageUrl: normalizedEditorialImageUrl(alternative.imageUrl)
     };
-    if (!candidate.imageUrl || currentUrls.has(photoIdentity(candidate.imageUrl)) || (!options.allowSourceImageReuse && priorUrls.has(photoIdentity(candidate.imageUrl)))) continue;
-    const downloaded = await downloadEditorialImage(candidate.imageUrl, runDir, `radar-slide-${String(selected.length + 1).padStart(2, '0')}`, options.signal);
-    if (!downloaded || currentHashes.has(downloaded.imageHash) || (!options.allowSourceImageReuse && (priorHashes.has(downloaded.imageHash) || priorUrls.has(photoIdentity(downloaded.imageUrl))))) continue;
+    if (!candidate.imageUrl || currentUrls.has(photoIdentity(candidate.imageUrl)) || (!options.allowSourceImageReuse && priorUrls.has(photoIdentity(candidate.imageUrl)))) return;
+    const downloaded = await downloadEditorialImage(candidate.imageUrl, runDir, `radar-slide-${String(selected.length + 1).padStart(2, '0')}`, signal);
+    if (!downloaded || currentHashes.has(downloaded.imageHash) || (!options.allowSourceImageReuse && (priorHashes.has(downloaded.imageHash) || priorUrls.has(photoIdentity(downloaded.imageUrl))))) return;
     let perceptualHash;
     try { perceptualHash = await photoSignature(photoPage, downloaded.path); }
-    catch (error) { console.warn(`Foto rejeitada: ${error.message}`); continue; }
-    if ([...(options.allowSourceImageReuse ? [] : priorPerceptualHashes), ...selected.map(visual => visual.perceptualHash)].some(hash => similarPhoto(hash, perceptualHash))) continue;
+    catch (error) { console.warn(`Foto rejeitada: ${error.message}`); return; }
+    if ([...(options.allowSourceImageReuse ? [] : priorPerceptualHashes), ...selected.map(visual => visual.perceptualHash)].some(hash => similarPhoto(hash, perceptualHash))) return;
     currentHashes.add(downloaded.imageHash);
     currentUrls.add(photoIdentity(candidate.imageUrl));
     selected.push({
@@ -2128,7 +2129,23 @@ async function downloadResearchSlideImages(pack = {}, editorialPacks = [], publi
       reusedRelevantImage: priorUrls.has(photoIdentity(candidate.imageUrl)) || priorHashes.has(downloaded.imageHash),
       approvedRevisionImageReuse: options.allowSourceImageReuse === true
     });
+  };
+  const candidates = editorialImageCandidates(pack.research, fetchPhotoPage, editorialPacks, options.prevalidatedVisual);
+  for await (const alternative of candidates) {
+    if (options.signal?.aborted) break;
+    await selectPhoto(alternative, options.signal);
     if (selected.length >= requiredCount) break;
+  }
+  if (options.allowWikimedia && selected.length === 0) {
+    const signal = AbortSignal.timeout(6500);
+    const photos = await searchWikimediaEditorialPhotos(pack.research, {
+      signal: AbortSignal.any([signal, AbortSignal.timeout(4000)])
+    });
+    for (const photo of photos) {
+      if (signal.aborted) break;
+      await selectPhoto(photo, signal);
+      if (selected.length) break;
+    }
   }
   } finally { await photoBrowser.close(); }
   if (selected.length < requiredCount) console.warn(`Agente Visual: ${selected.length}/${requiredCount} fotos distintas encontradas; cobertura parcial, cartões restantes serão tipográficos se houver foto válida para a capa.`);
@@ -3641,7 +3658,9 @@ async function launchChromium() {
 function mjmPublicationHtml(slide, index, total, renderContext, story = false) {
   const reel = ['reel-only', 'reel-and-story'].includes(renderContext.publishMode);
   const explicitImage = fileCssImage(slide.imagePath);
-  const researchImage = fileCssImage(story ? renderContext.researchSourceImagePath : renderContext.researchSlideImagePaths?.[index - 1]);
+  const researchPath = story ? renderContext.researchSourceImagePath : renderContext.researchSlideImagePaths?.[index - 1];
+  const researchImage = fileCssImage(researchPath);
+  const photo = renderContext.researchVisualSources?.find(visual => visual.path === researchPath);
   const body = String(slide.body || '');
   const visualCue = slide.visualCue || visualCueForAccount({ account: 'cliente-x' }, slide.title || '');
   const fallbackImage = !slide.researchSource && !slide.typographicOnly && (story || index === 1)
@@ -3653,6 +3672,7 @@ function mjmPublicationHtml(slide, index, total, renderContext, story = false) {
     body,
     source: slide.researchSource,
     image: explicitImage || researchImage || fallbackImage,
+    illustrativeCredit: !explicitImage && photo?.imageIllustrative ? `${photo.imageCredit} · ${photo.imageLicense}` : '',
     index,
     total,
     height: story || reel ? STORY_HEIGHT : FEED_HEIGHT,
@@ -6226,17 +6246,20 @@ async function main() {
       const stored = visualNewsReserve.get(url);
       const sources = await downloadResearchSlideImages(probe, editorialResearch.packs, publicationHistory, candidateDir, visualProbe.slides.length, radarNewsOnly ? {
         signal: AbortSignal.timeout(15_000),
-        prevalidatedVisual: stored?.visual
+        allowWikimedia: usesMjmEditorialArt(account),
+        prevalidatedVisual: !stored?.visual?.imageIllustrative || usesMjmEditorialArt(account) ? stored?.visual : null
       } : {});
       const plan = buildVisualAgentPlan(visualProbe, sources);
       if (radarNewsOnly) {
         visualNewsReserve.delete(url);
         if (plan.approvedVisuals > 0) {
           const cover = sources.find(source => source.path === plan.slideImagePaths[0]);
-          const { imageUrl, imageSourcePageUrl, imageCredit, imageEvidence } = cover;
+          const {
+            imageUrl, imageSourcePageUrl, imageCredit, imageEvidence, imageIllustrative, imageLicense, imageLicenseUrl
+          } = cover;
           visualNewsReserve.set(url, {
             pack,
-            visual: { imageUrl, imageSourcePageUrl, imageCredit, imageEvidence },
+            visual: { imageUrl, imageSourcePageUrl, imageCredit, imageEvidence, imageIllustrative, imageLicense, imageLicenseUrl },
             validatedAt: new Date().toISOString()
           });
           passedNews.add(url);
@@ -6380,6 +6403,12 @@ async function main() {
   const visualAgent = assertVisualAgentPlan(visualPack, buildVisualAgentPlan(visualPack, researchVisualSources));
   const researchSlideImagePaths = visualAgent.slideImagePaths;
   const researchSourceImagePath = researchSlideImagePaths[0] || null;
+  const cover = researchVisualSources.find(visual => visual.path === researchSourceImagePath);
+  const photoCredit = wikimediaPhotoCaption(cover);
+  if (photoCredit) {
+    pack.caption = fitInstagramCaption(pack.caption, pack, photoCredit);
+    historyPack.caption = pack.caption;
+  }
   writeFileSync(join(runDir, 'visual-agent.json'), JSON.stringify(visualAgent, null, 2), 'utf8');
   console.log(`Agente Visual ${CLOUD_VISUAL_AGENT_VERSION}: ${visualAgent.status}; ${visualAgent.approvedVisuals} fotos distintas aprovadas.`);
   if (researchVisualSources.length) {
