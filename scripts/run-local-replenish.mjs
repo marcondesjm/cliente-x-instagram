@@ -5,12 +5,14 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
-// Configurações do gateway Anthropic fornecidas pelo usuário
-const GATEWAY_URL = 'https://claude-ss.ia.br';
-const API_KEY = 'kp_user_9gMrj-eeqoklSvqiw41PgD_466gD6Isl';
+// Credencial do gateway somente por variável de ambiente.
+const GATEWAY_URL = process.env.CLAUDE_SS_BASE_URL || 'https://claude-ss.ia.br';
+const API_KEY = process.env.CLAUDE_SS_API_KEY || process.env.KIDS_VISION_ANTHROPIC_API_KEY;
+if (!API_KEY) throw new Error('Configure CLAUDE_SS_API_KEY ou KIDS_VISION_ANTHROPIC_API_KEY no ambiente local.');
 
 console.log('=== REABASTECIMENTO AUTOMÁTICO SABEDORIA KIDS ===');
 console.log('Gateway:', GATEWAY_URL);
+console.log('Credencial carregada por variável de ambiente:', Boolean(API_KEY));
 console.log('Executando reabastecimento local com modo calibrate...');
 
 try {
