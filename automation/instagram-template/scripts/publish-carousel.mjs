@@ -2047,7 +2047,8 @@ async function downloadEditorialImage(sourceImageUrl = '', runDir = '', fileStem
         const contentType = String(response.headers.get('content-type') || '').split(';')[0].toLowerCase();
         if (!extensions.has(contentType)) throw new Error(`tipo ${contentType || 'desconhecido'} nao aceito`);
         const bytes = Buffer.from(await response.arrayBuffer());
-        if (bytes.length < 20000) throw new Error(`arquivo pequeno demais (${bytes.length} bytes)`);
+        // photoSignature valida a decodificação e a resolução da foto após o download.
+        if (!bytes.length) throw new Error('arquivo de imagem vazio');
         if (bytes.length > 12000000) throw new Error(`arquivo grande demais (${bytes.length} bytes)`);
         const destination = join(runDir, `${fileStem}${extensions.get(contentType)}`);
         writeFileSync(destination, bytes);
