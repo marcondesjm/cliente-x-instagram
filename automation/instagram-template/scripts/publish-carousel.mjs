@@ -6212,10 +6212,12 @@ async function main() {
   const runDir = join(RUNS_DIR, account.account, runId);
   mkdirSync(runDir, { recursive: true });
   let preparedVisualSources = null;
+  let useTypographicNewsCover = false;
   if (pack?.research?.sourceUrl && !dashboardPack && !scheduledPost && !seriesSelection) {
     const rejectedSources = new Set();
     const visualAttempts = [];
     let bestVisualCandidate = null;
+    let typographicNewsCandidate = null;
     // Evaluate fresh articles and keep the one with the most usable photos.
     // A real cover is mandatory; remaining cards may use the approved typographic layout.
     const visualLimit = radarNewsOnly ? NEWS_VISUAL_LIMIT : 8;
@@ -6226,6 +6228,11 @@ async function main() {
       const candidateDir = join(runDir, `visual-candidate-${attempt + 1}`);
       mkdirSync(candidateDir, { recursive: true });
       const url = pack.research.sourceUrl;
+      if (radarNewsOnly && usesMjmEditorialArt(account) && useResearchThisSlot && !typographicNewsCandidate
+        && !findDuplicateSelection(pack, recentSelectionMedia, publicationHistory)
+        && !findDuplicateResearchSource(publicationHistory, pack)) {
+        typographicNewsCandidate = { pack, packIndex, selectionMode, skippedDuplicates };
+      }
       const stored = visualNewsReserve.get(url);
       const sources = await downloadResearchSlideImages(probe, editorialResearch.packs, publicationHistory, candidateDir, visualProbe.slides.length, radarNewsOnly ? {
         signal: AbortSignal.timeout(15_000),
@@ -6276,7 +6283,13 @@ async function main() {
       writeNewsReserve(args.configDir, account.account, radar, entries);
       console.log(`Radar visual: ${visualAttempts.length} notícia(s) testada(s), ${entries.length} candidata(s) na reserva antes de expiração.`);
     }
-    if (!bestVisualCandidate) {
+    if (!bestVisualCandidate && typographicNewsCandidate) {
+      ({ pack, packIndex, selectionMode, skippedDuplicates } = typographicNewsCandidate);
+      preparedVisualSources = [];
+      useTypographicNewsCover = true;
+      editorialResearch.visualFallback = { mode: 'typographic-news-cover', attempts: visualAttempts, sourceUrl: pack.research.sourceUrl };
+      console.log('Radar visual: notícia inédita com fonte registrada selecionada para capa tipográfica da MJM Digital.');
+    } else if (!bestVisualCandidate) {
       if (radarNewsOnly) {
         throw Object.assign(new Error('Radar de notícias sem foto inédita válida; as próximas coletas consultarão novamente as fontes. Consulte visual-selection.json.'), { stage: 'content-selection' });
       }
@@ -6380,7 +6393,10 @@ async function main() {
     { allowSourceImageReuse: approvedRevisionImageReuse(pack, publicationHistory, Boolean(dashboardPack)) }
   );
   const visualPack = publishMode === 'story-only' ? { ...pack, slides: pack.slides.slice(0, 1) } : pack;
-  const visualAgent = assertVisualAgentPlan(visualPack, buildVisualAgentPlan(visualPack, researchVisualSources));
+  const visualPlan = buildVisualAgentPlan(visualPack, researchVisualSources);
+  const visualAgent = useTypographicNewsCover
+    ? { ...visualPlan, status: 'approved', policy: 'verified-news-typographic-cover' }
+    : assertVisualAgentPlan(visualPack, visualPlan);
   const researchSlideImagePaths = visualAgent.slideImagePaths;
   const researchSourceImagePath = researchSlideImagePaths[0] || null;
   writeFileSync(join(runDir, 'visual-agent.json'), JSON.stringify(visualAgent, null, 2), 'utf8');
