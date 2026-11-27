@@ -2024,7 +2024,9 @@ async function downloadEditorialImage(sourceImageUrl = '', runDir = '', fileStem
   // Ela pode ficar abaixo do limite de qualidade embora o original esteja no
   // mesmo endereço. Tente a versão original antes de aceitar a miniatura.
   const originalImageUrl = sourceImageUrl.replace(/-\d{2,4}x\d{2,4}(?=\.[a-z0-9]+(?:\?|$))/i, '');
-  const candidates = [...new Set([originalImageUrl, sourceImageUrl])];
+  // URLs do CDN do G1 incluem o endereço da mesma foto no servidor de origem.
+  const globoOrigin = sourceImageUrl.match(/^https:\/\/s2-g1\.glbimg\.com\/[^?#]*?\/(https:\/\/i\.s3\.glbimg\.com\/v1\/[^?#]+)$/i)?.[1];
+  const candidates = [...new Set([globoOrigin, originalImageUrl, sourceImageUrl].filter(Boolean))];
   try {
     const extensions = new Map([
       ['image/jpeg', '.jpg'],
